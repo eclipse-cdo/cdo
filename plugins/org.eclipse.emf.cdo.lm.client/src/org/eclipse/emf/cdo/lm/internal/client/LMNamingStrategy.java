@@ -8,16 +8,21 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.lm.client;
+package org.eclipse.emf.cdo.lm.internal.client;
 
 /**
+ * TODO Make pluggable / customizable.
+ *
  * @author Eike Stepper
  */
-public class SystemDescriptorUtil
+public final class LMNamingStrategy
 {
-  public static String getChangeBranchName(String label)
+  private LMNamingStrategy()
   {
-    int NamingStrategy;
-    return "change-" + label.replace(' ', '-');
+  }
+
+  public static String getChangeBranchName(String changeLabel)
+  {
+    return "change-" + changeLabel.trim().replace('/', '-').replace(' ', '-');
   }
 }

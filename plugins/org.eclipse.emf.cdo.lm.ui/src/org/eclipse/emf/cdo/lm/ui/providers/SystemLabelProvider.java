@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.lm.ui.providers;
 
 import org.eclipse.emf.cdo.lm.Change;
-import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 
@@ -48,7 +47,7 @@ public class SystemLabelProvider extends AdapterFactoryLabelProvider implements 
     if (object instanceof Change)
     {
       Change change = (Change)object;
-      if (!canBeDelivered(change))
+      if (!change.isDeliverable())
       {
         return ExtendedImageRegistry.INSTANCE.getImage(LMEditPlugin.INSTANCE.getImage("full/obj16/ChangeDisabled"));
       }
@@ -75,26 +74,12 @@ public class SystemLabelProvider extends AdapterFactoryLabelProvider implements 
     if (object instanceof Change)
     {
       Change change = (Change)object;
-      if (!canBeDelivered(change))
+      if (!change.isDeliverable())
       {
         return gray;
       }
     }
 
     return super.getForeground(object);
-  }
-
-  private boolean canBeDelivered(Change change)
-  {
-    int MoveToModel;
-    for (Stream stream : change.getModule().getStreams())
-    {
-      if (change.getDeliveryPoint(stream) == null)
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 }

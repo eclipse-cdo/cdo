@@ -504,7 +504,7 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     AssemblyManager.INSTANCE.scheduleUpdateCheck(this);
   }
 
-  public void moduleRemoved()
+  public void moduleDeleted(CDOID deletedModuleID)
   {
     AssemblyManager.INSTANCE.scheduleUpdateCheck(this);
   }

@@ -59,7 +59,6 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason.Conflicting;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason.Missing;
-import org.eclipse.emf.cdo.lm.client.LMClientUtil;
 import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
@@ -458,7 +457,7 @@ public final class SystemDescriptor implements ISystemDescriptor
 
   private CDORepository connectModuleRepository(String moduleName)
   {
-    int NamingStrategy;
+    // TODO Move to NamingStrategy.
     String label = "_LM_Module_" + systemName + "_" + moduleName;
 
     CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
@@ -600,9 +599,7 @@ public final class SystemDescriptor implements ISystemDescriptor
       }
       catch (ProvisionException ex)
       {
-        // TODO Auto-generated catch block
-        int PrintStackTrace;
-        ex.printStackTrace();
+        OM.LOG.error(ex);
         return null;
       }
 
@@ -649,28 +646,21 @@ public final class SystemDescriptor implements ISystemDescriptor
     {
       resolveDependencies(rootDefinition, assembly, monitor);
     }
-    catch (ProvisionException ex)
+    catch (ProvisionException | ResolutionException ex)
     {
-      // TODO Auto-generated catch block
-      int PrintStackTrace;
-      ex.printStackTrace();
+      OM.LOG.error(ex);
       return null;
-    }
-    catch (ResolutionException resEx)
-    {
-      return tryDeprecatedResolution(resEx, rootDefinition, rootBaseline, monitor);
     }
 
     return assembly;
   }
 
-  private Assembly tryDeprecatedResolution(ResolutionException resEx, ModuleDefinition rootDefinition, Baseline rootBaseline, IProgressMonitor monitor)
+  private Assembly tryDeprecatedResolution(ResolutionException ex, ModuleDefinition rootDefinition, Baseline rootBaseline, IProgressMonitor monitor)
       throws ResolutionException
   {
-    int PartialResolution;
     List<String> missingModules = new ArrayList<>();
 
-    for (Reason reason : resEx.getReasons())
+    for (Reason reason : ex.getReasons())
     {
       if (reason instanceof Reason.Missing)
       {
@@ -690,7 +680,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     newDefinition.getDependencies().removeAll(depToRemove);
-    OM.LOG.warn(resEx);
+    OM.LOG.warn(ex);
     OM.LOG.warn("Trying to resolve without missing dependencies. You should consider updating module.md");
     return resolve(newDefinition, rootBaseline, monitor);
   }
@@ -843,8 +833,7 @@ public final class SystemDescriptor implements ISystemDescriptor
       stream.setStartTimeStamp(base.getBranchPoint().getTimeStamp());
 
       m.getStreams().add(stream);
-      int NamingStrategy;
-      setCommitComment(m, "Add stream '" + stream.getName() + "'");
+      setCommitComment(m, "Add stream '" + stream.getName() + "'"); // TODO Move to NamingStrategy.
       return stream;
     }, monitor);
   }
@@ -909,10 +898,6 @@ public final class SystemDescriptor implements ISystemDescriptor
             s.setMaintenanceBranch(new CDOBranchRef(maintenanceBranch));
             s.setMaintenanceTimeStamp(timeStamp);
           }
-          else
-          {
-            int TODO;
-          }
         });
       }
 
@@ -924,7 +909,7 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public Change createChange(Stream stream, FixedBaseline base, String label, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
   {
-    String branchName = LMClientUtil.getChangeBranchName(label);
+    String branchName = LMNamingStrategy.getChangeBranchName(label);
 
     return modify(stream, s -> {
       Change change = LMFactory.eINSTANCE.createChange();
@@ -948,7 +933,7 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public void renameChange(Change change, String newLabel, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
   {
-    String branchName = LMClientUtil.getChangeBranchName(newLabel);
+    String branchName = LMNamingStrategy.getChangeBranchName(newLabel);
 
     modify(change, c -> {
       String oldLabel = c.getLabel();

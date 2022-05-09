@@ -144,4 +144,8 @@ public interface Change extends FloatingBaseline
 
   public BasePoint getDeliveryPoint(Stream stream);
 
+  public EList<Stream> getDeliveryCandidateStreams();
+
+  public boolean isDeliverable();
+
 } // Change

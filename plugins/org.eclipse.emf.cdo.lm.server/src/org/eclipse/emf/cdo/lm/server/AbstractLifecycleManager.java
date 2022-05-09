@@ -447,7 +447,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
           try
           {
-            // in case the module was already existing we don't modify its content
+            // In case the module was already existing we don't modify its content.
             if (!moduleTransaction.hasResource(moduleDefinitionPath))
             {
               ModuleDefinition moduleDefinition = ModulesFactory.eINSTANCE.createModuleDefinition();
@@ -649,7 +649,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   }
 
   private void handleListDelta(CommitContext commitContext, InternalCDORevisionDelta revisionDelta, EReference reference, boolean preventRemoval,
-      Consumer<InternalCDORevision> additionHandler)
+      Consumer<InternalCDORevision> additionConsumer)
   {
     CDOListFeatureDelta listDelta = (CDOListFeatureDelta)revisionDelta.getFeatureDelta(reference);
     if (listDelta != null)
@@ -680,18 +680,17 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
                 LifecycleUtil.deactivate(session);
                 LifecycleUtil.deactivate(repo);
-              }
-            }
 
-            try
-            {
-              // removeModule(module);
-            }
-            catch (Exception e)
-            {
-              // TODO Auto-generated catch block
-              int PrintStackTrace;
-              e.printStackTrace();
+                // try
+                // {
+                // removeModule(moduleName);
+                // }
+                // catch (Exception e)
+                // {
+                // // TODO Auto-generated catch block
+                // e.printStackTrace();
+                // }
+              }
             }
           }
           else
@@ -704,10 +703,14 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           CDOAddFeatureDelta addDelta = (CDOAddFeatureDelta)featureDelta;
           CDOID id = (CDOID)addDelta.getValue();
           InternalCDORevision revision = (InternalCDORevision)commitContext.getRevision(id);
-          additionHandler.accept(revision);
+          additionConsumer.accept(revision);
         }
       }
     }
+  }
+
+  private void removeModule(String moduleName)
+  {
   }
 
   private static void deactivate(Map<String, ?> map)

@@ -139,8 +139,7 @@ public class NewModuleAction extends LMAction<System>
 
       Label label = new Label(composite, SWT.NONE);
       label.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).create());
-      int NamingStrategy;
-      label.setText("Initial Stream");
+      label.setText("Initial Stream"); // TODO Move to NamingStrategy.
 
       Label separator2 = new Label(composite, SWT.SEPARATOR | SWT.HORIZONTAL);
       separator2.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).create());

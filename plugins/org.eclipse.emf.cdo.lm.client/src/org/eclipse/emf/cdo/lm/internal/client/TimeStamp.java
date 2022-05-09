@@ -42,7 +42,6 @@ public final class TimeStamp extends Number implements Comparable<TimeStamp>
   public TimeStamp()
   {
     this(System.currentTimeMillis());
-    int MoveToNet4jUtil;
   }
 
   public TimeStamp(String string) throws DateTimeException

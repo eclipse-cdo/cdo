@@ -80,7 +80,6 @@ public class TimeStampComposite extends Composite
   public TimeStampComposite(Composite parent, int style, long minTimeStamp, long maxTimeStamp, Object context)
   {
     super(parent, style);
-    int MoveToNet4jUtilUI;
 
     this.minTimeStamp = minTimeStamp;
     this.maxTimeStamp = maxTimeStamp;

@@ -32,8 +32,8 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.client.ISystemManager.ModuleDeletedEvent;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.BaselineCreatedEvent;
+import org.eclipse.emf.cdo.lm.client.ISystemManager.ModuleDeletedEvent;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.StreamBranchChangedEvent;
 import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
@@ -115,18 +115,19 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
       {
         ModuleDeletedEvent e = (ModuleDeletedEvent)event;
         ISystemDescriptor systemDescriptor = e.getSystemDescriptor();
+        CDOID deletedModuleID = e.getDeletedModuleID();
 
         ObjectUtil.forEachSafe(getDescriptors(), assemblyDescriptor -> {
           if (assemblyDescriptor.getSystemDescriptor() == systemDescriptor)
           {
-            ((AssemblyDescriptor)assemblyDescriptor).moduleRemoved();
+            ((AssemblyDescriptor)assemblyDescriptor).moduleDeleted(deletedModuleID);
           }
         });
       }
     }
   };
 
-  private final TaskQueue<IAssemblyDescriptor> updateChecker = new TaskQueue<IAssemblyDescriptor>()
+  private final TaskQueue<IAssemblyDescriptor> updateChecker = new TaskQueue<>()
   {
     @Override
     protected String getJobName(IAssemblyDescriptor descriptor)

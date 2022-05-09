@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.client.LMClientUtil;
+import org.eclipse.emf.cdo.lm.internal.client.LMNamingStrategy;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -90,13 +90,13 @@ public class RenameChangeAction extends LMAction<Change>
       validateDialog();
     });
 
+    // TODO Make the note conditional (only if checkouts exist).
     Label separator = new Label(parent, SWT.SEPARATOR | SWT.HORIZONTAL);
     separator.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
 
     Label note = new Label(parent, SWT.NONE);
     note.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 2, 1));
     note.setText("Note that checkouts will be removed.");
-    int TODO; // Make the note conditional (only if checkouts exist)
   }
 
   @Override
@@ -114,7 +114,7 @@ public class RenameChangeAction extends LMAction<Change>
     systemDescriptor.withModuleSession(moduleName, session -> {
       CDOBranchPoint branchPoint = change.getBranchPoint().resolve(session.getBranchManager());
 
-      String branchName = LMClientUtil.getChangeBranchName(labelString);
+      String branchName = LMNamingStrategy.getChangeBranchName(labelString);
       branchExists[0] = branchPoint.getBranch().getBase().getBranch().getBranch(branchName) != null;
     });
 

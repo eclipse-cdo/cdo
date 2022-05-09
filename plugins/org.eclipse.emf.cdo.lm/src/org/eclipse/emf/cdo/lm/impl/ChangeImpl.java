@@ -419,4 +419,27 @@ public class ChangeImpl extends FloatingBaselineImpl implements Change
     }
   }
 
+  @Override
+  public EList<Stream> getDeliveryCandidateStreams()
+  {
+    EList<Stream> result = new BasicEList<>();
+
+    for (Stream stream : getModule().getStreams())
+    {
+      if (getDelivery(stream) == null)
+      {
+        result.add(stream);
+      }
+    }
+
+    return result;
+  }
+
+  @Override
+  public boolean isDeliverable()
+  {
+    EList<Stream> candidates = getDeliveryCandidateStreams();
+    return !candidates.isEmpty();
+  }
+
 } // ChangeImpl

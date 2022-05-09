@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.client.LMClientUtil;
+import org.eclipse.emf.cdo.lm.internal.client.LMNamingStrategy;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.widgets.BaselineComposite;
@@ -206,7 +206,7 @@ public class NewChangeAction extends LMAction<Stream>
       CDOBranchPoint baseBranchPoint = (base == null ? stream.getBranch().getPointRef(java.lang.System.currentTimeMillis()) : base.getBranchPoint())
           .resolve(moduleSession.getBranchManager());
 
-      String branchName = LMClientUtil.getChangeBranchName(labelString);
+      String branchName = LMNamingStrategy.getChangeBranchName(labelString);
       branchExists[0] = baseBranchPoint.getBranch().getBranch(branchName) != null;
 
     });
@@ -250,7 +250,7 @@ public class NewChangeAction extends LMAction<Stream>
 
   private String getCheckoutLabel()
   {
-    int NamingStrategy;
+    // TODO Move to NamingStrategy.
     if (StringUtil.isEmpty(labelString))
     {
       return "";

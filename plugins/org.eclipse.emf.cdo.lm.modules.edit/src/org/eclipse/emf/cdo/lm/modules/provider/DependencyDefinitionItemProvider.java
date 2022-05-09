@@ -204,15 +204,12 @@ public class DependencyDefinitionItemProvider extends ModelElementItemProvider
   {
     List<TargetNameProvider> providers = new ArrayList<>();
 
-    int MoveToNet4jUtil;
-    for (String type : IPluginContainer.INSTANCE.getFactoryTypes(TargetNameProvider.Factory.PRODUCT_GROUP))
-    {
-      TargetNameProvider provider = (TargetNameProvider)IPluginContainer.INSTANCE.getElement(TargetNameProvider.Factory.PRODUCT_GROUP, type, null);
+    IPluginContainer.INSTANCE.forEachElement(TargetNameProvider.Factory.PRODUCT_GROUP, TargetNameProvider.class, provider -> {
       if (provider != null)
       {
         providers.add(provider);
       }
-    }
+    });
 
     return new TargetNameProvider()
     {

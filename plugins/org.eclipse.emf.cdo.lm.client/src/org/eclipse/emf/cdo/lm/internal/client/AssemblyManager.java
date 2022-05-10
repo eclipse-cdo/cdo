@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutInitializeEvent;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
@@ -31,6 +32,7 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
+import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.BaselineCreatedEvent;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.ModuleDeletedEvent;
@@ -40,9 +42,11 @@ import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.TaskQueue;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.URI;
@@ -53,7 +57,11 @@ import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +85,10 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
   private static final String ASSEMBLY_FILE_NAME = "module.assembly";
 
   private static final String ASSEMBLY_UPDATE_FILE_NAME = "update.assembly";
+
+  private static final String ERRORS_FILE_NAME = "resolution.errors";
+
+  private static final String RESOLUTION_ERROR = "Module definition could not be resolved";
 
   private static final ThreadLocal<Boolean> CREATING_DESCRIPTOR = new ThreadLocal<>();
 
@@ -221,15 +233,20 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
 
     ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(system);
     ModuleDefinition moduleDefinition = systemDescriptor.extractModuleDefinition(baseline);
+
     Assembly assembly = null;
+    Reason[] reasons = null;
+
     try
     {
       assembly = systemDescriptor.resolve(moduleDefinition, baseline, monitor);
     }
-    catch (ResolutionException e)
+    catch (ResolutionException ex)
     {
-      // Create a default assembly
-      OM.LOG.warn(e);
+      reasons = ex.getReasons();
+      OM.LOG.warn(ex);
+
+      // Create an empty default assembly.
       assembly = AssemblyFactory.eINSTANCE.createAssembly();
       assembly.setSystemName(systemDescriptor.getSystemName());
     }
@@ -246,11 +263,17 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
       {
         properties.setProperty(PROP_MODULE_TYPE, moduleType.getName());
       }
+
       saveProperties(checkout, properties);
 
       if (assembly != null)
       {
         saveAssembly(checkout, assembly, false);
+      }
+
+      if (reasons != null)
+      {
+        AssemblyManager.saveErrors(checkout, reasons);
       }
 
       try
@@ -475,10 +498,32 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     }
   }
 
+  private static File getStateFolder(CDOCheckout checkout, boolean createFolderOnDemand)
+  {
+    return checkout.getStateFolder(STATE_FOLDER_NAME, createFolderOnDemand);
+  }
+
   private static File getAssemblyFile(CDOCheckout checkout, boolean createFolderOnDemand, boolean update)
   {
-    File stateFolder = checkout.getStateFolder(STATE_FOLDER_NAME, createFolderOnDemand);
+    File stateFolder = getStateFolder(checkout, createFolderOnDemand);
     return new File(stateFolder, update ? ASSEMBLY_UPDATE_FILE_NAME : ASSEMBLY_FILE_NAME);
+  }
+
+  private static File getErrorsFile(CDOCheckout checkout, boolean createFolderOnDemand)
+  {
+    File stateFolder = getStateFolder(checkout, createFolderOnDemand);
+    return new File(stateFolder, ERRORS_FILE_NAME);
+  }
+
+  private static void deleteFile(File file) throws IOException
+  {
+    if (file.isFile())
+    {
+      if (!file.delete())
+      {
+        throw new IOException(file + " could not be deleted");
+      }
+    }
   }
 
   public static void saveAssembly(CDOCheckout checkout, Assembly assembly, boolean update) throws IOException
@@ -511,12 +556,70 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
   public static void deleteAssembly(CDOCheckout checkout, boolean update) throws IOException
   {
     File file = getAssemblyFile(checkout, true, update);
-    if (file.isFile())
+    deleteFile(file);
+  }
+
+  @SuppressWarnings("restriction")
+  public static void setCheckoutError(CDOCheckout checkout, String error)
+  {
+    ((CDOCheckoutImpl)checkout).setError(error);
+  }
+
+  public static List<String> saveErrors(CDOCheckout checkout, ResolutionException.Reason[] reasons) throws IOException
+  {
+    setCheckoutError(checkout, RESOLUTION_ERROR);
+    List<String> errors = new ArrayList<>();
+
+    File file = getErrorsFile(checkout, true);
+    try (FileWriter fileWriter = new FileWriter(file); BufferedWriter writer = new BufferedWriter(fileWriter))
     {
-      if (!file.delete())
+      for (ResolutionException.Reason reason : reasons)
       {
-        throw new IOException(file + " could not be deleted");
+        String error = reason.toString();
+        errors.add(error);
+
+        writer.write(error);
+        writer.write(StringUtil.NL);
       }
     }
+
+    return errors;
+  }
+
+  public static List<String> loadErrors(CDOCheckout checkout)
+  {
+    File file = getErrorsFile(checkout, true);
+    if (file.isFile())
+    {
+      List<String> errors = new ArrayList<>();
+
+      try (FileReader fileReader = new FileReader(file); BufferedReader reader = new BufferedReader(fileReader))
+      {
+        String error;
+        while ((error = reader.readLine()) != null)
+        {
+          errors.add(error);
+        }
+      }
+      catch (IOException ex)
+      {
+        throw new IORuntimeException(ex);
+      }
+
+      return errors;
+    }
+
+    return null;
+  }
+
+  public static void deleteErrors(CDOCheckout checkout) throws IOException
+  {
+    if (RESOLUTION_ERROR.equals(checkout.getError()))
+    {
+      setCheckoutError(checkout, null);
+    }
+
+    File file = getErrorsFile(checkout, true);
+    deleteFile(file);
   }
 }

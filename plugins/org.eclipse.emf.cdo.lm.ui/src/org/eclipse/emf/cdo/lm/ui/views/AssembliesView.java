@@ -39,8 +39,11 @@ import org.eclipse.emf.cdo.lm.ui.actions.CheckoutAction;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.decorators.AvailableUpdatesDecorator;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.ui.OverlayImage;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 
+import org.eclipse.net4j.ui.shared.SharedIcons;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
@@ -53,6 +56,7 @@ import org.eclipse.net4j.util.ui.views.ContainerView;
 import org.eclipse.net4j.util.ui.views.IElementFilter;
 
 import org.eclipse.emf.common.util.BasicEList;
+import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -138,9 +142,20 @@ public class AssembliesView extends ContainerView
       @Override
       protected Node createNode(Node parent, Object element)
       {
-        EList<DependencyDefinition> dependencies = getDependencies(parent, element);
-        if (dependencies != null)
+        if (element instanceof IAssemblyDescriptor)
         {
+          IAssemblyDescriptor descriptor = (IAssemblyDescriptor)element;
+
+          List<String> errors = descriptor.getResolutionErrors();
+          if (!ObjectUtil.isEmpty(errors))
+          {
+            return new FixedChildrenNode(parent, element, errors);
+          }
+        }
+
+        if (element instanceof AssemblyModule)
+        {
+          EList<DependencyDefinition> dependencies = getDependencies(parent, (AssemblyModule)element);
           return new FixedChildrenNode(parent, element, dependencies);
         }
 
@@ -477,48 +492,43 @@ public class AssembliesView extends ContainerView
     return children;
   }
 
-  public static EList<DependencyDefinition> getDependencies(Node parent, Object element)
+  public static EList<DependencyDefinition> getDependencies(Node parent, AssemblyModule module)
   {
-    if (element instanceof AssemblyModule)
+    IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(module);
+    Baseline baseline = descriptor.getBaseline(module);
+    if (baseline instanceof FixedBaseline)
     {
-      AssemblyModule module = (AssemblyModule)element;
+      EList<Dependency> dependencies = ((FixedBaseline)baseline).getDependencies();
+      EList<DependencyDefinition> definitions = new BasicEList<>(dependencies.size());
 
-      IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(module);
-      Baseline baseline = descriptor.getBaseline(module);
-      if (baseline instanceof FixedBaseline)
+      for (Dependency dependency : dependencies)
       {
-        EList<Dependency> dependencies = ((FixedBaseline)baseline).getDependencies();
-        EList<DependencyDefinition> definitions = new BasicEList<>(dependencies.size());
-
-        for (Dependency dependency : dependencies)
-        {
-          DependencyDefinition definition = ModulesFactory.eINSTANCE.createDependencyDefinition(dependency.getTarget().getName(), dependency.getVersionRange());
-          definitions.add(definition);
-        }
-
-        return definitions;
+        DependencyDefinition definition = ModulesFactory.eINSTANCE.createDependencyDefinition(dependency.getTarget().getName(), dependency.getVersionRange());
+        definitions.add(definition);
       }
 
-      Annotation annotation = module.getAnnotation(LMPackage.ANNOTATION_SOURCE);
-      if (annotation != null)
-      {
-        EList<EObject> contents = annotation.getContents();
-        EList<DependencyDefinition> definitions = new BasicEList<>(contents.size());
-
-        for (EObject content : contents)
-        {
-          if (content instanceof DependencyDefinition)
-          {
-            DependencyDefinition definition = (DependencyDefinition)content;
-            definitions.add(definition);
-          }
-        }
-
-        return definitions;
-      }
+      return definitions;
     }
 
-    return null;
+    Annotation annotation = module.getAnnotation(LMPackage.ANNOTATION_SOURCE);
+    if (annotation != null)
+    {
+      EList<EObject> contents = annotation.getContents();
+      EList<DependencyDefinition> definitions = new BasicEList<>(contents.size());
+
+      for (EObject content : contents)
+      {
+        if (content instanceof DependencyDefinition)
+        {
+          DependencyDefinition definition = (DependencyDefinition)content;
+          definitions.add(definition);
+        }
+      }
+
+      return definitions;
+    }
+
+    return ECollections.emptyEList();
   }
 
   public static String getText(Object element)
@@ -556,8 +566,17 @@ public class AssembliesView extends ContainerView
   {
     if (element instanceof IAssemblyDescriptor)
     {
-      return ExtendedImageRegistry.INSTANCE.getImage( //
-          AssemblyEditPlugin.INSTANCE.getImage("full/obj16/Assembly"));
+      IAssemblyDescriptor descriptor = (IAssemblyDescriptor)element;
+      Object imageKey = AssemblyEditPlugin.INSTANCE.getImage("full/obj16/Assembly");
+
+      List<String> resolutionErrors = descriptor.getResolutionErrors();
+      if (!ObjectUtil.isEmpty(resolutionErrors))
+      {
+        return ExtendedImageRegistry.INSTANCE.getImage(
+            new OverlayImage(imageKey, org.eclipse.emf.cdo.ui.shared.SharedIcons.getImage(org.eclipse.emf.cdo.ui.shared.SharedIcons.OVR_ERROR), 8, 8));
+      }
+
+      return ExtendedImageRegistry.INSTANCE.getImage(imageKey);
     }
 
     if (element instanceof AssemblyModule)
@@ -570,6 +589,11 @@ public class AssembliesView extends ContainerView
     {
       return ExtendedImageRegistry.INSTANCE.getImage( //
           ModulesEditPlugin.INSTANCE.getImage("full/obj16/DependencyDefinition"));
+    }
+
+    if (element instanceof String)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_ERROR);
     }
 
     return null;

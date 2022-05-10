@@ -646,7 +646,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     {
       resolveDependencies(rootDefinition, assembly, monitor);
     }
-    catch (ProvisionException | ResolutionException ex)
+    catch (ProvisionException ex)
     {
       OM.LOG.error(ex);
       return null;
@@ -808,18 +808,19 @@ public final class SystemDescriptor implements ISystemDescriptor
   public void deleteModule(Module module, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, ModuleDeletionException
   {
     CDOView view = module.cdoView();
+    String moduleName = module.getName();
 
     // Here we check that there is no module that depends on this module.
     List<CDOObjectReference> result = view.queryXRefs(module, LMPackage.eINSTANCE.getDependency_Target());
     if (result.size() > 0)
     {
       // The deletion is not possible because another module references this one.
-      throw new ModuleDeletionException(module.getName(), result);
+      throw new ModuleDeletionException(moduleName, result);
     }
 
     modify(module, m -> {
+      setCommitComment(m, "Delete module '" + moduleName + "'");
       EcoreUtil.remove(m);
-      setCommitComment(m, "Delete module '" + module.getName() + "'");
       return null;
     }, monitor);
   }

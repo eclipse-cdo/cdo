@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -50,6 +51,8 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 
   public Updates getAvailableUpdates();
 
+  public List<String> getResolutionErrors();
+
   public void update() throws Exception;
 
   /**
@@ -65,6 +68,8 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
    */
   public interface Updates
   {
+    public boolean isEmpty();
+
     public Map<String, AssemblyModule> getAdditions();
 
     public Map<String, AssemblyModule> getModifications();

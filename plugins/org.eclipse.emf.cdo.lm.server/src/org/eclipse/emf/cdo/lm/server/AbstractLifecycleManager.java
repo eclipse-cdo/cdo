@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.server;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDOList;
@@ -18,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
@@ -69,6 +71,7 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.equinox.p2.metadata.Version;
@@ -341,146 +344,29 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
         if (eClass == SYSTEM)
         {
-          handleListDelta(commitContext, revisionDelta, SYSTEM__MODULES, true, addedModule -> {
-            String name = (String)addedModule.get(MODULE__NAME, 0);
-
-            if (!isValidModuleName(name))
-            {
-              throw new RuntimeException("Module name not valid: " + name);
-            }
-
-            if (moduleRepositories.containsKey(name))
-            {
-              throw new RuntimeException("Module name not unique: " + name);
-            }
-
-            CDOID initialStreamID = null;
-            CDOList streams = addedModule.getListOrNull(MODULE__STREAMS);
-            if (streams != null && !streams.isEmpty())
-            {
-              initialStreamID = (CDOID)streams.get(0);
-            }
-
-            newModules.add(Pair.create(name, initialStreamID));
-          });
+          handleListDelta(commitContext, revisionDelta, SYSTEM__MODULES, //
+              addedModule -> handleModuleAddition(addedModule, newModules), //
+              removeModuleDelta -> handleModuleDeletion(commitContext, revisionDelta, removeModuleDelta));
         }
         else if (eClass == MODULE)
         {
           CDOFeatureDelta featureDelta = revisionDelta.getFeatureDelta(MODULE__NAME);
           if (featureDelta != null)
           {
-            throw new RuntimeException("Renaming modules is not supported");
+            throw new CDOException("Renaming modules is not supported");
           }
         }
         else if (eClass == STREAM)
         {
-          // handleListDelta(commitContext, revisionDelta, STREAM__CONTENTS, true,
-          // addedContent -> {
-          // if (addedContent.getEClass() == DROP) {
-          // CDOID dropID = addedContent.getID();
-          //
-          // CDOID streamID = (CDOID) addedContent.getContainerID();
-          // InternalCDORevision stream = (InternalCDORevision)
-          // commitContext.getRevision(streamID);
-          //
-          // String branchPath = new CDOBranchRef((String)
-          // stream.get(FLOATING_BASELINE__BRANCH, 0))
-          // .getBranchPath();
-          //
-          // CDOID moduleID = (CDOID) stream.getContainerID();
-          // AtomicReference<ModuleDefinition> moduleDefinitionHolder = new
-          // AtomicReference<>();
-          //
-          // // Fork and wait to avoid a mess with StoreThreadLocal.
-          // CDOBranchPointRef branchPointRef = executeAgainstModuleSession(commitContext,
-          // moduleID,
-          // session -> {
-          // CDOBranch branch = session.getBranchManager().getBranch(branchPath);
-          // CDOBranchPoint branchPoint = branch
-          // .getPoint(commitContext.getBranchPoint().getTimeStamp());
-          // return new CDOBranchPointRef(branchPoint);
-          // });
-          //
-          // commitContext.modify(context -> {
-          // CDOChangeSetData changeSetData = context.getChangeSetData();
-          // List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
-          // for (CDOIDAndVersion newObject : newObjects) {
-          // if (newObject.getID() == dropID) {
-          // InternalCDORevision dropRevision = (InternalCDORevision) newObject;
-          // dropRevision.set(DROP__BRANCH_POINT, 0, branchPointRef.getURI());
-          // }
-          // }
-          // });
-          // }
-          // });
+          handleListDelta(commitContext, revisionDelta, STREAM__CONTENTS, //
+              addedContent -> handleBaselineAddition(commitContext, addedContent), //
+              AbstractLifecycleManager::preventRemoval);
         }
 
         // TODO Implement more server-side validations.
       }
 
-      for (Pair<String, CDOID> newModule : newModules)
-      {
-        try
-        {
-          String newModuleName = newModule.getElement1();
-          CDOID initialStreamID = newModule.getElement2();
-
-          createNewModule(newModuleName);
-
-          CDOView systemView = systemSession.openView();
-          Version initialModuleVersion;
-
-          try
-          {
-            CDOResource systemResource = systemView.getResource(System.RESOURCE_PATH);
-            System system = (System)systemResource.getContents().get(0);
-            Process process = system.getProcess();
-            initialModuleVersion = process.getInitialModuleVersion();
-          }
-          finally
-          {
-            systemView.close();
-          }
-
-          CDOSession moduleSession = getModuleSession(newModuleName);
-          CDOTransaction moduleTransaction = moduleSession.openTransaction();
-
-          try
-          {
-            // In case the module was already existing we don't modify its content.
-            if (!moduleTransaction.hasResource(moduleDefinitionPath))
-            {
-              ModuleDefinition moduleDefinition = ModulesFactory.eINSTANCE.createModuleDefinition();
-              moduleDefinition.setName(newModuleName);
-              moduleDefinition.setVersion(initialModuleVersion);
-
-              CDOResource moduleDefinitionResource = moduleTransaction.createResource(moduleDefinitionPath);
-              moduleDefinitionResource.getContents().add(moduleDefinition);
-              moduleTransaction.commit();
-
-              long creationTime = moduleSession.getRepositoryInfo().getCreationTime();
-              commitContext.modify(context -> {
-                for (CDOIDAndVersion newObject : context.getChangeSetData().getNewObjects())
-                {
-                  if (newObject.getID() == initialStreamID)
-                  {
-                    InternalCDORevision streamRevision = (InternalCDORevision)newObject;
-                    streamRevision.set(STREAM__START_TIME_STAMP, 0, creationTime);
-                  }
-                }
-              });
-            }
-          }
-          finally
-          {
-            moduleTransaction.close();
-          }
-        }
-        catch (Exception ex)
-        {
-          throw new RuntimeException(ex);
-        }
-      }
+      createNewModules(commitContext, newModules);
 
       // InternalCDORevision[] newObjects = commitContext.getNewObjects();
       // if (newObjects != null) {
@@ -523,7 +409,172 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       // }
       // }
     }
+  }
 
+  protected void handleModuleAddition(InternalCDORevision addedModule, List<Pair<String, CDOID>> newModules)
+  {
+    String name = (String)addedModule.get(MODULE__NAME, 0);
+
+    if (!isValidModuleName(name))
+    {
+      throw new CDOException("Module name is invalid: " + name);
+    }
+
+    if (moduleRepositories.containsKey(name))
+    {
+      throw new CDOException("Module name is not unique: " + name);
+    }
+
+    CDOID initialStreamID = null;
+    CDOList streams = addedModule.getListOrNull(MODULE__STREAMS);
+    if (streams != null && !streams.isEmpty())
+    {
+      initialStreamID = (CDOID)streams.get(0);
+    }
+
+    newModules.add(Pair.create(name, initialStreamID));
+  }
+
+  protected void handleModuleDeletion(CommitContext commitContext, InternalCDORevisionDelta systemRevisionDelta, CDORemoveFeatureDelta removeModuleDelta)
+  {
+    CDOID systemID = systemRevisionDelta.getID();
+    int index = removeModuleDelta.getIndex();
+
+    InternalCDORevision systemRevision = commitContext.getOldRevisions().get(systemID);
+    CDOID removedID = (CDOID)systemRevision.get(SYSTEM__MODULES, index);
+
+    for (InternalCDORevision revision : ((InternalCommitContext)commitContext).getDetachedRevisions())
+    {
+      if (revision.getID() == removedID)
+      {
+        String moduleName = (String)revision.get(MODULE__NAME, 0);
+
+        CDOSession session = moduleSessions.remove(moduleName);
+        LifecycleUtil.deactivate(session);
+
+        InternalRepository repository = moduleRepositories.remove(moduleName);
+        LifecycleUtil.deactivate(repository);
+
+        // try
+        // {
+        // removeModule(moduleName);
+        // }
+        // catch (Exception e)
+        // {
+        // // TODO Auto-generated catch block
+        // e.printStackTrace();
+        // }
+
+        break;
+      }
+    }
+  }
+
+  private void removeModule(String moduleName)
+  {
+  }
+
+  protected void handleBaselineAddition(CommitContext commitContext, InternalCDORevision addedContent)
+  {
+    // if (addedContent.getEClass() == DROP)
+    // {
+    // CDOID dropID = addedContent.getID();
+    //
+    // CDOID streamID = (CDOID)addedContent.getContainerID();
+    // InternalCDORevision stream = (InternalCDORevision)commitContext.getRevision(streamID);
+    //
+    // String branchPath = getBranch(stream).getBranchPath();
+    //
+    // CDOID moduleID = (CDOID)stream.getContainerID();
+    // AtomicReference<ModuleDefinition> moduleDefinitionHolder = new AtomicReference<>();
+    //
+    // // Fork and wait to avoid a mess with StoreThreadLocal.
+    // CDOBranchPointRef branchPointRef = executeAgainstModuleSession(commitContext, moduleID, session -> {
+    // CDOBranch branch = session.getBranchManager().getBranch(branchPath);
+    // CDOBranchPoint branchPoint = branch.getPoint(commitContext.getBranchPoint().getTimeStamp());
+    // return new CDOBranchPointRef(branchPoint);
+    // });
+    //
+    // commitContext.modify(context -> {
+    // CDOChangeSetData changeSetData = context.getChangeSetData();
+    // List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
+    // for (CDOIDAndVersion newObject : newObjects)
+    // {
+    // if (newObject.getID() == dropID)
+    // {
+    // InternalCDORevision dropRevision = (InternalCDORevision)newObject;
+    // dropRevision.set(DROP__BRANCH_POINT, 0, branchPointRef.getURI());
+    // }
+    // }
+    // });
+    // }
+  }
+
+  protected void createNewModules(CommitContext commitContext, List<Pair<String, CDOID>> newModules)
+  {
+    for (Pair<String, CDOID> newModule : newModules)
+    {
+      try
+      {
+        String newModuleName = newModule.getElement1();
+        CDOID initialStreamID = newModule.getElement2();
+
+        createNewModule(newModuleName);
+
+        CDOView systemView = systemSession.openView();
+        Version initialModuleVersion;
+
+        try
+        {
+          CDOResource systemResource = systemView.getResource(System.RESOURCE_PATH);
+          System system = (System)systemResource.getContents().get(0);
+          Process process = system.getProcess();
+          initialModuleVersion = process.getInitialModuleVersion();
+        }
+        finally
+        {
+          systemView.close();
+        }
+
+        CDOSession moduleSession = getModuleSession(newModuleName);
+        CDOTransaction moduleTransaction = moduleSession.openTransaction();
+
+        try
+        {
+          // In case the module was already existing we don't modify its content.
+          if (!moduleTransaction.hasResource(moduleDefinitionPath))
+          {
+            ModuleDefinition moduleDefinition = ModulesFactory.eINSTANCE.createModuleDefinition();
+            moduleDefinition.setName(newModuleName);
+            moduleDefinition.setVersion(initialModuleVersion);
+
+            CDOResource moduleDefinitionResource = moduleTransaction.createResource(moduleDefinitionPath);
+            moduleDefinitionResource.getContents().add(moduleDefinition);
+            moduleTransaction.commit();
+
+            long creationTime = moduleSession.getRepositoryInfo().getCreationTime();
+            commitContext.modify(context -> {
+              for (CDOIDAndVersion newObject : context.getChangeSetData().getNewObjects())
+              {
+                if (newObject.getID() == initialStreamID)
+                {
+                  InternalCDORevision streamRevision = (InternalCDORevision)newObject;
+                  streamRevision.set(STREAM__START_TIME_STAMP, 0, creationTime);
+                }
+              }
+            });
+          }
+        }
+        finally
+        {
+          moduleTransaction.close();
+        }
+      }
+      catch (Exception ex)
+      {
+        throw new RuntimeException(ex);
+      }
+    }
   }
 
   protected void createNewModule(String moduleName) throws Exception
@@ -648,57 +699,20 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     return result.get();
   }
 
-  private void handleListDelta(CommitContext commitContext, InternalCDORevisionDelta revisionDelta, EReference reference, boolean preventRemoval,
-      Consumer<InternalCDORevision> additionConsumer)
+  private static void handleListDelta(CommitContext commitContext, InternalCDORevisionDelta revisionDelta, EReference reference,
+      Consumer<InternalCDORevision> additionConsumer, Consumer<CDORemoveFeatureDelta> removalConsumer)
   {
     CDOListFeatureDelta listDelta = (CDOListFeatureDelta)revisionDelta.getFeatureDelta(reference);
     if (listDelta != null)
     {
       for (CDOFeatureDelta featureDelta : listDelta.getListChanges())
       {
-        if (preventRemoval && featureDelta instanceof CDORemoveFeatureDelta)
+        if (removalConsumer != null && featureDelta instanceof CDORemoveFeatureDelta)
         {
-          if (featureDelta.getFeature() == LMPackage.eINSTANCE.getSystem_Modules())
-          {
-            // We accept to delete a module.
-            CDORemoveFeatureDelta removeDelta = (CDORemoveFeatureDelta)featureDelta;
-            CDOID systemID = revisionDelta.getID();
-            int index = removeDelta.getIndex();
-
-            InternalCDORevision systemRevision = commitContext.getOldRevisions().get(systemID);
-            CDOID removedID = (CDOID)systemRevision.get(SYSTEM__MODULES, index);
-            for (InternalCDORevision revision : ((InternalCommitContext)commitContext).getDetachedRevisions())
-            {
-              if (revision.getID().equals(removedID))
-              {
-                String moduleName = (String)revision.get(MODULE__NAME, 0);
-                CDOSession session = moduleSessions.get(moduleName);
-                moduleSessions.remove(moduleName);
-
-                InternalRepository repo = moduleRepositories.get(moduleName);
-                moduleRepositories.remove(moduleName);
-
-                LifecycleUtil.deactivate(session);
-                LifecycleUtil.deactivate(repo);
-
-                // try
-                // {
-                // removeModule(moduleName);
-                // }
-                // catch (Exception e)
-                // {
-                // // TODO Auto-generated catch block
-                // e.printStackTrace();
-                // }
-              }
-            }
-          }
-          else
-          {
-            throw new RuntimeException("Removing " + reference.getName() + " is not supported");
-          }
+          CDORemoveFeatureDelta removeDelta = (CDORemoveFeatureDelta)featureDelta;
+          removalConsumer.accept(removeDelta);
         }
-        else if (featureDelta instanceof CDOAddFeatureDelta)
+        else if (additionConsumer != null && featureDelta instanceof CDOAddFeatureDelta)
         {
           CDOAddFeatureDelta addDelta = (CDOAddFeatureDelta)featureDelta;
           CDOID id = (CDOID)addDelta.getValue();
@@ -709,8 +723,11 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
   }
 
-  private void removeModule(String moduleName)
+  private static void preventRemoval(CDORemoveFeatureDelta removeFeatureDelta) throws CDOException
   {
+    EStructuralFeature feature = removeFeatureDelta.getFeature();
+    EClass eClass = feature.getEContainingClass();
+    throw new CDOException("Removing from " + eClass.getName() + "." + feature.getName() + " is not supported");
   }
 
   private static void deactivate(Map<String, ?> map)
@@ -721,6 +738,32 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
 
     map.clear();
+  }
+
+  public static CDOBranchRef getBranch(CDORevision floatingBaseline)
+  {
+    String branchPath = null;
+
+    EClass eClass = floatingBaseline.getEClass();
+    if (eClass == STREAM)
+    {
+      branchPath = (String)floatingBaseline.data().get(STREAM__MAINTENANCE_BRANCH, 0);
+      if (branchPath == null)
+      {
+        branchPath = (String)floatingBaseline.data().get(STREAM__DEVELOPMENT_BRANCH, 0);
+      }
+    }
+    else if (eClass == CHANGE)
+    {
+      branchPath = (String)floatingBaseline.data().get(CHANGE__BRANCH, 0);
+    }
+
+    if (branchPath == null)
+    {
+      return null;
+    }
+
+    return new CDOBranchRef(branchPath);
   }
 
   static

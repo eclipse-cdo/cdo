@@ -166,50 +166,6 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
       /**
        * @author Eike Stepper
        */
-      public static final class Module
-      {
-        public final String name;
-
-        public final Version version;
-
-        public Module(String name, Version version)
-        {
-          this.name = name;
-          this.version = version;
-        }
-
-        @Override
-        public String toString()
-        {
-          return name + " " + version;
-        }
-      }
-
-      /**
-       * @author Eike Stepper
-       */
-      public static final class Dependency
-      {
-        public final String name;
-
-        public final VersionRange versionRange;
-
-        public Dependency(String name, VersionRange versionRange)
-        {
-          this.name = name;
-          this.versionRange = versionRange;
-        }
-
-        @Override
-        public String toString()
-        {
-          return name + " " + versionRange;
-        }
-      }
-
-      /**
-       * @author Eike Stepper
-       */
       public static final class Missing extends Reason
       {
         public final Module module;
@@ -220,6 +176,16 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
         {
           this.module = module;
           this.dependency = dependency;
+        }
+
+        public Module getModule()
+        {
+          return module;
+        }
+
+        public Dependency getDependency()
+        {
+          return dependency;
         }
 
         public boolean isEntryPoint()
@@ -251,10 +217,59 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
           this.modules = modules;
         }
 
+        public Module[] getModules()
+        {
+          return modules;
+        }
+
         @Override
         public String toString()
         {
           return MessageFormat.format("Only one of the following can be installed at once: {0}", Arrays.asList(modules));
+        }
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static final class Module
+      {
+        public final String name;
+      
+        public final Version version;
+      
+        public Module(String name, Version version)
+        {
+          this.name = name;
+          this.version = version;
+        }
+      
+        @Override
+        public String toString()
+        {
+          return name + " " + version;
+        }
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static final class Dependency
+      {
+        public final String name;
+      
+        public final VersionRange versionRange;
+      
+        public Dependency(String name, VersionRange versionRange)
+        {
+          this.name = name;
+          this.versionRange = versionRange;
+        }
+      
+        @Override
+        public String toString()
+        {
+          return name + " " + versionRange;
         }
       }
     }

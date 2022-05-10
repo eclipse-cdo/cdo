@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.lm.assembly.Assembly.DeltaHandler;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
+import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration.BranchPointDelta;
 import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
@@ -89,6 +90,8 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
 
   private final ISystemDescriptor systemDescriptor;
 
+  private final CDOID moduleID;
+
   private final String moduleName;
 
   private final Baseline baseline;
@@ -97,11 +100,13 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
 
   private final Assembly assembly;
 
-  private Assembly updateAssembly;
+  private volatile Assembly updateAssembly;
 
   private volatile UpdateState updateState;
 
   private volatile Updates availableUpdates;
+
+  private volatile List<String> resolutionErrors;
 
   private String name;
 
@@ -119,11 +124,13 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     assembly = AssemblyManager.loadAssembly(checkout, false);
     addAssemblyAdapter(assembly);
 
+    moduleID = baseline.getModule().cdoID();
     moduleName = assembly.getRootModule().getName();
 
     updateAssembly = AssemblyManager.loadAssembly(checkout, true);
     if (updateAssembly == null)
     {
+      resolutionErrors = AssemblyManager.loadErrors(checkout);
       updateState = UpdateState.NoUpdatesAvailable;
     }
     else
@@ -308,6 +315,12 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     return availableUpdates;
   }
 
+  @Override
+  public List<String> getResolutionErrors()
+  {
+    return resolutionErrors;
+  }
+
   public void checkForUpdates(IProgressMonitor monitor) throws Exception
   {
     ConcurrencyUtil.checkCancelation(monitor);
@@ -315,14 +328,33 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     ModuleDefinition moduleDefinition = systemDescriptor.extractModuleDefinition(baseline);
     ConcurrencyUtil.checkCancelation(monitor);
 
-    Assembly newAssembly = systemDescriptor.resolve(moduleDefinition, baseline, monitor);
-    ConcurrencyUtil.checkCancelation(monitor);
-
-    Updates oldAvailableUpdates = availableUpdates;
-    UpdatesImpl newAvailableUpdates;
-
     removeAssemblyAdapter(updateAssembly);
     ConcurrencyUtil.checkCancelation(monitor);
+
+    Assembly newAssembly;
+
+    Updates oldAvailableUpdates = availableUpdates;
+    Updates newAvailableUpdates;
+
+    availableUpdates = null;
+    resolutionErrors = null;
+
+    try
+    {
+      newAssembly = systemDescriptor.resolve(moduleDefinition, baseline, monitor);
+      ConcurrencyUtil.checkCancelation(monitor);
+    }
+    catch (ResolutionException ex)
+    {
+      AssemblyManager.deleteAssembly(checkout, true);
+      resolutionErrors = AssemblyManager.saveErrors(checkout, ex.getReasons());
+      updateAssembly = null;
+
+      setUpdateState(UpdateState.NoUpdatesAvailable);
+      fireEvent(new AvailableUpdatesChangedEventImpl(this, oldAvailableUpdates, null));
+
+      throw ex;
+    }
 
     try
     {
@@ -350,7 +382,7 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
         updateAssembly = newAssembly;
         newAvailableUpdates = new UpdatesImpl();
 
-        UpdatesImpl updates = newAvailableUpdates;
+        UpdatesImpl updates = (UpdatesImpl)newAvailableUpdates;
         assembly.compareTo(updateAssembly, new DeltaHandler()
         {
           @Override
@@ -506,7 +538,15 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
 
   public void moduleDeleted(CDOID deletedModuleID)
   {
-    AssemblyManager.INSTANCE.scheduleUpdateCheck(this);
+    if (deletedModuleID == moduleID)
+    {
+      OM.LOG.info("Deleting checkout '" + checkout + "' because module '" + moduleName + "' was deleted");
+      checkout.delete(true);
+    }
+    else
+    {
+      AssemblyManager.INSTANCE.scheduleUpdateCheck(this);
+    }
   }
 
   public void baselineAdded(Baseline newBaseline)
@@ -710,6 +750,7 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     {
     }
 
+    @Override
     public boolean isEmpty()
     {
       return additions.isEmpty() && modifications.isEmpty() && removals.isEmpty();

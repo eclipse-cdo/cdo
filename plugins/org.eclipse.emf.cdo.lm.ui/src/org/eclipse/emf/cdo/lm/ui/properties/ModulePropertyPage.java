@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.ui.properties;
 
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor.AvailableUpdatesChangedEvent;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor.UpdateStateChangedEvent;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.views.AssembliesView;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -47,6 +49,8 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PropertyPage;
+
+import java.util.List;
 
 /**
  * @author Eike Stepper
@@ -118,9 +122,20 @@ public class ModulePropertyPage extends PropertyPage
       @Override
       protected Node createNode(Node parent, Object element)
       {
-        EList<DependencyDefinition> dependencies = AssembliesView.getDependencies(parent, element);
-        if (dependencies != null)
+        if (element instanceof IAssemblyDescriptor)
         {
+          IAssemblyDescriptor descriptor = (IAssemblyDescriptor)element;
+
+          List<String> errors = descriptor.getResolutionErrors();
+          if (!ObjectUtil.isEmpty(errors))
+          {
+            return new FixedChildrenNode(parent, element, errors);
+          }
+        }
+
+        if (element instanceof AssemblyModule)
+        {
+          EList<DependencyDefinition> dependencies = AssembliesView.getDependencies(parent, (AssemblyModule)element);
           return new FixedChildrenNode(parent, element, dependencies);
         }
 

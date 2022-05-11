@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.lm" version="2">
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/BaselineImpl.java" type="org.eclipse.emf.cdo.lm.impl.BaselineImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Baseline"/>
+                <message_argument value="BaselineImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ChangeImpl.java" type="org.eclipse.emf.cdo.lm.impl.ChangeImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Change"/>
+                <message_argument value="ChangeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/DeliveryImpl.java" type="org.eclipse.emf.cdo.lm.impl.DeliveryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Delivery"/>
+                <message_argument value="DeliveryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/DependencyImpl.java" type="org.eclipse.emf.cdo.lm.impl.DependencyImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Dependency"/>
+                <message_argument value="DependencyImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/DropImpl.java" type="org.eclipse.emf.cdo.lm.impl.DropImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Drop"/>
+                <message_argument value="DropImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/DropTypeImpl.java" type="org.eclipse.emf.cdo.lm.impl.DropTypeImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="DropType"/>
+                <message_argument value="DropTypeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/FixedBaselineImpl.java" type="org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="FixedBaseline"/>
+                <message_argument value="FixedBaselineImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/FloatingBaselineImpl.java" type="org.eclipse.emf.cdo.lm.impl.FloatingBaselineImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="FloatingBaseline"/>
+                <message_argument value="FloatingBaselineImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/LMFactoryImpl.java" type="org.eclipse.emf.cdo.lm.impl.LMFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="LMFactory"/>
+                <message_argument value="LMFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/LMPackageImpl.java" type="org.eclipse.emf.cdo.lm.impl.LMPackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="LMPackage"/>
+                <message_argument value="LMPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ModuleImpl.java" type="org.eclipse.emf.cdo.lm.impl.ModuleImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Module"/>
+                <message_argument value="ModuleImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ModuleTypeImpl.java" type="org.eclipse.emf.cdo.lm.impl.ModuleTypeImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ModuleType"/>
+                <message_argument value="ModuleTypeImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ProcessElementImpl.java" type="org.eclipse.emf.cdo.lm.impl.ProcessElementImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ProcessElement"/>
+                <message_argument value="ProcessElementImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ProcessImpl.java" type="org.eclipse.emf.cdo.lm.impl.ProcessImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Process"/>
+                <message_argument value="ProcessImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/StreamImpl.java" type="org.eclipse.emf.cdo.lm.impl.StreamImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Stream"/>
+                <message_argument value="StreamImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/SystemImpl.java" type="org.eclipse.emf.cdo.lm.impl.SystemImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="System"/>
+                <message_argument value="SystemImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

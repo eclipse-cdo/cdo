@@ -25,6 +25,8 @@ import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IAssemblyManager extends IContainer<IAssemblyDescriptor>
 {
@@ -46,6 +48,8 @@ public interface IAssemblyManager extends IContainer<IAssemblyDescriptor>
 
   /**
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface DescriptorSyncStateEvent extends IEvent
   {

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.lm.modules" version="2">
+    <resource path="src/org/eclipse/emf/cdo/lm/modules/impl/DependencyDefinitionImpl.java" type="org.eclipse.emf.cdo.lm.modules.impl.DependencyDefinitionImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="DependencyDefinition"/>
+                <message_argument value="DependencyDefinitionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/modules/impl/ModuleDefinitionImpl.java" type="org.eclipse.emf.cdo.lm.modules.impl.ModuleDefinitionImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ModuleDefinition"/>
+                <message_argument value="ModuleDefinitionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/modules/impl/ModulesFactoryImpl.java" type="org.eclipse.emf.cdo.lm.modules.impl.ModulesFactoryImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ModulesFactory"/>
+                <message_argument value="ModulesFactoryImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/modules/impl/ModulesPackageImpl.java" type="org.eclipse.emf.cdo.lm.modules.impl.ModulesPackageImpl">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="ModulesPackage"/>
+                <message_argument value="ModulesPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

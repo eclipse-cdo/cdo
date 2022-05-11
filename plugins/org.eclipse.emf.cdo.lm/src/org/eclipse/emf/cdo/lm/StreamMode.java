@@ -19,6 +19,8 @@ import java.util.List;
 /**
  * <!-- begin-user-doc --> A representation of the literals of the enumeration
  * '<em><b>Stream Mode</b></em>', and utility methods for working with them.
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  * @see org.eclipse.emf.cdo.lm.LMPackage#getStreamMode()
  * @model

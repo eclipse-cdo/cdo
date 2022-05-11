@@ -37,7 +37,9 @@ import java.util.function.Consumer;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
- * '<em><b>Stream</b></em>'. <!-- end-user-doc -->
+ * '<em><b>Stream</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>

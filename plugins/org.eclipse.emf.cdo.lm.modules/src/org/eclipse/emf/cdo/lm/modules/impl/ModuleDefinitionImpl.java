@@ -28,7 +28,9 @@ import java.util.Collection;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object '<em><b>Module
- * Definition</b></em>'. <!-- end-user-doc -->
+ * Definition</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
+ * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>

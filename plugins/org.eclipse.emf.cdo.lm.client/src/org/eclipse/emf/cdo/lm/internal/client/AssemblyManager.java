@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutInitializeEvent;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager.CheckoutStateEvent;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
@@ -561,7 +562,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
   @SuppressWarnings("restriction")
   public static void setCheckoutError(CDOCheckout checkout, String error)
   {
-    ((org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl)checkout).setError(error);
+    ((CDOCheckoutImpl)checkout).setError(error);
   }
 
   public static List<String> saveErrors(CDOCheckout checkout, ResolutionException.Reason[] reasons) throws IOException

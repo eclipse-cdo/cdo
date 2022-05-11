@@ -12,10 +12,7 @@ package org.eclipse.emf.cdo.lm;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object '<em><b>Stream
- * Element</b></em>'.
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
- * <!-- end-user-doc -->
+ * Element</b></em>'. <!-- end-user-doc -->
  *
  *
  * @see org.eclipse.emf.cdo.lm.LMPackage#getStreamElement()

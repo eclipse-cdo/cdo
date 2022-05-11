@@ -24,8 +24,6 @@ import java.util.Set;
 
 /**
  * @author Eike Stepper
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 {
@@ -67,8 +65,6 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Updates
   {
@@ -83,8 +79,6 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface NameChangedEvent extends IEvent
   {
@@ -97,8 +91,6 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface UpdateStateChangedEvent extends IEvent
   {
@@ -111,8 +103,6 @@ public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface AvailableUpdatesChangedEvent extends IEvent
   {

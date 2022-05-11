@@ -16,10 +16,7 @@ import org.eclipse.emf.common.util.EList;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
- * '<em><b>Drop</b></em>'.
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
- * <!-- end-user-doc -->
+ * '<em><b>Drop</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:

@@ -27,9 +27,8 @@ import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
 /**
- * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
- * @noextend This class is not intended to be subclassed by clients.
- * <!-- end-user-doc -->
+ * <!-- begin-user-doc --> An implementation of the model <b>Package</b>. <!--
+ * end-user-doc -->
  * @generated
  */
 public class ModulesPackageImpl extends EPackageImpl implements ModulesPackage

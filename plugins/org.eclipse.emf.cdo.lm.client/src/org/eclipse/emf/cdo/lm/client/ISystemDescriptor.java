@@ -49,8 +49,6 @@ import java.util.function.Function;
 
 /**
  * @author Eike Stepper
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
 {
@@ -162,7 +160,6 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
 
     /**
      * @author Eike Stepper
-     * @noextend This class is not intended to be subclassed by clients.
      */
     public static abstract class Reason
     {
@@ -238,15 +235,15 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
       public static final class Module
       {
         public final String name;
-
+      
         public final Version version;
-
+      
         public Module(String name, Version version)
         {
           this.name = name;
           this.version = version;
         }
-
+      
         @Override
         public String toString()
         {
@@ -260,15 +257,15 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
       public static final class Dependency
       {
         public final String name;
-
+      
         public final VersionRange versionRange;
-
+      
         public Dependency(String name, VersionRange versionRange)
         {
           this.name = name;
           this.versionRange = versionRange;
         }
-
+      
         @Override
         public String toString()
         {

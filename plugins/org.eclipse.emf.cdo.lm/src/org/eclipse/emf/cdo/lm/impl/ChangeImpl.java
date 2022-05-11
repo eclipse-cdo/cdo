@@ -35,9 +35,7 @@ import java.util.Collection;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
- * '<em><b>Change</b></em>'.
- * @noextend This class is not intended to be subclassed by clients.
- * <!-- end-user-doc -->
+ * '<em><b>Change</b></em>'. <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>

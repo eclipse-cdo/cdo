@@ -29,8 +29,6 @@ import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface ISystemManager extends IContainer<ISystemDescriptor>
 {
@@ -54,8 +52,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface SystemEvent extends IEvent
   {
@@ -66,8 +62,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface DescriptorStateEvent extends SystemEvent
   {
@@ -76,8 +70,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface ModuleCreatedEvent extends SystemEvent
   {
@@ -86,8 +78,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface ModuleDeletedEvent extends SystemEvent
   {
@@ -96,8 +86,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface BaselineCreatedEvent extends SystemEvent
   {
@@ -106,8 +94,6 @@ public interface ISystemManager extends IContainer<ISystemDescriptor>
 
   /**
    * @author Eike Stepper
-   * @noextend This interface is not intended to be extended by clients.
-   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface StreamBranchChangedEvent extends SystemEvent
   {

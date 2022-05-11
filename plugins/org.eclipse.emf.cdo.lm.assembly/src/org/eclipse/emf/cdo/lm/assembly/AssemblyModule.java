@@ -22,10 +22,7 @@ import java.util.Comparator;
  * <!-- begin-user-doc --> A representation of the model object
  * '<em><b>Module</b></em>'.
  *
- * @extends Comparable<AssemblyModule>
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
- * <!-- end-user-doc -->
+ * @extends Comparable<AssemblyModule> <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:

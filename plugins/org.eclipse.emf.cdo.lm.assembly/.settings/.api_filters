@@ -9,36 +9,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/assembly/impl/AssemblyFactoryImpl.java" type="org.eclipse.emf.cdo.lm.assembly.impl.AssemblyFactoryImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="AssemblyFactory"/>
-                <message_argument value="AssemblyFactoryImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/assembly/impl/AssemblyImpl.java" type="org.eclipse.emf.cdo.lm.assembly.impl.AssemblyImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="Assembly"/>
-                <message_argument value="AssemblyImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/assembly/impl/AssemblyModuleImpl.java" type="org.eclipse.emf.cdo.lm.assembly.impl.AssemblyModuleImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="AssemblyModule"/>
-                <message_argument value="AssemblyModuleImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/assembly/impl/AssemblyPackageImpl.java" type="org.eclipse.emf.cdo.lm.assembly.impl.AssemblyPackageImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="AssemblyPackage"/>
-                <message_argument value="AssemblyPackageImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

@@ -14,10 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
- * '<em><b>Delivery</b></em>'.
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
- * <!-- end-user-doc -->
+ * '<em><b>Delivery</b></em>'. <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:

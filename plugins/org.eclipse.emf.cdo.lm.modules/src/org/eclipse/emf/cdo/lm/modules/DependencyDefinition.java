@@ -16,7 +16,10 @@ import org.eclipse.equinox.p2.metadata.VersionRange;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
- * '<em><b>Dependency Definition</b></em>'. <!-- end-user-doc -->
+ * '<em><b>Dependency Definition</b></em>'.
+ * @noextend This interface is not intended to be extended by clients.
+ * @noimplement This interface is not intended to be implemented by clients.
+ * <!-- end-user-doc -->
  *
  * <p>
  * The following features are supported:

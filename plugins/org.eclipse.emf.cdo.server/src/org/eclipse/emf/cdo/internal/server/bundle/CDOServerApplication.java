@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
+import org.eclipse.net4j.util.PluginUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -25,8 +26,6 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiApplication;
 
 import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -160,8 +159,8 @@ public class CDOServerApplication extends OSGiApplication
 
   private void startExtensions(File configFile)
   {
-    IExtensionRegistry registry = Platform.getExtensionRegistry();
-    IConfigurationElement[] elements = registry.getConfigurationElementsFor(OM.BUNDLE_ID, IAppExtension.EXT_POINT);
+    IConfigurationElement[] elements = PluginUtil.getConfigurationElements(OM.BUNDLE_ID, IAppExtension.EXT_POINT);
+    elements = PluginUtil.removePredecessors(elements);
 
     for (IConfigurationElement element : elements)
     {
@@ -169,7 +168,7 @@ public class CDOServerApplication extends OSGiApplication
       {
         try
         {
-          IAppExtension extension = (IAppExtension)element.createExecutableExtension("class"); //$NON-NLS-1$
+          IAppExtension extension = PluginUtil.instantiate(element);
           extensions.add(extension);
         }
         catch (Exception ex)

@@ -655,36 +655,6 @@ public final class SystemDescriptor implements ISystemDescriptor
     return assembly;
   }
 
-  private Assembly tryDeprecatedResolution(ResolutionException ex, ModuleDefinition rootDefinition, Baseline rootBaseline, IProgressMonitor monitor)
-      throws ResolutionException
-  {
-    List<String> missingModules = new ArrayList<>();
-
-    for (Reason reason : ex.getReasons())
-    {
-      if (reason instanceof Reason.Missing)
-      {
-        Reason.Missing missing = (Reason.Missing)reason;
-        missingModules.add(missing.dependency.name);
-      }
-    }
-
-    ModuleDefinition newDefinition = EcoreUtil.copy(rootDefinition);
-    List<DependencyDefinition> depToRemove = new ArrayList<>();
-    for (DependencyDefinition dep : newDefinition.getDependencies())
-    {
-      if (missingModules.contains(dep.getTargetName()))
-      {
-        depToRemove.add(dep);
-      }
-    }
-
-    newDefinition.getDependencies().removeAll(depToRemove);
-    OM.LOG.warn(ex);
-    OM.LOG.warn("Trying to resolve without missing dependencies. You should consider updating module.md");
-    return resolve(newDefinition, rootBaseline, monitor);
-  }
-
   private void resolveDependencies(ModuleDefinition rootDefinition, Assembly assembly, IProgressMonitor monitor) throws ResolutionException, ProvisionException
   {
     List<FixedBaseline> baselines = new ArrayList<>();

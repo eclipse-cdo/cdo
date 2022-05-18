@@ -14,10 +14,7 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -45,14 +42,12 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
 
-import org.junit.jupiter.api.Test;
-
 import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
  */
-public class LMVersionEvolutionTest extends AbstractIntegrationTest
+public class LMVersionEvolutionTest extends AbstractLMTest
 {
   private static final String INITIAL_STREAM = "InitialStream";
 
@@ -68,8 +63,7 @@ public class LMVersionEvolutionTest extends AbstractIntegrationTest
 
   private static final String TAG1_0 = "Tag1.0";
 
-  @Test
-  protected void testVersionEvolution() throws Exception
+  public void testVersionEvolution() throws Exception
   {
     ISystemDescriptor systemDescriptor = createSystemRepository();
     System system = systemDescriptor.getSystem();

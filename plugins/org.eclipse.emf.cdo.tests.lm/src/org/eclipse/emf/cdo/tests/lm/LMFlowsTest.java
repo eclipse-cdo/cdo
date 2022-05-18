@@ -23,12 +23,10 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 
-import org.junit.jupiter.api.Test;
-
 /**
  * @author Eike Stepper
  */
-public class LMIntegrationTest extends AbstractIntegrationTest
+public class LMFlowsTest extends AbstractLMTest
 {
   private static final String INITIAL_STREAM = "InitialStream";
 
@@ -42,8 +40,7 @@ public class LMIntegrationTest extends AbstractIntegrationTest
 
   private static final String CHANGE_1 = "Change1";
 
-  @Test
-  protected void entireNormalFlow() throws Exception
+  public void testEntireNormalFlow() throws Exception
   {
     ISystemDescriptor systemDescriptor = createSystemRepository();
     System system = systemDescriptor.getSystem();

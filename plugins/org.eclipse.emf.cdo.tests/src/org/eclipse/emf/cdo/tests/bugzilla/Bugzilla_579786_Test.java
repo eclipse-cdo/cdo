@@ -32,6 +32,7 @@ public class Bugzilla_579786_Test extends AbstractCDOTest
 
   private static final int TIMEOUT = 1500; // Must be greater than 1000.
 
+  @CleanRepositoriesBefore(reason = "Needs special query handler")
   public void testDisableResponseTimeout() throws Exception
   {
     registerQueryHandler(new IQueryHandler()
@@ -54,6 +55,7 @@ public class Bugzilla_579786_Test extends AbstractCDOTest
     assertEquals(RESULT, result);
   }
 
+  @CleanRepositoriesBefore(reason = "Needs special query handler")
   public void testSlowQueryHandler() throws Exception
   {
     registerQueryHandler(new IQueryHandler.PotentiallySlow()

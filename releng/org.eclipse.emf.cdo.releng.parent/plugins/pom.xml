@@ -87,9 +87,9 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.server.security</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.all</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.tests.lm</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.db</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.lissome</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.tests.lm</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.mango</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model1</module>
     <module>../../../plugins/org.eclipse.emf.cdo.tests.model2</module>

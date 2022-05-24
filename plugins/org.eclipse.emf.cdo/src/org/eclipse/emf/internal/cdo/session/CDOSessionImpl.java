@@ -134,6 +134,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.MergeDataResult;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
@@ -727,6 +728,11 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
           revisions.add((InternalCDORevision)r);
         }
       });
+
+      if (permissionUpdater instanceof CDOPermissionUpdater2)
+      {
+        return ((CDOPermissionUpdater2)permissionUpdater).updatePermissions(CDOSessionImpl.this, revisions, commitInfo);
+      }
 
       return permissionUpdater.updatePermissions(CDOSessionImpl.this, revisions);
     }

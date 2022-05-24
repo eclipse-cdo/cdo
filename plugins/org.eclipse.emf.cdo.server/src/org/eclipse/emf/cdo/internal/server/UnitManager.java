@@ -506,7 +506,8 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
 
   private static CDOID getUnitOf(InternalCDORevision revision, CDORevisionProvider revisionProvider, Set<CDOID> rootIDs)
   {
-    if (rootIDs.isEmpty())
+    // Bug 494372: Revisions of deleted roots may be null.
+    if (revision == null || rootIDs.isEmpty())
     {
       return null;
     }

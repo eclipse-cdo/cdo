@@ -275,6 +275,10 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     if (forUnits)
     {
+      builder.append(" AND "); //$NON-NLS-1$
+      builder.append(ATTRIBUTES_VERSION);
+      builder.append(">0"); //$NON-NLS-1$
+
       builder.append(" ORDER BY "); //$NON-NLS-1$
       builder.append(ATTRIBUTES_ID);
     }

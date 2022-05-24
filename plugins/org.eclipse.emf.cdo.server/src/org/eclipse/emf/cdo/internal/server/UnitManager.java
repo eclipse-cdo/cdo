@@ -676,7 +676,7 @@ public class UnitManager extends Container<IUnit> implements InternalUnitManager
      */
     public IUnit initialize(OMMonitor monitor)
     {
-      unit = new Unit(rootID);
+      unit = createUnit(rootID);
       unit.initialize(view, timeStamp, revisionHandler, concurrentObjectAttachers, monitor);
       return unit;
     }

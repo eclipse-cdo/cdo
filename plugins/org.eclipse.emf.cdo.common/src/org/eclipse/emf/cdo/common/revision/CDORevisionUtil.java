@@ -54,6 +54,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringTokenizer;
+import java.util.function.Consumer;
 
 /**
  * Various static helper methods for dealing with {@link CDORevision revisions}.
@@ -422,7 +423,7 @@ public final class CDORevisionUtil
    */
   public static List<CDORevision> getChildRevisions(CDOID container, CDORevisionProvider provider, boolean onlyProperContents)
   {
-    InternalCDORevision revision = (InternalCDORevision)provider.getRevision(container);
+    CDORevision revision = provider.getRevision(container);
     return getChildRevisions(revision, provider, onlyProperContents);
   }
 
@@ -440,7 +441,24 @@ public final class CDORevisionUtil
   public static List<CDORevision> getChildRevisions(CDORevision container, CDORevisionProvider provider, boolean onlyProperContents)
   {
     List<CDORevision> children = new ArrayList<>();
+    forEachChildRevision(container, provider, onlyProperContents, children::add);
+    return children;
+  }
 
+  /**
+   * @since 4.18
+   */
+  public static void forEachChildRevision(CDOID container, CDORevisionProvider provider, boolean onlyProperContents, Consumer<CDORevision> consumer)
+  {
+    CDORevision revision = provider.getRevision(container);
+    forEachChildRevision(revision, provider, onlyProperContents, consumer);
+  }
+
+  /**
+   * @since 4.18
+   */
+  public static void forEachChildRevision(CDORevision container, CDORevisionProvider provider, boolean onlyProperContents, Consumer<CDORevision> consumer)
+  {
     InternalCDORevision revisionData = (InternalCDORevision)container;
     CDOClassInfo classInfo = revisionData.getClassInfo();
 
@@ -460,22 +478,20 @@ public final class CDORevisionUtil
           {
             for (Object value : list)
             {
-              addChildRevision(value, provider, children, onlyProperContents);
+              forChildRevision(value, provider, onlyProperContents, consumer);
             }
           }
         }
         else
         {
           Object value = revisionData.getValue(feature);
-          addChildRevision(value, provider, children, onlyProperContents);
+          forChildRevision(value, provider, onlyProperContents, consumer);
         }
       }
     }
-
-    return children;
   }
 
-  private static void addChildRevision(Object value, CDORevisionProvider provider, List<CDORevision> children, boolean onlyProperContents)
+  private static void forChildRevision(Object value, CDORevisionProvider provider, boolean onlyProperContents, Consumer<CDORevision> consumer)
   {
     if (value instanceof CDOID)
     {
@@ -493,7 +509,7 @@ public final class CDORevisionUtil
           }
         }
 
-        children.add(child);
+        consumer.accept(child);
       }
     }
   }
@@ -600,12 +616,12 @@ public final class CDORevisionUtil
   {
     if (revision.isResourceNode())
     {
-      if (CDORevisionUtil.resourceNodeNameAttribute == null)
+      if (resourceNodeNameAttribute == null)
       {
-        CDORevisionUtil.resourceNodeNameAttribute = (EAttribute)revision.getEClass().getEStructuralFeature("name");
+        resourceNodeNameAttribute = (EAttribute)revision.getEClass().getEStructuralFeature("name");
       }
 
-      return CDORevisionUtil.resourceNodeNameAttribute;
+      return resourceNodeNameAttribute;
     }
 
     return null;

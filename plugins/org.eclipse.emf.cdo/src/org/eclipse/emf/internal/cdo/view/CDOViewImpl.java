@@ -35,6 +35,8 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -47,6 +49,7 @@ import org.eclipse.emf.cdo.spi.common.lock.InternalCDOLockState;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
+import org.eclipse.emf.cdo.spi.common.revision.MapRevisionProvider;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -2261,14 +2264,14 @@ public class CDOViewImpl extends AbstractCDOView
             }
           }
 
-          final InternalCDORevisionManager revisionManager = session.getRevisionManager();
+          InternalCDORevisionManager revisionManager = session.getRevisionManager();
           openingUnit = new CDOUnitImpl(root);
 
           int viewID = getViewID();
           CDOID rootID = getCDORoot(root).cdoID();
 
           CDORevisionHandler revisionHandler = null;
-          final List<CDORevision> revisions = new ArrayList<>();
+          MapRevisionProvider revisions = new MapRevisionProvider();
 
           if (opcode.isOpen())
           {
@@ -2281,9 +2284,9 @@ public class CDOViewImpl extends AbstractCDOView
               {
                 ++openingUnit.elements;
                 revision = revisionManager.internRevision(revision);
-                revisions.add(revision);
-
                 CDOID id = revision.getID();
+                revisions.put(id, revision);
+
                 changeSubscriptionManager.removeEntry(id);
                 openingIDs.add(id);
 
@@ -2297,18 +2300,15 @@ public class CDOViewImpl extends AbstractCDOView
 
           if (success)
           {
-            if (revisionHandler != null)
+            if (opcode.isOpen())
             {
               unitPerRoot.put(root, openingUnit);
               unitPerObject.put(root, openingUnit);
 
-              for (CDORevision revision : revisions)
-              {
-                CDOID id = revision.getID();
-
-                InternalCDOObject object = getObject(id);
-                unitPerObject.put(object, openingUnit);
-              }
+              // Bug 511506: Load the unit from the root object. This ensures that all container objects are loaded
+              // before their children. Thus children should always be attached to their container and resource.
+              CDORevision rootRevision = getRevision(rootID);
+              initializeObjectsRecursively(rootRevision, revisions);
             }
 
             return openingUnit;
@@ -2323,6 +2323,15 @@ public class CDOViewImpl extends AbstractCDOView
           unlockView();
         }
       }
+    }
+
+    private void initializeObjectsRecursively(CDORevision revision, CDORevisionProvider revisions)
+    {
+      InternalCDOObject object = getObject(revision.getID());
+      unitPerObject.put(object, openingUnit);
+
+      // Recurse.
+      CDORevisionUtil.forEachChildRevision(revision, revisions, false, child -> initializeObjectsRecursively(child, revisions));
     }
 
     private void closeUnit(CDOUnit unit, boolean resubscribe)

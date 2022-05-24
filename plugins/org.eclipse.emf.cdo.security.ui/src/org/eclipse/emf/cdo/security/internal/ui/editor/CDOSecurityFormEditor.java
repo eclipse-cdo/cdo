@@ -36,14 +36,17 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.swt.custom.CTabFolder;
+import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.PartInitException;
+import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.forms.editor.FormEditor;
 import org.eclipse.ui.forms.editor.IFormPage;
+import org.eclipse.ui.help.IWorkbenchHelpSystem;
 import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
 import org.eclipse.ui.statushandlers.StatusAdapter;
 import org.eclipse.ui.statushandlers.StatusManager;
@@ -270,5 +273,16 @@ public class CDOSecurityFormEditor extends FormEditor implements IEditingDomainP
       // (which shows ugly blue highlights on the toolbar buttons, at least on Mac OS X)
       page.setFocus();
     }
+  }
+
+  @Override
+  protected Composite createPageContainer(Composite parent)
+  {
+    Composite container = super.createPageContainer(parent);
+
+    IWorkbenchHelpSystem helpSystem = PlatformUI.getWorkbench().getHelpSystem();
+    helpSystem.setHelp(container, ID);
+
+    return container;
   }
 }

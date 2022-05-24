@@ -12,22 +12,32 @@ package org.eclipse.emf.cdo.security.internal.ui.editor;
 
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
+import org.eclipse.emf.cdo.security.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.security.internal.ui.messages.Messages;
+import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.domain.EditingDomain;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.forms.widgets.FormToolkit;
+import org.eclipse.ui.statushandlers.IStatusAdapterConstants;
+import org.eclipse.ui.statushandlers.StatusAdapter;
+import org.eclipse.ui.statushandlers.StatusManager;
 
 /**
  * Details page for selected {@link User} master objects.
@@ -55,7 +65,6 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
 
     space(parent, toolkit);
 
-    checkbox(parent, toolkit, Messages.UserDetailsPage_5, SecurityPackage.Literals.USER__LOCKED);
     button(parent, toolkit, Messages.UserDetailsPage_9, new SelectionAdapter()
     {
       @Override
@@ -77,14 +86,47 @@ public class UserDetailsPage extends AbstractDetailsPage<User>
     oneToMany(parent, toolkit, Messages.UserDetailsPage_8, SecurityPackage.Literals.ASSIGNEE__ROLES);
   }
 
-  private void resetPassword(final User user)
+  private void resetPassword(User user)
   {
+    if (user == null)
+    {
+      return;
+    }
+
+    CDOView view = user.cdoView();
+    if (view.isClosed())
+    {
+      return;
+    }
+
+    if (FSMUtil.isNew(user))
+    {
+      Shell shell = Display.getCurrent().getActiveShell();
+      if (!MessageDialog.openQuestion(shell, Messages.UserDetailsPage_titleSaveNeeded, Messages.UserDetailsPage_messageSaveNeeded))
+      {
+        return;
+      }
+
+      try
+      {
+        ((CDOTransaction)view).commit(); // The view must be a transaction because the user is NEW.
+        getManagedForm().dirtyStateChanged();
+      }
+      catch (CommitException ex)
+      {
+        StatusAdapter status = new StatusAdapter(new Status(IStatus.ERROR, OM.BUNDLE_ID, Messages.CDOSecurityFormEditor_0, ex));
+        status.setProperty(IStatusAdapterConstants.TITLE_PROPERTY, Messages.CDOSecurityFormEditor_1);
+        status.setProperty(IStatusAdapterConstants.TIMESTAMP_PROPERTY, System.currentTimeMillis());
+        StatusManager.getManager().handle(status, StatusManager.SHOW);
+        return;
+      }
+    }
+
     new Job(Messages.UserDetailsPage_9)
     {
       @Override
       public IStatus run(IProgressMonitor monitor)
       {
-        CDOView view = user.cdoView();
         if (!view.isClosed())
         {
           InternalCDOSession session = (InternalCDOSession)view.getSession();

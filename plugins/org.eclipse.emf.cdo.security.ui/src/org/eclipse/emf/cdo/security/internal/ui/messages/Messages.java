@@ -101,8 +101,6 @@ public class Messages extends NLS
 
   public static String UserDetailsPage_4;
 
-  public static String UserDetailsPage_5;
-
   public static String UserDetailsPage_6;
 
   public static String UserDetailsPage_7;
@@ -110,6 +108,10 @@ public class Messages extends NLS
   public static String UserDetailsPage_8;
 
   public static String UserDetailsPage_9;
+
+  public static String UserDetailsPage_messageSaveNeeded;
+
+  public static String UserDetailsPage_titleSaveNeeded;
 
   public static String UsersSection_0;
 

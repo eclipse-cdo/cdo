@@ -69,7 +69,7 @@ public class SQLQueryHandler implements IQueryHandler
    * Takes into account the {@link CDOQueryInfo#getMaxResults()} and the {@link SQLQueryHandler#FIRST_RESULT} (numbered
    * from 0) values for paging.
    * <p>
-   * By default (parameter {@link SQLQueryHandler#CDO_OBJECT_QUERY} == true) a query for CDO Objects is exectued. The
+   * By default (parameter {@link SQLQueryHandler#CDO_OBJECT_QUERY} == true) a query for CDO Objects is executed. The
    * SQL query must return the CDO ID in the first column for this to work. If you set
    * {@link SQLQueryHandler#CDO_OBJECT_QUERY} parameter to false, the value of the first column of a row itself is
    * returned.
@@ -111,7 +111,7 @@ public class SQLQueryHandler implements IQueryHandler
     try
     {
       stmt = accessor.getDBConnection().prepareStatement(query, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY, ReuseProbability.MEDIUM);
-        
+
       for (String key : info.getParameters().keySet())
       {
         if (FIRST_RESULT.equalsIgnoreCase(key))

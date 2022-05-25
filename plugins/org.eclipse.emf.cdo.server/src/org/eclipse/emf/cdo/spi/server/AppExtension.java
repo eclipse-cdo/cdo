@@ -40,6 +40,12 @@ public abstract class AppExtension implements IAppExtension3, IAppExtension5
   public abstract String getName();
 
   @Override
+  public boolean startBeforeRepositories()
+  {
+    return false;
+  }
+
+  @Override
   public final void start(File configFile) throws Exception
   {
     throw new UnsupportedOperationException();

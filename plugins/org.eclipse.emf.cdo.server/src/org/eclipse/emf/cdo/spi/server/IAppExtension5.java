@@ -19,4 +19,6 @@ package org.eclipse.emf.cdo.spi.server;
 public interface IAppExtension5 extends IAppExtension
 {
   public String getName();
+
+  public boolean startBeforeRepositories();
 }

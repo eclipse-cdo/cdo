@@ -58,6 +58,12 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
   }
 
   @Override
+  public boolean startBeforeRepositories()
+  {
+    return false;
+  }
+
+  @Override
   public int getPriority()
   {
     return PRIORITY_SECURITY;

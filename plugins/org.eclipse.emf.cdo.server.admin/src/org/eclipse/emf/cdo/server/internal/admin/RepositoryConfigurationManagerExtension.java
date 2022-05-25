@@ -56,6 +56,12 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension5
   }
 
   @Override
+  public boolean startBeforeRepositories()
+  {
+    return false;
+  }
+
+  @Override
   public void start(File configFile) throws Exception
   {
     IManagedContainer container = IPluginContainer.INSTANCE;

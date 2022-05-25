@@ -38,6 +38,12 @@ public class Net4jAppExtension implements IAppExtension4, IAppExtension5
   }
 
   @Override
+  public boolean startBeforeRepositories()
+  {
+    return false;
+  }
+
+  @Override
   public int getPriority()
   {
     return PRIORITY_NETWORK;

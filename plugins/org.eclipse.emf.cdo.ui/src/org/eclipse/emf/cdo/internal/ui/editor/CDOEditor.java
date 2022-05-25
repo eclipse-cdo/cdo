@@ -244,6 +244,8 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   private static final boolean SHOW_BULK_ADD_ACTION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.editor.SHOW_BULK_ADD_ACTION");
 
+  private static final boolean LOG_EXCEPTIONS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.editor.LOG_EXCEPTIONS");
+
   /**
    * @ADDED
    */
@@ -1833,6 +1835,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
+          ex.printStackTrace();
           handleException(ex);
           super.selectionChanged(part, StructuredSelection.EMPTY);
         }
@@ -2813,7 +2816,11 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   protected void handleException(Exception ex)
   {
-    if (TRACER.isEnabled())
+    if (LOG_EXCEPTIONS)
+    {
+      OM.LOG.error(ex);
+    }
+    else if (TRACER.isEnabled())
     {
       TRACER.trace(ex);
     }
@@ -3065,7 +3072,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
     {
       super(provider, decorator);
     }
-  
+
     @Override
     public Image getImage(Object element)
     {
@@ -3075,7 +3082,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         {
           return ContainerItemProvider.pendingImage();
         }
-  
+
         Image image = super.getImage(element);
         if (image != null)
         {
@@ -3086,10 +3093,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         handleException(ex);
       }
-  
+
       return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
     }
-  
+
     @Override
     public String getText(Object element)
     {
@@ -3100,7 +3107,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
           ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
           return pending.getText();
         }
-  
+
         String text = super.getText(element);
         if (!StringUtil.isEmpty(text))
         {
@@ -3111,7 +3118,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         handleException(ex);
       }
-  
+
       try
       {
         if (element instanceof EObject)
@@ -3129,10 +3136,10 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         //$FALL-THROUGH$
       }
-  
+
       return element.getClass().getSimpleName();
     }
-  
+
     @Override
     public StyledString getStyledText(Object element)
     {
@@ -3141,7 +3148,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       {
         return ((IStyledLabelProvider)provider).getStyledText(element);
       }
-  
+
       return new StyledString(getText(element));
     }
   }

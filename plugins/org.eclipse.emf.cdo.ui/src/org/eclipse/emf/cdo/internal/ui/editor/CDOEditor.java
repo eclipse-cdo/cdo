@@ -106,6 +106,7 @@ import org.eclipse.emf.edit.ui.dnd.LocalTransfer;
 import org.eclipse.emf.edit.ui.dnd.ViewerDragAdapter;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DelegatingStyledCellLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.emf.edit.ui.provider.UnwrappingSelectionProvider;
 import org.eclipse.emf.edit.ui.util.EditUIUtil;
@@ -131,6 +132,7 @@ import org.eclipse.jface.operation.IRunnableWithProgress;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.util.LocalSelectionTransfer;
 import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.IInputProvider;
 import org.eclipse.jface.viewers.ILabelDecorator;
@@ -144,6 +146,7 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
@@ -1636,75 +1639,9 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
    */
   protected ILabelProvider createLabelProvider(TreeViewer viewer)
   {
-    return new DecoratingLabelProvider(new CDOLabelProvider(adapterFactory, view, viewer), createLabelDecorator())
-    {
-      @Override
-      public Image getImage(Object element)
-      {
-        try
-        {
-          if (element instanceof ViewerUtil.Pending)
-          {
-            return ContainerItemProvider.pendingImage();
-          }
-
-          Image image = super.getImage(element);
-          if (image != null)
-          {
-            return image;
-          }
-        }
-        catch (Exception ex)
-        {
-          handleException(ex);
-        }
-
-        return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
-      }
-
-      @Override
-      public String getText(Object element)
-      {
-        try
-        {
-          if (element instanceof ViewerUtil.Pending)
-          {
-            ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
-            return pending.getText();
-          }
-
-          String text = super.getText(element);
-          if (!StringUtil.isEmpty(text))
-          {
-            return text;
-          }
-        }
-        catch (Exception ex)
-        {
-          handleException(ex);
-        }
-
-        try
-        {
-          if (element instanceof EObject)
-          {
-            EObject eObject = (EObject)element;
-            EClass eClass = eObject.eClass();
-            String text = getText(eClass);
-            if (!StringUtil.isEmpty(text))
-            {
-              return text;
-            }
-          }
-        }
-        catch (Exception ignore)
-        {
-          //$FALL-THROUGH$
-        }
-
-        return element.getClass().getSimpleName();
-      }
-    };
+    CDOLabelProvider provider = new CDOLabelProvider(adapterFactory, view, viewer);
+    ILabelDecorator decorator = createLabelDecorator();
+    return new DelegatingStyledCellLabelProvider(new DecoratingStyledLabelProvider(provider, decorator));
   }
 
   /**
@@ -3116,6 +3053,96 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
       }
 
       super.dispose();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DecoratingStyledLabelProvider extends DecoratingLabelProvider implements IStyledLabelProvider
+  {
+    public DecoratingStyledLabelProvider(ILabelProvider provider, ILabelDecorator decorator)
+    {
+      super(provider, decorator);
+    }
+  
+    @Override
+    public Image getImage(Object element)
+    {
+      try
+      {
+        if (element instanceof ViewerUtil.Pending)
+        {
+          return ContainerItemProvider.pendingImage();
+        }
+  
+        Image image = super.getImage(element);
+        if (image != null)
+        {
+          return image;
+        }
+      }
+      catch (Exception ex)
+      {
+        handleException(ex);
+      }
+  
+      return PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
+    }
+  
+    @Override
+    public String getText(Object element)
+    {
+      try
+      {
+        if (element instanceof ViewerUtil.Pending)
+        {
+          ViewerUtil.Pending pending = (ViewerUtil.Pending)element;
+          return pending.getText();
+        }
+  
+        String text = super.getText(element);
+        if (!StringUtil.isEmpty(text))
+        {
+          return text;
+        }
+      }
+      catch (Exception ex)
+      {
+        handleException(ex);
+      }
+  
+      try
+      {
+        if (element instanceof EObject)
+        {
+          EObject eObject = (EObject)element;
+          EClass eClass = eObject.eClass();
+          String text = getText(eClass);
+          if (!StringUtil.isEmpty(text))
+          {
+            return text;
+          }
+        }
+      }
+      catch (Exception ignore)
+      {
+        //$FALL-THROUGH$
+      }
+  
+      return element.getClass().getSimpleName();
+    }
+  
+    @Override
+    public StyledString getStyledText(Object element)
+    {
+      ILabelProvider provider = getLabelProvider();
+      if (provider instanceof IStyledLabelProvider)
+      {
+        return ((IStyledLabelProvider)provider).getStyledText(element);
+      }
+  
+      return new StyledString(getText(element));
     }
   }
 

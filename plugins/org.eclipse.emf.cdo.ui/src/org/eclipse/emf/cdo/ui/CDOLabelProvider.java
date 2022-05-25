@@ -25,6 +25,7 @@ import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IFontProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -45,7 +46,7 @@ import org.eclipse.swt.widgets.Control;
  * @see org.eclipse.emf.cdo.CDOObject
  * @see org.eclipse.emf.cdo.CDOState
  */
-public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider
+public class CDOLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider, IFontProvider, IStyledLabelProvider
 {
   private static Color readPermissionColor;
 
@@ -131,6 +132,8 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
   @Override
   public String getText(Object object)
   {
+    Exception exception = null;
+
     try
     {
       String text = super.getText(object);
@@ -141,8 +144,18 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     }
     catch (Exception ex)
     {
-      //$FALL-THROUGH$
+      exception = ex;
     }
+
+    return getText(object, exception);
+  }
+
+  /**
+   * @since 4.13
+   */
+  protected String getText(Object object, Exception exception)
+  {
+    String text = null;
 
     try
     {
@@ -150,11 +163,7 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       {
         EObject eObject = (EObject)object;
         EClass eClass = eObject.eClass();
-        String text = getText(eClass);
-        if (!StringUtil.isEmpty(text))
-        {
-          return text;
-        }
+        text = getText(eClass);
       }
     }
     catch (Exception ignore)
@@ -162,13 +171,37 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       //$FALL-THROUGH$
     }
 
-    return object.getClass().getSimpleName();
+    if (StringUtil.isEmpty(text))
+    {
+      text = object.getClass().getSimpleName();
+    }
+
+    return text + "  [" + getExceptionMessage(exception) + "]";
+  }
+
+  /**
+   * @since 4.13
+   */
+  protected String getExceptionMessage(Exception exception)
+  {
+    String message = exception.getLocalizedMessage();
+    if (StringUtil.isEmpty(message))
+    {
+      message = exception.getMessage();
+    }
+
+    if (StringUtil.isEmpty(message))
+    {
+      message = exception.getClass().getName();
+    }
+
+    return message;
   }
 
   @Override
   public Color getBackground(Object object)
   {
-    // Use default
+    // Use default.
     return null;
   }
 
@@ -197,9 +230,10 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     }
     catch (RuntimeException ignore)
     {
+      //$FALL-THROUGH$
     }
 
-    // Use default
+    // Use default.
     return null;
   }
 
@@ -232,10 +266,11 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
       }
       catch (RuntimeException ignore)
       {
+        //$FALL-THROUGH$
       }
     }
 
-    // Use default
+    // Use default.
     return null;
   }
 

@@ -108,6 +108,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    *
    * @since 3.0
    */
+  @Override
   public CDOBranchManager getBranchManager();
 
   /**
@@ -116,6 +117,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    *
    * @since 3.0
    */
+  @Override
   public CDORevisionManager getRevisionManager();
 
   /**
@@ -136,6 +138,7 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    *
    * @since 3.0
    */
+  @Override
   public CDOCommitInfoManager getCommitInfoManager();
 
   /**

@@ -16,6 +16,7 @@
   <extension point="org.eclipse.net4j.util.productGroups">
      <productGroup id="org.eclipse.emf.cdo.common.util.uriHandlers" name="URI Handlers"/>
      <productGroup id="org.eclipse.emf.cdo.common.ResourceSetConfigurers" name="Resource Set Configurers"/>
+     <productGroup id="org.eclipse.emf.cdo.common.model.typeHandlers" name="Type Handlers"/>
   </extension>
 
   <extension point="org.eclipse.core.expressions.propertyTesters">

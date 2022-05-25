@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
@@ -32,6 +33,7 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -185,9 +187,22 @@ public class Session extends Container<IView> implements InternalSession
     return manager.getExecutorService();
   }
 
+  @Override
+  public CDORevisionManager getRevisionManager()
+  {
+    return getRepository().getRevisionManager();
+  }
+
+  @Override
   public CDOBranchManager getBranchManager()
   {
     return getRepository().getBranchManager();
+  }
+
+  @Override
+  public CDOCommitInfoManager getCommitInfoManager()
+  {
+    return getRepository().getCommitInfoManager();
   }
 
   @Override

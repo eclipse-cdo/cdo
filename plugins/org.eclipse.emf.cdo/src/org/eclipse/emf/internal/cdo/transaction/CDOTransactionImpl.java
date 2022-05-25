@@ -2902,6 +2902,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         CDODataOutput out = new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
         {
           @Override
+          public InternalCDOSession getSession()
+          {
+            return CDOTransactionImpl.this.getSession();
+          }
+
+          @Override
           public CDOIDProvider getIDProvider()
           {
             return CDOTransactionImpl.this;
@@ -2993,6 +2999,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         {
           CDODataInput in = new CDODataInputImpl(new ExtendedDataInputStream(stream))
           {
+            @Override
+            public InternalCDOSession getSession()
+            {
+              return CDOTransactionImpl.this.getSession();
+            }
+
             @Override
             public CDOPackageRegistry getPackageRegistry()
             {

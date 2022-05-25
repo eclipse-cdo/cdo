@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.common.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -72,6 +73,11 @@ public interface CDODataOutput extends ExtendedDataOutput
    * @since 4.6
    */
   public void writeXLong(long v) throws IOException;
+
+  /**
+   * @since 4.18
+   */
+  public CDOCommonSession getSession();
 
   public CDOPackageRegistry getPackageRegistry();
 

@@ -65,6 +65,12 @@ public abstract class CDOServerRequest extends Request
     requesting(new CDODataOutputImpl(out)
     {
       @Override
+      public InternalSession getSession()
+      {
+        return CDOServerRequest.this.getSession();
+      }
+
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getRepository().getPackageRegistry();

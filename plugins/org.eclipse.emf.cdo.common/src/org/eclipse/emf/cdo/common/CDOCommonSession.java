@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.common;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+
 import org.eclipse.net4j.util.collection.Closeable;
 import org.eclipse.net4j.util.options.IOptions;
 import org.eclipse.net4j.util.options.IOptionsContainer;
@@ -45,6 +49,21 @@ public interface CDOCommonSession extends IAdaptable, IUserAware, IOptionsContai
    * @since 4.15
    */
   public String[] authorizeOperations(AuthorizableOperation... operations);
+
+  /**
+   * @since 4.18
+   */
+  public CDORevisionManager getRevisionManager();
+
+  /**
+   * @since 4.18
+   */
+  public CDOBranchManager getBranchManager();
+
+  /**
+   * @since 4.18
+   */
+  public CDOCommitInfoManager getCommitInfoManager();
 
   /**
    * Returns the {@link Options options} of this session.

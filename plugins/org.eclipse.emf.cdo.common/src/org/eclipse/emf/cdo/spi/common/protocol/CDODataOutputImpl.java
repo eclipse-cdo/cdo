@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.CDOType;
+import org.eclipse.emf.cdo.common.model.CDOType.Handler;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -45,7 +47,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
-import org.eclipse.emf.cdo.internal.common.messages.Messages;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
@@ -67,7 +68,6 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
-import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
@@ -630,10 +630,19 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     }
     else
     {
-      type = CDOModelUtil.getPrimitiveType(value.getClass());
-      if (type == null)
+      try
       {
-        throw new IllegalArgumentException(MessageFormat.format(Messages.getString("CDODataOutputImpl.6"), value.getClass())); //$NON-NLS-1$
+        type = CDOModelUtil.getPrimitiveType(value.getClass());
+      }
+      catch (IllegalArgumentException ex)
+      {
+        Handler handler = CDOType.Handler.Registry.INSTANCE.getHandlerByValue(value);
+        if (handler == null)
+        {
+          throw ex;
+        }
+
+        type = CDOType.HANDLER;
       }
     }
 
@@ -654,6 +663,12 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
       writeBoolean(false);
       writeCDORevisionOrPrimitive(value);
     }
+  }
+
+  @Override
+  public CDOCommonSession getSession()
+  {
+    return null;
   }
 
   @Override

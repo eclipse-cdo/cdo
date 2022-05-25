@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.server.internal.lissome;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -98,6 +99,12 @@ public class LissomeFileHandle extends DataInputOutputFile implements CDODataInp
   public LissomeStore getStore()
   {
     return file.getStore();
+  }
+
+  @Override
+  public CDOCommonSession getSession()
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override

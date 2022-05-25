@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.common.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
@@ -223,6 +224,11 @@ public interface CDODataInput extends ExtendedDataInput
    * @since 4.1
    */
   public LockArea readCDOLockArea() throws IOException;
+
+  /**
+   * @since 4.18
+   */
+  public CDOCommonSession getSession();
 
   /**
    * @since 4.2

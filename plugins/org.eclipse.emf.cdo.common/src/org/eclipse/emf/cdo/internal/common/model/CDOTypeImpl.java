@@ -958,6 +958,38 @@ public abstract class CDOTypeImpl implements CDOType
     }
   };
 
+  public static final CDOType HANDLER = new ObjectType("HANDLER", -10) //$NON-NLS-1$
+  {
+    @Override
+    protected void doWriteValue(CDODataOutput out, Object value) throws IOException
+    {
+      Handler handler = Handler.Registry.INSTANCE.getHandlerByValue(value);
+      if (handler == null)
+      {
+        throw new IOException("No type handler for value '" + value + "'");
+      }
+
+      String type = handler.getType();
+      out.writeString(type);
+
+      handler.writeValue(out, value);
+    }
+
+    @Override
+    protected Object doReadValue(CDODataInput in) throws IOException
+    {
+      String type = in.readString();
+
+      Handler handler = Handler.Registry.INSTANCE.getHandlerByType(type);
+      if (handler == null)
+      {
+        throw new IOException("No type handler for type '" + type + "'");
+      }
+
+      return handler.readValue(in);
+    }
+  };
+
   private String name;
 
   private byte typeID;

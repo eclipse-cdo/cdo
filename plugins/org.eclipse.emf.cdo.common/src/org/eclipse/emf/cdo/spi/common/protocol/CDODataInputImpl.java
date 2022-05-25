@@ -11,6 +11,7 @@
  */
 package org.eclipse.emf.cdo.spi.common.protocol;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -661,6 +662,12 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     }
 
     return readCDORevisionOrPrimitive();
+  }
+
+  @Override
+  public CDOCommonSession getSession()
+  {
+    return null;
   }
 
   /**

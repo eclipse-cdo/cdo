@@ -93,6 +93,12 @@ public abstract class CDOClientRequestWithMonitoring<RESULT> extends RequestWith
     requesting(new CDODataOutputImpl(out)
     {
       @Override
+      public InternalCDOSession getSession()
+      {
+        return CDOClientRequestWithMonitoring.this.getSession();
+      }
+
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getSession().getPackageRegistry();
@@ -130,6 +136,12 @@ public abstract class CDOClientRequestWithMonitoring<RESULT> extends RequestWith
     confirmationStream = in;
     return confirming(new CDODataInputImpl(in)
     {
+      @Override
+      public InternalCDOSession getSession()
+      {
+        return CDOClientRequestWithMonitoring.this.getSession();
+      }
+
       @Override
       public CDOPackageRegistry getPackageRegistry()
       {

@@ -15,10 +15,18 @@ import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
 
+import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
+
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Provides access to all CDO-supported data types.
@@ -143,6 +151,11 @@ public interface CDOType
    */
   public static final CDOType EXCEPTION = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.EXCEPTION;
 
+  /**
+   * @since 4.18
+   */
+  public static final CDOType HANDLER = org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl.HANDLER;
+
   public String getName();
 
   /**
@@ -180,4 +193,116 @@ public interface CDOType
    * @since 2.0
    */
   public Object convertToCDO(EClassifier feature, Object value);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.18
+   */
+  public abstract class Handler
+  {
+    public static final int DEFAULT_PRIORITY = 100;
+
+    private final String type;
+
+    public Handler(String type)
+    {
+      this.type = type;
+    }
+
+    public final String getType()
+    {
+      return type;
+    }
+
+    public int getPriority()
+    {
+      return DEFAULT_PRIORITY;
+    }
+
+    public abstract boolean canHandle(Object value);
+
+    public abstract void writeValue(CDODataOutput out, Object value) throws IOException;
+
+    public abstract Object readValue(CDODataInput in) throws IOException;
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Registry
+    {
+      public static final Registry INSTANCE = new Registry();
+
+      private final Map<String, Handler> handlersByType = new HashMap<>();
+
+      private final List<Handler> handlers = new ArrayList<>();
+
+      private Registry()
+      {
+        IPluginContainer.INSTANCE.forEachElement(Factory.PRODUCT_GROUP, Handler.class, this::registerHandler);
+        updateHandlers();
+      }
+
+      private void updateHandlers()
+      {
+        handlers.clear();
+        handlers.addAll(handlersByType.values());
+        handlers.sort(Comparator.comparingInt(Handler::getPriority).reversed());
+      }
+
+      private boolean registerHandler(Handler handler)
+      {
+        String type = handler.getType();
+        Handler existingHandler = handlersByType.get(type);
+        if (existingHandler == null || handler.getPriority() > existingHandler.getPriority())
+        {
+          handlersByType.put(type, handler);
+          return true;
+        }
+
+        return false;
+      }
+
+      public void addHandler(Handler handler)
+      {
+        if (registerHandler(handler))
+        {
+          updateHandlers();
+        }
+      }
+
+      public Handler getHandlerByType(String type)
+      {
+        return handlersByType.get(type);
+      }
+
+      public Handler getHandlerByValue(Object value)
+      {
+        for (Handler handler : handlers)
+        {
+          if (handler.canHandle(value))
+          {
+            return handler;
+          }
+        }
+
+        return null;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.model.typeHandlers";
+
+      public Factory(String type)
+      {
+        super(PRODUCT_GROUP, type);
+      }
+
+      @Override
+      public abstract Handler create(String description) throws ProductCreationException;
+    }
+  }
 }

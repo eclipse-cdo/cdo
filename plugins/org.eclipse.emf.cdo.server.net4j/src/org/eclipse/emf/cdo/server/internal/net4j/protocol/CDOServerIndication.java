@@ -162,6 +162,12 @@ public abstract class CDOServerIndication extends IndicationWithResponse
     responding(new CDODataOutputImpl(out)
     {
       @Override
+      public InternalSession getSession()
+      {
+        return CDOServerIndication.this.getSession();
+      }
+
+      @Override
       public CDOPackageRegistry getPackageRegistry()
       {
         return getRepository().getPackageRegistry();

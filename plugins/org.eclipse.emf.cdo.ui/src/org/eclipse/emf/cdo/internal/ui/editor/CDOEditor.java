@@ -1835,7 +1835,6 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
         catch (Exception ex)
         {
-          ex.printStackTrace();
           handleException(ex);
           super.selectionChanged(part, StructuredSelection.EMPTY);
         }

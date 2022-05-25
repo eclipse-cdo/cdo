@@ -181,6 +181,22 @@ public abstract class Property<RECEIVER>
    */
   protected abstract Object eval(RECEIVER receiver);
 
+  @Override
+  public String toString()
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append("Property[name=");
+    builder.append(name);
+    builder.append(", label=");
+    builder.append(label);
+    builder.append(", description=");
+    builder.append(description);
+    builder.append(", category=");
+    builder.append(category);
+    builder.append("]");
+    return builder.toString();
+  }
+
   /**
    * Describes a property of a receiver object and extracts its value with given arguments.
    *

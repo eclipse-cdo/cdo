@@ -287,20 +287,10 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
       {
         collectRequiredParentIDs(view, resourceID, requiredParentIDs);
       }
-      else
+
+      CDOID containerID = getContainerID(view, revisionData);
+      if (!CDOIDUtil.isNull(containerID))
       {
-        CDOID containerID;
-
-        Object containerOrID = revisionData.getContainerID();
-        if (containerOrID instanceof EObject)
-        {
-          containerID = (CDOID)((InternalCDOView)object.cdoView()).convertObjectToID(containerOrID);
-        }
-        else
-        {
-          containerID = (CDOID)containerOrID;
-        }
-
         collectRequiredParentIDs(view, containerID, requiredParentIDs);
       }
     }
@@ -422,6 +412,17 @@ public abstract class CDOComparisonScope extends AbstractComparisonScope
 
       CDOChangeSetData changeSetData = leftView.compareRevisions(rightView);
       return new HashSet<>(changeSetData.getChangeKinds().keySet());
+    }
+
+    private static CDOID getContainerID(CDOView view, CDORevisionData revisionData)
+    {
+      Object containerOrID = revisionData.getContainerID();
+      if (containerOrID instanceof EObject)
+      {
+        return (CDOID)((InternalCDOView)view).convertObjectToID(containerOrID);
+      }
+
+      return (CDOID)containerOrID;
     }
 
     private static void addDirtyIDs(Set<CDOID> ids, CDOView view)

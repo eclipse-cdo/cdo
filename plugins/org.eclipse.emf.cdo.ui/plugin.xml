@@ -30,11 +30,11 @@
       <factory
             productGroup="org.eclipse.emf.cdo.ui.userInfoStorages"
             type="preferences"
-            class="org.eclipse.emf.cdo.internal.ui.views.UserInfo$Manager$PreferencesUserInfoStorage$Factory"/>
+            class="org.eclipse.emf.cdo.ui.UserInfo$Manager$PreferencesUserInfoStorage$Factory"/>
       <factory
             productGroup="org.eclipse.emf.cdo.ui.userInfoStorages"
             type="home"
-            class="org.eclipse.emf.cdo.internal.ui.views.UserInfo$Manager$HomeUserInfoStorage$Factory"/>
+            class="org.eclipse.emf.cdo.ui.UserInfo$Manager$HomeUserInfoStorage$Factory"/>
       <factories
             productGroup="org.eclipse.net4j.util.security.authorizableOperations"
             class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory">

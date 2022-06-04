@@ -12,14 +12,15 @@ package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.ui.messages.Messages;
-import org.eclipse.emf.cdo.internal.ui.views.UserInfo.Manager.UserChangedEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
+import org.eclipse.emf.cdo.ui.UserInfo;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Listener;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic;
+import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserChangedEvent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
 import org.eclipse.net4j.ui.shared.CollapseAllAction;

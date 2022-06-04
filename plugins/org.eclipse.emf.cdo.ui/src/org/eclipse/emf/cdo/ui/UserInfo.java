@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.internal.ui.views;
+package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -37,6 +37,7 @@ import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
+ * @since 4.13
  */
 public final class UserInfo
 {

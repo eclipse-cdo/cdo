@@ -11,11 +11,11 @@
  */
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
-import org.eclipse.emf.cdo.internal.ui.views.UserInfo;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.OverlayImage;
 import org.eclipse.emf.cdo.ui.Support;
+import org.eclipse.emf.cdo.ui.UserInfo;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;

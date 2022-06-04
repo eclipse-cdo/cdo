@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.6.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202202240907:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.5.6.v20220505-0518:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.v20220505-0518:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.v20220505-0518:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202111290942:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.7.0.v20210113-0340:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.edit:2.17.0.v20220201-1551:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.edit:2.16.0.v20190920-0401:default:true:default:default"/>
         <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202004160913:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
@@ -52,33 +51,18 @@
         <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
-        <setEntry value="org.eclipse.emf.cdo.epp:default"/>
-        <setEntry value="org.eclipse.emf.cdo.examples:default"/>
-        <setEntry value="org.eclipse.emf.cdo.license:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
         <setEntry value="org.eclipse.emf.cdo.server:default"/>
         <setEntry value="org.eclipse.emf.cdo:default"/>
         <setEntry value="org.eclipse.emf.common:default"/>
         <setEntry value="org.eclipse.emf.ecore:default"/>
-        <setEntry value="org.eclipse.equinox.executable:default"/>
         <setEntry value="org.eclipse.equinox.p2.core.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.extras.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.rcp.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.user.ui:default"/>
         <setEntry value="org.eclipse.help:default"/>
-        <setEntry value="org.eclipse.net4j.db.doc:default"/>
         <setEntry value="org.eclipse.net4j.db.h2:default"/>
-        <setEntry value="org.eclipse.net4j.db:default"/>
-        <setEntry value="org.eclipse.net4j.doc:default"/>
-        <setEntry value="org.eclipse.net4j.sdk:default"/>
-        <setEntry value="org.eclipse.net4j.ui:default"/>
-        <setEntry value="org.eclipse.net4j.util.doc:default"/>
-        <setEntry value="org.eclipse.net4j.util.ui:default"/>
-        <setEntry value="org.eclipse.net4j.util:default"/>
-        <setEntry value="org.eclipse.net4j:default"/>
-        <setEntry value="org.eclipse.pde:default"/>
         <setEntry value="org.eclipse.platform:default"/>
         <setEntry value="org.eclipse.rcp:default"/>
     </setAttribute>

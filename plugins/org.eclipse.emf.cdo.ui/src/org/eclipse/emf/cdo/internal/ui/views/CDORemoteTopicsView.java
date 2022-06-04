@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.ui.views;
 
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.internal.ui.views.UserInfo.Manager.UserChangedEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
@@ -348,7 +349,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
       manager.add(new Action(localUser.getDisplayName(), IAction.AS_PUSH_BUTTON)
       {
         {
-          setToolTipText("Change Local Name");
+          setToolTipText(Messages.getString("CDORemoteTopicsView_0")); //$NON-NLS-1$
           setEnabled(!LOCAL_USER_INFO_DISABLE);
         }
 
@@ -356,7 +357,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
         public void run()
         {
           String displayName = localUser.getDisplayName();
-          InputDialog dialog = new InputDialog(getShell(), getToolTipText(), "Local name:", displayName, null);
+          InputDialog dialog = new InputDialog(getShell(), getToolTipText(), Messages.getString("CDORemoteTopicsView_1"), displayName, null); //$NON-NLS-1$
           if (dialog.open() == InputDialog.OK)
           {
             String newDisplayName = dialog.getValue();

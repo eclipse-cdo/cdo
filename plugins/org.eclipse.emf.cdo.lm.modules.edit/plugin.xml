@@ -14,7 +14,7 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-      <productGroup id="org.eclipse.emf.cdo.lm.modules.targetNameProviders" name="CDO Dependency Target Name Providers"/>
+      <productGroup id="org.eclipse.emf.cdo.lm.modules.targetNameProviders" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">

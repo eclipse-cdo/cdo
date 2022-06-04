@@ -15,9 +15,9 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-     <productGroup id="org.eclipse.emf.cdo.server.admin.adminServers" name="CDO Administration Servers"/>
-     <productGroup id="org.eclipse.emf.cdo.server.admin.adminHandlers" name="CDO Administration Handlers"/>
-     <productGroup id="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers" name="CDO Repository Configuration Managers"/>
+     <productGroup id="org.eclipse.emf.cdo.server.admin.adminServers" name="%productGroup.name"/>
+     <productGroup id="org.eclipse.emf.cdo.server.admin.adminHandlers" name="%productGroup.name.0"/>
+     <productGroup id="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers" name="%productGroup.name.1"/>
    </extension>
 
  	<extension point="org.eclipse.net4j.util.factories">

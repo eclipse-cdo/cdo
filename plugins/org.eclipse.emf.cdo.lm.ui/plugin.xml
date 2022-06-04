@@ -38,13 +38,13 @@
             class="org.eclipse.emf.cdo.lm.ui.views.SystemsView"
             icon="icons/System.gif"
             id="org.eclipse.emf.cdo.lm.SystemsView"
-            name="Systems"/>
+            name="%view.name"/>
       <view
             category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.lm.ui.views.AssembliesView"
             icon="icons/Assembly.gif"
             id="org.eclipse.emf.cdo.lm.AssembliesView"
-            name="Module Checkouts"/>
+            name="%view.name.0"/>
    </extension>
    
    <extension point="org.eclipse.ui.decorators">
@@ -52,7 +52,7 @@
             adaptable="true"
             class="org.eclipse.emf.cdo.lm.ui.decorators.AvailableUpdatesDecorator"
             id="org.eclipse.emf.cdo.lm.ModuleUpdatesAvailableDecorator"
-            label="Available Updates Decorator"
+            label="%decorator.label"
             lightweight="true"
             state="true">
          <enablement>
@@ -67,7 +67,7 @@
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.lm.InstallUpdates"
-            name="Install Updates"
+            name="%command.name"
             defaultHandler="org.eclipse.emf.cdo.lm.ui.actions.InstallUpdatesHandler"/>
   </extension>
 
@@ -92,9 +92,9 @@
          <command
                commandId="org.eclipse.emf.cdo.lm.InstallUpdates"
                icon="icons/Update.gif"
-               label="Install Updates..."
+               label="%command.label"
                style="push"
-               tooltip="Install the available updates into the checkout">
+               tooltip="%command.tooltip">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -112,7 +112,7 @@
       <page
             class="org.eclipse.emf.cdo.lm.ui.properties.ModulePropertyPage"
             id="org.eclipse.emf.cdo.lm.ui.properties.ModulePropertyPage"
-            name="Module">
+            name="%page.name">
          <enabledWhen>
             <adapt type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout">
               <test property="org.eclipse.emf.cdo.lm.checkout.isModule" value="true"/>

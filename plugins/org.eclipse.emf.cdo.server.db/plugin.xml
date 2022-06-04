@@ -16,7 +16,7 @@
    <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
    
    <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO Type Mapping Providers"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

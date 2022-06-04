@@ -21,7 +21,7 @@
 
    <extension id="product" point="org.eclipse.core.runtime.products">
       <product
-        name="CDO Explorer"
+        name="%product.name.0"
         description="%product.description"
         application="org.eclipse.emf.cdo.explorer.ui.app">
           <property name="appName" value="CDO Explorer"/>
@@ -29,7 +29,7 @@
    </extension>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-     <productGroup id="org.eclipse.emf.cdo.explorer.ui.checkouts.contentModifiers" name="CDO Checkout Content Modifiers"/>
+     <productGroup id="org.eclipse.emf.cdo.explorer.ui.checkouts.contentModifiers" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -162,7 +162,7 @@
       <view
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView"
             id="org.eclipse.emf.cdo.explorer.ui.CDORepositoriesView"
-            name="CDO Repositories"
+            name="%view.name"
             icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/locations.gif"
             category="org.eclipse.emf.cdo"
             allowMultiple="false">
@@ -175,9 +175,9 @@
            class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard"
            icon="icons/checkout.gif"
            id="org.eclipse.emf.cdo.explorer.ui.checkout"
-           name="Checkout from CDO">
+           name="%wizard.name">
         <description>
-           Connect to or checkout from a CDO model repository.
+           %wizard.description
         </description>
      </wizard>
   </extension>
@@ -189,9 +189,9 @@
            hasPages="true"
            icon="icons/CDOResourceFolder.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.folder"
-           name="Folder">
+           name="%wizard.name.0">
         <description>
-           Create a new folder.
+           %wizard.description.0
         </description>
      </wizard>
      <wizard
@@ -200,9 +200,9 @@
            hasPages="true"
            icon="icons/CDOResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource"
-           name="Model Resource">
+           name="%wizard.name.1">
         <description>
-           Create a new model resource.
+           %wizard.description.1
         </description>
      </wizard>
      <wizard
@@ -211,9 +211,9 @@
            hasPages="true"
            icon="icons/CDOBinaryResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource.binary"
-           name="Binary File">
+           name="%wizard.name.2">
         <description>
-           Create a new binary file.
+           %wizard.description.2
         </description>
      </wizard>
      <wizard
@@ -222,9 +222,9 @@
            hasPages="true"
            icon="icons/CDOTextResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.new.resource.text"
-           name="Text File">
+           name="%wizard.name.3">
         <description>
-           Create a new text file.
+           %wizard.description.3
         </description>
      </wizard>
      <wizard
@@ -233,9 +233,9 @@
            hasPages="true"
            icon="icons/LinkedResource.gif"
            id="org.eclipse.emf.cdo.explorer.ui.link.resource"
-           name="Linked Resource">
+           name="%wizard.name.4">
         <description>
-           Create a new linked resource.
+           %wizard.description.4
         </description>
      </wizard>
   </extension>
@@ -244,7 +244,7 @@
       <navigatorContent
             id="org.eclipse.emf.cdo.explorer.ui.CDOCheckouts"
             icon="icons/checkout.gif"
-            name="CDO Checkouts"
+            name="%navigatorContent.name"
             contentProvider="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutContentProvider$FromPreferences"
             labelProvider="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelProvider"
             priority="normal"
@@ -477,19 +477,19 @@
       <decorator
             class="org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryLabelDecorator"
             id="org.eclipse.emf.cdo.explorer.ui.repositories.decorator"
-            label="CDO Repositories"
+            label="%decorator.label"
             state="true">
          <description>
-            Decorates CDO repositories with their URI.
+            %decorator.description
          </description>
       </decorator>
       <decorator
             class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutLabelDecorator"
             id="org.eclipse.emf.cdo.explorer.ui.checkouts.decorator"
-            label="CDO Checkouts"
+            label="%decorator.label.0"
             state="true">
          <description>
-            Decorates CDO checkouts with their branch point and offline state.
+            %decorator.description.0
          </description>
       </decorator>
   </extension>
@@ -497,43 +497,43 @@
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
-            name="Connect Repository"
+            name="%command.name"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryConnectHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
-            name="Disconnect Repository"
+            name="%command.name.0"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryDisconnectHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
-            name="Checkout Repository"
+            name="%command.name.1"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutQuick"
-            name="Checkout Repository Quick"
+            name="%command.name.2"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.RepositoryCheckoutHandlerQuick"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
-            name="Open Checkout"
+            name="%command.name.3"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutOpenHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
-            name="Close Checkout"
+            name="%command.name.4"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutCloseHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
-            name="Duplicate Checkout"
+            name="%command.name.5"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.CheckoutDuplicateHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
-            name="Update Workspace"
+            name="%command.name.6"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceUpdateHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
-            name="Checkin Workspace"
+            name="%command.name.7"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceCheckinHandler"/>
       <command
             id="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
-            name="Revert Workspace"
+            name="%command.name.8"
             defaultHandler="org.eclipse.emf.cdo.explorer.ui.handlers.WorkspaceRevertHandler"/>
   </extension>
 
@@ -605,9 +605,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryConnect"
                icon="icons/connect.gif"
-               label="Connect"
+               label="%command.label"
                style="push"
-               tooltip="Connect to the repository">
+               tooltip="%command.tooltip">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -622,9 +622,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutOpen"
                icon="icons/checkout.gif"
-               label="Open Checkout"
+               label="%command.label.0"
                style="push"
-               tooltip="Open the checkout">
+               tooltip="%command.tooltip.0">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -643,9 +643,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckoutQuick"
                icon="icons/new_checkout.gif"
-               label="Checkout"
+               label="%command.label.1"
                style="push"
-               tooltip="Check the repository out as an online connection">
+               tooltip="%command.tooltip.1">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -660,9 +660,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryCheckout"
                icon="icons/new_checkout.gif"
-               label="Checkout As..."
+               label="%command.label.2"
                style="push"
-               tooltip="Check the repository out into the Project Explorer">
+               tooltip="%command.tooltip.2">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -681,9 +681,9 @@
          <command
                commandId="org.eclipse.ui.edit.rename"
                icon="icons/rename.gif"
-               label="Rename..."
+               label="%command.label.3"
                style="push"
-               tooltip="Rename the element">
+               tooltip="%command.tooltip.3">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -695,9 +695,9 @@
          <command
                commandId="org.eclipse.ui.edit.delete"
                icon="icons/delete.gif"
-               label="Delete..."
+               label="%command.label.4"
                style="push"
-               tooltip="Delete the repositories">
+               tooltip="%command.tooltip.4">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -709,9 +709,9 @@
          <command
                commandId="org.eclipse.ui.edit.delete"
                icon="icons/delete.gif"
-               label="Delete..."
+               label="%command.label.5"
                style="push"
-               tooltip="Delete the checkouts">
+               tooltip="%command.tooltip.5">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -723,9 +723,9 @@
          <command
                commandId="org.eclipse.ui.edit.delete"
                icon="icons/delete.gif"
-               label="Delete..."
+               label="%command.label.6"
                style="push"
-               tooltip="Delete the objects">
+               tooltip="%command.tooltip.6">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -750,9 +750,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutDuplicate"
                icon="icons/duplicate.gif"
-               label="Duplicate Checkout"
+               label="%command.label.7"
                style="push"
-               tooltip="Duplicate the checkout">
+               tooltip="%command.tooltip.7">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -768,9 +768,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.RepositoryDisconnect"
                icon="icons/disconnect.gif"
-               label="Disconnect"
+               label="%command.label.8"
                style="push"
-               tooltip="Disconnect from the repository">
+               tooltip="%command.tooltip.8">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -789,9 +789,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.CheckoutClose"
                icon="icons/checkout_closed.gif"
-               label="Close Checkout"
+               label="%command.label.9"
                style="push"
-               tooltip="Close the checkout">
+               tooltip="%command.tooltip.9">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -810,9 +810,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceUpdate"
                icon="icons/update.gif"
-               label="Update"
+               label="%command.label.10"
                style="push"
-               tooltip="Update the checkout from the remote repository">
+               tooltip="%command.tooltip.10">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -827,9 +827,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceCheckin"
                icon="icons/checkin.gif"
-               label="Checkin"
+               label="%command.label.11"
                style="push"
-               tooltip="Checkin the local changes into the remote repository">
+               tooltip="%command.tooltip.11">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -844,9 +844,9 @@
          <command
                commandId="org.eclipse.emf.cdo.explorer.ui.WorkspaceRevert"
                icon="icons/revert.gif"
-               label="Revert..."
+               label="%command.label.12"
                style="push"
-               tooltip="Revert the local changes">
+               tooltip="%command.tooltip.12">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -871,7 +871,7 @@
              enablesFor="1"
              icon="icons/new_checkout.gif"
              id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
-             label="Checkout As..."
+             label="%action.label"
              menubarPath="additions"
              style="push">
        </action>
@@ -880,7 +880,7 @@
              enablesFor="1"
              icon="icons/new_checkout.gif"
              id="org.eclipse.emf.cdo.explorer.ui.CheckoutCommitInfo"
-             label="Checkout"
+             label="%action.label.0"
              menubarPath="additions"
              style="push">
        </action>
@@ -909,15 +909,15 @@
   <extension point="org.eclipse.ui.workingSets">
     <workingSet
           id="org.eclipse.emf.cdo.explorer.ui.CheckoutWorkingSet"
-          name="CDO Checkouts"
+          name="%workingSet.name"
           icon="icons/workingset.gif"
-          description="Working set for CDO checkouts"
+          description="%workingSet.description"
           pageClass="org.eclipse.emf.cdo.explorer.ui.checkouts.workingsets.CheckoutWorkingSetWizardPage"/>
     <workingSet
           id="org.eclipse.emf.cdo.explorer.ui.OthersWorkingSet"
-          name="Other CDO Checkouts"
+          name="%workingSet.name.0"
           icon="icons/workingset.gif"
-          description="Working set containing all CDO checkouts not in any other groups"
+          description="%workingSet.description.0"
           updaterClass="org.eclipse.emf.cdo.explorer.ui.checkouts.workingsets.OthersWorkingSetUpdater"/>
   </extension>
 

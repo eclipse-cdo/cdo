@@ -15,14 +15,14 @@
          point="org.eclipse.ui.views">
       <category
             id="org.eclipse.emf.cdo.dawn.ui"
-            name="Dawn Category">
+            name="%category.name">
       </category>
       <view
             category="org.eclipse.emf.cdo.dawn.ui"
             class="org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer"
             icon="icons/dawn_16x16.gif"
             id="org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer"
-            name="Dawn Explorer">
+            name="%view.name">
       </view>
    </extension>
    <extension
@@ -35,11 +35,11 @@
          point="org.eclipse.ui.newWizards">
       <category
             id="org.eclipse.emf.cdo.dawn.ui.category.examples"
-            name="Dawn Examples">
+            name="%category.name.0">
       </category>
       <category
             id="org.eclipse.emf.cdo.dawn.ui.category.dawn"
-            name="Dawn">
+            name="%category.name.1">
       </category>
    </extension>
    <extension
@@ -47,12 +47,12 @@
       <command
             defaultHandler="org.eclipse.emf.cdo.dawn.ui.handlers.LockObjectsHandler"
             id="org.eclipse.emf.cdo.dawn.ui.lockobjects"
-            name="Lock objects">
+            name="%command.name">
       </command>
       <command
             defaultHandler="org.eclipse.emf.cdo.dawn.ui.handlers.UnLockObjectsHandler"
             id="org.eclipse.emf.cdo.dawn.ui.unlockobjects"
-            name="Unlock objects">
+            name="%command.name.0">
       </command>
    </extension>
   <extension
@@ -60,7 +60,7 @@
              <menuContribution
                    locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               label="Locking">
+               label="%menu.label">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -72,12 +72,12 @@
             </visibleWhen>
             <command
                   commandId="org.eclipse.emf.cdo.dawn.ui.lockobjects"
-                  label="Lock"
+                  label="%command.label"
                   mnemonic="%contributions.view.refresh.mnemonic">
             </command>
                    <command
                   commandId="org.eclipse.emf.cdo.dawn.ui.unlockobjects"
-                  label="Unlock"
+                  label="%command.label.0"
                   mnemonic="%contributions.view.refresh.mnemonic">
             </command>
          </menu>
@@ -89,7 +89,7 @@
              <menuContribution
                    locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <menu
-               label="Conflict">
+               label="%menu.label.0">
             <visibleWhen
                   checkEnabled="false">
                <with
@@ -101,7 +101,7 @@
             </visibleWhen>
             <command
                   commandId="org.eclipse.emf.cdo.dawn.commands.solveconflict"
-                  label="Solve Conflict"
+                  label="%command.label.1"
                   mnemonic="%contributions.view.refresh.mnemonic">
             </command>
          </menu>
@@ -112,7 +112,7 @@
           point="org.eclipse.ui.commands">
        <command
              id="org.eclipse.emf.cdo.dawn.commands.solveconflict"
-             name="Solve Confilct">
+             name="%command.name.1">
        </command>
     </extension>
     <extension

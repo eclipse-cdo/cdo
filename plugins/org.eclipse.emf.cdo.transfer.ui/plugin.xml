@@ -14,7 +14,7 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.transfer.ui.providers" name="CDO Transfer UI Providers"/>
+       <productGroup id="org.eclipse.emf.cdo.transfer.ui.providers" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

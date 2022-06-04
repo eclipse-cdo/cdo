@@ -15,7 +15,7 @@
 
    	<extension id="tcp_h2" point="org.eclipse.core.runtime.products">
       	<product
-        	name="CDO Server"
+        	name="%product.name.0"
           description="%product.description"
           application="org.eclipse.emf.cdo.server.app">
         		<property name="appName" value="CDO Server"/>

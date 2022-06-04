@@ -14,7 +14,7 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.sessions" name="Net4j Sessions"/>
+       <productGroup id="org.eclipse.emf.cdo.sessions" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

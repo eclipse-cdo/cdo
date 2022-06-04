@@ -14,7 +14,7 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-      <productGroup id="org.eclipse.emf.cdo.lm.server.lifecycleManagers" name="CDO Lifecycle Managers"/>
+      <productGroup id="org.eclipse.emf.cdo.lm.server.lifecycleManagers" name="%productGroup.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

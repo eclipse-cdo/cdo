@@ -31,7 +31,7 @@
             objectClass="org.eclipse.emf.cdo.transaction.CDOTransaction">
          <menu
                id="org.eclipse.emf.cdo.ui.compare.MergeMenu"
-               label="Merge"
+               label="%menu.label"
                path="additions">
             <separator name="group1"/>
          </menu>
@@ -39,14 +39,14 @@
                class="org.eclipse.emf.cdo.ui.internal.compare.Merge$FromBranchPoint"
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.compare.MergeFromBranchPointAction"
-               label="From Branch Point..."
+               label="%action.label"
                menubarPath="org.eclipse.emf.cdo.ui.compare.MergeMenu/group1">
          </action>
          <action
                class="org.eclipse.emf.cdo.ui.internal.compare.Merge$FromBranch"
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.compare.MergeFromBranchAction"
-               label="From Branch..."
+               label="%action.label.0"
                menubarPath="org.eclipse.emf.cdo.ui.compare.MergeMenu/group1">
          </action>
       </objectContribution>
@@ -58,7 +58,7 @@
                class="org.eclipse.emf.cdo.ui.internal.compare.CompareWithEachOther"
                enablesFor="2"
                id="org.eclipse.emf.cdo.ui.compare.CompareWithEachOtherAction"
-               label="Compare With Each Other..."
+               label="%action.label.1"
                menubarPath="compare"
                style="push">
          </action>
@@ -66,7 +66,7 @@
                class="org.eclipse.emf.cdo.ui.internal.compare.CompareWithPreviousVersion"
                enablesFor="1"
                id="org.eclipse.emf.cdo.ui.compare.CompareWithPreviousVersionAction"
-               label="Compare With Previous Version..."
+               label="%action.label.2"
                menubarPath="compare"
                style="push">
          </action>

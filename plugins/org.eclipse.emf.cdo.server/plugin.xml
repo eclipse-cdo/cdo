@@ -18,12 +18,12 @@
    	<extension-point id="appExtensions" name="%extension-point.name.1" schema="schema/appExtensions.exsd"/>
     
     <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="CDO Repository Configurators"/>
-       <productGroup id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="CDO Repository Activity Logs"/>
-       <productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories"/>
-       <productGroup id="org.eclipse.emf.cdo.server.commands" name="CDO Commands"/>
-       <productGroup id="org.eclipse.emf.cdo.server.browsers" name="CDO Browsers"/>
-       <productGroup id="org.eclipse.emf.cdo.server.browserPages" name="CDO Browser Pages"/>
+       <productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="%productGroup.name"/>
+       <productGroup id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="%productGroup.name.0"/>
+       <productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="%productGroup.name.1"/>
+       <productGroup id="org.eclipse.emf.cdo.server.commands" name="%productGroup.name.2"/>
+       <productGroup id="org.eclipse.emf.cdo.server.browsers" name="%productGroup.name.3"/>
+       <productGroup id="org.eclipse.emf.cdo.server.browserPages" name="%productGroup.name.4"/>
     </extension>
 
 		<extension point="org.eclipse.net4j.util.factories">

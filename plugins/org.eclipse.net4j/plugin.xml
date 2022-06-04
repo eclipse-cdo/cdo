@@ -14,13 +14,13 @@
 <plugin>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-     <productGroup id="org.eclipse.net4j.bufferProviders" name="Net4j Buffer Providers"/>
-     <productGroup id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols"/>
-     <productGroup id="org.eclipse.net4j.clientProtocols" name="Net4j Client Protocols"/>
-     <productGroup id="org.eclipse.net4j.acceptorDescriptionParsers" name="Net4j Acceptor Description Parsers"/>
-     <productGroup id="org.eclipse.net4j.acceptors" name="Net4j Acceptors"/>
-     <productGroup id="org.eclipse.net4j.connectors" name="Net4j Connectors"/>
-     <productGroup id="org.eclipse.net4j.selectors" name="Net4j Selectors"/>
+     <productGroup id="org.eclipse.net4j.bufferProviders" name="%productGroup.name"/>
+     <productGroup id="org.eclipse.net4j.serverProtocols" name="%productGroup.name.0"/>
+     <productGroup id="org.eclipse.net4j.clientProtocols" name="%productGroup.name.1"/>
+     <productGroup id="org.eclipse.net4j.acceptorDescriptionParsers" name="%productGroup.name.2"/>
+     <productGroup id="org.eclipse.net4j.acceptors" name="%productGroup.name.3"/>
+     <productGroup id="org.eclipse.net4j.connectors" name="%productGroup.name.4"/>
+     <productGroup id="org.eclipse.net4j.selectors" name="%productGroup.name.5"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

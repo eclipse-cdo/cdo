@@ -14,12 +14,12 @@
 
 <plugin>
 
-  <extension-point id="editorOpeners" name="Editor Openers" schema="schema/editorOpeners.exsd"/>
+  <extension-point id="editorOpeners" name="%extension-point.name" schema="schema/editorOpeners.exsd"/>
 
    <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="CDO Load Resource Providers"/>
-       <productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages"/>
-       <productGroup id="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" name="CDO History Input Object Modifiers"/>
+       <productGroup id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="%productGroup.name"/>
+       <productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="%productGroup.name.0"/>
+       <productGroup id="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" name="%productGroup.name.1"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -121,14 +121,14 @@
   <extension point="org.eclipse.ui.importWizards">
      <category
            id="org.eclipse.emf.cdo.category"
-           name="CDO">
+           name="%category.name">
      </category>
   </extension>
 
   <extension point="org.eclipse.ui.newWizards">
      <category
            id="org.eclipse.emf.cdo.category"
-           name="CDO">
+           name="%category.name.1">
      </category>
   </extension>
 
@@ -348,7 +348,7 @@
                enablesFor="1"
                icon="icons/full/obj16/branch.gif"
                id="org.eclipse.emf.cdo.ui.CreateBranchAction"
-               label="Create Branch..."
+               label="%action.label"
                menubarPath="branching"
                style="push">
          </action>
@@ -358,25 +358,25 @@
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.ui.CreateBranch"
-            name="Create Branch"/>
+            name="%command.name"/>
       <command
             id="org.eclipse.emf.cdo.ui.DeleteBranch"
-            name="Delete Branch"/>
+            name="%command.name.0"/>
       <command
             id="org.eclipse.emf.cdo.ui.LockObject"
-            name="Lock Object"
+            name="%command.name.1"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$LockObject"/>
       <command
             id="org.eclipse.emf.cdo.ui.LockTree"
-            name="Lock Tree"
+            name="%command.name.2"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$LockTree"/>
       <command
             id="org.eclipse.emf.cdo.ui.UnlockObject"
-            name="Unlock Object"
+            name="%command.name.3"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$UnlockObject"/>
       <command
             id="org.eclipse.emf.cdo.ui.UnlockTree"
-            name="Unlock Tree"
+            name="%command.name.4"
             defaultHandler="org.eclipse.emf.cdo.internal.ui.handlers.LockingHandler$UnlockTree"/>
   </extension>
 
@@ -408,9 +408,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.CreateBranch"
                icon="icons/full/obj16/branch.gif"
-               label="New Branch..."
+               label="%command.label"
                style="push"
-               tooltip="Add a new branch">
+               tooltip="%command.tooltip">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -429,9 +429,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.DeleteBranch"
                icon="icons/full/elcl16/delete_edit.gif"
-               label="Delete..."
+               label="%command.label.0"
                style="push"
-               tooltip="Delete the branch and its sub branches">
+               tooltip="%command.tooltip.0">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <and>
@@ -453,9 +453,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.LockObject"
                icon="icons/full/elcl16/lock.gif"
-               label="Lock Object"
+               label="%command.label.1"
                style="push"
-               tooltip="Acquire write locks for the selected objects">
+               tooltip="%command.tooltip.1">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -472,9 +472,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.LockTree"
                icon="icons/full/elcl16/lock.gif"
-               label="Lock Tree"
+               label="%command.label.2"
                style="push"
-               tooltip="Acquire write locks for the selected objects and their children">
+               tooltip="%command.tooltip.2">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -492,9 +492,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.UnlockObject"
                icon="icons/full/elcl16/unlock.gif"
-               label="Unlock Object"
+               label="%command.label.3"
                style="push"
-               tooltip="Release write locks for the selected objects">
+               tooltip="%command.tooltip.3">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">
@@ -509,9 +509,9 @@
          <command
                commandId="org.eclipse.emf.cdo.ui.UnlockTree"
                icon="icons/full/elcl16/unlock.gif"
-               label="Unlock Tree"
+               label="%command.label.4"
                style="push"
-               tooltip="Release write locks for the selected objects and their children">
+               tooltip="%command.tooltip.4">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">

@@ -41,7 +41,7 @@
           name="%view.category.name"/>
         <view
             id="org.eclipse.emf.cdo.ecore.DependenciesView"
-            name="Ecore Dependencies"
+            name="%view.name"
             icon="icons/full/obj16/Model.gif"
             class="org.eclipse.emf.cdo.ecore.dependencies.ui.DependenciesView"
             category="org.eclipse.emf.views"

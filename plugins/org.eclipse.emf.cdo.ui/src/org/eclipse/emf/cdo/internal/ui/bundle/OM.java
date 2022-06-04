@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.internal.ui.views.UserInfo;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.OverlayImage;
+import org.eclipse.emf.cdo.ui.Support;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -24,7 +25,6 @@ import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
-import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
@@ -64,9 +64,6 @@ public abstract class OM
   public static final OMPreference<Boolean> PREF_AUTOMATIC_PACKAGE_REGISTRY = //
       PREFS.init("PREF_AUTOMATIC_PACKAGE_REGISTRY", true); //$NON-NLS-1$
 
-  public static final OMPreference<Boolean> PREF_LEGACY_MODE_DEFAULT = //
-      PREFS.init("PREF_LEGACY_MODE_DEFAULT", true); //$NON-NLS-1$
-
   public static final OMPreference<Boolean> PREF_EDITOR_AUTO_RELOAD = //
       PREFS.init("PREF_EDITOR_AUTO_RELOAD", true); //$NON-NLS-1$
 
@@ -85,42 +82,22 @@ public abstract class OM
   public static final OMPreference<String> PREF_USER_DISPLAY_NAME = //
       PREFS.init("PREF_USER_DISPLAY_NAME", System.getProperty("user.name")); //$NON-NLS-1$
 
-  private static Boolean historySupportAvailable;
-
-  private static Boolean compareSupportAvailable;
-
+  /**
+   * @deprecated As of 4.13 use {@link Support#HISTORY Support.HISTORY.isAvailable()}.
+   */
+  @Deprecated
   public static boolean isHistorySupportAvailable()
   {
-    if (historySupportAvailable == null)
-    {
-      try
-      {
-        historySupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team", "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
-      }
-      catch (Throwable ex)
-      {
-        historySupportAvailable = false;
-      }
-    }
-
-    return historySupportAvailable;
+    return Support.HISTORY.isAvailable();
   }
 
+  /**
+   * @deprecated As of 4.13 use {@link Support#COMPARE Support.COMPARE.isAvailable()}.
+   */
+  @Deprecated
   public static boolean isCompareSupportAvailable()
   {
-    if (compareSupportAvailable == null)
-    {
-      try
-      {
-        compareSupportAvailable = CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare", "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
-      }
-      catch (Throwable ex)
-      {
-        compareSupportAvailable = false;
-      }
-    }
-
-    return compareSupportAvailable;
+    return Support.COMPARE.isAvailable();
   }
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)

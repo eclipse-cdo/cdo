@@ -110,7 +110,7 @@ public final class UserInfo
    */
   public static final class Manager extends Lifecycle
   {
-    public static final UserInfo.Manager INSTANCE = new Manager();
+    private static UserInfo.Manager instance;
 
     private final Map<CDORemoteSession, UserInfo> remoteUsers = new HashMap<>();
 
@@ -235,6 +235,22 @@ public final class UserInfo
       super.doDeactivate();
     }
 
+    public static synchronized UserInfo.Manager getInstance()
+    {
+      if (instance == null)
+      {
+        instance = new Manager();
+        instance.activate();
+      }
+
+      return instance;
+    }
+
+    public static synchronized UserInfo.Manager getInstanceOrNull()
+    {
+      return instance;
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -285,7 +301,8 @@ public final class UserInfo
       @Override
       protected byte[] createResponse(CDORemoteSession sender, byte[] request)
       {
-        UserInfo userInfo = INSTANCE.getLocalUser();
+        Manager manager = getInstance();
+        UserInfo userInfo = manager.getLocalUser();
         return userInfo.serialize();
       }
     }
@@ -305,7 +322,8 @@ public final class UserInfo
       @Override
       protected byte[] createResponse(CDORemoteSession sender, byte[] request)
       {
-        INSTANCE.changeRemoteUser(sender, request);
+        Manager manager = getInstance();
+        manager.changeRemoteUser(sender, request);
         return null;
       }
     }

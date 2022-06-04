@@ -17,9 +17,10 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
-import org.eclipse.emf.cdo.ui.UserInfo;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Listener;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic;
+import org.eclipse.emf.cdo.ui.UserInfo;
+import org.eclipse.emf.cdo.ui.UserInfo.Manager;
 import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserChangedEvent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -99,6 +100,8 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
 
   private static final boolean EXPAND_SELECTION = //
       OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.CDORemoteTopicsView.EXPAND_SELECTION"); //$NON-NLS-1$
+
+  private Manager userInfoManager;
 
   private AutoCloseable userInfoListener;
 
@@ -293,7 +296,8 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     viewer.setInput(root);
     viewer.addSelectionChangedListener(selectionListener);
 
-    userInfoListener = EventUtil.addListener(UserInfo.Manager.INSTANCE, UserChangedEvent.class, e -> {
+    userInfoManager = UserInfo.Manager.getInstance();
+    userInfoListener = EventUtil.addListener(userInfoManager, UserChangedEvent.class, e -> {
       CDORemoteSession remoteSession = e.getRemoteSession();
       if (remoteSession != null)
       {
@@ -345,7 +349,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
   {
     if (!LOCAL_USER_INFO_HIDE)
     {
-      UserInfo localUser = UserInfo.Manager.INSTANCE.getLocalUser();
+      UserInfo localUser = userInfoManager.getLocalUser();
 
       manager.add(new Action(localUser.getDisplayName(), IAction.AS_PUSH_BUTTON)
       {
@@ -362,7 +366,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
           if (dialog.open() == InputDialog.OK)
           {
             String newDisplayName = dialog.getValue();
-            UserInfo.Manager.INSTANCE.changeLocalUser(localUser.getFirstName(), localUser.getLastName(), newDisplayName);
+            userInfoManager.changeLocalUser(localUser.getFirstName(), localUser.getLastName(), newDisplayName);
 
             newDisplayName = localUser.getDisplayName(); // Could be different if it was originally empty.
             if (!Objects.equals(newDisplayName, displayName))
@@ -748,7 +752,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
 
     public void updateText()
     {
-      UserInfo userInfo = UserInfo.Manager.INSTANCE.getRemoteUser(remoteSession);
+      UserInfo userInfo = userInfoManager.getRemoteUser(remoteSession);
       setText(userInfo.getDisplayName());
     }
 

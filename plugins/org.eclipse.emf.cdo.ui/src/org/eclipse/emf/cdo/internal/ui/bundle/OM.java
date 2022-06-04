@@ -138,13 +138,17 @@ public abstract class OM
     protected void doStart() throws Exception
     {
       CDOEditorOpener.Registry.INSTANCE.activate();
-      UserInfo.Manager.INSTANCE.activate();
     }
 
     @Override
     protected void doStop() throws Exception
     {
-      UserInfo.Manager.INSTANCE.deactivate();
+      UserInfo.Manager userInfoManager = UserInfo.Manager.getInstanceOrNull();
+      if (userInfoManager != null)
+      {
+        userInfoManager.deactivate();
+      }
+
       CDOEditorOpener.Registry.INSTANCE.deactivate();
     }
   }

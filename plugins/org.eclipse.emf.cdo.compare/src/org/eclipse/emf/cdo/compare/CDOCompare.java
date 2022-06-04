@@ -64,6 +64,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Supplier;
 
 /**
  * A class with many overridable factory methods that help to create EMF {@link Comparison comparisons}.
@@ -75,6 +76,8 @@ public class CDOCompare
   private static final boolean IGNORE_RCP_REGISTRIES = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.compare.CDOCompare.IGNORE_RCP_REGISTRIES");
 
   private static final boolean USE_RCP_REGISTRIES;
+
+  private static final ThreadLocal<Supplier<CDOCompare>> SUPPLIER = new ThreadLocal<>();
 
   static
   {
@@ -250,9 +253,36 @@ public class CDOCompare
     return null;
   }
 
+  /**
+   * @since 4.7
+   */
+  public static CDOCompare create()
+  {
+    Supplier<CDOCompare> supplier = SUPPLIER.get();
+    if (supplier != null)
+    {
+      SUPPLIER.remove();
+      return supplier.get();
+    }
+
+    return new CDOCompare();
+  }
+
+  /**
+   * @since 4.7
+   */
+  public static void setCompareSupplier(Supplier<CDOCompare> supplier)
+  {
+    SUPPLIER.set(supplier);
+  }
+
+  /**
+   * @deprecated As 4.7 use {@link CDOCompareUtil#getScope(Comparison)}.
+   */
+  @Deprecated
   public static IComparisonScope getScope(Comparison comparison)
   {
-    return EMFUtil.getAdapter(comparison, IComparisonScope.class);
+    return CDOCompareUtil.getScope(comparison);
   }
 
   /**
@@ -511,7 +541,7 @@ public class CDOCompare
        */
       public Factory()
       {
-        CDOCompare compare = new CDOCompare();
+        CDOCompare compare = CDOCompare.create();
         CDOIDFunction idFunction = compare.createIDFunction();
         IdentifierEObjectMatcher matcher = compare.createMatcher(idFunction);
         IEqualityHelperFactory equalityHelperFactory = compare.createEqualityHelperFactory();

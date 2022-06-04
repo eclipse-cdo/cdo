@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.compare.CDOCompare.CDOIDFunction;
 import org.eclipse.emf.cdo.compare.CDOComparisonScope.AllContents;
 import org.eclipse.emf.cdo.compare.CDOComparisonScope.Minimal;
@@ -74,9 +75,17 @@ public final class CDOCompareUtil
   {
   }
 
+  /**
+   * @since 4.7
+   */
+  public static IComparisonScope getScope(Comparison comparison)
+  {
+    return EMFUtil.getAdapter(comparison, IComparisonScope.class);
+  }
+
   public static Comparison compare(IComparisonScope scope)
   {
-    return new CDOCompare().compare(scope);
+    return CDOCompare.create().compare(scope);
   }
 
   /**

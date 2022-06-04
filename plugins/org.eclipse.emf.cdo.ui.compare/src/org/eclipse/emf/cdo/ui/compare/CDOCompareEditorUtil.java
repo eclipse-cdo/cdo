@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
-import org.eclipse.emf.cdo.compare.CDOCompare;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.compare.CDOComparisonScope;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -273,13 +272,13 @@ public final class CDOCompareEditorUtil
   /**
    * @since 4.3
    */
-  public static boolean openEditor(CDOCommitInfo rightCommitInfo, CDOBranchPoint leftPoint, boolean activate)
+  public static boolean openEditor(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint, boolean activate)
   {
     ACTIVATE_EDITOR.set(activate);
 
     try
     {
-      return openDialog(rightCommitInfo, leftPoint);
+      return openDialog(leftCommitInfo, rightPoint);
     }
     finally
     {
@@ -401,12 +400,12 @@ public final class CDOCompareEditorUtil
     }
   }
 
-  public static boolean openDialog(CDOCommitInfo rightCommitInfo, CDOBranchPoint leftPoint)
+  public static boolean openDialog(CDOCommitInfo leftCommitInfo, CDOBranchPoint rightPoint)
   {
-    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)rightCommitInfo.getCommitInfoManager().getRepository();
+    CDORepositoryInfo repositoryInfo = (CDORepositoryInfo)leftCommitInfo.getCommitInfoManager().getRepository();
     CDOSession session = repositoryInfo.getSession();
 
-    return openDialog(session, leftPoint, rightCommitInfo);
+    return openDialog(session, leftCommitInfo, rightPoint);
   }
 
   public static boolean openDialog(CDOCommitInfo commitInfo)
@@ -539,7 +538,7 @@ public final class CDOCompareEditorUtil
       return null;
     }
 
-    IComparisonScope scope = CDOCompare.getScope(comparison);
+    IComparisonScope scope = CDOCompareUtil.getScope(comparison);
     ICompareEditingDomain editingDomain = EMFCompareEditingDomain.create(scope.getLeft(), scope.getRight(), scope.getOrigin());
 
     ComposedAdapterFactory.Descriptor.Registry registry = EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry();

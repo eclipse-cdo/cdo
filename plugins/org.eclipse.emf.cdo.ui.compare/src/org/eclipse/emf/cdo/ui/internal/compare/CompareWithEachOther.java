@@ -36,7 +36,7 @@ public class CompareWithEachOther extends CompareActionDelegate<CDOCommitInfo>
       CDOCommitInfo commitInfo0 = targets.get(0);
       CDOCommitInfo commitInfo1 = targets.get(1);
 
-      if (CDOCommonUtil.compareTimeStamps(commitInfo0.getTimeStamp(), commitInfo1.getTimeStamp()) < 0)
+      if (CDOCommonUtil.compareTimeStamps(commitInfo0.getTimeStamp(), commitInfo1.getTimeStamp()) > 0)
       {
         CDOCommitInfo tmp = commitInfo0;
         commitInfo0 = commitInfo1;

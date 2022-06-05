@@ -228,7 +228,12 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     try
     {
       CloseableIterator<Object> result = query.getResultAsync(Object.class);
-      result.hasNext();
+      for (int i = 0; i < 20; i++)
+      {
+        result.hasNext();
+        sleep(10);
+      }
+
       fail("Exception expected");
     }
     catch (Exception expected)

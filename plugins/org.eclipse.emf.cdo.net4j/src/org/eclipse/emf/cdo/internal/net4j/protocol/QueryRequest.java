@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.object.CDOObjectReferenceImpl;
 
+import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
@@ -104,5 +105,12 @@ public class QueryRequest extends CDOClientRequest<Boolean>
     }
 
     return true;
+  }
+
+  @Override
+  protected void onRemoteException(RemoteException ex)
+  {
+    CDOQueryQueue<Object> resultQueue = queryResult.getQueue();
+    resultQueue.setException(ex);
   }
 }

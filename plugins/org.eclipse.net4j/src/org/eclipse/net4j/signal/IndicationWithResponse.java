@@ -73,12 +73,7 @@ public abstract class IndicationWithResponse extends SignalReactor
       responding = true;
       doOutput(out);
     }
-    catch (Error ex)
-    {
-      sendExceptionSignal(ex, responding);
-      throw ex;
-    }
-    catch (Exception ex)
+    catch (Exception | Error ex)
     {
       sendExceptionSignal(ex, responding);
       throw ex;

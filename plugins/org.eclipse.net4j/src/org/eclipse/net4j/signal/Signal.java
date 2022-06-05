@@ -391,11 +391,7 @@ public abstract class Signal implements Runnable
     {
       doExtendedOutput(extended);
     }
-    catch (Error ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
+    catch (Exception | Error ex)
     {
       throw ex;
     }
@@ -422,11 +418,7 @@ public abstract class Signal implements Runnable
     {
       doExtendedInput(extended);
     }
-    catch (Error ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
+    catch (Exception | Error ex)
     {
       throw ex;
     }

@@ -33,9 +33,9 @@ public class AbstractQueryResult<T> implements BlockingCloseableIterator<T>
 
   private int queryID;
 
-  private CDOQueryQueue<Object> queue = new CDOQueryQueue<>();
+  private final CDOQueryQueue<Object> queue = new CDOQueryQueue<>();
 
-  private BlockingCloseableIterator<Object> queueItr = queue.iterator();
+  private final BlockingCloseableIterator<Object> queueItr = queue.iterator();
 
   /**
    * @since 3.0

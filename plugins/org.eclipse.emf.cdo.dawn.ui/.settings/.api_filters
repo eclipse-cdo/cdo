@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.dawn.ui" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="2.3.0"/>
+                <message_argument value="2.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/dawn/ui/views/DawnExplorer.java" type="org.eclipse.emf.cdo.dawn.ui.views.DawnExplorer">
         <filter comment="To be fixed later" id="576720909">
             <message_arguments>

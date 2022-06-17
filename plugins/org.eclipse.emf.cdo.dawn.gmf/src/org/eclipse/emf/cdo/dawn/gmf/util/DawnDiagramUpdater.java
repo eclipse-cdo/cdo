@@ -43,6 +43,7 @@ import org.eclipse.ui.PlatformUI;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author Martin Fluegge
@@ -98,7 +99,6 @@ public class DawnDiagramUpdater
   {
     editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
     {
-
       @Override
       protected void doExecute()
       {
@@ -111,14 +111,19 @@ public class DawnDiagramUpdater
           {
             return;
           }
-          if (structuredSelection.getFirstElement() instanceof EditPart && ((EditPart)structuredSelection.getFirstElement()).getModel() instanceof View)
+
+          if (structuredSelection.getFirstElement() instanceof EditPart)
           {
-            EObject modelElement = ((View)((EditPart)structuredSelection.getFirstElement()).getModel()).getElement();
-            List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
-            for (Iterator<?> it = editPolicies.iterator(); it.hasNext();)
+            Object model = ((EditPart)structuredSelection.getFirstElement()).getModel();
+            if (model instanceof View)
             {
-              CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy)it.next();
-              nextEditPolicy.refresh();
+              EObject modelElement = ((View)model).getElement();
+              List<?> editPolicies = CanonicalEditPolicy.getRegisteredEditPolicies(modelElement);
+              for (Iterator<?> it = editPolicies.iterator(); it.hasNext();)
+              {
+                CanonicalEditPolicy nextEditPolicy = (CanonicalEditPolicy)it.next();
+                nextEditPolicy.refresh();
+              }
             }
           }
         }
@@ -156,9 +161,13 @@ public class DawnDiagramUpdater
         {
           if (connectionEditPart instanceof EditPart)
           {
-            if (((Edge)((EditPart)connectionEditPart).getModel()).getBendpoints() != null)
+            Object model = ((EditPart)connectionEditPart).getModel();
+            if (model instanceof Edge)
             {
-              refeshEditpartInternal((EditPart)connectionEditPart);
+              if (((Edge)model).getBendpoints() != null)
+              {
+                refeshEditpartInternal((EditPart)connectionEditPart);
+              }
             }
           }
         }
@@ -196,17 +205,18 @@ public class DawnDiagramUpdater
       return (View)element;
     }
 
-    if (element.eContainer() == null)
+    EObject eContainer = element.eContainer();
+    if (eContainer == null)
     {
       return null;
     }
 
-    if (element.eContainer() instanceof View)
+    if (eContainer instanceof View)
     {
-      return (View)element.eContainer();
+      return (View)eContainer;
     }
 
-    return findViewByContainer(element.eContainer());
+    return findViewByContainer(eContainer);
   }
 
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
@@ -215,6 +225,7 @@ public class DawnDiagramUpdater
     {
       return null;
     }
+
     for (EObject e : editor.getDiagram().eContents())
     {
       if (e instanceof View)
@@ -227,9 +238,11 @@ public class DawnDiagramUpdater
             TRACER.format("FOUND View: {0} for view obj: {1} ", e, object); //$NON-NLS-1$
           }
         }
+
         return (View)e;
       }
     }
+
     return null;
   }
 
@@ -255,6 +268,7 @@ public class DawnDiagramUpdater
         view = DawnDiagramUpdater.findViewForModel(element, editor);
       }
     }
+
     return view;
   }
 
@@ -270,14 +284,17 @@ public class DawnDiagramUpdater
         {
           TRACER.format("EditPart does not exist for view  {0} ", view); //$NON-NLS-1$
         }
+
         editPart = EditPartService.getInstance().createGraphicEditPart(view);
         setParentEditPart(editor, view, editPart);
       }
     }
+
     if (TRACER.isEnabled())
     {
       TRACER.format("Found EditPart:  {0} ", editPart); //$NON-NLS-1$
     }
+
     return editPart;
   }
 
@@ -289,6 +306,7 @@ public class DawnDiagramUpdater
     {
       parentEditPart = editor.getDiagramEditPart();
     }
+
     editPart.setParent(parentEditPart);
   }
 
@@ -299,7 +317,7 @@ public class DawnDiagramUpdater
     for (Object e : diagramEditPart.getChildren())
     {
       EditPart ep = (EditPart)e;
-      if (ep.getModel().equals(view))
+      if (Objects.equals(ep.getModel(), view))
       {
         return ep;
       }
@@ -308,11 +326,12 @@ public class DawnDiagramUpdater
     for (Object e : diagramEditPart.getConnections())
     {
       EditPart ep = (EditPart)e;
-      if (ep.getModel().equals(view))
+      if (Objects.equals(ep.getModel(), view))
       {
         return ep;
       }
     }
+
     return null;
   }
 
@@ -320,7 +339,7 @@ public class DawnDiagramUpdater
   {
     EditPart ret;
 
-    if (editPart.getModel().equals(view))
+    if (Objects.equals(editPart.getModel(), view))
     {
       return editPart;
     }
@@ -347,6 +366,7 @@ public class DawnDiagramUpdater
         }
       }
     }
+
     return null;
   }
 
@@ -365,8 +385,6 @@ public class DawnDiagramUpdater
    * <p>
    * In our scenario the Edges will be wrongly connected to the diagram itself, which makes the CanonicalEditingPolicy
    * to remove and restore the edge. Long, short story, we must 'touch' the elements here to have the element set.
-   *
-   * @param diagram
    */
   public static void initializeElement(Diagram diagram)
   {
@@ -398,17 +416,18 @@ public class DawnDiagramUpdater
         }
       }
     }
+
     return null;
   }
 
   public static View findView(EObject element)
   {
     View view = DawnDiagramUpdater.findViewByContainer(element);
-
     if (view == null)
     {
       view = DawnDiagramUpdater.findViewFromCrossReferences(element);
     }
+
     return view;
   }
 }

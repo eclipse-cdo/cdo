@@ -207,9 +207,14 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
   {
     if (!changedObjects.isEmpty())
     {
-      for (Object o : changedObjects.keySet())
+      CDOView view = getView();
+
+      for (Object object : changedObjects.keySet())
       {
-        handleLock((CDOObject)o, getView());
+        if (object instanceof CDOObject)
+        {
+          handleLock((CDOObject)object, view);
+        }
       }
 
       refresh();
@@ -224,20 +229,22 @@ public class DawnGMFEditorSupport extends DawnAbstractEditorSupport
     {
       // if there is no view, the semantic object is not displayed.
       EditPart editPart = DawnDiagramUpdater.createOrFindEditPartIfViewExists(view, getDiagramEditor(getEditor()));
-
-      if (object.cdoWriteLock().isLocked())
+      if (editPart != null)
       {
-        DawnAppearancer.setEditPartLocked(editPart, DawnAppearancer.TYPE_LOCKED_LOCALLY);
-      }
-      else if (object.cdoWriteLock().isLockedByOthers())
-      {
-        DawnAppearancer.setEditPartLocked(editPart, DawnAppearancer.TYPE_LOCKED_GLOBALLY);
-        DawnChangeHelper.deactivateEditPart(editPart);
-      }
-      else
-      {
-        DawnAppearancer.setEditPartDefault(editPart);
-        DawnChangeHelper.activateEditPart(editPart);
+        if (object.cdoWriteLock().isLocked())
+        {
+          DawnAppearancer.setEditPartLocked(editPart, DawnAppearancer.TYPE_LOCKED_LOCALLY);
+        }
+        else if (object.cdoWriteLock().isLockedByOthers())
+        {
+          DawnAppearancer.setEditPartLocked(editPart, DawnAppearancer.TYPE_LOCKED_GLOBALLY);
+          DawnChangeHelper.deactivateEditPart(editPart);
+        }
+        else
+        {
+          DawnAppearancer.setEditPartDefault(editPart);
+          DawnChangeHelper.activateEditPart(editPart);
+        }
       }
     }
   }

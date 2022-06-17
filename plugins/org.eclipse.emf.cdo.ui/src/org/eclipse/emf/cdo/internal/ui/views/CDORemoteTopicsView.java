@@ -46,7 +46,9 @@ import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.ItemProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryContentProvider;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
+import org.eclipse.emf.edit.ui.provider.DelegatingStyledCellLabelProvider;
 
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
@@ -54,12 +56,17 @@ import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.ToolBarManager;
 import org.eclipse.jface.dialogs.InputDialog;
+import org.eclipse.jface.viewers.DecoratingLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ILabelDecorator;
+import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
@@ -286,8 +293,14 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
 
   protected Control createUI(Composite parent)
   {
-    AdapterFactoryLabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
-    labelProvider.setFireLabelUpdateNotifications(true);
+    ILabelProvider labelProvider = new AdapterFactoryLabelProvider(adapterFactory);
+    ((AdapterFactoryLabelProvider)labelProvider).setFireLabelUpdateNotifications(true);
+
+    ILabelDecorator decorator = createLabelDecorator();
+    if (decorator != null)
+    {
+      labelProvider = new DelegatingStyledCellLabelProvider(new DecoratingStyledLabelProvider(labelProvider, decorator));
+    }
 
     viewer = new TreeViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
     viewer.setContentProvider(new AdapterFactoryContentProvider(adapterFactory));
@@ -316,6 +329,11 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     });
 
     return viewer.getControl();
+  }
+
+  protected ILabelDecorator createLabelDecorator()
+  {
+    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
 
   protected void hookDoubleClick()
@@ -615,7 +633,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
   /**
    * @author Eike Stepper
    */
-  private class Item extends ItemProvider
+  private abstract class Item extends ItemProvider implements IAdaptable
   {
     protected Item()
     {
@@ -674,6 +692,18 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     public Topic getTopic()
     {
       return topic;
+    }
+
+    @Override
+    public <T> T getAdapter(Class<T> type)
+    {
+      T adapter = AdapterUtil.adapt(this, type);
+      if (adapter != null)
+      {
+        return adapter;
+      }
+
+      return topic.getAdapter(type);
     }
 
     @Override
@@ -759,6 +789,35 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     public CDORemoteSession getRemoteSession()
     {
       return remoteSession;
+    }
+
+    @Override
+    public <T> T getAdapter(Class<T> type)
+    {
+      return AdapterUtil.adapt(this, type);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class DecoratingStyledLabelProvider extends DecoratingLabelProvider implements IStyledLabelProvider
+  {
+    public DecoratingStyledLabelProvider(ILabelProvider provider, ILabelDecorator decorator)
+    {
+      super(provider, decorator);
+    }
+
+    @Override
+    public StyledString getStyledText(Object element)
+    {
+      ILabelProvider provider = getLabelProvider();
+      if (provider instanceof IStyledLabelProvider)
+      {
+        return ((IStyledLabelProvider)provider).getStyledText(element);
+      }
+
+      return new StyledString(getText(element));
     }
   }
 }

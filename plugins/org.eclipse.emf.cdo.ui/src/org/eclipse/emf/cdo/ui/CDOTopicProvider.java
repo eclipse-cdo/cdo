@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.core.runtime.PlatformObject;
 import org.eclipse.swt.graphics.Image;
 
 import java.util.Objects;
@@ -33,7 +34,7 @@ public interface CDOTopicProvider
   /**
    * @author Eike Stepper
    */
-  public static final class Topic
+  public static final class Topic extends PlatformObject
   {
     private final CDOSession session;
 

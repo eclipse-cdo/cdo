@@ -918,6 +918,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getLockStates(ids);
   }
 
+  @Override
+  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
+  {
+    return delegate.getLockStates(ids, loadOnDemand);
+  }
+
   /**
    * @since 4.6
    */

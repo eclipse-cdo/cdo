@@ -470,6 +470,11 @@ public final class CDOUtil
    */
   public static CDOViewSet getViewSet(Notifier notifier)
   {
+    if (notifier == null)
+    {
+      return null;
+    }
+
     if (notifier instanceof CDOViewSet)
     {
       return (CDOViewSet)notifier;

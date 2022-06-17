@@ -4289,50 +4289,51 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     return lockStateCache;
   }
 
-  @Override
-  protected Collection<CDOID> collectLockStatesAndReturnMissingIDs(Collection<CDOID> ids, boolean loadOnDemand, List<CDOLockState> result)
-  {
-    if (ObjectUtil.isEmpty(ids))
-    {
-      for (InternalCDOObject object : getModifiableObjects().values())
-      {
-        if (FSMUtil.isNew(object))
-        {
-          addLockStateOfNewObject(object, result);
-        }
-      }
-
-      return ids;
-    }
-
-    // Filter out ids that are of new objects or that are duplicate.
-    List<CDOID> missingIDs = new ArrayList<>();
-    Set<CDOID> visited = new HashSet<>();
-
-    for (CDOID id : ids)
-    {
-      if (visited.add(id))
-      {
-        InternalCDOObject object = getObject(id, false);
-        if (object != null && FSMUtil.isNew(object))
-        {
-          addLockStateOfNewObject(object, result);
-        }
-        else
-        {
-          missingIDs.add(id);
-        }
-      }
-    }
-
-    return missingIDs;
-  }
-
-  private void addLockStateOfNewObject(CDOObject object, List<CDOLockState> result)
-  {
-    CDOLockState lockStateOfNewObject = getLockStateOfNewObject(object);
-    result.add(lockStateOfNewObject);
-  }
+  // @Override
+  // protected Collection<CDOID> collectLockStatesAndReturnMissingIDs(Collection<CDOID> ids, boolean loadOnDemand,
+  // List<CDOLockState> result)
+  // {
+  // if (ObjectUtil.isEmpty(ids))
+  // {
+  // for (InternalCDOObject object : getModifiableObjects().values())
+  // {
+  // if (FSMUtil.isNew(object))
+  // {
+  // addLockStateOfNewObject(object, result);
+  // }
+  // }
+  //
+  // return Collections.emptySet();
+  // }
+  //
+  // // Filter out ids that are of new objects or that are duplicate.
+  // List<CDOID> missingIDs = new ArrayList<>();
+  // Set<CDOID> visited = new HashSet<>();
+  //
+  // for (CDOID id : ids)
+  // {
+  // if (visited.add(id))
+  // {
+  // InternalCDOObject object = getObject(id, false);
+  // if (object != null && FSMUtil.isNew(object))
+  // {
+  // addLockStateOfNewObject(object, result);
+  // }
+  // else
+  // {
+  // missingIDs.add(id);
+  // }
+  // }
+  // }
+  //
+  // return missingIDs;
+  // }
+  //
+  // private void addLockStateOfNewObject(CDOObject object, List<CDOLockState> result)
+  // {
+  // CDOLockState lockStateOfNewObject = getLockStateOfNewObject(object);
+  // result.add(lockStateOfNewObject);
+  // }
 
   /**
    * The caller must have checked FSMUtil.isNew(object) == true.

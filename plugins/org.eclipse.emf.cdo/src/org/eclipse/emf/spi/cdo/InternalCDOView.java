@@ -176,11 +176,6 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
   public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers);
 
   /**
-   * @since 4.15
-   */
-  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand);
-
-  /**
    * @since 4.1
    */
   public void handleLockNotification(InternalCDOView sender, CDOLockChangeInfo lockChangeInfo);

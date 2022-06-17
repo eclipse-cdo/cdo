@@ -501,11 +501,20 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   /**
    * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
    *
-   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all locked objects are returned.
+   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all objects are returned.
    *
    * @since 4.6
    */
   public CDOLockState[] getLockStates(Collection<CDOID> ids);
+
+  /**
+   * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOID ids}.
+   *
+   * If the collection of {@link CDOID ids} is empty, {@link CDOLockState lock states} of all objects are returned.
+   *
+   * @since 4.19
+   */
+  public CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand);
 
   /**
    * Get an array of {@link CDOLockState lock states} corresponding to the specified collection of {@link CDOObject objects}.

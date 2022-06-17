@@ -24,6 +24,8 @@ import org.eclipse.emf.cdo.spi.common.lock.AbstractCDOLockState;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
+import org.eclipse.emf.internal.cdo.bundle.OM;
+
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.ObjectUtil;
@@ -306,7 +308,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
       }
       catch (Exception ex)
       {
-        ex.printStackTrace();
+        OM.LOG.error(ex);
       }
     }
   }

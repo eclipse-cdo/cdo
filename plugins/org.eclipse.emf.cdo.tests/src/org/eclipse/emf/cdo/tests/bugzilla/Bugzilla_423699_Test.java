@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
@@ -31,6 +32,7 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * Test ensuring that locks are correctly released on deleted objects.
@@ -186,10 +188,22 @@ public class Bugzilla_423699_Test extends AbstractLockingTest
     }
 
     // Step 2: check lock
-    ArrayList<CDOID> elementIDs = new ArrayList<>();
-    elementIDs.add(elementID);
 
-    CDOLockState cdoLockState = transaction.getLockStates(elementIDs)[0];
-    assertEquals(elementID + " has wrong lock status", shouldBeLocked, cdoLockState.getWriteLockOwner() != null);
+    CDOLockState lockState = getLockState(elementID);
+    assertEquals(elementID + " has wrong lock status", shouldBeLocked, lockState != null && lockState.getWriteLockOwner() != null);
+  }
+
+  private CDOLockState getLockState(CDOID id)
+  {
+    List<CDOID> ids = new ArrayList<>();
+    ids.add(id);
+
+    CDOLockState[] lockStates = transaction.getLockStates(ids);
+    if (ObjectUtil.isEmpty(lockStates))
+    {
+      return null;
+    }
+
+    return lockStates[0];
   }
 }

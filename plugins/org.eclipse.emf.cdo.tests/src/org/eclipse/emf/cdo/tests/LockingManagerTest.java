@@ -1780,6 +1780,33 @@ public class LockingManagerTest extends AbstractLockingTest
     assertTrue(isLockedByOthersAfterClose);
   }
 
+  public void testViewGetLockStates() throws Exception
+  {
+    CDOView view = openSession().openView();
+    view.getRootResource().cdoReadLock().lock();
+
+    CDOLockState[] lockStates = view.getLockStates(Collections.emptySet());
+    assertEquals(1, lockStates.length);
+  }
+
+  public void testTransactionGetLockStates() throws Exception
+  {
+    CDOTransaction transaction = openSession().openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/res1"));
+    transaction.commit();
+    resource.cdoWriteLock().lock();
+
+    CDOLockState[] lockStates = transaction.getLockStates(Collections.emptySet(), false);
+    assertEquals(1, lockStates.length);
+
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    CDOUtil.getCDOObject(company).cdoWriteLock().lock();
+
+    lockStates = transaction.getLockStates(Collections.emptySet(), false);
+    assertEquals(2, lockStates.length);
+  }
+
   private void commitAndTimeout(CDOTransaction transaction)
   {
     InternalRepository repository = getRepository();

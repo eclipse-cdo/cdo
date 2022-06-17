@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests;singleton:=true
-Bundle-Version: 4.1.10.qualifier
+Bundle-Version: 4.1.11.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -62,17 +62,17 @@ Export-Package: base;version="4.0.200",
  interface_;version="4.0.200",
  interface_.impl;version="4.0.200",
  interface_.util;version="4.0.200",
- org.eclipse.emf.cdo.tests;version="4.1.10",
- org.eclipse.emf.cdo.tests.bugzilla;version="4.1.10",
- org.eclipse.emf.cdo.tests.bundle;version="4.1.10";x-internal:=true,
- org.eclipse.emf.cdo.tests.config;version="4.1.10",
- org.eclipse.emf.cdo.tests.config.impl;version="4.1.10",
- org.eclipse.emf.cdo.tests.extra;version="4.1.10",
- org.eclipse.emf.cdo.tests.offline;version="4.1.10",
- org.eclipse.emf.cdo.tests.performance;version="4.1.10",
- org.eclipse.emf.cdo.tests.performance.framework;version="4.1.10",
- org.eclipse.emf.cdo.tests.revisioncache;version="4.1.10",
- org.eclipse.emf.cdo.tests.util;version="4.1.10",
+ org.eclipse.emf.cdo.tests;version="4.1.11",
+ org.eclipse.emf.cdo.tests.bugzilla;version="4.1.11",
+ org.eclipse.emf.cdo.tests.bundle;version="4.1.11";x-internal:=true,
+ org.eclipse.emf.cdo.tests.config;version="4.1.11",
+ org.eclipse.emf.cdo.tests.config.impl;version="4.1.11",
+ org.eclipse.emf.cdo.tests.extra;version="4.1.11",
+ org.eclipse.emf.cdo.tests.offline;version="4.1.11",
+ org.eclipse.emf.cdo.tests.performance;version="4.1.11",
+ org.eclipse.emf.cdo.tests.performance.framework;version="4.1.11",
+ org.eclipse.emf.cdo.tests.revisioncache;version="4.1.11",
+ org.eclipse.emf.cdo.tests.util;version="4.1.11",
  reference;version="4.0.200",
  reference.impl;version="4.0.200";
   x-friends:="org.eclipse.emf.cdo.dawn.tests,

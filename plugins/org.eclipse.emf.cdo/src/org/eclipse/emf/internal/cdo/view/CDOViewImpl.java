@@ -54,6 +54,7 @@ import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.LockTimeoutException;
+import org.eclipse.emf.cdo.util.ObjectNotFoundException;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.util.StaleRevisionLockException;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
@@ -970,45 +971,74 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   public final CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
   {
+    List<CDOLockState> result = new ArrayList<>();
+
     synchronized (getViewMonitor())
     {
       lockView();
 
       try
       {
-        return getLockStatesUnsynced(ids, loadOnDemand);
+        collectLockStatesAndReturnMissingIDs(ids, loadOnDemand, result);
       }
       finally
       {
         unlockView();
       }
     }
-  }
-
-  protected final CDOLockState[] getLockStatesUnsynced(Collection<CDOID> ids, boolean loadOnDemand)
-  {
-    List<CDOLockState> result = new ArrayList<>();
-    Collection<CDOID> missingIDs = collectLockStatesAndReturnMissingIDs(ids, loadOnDemand, result);
-
-    if (!ObjectUtil.isEmpty(missingIDs))
-    {
-      CDOBranch branch = getBranch();
-      CDOLockStateCache lockStateCache = session.getLockStateCache();
-      lockStateCache.getLockStates(branch, missingIDs, loadOnDemand, result::add);
-    }
 
     return result.toArray(new CDOLockState[result.size()]);
   }
 
-  protected Collection<CDOID> collectLockStatesAndReturnMissingIDs(Collection<CDOID> ids, boolean loadOnDemand, List<CDOLockState> result)
+  protected void collectLockStatesAndReturnMissingIDs(Collection<CDOID> ids, boolean loadOnDemand, List<CDOLockState> result)
   {
-    if (ObjectUtil.isEmpty(ids))
+    // Consolidate duplicate ids.
+    Set<CDOID> idsToCollect = new HashSet<>(ids);
+    if (ObjectUtil.isEmpty(idsToCollect))
     {
-      return ids;
+      idsToCollect.addAll(getModifiableObjects().keySet());
     }
 
-    // Filter out ids that are duplicate.
-    return new HashSet<>(ids);
+    Set<CDOID> idsAlreadyCollected = new HashSet<>();
+
+    for (CDOID id : idsToCollect)
+    {
+      CDOObject object;
+
+      try
+      {
+        object = getObject(id, loadOnDemand);
+      }
+      catch (ObjectNotFoundException ex)
+      {
+        object = null;
+      }
+
+      if (object != null)
+      {
+        if (FSMUtil.isNew(object))
+        {
+          CDOLockState lockStateOfNewObject = getLockStateOfNewObject(object);
+          if (lockStateOfNewObject != null)
+          {
+            result.add(lockStateOfNewObject);
+            idsAlreadyCollected.add(id);
+          }
+        }
+      }
+      else
+      {
+        idsAlreadyCollected.add(id);
+      }
+    }
+
+    idsToCollect.removeAll(idsAlreadyCollected);
+    if (!ObjectUtil.isEmpty(idsToCollect))
+    {
+      CDOBranch branch = getBranch();
+      CDOLockStateCache lockStateCache = session.getLockStateCache();
+      lockStateCache.getLockStates(branch, idsToCollect, loadOnDemand, result::add);
+    }
   }
 
   private CDOBranchPoint getBranchPointForID(CDOID id)

@@ -12,12 +12,14 @@ package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.session.CDOSession;
 
+import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.StringUtil;
 
-import org.eclipse.core.runtime.PlatformObject;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.swt.graphics.Image;
 
 import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * @author Eike Stepper
@@ -34,7 +36,7 @@ public interface CDOTopicProvider
   /**
    * @author Eike Stepper
    */
-  public static final class Topic extends PlatformObject
+  public static final class Topic implements IAdaptable
   {
     private final CDOSession session;
 
@@ -46,13 +48,24 @@ public interface CDOTopicProvider
 
     private final String description;
 
+    private final Function<Class<?>, Object> adapterProvider;
+
     public Topic(CDOSession session, String id, Image image, String text, String description)
+    {
+      this(session, id, image, text, description, null);
+    }
+
+    /**
+     * @since 4.14
+     */
+    public Topic(CDOSession session, String id, Image image, String text, String description, Function<Class<?>, Object> adapterProvider)
     {
       this.session = session;
       this.id = id;
       this.image = image;
       this.text = text;
       this.description = description;
+      this.adapterProvider = adapterProvider;
     }
 
     public CDOSession getSession()
@@ -78,6 +91,37 @@ public interface CDOTopicProvider
     public String getDescription()
     {
       return description;
+    }
+
+    @Override
+    public <T> T getAdapter(Class<T> type)
+    {
+      T adapter = AdapterUtil.adapt(this, type, false);
+      if (adapter != null)
+      {
+        return adapter;
+      }
+
+      return provideAdapter(type);
+    }
+
+    private <T> T provideAdapter(Class<T> type)
+    {
+      if (adapterProvider != null)
+      {
+        try
+        {
+          @SuppressWarnings("unchecked")
+          T adapter = (T)adapterProvider.apply(type);
+          return adapter;
+        }
+        catch (ClassCastException ex)
+        {
+          //$FALL-THROUGH$
+        }
+      }
+
+      return null;
     }
 
     @Override

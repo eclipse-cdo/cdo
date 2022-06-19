@@ -697,7 +697,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     @Override
     public <T> T getAdapter(Class<T> type)
     {
-      T adapter = AdapterUtil.adapt(this, type);
+      T adapter = AdapterUtil.adapt(this, type, false);
       if (adapter != null)
       {
         return adapter;
@@ -794,7 +794,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     @Override
     public <T> T getAdapter(Class<T> type)
     {
-      return AdapterUtil.adapt(this, type);
+      return AdapterUtil.adapt(this, type, false);
     }
   }
 

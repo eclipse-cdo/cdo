@@ -100,5 +100,6 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
   /**
    * @since 4.17
    */
+  @Override
   public InternalCDORemoteTopic getSubscribedTopic(String id);
 }

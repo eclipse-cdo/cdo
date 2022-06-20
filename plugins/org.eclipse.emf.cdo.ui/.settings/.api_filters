@@ -1538,6 +1538,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/ui/CDOTopicProvider.java" type="org.eclipse.emf.cdo.ui.CDOTopicProvider">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider"/>
+                <message_argument value="changeTopic(CDOTopicProvider.Topic, Image, String, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/ui/widgets/TimeSlider.java" type="org.eclipse.emf.cdo.ui.widgets.TimeSlider">
         <filter id="571473929">
             <message_arguments>

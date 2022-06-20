@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Listener;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic;
+import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.TopicChangedEvent;
 import org.eclipse.emf.cdo.ui.UserInfo;
 import org.eclipse.emf.cdo.ui.UserInfo.Manager;
 import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserChangedEvent;
@@ -125,7 +126,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
       if (provider != null)
       {
         addTopics(provider.getTopics());
-        provider.addTopicListener(topicListener);
+        provider.addTopicListener(topicProviderListener);
       }
     }
 
@@ -135,7 +136,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
       CDOTopicProvider provider = getTopicProvider(partRef);
       if (provider != null)
       {
-        provider.removeTopicListener(topicListener);
+        provider.removeTopicListener(topicProviderListener);
         removeTopics(provider.getTopics());
       }
     }
@@ -154,7 +155,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     }
   };
 
-  private final Listener topicListener = new Listener()
+  private final Listener topicProviderListener = new Listener()
   {
     @Override
     public void topicAdded(CDOTopicProvider provider, Topic topic)
@@ -166,6 +167,19 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     public void topicRemoved(CDOTopicProvider provider, Topic topic)
     {
       removeTopics(topic);
+    }
+  };
+
+  private final IListener topicListener = new IListener()
+  {
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof TopicChangedEvent)
+      {
+        Topic topic = ((TopicChangedEvent)event).getSource();
+        UIUtil.asyncExec(viewer.getControl().getDisplay(), () -> refreshTopics(topic));
+      }
     }
   };
 
@@ -538,6 +552,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
         });
 
         item.reference();
+        topic.addListener(topicListener);
       }
     }
   }
@@ -548,6 +563,8 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
     {
       for (Topic topic : topics)
       {
+        topic.removeListener(topicListener);
+
         CDORemoteTopic remoteTopic = remoteTopics.get(topic);
         if (remoteTopic != null)
         {
@@ -567,6 +584,48 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
 
   protected void selectTopics(Topic... topics)
   {
+    List<RemoteTopicItem> items = getRemoteTopicItems(topics);
+
+    try
+    {
+      inEditorActivation = true;
+
+      IStructuredSelection selection = new StructuredSelection(items);
+      viewer.setSelection(selection);
+
+      if (EXPAND_SELECTION)
+      {
+        viewer.setExpandedElements(items.toArray());
+      }
+    }
+    finally
+    {
+      inEditorActivation = false;
+    }
+  }
+
+  protected void refreshTopics(Topic... topics)
+  {
+    synchronized (remoteTopics)
+    {
+      for (Topic topic : topics)
+      {
+        CDORemoteTopic remoteTopic = remoteTopics.get(topic);
+        if (remoteTopic != null)
+        {
+          RemoteTopicItem item = remoteTopicItems.get(remoteTopic);
+          if (item != null)
+          {
+            item.setImage(topic.getImage());
+            item.setText(topic.getText());
+          }
+        }
+      }
+    }
+  }
+
+  private List<RemoteTopicItem> getRemoteTopicItems(Topic... topics)
+  {
     List<RemoteTopicItem> items = new ArrayList<>();
 
     synchronized (remoteTopics)
@@ -585,22 +644,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
       }
     }
 
-    try
-    {
-      inEditorActivation = true;
-
-      IStructuredSelection selection = new StructuredSelection(items);
-      viewer.setSelection(selection);
-
-      if (EXPAND_SELECTION)
-      {
-        viewer.setExpandedElements(items.toArray());
-      }
-    }
-    finally
-    {
-      inEditorActivation = false;
-    }
+    return items;
   }
 
   private static CDOTopicProvider getTopicProvider(IWorkbenchPartReference partRef)
@@ -703,7 +747,27 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
         return adapter;
       }
 
-      return topic.getAdapter(type);
+      adapter = topic.getAdapter(type);
+      if (adapter != null)
+      {
+        return adapter;
+      }
+
+      if (type == Topic.class)
+      {
+        @SuppressWarnings("unchecked")
+        T result = (T)topic;
+        return result;
+      }
+
+      if (type == CDORemoteTopic.class)
+      {
+        @SuppressWarnings("unchecked")
+        T result = (T)remoteTopic;
+        return result;
+      }
+
+      return null;
     }
 
     @Override

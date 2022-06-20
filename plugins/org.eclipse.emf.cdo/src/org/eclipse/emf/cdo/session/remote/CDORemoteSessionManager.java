@@ -126,6 +126,14 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   public CDORemoteTopic subscribeTopic(String id);
 
   /**
+   * Returns the {@link CDORemoteTopic topic} with the given {@link CDORemoteTopic#getID() id},
+   * if it is currently subscribed, <code>null</code> otherwise.
+   *
+   * @since 4.19
+   */
+  public CDORemoteTopic getSubscribedTopic(String id);
+
+  /**
    * Returns an array of the currently subscribed {@link CDORemoteTopic topics}.
    *
    * @since 4.17

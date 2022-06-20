@@ -11,13 +11,19 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
+import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.Notifier;
 
 import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.swt.graphics.Image;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -34,38 +40,39 @@ public interface CDOTopicProvider
   public void removeTopicListener(Listener listener);
 
   /**
+   * @since 4.14
+   */
+  default public void changeTopic(Topic topic, Image newImage, String newText, String newDescription)
+  {
+    topic.change(newImage, newText, newDescription);
+  }
+
+  /**
    * @author Eike Stepper
    */
-  public static final class Topic implements IAdaptable
+  public static final class Topic extends Notifier implements IAdaptable
   {
+    private final Map<String, Object> properties = new HashMap<>();
+
     private final CDOSession session;
 
     private final String id;
 
-    private final Image image;
+    private Image image;
 
-    private final String text;
+    private String text;
 
-    private final String description;
+    private String description;
 
-    private final Function<Class<?>, Object> adapterProvider;
+    private Function<Class<?>, Object> adapterProvider = type -> null;
 
     public Topic(CDOSession session, String id, Image image, String text, String description)
-    {
-      this(session, id, image, text, description, null);
-    }
-
-    /**
-     * @since 4.14
-     */
-    public Topic(CDOSession session, String id, Image image, String text, String description, Function<Class<?>, Object> adapterProvider)
     {
       this.session = session;
       this.id = id;
       this.image = image;
       this.text = text;
       this.description = description;
-      this.adapterProvider = adapterProvider;
     }
 
     public CDOSession getSession()
@@ -93,6 +100,16 @@ public interface CDOTopicProvider
       return description;
     }
 
+    /**
+     * Returns a modifiable map of properties.
+     *
+     * @since 4.14
+     */
+    public Map<String, Object> getProperties()
+    {
+      return properties;
+    }
+
     @Override
     public <T> T getAdapter(Class<T> type)
     {
@@ -102,26 +119,42 @@ public interface CDOTopicProvider
         return adapter;
       }
 
-      return provideAdapter(type);
-    }
-
-    private <T> T provideAdapter(Class<T> type)
-    {
-      if (adapterProvider != null)
+      adapter = provideAdapter(type);
+      if (adapter != null)
       {
-        try
-        {
-          @SuppressWarnings("unchecked")
-          T adapter = (T)adapterProvider.apply(type);
-          return adapter;
-        }
-        catch (ClassCastException ex)
-        {
-          //$FALL-THROUGH$
-        }
+        return adapter;
+      }
+
+      if (type == CDORemoteTopic.class)
+      {
+        CDORemoteSessionManager remoteSessionManager = session.getRemoteSessionManager();
+
+        @SuppressWarnings("unchecked")
+        T subscribedTopic = (T)remoteSessionManager.getSubscribedTopic(id);
+        return subscribedTopic;
       }
 
       return null;
+    }
+
+    /**
+     * @since 4.14
+     */
+    public Topic addAdapterProvider(Function<Class<?>, Object> newAdapterProvider)
+    {
+      Function<Class<?>, Object> oldAdapterProvider = adapterProvider;
+
+      adapterProvider = type -> {
+        Object adapter = newAdapterProvider.apply(type);
+        if (adapter != null)
+        {
+          return adapter;
+        }
+
+        return oldAdapterProvider.apply(type);
+      };
+
+      return this;
     }
 
     @Override
@@ -164,6 +197,130 @@ public interface CDOTopicProvider
       }
 
       return string;
+    }
+
+    private <T> T provideAdapter(Class<T> type)
+    {
+      if (adapterProvider != null)
+      {
+        try
+        {
+          @SuppressWarnings("unchecked")
+          T adapter = (T)adapterProvider.apply(type);
+          return adapter;
+        }
+        catch (ClassCastException ex)
+        {
+          //$FALL-THROUGH$
+        }
+      }
+
+      return null;
+    }
+
+    private void change(Image newImage, String newText, String newDescription)
+    {
+      Image oldImage;
+      String oldText;
+      String oldDescription;
+      boolean changed = false;
+
+      synchronized (this)
+      {
+        oldImage = image;
+        if (!Objects.equals(oldImage, newImage))
+        {
+          image = newImage;
+          changed = true;
+        }
+
+        oldText = text;
+        if (!Objects.equals(oldText, newText))
+        {
+          text = newText;
+          changed = true;
+        }
+
+        oldDescription = description;
+        if (!Objects.equals(oldDescription, newDescription))
+        {
+          description = newDescription;
+          changed = true;
+        }
+      }
+
+      if (changed)
+      {
+        fireEvent(new TopicChangedEvent(this, oldImage, newImage, oldText, newText, oldDescription, newDescription));
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     * @since 4.14
+     */
+    public static final class TopicChangedEvent extends Event
+    {
+      private static final long serialVersionUID = 1L;
+
+      private final Image oldImage;
+
+      private final Image newImage;
+
+      private final String oldText;
+
+      private final String newText;
+
+      private final String oldDescription;
+
+      private final String newDescription;
+
+      private TopicChangedEvent(Topic topic, Image oldImage, Image newImage, String oldText, String newText, String oldDescription, String newDescription)
+      {
+        super(topic);
+        this.oldImage = oldImage;
+        this.newImage = newImage;
+        this.oldText = oldText;
+        this.newText = newText;
+        this.oldDescription = oldDescription;
+        this.newDescription = newDescription;
+      }
+
+      @Override
+      public Topic getSource()
+      {
+        return (Topic)super.getSource();
+      }
+
+      public Image getOldImage()
+      {
+        return oldImage;
+      }
+
+      public Image getNewImage()
+      {
+        return newImage;
+      }
+
+      public String getOldText()
+      {
+        return oldText;
+      }
+
+      public String getNewText()
+      {
+        return newText;
+      }
+
+      public String getOldDescription()
+      {
+        return oldDescription;
+      }
+
+      public String getNewDescription()
+      {
+        return newDescription;
+      }
     }
   }
 

@@ -117,9 +117,23 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public interface Props
   {
     /**
-     * In minutes.
+     * Period at which to execute an SQL statement to keep DB connection alive, in minutes.
      */
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$
+
+    /**
+     * Number of additional attempts to connect to the DB after initial connection failure.
+     *
+     * @since 4.12
+     */
+    public static final String CONNECTION_RETRY_COUNT = "connectionRetryCount"; //$NON-NLS-1$
+
+    /**
+     * Number of seconds to wait before additional attempts to connect to the DB after initial connection failure.
+     *
+     * @since 4.12
+     */
+    public static final String CONNECTION_RETRY_SECONDS = "connectionRetrySeconds"; //$NON-NLS-1$
 
     /**
      * @since 4.2

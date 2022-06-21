@@ -56,7 +56,9 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
 
@@ -108,6 +110,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastNonLocalCommitTime"; //$NON-NLS-1$
 
   private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
+
+  private static final int DEFAULT_CONNECTION_RETRY_COUNT = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_COUNT", 0);
+
+  private static final int DEFAULT_CONNECTION_RETRY_SECONDS = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_SECONDS",
+      30);
 
   private long creationTime;
 
@@ -191,6 +198,20 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return properties;
   }
 
+  private int getProperty(String key, int defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return Integer.parseInt(value);
+      }
+    }
+
+    return defaultValue;
+  }
+
   @Override
   public int getJDBCFetchSize()
   {
@@ -234,6 +255,50 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     return connection;
+  }
+
+  public Connection getConnectionOrRetry()
+  {
+    RuntimeException exception = null;
+    int attempts = 1 + getProperty(Props.CONNECTION_RETRY_COUNT, DEFAULT_CONNECTION_RETRY_COUNT);
+    int seconds = getProperty(Props.CONNECTION_RETRY_SECONDS, DEFAULT_CONNECTION_RETRY_SECONDS);
+    if (seconds < 1)
+    {
+      attempts = 1;
+    }
+
+    for (int i = 0; i < attempts; i++)
+    {
+      if (i != 0)
+      {
+        OM.LOG.info("Database connection could not be established. Next attempt is scheduled in " + seconds + " seconds...");
+        ConcurrencyUtil.sleep(1000L * seconds);
+      }
+
+      try
+      {
+        Connection connection = getConnection();
+        if (connection != null)
+        {
+          return connection;
+        }
+      }
+      catch (RuntimeException ex)
+      {
+        if (exception == null)
+        {
+          exception = ex;
+        }
+      }
+    }
+
+    String message = "Database connection could not be established after " + attempts + " attempts";
+    if (exception != null)
+    {
+      throw new DBException(message, exception);
+    }
+
+    throw new DBException(message);
   }
 
   public void setDBConnectionProvider(IDBConnectionProvider dbConnectionProvider)
@@ -674,7 +739,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       }
     }
 
-    Connection connection = getConnection();
+    Connection connection = getConnectionOrRetry();
     int schemaVersion;
 
     try

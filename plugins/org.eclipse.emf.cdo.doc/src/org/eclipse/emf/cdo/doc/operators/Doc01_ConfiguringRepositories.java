@@ -259,9 +259,27 @@ public class Doc01_ConfiguringRepositories
     /**
      * Property connectionKeepAlivePeriod
      * <p>
-     * Specifies, if the store is a DBStore, at what interval the store will issue an SQL statement to keep the connection to the database alive.
+     * Specifies, if the store is a DBStore, at what interval in minutes the store will issue an SQL statement to keep the connection to the database alive.
      */
     public class Property_connectionKeepAlivePeriod
+    {
+    }
+
+    /**
+     * Property connectionRetryCount
+     * <p>
+     * Specifies, if the store is a DBStore, the number of additional attempts to connect to the DB after initial connection failure.
+     */
+    public class Property_connectionRetryCount
+    {
+    }
+
+    /**
+     * Property connectionRetrySeconds
+     * <p>
+     * Specifies, if the store is a DBStore, the number of seconds to wait before additional attempts to connect to the DB after initial connection failure.
+     */
+    public class Property_connectionRetrySeconds
     {
     }
 

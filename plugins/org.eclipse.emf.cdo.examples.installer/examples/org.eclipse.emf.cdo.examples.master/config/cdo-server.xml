@@ -68,8 +68,14 @@
 	      <property name="jdbcFetchSize" value="10000"/>
 			-->
 
-      <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes -->
+      <!-- Period at which to execute an SQL statement to keep DB connection alive, in minutes. -->
       <property name="connectionKeepAlivePeriod" value="60"/>
+      
+      <!-- Number of additional attempts to connect to the DB after initial connection failure. -->
+      <property name="connectionRetryCount" value="1"/>
+      
+      <!-- Number of seconds to wait before additional attempts to connect to the DB after initial connection failure. -->
+      <property name="connectionRetrySeconds" value="30"/>
 
       <!-- Maximum number of store accessors (JDBC connections) to keep in the reader pool. The default value is 15.  -->
       <property name="readerPoolCapacity" value="20"/>

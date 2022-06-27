@@ -106,7 +106,9 @@ import org.eclipse.emf.cdo.transaction.CDOStaleReferenceCleaner;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksEnabledEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksExemptionsEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler1;
@@ -499,8 +501,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
       try
       {
-        event = new ConflictEvent(object, conflict == 0);
         ++conflict;
+        event = new ConflictAddedEvent(object, conflict);
       }
       finally
       {
@@ -514,6 +516,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public void removeConflict(InternalCDOObject object)
   {
+    IEvent event = null;
     synchronized (getViewMonitor())
     {
       lockView();
@@ -523,6 +526,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         if (conflict > 0)
         {
           --conflict;
+          event = new ConflictRemovedEvent(object, conflict);
         }
       }
       finally
@@ -530,6 +534,8 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         unlockView();
       }
     }
+
+    fireEvent(event);
   }
 
   /**
@@ -1001,6 +1007,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void handleConflicts(long lastUpdateTime, Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> deltas)
   {
+    int oldConflicts = -1;
+    List<CDOObject> resolvedObjects = null;
+
     synchronized (getViewMonitor())
     {
       lockView();
@@ -1035,7 +1044,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           revisions.add(conflict.cdoRevision());
         }
 
-        int resolved = 0;
+        oldConflicts = conflict;
 
         try
         {
@@ -1056,7 +1065,12 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               CDOObject object = it.next();
               if (!object.cdoConflict())
               {
-                ++resolved;
+                if (resolvedObjects == null)
+                {
+                  resolvedObjects = new ArrayList<>();
+                }
+
+                resolvedObjects.add(object);
                 it.remove();
               }
             }
@@ -1076,7 +1090,10 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           throw WrappedException.wrap(ex);
         }
 
-        conflict -= resolved;
+        if (resolvedObjects != null)
+        {
+          conflict -= resolvedObjects.size();
+        }
 
         Map<CDOID, CDOObject> dirtyObjects = getDirtyObjects();
         setDirty(!dirtyObjects.isEmpty());
@@ -1084,6 +1101,19 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       finally
       {
         unlockView();
+      }
+    }
+
+    if (!ObjectUtil.isEmpty(resolvedObjects))
+    {
+      IListener[] listeners = getListeners();
+      if (listeners.length != 0)
+      {
+        for (CDOObject resolvedObject : resolvedObjects)
+        {
+          --oldConflicts;
+          fireEvent(new ConflictRemovedEvent(resolvedObject, oldConflicts), listeners);
+        }
       }
     }
   }
@@ -5320,37 +5350,87 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   /**
    * @author Eike Stepper
    */
-  private final class ConflictEvent extends Event implements CDOTransactionConflictEvent
+  private abstract class ConflictChangedEvent extends Event implements CDOTransactionConflictChangedEvent
   {
     private static final long serialVersionUID = 1L;
 
-    private InternalCDOObject conflictingObject;
+    private final CDOObject conflictingObject;
 
-    private boolean firstConflict;
+    private final int conflicts;
 
-    public ConflictEvent(InternalCDOObject conflictingObject, boolean firstConflict)
+    protected ConflictChangedEvent(CDOObject conflictingObject, int conflicts)
     {
       this.conflictingObject = conflictingObject;
-      this.firstConflict = firstConflict;
+      this.conflicts = conflicts;
     }
 
     @Override
-    public InternalCDOObject getConflictingObject()
+    public final CDOObject getConflictingObject()
     {
       return conflictingObject;
     }
 
     @Override
-    public boolean isFirstConflict()
+    public final int getConflicts()
     {
-      return firstConflict;
+      return conflicts;
     }
 
     @Override
-    public String toString()
+    protected String formatAdditionalParameters()
     {
-      return MessageFormat.format("CDOTransactionConflictEvent[source={0}, conflictingObject={1}, firstConflict={2}]", //$NON-NLS-1$
-          getSource(), getConflictingObject(), isFirstConflict());
+      return "conflictingObject=" + conflictingObject + ", conflicts=" + conflicts;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  @SuppressWarnings("deprecation")
+  private final class ConflictAddedEvent extends ConflictChangedEvent implements CDOTransactionConflictEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ConflictAddedEvent(CDOObject conflictingObject, int conflicts)
+    {
+      super(conflictingObject, conflicts);
+    }
+
+    @Override
+    public boolean isFirstConflict()
+    {
+      return getConflicts() == 1;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return super.formatAdditionalParameters() + ", firstConflict=" + isFirstConflict();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ConflictRemovedEvent extends ConflictChangedEvent implements CDOTransactionConflictRemovedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ConflictRemovedEvent(CDOObject conflictingObject, int conflicts)
+    {
+      super(conflictingObject, conflicts);
+    }
+
+    @Override
+    public boolean wasLastConflict()
+    {
+      return getConflicts() == 0;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return super.formatAdditionalParameters() + ", lastConflict=" + wasLastConflict();
     }
   }
 

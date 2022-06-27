@@ -38,6 +38,8 @@ import org.eclipse.emf.transaction.RecordingCommand;
 import org.eclipse.emf.transaction.TransactionalEditingDomain;
 
 import org.eclipse.gef.EditPart;
+import org.eclipse.gef.EditPartViewer;
+import org.eclipse.gmf.runtime.diagram.ui.editparts.DiagramEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.editparts.IGraphicalEditPart;
 import org.eclipse.gmf.runtime.diagram.ui.resources.editor.parts.DiagramDocumentEditor;
 import org.eclipse.gmf.runtime.notation.Edge;
@@ -220,51 +222,62 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
     {
       return;
     }
-    EObject element = CDOUtil.getEObject(dirtyObject); // either sementic object or notational
 
+    EObject element = CDOUtil.getEObject(dirtyObject); // either sementic object or notational
     View view = DawnDiagramUpdater.findView(element);
 
-    if (DawnConflictHelper.isConflicted(dirtyObject))
-    {
-      // DawnConflictHelper.handleConflictedView(dirtyObject, view, editor);
-      return;
-    }
+    // if (DawnConflictHelper.isConflicted(dirtyObject))
+    // {
+    // if (editor instanceof DiagramDocumentEditor)
+    // {
+    // DawnConflictHelper.handleConflictedView(dirtyObject, view, (DiagramDocumentEditor)editor);
+    // }
+    //
+    // return;
+    // }
 
     DiagramDocumentEditor diagramEditor = getDiagramEditor(editor);
-    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, diagramEditor.getDiagramEditPart().getViewer());
+    DiagramEditPart diagramEditPart = diagramEditor == null ? null : diagramEditor.getDiagramEditPart();
+    EditPartViewer viewer = diagramEditPart == null ? null : diagramEditPart.getViewer();
+    EditPart relatedEditPart = viewer == null ? null : DawnDiagramUpdater.findEditPart(view, viewer);
     if (relatedEditPart != null)
     {
       if (TRACER.isEnabled())
       {
         TRACER.format("Updating EditPart {0} ", relatedEditPart); //$NON-NLS-1$
       }
+
       DawnDiagramUpdater.refreshEditPart(relatedEditPart.getParent(), diagramEditor);
     }
     else
     {
       if (TRACER.isEnabled())
       {
-        TRACER.format("Updating DiagramEditPart {0} ", diagramEditor.getDiagramEditPart()); //$NON-NLS-1$
+        TRACER.format("Updating DiagramEditPart {0} ", diagramEditPart); //$NON-NLS-1$
       }
-      DawnDiagramUpdater.refreshEditPart(diagramEditor.getDiagramEditPart(), diagramEditor);
+
+      DawnDiagramUpdater.refreshEditPart(diagramEditPart, diagramEditor);
     }
   }
 
   protected void refresh(CDOObject object)
   {
     DiagramDocumentEditor diagramEditor = getDiagramEditor(editor);
+
     View view = DawnDiagramUpdater.findViewByContainer(object);
     if (view == null)
     {
       view = DawnDiagramUpdater.findViewForModel(object, diagramEditor);
     }
+
     if (view == null)
     {
       DawnDiagramUpdater.findViewFromCrossReferences(object);
     }
 
-    EditPart relatedEditPart = DawnDiagramUpdater.findEditPart(view, diagramEditor.getDiagramEditPart().getViewer());
-
+    DiagramEditPart diagramEditPart = diagramEditor == null ? null : diagramEditor.getDiagramEditPart();
+    EditPartViewer viewer = diagramEditPart == null ? null : diagramEditPart.getViewer();
+    EditPart relatedEditPart = viewer == null ? null : DawnDiagramUpdater.findEditPart(view, viewer);
     if (relatedEditPart != null)
     {
       if (TRACER.isEnabled())

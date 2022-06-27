@@ -54,21 +54,26 @@ public class DawnDiagramUpdater
 
   public static void refresh(final IGraphicalEditPart editPart)
   {
-    TransactionalEditingDomain editingDomain = editPart.getEditingDomain();
-    editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
+    if (editPart != null)
     {
-      @Override
-      public void doExecute()
+      TransactionalEditingDomain editingDomain = editPart.getEditingDomain();
+      editingDomain.getCommandStack().execute(new RecordingCommand(editingDomain)
       {
-        editPart.refresh();
-
-        if (editPart instanceof ConnectionEditPart)
+        @Override
+        public void doExecute()
         {
-          DawnDiagramUpdater.refresh((IGraphicalEditPart)((ConnectionEditPart)editPart).getTarget());
-          DawnDiagramUpdater.refresh((IGraphicalEditPart)((ConnectionEditPart)editPart).getSource());
+          editPart.refresh();
+
+          if (editPart instanceof ConnectionEditPart)
+          {
+            ConnectionEditPart connectionEditPart = (ConnectionEditPart)editPart;
+
+            DawnDiagramUpdater.refresh((IGraphicalEditPart)connectionEditPart.getTarget());
+            DawnDiagramUpdater.refresh((IGraphicalEditPart)connectionEditPart.getSource());
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   public static void refreshEditPart(EditPart editPart)
@@ -78,20 +83,23 @@ public class DawnDiagramUpdater
 
   public static void refreshEditPart(final EditPart editPart, DiagramDocumentEditor editor)
   {
-    try
+    if (editPart != null)
     {
-      editor.getEditingDomain().runExclusive(new Runnable()
+      try
       {
-        @Override
-        public void run()
+        editor.getEditingDomain().runExclusive(new Runnable()
         {
-          DawnDiagramUpdater.refreshEditPart(editPart);
-        }
-      });
-    }
-    catch (InterruptedException ex)
-    {
-      throw new RuntimeException(ex);
+          @Override
+          public void run()
+          {
+            DawnDiagramUpdater.refreshEditPart(editPart);
+          }
+        });
+      }
+      catch (InterruptedException ex)
+      {
+        throw new RuntimeException(ex);
+      }
     }
   }
 
@@ -221,7 +229,7 @@ public class DawnDiagramUpdater
 
   public static View findViewForModel(EObject object, DiagramDocumentEditor editor)
   {
-    if (object == null)
+    if (object == null || editor == null)
     {
       return null;
     }
@@ -274,7 +282,7 @@ public class DawnDiagramUpdater
 
   public static EditPart createOrFindEditPartIfViewExists(View view, DiagramDocumentEditor editor)
   {
-    EditPart editPart = findEditPart(view, editor.getDiagramEditPart());
+    EditPart editPart = editor == null ? null : findEditPart(view, editor.getDiagramEditPart());
 
     if (view != null)
     {
@@ -312,6 +320,11 @@ public class DawnDiagramUpdater
 
   public static EditPart findEditPart(View view, DiagramDocumentEditor dawnDiagramEditor)
   {
+    if (dawnDiagramEditor == null)
+    {
+      return null;
+    }
+
     DiagramEditPart diagramEditPart = dawnDiagramEditor.getDiagramEditPart();
 
     for (Object e : diagramEditPart.getChildren())
@@ -337,7 +350,10 @@ public class DawnDiagramUpdater
 
   public static EditPart findEditPart(View view, EditPart editPart)
   {
-    EditPart ret;
+    if (editPart == null)
+    {
+      return null;
+    }
 
     if (Objects.equals(editPart.getModel(), view))
     {
@@ -347,7 +363,8 @@ public class DawnDiagramUpdater
     for (Object o : editPart.getChildren())
     {
       EditPart child = (EditPart)o;
-      ret = findEditPart(view, child);
+
+      EditPart ret = findEditPart(view, child);
       if (ret != null)
       {
         return ret;
@@ -359,7 +376,8 @@ public class DawnDiagramUpdater
       for (Object o : ((DiagramEditPart)editPart).getConnections())
       {
         EditPart child = (EditPart)o;
-        ret = findEditPart(view, child);
+
+        EditPart ret = findEditPart(view, child);
         if (ret != null)
         {
           return ret;

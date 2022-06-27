@@ -31,6 +31,8 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo.PersistenceFilter;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
+import org.eclipse.emf.cdo.view.CDOListWrapper;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -50,6 +52,7 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.BasicNotifierImpl.EObservableAdapterList.Listener;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.BasicEMap;
+import org.eclipse.emf.common.util.DelegatingEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
@@ -78,7 +81,9 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.RandomAccess;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -1297,6 +1302,183 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       viewAndState.view.handleRemoveAdapter(this, adapter);
     }
+  }
+
+  @Override
+  public EList<Adapter> eAdapters()
+  {
+    EList<Adapter> adapters = super.eAdapters();
+
+    InternalCDOView view = viewAndState.view;
+    if (view != null && view.isClosing())
+    {
+      CDOAdapterPolicy policy = view.options().getClearAdapterPolicy();
+      if (policy instanceof CDOListWrapper)
+      {
+        @SuppressWarnings("unchecked")
+        CDOListWrapper<Adapter> listWrapper = (CDOListWrapper<Adapter>)policy;
+
+        EList<Adapter> wrappedList = listWrapper.wrapList(adapters);
+        if (wrappedList != null)
+        {
+          return wrappedList;
+        }
+      }
+
+      /**
+       * An adapter list that ignores attempts to add adapters.
+       *
+       * @author Eike Stepper
+       */
+      class NonGrowingAdapterList extends DelegatingEList<Adapter> implements RandomAccess, EObservableAdapterList, EScannableAdapterList
+      {
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public Adapter getAdapterForType(Object type)
+        {
+          return ((EScannableAdapterList)adapters).getAdapterForType(type);
+        }
+
+        @Override
+        public void addListener(Listener listener)
+        {
+          ((EObservableAdapterList)adapters).addListener(listener);
+        }
+
+        @Override
+        public void removeListener(Listener listener)
+        {
+          ((EObservableAdapterList)adapters).removeListener(listener);
+        }
+
+        @Override
+        protected List<Adapter> delegateList()
+        {
+          return adapters;
+        }
+
+        @Override
+        public void addUnique(Adapter object)
+        {
+          // Do nothing.
+        }
+
+        @Override
+        public void addUnique(int index, Adapter object)
+        {
+          // Do nothing.
+        }
+
+        @Override
+        public boolean addAllUnique(Collection<? extends Adapter> collection)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public boolean addAllUnique(int index, Collection<? extends Adapter> collection)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public boolean addAllUnique(Object[] objects, int start, int end)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public boolean addAllUnique(int index, Object[] objects, int start, int end)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public boolean add(Adapter object)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public void add(int index, Adapter object)
+        {
+          // Do nothing.
+        }
+
+        @Override
+        public boolean addAll(Collection<? extends Adapter> collection)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public boolean addAll(int index, Collection<? extends Adapter> collection)
+        {
+          // Do nothing.
+          return false;
+        }
+
+        @Override
+        public Adapter setUnique(int index, Adapter object)
+        {
+          // Do not modify the adapters.
+          return super.get(index);
+        }
+
+        @Override
+        public Adapter set(int index, Adapter object)
+        {
+          // Do not modify the adapters.
+          return super.get(index);
+        }
+
+        @Override
+        @SuppressWarnings("deprecation")
+        public ListIterator<Adapter> listIterator()
+        {
+          return new EListIterator<Adapter>()
+          {
+            @Override
+            public void add(Adapter object)
+            {
+              // Do nothing.
+            }
+          };
+        }
+
+        @Override
+        @SuppressWarnings("deprecation")
+        public ListIterator<Adapter> listIterator(int index)
+        {
+          int size = size();
+          if (index < 0 || index > size)
+          {
+            throw new BasicIndexOutOfBoundsException(index, size);
+          }
+
+          return new EListIterator<Adapter>(index)
+          {
+
+            @Override
+            public void add(Adapter object)
+            {
+              // Do nothing.
+            }
+          };
+        }
+      }
+
+      return new NonGrowingAdapterList();
+    }
+
+    return adapters;
   }
 
   /**

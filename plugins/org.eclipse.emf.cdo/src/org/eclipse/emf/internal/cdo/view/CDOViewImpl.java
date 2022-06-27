@@ -1695,6 +1695,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     lockOwner = null;
     changeSubscriptionManager = null;
+    closing = false;
+
     super.doDeactivate();
   }
 

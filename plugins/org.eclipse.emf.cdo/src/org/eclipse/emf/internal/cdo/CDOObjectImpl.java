@@ -42,6 +42,7 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -118,6 +119,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   private static final boolean EMF_TO_STRING = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.emfToString");
 
   private static final boolean OPTIMIZE_UNORDERED_LISTS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.optimizeUnorderedLists");
+
+  private static final boolean IGNORE_LIFECYCLE_EXCEPTIONS = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.internal.cdo.CDOObjectImpl.ignoreLifecycleExceptions");
 
   /**
    * Optimized storage of {@link CDOObject#cdoView()} and {@link CDOObject#cdoState()}.
@@ -568,7 +572,17 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
 
     InternalCDOClassInfo classInfo = cdoClassInfo();
-    CDOStore store = cdoStore();
+    CDOStore store;
+
+    try
+    {
+      store = cdoStore();
+    }
+    catch (LifecycleException ex)
+    {
+      handleLifecycleException(ex);
+      return;
+    }
 
     Resource.Internal resource = (Resource.Internal)store.getResource(this);
     super.eSetDirectResource(resource);
@@ -718,7 +732,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return super.eDirectResource();
     }
 
-    return (Resource.Internal)cdoStore().getResource(this);
+    try
+    {
+      return (Resource.Internal)cdoStore().getResource(this);
+    }
+    catch (LifecycleException ex)
+    {
+      handleLifecycleException(ex);
+      return null;
+    }
   }
 
   @Override
@@ -747,9 +769,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
-      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      EStore eStore = eStore();
-      return eStore.get(this, eStructuralFeature, EStore.NO_INDEX);
+      try
+      {
+        EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+        return eStore().get(this, eStructuralFeature, EStore.NO_INDEX);
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return null;
+      }
     }
 
     // Here we know that the feature is transient or many-valued, hence it has a slot in eSettings.
@@ -783,9 +812,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
-      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      EStore eStore = eStore();
-      eStore.set(this, eStructuralFeature, EStore.NO_INDEX, value);
+      try
+      {
+        EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+        eStore().set(this, eStructuralFeature, EStore.NO_INDEX, value);
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return;
+      }
     }
     else
     {
@@ -803,9 +839,16 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       // The feature has no slot in eSettings, i.e., it's persistent or single-valued.
       // Delegate to the store. TransientStore delegates back to eSettings.
-      EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
-      EStore eStore = eStore();
-      eStore.unset(this, eStructuralFeature);
+      try
+      {
+        EStructuralFeature eStructuralFeature = eDynamicFeature(dynamicFeatureID);
+        eStore().unset(this, eStructuralFeature);
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return;
+      }
     }
     else
     {
@@ -847,7 +890,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     InternalCDOClassInfo classInfo = cdoClassInfo();
     if (classInfo.isPersistent(dynamicFeatureID))
     {
-      return eStore().isSet(this, eFeature);
+      try
+      {
+        return eStore().isSet(this, eFeature);
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return false;
+      }
     }
 
     return eSettingDelegate(eFeature).dynamicIsSet(this, eSettings(), dynamicFeatureID);
@@ -861,7 +912,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return eBasicInternalContainer();
     }
 
-    return cdoStore().getContainer(this);
+    try
+    {
+      return cdoStore().getContainer(this);
+    }
+    catch (LifecycleException ex)
+    {
+      handleLifecycleException(ex);
+      return null;
+    }
   }
 
   @Override
@@ -872,7 +931,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
       return eBasicContainerFeatureID();
     }
 
-    return cdoStore().getContainingFeatureID(this);
+    try
+    {
+      return cdoStore().getContainingFeatureID(this);
+    }
+    catch (LifecycleException ex)
+    {
+      handleLifecycleException(ex);
+      return 0;
+    }
   }
 
   /**
@@ -1099,7 +1166,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
     else if (resource == null || resource instanceof CDOResource)
     {
-      cdoStore().setContainer(this, (CDOResource)resource, eInternalContainer(), eContainerFeatureID());
+      try
+      {
+        cdoStore().setContainer(this, (CDOResource)resource, eInternalContainer(), eContainerFeatureID());
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return;
+      }
     }
     else
     {
@@ -1121,8 +1196,15 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     }
     else
     {
-      CDOStore cdoStore = cdoStore();
-      cdoStore.setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+      try
+      {
+        cdoStore().setContainer(this, cdoDirectResource(), newEContainer, newContainerFeatureID);
+      }
+      catch (LifecycleException ex)
+      {
+        handleLifecycleException(ex);
+        return;
+      }
     }
   }
 
@@ -1591,6 +1673,29 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   {
     InternalCDOClassInfo classInfo = (InternalCDOClassInfo)CDOModelUtil.getClassInfo(eClass);
     revision = classInfo.getRevisionForID(null);
+  }
+
+  private void handleLifecycleException(LifecycleException ex)
+  {
+    if (IGNORE_LIFECYCLE_EXCEPTIONS)
+    {
+      return;
+    }
+  
+    InternalCDOView view = viewAndState.view;
+    if (view != null)
+    {
+      Object object = view.properties().get(CDOView.PROP_LIFECYCLE_EXCEPTION_HANDLER);
+      if (object instanceof Consumer<?>)
+      {
+        @SuppressWarnings("unchecked")
+        Consumer<LifecycleException> handler = (Consumer<LifecycleException>)object;
+        handler.accept(ex);
+        return;
+      }
+    }
+  
+    throw ex;
   }
 
   /**

@@ -29,7 +29,7 @@ public final class AuthorizableOperationFactory extends Factory
 
   public AuthorizableOperationFactory()
   {
-    super(PRODUCT_GROUP, null);
+    super(PRODUCT_GROUP);
   }
 
   public String getOperationID()

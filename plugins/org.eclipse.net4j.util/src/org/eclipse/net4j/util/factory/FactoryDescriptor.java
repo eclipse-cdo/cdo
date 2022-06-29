@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.util.factory;
 
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 
@@ -30,93 +29,31 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @deprecated As of 3.19 no longer public API.
  */
-public class FactoryDescriptor extends Factory
+@Deprecated
+public class FactoryDescriptor extends org.eclipse.net4j.internal.util.factory.FactoryDescriptor
 {
-  private static final String ELEM_FACTORY = "factory"; //$NON-NLS-1$
-
-  private static final String ELEM_TYPE = "type"; //$NON-NLS-1$
-
-  private static final String ATTR_PRODUCT_GROUP = "productGroup"; //$NON-NLS-1$
-
-  private static final String ATTR_TYPE = "type"; //$NON-NLS-1$
-
-  private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
-
-  private static final String ATTR_VALUE = "value"; //$NON-NLS-1$
-
-  private final IConfigurationElement configurationElement;
-
   public FactoryDescriptor(IConfigurationElement configurationElement)
   {
-    super(createFactoryKey(configurationElement));
-    this.configurationElement = configurationElement;
+    super(configurationElement);
   }
 
+  @Override
   public IConfigurationElement getConfigurationElement()
   {
-    return configurationElement;
+    return super.getConfigurationElement();
   }
 
+  @Override
   public IFactory createFactory()
   {
-    try
-    {
-      IConfigurationElement element = configurationElement;
-
-      String name = element.getName();
-      if (ELEM_TYPE.equals(name))
-      {
-        element = (IConfigurationElement)element.getParent();
-      }
-
-      IFactory factory = (IFactory)element.createExecutableExtension(ATTR_CLASS);
-
-      IFactoryKey key = factory.getKey();
-      if (key instanceof FactoryKey && key.getType() == null)
-      {
-        ((FactoryKey)key).setType(getType());
-      }
-
-      return factory;
-    }
-    catch (CoreException ex)
-    {
-      throw new FactoryCreationException(ex);
-    }
+    return super.createFactory();
   }
 
   @Override
   public Object create(String description)
   {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  public String getDescriptionFor(Object product)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  private static FactoryKey createFactoryKey(IConfigurationElement element)
-  {
-    String name = element.getName();
-    if (ELEM_FACTORY.equals(name))
-    {
-      String productGroup = element.getAttribute(ATTR_PRODUCT_GROUP);
-      String type = element.getAttribute(ATTR_TYPE);
-      return new FactoryKey(productGroup, type);
-    }
-
-    if (ELEM_TYPE.equals(name))
-    {
-      IConfigurationElement parent = (IConfigurationElement)element.getParent();
-      String productGroup = parent.getAttribute(ATTR_PRODUCT_GROUP);
-
-      String value = element.getAttribute(ATTR_VALUE);
-      return new FactoryKey(productGroup, value);
-    }
-
-    throw new IllegalStateException("Wrong configuration element: " + name);
+    return super.create(description);
   }
 }

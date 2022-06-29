@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.factory;
 
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 
@@ -31,6 +32,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
 
   public FactoryKey(String productGroup, String type)
   {
+    CheckUtil.checkArg(!StringUtil.isEmpty(productGroup), "productGroup is empty");
     this.productGroup = productGroup;
     this.type = type;
   }

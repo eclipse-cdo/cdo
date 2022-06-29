@@ -144,6 +144,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/factory/FactoryDescriptor.java" type="org.eclipse.net4j.util.factory.FactoryDescriptor">
+        <filter id="576720909">
+            <message_arguments>
+                <message_argument value="FactoryDescriptor"/>
+                <message_argument value="FactoryDescriptor"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/factory/FactoryKey.java" type="org.eclipse.net4j.util.factory.FactoryKey">
         <filter id="576725006">
             <message_arguments>

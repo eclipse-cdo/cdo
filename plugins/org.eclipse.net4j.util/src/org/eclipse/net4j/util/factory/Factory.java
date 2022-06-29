@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.factory;
 
+import org.eclipse.net4j.util.CheckUtil;
+
 import java.text.MessageFormat;
 
 /**
@@ -23,6 +25,7 @@ public abstract class Factory implements IFactory
 
   public Factory(FactoryKey key)
   {
+    CheckUtil.checkArg(key, "key is null");
     this.key = key;
   }
 
@@ -58,6 +61,11 @@ public abstract class Factory implements IFactory
   @Override
   public String getDescriptionFor(Object product)
   {
+    if (product instanceof ProductDescriptionProvider)
+    {
+      return ((ProductDescriptionProvider)product).getDescription();
+    }
+
     return null;
   }
 

@@ -21,6 +21,7 @@ import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.factory.ProductCreationException;
+import org.eclipse.net4j.util.factory.ProductDescriptionProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -749,7 +750,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   /**
    * @author Eike Stepper
    */
-  private static final class ElementKey implements Serializable, Comparable<ElementKey>
+  private static final class ElementKey implements ProductDescriptionProvider, Serializable, Comparable<ElementKey>
   {
     private static final long serialVersionUID = 1L;
 
@@ -788,6 +789,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
       return factoryType;
     }
 
+    @Override
     public String getDescription()
     {
       return description;

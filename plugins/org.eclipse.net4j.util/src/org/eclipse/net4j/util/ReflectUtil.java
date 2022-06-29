@@ -86,9 +86,51 @@ public final class ReflectUtil
   {
     try
     {
-      try
+      return doGetMethod(c, methodName, parameterTypes);
+    }
+    catch (Exception ex)
+    {
+      throw ReflectionException.wrap(ex);
+    }
+  }
+
+  /**
+   * @since 3.20
+   */
+  public static Method getMethodOrNull(Class<?> c, String methodName, Class<?>... parameterTypes)
+  {
+    try
+    {
+      return doGetMethod(c, methodName, parameterTypes);
+    }
+    catch (NoSuchMethodException ex)
+    {
+      return null;
+    }
+    catch (Exception ex)
+    {
+      throw ReflectionException.wrap(ex);
+    }
+  }
+
+  private static Method doGetMethod(Class<?> c, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException
+  {
+    try
+    {
+      Method method = c.getDeclaredMethod(methodName, parameterTypes);
+      if (method != null)
       {
-        Method method = c.getDeclaredMethod(methodName, parameterTypes);
+        makeAccessible(method);
+      }
+
+      return method;
+    }
+    catch (NoSuchMethodException ex)
+    {
+      Class<?> superclass = c.getSuperclass();
+      if (superclass != null)
+      {
+        Method method = doGetMethod(superclass, methodName, parameterTypes);
         if (method != null)
         {
           makeAccessible(method);
@@ -96,26 +138,8 @@ public final class ReflectUtil
 
         return method;
       }
-      catch (NoSuchMethodException ex)
-      {
-        Class<?> superclass = c.getSuperclass();
-        if (superclass != null)
-        {
-          Method method = getMethod(superclass, methodName, parameterTypes);
-          if (method != null)
-          {
-            makeAccessible(method);
-          }
 
-          return method;
-        }
-
-        throw ex;
-      }
-    }
-    catch (Exception ex)
-    {
-      throw ReflectionException.wrap(ex);
+      throw ex;
     }
   }
 
@@ -832,14 +856,12 @@ public final class ReflectUtil
       super(cause);
     }
 
-    public static ReflectionException wrap(Exception exception)
+    /**
+     * @since 3.20
+     */
+    public Exception unwrap()
     {
-      if (exception instanceof ReflectionException)
-      {
-        return (ReflectionException)exception;
-      }
-
-      return new ReflectionException(exception);
+      return unwrap(this);
     }
 
     public static Exception unwrap(Exception exception)
@@ -850,6 +872,16 @@ public final class ReflectUtil
       }
 
       return exception;
+    }
+
+    public static ReflectionException wrap(Exception exception)
+    {
+      if (exception instanceof ReflectionException)
+      {
+        return (ReflectionException)exception;
+      }
+
+      return new ReflectionException(exception);
     }
   }
 }

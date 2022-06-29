@@ -13,7 +13,6 @@ package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.factory.FactoryDescriptor;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
@@ -28,8 +27,6 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   public static final String NAMESPACE = OM.BUNDLE_ID;
 
   public static final String EXT_POINT = "factories"; //$NON-NLS-1$
-
-  private static final String ELEM_FACTORY = "factory"; //$NON-NLS-1$
 
   private static final String ELEM_FACTORIES = "factories"; //$NON-NLS-1$
 
@@ -46,9 +43,11 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   public IFactory get(Object key)
   {
     IFactory factory = super.get(key);
+
     if (factory instanceof FactoryDescriptor)
     {
       FactoryDescriptor descriptor = (FactoryDescriptor)factory;
+
       factory = descriptor.createFactory();
       if (factory != null && factory != descriptor)
       {
@@ -59,7 +58,7 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
     return factory;
   }
 
-  public void registerFactory(FactoryDescriptor factory)
+  public void registerFactory(IFactory factory)
   {
     put(factory.getKey(), factory);
   }
@@ -115,7 +114,11 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
       try
       {
-        if (ELEM_FACTORY.equals(name))
+        if (SimpleFactory.ELEM.equals(name))
+        {
+          registerFactory(new SimpleFactory(element));
+        }
+        else if (FactoryDescriptor.ELEM.equals(name))
         {
           registerFactory(new FactoryDescriptor(element));
         }

@@ -35,8 +35,49 @@ public abstract class PropertiesFactory extends Factory
     super(productGroup, type);
   }
 
+  /**
+   * @since 3.20
+   */
+  public Map<String, String> getPropertiesFor(Object product)
+  {
+    String description = getDescriptionFor(product);
+    return parseProperties(description);
+  }
+
   @Override
   public Object create(String description) throws ProductCreationException
+  {
+    Map<String, String> properties = parseProperties(description);
+    return create(properties);
+  }
+
+  protected abstract Object create(Map<String, String> properties) throws ProductCreationException;
+
+  public static String createDescription(Map<String, String> properties)
+  {
+    StringBuilder builder = new StringBuilder();
+
+    String defaultValue = properties.remove(DEFAULT_KEY);
+    if (!StringUtil.isEmpty(defaultValue))
+    {
+      builder.append(defaultValue);
+    }
+
+    for (Map.Entry<String, String> entry : properties.entrySet())
+    {
+      StringUtil.appendSeparator(builder, PROPERTY_SEPARATOR);
+      builder.append(entry.getKey());
+      builder.append("=");
+      builder.append(entry.getValue());
+    }
+
+    return builder.toString();
+  }
+
+  /**
+   * @since 3.20
+   */
+  public static Map<String, String> parseProperties(String description)
   {
     Map<String, String> properties = new HashMap<>();
 
@@ -62,29 +103,6 @@ public abstract class PropertiesFactory extends Factory
       }
     }
 
-    return create(properties);
-  }
-
-  protected abstract Object create(Map<String, String> properties) throws ProductCreationException;
-
-  public static String createDescription(Map<String, String> properties)
-  {
-    StringBuilder builder = new StringBuilder();
-
-    String defaultValue = properties.remove(DEFAULT_KEY);
-    if (!StringUtil.isEmpty(defaultValue))
-    {
-      builder.append(defaultValue);
-    }
-
-    for (Map.Entry<String, String> entry : properties.entrySet())
-    {
-      StringUtil.appendSeparator(builder, PROPERTY_SEPARATOR);
-      builder.append(entry.getKey());
-      builder.append("=");
-      builder.append(entry.getValue());
-    }
-
-    return builder.toString();
+    return properties;
   }
 }

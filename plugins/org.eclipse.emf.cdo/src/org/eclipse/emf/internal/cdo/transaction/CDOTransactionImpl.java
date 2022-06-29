@@ -107,7 +107,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksEnabledEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction.Options.AutoReleaseLocksEvent.AutoReleaseLocksExemptionsEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler;
@@ -5387,7 +5386,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
    * @author Eike Stepper
    */
   @SuppressWarnings("deprecation")
-  private final class ConflictAddedEvent extends ConflictChangedEvent implements CDOTransactionConflictEvent
+  private final class ConflictAddedEvent extends ConflictChangedEvent implements org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent
   {
     private static final long serialVersionUID = 1L;
 

@@ -20,7 +20,6 @@ import org.eclipse.emf.cdo.dawn.graphiti.util.DawnGraphitiUtil;
 import org.eclipse.emf.cdo.dawn.helper.DawnEditorHelper;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnTransactionHandler;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
@@ -64,11 +63,9 @@ public class DawnGraphitiHandler extends BasicDawnTransactionHandler
    * @since 2.0
    */
   @Override
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event)
   {
-    CDOTransactionConflictEvent cdoTransactionConflictEvent = event;
-
-    CDOObject cdoObject = cdoTransactionConflictEvent.getConflictingObject();
+    CDOObject cdoObject = event.getConflictingObject();
 
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
 

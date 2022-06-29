@@ -912,6 +912,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/internal/cdo/transaction/CDOTransactionImpl.java" type="org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl">
+        <filter id="572522506">
+            <message_arguments>
+                <message_argument value="CDOIDReference"/>
+                <message_argument value="CDOTransactionImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/internal/cdo/view/AbstractCDOView.java" type="org.eclipse.emf.internal.cdo.view.AbstractCDOView">
         <filter id="574668824">
             <message_arguments>

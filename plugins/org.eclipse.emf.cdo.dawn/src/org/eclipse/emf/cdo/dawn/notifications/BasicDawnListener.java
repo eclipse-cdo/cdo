@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.dawn.notifications;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
@@ -48,15 +47,16 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
   }
 
   @Override
+  @SuppressWarnings("deprecation")
   public void notifyEvent(IEvent event)
   {
     if (event instanceof CDOViewInvalidationEvent)
     {
       handleViewInvalidationEvent((CDOViewInvalidationEvent)event);
     }
-    else if (event instanceof CDOTransactionConflictEvent)
+    else if (event instanceof org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent)
     {
-      handleTransactionConflictEvent((CDOTransactionConflictEvent)event);
+      handleTransactionConflictEvent((org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent)event);
     }
     else if (event instanceof CDOViewLocksChangedEvent)
     {
@@ -74,7 +74,7 @@ public abstract class BasicDawnListener implements IDawnListener// implements IL
   }
 
   @Override
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event)
   {
   }
 

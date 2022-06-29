@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.dawn.notifications;
 
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
 
@@ -31,7 +30,7 @@ public interface IDawnListener extends IListener
   /**
    * Allows to react on conflicts
    */
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event);
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event);
 
   /**
    * Allows the user to react on lock change notifications:

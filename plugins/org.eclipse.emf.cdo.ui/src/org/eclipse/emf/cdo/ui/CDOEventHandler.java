@@ -18,7 +18,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionStartedEvent;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
@@ -138,9 +138,9 @@ public class CDOEventHandler
       {
         viewDirtyStateChanged();
       }
-      else if (event instanceof CDOTransactionConflictEvent)
+      else if (event instanceof CDOTransactionConflictAddedEvent)
       {
-        CDOTransactionConflictEvent e = (CDOTransactionConflictEvent)event;
+        CDOTransactionConflictAddedEvent e = (CDOTransactionConflictAddedEvent)event;
         viewConflict(e.getConflictingObject(), e.isFirstConflict());
       }
     }

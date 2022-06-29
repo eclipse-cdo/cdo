@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.dawn.gmf.util.DawnDiagramUpdater;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnTransactionHandler;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidObjectException;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
@@ -93,11 +92,9 @@ public class DawnGMFHandler extends BasicDawnTransactionHandler
    * @since 1.0
    */
   @Override
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event)
   {
-    CDOTransactionConflictEvent cdoTransactionConflictEvent = event;
-
-    CDOObject cdoObject = cdoTransactionConflictEvent.getConflictingObject();
+    CDOObject cdoObject = event.getConflictingObject();
 
     EObject element = CDOUtil.getEObject(cdoObject); // either semantic object or notational
     View view = DawnDiagramUpdater.findView(element);

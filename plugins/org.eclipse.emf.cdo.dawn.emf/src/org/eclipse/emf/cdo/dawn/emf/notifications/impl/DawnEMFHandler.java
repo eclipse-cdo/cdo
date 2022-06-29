@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.dawn.emf.notifications.impl;
 
 import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.dawn.notifications.BasicDawnTransactionHandler;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
@@ -31,7 +30,7 @@ public class DawnEMFHandler extends BasicDawnTransactionHandler
   }
 
   @Override
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event)
   {
     super.handleTransactionConflictEvent(event);
     refreshEditor();

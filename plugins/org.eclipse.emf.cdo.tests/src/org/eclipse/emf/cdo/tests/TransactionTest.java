@@ -35,7 +35,7 @@ import org.eclipse.emf.cdo.tests.util.TestAdapter;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOPushTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
+import org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransactionHandler2;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -463,7 +463,7 @@ public class TransactionTest extends AbstractCDOTest
       @Override
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDOTransactionConflictEvent)
+        if (event instanceof CDOTransactionConflictAddedEvent)
         {
           transaction2.rollback();
         }

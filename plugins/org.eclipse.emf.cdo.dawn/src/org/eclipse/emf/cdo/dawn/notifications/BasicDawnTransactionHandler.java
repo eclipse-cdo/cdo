@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.dawn.editors.IDawnEditor;
 import org.eclipse.emf.cdo.internal.dawn.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 
 import org.eclipse.net4j.util.event.IEvent;
@@ -88,7 +87,7 @@ public class BasicDawnTransactionHandler extends BasicDawnListener implements ID
   }
 
   @Override
-  public void handleTransactionConflictEvent(CDOTransactionConflictEvent event)
+  public void handleTransactionConflictEvent(@SuppressWarnings("deprecation") org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent event)
   { // This method can be overwritten be subclasses
   }
 

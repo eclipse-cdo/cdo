@@ -1681,7 +1681,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     {
       return;
     }
-  
+
     InternalCDOView view = viewAndState.view;
     if (view != null)
     {
@@ -1694,7 +1694,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         return;
       }
     }
-  
+
     throw ex;
   }
 

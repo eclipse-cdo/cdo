@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.util.HexUtil;
-import org.eclipse.net4j.util.WrappedException;
 
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -26,7 +25,9 @@ import javax.xml.transform.stream.StreamResult;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -63,9 +64,25 @@ public class XMLOutput
     xmlHandler.startDocument();
   }
 
+  /**
+   * @since 3.20
+   */
+  public String getNewLine()
+  {
+    return new String(newLine);
+  }
+
   public void setNewLine(String newLine)
   {
     this.newLine = newLine.toCharArray();
+  }
+
+  /**
+   * @since 3.20
+   */
+  public String getIndentation()
+  {
+    return new String(indentation);
   }
 
   public void setIndentation(String indentation)
@@ -99,10 +116,22 @@ public class XMLOutput
 
   public Writer characters() throws SAXException
   {
+    return characters(true);
+  }
+
+  /**
+   * @since 3.20
+   */
+  public Writer characters(boolean cdata) throws SAXException
+  {
     checkElement();
     newLine();
     element.start();
-    xmlHandler.startCDATA();
+
+    if (cdata)
+    {
+      xmlHandler.startCDATA();
+    }
 
     return new Writer()
     {
@@ -115,7 +144,7 @@ public class XMLOutput
         }
         catch (SAXException ex)
         {
-          throw WrappedException.wrap(ex);
+          throw new IOException(ex);
         }
       }
 
@@ -130,12 +159,16 @@ public class XMLOutput
       {
         try
         {
-          xmlHandler.endCDATA();
+          if (cdata)
+          {
+            xmlHandler.endCDATA();
+          }
+
           element.end();
         }
         catch (SAXException ex)
         {
-          throw WrappedException.wrap(ex);
+          throw new IOException(ex);
         }
         finally
         {
@@ -164,7 +197,7 @@ public class XMLOutput
         }
         catch (SAXException ex)
         {
-          throw WrappedException.wrap(ex);
+          throw new IOException(ex);
         }
       }
 
@@ -186,7 +219,7 @@ public class XMLOutput
         }
         catch (SAXException ex)
         {
-          throw WrappedException.wrap(ex);
+          throw new IOException(ex);
         }
         finally
         {
@@ -194,6 +227,50 @@ public class XMLOutput
         }
       }
     };
+  }
+
+  /**
+   * @since 3.20
+   */
+  public String currentElement()
+  {
+    if (element == null)
+    {
+      return null;
+    }
+
+    return element.name;
+  }
+
+  /**
+   * @since 3.20
+   */
+  public Map<String, String> currentAttributes()
+  {
+    if (element == null)
+    {
+      return null;
+    }
+
+    Map<String, String> map = new HashMap<>();
+
+    int length = element.attributes.getLength();
+    for (int i = 0; i < length; i++)
+    {
+      String name = element.attributes.getQName(i);
+      String value = element.attributes.getValue(i);
+      map.put(name, value);
+    }
+
+    return map;
+  }
+
+  /**
+   * @since 3.20
+   */
+  public int level()
+  {
+    return stack.size();
   }
 
   public XMLOutput push() throws SAXException
@@ -244,7 +321,9 @@ public class XMLOutput
   private void newLine() throws SAXException
   {
     xmlHandler.ignorableWhitespace(newLine, 0, newLine.length);
-    for (int i = 0; i < stack.size(); i++)
+
+    int level = level();
+    for (int i = 0; i < level; i++)
     {
       xmlHandler.ignorableWhitespace(indentation, 0, indentation.length);
     }

@@ -507,8 +507,10 @@ public final class ReflectUtil
   {
     List<Field> fields = new ArrayList<>();
     collectFields(object.getClass(), fields);
+
     Pair<Field, Object>[] result = new Pair[fields.size()];
     int i = 0;
+
     for (Field field : fields)
     {
       Object value = getValue(field, object);

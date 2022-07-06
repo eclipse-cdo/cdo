@@ -17,21 +17,30 @@
   <extension point="org.eclipse.net4j.util.productGroups">
      <productGroup id="org.eclipse.net4j.util.ui.elementWizards" name="%productGroup.name"/>
      <productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="%productGroup.name.0"/>
+     <productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="%productGroup.name.1"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
       <factory
-            class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"
             productGroup="org.eclipse.net4j.util.security.credentialsProviders"
-            type="interactive"/>
+            type="interactive"
+            class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory"/>
       <factory
-            class="org.eclipse.net4j.util.ui.confirmation.InteractiveConfirmationProvider$Factory"
             productGroup="org.eclipse.net4j.util.confirmationProviders"
-            type="interactive"/>
+            type="interactive"
+            class="org.eclipse.net4j.util.ui.confirmation.InteractiveConfirmationProvider$Factory"/>
       <factory
-            class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"
             productGroup="org.eclipse.net4j.util.concurrent.delegateDetectors"
-            type="display"/>
+            type="display"
+            class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"/>
+      <simpleFactory
+            productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
+            type="java.lang.Iterable"
+            productClass="org.eclipse.net4j.util.internal.ui.views.IterableIntrospectionProvider"/>
+      <simpleFactory
+            productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
+            type="java.util.Map"
+            productClass="org.eclipse.net4j.util.internal.ui.views.MapIntrospectionProvider"/>
   </extension>
    
   <extension point="org.eclipse.ui.views">

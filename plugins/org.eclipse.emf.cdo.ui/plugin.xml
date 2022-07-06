@@ -42,6 +42,14 @@
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
       </factories>
+      <simpleFactory
+            productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
+            type="org.eclipse.emf.ecore.EObject"
+            productClass="org.eclipse.emf.cdo.internal.ui.EMFIntrospectionProvider"/>
+      <simpleFactory
+            productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
+            type="org.eclipse.emf.cdo.CDOObject"
+            productClass="org.eclipse.emf.cdo.internal.ui.CDOIntrospectionProvider"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.elementProcessors">

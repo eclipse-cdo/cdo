@@ -23,6 +23,8 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.views.IntrospectionProvider;
+import org.eclipse.net4j.util.ui.views.RowIntrospectionProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
@@ -30,6 +32,7 @@ import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.DoubleClickEvent;
+import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -44,8 +47,6 @@ import org.eclipse.swt.custom.StackLayout;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener;
@@ -58,6 +59,8 @@ import org.eclipse.ui.part.ViewPart;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
@@ -71,19 +74,21 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private static final Object[] NO_ELEMENTS = {};
 
+  private static final IntrospectionProvider ARRAY_INTROSPECTION_PROVIDER = new ArrayIntrospectionProvider();
+
+  private static final IntrospectionProvider OBJECT_INTROSPECTION_PROVIDER = new ObjectIntrospectionProvider();
+
+  private static final List<IntrospectionProvider> DEFAULT_INTROSPECTION_PROVIDERS = Arrays.asList(ARRAY_INTROSPECTION_PROVIDER, OBJECT_INTROSPECTION_PROVIDER);
+
   private static Net4jIntrospectorView instance;
 
-  private TableViewer currentViewer;
+  private final Stack<Object> elements = new Stack<>();
 
-  private TableViewer objectViewer;
+  private final Map<IntrospectionProvider, TableViewer> viewers = new HashMap<>();
 
-  private TableViewer iterableViewer;
+  private final List<IntrospectionProvider> providers = new ArrayList<>();
 
-  private TableViewer arrayViewer;
-
-  private TableViewer mapViewer;
-
-  private Stack<Object> elements = new Stack<>();
+  private IntrospectionProvider currentProvider;
 
   private Text classLabel;
 
@@ -93,7 +98,9 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private IAction backAction = new BackAction();
 
-  private IAction modeAction = new ModeAction();
+  private IAction activePartAction = new ActivePartAction();
+
+  private IAction logicalStructureAction = new LogicalStructureAction();
 
   private IAction containerAction = new ContainerAction();
 
@@ -107,265 +114,30 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   public Net4jIntrospectorView()
   {
+    IPluginContainer.INSTANCE.forEachElement(IntrospectionProvider.Factory.PRODUCT_GROUP, IntrospectionProvider.class, providers::add);
+    providers.sort(null);
+    providers.addAll(DEFAULT_INTROSPECTION_PROVIDERS);
   }
 
   @Override
   public void dispose()
   {
+    instance = null;
+
     IWorkbenchPage page = getSite().getPage();
     page.removePartListener(this);
     page.removeSelectionListener(this);
     super.dispose();
   }
 
-  public static Net4jIntrospectorView getInstance()
+  public Object getObject()
   {
-    return instance;
-  }
-
-  public static synchronized Net4jIntrospectorView getInstance(boolean show)
-  {
-    if (instance == null)
+    if (!elements.isEmpty())
     {
-      try
-      {
-        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
-        page.showView(VIEW_ID);
-      }
-      catch (Exception ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
+      return elements.peek();
     }
 
-    return instance;
-  }
-
-  @Override
-  public void createPartControl(Composite parent)
-  {
-    Color bg = parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
-    Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);
-
-    Composite composite = new Composite(parent, SWT.NONE);
-    composite.setLayout(UIUtil.createGridLayout(1));
-
-    Composite c = new Composite(composite, SWT.BORDER);
-    c.setLayout(UIUtil.createGridLayout(3));
-    c.setLayoutData(UIUtil.createGridData(true, false));
-
-    classLabel = new Text(c, SWT.READ_ONLY);
-    classLabel.setLayoutData(UIUtil.createGridData(false, false));
-    classLabel.setBackground(bg);
-    classLabel.setForeground(gray);
-
-    identityLabel = new Text(c, SWT.READ_ONLY);
-    identityLabel.setLayoutData(UIUtil.createGridData(false, false));
-    identityLabel.setBackground(bg);
-
-    objectLabel = new Text(c, SWT.READ_ONLY);
-    objectLabel.setLayoutData(UIUtil.createGridData(true, false));
-    objectLabel.setBackground(bg);
-
-    stackLayout = new StackLayout();
-    stacked = new Composite(composite, SWT.NONE);
-    stacked.setLayoutData(UIUtil.createGridData());
-    stacked.setLayout(stackLayout);
-
-    objectViewer = createViewer(stacked);
-    createObjectColmuns();
-    objectViewer.addDoubleClickListener(this);
-    objectViewer.setContentProvider(new ObjectContentProvider());
-    objectViewer.setLabelProvider(new ObjectLabelProvider());
-    objectViewer.setComparator(new NameComparator());
-    objectViewer.setInput(getViewSite());
-
-    iterableViewer = createViewer(stacked);
-    createIterableColmuns();
-    iterableViewer.addDoubleClickListener(this);
-    iterableViewer.setContentProvider(new IterableContentProvider());
-    iterableViewer.setLabelProvider(new IterableLabelProvider());
-    iterableViewer.setInput(getViewSite());
-
-    arrayViewer = createViewer(stacked);
-    createArrayColmuns();
-    arrayViewer.addDoubleClickListener(this);
-    arrayViewer.setContentProvider(new ArrayContentProvider());
-    arrayViewer.setLabelProvider(new ArrayLabelProvider());
-    arrayViewer.setInput(getViewSite());
-
-    mapViewer = createViewer(stacked);
-    createMapColmuns();
-    mapViewer.addDoubleClickListener(this);
-    mapViewer.setContentProvider(new MapContentProvider());
-    mapViewer.setLabelProvider(new MapLabelProvider());
-    mapViewer.setComparator(new NameComparator());
-    mapViewer.setInput(getViewSite());
-
-    IActionBars bars = getViewSite().getActionBars();
-    fillLocalPullDown(bars.getMenuManager());
-    fillLocalToolBar(bars.getToolBarManager());
-
-    IWorkbenchPage page = getSite().getPage();
-    page.addPartListener(this);
-    page.addSelectionListener(this);
-
-    setCurrentViewer(objectViewer);
-    instance = this;
-  }
-
-  private void setCurrentViewer(TableViewer viewer)
-  {
-    currentViewer = viewer;
-    stackLayout.topControl = currentViewer.getControl();
-    stacked.layout();
-  }
-
-  private TableViewer createViewer(Composite parent)
-  {
-    TableViewer viewer = new TableViewer(parent, SWT.FULL_SELECTION | SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
-    viewer.getTable().setLayoutData(UIUtil.createGridData());
-    viewer.getTable().setHeaderVisible(true);
-    viewer.getTable().setLinesVisible(true);
-    return viewer;
-  }
-
-  public void refreshViewer()
-  {
-    UIUtil.refreshViewer(currentViewer);
-  }
-
-  @Override
-  public void partActivated(IWorkbenchPart part)
-  {
-    if (part == this)
-    {
-      return;
-    }
-
-    activePart = part;
-    if (modeAction.isChecked())
-    {
-      elements.clear();
-      setObject(activePart);
-    }
-  }
-
-  @Override
-  public void partBroughtToTop(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void partClosed(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void partDeactivated(IWorkbenchPart part)
-  {
-    if (modeAction.isChecked())
-    {
-      IWorkbenchPart newPart = part.getSite().getPage().getActivePart();
-      if (newPart == this)
-      {
-        return;
-      }
-
-      if (part == activePart)
-      {
-        activePart = null;
-        setObject(null);
-      }
-    }
-  }
-
-  @Override
-  public void partOpened(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void selectionChanged(IWorkbenchPart part, ISelection sel)
-  {
-    if (part == this)
-    {
-      return;
-    }
-
-    if (modeAction.isChecked())
-    {
-      return;
-    }
-
-    if (sel instanceof IStructuredSelection)
-    {
-      IStructuredSelection ssel = (IStructuredSelection)sel;
-      elements.clear();
-      setObject(ssel.getFirstElement());
-    }
-    else
-    {
-      setObject(null);
-    }
-  }
-
-  @Override
-  public void doubleClick(DoubleClickEvent event)
-  {
-    ISelection sel = event.getSelection();
-    if (sel instanceof IStructuredSelection)
-    {
-      IStructuredSelection ssel = (IStructuredSelection)sel;
-      Object element = ssel.getFirstElement();
-      if (currentViewer == objectViewer && element instanceof Pair<?, ?>)
-      {
-        @SuppressWarnings("unchecked")
-        Pair<Field, Object> pair = (Pair<Field, Object>)element;
-
-        Field field = pair.getElement1();
-        if (!field.getType().isPrimitive())
-        {
-          setObject(pair.getElement2());
-        }
-      }
-      else if (currentViewer == mapViewer && element instanceof Map.Entry<?, ?>)
-      {
-        Map.Entry<?, ?> entry = (Map.Entry<?, ?>)element;
-        setObject(entry.getValue());
-      }
-      else if (currentViewer == iterableViewer)
-      {
-        setObject(element);
-      }
-      else if (currentViewer == arrayViewer && element instanceof Pair<?, ?>)
-      {
-        @SuppressWarnings("unchecked")
-        Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
-        setObject(pair.getElement2());
-      }
-    }
-  }
-
-  /**
-   * Passing the focus request to the viewer's control.
-   */
-  @Override
-  public void setFocus()
-  {
-    try
-    {
-      currentViewer.getControl().setFocus();
-    }
-    catch (RuntimeException ignore)
-    {
-    }
-  }
-
-  @Override
-  public void notifyEvent(IEvent event)
-  {
-    refreshViewer();
+    return null;
   }
 
   public void setObject(Object object)
@@ -393,7 +165,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
       classLabel.setText(""); //$NON-NLS-1$
       identityLabel.setText(""); //$NON-NLS-1$
       objectLabel.setText(""); //$NON-NLS-1$
-      currentViewer = objectViewer;
+      currentProvider = OBJECT_INTROSPECTION_PROVIDER;
     }
     else
     {
@@ -427,96 +199,273 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     classLabel.getParent().layout();
     backAction.setEnabled(elements.size() >= 2);
 
-    if (object instanceof Map<?, ?>)
+    updateProvider(object);
+  }
+
+  @Override
+  public void createPartControl(Composite parent)
+  {
+    Color bg = parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
+    Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);
+
+    Composite composite = new Composite(parent, SWT.NONE);
+    composite.setLayout(UIUtil.createGridLayout(1));
+
+    Composite c = new Composite(composite, SWT.BORDER);
+    c.setLayout(UIUtil.createGridLayout(3));
+    c.setLayoutData(UIUtil.createGridData(true, false));
+
+    classLabel = new Text(c, SWT.READ_ONLY);
+    classLabel.setLayoutData(UIUtil.createGridData(false, false));
+    classLabel.setBackground(bg);
+    classLabel.setForeground(gray);
+
+    identityLabel = new Text(c, SWT.READ_ONLY);
+    identityLabel.setLayoutData(UIUtil.createGridData(false, false));
+    identityLabel.setBackground(bg);
+
+    objectLabel = new Text(c, SWT.READ_ONLY);
+    objectLabel.setLayoutData(UIUtil.createGridData(true, false));
+    objectLabel.setBackground(bg);
+
+    stackLayout = new StackLayout();
+    stacked = new Composite(composite, SWT.NONE);
+    stacked.setLayoutData(UIUtil.createGridData());
+    stacked.setLayout(stackLayout);
+
+    for (IntrospectionProvider provider : providers)
     {
-      setCurrentViewer(mapViewer);
+      TableViewer viewer = provider.createViewer(stacked);
+      provider.createColumns(viewer);
+      viewer.addDoubleClickListener(this);
+      viewer.setContentProvider(new IntrospectionContentProvider(provider));
+      viewer.setLabelProvider(new IntrospectionLabelProvider(provider));
+      viewer.setInput(getViewSite());
+
+      ViewerComparator comparator = provider.getComparator();
+      if (comparator != null)
+      {
+        viewer.setComparator(comparator);
+      }
+
+      viewers.put(provider, viewer);
     }
-    else if (object instanceof Iterable<?>)
+
+    IActionBars bars = getViewSite().getActionBars();
+    fillLocalPullDown(bars.getMenuManager());
+    fillLocalToolBar(bars.getToolBarManager());
+
+    IWorkbenchPage page = getSite().getPage();
+    page.addPartListener(this);
+    page.addSelectionListener(this);
+
+    setCurrentProvider(OBJECT_INTROSPECTION_PROVIDER);
+    instance = this;
+  }
+
+  @Override
+  public void partActivated(IWorkbenchPart part)
+  {
+    if (part == this)
     {
-      setCurrentViewer(iterableViewer);
+      return;
     }
-    else if (object != null && object.getClass().isArray())
+
+    activePart = part;
+    if (activePartAction.isChecked())
     {
-      setCurrentViewer(arrayViewer);
+      elements.clear();
+      setObject(activePart);
+    }
+  }
+
+  @Override
+  public void partBroughtToTop(IWorkbenchPart part)
+  {
+  }
+
+  @Override
+  public void partClosed(IWorkbenchPart part)
+  {
+  }
+
+  @Override
+  public void partDeactivated(IWorkbenchPart part)
+  {
+    if (activePartAction.isChecked())
+    {
+      IWorkbenchPart newPart = part.getSite().getPage().getActivePart();
+      if (newPart == this)
+      {
+        return;
+      }
+
+      if (part == activePart)
+      {
+        activePart = null;
+        setObject(null);
+      }
+    }
+  }
+
+  @Override
+  public void partOpened(IWorkbenchPart part)
+  {
+  }
+
+  @Override
+  public void selectionChanged(IWorkbenchPart part, ISelection sel)
+  {
+    if (part == this)
+    {
+      return;
+    }
+
+    if (activePartAction.isChecked())
+    {
+      return;
+    }
+
+    if (sel instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)sel;
+      elements.clear();
+      setObject(ssel.getFirstElement());
     }
     else
     {
-      setCurrentViewer(objectViewer);
+      setObject(null);
+    }
+  }
+
+  @Override
+  public void doubleClick(DoubleClickEvent event)
+  {
+    ISelection sel = event.getSelection();
+    if (sel instanceof IStructuredSelection)
+    {
+      IStructuredSelection ssel = (IStructuredSelection)sel;
+
+      Object element = ssel.getFirstElement();
+      Object object = null;
+
+      try
+      {
+        object = currentProvider.getObject(element);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      if (object != null)
+      {
+        setObject(object);
+      }
+    }
+  }
+
+  /**
+   * Passing the focus request to the viewer's control.
+   */
+  @Override
+  public void setFocus()
+  {
+    try
+    {
+      TableViewer currentViewer = getCurrentViewer();
+      currentViewer.getControl().setFocus();
+    }
+    catch (RuntimeException ignore)
+    {
+    }
+  }
+
+  @Override
+  public void notifyEvent(IEvent event)
+  {
+    refreshViewer();
+  }
+
+  private void refreshViewer()
+  {
+    UIUtil.refreshViewer(getCurrentViewer());
+  }
+
+  private TableViewer getCurrentViewer()
+  {
+    return viewers.get(currentProvider);
+  }
+
+  private void setCurrentProvider(IntrospectionProvider provider)
+  {
+    currentProvider = provider;
+    stackLayout.topControl = getCurrentViewer().getControl();
+    stacked.layout();
+  }
+
+  private void updateProvider(Object object)
+  {
+    if (object != null)
+    {
+      List<IntrospectionProvider> providersToUse = logicalStructureAction.isChecked() ? providers : DEFAULT_INTROSPECTION_PROVIDERS;
+
+      for (IntrospectionProvider provider : providersToUse)
+      {
+        if (provider.canHandle(object))
+        {
+          setCurrentProvider(provider);
+          break;
+        }
+      }
     }
 
     refreshViewer();
   }
 
-  private void createObjectColmuns()
-  {
-    Table table = objectViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_4"), //$NON-NLS-1$
-        Messages.getString("Net4jIntrospectorView_5"), Messages.getString("Net4jIntrospectorView_6"), //$NON-NLS-1$ //$NON-NLS-2$
-        Messages.getString("Net4jIntrospectorView_7") }; //$NON-NLS-1$
-    int[] columnWidths = { 200, 400, 300, 300 };
-    createColumns(table, columnNames, columnWidths);
-  }
-
-  private void createMapColmuns()
-  {
-    Table table = mapViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_8"), //$NON-NLS-1$
-        Messages.getString("Net4jIntrospectorView_9"), Messages.getString("Net4jIntrospectorView_10") }; //$NON-NLS-1$ //$NON-NLS-2$
-    int[] columnWidths = { 200, 400, 300 };
-    createColumns(table, columnNames, columnWidths);
-  }
-
-  private void createIterableColmuns()
-  {
-    Table table = iterableViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_11"), //$NON-NLS-1$
-        Messages.getString("Net4jIntrospectorView_12") }; //$NON-NLS-1$
-    int[] columnWidths = { 400, 300 };
-    createColumns(table, columnNames, columnWidths);
-  }
-
-  private void createArrayColmuns()
-  {
-    Table table = arrayViewer.getTable();
-    String[] columnNames = { Messages.getString("Net4jIntrospectorView_13"), //$NON-NLS-1$
-        Messages.getString("Net4jIntrospectorView_14"), Messages.getString("Net4jIntrospectorView_15") }; //$NON-NLS-1$ //$NON-NLS-2$
-    int[] columnWidths = { 50, 400, 300 };
-    createColumns(table, columnNames, columnWidths);
-  }
-
-  private void createColumns(Table table, String[] columnNames, int[] columnWidths)
-  {
-    TableColumn[] columns = new TableColumn[columnNames.length];
-    for (int i = 0; i < columns.length; i++)
-    {
-      TableColumn column = new TableColumn(table, SWT.LEFT, i);
-      column.setText(columnNames[i]);
-      column.setWidth(columnWidths[i]);
-      column.setMoveable(true);
-      column.setResizable(true);
-    }
-  }
-
   private void fillLocalPullDown(IMenuManager manager)
   {
+    manager.add(containerAction);
+    manager.add(refreshAction);
   }
 
   private void fillLocalToolBar(IToolBarManager manager)
   {
     manager.add(backAction);
-    manager.add(containerAction);
     manager.add(new Separator());
-    manager.add(modeAction);
-    manager.add(new Separator());
-    manager.add(refreshAction);
+    manager.add(logicalStructureAction);
+    manager.add(activePartAction);
+  }
+
+  public static Net4jIntrospectorView getInstance()
+  {
+    return instance;
+  }
+
+  public static synchronized Net4jIntrospectorView getInstance(boolean show)
+  {
+    if (instance == null)
+    {
+      try
+      {
+        IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+        page.showView(VIEW_ID);
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+    }
+
+    return instance;
   }
 
   /**
    * @author Eike Stepper
    */
-  class BackAction extends Action
+  private final class BackAction extends Action
   {
-    private BackAction()
+    public BackAction()
     {
       super(Messages.getString("Net4jIntrospectorView_16")); //$NON-NLS-1$
       ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
@@ -541,18 +490,22 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  class ModeAction extends Action
+  private final class ActivePartAction extends Action
   {
-    private ModeAction()
+    public ActivePartAction()
     {
       super(Messages.getString("Net4jIntrospectorView_17b"), AS_CHECK_BOX); //$NON-NLS-1$
       setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE));
+      setChecked(OM.PREF_ACTIVE_PART.getValue());
     }
 
     @Override
     public void run()
     {
-      if (isChecked())
+      boolean checked = isChecked();
+      OM.PREF_ACTIVE_PART.setValue(checked);
+
+      if (checked)
       {
         elements.clear();
         setObject(activePart);
@@ -567,9 +520,29 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  class ContainerAction extends Action
+  private final class LogicalStructureAction extends Action
   {
-    private ContainerAction()
+    public LogicalStructureAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_30"), AS_CHECK_BOX); //$NON-NLS-1$
+      setImageDescriptor(OM.getImageDescriptor("icons/logical_structure.png"));
+      setChecked(OM.PREF_LOGICAL_STRUCTURE.getValue());
+    }
+
+    @Override
+    public void run()
+    {
+      OM.PREF_LOGICAL_STRUCTURE.setValue(isChecked());
+      updateProvider(getObject());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ContainerAction extends Action
+  {
+    public ContainerAction()
     {
       super(Messages.getString("Net4jIntrospectorView_17")); //$NON-NLS-1$
       setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.VIEW_CONTAINER));
@@ -585,9 +558,9 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  class RefreshAction extends Action
+  private final class RefreshAction extends Action
   {
-    private RefreshAction()
+    public RefreshAction()
     {
       super("Refresh"); //$NON-NLS-1$
       setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_REFRESH));
@@ -603,24 +576,98 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  abstract class AbstractContentProvider implements IStructuredContentProvider
+  private final class IntrospectionContentProvider implements IStructuredContentProvider
   {
+    private final IntrospectionProvider provider;
+
+    public IntrospectionContentProvider(IntrospectionProvider provider)
+    {
+      this.provider = provider;
+    }
+
+    @Override
+    public Object[] getElements(Object parent)
+    {
+      if (!elements.isEmpty())
+      {
+        Object element = elements.peek();
+
+        try
+        {
+          Object[] result = provider.getElements(element);
+          if (result != null)
+          {
+            return result;
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+
+      return NO_ELEMENTS;
+    }
+
     @Override
     public void inputChanged(Viewer v, Object oldInput, Object newInput)
     {
+      // Do nothing.
     }
 
     @Override
     public void dispose()
     {
+      // Do nothing.
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  abstract class AbstractLabelProvider extends LabelProvider implements ITableLabelProvider
+  private static final class IntrospectionLabelProvider extends LabelProvider implements ITableLabelProvider, IColorProvider
   {
+    private final IntrospectionProvider provider;
+
+    public IntrospectionLabelProvider(IntrospectionProvider provider)
+    {
+      this.provider = provider;
+    }
+
+    @Override
+    public String getColumnText(Object element, int index)
+    {
+      try
+      {
+        String result = provider.getColumnText(element, index);
+        if (result != null)
+        {
+          return result;
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      return ""; //$NON-NLS-1$
+    }
+
+    @Override
+    public Image getColumnImage(Object element, int index)
+    {
+      try
+      {
+        return provider.getColumnImage(element, index);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      return null;
+    }
+
     @Override
     public String getText(Object element)
     {
@@ -628,248 +675,140 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
 
     @Override
-    public Image getColumnImage(Object obj, int index)
+    public Image getImage(Object element)
     {
+      return getColumnImage(element, 0);
+    }
+
+    @Override
+    public Color getForeground(Object element)
+    {
+      return provider.getForeground(element);
+    }
+
+    @Override
+    public Color getBackground(Object element)
+    {
+      return provider.getBackground(element);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ObjectIntrospectionProvider extends RowIntrospectionProvider
+  {
+    public ObjectIntrospectionProvider()
+    {
+      super("java.lang.Object", "Object");
+    }
+
+    @Override
+    public int getPriority()
+    {
+      return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean canHandle(Object object)
+    {
+      return true;
+    }
+
+    @Override
+    protected void fillRows(Object parent, List<Row> rows) throws Exception
+    {
+      for (Pair<Field, Object> pair : ReflectUtil.dumpToArray(parent))
+      {
+        Field field = pair.getElement1();
+        Object value = pair.getElement2();
+
+        rows.add(new Row(field.getName(), value, field.getType().getName(),
+            value == null ? Messages.getString("Net4jIntrospectorView_1") : value.getClass().getName()));
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ArrayIntrospectionProvider extends IntrospectionProvider
+  {
+    public ArrayIntrospectionProvider()
+    {
+      super("java.lang.Array", "Array");
+    }
+
+    @Override
+    public int getPriority()
+    {
+      return Integer.MAX_VALUE;
+    }
+
+    @Override
+    public boolean canHandle(Object object)
+    {
+      return object.getClass().isArray();
+    }
+
+    @Override
+    public void createColumns(TableViewer viewer)
+    {
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_13"), 50); //$NON-NLS-1$
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_14"), 400); //$NON-NLS-1$
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_15"), 300); //$NON-NLS-1$
+    }
+
+    @Override
+    public Object[] getElements(Object parent) throws Exception
+    {
+      if (parent instanceof Object[])
+      {
+        Object[] array = (Object[])parent;
+
+        @SuppressWarnings("unchecked")
+        Pair<Integer, Object>[] result = new Pair[array.length];
+
+        for (int i = 0; i < array.length; i++)
+        {
+          result[i] = Pair.create(i, array[i]);
+        }
+
+        return result;
+      }
+
       return null;
     }
 
     @Override
-    public Image getImage(Object obj)
+    public Object getObject(Object element) throws Exception
     {
-      return null;
+      @SuppressWarnings("unchecked")
+      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
+      return pair.getElement2();
     }
-  }
 
-  /**
-   * @author Eike Stepper
-   */
-  class ObjectContentProvider extends AbstractContentProvider
-  {
     @Override
-    public Object[] getElements(Object parent)
+    public String getColumnText(Object element, int index) throws Exception
     {
-      if (!elements.isEmpty())
-      {
-        try
-        {
-          return ReflectUtil.dumpToArray(elements.peek());
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
+      @SuppressWarnings("unchecked")
+      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
 
-      return NO_ELEMENTS;
-    }
-  }
+      int i = pair.getElement1();
+      Object value = pair.getElement2();
 
-  /**
-   * @author Eike Stepper
-   */
-  class ObjectLabelProvider extends AbstractLabelProvider
-  {
-    @Override
-    public String getColumnText(Object obj, int index)
-    {
-      if (obj instanceof Pair<?, ?>)
-      {
-        try
-        {
-          @SuppressWarnings("unchecked")
-          Pair<Field, Object> pair = (Pair<Field, Object>)obj;
-
-          Field field = pair.getElement1();
-          Object value = pair.getElement2();
-
-          switch (index)
-          {
-          case 0:
-            return field.getName();
-          case 1:
-            return value == null ? Messages.getString("Net4jIntrospectorView_18") : value.toString(); //$NON-NLS-1$
-          case 2:
-            return field.getType().getName();
-          case 3:
-            return value == null ? Messages.getString("Net4jIntrospectorView_1") : value.getClass().getName(); //$NON-NLS-1$
-          }
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-
-      return ""; //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class IterableContentProvider extends AbstractContentProvider
-  {
-    @Override
-    public Object[] getElements(Object parent)
-    {
-      if (!elements.isEmpty())
-      {
-        Object element = elements.peek();
-        if (element instanceof Iterable<?>)
-        {
-          List<Object> result = new ArrayList<>();
-          for (Object object : (Iterable<?>)element)
-          {
-            result.add(object);
-          }
-
-          return result.toArray();
-        }
-      }
-
-      return NO_ELEMENTS;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class IterableLabelProvider extends AbstractLabelProvider
-  {
-    @Override
-    public String getColumnText(Object obj, int index)
-    {
       switch (index)
       {
       case 0:
-        return obj == null ? Messages.getString("Net4jIntrospectorView_21") : obj.toString(); //$NON-NLS-1$
+        return String.valueOf(i);
       case 1:
-        return obj == null ? Messages.getString("Net4jIntrospectorView_22") : obj.getClass().getName(); //$NON-NLS-1$
+        return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
+      case 2:
+        return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
+
+      default:
+        return null;
       }
-
-      return ""; //$NON-NLS-1$
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class ArrayContentProvider extends AbstractContentProvider
-  {
-    @Override
-    @SuppressWarnings("unchecked")
-    public Object[] getElements(Object parent)
-    {
-      if (!elements.isEmpty())
-      {
-        Object element = elements.peek();
-        if (element.getClass().isArray())
-        {
-          Object[] array = (Object[])element;
-          Pair<Integer, Object>[] result = new Pair[array.length];
-          for (int i = 0; i < array.length; i++)
-          {
-            result[i] = Pair.create(i, array[i]);
-          }
-
-          return result;
-        }
-      }
-
-      return NO_ELEMENTS;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class ArrayLabelProvider extends AbstractLabelProvider
-  {
-    @Override
-    public String getColumnText(Object obj, int index)
-    {
-      if (obj instanceof Pair<?, ?>)
-      {
-        try
-        {
-          @SuppressWarnings("unchecked")
-          Pair<Integer, Object> pair = (Pair<Integer, Object>)obj;
-
-          int i = pair.getElement1();
-          Object value = pair.getElement2();
-          switch (index)
-          {
-          case 0:
-            return String.valueOf(i);
-          case 1:
-            return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
-          case 2:
-            return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
-          }
-        }
-        catch (RuntimeException ex)
-        {
-          OM.LOG.error(ex);
-        }
-      }
-
-      return ""; //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class MapContentProvider extends AbstractContentProvider
-  {
-    @Override
-    public Object[] getElements(Object parent)
-    {
-      if (!elements.isEmpty())
-      {
-        Object element = elements.peek();
-        if (element instanceof Map<?, ?>)
-        {
-          return ((Map<?, ?>)element).entrySet().toArray();
-        }
-      }
-
-      return NO_ELEMENTS;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class MapLabelProvider extends AbstractLabelProvider
-  {
-    @Override
-    public String getColumnText(Object obj, int index)
-    {
-      if (obj instanceof Map.Entry<?, ?>)
-      {
-        Map.Entry<?, ?> entry = (Map.Entry<?, ?>)obj;
-        Object key = entry.getKey();
-        Object value = entry.getValue();
-        switch (index)
-        {
-        case 0:
-          return key == null ? Messages.getString("Net4jIntrospectorView_27") : key.toString(); //$NON-NLS-1$
-        case 1:
-          return value == null ? Messages.getString("Net4jIntrospectorView_28") : value.toString(); //$NON-NLS-1$
-        case 2:
-          return value == null ? Messages.getString("Net4jIntrospectorView_29") : value.getClass().getName(); //$NON-NLS-1$
-        }
-      }
-
-      return ""; //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  class NameComparator extends ViewerComparator
-  {
   }
 }

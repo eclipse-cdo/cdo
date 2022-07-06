@@ -98,9 +98,9 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private IAction backAction = new BackAction();
 
-  private IAction activePartAction = new ActivePartAction();
-
   private IAction logicalStructureAction = new LogicalStructureAction();
+
+  private IAction activePartAction = new ActivePartAction();
 
   private IAction containerAction = new ContainerAction();
 
@@ -490,36 +490,6 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  private final class ActivePartAction extends Action
-  {
-    public ActivePartAction()
-    {
-      super(Messages.getString("Net4jIntrospectorView_17b"), AS_CHECK_BOX); //$NON-NLS-1$
-      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE));
-      setChecked(OM.PREF_ACTIVE_PART.getValue());
-    }
-
-    @Override
-    public void run()
-    {
-      boolean checked = isChecked();
-      OM.PREF_ACTIVE_PART.setValue(checked);
-
-      if (checked)
-      {
-        elements.clear();
-        setObject(activePart);
-      }
-      else
-      {
-        setObject(null);
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   private final class LogicalStructureAction extends Action
   {
     public LogicalStructureAction()
@@ -534,6 +504,36 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     {
       OM.PREF_LOGICAL_STRUCTURE.setValue(isChecked());
       updateProvider(getObject());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ActivePartAction extends Action
+  {
+    public ActivePartAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_17b"), AS_CHECK_BOX); //$NON-NLS-1$
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE));
+      setChecked(OM.PREF_ACTIVE_PART.getValue());
+    }
+  
+    @Override
+    public void run()
+    {
+      boolean checked = isChecked();
+      OM.PREF_ACTIVE_PART.setValue(checked);
+  
+      if (checked)
+      {
+        elements.clear();
+        setObject(activePart);
+      }
+      else
+      {
+        setObject(null);
+      }
     }
   }
 
@@ -696,6 +696,89 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
+  public static final class ArrayIntrospectionProvider extends IntrospectionProvider
+  {
+    public ArrayIntrospectionProvider()
+    {
+      super("java.lang.Array", "Array");
+    }
+  
+    @Override
+    public int getPriority()
+    {
+      return Integer.MAX_VALUE;
+    }
+  
+    @Override
+    public boolean canHandle(Object object)
+    {
+      return object.getClass().isArray();
+    }
+  
+    @Override
+    public void createColumns(TableViewer viewer)
+    {
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_13"), 50); //$NON-NLS-1$
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_14"), 400); //$NON-NLS-1$
+      createColumn(viewer, Messages.getString("Net4jIntrospectorView_15"), 300); //$NON-NLS-1$
+    }
+  
+    @Override
+    public Object[] getElements(Object parent) throws Exception
+    {
+      if (parent instanceof Object[])
+      {
+        Object[] array = (Object[])parent;
+  
+        @SuppressWarnings("unchecked")
+        Pair<Integer, Object>[] result = new Pair[array.length];
+  
+        for (int i = 0; i < array.length; i++)
+        {
+          result[i] = Pair.create(i, array[i]);
+        }
+  
+        return result;
+      }
+  
+      return null;
+    }
+  
+    @Override
+    public Object getObject(Object element) throws Exception
+    {
+      @SuppressWarnings("unchecked")
+      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
+      return pair.getElement2();
+    }
+  
+    @Override
+    public String getColumnText(Object element, int index) throws Exception
+    {
+      @SuppressWarnings("unchecked")
+      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
+  
+      int i = pair.getElement1();
+      Object value = pair.getElement2();
+  
+      switch (index)
+      {
+      case 0:
+        return String.valueOf(i);
+      case 1:
+        return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
+      case 2:
+        return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
+  
+      default:
+        return null;
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class ObjectIntrospectionProvider extends RowIntrospectionProvider
   {
     public ObjectIntrospectionProvider()
@@ -725,89 +808,6 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
         rows.add(new Row(field.getName(), value, field.getType().getName(),
             value == null ? Messages.getString("Net4jIntrospectorView_1") : value.getClass().getName()));
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static final class ArrayIntrospectionProvider extends IntrospectionProvider
-  {
-    public ArrayIntrospectionProvider()
-    {
-      super("java.lang.Array", "Array");
-    }
-
-    @Override
-    public int getPriority()
-    {
-      return Integer.MAX_VALUE;
-    }
-
-    @Override
-    public boolean canHandle(Object object)
-    {
-      return object.getClass().isArray();
-    }
-
-    @Override
-    public void createColumns(TableViewer viewer)
-    {
-      createColumn(viewer, Messages.getString("Net4jIntrospectorView_13"), 50); //$NON-NLS-1$
-      createColumn(viewer, Messages.getString("Net4jIntrospectorView_14"), 400); //$NON-NLS-1$
-      createColumn(viewer, Messages.getString("Net4jIntrospectorView_15"), 300); //$NON-NLS-1$
-    }
-
-    @Override
-    public Object[] getElements(Object parent) throws Exception
-    {
-      if (parent instanceof Object[])
-      {
-        Object[] array = (Object[])parent;
-
-        @SuppressWarnings("unchecked")
-        Pair<Integer, Object>[] result = new Pair[array.length];
-
-        for (int i = 0; i < array.length; i++)
-        {
-          result[i] = Pair.create(i, array[i]);
-        }
-
-        return result;
-      }
-
-      return null;
-    }
-
-    @Override
-    public Object getObject(Object element) throws Exception
-    {
-      @SuppressWarnings("unchecked")
-      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
-      return pair.getElement2();
-    }
-
-    @Override
-    public String getColumnText(Object element, int index) throws Exception
-    {
-      @SuppressWarnings("unchecked")
-      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
-
-      int i = pair.getElement1();
-      Object value = pair.getElement2();
-
-      switch (index)
-      {
-      case 0:
-        return String.valueOf(i);
-      case 1:
-        return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
-      case 2:
-        return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
-
-      default:
-        return null;
       }
     }
   }

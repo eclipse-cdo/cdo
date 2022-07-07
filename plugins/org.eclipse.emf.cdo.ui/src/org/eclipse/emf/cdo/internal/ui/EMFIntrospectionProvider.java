@@ -34,6 +34,18 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
 
   protected static final int CATEGORY = DEFAULT_CATEGORY - 20;
 
+  private static final String E_CONTAINER = "eContainer";
+
+  private static final String E_CLASS = "eClass";
+
+  private static final String E_IS_PROXY = "eIsProxy";
+
+  private static final String E_DELIVER = "eDeliver";
+
+  private static final String RESOURCE = "resource";
+
+  private static final String URI = "uri";
+
   private final Color foreground = Display.getDefault().getSystemColor(SWT.COLOR_DARK_BLUE);
 
   public EMFIntrospectionProvider()
@@ -65,24 +77,131 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
     {
       EObject eObject = (EObject)parent;
 
-      addRow(rows, "eContainer", eObject.eContainer(), EObject.class.getName(), CATEGORY, foreground);
-      addRow(rows, "uri", EcoreUtil.getURI(eObject), URI.class.getName(), CATEGORY, foreground);
-      addRow(rows, "resource", eObject.eResource(), Resource.class.getName(), CATEGORY, foreground);
-      addRow(rows, "eClass", eObject.eClass(), EClass.class.getName(), CATEGORY, foreground);
-      addRow(rows, "eIsProxy", eObject.eIsProxy(), boolean.class.getName(), CATEGORY, foreground);
-      addRow(rows, "eDeliver", eObject.eDeliver(), boolean.class.getName(), CATEGORY, foreground);
+      rows.add(createEContainerRow(eObject));
+      rows.add(createURIRow(eObject));
+      rows.add(createResourceRow(eObject));
+      rows.add(createEClassRow(eObject));
+      rows.add(createEIsProxyRow(eObject));
+      rows.add(createEDeliverRow(eObject));
 
       for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
       {
-        Object value = eObject.eGet(feature);
-        rows.add(new Row(feature.getName(), value, feature.getEType().getName(), getConcreteType(value)));
+        rows.add(createRow(eObject, feature));
       }
     }
   }
 
-  protected static void addRow(List<Row> rows, String name, Object value, String declaredType, int category, Color foreground)
+  @Override
+  public Row getElementByName(Object parent, String name) throws Exception
   {
-    rows.add(new Row(name, value, declaredType, getConcreteType(value), category, foreground, null));
+    if (parent instanceof EObject)
+    {
+      EObject eObject = (EObject)parent;
+
+      if (E_CONTAINER.equals(name))
+      {
+        return createEContainerRow(eObject);
+      }
+
+      if (E_CLASS.equals(name))
+      {
+        return createEClassRow(eObject);
+      }
+
+      if (E_IS_PROXY.equals(name))
+      {
+        return createEIsProxyRow(eObject);
+      }
+
+      if (E_DELIVER.equals(name))
+      {
+        return createEDeliverRow(eObject);
+      }
+
+      if (RESOURCE.equals(name))
+      {
+        return createResourceRow(eObject);
+      }
+
+      if (URI.equals(name))
+      {
+        return createURIRow(eObject);
+      }
+
+      EStructuralFeature feature = eObject.eClass().getEStructuralFeature(name);
+      if (feature != null)
+      {
+        return createRow(eObject, feature);
+      }
+    }
+
+    return null;
+  }
+
+  private Row createEContainerRow(EObject eObject)
+  {
+    return createRow(E_CONTAINER, eObject.eContainer(), EObject.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createURIRow(EObject eObject)
+  {
+    return createRow(URI, EcoreUtil.getURI(eObject), URI.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createResourceRow(EObject eObject)
+  {
+    return createRow(RESOURCE, eObject.eResource(), Resource.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createEClassRow(EObject eObject)
+  {
+    return createRow(E_CLASS, eObject.eClass(), EClass.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createEIsProxyRow(EObject eObject)
+  {
+    return createRow(E_IS_PROXY, eObject.eIsProxy(), boolean.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createEDeliverRow(EObject eObject)
+  {
+    return createRow(E_DELIVER, eObject.eDeliver(), boolean.class.getName(), CATEGORY, foreground);
+  }
+
+  private static Row createRow(EObject eObject, EStructuralFeature feature)
+  {
+    Object value = eObject.eGet(feature);
+    return new Row(feature.getName(), value, getDeclaredType(feature), getConcreteType(value));
+  }
+
+  protected static Row createRow(String name, Object value, String declaredType, int category, Color foreground)
+  {
+    return new Row(name, value, declaredType, getConcreteType(value), category, foreground, null);
+  }
+
+  private static String getDeclaredType(EStructuralFeature feature)
+  {
+    String result = feature.getEType().getName();
+
+    int lowerBound = feature.getLowerBound();
+    int upperBound = feature.getUpperBound();
+    if (lowerBound != 0 || upperBound != 1)
+    {
+      result += "[" + lowerBound + "..";
+
+      if (upperBound == -1)
+      {
+        result += "*";
+      }
+      else
+      {
+        result += upperBound;
+      }
+
+      result += "]";
+    }
+
+    return result;
   }
 
   private static String getConcreteType(Object value)
@@ -93,6 +212,6 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
       return eObject.eClass().getName();
     }
 
-    return value == null ? "" : value.getClass().getName(); //$NON-NLS-1$
+    return getClassName(value);
   }
 }

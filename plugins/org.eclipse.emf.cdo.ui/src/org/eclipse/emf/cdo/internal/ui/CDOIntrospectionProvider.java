@@ -36,6 +36,18 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
 
   protected static final int CATEGORY = EMFIntrospectionProvider.CATEGORY + 10;
 
+  private static final String CDO_ID = "cdoID";
+
+  private static final String CDO_LOCK_STATE = "cdoLockState";
+
+  private static final String CDO_PERMISSION = "cdoPermission";
+
+  private static final String CDO_REVISION = "cdoRevision";
+
+  private static final String CDO_STATE = "cdoState";
+
+  private static final String CDO_VIEW = "cdoView";
+
   private final Color foreground = Display.getDefault().getSystemColor(SWT.COLOR_DARK_CYAN);
 
   public CDOIntrospectionProvider()
@@ -63,13 +75,87 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
     CDOObject cdoObject = getCDOObject(parent);
     if (cdoObject != null)
     {
-      addRow(rows, "cdoID", cdoObject.cdoID(), CDOID.class.getName(), CATEGORY, foreground);
-      addRow(rows, "cdoLockState", cdoObject.cdoLockState(), CDOLockState.class.getName(), CATEGORY, foreground);
-      addRow(rows, "cdoPermission", cdoObject.cdoPermission(), CDOPermission.class.getName(), CATEGORY, foreground);
-      addRow(rows, "cdoRevision", cdoObject.cdoRevision(), CDORevision.class.getName(), CATEGORY, foreground);
-      addRow(rows, "cdoState", cdoObject.cdoState(), CDOState.class.getName(), CATEGORY, foreground);
-      addRow(rows, "cdoView", cdoObject.cdoView(), CDOView.class.getName(), CATEGORY, foreground);
+      rows.add(createCDOIDRow(cdoObject));
+      rows.add(createCDOLockStateRow(cdoObject));
+      rows.add(createCDOPermissionRow(cdoObject));
+      rows.add(createCDORevisionRow(cdoObject));
+      rows.add(createCDOStateRow(cdoObject));
+      rows.add(createCDOViewRow(cdoObject));
     }
+  }
+
+  @Override
+  public Row getElementByName(Object parent, String name) throws Exception
+  {
+    Row result = super.getElementByName(parent, name);
+    if (result == null)
+    {
+      CDOObject cdoObject = getCDOObject(parent);
+      if (cdoObject != null)
+      {
+        if (CDO_ID.equals(name))
+        {
+          return createCDOIDRow(cdoObject);
+        }
+
+        if (CDO_LOCK_STATE.equals(name))
+        {
+          return createCDOLockStateRow(cdoObject);
+        }
+
+        if (CDO_PERMISSION.equals(name))
+        {
+          return createCDOPermissionRow(cdoObject);
+        }
+
+        if (CDO_REVISION.equals(name))
+        {
+          return createCDORevisionRow(cdoObject);
+        }
+
+        if (CDO_STATE.equals(name))
+        {
+          return createCDOStateRow(cdoObject);
+        }
+
+        if (CDO_VIEW.equals(name))
+        {
+          return createCDOViewRow(cdoObject);
+        }
+      }
+    }
+
+    return result;
+  }
+
+  private Row createCDOViewRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_VIEW, cdoObject.cdoView(), CDOView.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDOStateRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_STATE, cdoObject.cdoState(), CDOState.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDORevisionRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_REVISION, cdoObject.cdoRevision(), CDORevision.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDOPermissionRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_PERMISSION, cdoObject.cdoPermission(), CDOPermission.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDOLockStateRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_LOCK_STATE, cdoObject.cdoLockState(), CDOLockState.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDOIDRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_ID, cdoObject.cdoID(), CDOID.class.getName(), CATEGORY, foreground);
   }
 
   private static CDOObject getCDOObject(Object object)

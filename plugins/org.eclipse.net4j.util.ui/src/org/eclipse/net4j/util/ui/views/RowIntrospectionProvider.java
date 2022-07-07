@@ -42,19 +42,22 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
   }
 
   @Override
-  public final Object[] getElements(Object parent) throws Exception
+  public final Row[] getElements(Object parent) throws Exception
   {
     List<Row> rows = new ArrayList<>();
     fillRows(parent, rows);
-    return rows.toArray();
+    return rows.toArray(new Row[rows.size()]);
   }
 
   protected abstract void fillRows(Object parent, List<Row> rows) throws Exception;
 
   @Override
-  public final Object getObject(Object element) throws Exception
+  public abstract Row getElementByName(Object parent, String name) throws Exception;
+
+  @Override
+  public final Row getNameAndValue(Object element) throws Exception
   {
-    return ((Row)element).getValue();
+    return (Row)element;
   }
 
   @Override
@@ -91,12 +94,8 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
   /**
    * @author Eike Stepper
    */
-  public static final class Row
+  public static final class Row extends NameAndValue
   {
-    private final String name;
-
-    private final Object value;
-
     private final String declaredType;
 
     private final String concreteType;
@@ -109,8 +108,7 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
 
     public Row(String name, Object value, String declaredType, String concreteType, int category, Color foreground, Color background)
     {
-      this.name = name;
-      this.value = value;
+      super(name, value);
       this.declaredType = declaredType;
       this.concreteType = concreteType;
       this.category = category;
@@ -121,16 +119,6 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
     public Row(String name, Object value, String declaredType, String concreteType)
     {
       this(name, value, declaredType, concreteType, DEFAULT_CATEGORY, null, null);
-    }
-
-    public String getName()
-    {
-      return name;
-    }
-
-    public Object getValue()
-    {
-      return value;
     }
 
     public String getDeclaredType()
@@ -163,10 +151,10 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
       switch (index)
       {
       case 0:
-        return name;
+        return getName();
 
       case 1:
-        return "" + value;
+        return formatValue(getValue());
 
       case 2:
         return declaredType;
@@ -177,12 +165,6 @@ public abstract class RowIntrospectionProvider extends IntrospectionProvider
       default:
         return null;
       }
-    }
-
-    @Override
-    public String toString()
-    {
-      return name + "=" + value;
     }
   }
 }

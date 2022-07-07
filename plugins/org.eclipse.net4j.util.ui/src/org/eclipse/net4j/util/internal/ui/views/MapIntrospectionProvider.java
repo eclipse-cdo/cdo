@@ -48,35 +48,55 @@ public final class MapIntrospectionProvider extends IntrospectionProvider
     if (parent instanceof Map<?, ?>)
     {
       Map<?, ?> map = (Map<?, ?>)parent;
-      return map.entrySet().toArray();
+
+      NameAndValue[] result = new NameAndValue[map.size()];
+      int index = 0;
+
+      for (Map.Entry<?, ?> entry : map.entrySet())
+      {
+        result[index++] = new NameAndValue("" + entry.getKey(), entry.getValue());
+      }
+
+      return result;
     }
 
     return null;
   }
 
   @Override
-  public Object getObject(Object element) throws Exception
+  public Object getElementByName(Object parent, String name) throws Exception
   {
-    Map.Entry<?, ?> entry = (Map.Entry<?, ?>)element;
-    return entry.getValue();
+    Map<?, ?> map = (Map<?, ?>)parent;
+    Object value = map.get(name);
+    if (value != null)
+    {
+      return new NameAndValue(name, value);
+    }
+
+    return null;
+  }
+
+  @Override
+  public NameAndValue getNameAndValue(Object element) throws Exception
+  {
+    return (NameAndValue)element;
   }
 
   @Override
   public String getColumnText(Object element, int index) throws Exception
   {
-    Map.Entry<?, ?> entry = (Map.Entry<?, ?>)element;
-
-    Object key = entry.getKey();
-    Object value = entry.getValue();
+    NameAndValue nameAndValue = (NameAndValue)element;
 
     switch (index)
     {
     case 0:
-      return key == null ? Messages.getString("Net4jIntrospectorView_27") : key.toString(); //$NON-NLS-1$
+      return nameAndValue.getName();
+
     case 1:
-      return value == null ? Messages.getString("Net4jIntrospectorView_28") : value.toString(); //$NON-NLS-1$
+      return formatValue(nameAndValue.getValue());
+
     case 2:
-      return value == null ? Messages.getString("Net4jIntrospectorView_29") : value.getClass().getName(); //$NON-NLS-1$
+      return getClassName(nameAndValue.getValue());
 
     default:
       return null;

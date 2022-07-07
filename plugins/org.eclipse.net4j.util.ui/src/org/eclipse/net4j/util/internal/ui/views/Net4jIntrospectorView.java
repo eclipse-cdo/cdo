@@ -23,7 +23,9 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
+import org.eclipse.net4j.util.ui.actions.ToggleAction;
 import org.eclipse.net4j.util.ui.views.IntrospectionProvider;
+import org.eclipse.net4j.util.ui.views.IntrospectionProvider.NameAndValue;
 import org.eclipse.net4j.util.ui.views.RowIntrospectionProvider;
 
 import org.eclipse.jface.action.Action;
@@ -31,22 +33,23 @@ import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IColorProvider;
-import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
+import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.jface.viewers.ViewerComparator;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StackLayout;
+import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener;
@@ -68,7 +71,7 @@ import java.util.Stack;
 /**
  * @author Eike Stepper
  */
-public class Net4jIntrospectorView extends ViewPart implements IPartListener, ISelectionListener, IDoubleClickListener, IListener
+public class Net4jIntrospectorView extends ViewPart
 {
   public static final String VIEW_ID = "org.eclipse.net4j.util.Net4jIntrospectorView"; //$NON-NLS-1$
 
@@ -82,13 +85,115 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private static Net4jIntrospectorView instance;
 
-  private final Stack<Object> elements = new Stack<>();
+  private final IPartListener partListener = new IPartListener()
+  {
+    @Override
+    public void partActivated(IWorkbenchPart part)
+    {
+      if (part == Net4jIntrospectorView.this)
+      {
+        return;
+      }
+
+      activePart = part;
+      if (activePartAction.isChecked())
+      {
+        history.clear();
+        setObject(activePart);
+      }
+    }
+
+    @Override
+    public void partDeactivated(IWorkbenchPart part)
+    {
+      if (activePartAction.isChecked())
+      {
+        IWorkbenchPart newPart = part.getSite().getPage().getActivePart();
+        if (newPart == Net4jIntrospectorView.this)
+        {
+          return;
+        }
+
+        if (part == activePart)
+        {
+          activePart = null;
+          setObject(null);
+        }
+      }
+    }
+
+    @Override
+    public void partOpened(IWorkbenchPart part)
+    {
+      // Do nothing.
+    }
+
+    @Override
+    public void partClosed(IWorkbenchPart part)
+    {
+      // Do nothing.
+    }
+
+    @Override
+    public void partBroughtToTop(IWorkbenchPart part)
+    {
+      // Do nothing.
+    }
+  };
+
+  private final ISelectionListener pageSelectionListener = new ISelectionListener()
+  {
+    @Override
+    public void selectionChanged(IWorkbenchPart part, ISelection sel)
+    {
+      if (part == Net4jIntrospectorView.this)
+      {
+        return;
+      }
+
+      if (activePartAction.isChecked())
+      {
+        return;
+      }
+
+      Object pageSelection = null;
+      if (sel instanceof IStructuredSelection)
+      {
+        IStructuredSelection ssel = (IStructuredSelection)sel;
+        pageSelection = ssel.getFirstElement();
+      }
+
+      if (pageSelection != lastPageSelection)
+      {
+        lastPageSelection = pageSelection;
+        history.clear();
+
+        if (linkSelectionAction.isChecked())
+        {
+          setObject(lastPageSelection);
+        }
+      }
+    }
+  };
+
+  private final IListener elementListener = new IListener()
+  {
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      refreshViewer();
+    }
+  };
+
+  private final History history = new History();
 
   private final Map<IntrospectionProvider, TableViewer> viewers = new HashMap<>();
 
   private final List<IntrospectionProvider> providers = new ArrayList<>();
 
   private IntrospectionProvider currentProvider;
+
+  private Object currentObject;
 
   private Text classLabel;
 
@@ -97,6 +202,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   private Text objectLabel;
 
   private IAction backAction = new BackAction();
+
+  private IAction linkSelectionAction = new LinkSelectionAction();
 
   private IAction logicalStructureAction = new LogicalStructureAction();
 
@@ -112,6 +219,8 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
 
   private IWorkbenchPart activePart;
 
+  private Object lastPageSelection;
+
   public Net4jIntrospectorView()
   {
     IPluginContainer.INSTANCE.forEachElement(IntrospectionProvider.Factory.PRODUCT_GROUP, IntrospectionProvider.class, providers::add);
@@ -125,39 +234,33 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     instance = null;
 
     IWorkbenchPage page = getSite().getPage();
-    page.removePartListener(this);
-    page.removeSelectionListener(this);
+    page.removePartListener(partListener);
+    page.removeSelectionListener(pageSelectionListener);
     super.dispose();
   }
 
   public Object getObject()
   {
-    if (!elements.isEmpty())
+    NameAndValue nameAndValue = history.peek();
+    if (nameAndValue == null)
     {
-      return elements.peek();
+      return null;
     }
 
-    return null;
+    return nameAndValue.getValue();
   }
 
   public void setObject(Object object)
   {
-    EventUtil.removeListener(object, this);
-    if (object != null)
+    Object oldObject = currentObject;
+    if (oldObject == object)
     {
-      if (!elements.isEmpty())
-      {
-        Object element = elements.peek();
-        if (element != object)
-        {
-          EventUtil.removeListener(element, this);
-          elements.push(object);
-        }
-      }
-      else
-      {
-        elements.push(object);
-      }
+      return;
+    }
+
+    if (oldObject != null)
+    {
+      EventUtil.removeListener(oldObject, elementListener);
     }
 
     if (object == null)
@@ -169,16 +272,16 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
     else
     {
-      EventUtil.addListener(object, this);
+      EventUtil.addListener(object, elementListener);
 
       Class<? extends Object> c = object.getClass();
       String className = c.isArray() ? c.getComponentType().getName() + "[]" : c.getName();
       classLabel.setText(className);
 
-      String identity = HexUtil.identityHashCode(object);
+      String identity = HexUtil.identityHashCode(object, true);
       identityLabel.setText(identity);
 
-      String value = object.toString();
+      String value = StringUtil.safe(object);
       String prefix = c.getName() + "@";
       if (value.startsWith(prefix))
       {
@@ -187,8 +290,12 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
         {
           text = StringUtil.EMPTY;
         }
+        else if (text.startsWith(identity))
+        {
+          text = text.substring(identity.length());
+        }
 
-        objectLabel.setText(text);
+        objectLabel.setText(text.trim());
       }
       else
       {
@@ -197,8 +304,9 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
 
     classLabel.getParent().layout();
-    backAction.setEnabled(elements.size() >= 2);
+    backAction.setEnabled(!history.isEmpty());
 
+    currentObject = object;
     updateProvider(object);
   }
 
@@ -237,10 +345,27 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     {
       TableViewer viewer = provider.createViewer(stacked);
       provider.createColumns(viewer);
-      viewer.addDoubleClickListener(this);
       viewer.setContentProvider(new IntrospectionContentProvider(provider));
       viewer.setLabelProvider(new IntrospectionLabelProvider(provider));
       viewer.setInput(getViewSite());
+
+      viewer.addDoubleClickListener(e -> {
+        ISelection sel = e.getSelection();
+        if (sel instanceof IStructuredSelection)
+        {
+          IStructuredSelection ssel = (IStructuredSelection)sel;
+
+          Object element = ssel.getFirstElement();
+          drillIn(element);
+        }
+      });
+
+      viewer.getControl().addKeyListener(KeyListener.keyPressedAdapter(e -> {
+        if (e.character == SWT.BS)
+        {
+          backAction.run();
+        }
+      }));
 
       ViewerComparator comparator = provider.getComparator();
       if (comparator != null)
@@ -251,123 +376,20 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
       viewers.put(provider, viewer);
     }
 
+    linkSelectionAction.setEnabled(!activePartAction.isChecked());
+
     IActionBars bars = getViewSite().getActionBars();
     fillLocalPullDown(bars.getMenuManager());
     fillLocalToolBar(bars.getToolBarManager());
 
     IWorkbenchPage page = getSite().getPage();
-    page.addPartListener(this);
-    page.addSelectionListener(this);
+    page.addPartListener(partListener);
+    page.addSelectionListener(pageSelectionListener);
 
     setCurrentProvider(OBJECT_INTROSPECTION_PROVIDER);
     instance = this;
   }
 
-  @Override
-  public void partActivated(IWorkbenchPart part)
-  {
-    if (part == this)
-    {
-      return;
-    }
-
-    activePart = part;
-    if (activePartAction.isChecked())
-    {
-      elements.clear();
-      setObject(activePart);
-    }
-  }
-
-  @Override
-  public void partBroughtToTop(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void partClosed(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void partDeactivated(IWorkbenchPart part)
-  {
-    if (activePartAction.isChecked())
-    {
-      IWorkbenchPart newPart = part.getSite().getPage().getActivePart();
-      if (newPart == this)
-      {
-        return;
-      }
-
-      if (part == activePart)
-      {
-        activePart = null;
-        setObject(null);
-      }
-    }
-  }
-
-  @Override
-  public void partOpened(IWorkbenchPart part)
-  {
-  }
-
-  @Override
-  public void selectionChanged(IWorkbenchPart part, ISelection sel)
-  {
-    if (part == this)
-    {
-      return;
-    }
-
-    if (activePartAction.isChecked())
-    {
-      return;
-    }
-
-    if (sel instanceof IStructuredSelection)
-    {
-      IStructuredSelection ssel = (IStructuredSelection)sel;
-      elements.clear();
-      setObject(ssel.getFirstElement());
-    }
-    else
-    {
-      setObject(null);
-    }
-  }
-
-  @Override
-  public void doubleClick(DoubleClickEvent event)
-  {
-    ISelection sel = event.getSelection();
-    if (sel instanceof IStructuredSelection)
-    {
-      IStructuredSelection ssel = (IStructuredSelection)sel;
-
-      Object element = ssel.getFirstElement();
-      Object object = null;
-
-      try
-      {
-        object = currentProvider.getObject(element);
-      }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
-
-      if (object != null)
-      {
-        setObject(object);
-      }
-    }
-  }
-
-  /**
-   * Passing the focus request to the viewer's control.
-   */
   @Override
   public void setFocus()
   {
@@ -381,10 +403,45 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     }
   }
 
-  @Override
-  public void notifyEvent(IEvent event)
+  private void drillIn(Object element)
   {
-    refreshViewer();
+    try
+    {
+      NameAndValue nameAndValue = currentProvider.getNameAndValue(element);
+      if (nameAndValue != null)
+      {
+        history.push(nameAndValue.getName(), currentObject);
+        setObject(nameAndValue.getValue());
+      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
+    }
+  }
+
+  private void drillOut()
+  {
+    NameAndValue nameAndValue = history.pop();
+    if (nameAndValue != null)
+    {
+      setObject(nameAndValue.getValue());
+
+      try
+      {
+        Object element = currentProvider.getElementByName(currentObject, nameAndValue.getName());
+        if (element != null)
+        {
+          TableViewer viewer = getCurrentViewer();
+          Display display = viewer.getControl().getDisplay();
+          UIUtil.asyncExec(display, () -> viewer.setSelection(new StructuredSelection(element), true));
+        }
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
   }
 
   private void refreshViewer()
@@ -402,6 +459,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     currentProvider = provider;
     stackLayout.topControl = getCurrentViewer().getControl();
     stacked.layout();
+    setFocus();
   }
 
   private void updateProvider(Object object)
@@ -435,6 +493,7 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     manager.add(new Separator());
     manager.add(logicalStructureAction);
     manager.add(activePartAction);
+    manager.add(linkSelectionAction);
   }
 
   public static Net4jIntrospectorView getInstance()
@@ -476,13 +535,28 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     @Override
     public void run()
     {
-      if (!elements.isEmpty())
+      drillOut();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LinkSelectionAction extends ToggleAction
+  {
+    public LinkSelectionAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_31"), //$NON-NLS-1$
+          SharedIcons.getDescriptor(SharedIcons.ETOOL_LINK_WITH_EDITOR), //
+          OM.PREF_LINK_SELECTION);
+    }
+
+    @Override
+    protected void run(boolean checked)
+    {
+      if (checked)
       {
-        elements.pop();
-        if (!elements.isEmpty())
-        {
-          setObject(elements.peek());
-        }
+        setObject(lastPageSelection);
       }
     }
   }
@@ -490,19 +564,18 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  private final class LogicalStructureAction extends Action
+  private final class LogicalStructureAction extends ToggleAction
   {
     public LogicalStructureAction()
     {
-      super(Messages.getString("Net4jIntrospectorView_30"), AS_CHECK_BOX); //$NON-NLS-1$
-      setImageDescriptor(OM.getImageDescriptor("icons/logical_structure.png"));
-      setChecked(OM.PREF_LOGICAL_STRUCTURE.getValue());
+      super(Messages.getString("Net4jIntrospectorView_30"), //$NON-NLS-1$
+          OM.getImageDescriptor("icons/logical_structure.png"), //$NON-NLS-1$
+          OM.PREF_LOGICAL_STRUCTURE);
     }
 
     @Override
-    public void run()
+    protected void run(boolean checked)
     {
-      OM.PREF_LOGICAL_STRUCTURE.setValue(isChecked());
       updateProvider(getObject());
     }
   }
@@ -510,30 +583,29 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
-  private final class ActivePartAction extends Action
+  private final class ActivePartAction extends ToggleAction
   {
     public ActivePartAction()
     {
-      super(Messages.getString("Net4jIntrospectorView_17b"), AS_CHECK_BOX); //$NON-NLS-1$
-      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE));
-      setChecked(OM.PREF_ACTIVE_PART.getValue());
+      super(Messages.getString("Net4jIntrospectorView_17b"), //$NON-NLS-1$
+          SharedIcons.getDescriptor(SharedIcons.ETOOL_PART_MODE), //
+          OM.PREF_ACTIVE_PART);
     }
-  
+
     @Override
-    public void run()
+    protected void run(boolean checked)
     {
-      boolean checked = isChecked();
-      OM.PREF_ACTIVE_PART.setValue(checked);
-  
       if (checked)
       {
-        elements.clear();
+        history.clear();
         setObject(activePart);
       }
       else
       {
-        setObject(null);
+        setObject(lastPageSelection);
       }
+
+      linkSelectionAction.setEnabled(!checked);
     }
   }
 
@@ -588,13 +660,11 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     @Override
     public Object[] getElements(Object parent)
     {
-      if (!elements.isEmpty())
+      if (currentObject != null)
       {
-        Object element = elements.peek();
-
         try
         {
-          Object[] result = provider.getElements(element);
+          Object[] result = provider.getElements(currentObject);
           if (result != null)
           {
             return result;
@@ -696,25 +766,72 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
   /**
    * @author Eike Stepper
    */
+  private static final class History
+  {
+    private final Stack<NameAndValue> stack = new Stack<>();
+
+    public History()
+    {
+    }
+
+    public boolean isEmpty()
+    {
+      return stack.isEmpty();
+    }
+
+    public NameAndValue peek()
+    {
+      if (stack.isEmpty())
+      {
+        return null;
+      }
+
+      return stack.peek();
+    }
+
+    public void push(String name, Object value)
+    {
+      stack.push(new NameAndValue(name, value));
+    }
+
+    public NameAndValue pop()
+    {
+      if (stack.isEmpty())
+      {
+        return null;
+      }
+
+      return stack.pop();
+    }
+
+    public void clear()
+    {
+      stack.clear();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static final class ArrayIntrospectionProvider extends IntrospectionProvider
   {
     public ArrayIntrospectionProvider()
     {
       super("java.lang.Array", "Array");
     }
-  
+
     @Override
     public int getPriority()
     {
       return Integer.MAX_VALUE;
     }
-  
+
     @Override
     public boolean canHandle(Object object)
     {
       return object.getClass().isArray();
     }
-  
+
     @Override
     public void createColumns(TableViewer viewer)
     {
@@ -722,54 +839,54 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
       createColumn(viewer, Messages.getString("Net4jIntrospectorView_14"), 400); //$NON-NLS-1$
       createColumn(viewer, Messages.getString("Net4jIntrospectorView_15"), 300); //$NON-NLS-1$
     }
-  
+
     @Override
     public Object[] getElements(Object parent) throws Exception
     {
       if (parent instanceof Object[])
       {
         Object[] array = (Object[])parent;
-  
-        @SuppressWarnings("unchecked")
-        Pair<Integer, Object>[] result = new Pair[array.length];
-  
-        for (int i = 0; i < array.length; i++)
+        NameAndValue[] result = new NameAndValue[array.length];
+
+        for (int index = 0; index < array.length; index++)
         {
-          result[i] = Pair.create(i, array[i]);
+          result[index] = new NameAndValue(index, array[index]);
         }
-  
+
         return result;
       }
-  
+
       return null;
     }
-  
+
     @Override
-    public Object getObject(Object element) throws Exception
+    public Object getElementByName(Object parent, String name) throws Exception
     {
-      @SuppressWarnings("unchecked")
-      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
-      return pair.getElement2();
+      Object[] array = (Object[])parent;
+      int index = Integer.parseInt(name);
+      return new NameAndValue(index, array[index]);
     }
-  
+
+    @Override
+    public NameAndValue getNameAndValue(Object element) throws Exception
+    {
+      return (NameAndValue)element;
+    }
+
     @Override
     public String getColumnText(Object element, int index) throws Exception
     {
-      @SuppressWarnings("unchecked")
-      Pair<Integer, Object> pair = (Pair<Integer, Object>)element;
-  
-      int i = pair.getElement1();
-      Object value = pair.getElement2();
-  
+      NameAndValue nameAndValue = (NameAndValue)element;
+
       switch (index)
       {
       case 0:
-        return String.valueOf(i);
+        return nameAndValue.getName();
       case 1:
-        return value == null ? Messages.getString("Net4jIntrospectorView_24") : value.toString(); //$NON-NLS-1$
+        return formatValue(nameAndValue.getValue());
       case 2:
-        return value == null ? Messages.getString("Net4jIntrospectorView_25") : value.getClass().getName(); //$NON-NLS-1$
-  
+        return getClassName(nameAndValue.getValue());
+
       default:
         return null;
       }
@@ -803,12 +920,30 @@ public class Net4jIntrospectorView extends ViewPart implements IPartListener, IS
     {
       for (Pair<Field, Object> pair : ReflectUtil.dumpToArray(parent))
       {
-        Field field = pair.getElement1();
-        Object value = pair.getElement2();
-
-        rows.add(new Row(field.getName(), value, field.getType().getName(),
-            value == null ? Messages.getString("Net4jIntrospectorView_1") : value.getClass().getName()));
+        rows.add(createRow(pair));
       }
+    }
+
+    @Override
+    public Row getElementByName(Object parent, String name) throws Exception
+    {
+      for (Pair<Field, Object> pair : ReflectUtil.dumpToArray(parent))
+      {
+        if (pair.getElement1().getName().equals(name))
+        {
+          return createRow(pair);
+        }
+      }
+
+      return null;
+    }
+
+    private static Row createRow(Pair<Field, Object> pair)
+    {
+      Field field = pair.getElement1();
+      Object value = pair.getElement2();
+
+      return new Row(field.getName(), value, getName(field.getType()), getClassName(value));
     }
   }
 }

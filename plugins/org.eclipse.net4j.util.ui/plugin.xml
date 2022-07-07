@@ -18,6 +18,7 @@
      <productGroup id="org.eclipse.net4j.util.ui.elementWizards" name="%productGroup.name"/>
      <productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="%productGroup.name.0"/>
      <productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="%productGroup.name.1"/>
+     <productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="%productGroup.name.2"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

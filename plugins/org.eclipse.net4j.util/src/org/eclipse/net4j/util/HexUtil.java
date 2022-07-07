@@ -230,7 +230,21 @@ public final class HexUtil
    */
   public static String identityHashCode(Object object)
   {
-    return intToHex(System.identityHashCode(object));
+    return identityHashCode(object, false);
+  }
+
+  /**
+   * @since 3.20
+   */
+  public static String identityHashCode(Object object, boolean trimLeadingZeros)
+  {
+    int identity = System.identityHashCode(object);
+    if (trimLeadingZeros)
+    {
+      return Integer.toHexString(identity);
+    }
+
+    return intToHex(identity);
   }
 
   @Deprecated

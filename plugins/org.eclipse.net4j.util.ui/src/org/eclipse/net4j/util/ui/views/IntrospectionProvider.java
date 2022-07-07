@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.ui.views;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -22,6 +24,11 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+
 /**
  * @author Eike Stepper
  * @since 3.16
@@ -29,6 +36,8 @@ import org.eclipse.swt.widgets.TableColumn;
 public abstract class IntrospectionProvider implements Comparable<IntrospectionProvider>
 {
   public static final int DEFAULT_PRIORITY = 100;
+
+  private static final List<ValueFormatter> FORMATTERS = new ArrayList<>();
 
   private final String id;
 
@@ -68,22 +77,11 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
 
   public abstract void createColumns(TableViewer viewer);
 
-  protected static TableColumn createColumn(TableViewer viewer, String name, int width)
-  {
-    Table table = viewer.getTable();
-    int index = table.getColumnCount();
-
-    TableColumn column = new TableColumn(table, SWT.LEFT, index);
-    column.setText(name);
-    column.setWidth(width);
-    column.setMoveable(true);
-    column.setResizable(true);
-    return column;
-  }
-
   public abstract Object[] getElements(Object parent) throws Exception;
 
-  public abstract Object getObject(Object element) throws Exception;
+  public abstract Object getElementByName(Object parent, String name) throws Exception;
+
+  public abstract NameAndValue getNameAndValue(Object element) throws Exception;
 
   public abstract String getColumnText(Object element, int index) throws Exception;
 
@@ -108,15 +106,185 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
   }
 
   @Override
-  public int compareTo(IntrospectionProvider o)
+  public final int compareTo(IntrospectionProvider o)
   {
     return Integer.compare(getPriority(), o.getPriority());
   }
 
   @Override
-  public String toString()
+  public final String toString()
   {
     return getLabel();
+  }
+
+  protected static TableColumn createColumn(TableViewer viewer, String name, int width)
+  {
+    Table table = viewer.getTable();
+    int index = table.getColumnCount();
+
+    TableColumn column = new TableColumn(table, SWT.LEFT, index);
+    column.setText(name);
+    column.setWidth(width);
+    column.setMoveable(true);
+    column.setResizable(true);
+    return column;
+  }
+
+  protected static String getClassName(Object value)
+  {
+    if (value == null)
+    {
+      return ""; //$NON-NLS-1$
+    }
+
+    Class<?> type = value.getClass();
+    return getName(type);
+  }
+
+  protected static String getName(Class<?> type)
+  {
+    if (type.isArray())
+    {
+      Class<?> componentType = type.getComponentType();
+      return getName(componentType) + "[]"; //$NON-NLS-1$
+    }
+
+    return type.getName();
+  }
+
+  protected static String formatValue(Object value)
+  {
+    for (ValueFormatter formatter : FORMATTERS)
+    {
+      if (formatter.canHandle(value))
+      {
+        try
+        {
+          return formatter.formatValue(value);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+    }
+
+    if (value != null)
+    {
+      Class<? extends Object> type = value.getClass();
+      if (type.isArray())
+      {
+        if (type == byte[].class)
+        {
+          return Arrays.toString((byte[])value);
+        }
+
+        if (type == short[].class)
+        {
+          return Arrays.toString((short[])value);
+        }
+
+        if (type == int[].class)
+        {
+          return Arrays.toString((int[])value);
+        }
+
+        if (type == long[].class)
+        {
+          return Arrays.toString((long[])value);
+        }
+
+        if (type == char[].class)
+        {
+          return Arrays.toString((char[])value);
+        }
+
+        if (type == float[].class)
+        {
+          return Arrays.toString((float[])value);
+        }
+
+        if (type == double[].class)
+        {
+          return Arrays.toString((double[])value);
+        }
+
+        if (type == boolean[].class)
+        {
+          return Arrays.toString((boolean[])value);
+        }
+
+        return Arrays.deepToString((Object[])value);
+      }
+    }
+
+    return "" + value;
+  }
+
+  static
+  {
+    IPluginContainer.INSTANCE.forEachElement(ValueFormatter.Factory.PRODUCT_GROUP, ValueFormatter.class, FORMATTERS::add);
+    FORMATTERS.sort(null);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static class NameAndValue
+  {
+    private final String name;
+
+    private final Object value;
+
+    public NameAndValue(String name, Object value)
+    {
+      this.name = name;
+      this.value = value;
+    }
+
+    public NameAndValue(int index, Object value)
+    {
+      this(Integer.toString(index), value);
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public Object getValue()
+    {
+      return value;
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return Objects.hash(name);
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (!(obj instanceof NameAndValue))
+      {
+        return false;
+      }
+
+      NameAndValue other = (NameAndValue)obj;
+      return Objects.equals(name, other.name);
+    }
+
+    @Override
+    public String toString()
+    {
+      return name + "=" + value;
+    }
   }
 
   /**

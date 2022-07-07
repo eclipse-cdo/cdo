@@ -37,6 +37,8 @@ public abstract class OM
 
   public static final OMPreferences PREFS = BUNDLE.preferences();
 
+  public static final OMPreference<Boolean> PREF_LINK_SELECTION = PREFS.init("PREF_LINK_SELECTION", true); //$NON-NLS-1$
+
   public static final OMPreference<Boolean> PREF_LOGICAL_STRUCTURE = PREFS.init("PREF_LOGICAL_STRUCTURE", true); //$NON-NLS-1$
 
   public static final OMPreference<Boolean> PREF_ACTIVE_PART = PREFS.init("PREF_ACTIVE_PART", false); //$NON-NLS-1$

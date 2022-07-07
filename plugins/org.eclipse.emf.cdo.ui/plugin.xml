@@ -43,6 +43,10 @@
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
       </factories>
       <simpleFactory
+            productGroup="org.eclipse.net4j.util.ui.valueFormatters"
+            type="org.eclipse.emf.ecore.ENamedElement"
+            productClass="org.eclipse.emf.cdo.internal.ui.EMFValueFormatter"/>
+      <simpleFactory
             productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
             type="org.eclipse.emf.ecore.EObject"
             productClass="org.eclipse.emf.cdo.internal.ui.EMFIntrospectionProvider"/>

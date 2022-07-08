@@ -1621,6 +1621,12 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
           EObject container = cdoObject.eContainer();
           if (container != null)
           {
+            // Do not attach if container's notifications are muted. See bug 580354.
+            if (!container.eDeliver())
+            {
+              return;
+            }
+
             CDOObject cdoContainer = FSMUtil.adapt(container, transaction);
             if (FSMUtil.isTransient(cdoContainer))
             {

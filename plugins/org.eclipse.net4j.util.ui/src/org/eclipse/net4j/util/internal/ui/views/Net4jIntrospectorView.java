@@ -99,7 +99,7 @@ public class Net4jIntrospectorView extends ViewPart
       if (activePartAction.isChecked())
       {
         history.clear();
-        setObject(activePart);
+        setValue(activePart);
       }
     }
 
@@ -117,7 +117,7 @@ public class Net4jIntrospectorView extends ViewPart
         if (part == activePart)
         {
           activePart = null;
-          setObject(null);
+          setValue(null);
         }
       }
     }
@@ -170,7 +170,7 @@ public class Net4jIntrospectorView extends ViewPart
 
         if (linkSelectionAction.isChecked())
         {
-          setObject(lastPageSelection);
+          setValue(lastPageSelection);
         }
       }
     }
@@ -193,7 +193,9 @@ public class Net4jIntrospectorView extends ViewPart
 
   private IntrospectionProvider currentProvider;
 
-  private Object currentObject;
+  private Object currentValue;
+
+  private String currentName;
 
   private Text classLabel;
 
@@ -201,7 +203,9 @@ public class Net4jIntrospectorView extends ViewPart
 
   private Text objectLabel;
 
-  private IAction backAction = new BackAction();
+  private IAction backwardAction = new BackwardAction();
+
+  private IAction forwardAction = new ForwardAction();
 
   private IAction linkSelectionAction = new LinkSelectionAction();
 
@@ -239,31 +243,25 @@ public class Net4jIntrospectorView extends ViewPart
     super.dispose();
   }
 
-  public Object getObject()
+  public Object getValue()
   {
-    NameAndValue nameAndValue = history.peek();
-    if (nameAndValue == null)
-    {
-      return null;
-    }
-
-    return nameAndValue.getValue();
+    return currentValue;
   }
 
-  public void setObject(Object object)
+  public void setValue(Object value)
   {
-    Object oldObject = currentObject;
-    if (oldObject == object)
+    Object oldValue = currentValue;
+    if (oldValue == value)
     {
       return;
     }
 
-    if (oldObject != null)
+    if (oldValue != null)
     {
-      EventUtil.removeListener(oldObject, elementListener);
+      EventUtil.removeListener(oldValue, elementListener);
     }
 
-    if (object == null)
+    if (value == null)
     {
       classLabel.setText(""); //$NON-NLS-1$
       identityLabel.setText(""); //$NON-NLS-1$
@@ -272,20 +270,20 @@ public class Net4jIntrospectorView extends ViewPart
     }
     else
     {
-      EventUtil.addListener(object, elementListener);
+      EventUtil.addListener(value, elementListener);
 
-      Class<? extends Object> c = object.getClass();
+      Class<? extends Object> c = value.getClass();
       String className = c.isArray() ? c.getComponentType().getName() + "[]" : c.getName();
       classLabel.setText(className);
 
-      String identity = HexUtil.identityHashCode(object, true);
+      String identity = HexUtil.identityHashCode(value, true);
       identityLabel.setText(identity);
 
-      String value = StringUtil.safe(object);
+      String str = StringUtil.safe(value);
       String prefix = c.getName() + "@";
-      if (value.startsWith(prefix))
+      if (str.startsWith(prefix))
       {
-        String text = value.substring(prefix.length());
+        String text = str.substring(prefix.length());
         if (identity.endsWith(text))
         {
           text = StringUtil.EMPTY;
@@ -299,15 +297,15 @@ public class Net4jIntrospectorView extends ViewPart
       }
       else
       {
-        objectLabel.setText(value);
+        objectLabel.setText(str);
       }
     }
 
     classLabel.getParent().layout();
-    backAction.setEnabled(!history.isEmpty());
+    updateEnablements();
 
-    currentObject = object;
-    updateProvider(object);
+    currentValue = value;
+    updateProvider(value);
   }
 
   @Override
@@ -349,21 +347,36 @@ public class Net4jIntrospectorView extends ViewPart
       viewer.setLabelProvider(new IntrospectionLabelProvider(provider));
       viewer.setInput(getViewSite());
 
-      viewer.addDoubleClickListener(e -> {
-        ISelection sel = e.getSelection();
-        if (sel instanceof IStructuredSelection)
-        {
-          IStructuredSelection ssel = (IStructuredSelection)sel;
+      viewer.addOpenListener(e -> {
+        Object element = viewer.getStructuredSelection().getFirstElement();
+        open(element);
+      });
 
-          Object element = ssel.getFirstElement();
-          drillIn(element);
+      viewer.addSelectionChangedListener(e -> {
+        Object element = viewer.getStructuredSelection().getFirstElement();
+
+        try
+        {
+          NameAndValue nameAndValue = currentProvider.getNameAndValue(element);
+          if (nameAndValue != null)
+          {
+            currentName = nameAndValue.getName();
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
         }
       });
 
       viewer.getControl().addKeyListener(KeyListener.keyPressedAdapter(e -> {
-        if (e.character == SWT.BS)
+        if ((e.keyCode == SWT.ARROW_LEFT || e.character == SWT.BS) && backwardAction.isEnabled())
         {
-          backAction.run();
+          backwardAction.run();
+        }
+        else if (e.keyCode == SWT.ARROW_RIGHT && forwardAction.isEnabled())
+        {
+          forwardAction.run();
         }
       }));
 
@@ -387,6 +400,7 @@ public class Net4jIntrospectorView extends ViewPart
     page.addSelectionListener(pageSelectionListener);
 
     setCurrentProvider(OBJECT_INTROSPECTION_PROVIDER);
+    updateEnablements();
     instance = this;
   }
 
@@ -403,15 +417,15 @@ public class Net4jIntrospectorView extends ViewPart
     }
   }
 
-  private void drillIn(Object element)
+  private void open(Object element)
   {
     try
     {
       NameAndValue nameAndValue = currentProvider.getNameAndValue(element);
       if (nameAndValue != null)
       {
-        history.push(nameAndValue.getName(), currentObject);
-        setObject(nameAndValue.getValue());
+        history.open(nameAndValue.getName(), currentValue);
+        setValue(nameAndValue.getValue());
       }
     }
     catch (Exception ex)
@@ -420,27 +434,43 @@ public class Net4jIntrospectorView extends ViewPart
     }
   }
 
-  private void drillOut()
+  private void goBackward()
   {
-    NameAndValue nameAndValue = history.pop();
+    NameAndValue nameAndValue = history.goBackward(currentName, currentValue);
     if (nameAndValue != null)
     {
-      setObject(nameAndValue.getValue());
+      setValue(nameAndValue.getValue());
+      selectElement(currentValue, nameAndValue.getName());
+    }
+  }
 
-      try
+  private void goForward()
+  {
+    NameAndValue nameAndValue = history.goForward(currentName, currentValue);
+    if (nameAndValue != null)
+    {
+      setValue(nameAndValue.getValue());
+      selectElement(currentValue, nameAndValue.getName());
+    }
+  }
+
+  private void selectElement(Object parent, String name)
+  {
+    try
+    {
+      Object element = currentProvider.getElementByName(parent, name);
+      if (element != null)
       {
-        Object element = currentProvider.getElementByName(currentObject, nameAndValue.getName());
-        if (element != null)
-        {
-          TableViewer viewer = getCurrentViewer();
-          Display display = viewer.getControl().getDisplay();
-          UIUtil.asyncExec(display, () -> viewer.setSelection(new StructuredSelection(element), true));
-        }
+        currentName = name;
+
+        TableViewer viewer = getCurrentViewer();
+        Display display = viewer.getControl().getDisplay();
+        UIUtil.asyncExec(display, () -> viewer.setSelection(new StructuredSelection(element), true));
       }
-      catch (Exception ex)
-      {
-        OM.LOG.error(ex);
-      }
+    }
+    catch (Exception ex)
+    {
+      OM.LOG.error(ex);
     }
   }
 
@@ -481,6 +511,12 @@ public class Net4jIntrospectorView extends ViewPart
     refreshViewer();
   }
 
+  private void updateEnablements()
+  {
+    backwardAction.setEnabled(history.canGoBackward());
+    forwardAction.setEnabled(history.canGoForward());
+  }
+
   private void fillLocalPullDown(IMenuManager manager)
   {
     manager.add(containerAction);
@@ -489,7 +525,8 @@ public class Net4jIntrospectorView extends ViewPart
 
   private void fillLocalToolBar(IToolBarManager manager)
   {
-    manager.add(backAction);
+    manager.add(backwardAction);
+    manager.add(forwardAction);
     manager.add(new Separator());
     manager.add(logicalStructureAction);
     manager.add(activePartAction);
@@ -522,9 +559,9 @@ public class Net4jIntrospectorView extends ViewPart
   /**
    * @author Eike Stepper
    */
-  private final class BackAction extends Action
+  private final class BackwardAction extends Action
   {
-    public BackAction()
+    public BackwardAction()
     {
       super(Messages.getString("Net4jIntrospectorView_16")); //$NON-NLS-1$
       ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
@@ -535,7 +572,28 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public void run()
     {
-      drillOut();
+      goBackward();
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ForwardAction extends Action
+  {
+    public ForwardAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_16b")); //$NON-NLS-1$
+      ISharedImages sharedImages = PlatformUI.getWorkbench().getSharedImages();
+      setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_BACK));
+      setImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD));
+      setDisabledImageDescriptor(sharedImages.getImageDescriptor(ISharedImages.IMG_TOOL_FORWARD_DISABLED));
+    }
+
+    @Override
+    public void run()
+    {
+      goForward();
     }
   }
 
@@ -556,7 +614,7 @@ public class Net4jIntrospectorView extends ViewPart
     {
       if (checked)
       {
-        setObject(lastPageSelection);
+        setValue(lastPageSelection);
       }
     }
   }
@@ -576,7 +634,7 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     protected void run(boolean checked)
     {
-      updateProvider(getObject());
+      updateProvider(getValue());
     }
   }
 
@@ -598,11 +656,11 @@ public class Net4jIntrospectorView extends ViewPart
       if (checked)
       {
         history.clear();
-        setObject(activePart);
+        setValue(activePart);
       }
       else
       {
-        setObject(lastPageSelection);
+        setValue(lastPageSelection);
       }
 
       linkSelectionAction.setEnabled(!checked);
@@ -623,7 +681,7 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public void run()
     {
-      setObject(IPluginContainer.INSTANCE);
+      setValue(IPluginContainer.INSTANCE);
     }
   }
 
@@ -660,11 +718,11 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public Object[] getElements(Object parent)
     {
-      if (currentObject != null)
+      if (currentValue != null)
       {
         try
         {
-          Object[] result = provider.getElements(currentObject);
+          Object[] result = provider.getElements(currentValue);
           if (result != null)
           {
             return result;
@@ -768,45 +826,70 @@ public class Net4jIntrospectorView extends ViewPart
    */
   private static final class History
   {
-    private final Stack<NameAndValue> stack = new Stack<>();
+    private final Stack<NameAndValue> backward = new Stack<>();
+
+    private final Stack<NameAndValue> forward = new Stack<>();
 
     public History()
     {
     }
 
-    public boolean isEmpty()
+    public void open(String name, Object value)
     {
-      return stack.isEmpty();
+      NameAndValue toPush = new NameAndValue(name, value);
+
+      if (!forward.isEmpty())
+      {
+        NameAndValue peeked = forward.peek();
+        if (peeked.equals(toPush))
+        {
+          forward.pop();
+        }
+        else
+        {
+          forward.clear();
+        }
+      }
+
+      backward.push(toPush);
     }
 
-    public NameAndValue peek()
+    public boolean canGoBackward()
     {
-      if (stack.isEmpty())
+      return !backward.isEmpty();
+    }
+
+    public boolean canGoForward()
+    {
+      return !forward.isEmpty();
+    }
+
+    public NameAndValue goBackward(String currentName, Object currentObject)
+    {
+      if (backward.isEmpty())
       {
         return null;
       }
 
-      return stack.peek();
+      forward.push(new NameAndValue(currentName, currentObject));
+      return backward.pop();
     }
 
-    public void push(String name, Object value)
+    public NameAndValue goForward(String currentName, Object currentObject)
     {
-      stack.push(new NameAndValue(name, value));
-    }
-
-    public NameAndValue pop()
-    {
-      if (stack.isEmpty())
+      if (forward.isEmpty())
       {
         return null;
       }
 
-      return stack.pop();
+      backward.push(new NameAndValue(currentName, currentObject));
+      return forward.pop();
     }
 
     public void clear()
     {
-      stack.clear();
+      backward.clear();
+      forward.clear();
     }
   }
 

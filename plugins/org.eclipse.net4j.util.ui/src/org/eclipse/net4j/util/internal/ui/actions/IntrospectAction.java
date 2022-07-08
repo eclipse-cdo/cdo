@@ -31,6 +31,6 @@ public class IntrospectAction extends SafeAction
   protected void safeRun() throws Exception
   {
     Net4jIntrospectorView introspector = Net4jIntrospectorView.getInstance(true);
-    introspector.setObject(object);
+    introspector.setValue(object);
   }
 }

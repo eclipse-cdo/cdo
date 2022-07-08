@@ -42,9 +42,11 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
 
   private static final String E_DELIVER = "eDeliver";
 
-  private static final String RESOURCE = "resource";
+  private static final String E_ADAPTERS = "eAdapters";
 
-  private static final String URI = "uri";
+  private static final String E_RESOURCE = "eResource";
+
+  private static final String E_URI = "eURI";
 
   private final Color foreground = Display.getDefault().getSystemColor(SWT.COLOR_DARK_BLUE);
 
@@ -78,11 +80,12 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
       EObject eObject = (EObject)parent;
 
       rows.add(createEContainerRow(eObject));
-      rows.add(createURIRow(eObject));
-      rows.add(createResourceRow(eObject));
+      rows.add(createEURIRow(eObject));
+      rows.add(createEResourceRow(eObject));
       rows.add(createEClassRow(eObject));
       rows.add(createEIsProxyRow(eObject));
       rows.add(createEDeliverRow(eObject));
+      rows.add(createEAdaptersRow(eObject));
 
       for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
       {
@@ -118,14 +121,19 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
         return createEDeliverRow(eObject);
       }
 
-      if (RESOURCE.equals(name))
+      if (E_ADAPTERS.equals(name))
       {
-        return createResourceRow(eObject);
+        return createEAdaptersRow(eObject);
       }
 
-      if (URI.equals(name))
+      if (E_RESOURCE.equals(name))
       {
-        return createURIRow(eObject);
+        return createEResourceRow(eObject);
+      }
+
+      if (E_URI.equals(name))
+      {
+        return createEURIRow(eObject);
       }
 
       EStructuralFeature feature = eObject.eClass().getEStructuralFeature(name);
@@ -143,14 +151,14 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
     return createRow(E_CONTAINER, eObject.eContainer(), EObject.class.getName(), CATEGORY, foreground);
   }
 
-  private Row createURIRow(EObject eObject)
+  private Row createEURIRow(EObject eObject)
   {
-    return createRow(URI, EcoreUtil.getURI(eObject), URI.class.getName(), CATEGORY, foreground);
+    return createRow(E_URI, EcoreUtil.getURI(eObject), URI.class.getName(), CATEGORY, foreground);
   }
 
-  private Row createResourceRow(EObject eObject)
+  private Row createEResourceRow(EObject eObject)
   {
-    return createRow(RESOURCE, eObject.eResource(), Resource.class.getName(), CATEGORY, foreground);
+    return createRow(E_RESOURCE, eObject.eResource(), Resource.class.getName(), CATEGORY, foreground);
   }
 
   private Row createEClassRow(EObject eObject)
@@ -166,6 +174,11 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
   private Row createEDeliverRow(EObject eObject)
   {
     return createRow(E_DELIVER, eObject.eDeliver(), boolean.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createEAdaptersRow(EObject eObject)
+  {
+    return createRow(E_ADAPTERS, eObject.eAdapters(), "EList<Adapter>", CATEGORY, foreground);
   }
 
   private static Row createRow(EObject eObject, EStructuralFeature feature)

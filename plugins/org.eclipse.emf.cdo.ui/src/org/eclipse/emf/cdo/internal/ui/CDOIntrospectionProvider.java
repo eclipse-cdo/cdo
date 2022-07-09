@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -43,6 +44,8 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
   private static final String CDO_PERMISSION = "cdoPermission";
 
   private static final String CDO_REVISION = "cdoRevision";
+
+  private static final String CDO_CLASS_INFO = "cdoClassInfo";
 
   private static final String CDO_STATE = "cdoState";
 
@@ -79,6 +82,7 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
       rows.add(createCDOLockStateRow(cdoObject));
       rows.add(createCDOPermissionRow(cdoObject));
       rows.add(createCDORevisionRow(cdoObject));
+      rows.add(createCDOClassInfoRow(cdoObject));
       rows.add(createCDOStateRow(cdoObject));
       rows.add(createCDOViewRow(cdoObject));
     }
@@ -113,6 +117,11 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
           return createCDORevisionRow(cdoObject);
         }
 
+        if (CDO_CLASS_INFO.equals(name))
+        {
+          return createCDOClassInfoRow(cdoObject);
+        }
+
         if (CDO_STATE.equals(name))
         {
           return createCDOStateRow(cdoObject);
@@ -141,6 +150,12 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
   private Row createCDORevisionRow(CDOObject cdoObject)
   {
     return createRow(CDO_REVISION, cdoObject.cdoRevision(), CDORevision.class.getName(), CATEGORY, foreground);
+  }
+
+  private Row createCDOClassInfoRow(CDOObject cdoObject)
+  {
+    CDORevision revision = cdoObject.cdoRevision();
+    return createRow(CDO_CLASS_INFO, revision == null ? null : revision.getClassInfo(), CDOClassInfo.class.getName(), CATEGORY, foreground);
   }
 
   private Row createCDOPermissionRow(CDOObject cdoObject)

@@ -75,72 +75,66 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
   @Override
   protected void fillRows(Object parent, List<Row> rows) throws Exception
   {
-    if (parent instanceof EObject)
+    EObject eObject = (EObject)parent;
+
+    rows.add(createEContainerRow(eObject));
+    rows.add(createEURIRow(eObject));
+    rows.add(createEResourceRow(eObject));
+    rows.add(createEClassRow(eObject));
+    rows.add(createEIsProxyRow(eObject));
+    rows.add(createEDeliverRow(eObject));
+    rows.add(createEAdaptersRow(eObject));
+
+    for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
     {
-      EObject eObject = (EObject)parent;
-
-      rows.add(createEContainerRow(eObject));
-      rows.add(createEURIRow(eObject));
-      rows.add(createEResourceRow(eObject));
-      rows.add(createEClassRow(eObject));
-      rows.add(createEIsProxyRow(eObject));
-      rows.add(createEDeliverRow(eObject));
-      rows.add(createEAdaptersRow(eObject));
-
-      for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
-      {
-        rows.add(createRow(eObject, feature));
-      }
+      rows.add(createRow(eObject, feature));
     }
   }
 
   @Override
   public Row getElementByName(Object parent, String name) throws Exception
   {
-    if (parent instanceof EObject)
+    EObject eObject = (EObject)parent;
+
+    if (E_CONTAINER.equals(name))
     {
-      EObject eObject = (EObject)parent;
+      return createEContainerRow(eObject);
+    }
 
-      if (E_CONTAINER.equals(name))
-      {
-        return createEContainerRow(eObject);
-      }
+    if (E_CLASS.equals(name))
+    {
+      return createEClassRow(eObject);
+    }
 
-      if (E_CLASS.equals(name))
-      {
-        return createEClassRow(eObject);
-      }
+    if (E_IS_PROXY.equals(name))
+    {
+      return createEIsProxyRow(eObject);
+    }
 
-      if (E_IS_PROXY.equals(name))
-      {
-        return createEIsProxyRow(eObject);
-      }
+    if (E_DELIVER.equals(name))
+    {
+      return createEDeliverRow(eObject);
+    }
 
-      if (E_DELIVER.equals(name))
-      {
-        return createEDeliverRow(eObject);
-      }
+    if (E_ADAPTERS.equals(name))
+    {
+      return createEAdaptersRow(eObject);
+    }
 
-      if (E_ADAPTERS.equals(name))
-      {
-        return createEAdaptersRow(eObject);
-      }
+    if (E_RESOURCE.equals(name))
+    {
+      return createEResourceRow(eObject);
+    }
 
-      if (E_RESOURCE.equals(name))
-      {
-        return createEResourceRow(eObject);
-      }
+    if (E_URI.equals(name))
+    {
+      return createEURIRow(eObject);
+    }
 
-      if (E_URI.equals(name))
-      {
-        return createEURIRow(eObject);
-      }
-
-      EStructuralFeature feature = eObject.eClass().getEStructuralFeature(name);
-      if (feature != null)
-      {
-        return createRow(eObject, feature);
-      }
+    EStructuralFeature feature = eObject.eClass().getEStructuralFeature(name);
+    if (feature != null)
+    {
+      return createRow(eObject, feature);
     }
 
     return null;

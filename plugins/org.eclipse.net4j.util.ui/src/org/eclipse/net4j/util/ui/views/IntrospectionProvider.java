@@ -171,45 +171,45 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
 
     if (value != null)
     {
-      Class<? extends Object> type = value.getClass();
-      if (type.isArray())
+      Class<? extends Object> valueClass = value.getClass();
+      if (valueClass.isArray())
       {
-        if (type == byte[].class)
+        if (valueClass == byte[].class)
         {
           return Arrays.toString((byte[])value);
         }
 
-        if (type == short[].class)
+        if (valueClass == short[].class)
         {
           return Arrays.toString((short[])value);
         }
 
-        if (type == int[].class)
+        if (valueClass == int[].class)
         {
           return Arrays.toString((int[])value);
         }
 
-        if (type == long[].class)
+        if (valueClass == long[].class)
         {
           return Arrays.toString((long[])value);
         }
 
-        if (type == char[].class)
+        if (valueClass == char[].class)
         {
           return Arrays.toString((char[])value);
         }
 
-        if (type == float[].class)
+        if (valueClass == float[].class)
         {
           return Arrays.toString((float[])value);
         }
 
-        if (type == double[].class)
+        if (valueClass == double[].class)
         {
           return Arrays.toString((double[])value);
         }
 
-        if (type == boolean[].class)
+        if (valueClass == boolean[].class)
         {
           return Arrays.toString((boolean[])value);
         }

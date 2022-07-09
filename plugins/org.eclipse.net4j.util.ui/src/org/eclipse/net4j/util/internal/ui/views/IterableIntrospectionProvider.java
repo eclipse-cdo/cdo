@@ -46,22 +46,17 @@ public final class IterableIntrospectionProvider extends IntrospectionProvider
   @Override
   public Object[] getElements(Object parent) throws Exception
   {
-    if (parent instanceof Iterable<?>)
+    Iterable<?> iterable = (Iterable<?>)parent;
+
+    List<NameAndValue> result = new ArrayList<>();
+    int index = 0;
+
+    for (Object object : iterable)
     {
-      Iterable<?> iterable = (Iterable<?>)parent;
-
-      List<NameAndValue> result = new ArrayList<>();
-      int index = 0;
-
-      for (Object object : iterable)
-      {
-        result.add(new NameAndValue(index++, object));
-      }
-
-      return result.toArray();
+      result.add(new NameAndValue(index++, object));
     }
 
-    return null;
+    return result.toArray();
   }
 
   @Override
@@ -70,8 +65,17 @@ public final class IterableIntrospectionProvider extends IntrospectionProvider
     Iterable<?> iterable = (Iterable<?>)parent;
     Iterator<?> iterator = iterable.iterator();
 
-    int index = Integer.parseInt(name);
     Object value = null;
+    int index;
+
+    try
+    {
+      index = Integer.parseInt(name);
+    }
+    catch (NumberFormatException ex)
+    {
+      return null;
+    }
 
     for (int i = 0; i < index; i++)
     {

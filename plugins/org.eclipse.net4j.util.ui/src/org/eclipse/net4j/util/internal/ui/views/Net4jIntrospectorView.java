@@ -60,6 +60,7 @@ import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -207,11 +208,11 @@ public class Net4jIntrospectorView extends ViewPart
 
   private IAction forwardAction = new ForwardAction();
 
-  private IAction linkSelectionAction = new LinkSelectionAction();
-
   private IAction logicalStructureAction = new LogicalStructureAction();
 
   private IAction activePartAction = new ActivePartAction();
+
+  private IAction linkSelectionAction = new LinkSelectionAction();
 
   private IAction containerAction = new ContainerAction();
 
@@ -302,10 +303,10 @@ public class Net4jIntrospectorView extends ViewPart
     }
 
     classLabel.getParent().layout();
-    updateEnablements();
-
     currentValue = value;
-    updateProvider(value);
+
+    updateEnablements();
+    updateProvider();
   }
 
   @Override
@@ -467,6 +468,10 @@ public class Net4jIntrospectorView extends ViewPart
         Display display = viewer.getControl().getDisplay();
         UIUtil.asyncExec(display, () -> viewer.setSelection(new StructuredSelection(element), true));
       }
+      else
+      {
+        currentName = null;
+      }
     }
     catch (Exception ex)
     {
@@ -486,28 +491,34 @@ public class Net4jIntrospectorView extends ViewPart
 
   private void setCurrentProvider(IntrospectionProvider provider)
   {
-    currentProvider = provider;
-    stackLayout.topControl = getCurrentViewer().getControl();
-    stacked.layout();
-    setFocus();
+    if (currentProvider != provider)
+    {
+      currentProvider = provider;
+      stackLayout.topControl = getCurrentViewer().getControl();
+      stacked.layout();
+      setFocus();
+    }
   }
 
-  private void updateProvider(Object object)
+  private void updateProvider()
   {
-    if (object != null)
+    IntrospectionProvider result = OBJECT_INTROSPECTION_PROVIDER;
+
+    if (currentValue != null)
     {
       List<IntrospectionProvider> providersToUse = logicalStructureAction.isChecked() ? providers : DEFAULT_INTROSPECTION_PROVIDERS;
 
       for (IntrospectionProvider provider : providersToUse)
       {
-        if (provider.canHandle(object))
+        if (provider.canHandle(currentValue))
         {
-          setCurrentProvider(provider);
+          result = provider;
           break;
         }
       }
     }
 
+    setCurrentProvider(result);
     refreshViewer();
   }
 
@@ -600,28 +611,6 @@ public class Net4jIntrospectorView extends ViewPart
   /**
    * @author Eike Stepper
    */
-  private final class LinkSelectionAction extends ToggleAction
-  {
-    public LinkSelectionAction()
-    {
-      super(Messages.getString("Net4jIntrospectorView_31"), //$NON-NLS-1$
-          SharedIcons.getDescriptor(SharedIcons.ETOOL_LINK_WITH_EDITOR), //
-          OM.PREF_LINK_SELECTION);
-    }
-
-    @Override
-    protected void run(boolean checked)
-    {
-      if (checked)
-      {
-        setValue(lastPageSelection);
-      }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
   private final class LogicalStructureAction extends ToggleAction
   {
     public LogicalStructureAction()
@@ -634,7 +623,7 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     protected void run(boolean checked)
     {
-      updateProvider(getValue());
+      updateProvider();
     }
   }
 
@@ -664,6 +653,28 @@ public class Net4jIntrospectorView extends ViewPart
       }
 
       linkSelectionAction.setEnabled(!checked);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LinkSelectionAction extends ToggleAction
+  {
+    public LinkSelectionAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_31"), //$NON-NLS-1$
+          SharedIcons.getDescriptor(SharedIcons.ETOOL_LINK_WITH_EDITOR), //
+          OM.PREF_LINK_SELECTION);
+    }
+
+    @Override
+    protected void run(boolean checked)
+    {
+      if (checked)
+      {
+        setValue(lastPageSelection);
+      }
     }
   }
 
@@ -926,28 +937,34 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public Object[] getElements(Object parent) throws Exception
     {
-      if (parent instanceof Object[])
+      int length = Array.getLength(parent);
+      NameAndValue[] result = new NameAndValue[length];
+
+      for (int index = 0; index < length; index++)
       {
-        Object[] array = (Object[])parent;
-        NameAndValue[] result = new NameAndValue[array.length];
-
-        for (int index = 0; index < array.length; index++)
-        {
-          result[index] = new NameAndValue(index, array[index]);
-        }
-
-        return result;
+        Object value = Array.get(parent, index);
+        result[index] = new NameAndValue(index, value);
       }
 
-      return null;
+      return result;
     }
 
     @Override
     public Object getElementByName(Object parent, String name) throws Exception
     {
-      Object[] array = (Object[])parent;
-      int index = Integer.parseInt(name);
-      return new NameAndValue(index, array[index]);
+      int index;
+
+      try
+      {
+        index = Integer.parseInt(name);
+      }
+      catch (NumberFormatException ex)
+      {
+        return null;
+      }
+
+      Object element = Array.get(parent, index);
+      return new NameAndValue(index, element);
     }
 
     @Override

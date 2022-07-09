@@ -45,29 +45,23 @@ public final class MapIntrospectionProvider extends IntrospectionProvider
   @Override
   public Object[] getElements(Object parent) throws Exception
   {
-    if (parent instanceof Map<?, ?>)
+    Map<?, ?> map = (Map<?, ?>)parent;
+
+    NameAndValue[] result = new NameAndValue[map.size()];
+    int index = 0;
+
+    for (Map.Entry<?, ?> entry : map.entrySet())
     {
-      Map<?, ?> map = (Map<?, ?>)parent;
-
-      NameAndValue[] result = new NameAndValue[map.size()];
-      int index = 0;
-
-      for (Map.Entry<?, ?> entry : map.entrySet())
-      {
-        result[index++] = new NameAndValue("" + entry.getKey(), entry.getValue());
-      }
-
-      return result;
+      result[index++] = new NameAndValue("" + entry.getKey(), entry.getValue());
     }
 
-    return null;
+    return result;
   }
 
   @Override
   public Object getElementByName(Object parent, String name) throws Exception
   {
-    Map<?, ?> map = (Map<?, ?>)parent;
-    Object value = map.get(name);
+    Object value = ((Map<?, ?>)parent).get(name);
     if (value != null)
     {
       return new NameAndValue(name, value);

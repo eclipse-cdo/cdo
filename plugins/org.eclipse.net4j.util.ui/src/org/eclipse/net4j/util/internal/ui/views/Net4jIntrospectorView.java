@@ -49,6 +49,7 @@ import org.eclipse.swt.events.KeyListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
@@ -363,11 +364,6 @@ public class Net4jIntrospectorView extends ViewPart
       viewer.setLabelProvider(new IntrospectionLabelProvider(provider));
       viewer.setInput(getViewSite());
 
-      viewer.addOpenListener(e -> {
-        Object element = viewer.getStructuredSelection().getFirstElement();
-        open(element);
-      });
-
       viewer.addSelectionChangedListener(e -> {
         Object element = viewer.getStructuredSelection().getFirstElement();
 
@@ -385,7 +381,14 @@ public class Net4jIntrospectorView extends ViewPart
         }
       });
 
-      viewer.getControl().addKeyListener(KeyListener.keyPressedAdapter(e -> {
+      Control control = viewer.getControl();
+
+      control.addListener(SWT.DefaultSelection, e -> {
+        Object element = viewer.getStructuredSelection().getFirstElement();
+        provider.open(e, currentValue, element, elem -> open(elem));
+      });
+
+      control.addKeyListener(KeyListener.keyPressedAdapter(e -> {
         if ((e.keyCode == SWT.ARROW_LEFT || e.character == SWT.BS) && backwardAction.isEnabled())
         {
           backwardAction.run();

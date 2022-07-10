@@ -15,8 +15,11 @@ import org.eclipse.net4j.util.ui.views.IntrospectionProvider;
 
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.ViewerComparator;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
 
 import java.util.Map;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -26,6 +29,27 @@ public final class MapIntrospectionProvider extends IntrospectionProvider
   public MapIntrospectionProvider()
   {
     super("java.util.Map", "Map");
+  }
+
+  @Override
+  public void open(Event selectionEvent, Object parent, Object element, Consumer<Object> introspector)
+  {
+    if ((selectionEvent.stateMask & SWT.CTRL) != 0)
+    {
+      Map<?, ?> map = (Map<?, ?>)parent;
+      NameAndValue nameAndValue = (NameAndValue)element;
+
+      for (Map.Entry<?, ?> entry : map.entrySet())
+      {
+        if (new NameAndValue(entry).equals(nameAndValue))
+        {
+          super.open(selectionEvent, parent, new NameAndValue(nameAndValue.getName(), entry.getKey()), introspector);
+          return;
+        }
+      }
+    }
+
+    super.open(selectionEvent, parent, element, introspector);
   }
 
   @Override
@@ -52,7 +76,7 @@ public final class MapIntrospectionProvider extends IntrospectionProvider
 
     for (Map.Entry<?, ?> entry : map.entrySet())
     {
-      result[index++] = new NameAndValue("" + entry.getKey(), entry.getValue());
+      result[index++] = new NameAndValue(entry);
     }
 
     return result;

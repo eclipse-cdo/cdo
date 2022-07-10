@@ -21,13 +21,16 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -62,6 +65,11 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
   public final String getLabel()
   {
     return label;
+  }
+
+  public void open(Event selectionEvent, Object parent, Object element, Consumer<Object> introspector)
+  {
+    introspector.accept(element);
   }
 
   public abstract boolean canHandle(Object object);
@@ -245,6 +253,11 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
     public NameAndValue(int index, Object value)
     {
       this(Integer.toString(index), value);
+    }
+
+    public NameAndValue(Map.Entry<?, ?> entry)
+    {
+      this("" + entry.getKey(), entry.getValue());
     }
 
     public String getName()

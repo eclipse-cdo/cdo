@@ -157,13 +157,7 @@ public class Net4jIntrospectorView extends ViewPart
         return;
       }
 
-      Object pageSelection = null;
-      if (sel instanceof IStructuredSelection)
-      {
-        IStructuredSelection ssel = (IStructuredSelection)sel;
-        pageSelection = ssel.getFirstElement();
-      }
-
+      Object pageSelection = getPageSelection(sel);
       if (pageSelection != lastPageSelection)
       {
         lastPageSelection = pageSelection;
@@ -174,6 +168,27 @@ public class Net4jIntrospectorView extends ViewPart
           setValue(lastPageSelection);
         }
       }
+    }
+
+    private Object getPageSelection(ISelection sel)
+    {
+      if (sel.isEmpty())
+      {
+        return null;
+      }
+
+      if (sel instanceof IStructuredSelection)
+      {
+        IStructuredSelection ssel = (IStructuredSelection)sel;
+        if (ssel.size() == 1)
+        {
+          return ssel.getFirstElement();
+        }
+
+        return ssel.toList();
+      }
+
+      return sel;
     }
   };
 
@@ -729,7 +744,7 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     public Object[] getElements(Object parent)
     {
-      if (currentValue != null)
+      if (currentValue != null && provider.canHandle(currentValue))
       {
         try
         {

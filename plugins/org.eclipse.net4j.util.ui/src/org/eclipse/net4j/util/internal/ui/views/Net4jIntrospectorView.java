@@ -429,7 +429,10 @@ public class Net4jIntrospectorView extends ViewPart
     try
     {
       TableViewer currentViewer = getCurrentViewer();
-      currentViewer.getControl().setFocus();
+      if (currentViewer != null)
+      {
+        currentViewer.getControl().setFocus();
+      }
     }
     catch (RuntimeException ignore)
     {

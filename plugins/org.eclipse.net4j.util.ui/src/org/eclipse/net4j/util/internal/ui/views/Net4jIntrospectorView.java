@@ -511,10 +511,17 @@ public class Net4jIntrospectorView extends ViewPart
   {
     if (currentProvider != provider)
     {
+      TableViewer currentViewer = getCurrentViewer();
+      boolean hadFocus = currentViewer == null ? false : currentViewer.getControl().isFocusControl();
+
       currentProvider = provider;
       stackLayout.topControl = getCurrentViewer().getControl();
       stacked.layout();
-      setFocus();
+
+      if (hadFocus)
+      {
+        setFocus();
+      }
     }
   }
 

@@ -763,6 +763,11 @@ public final class UIUtil
    */
   public static void preserveViewerState(Viewer viewer, Runnable runnable)
   {
+    if (viewer == null)
+    {
+      return;
+    }
+
     try
     {
       asyncExec(viewer.getControl().getDisplay(), () -> {

@@ -12,6 +12,10 @@ package org.eclipse.net4j.util.ui.views;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.EventUtil;
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -70,6 +74,22 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
   public void open(Event selectionEvent, Object parent, Object element, Consumer<Object> introspector)
   {
     introspector.accept(element);
+  }
+
+  public void attachListener(TableViewer viewer, Object value)
+  {
+    if (value instanceof INotifier)
+    {
+      INotifier notifier = (INotifier)value;
+
+      ValueListener listener = new ValueListener(viewer);
+      notifier.addListener(listener);
+    }
+  }
+
+  public void detachListener(TableViewer viewer, Object value)
+  {
+    EventUtil.removeListeners(value, listener -> listener.getClass() == ValueListener.class);
   }
 
   public abstract boolean canHandle(Object object);
@@ -238,6 +258,41 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
   /**
    * @author Eike Stepper
    */
+  private static final class ValueListener implements IListener
+  {
+    private final TableViewer viewer;
+
+    public ValueListener(TableViewer viewer)
+    {
+      this.viewer = viewer;
+    }
+
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      UIUtil.refreshViewer(viewer);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.ui.introspectionProviders";
+
+    public Factory(String type)
+    {
+      super(PRODUCT_GROUP, type);
+    }
+
+    @Override
+    public abstract IntrospectionProvider create(String description) throws ProductCreationException;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static class NameAndValue
   {
     private final String name;
@@ -298,21 +353,5 @@ public abstract class IntrospectionProvider implements Comparable<IntrospectionP
     {
       return name + "=" + value;
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
-  {
-    public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.ui.introspectionProviders";
-
-    public Factory(String type)
-    {
-      super(PRODUCT_GROUP, type);
-    }
-
-    @Override
-    public abstract IntrospectionProvider create(String description) throws ProductCreationException;
   }
 }

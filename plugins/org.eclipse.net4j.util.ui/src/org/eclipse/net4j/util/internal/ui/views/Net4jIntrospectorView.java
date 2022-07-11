@@ -17,9 +17,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.event.EventUtil;
-import org.eclipse.net4j.util.event.IEvent;
-import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -193,15 +190,6 @@ public class Net4jIntrospectorView extends ViewPart
     }
   };
 
-  private final IListener elementListener = new IListener()
-  {
-    @Override
-    public void notifyEvent(IEvent event)
-    {
-      refreshViewer();
-    }
-  };
-
   private final History history = new History();
 
   private final Map<IntrospectionProvider, TableViewer> viewers = new HashMap<>();
@@ -254,6 +242,8 @@ public class Net4jIntrospectorView extends ViewPart
   {
     instance = null;
 
+    detachListener();
+
     IWorkbenchPage page = getSite().getPage();
     page.removePartListener(partListener);
     page.removeSelectionListener(pageSelectionListener);
@@ -267,28 +257,21 @@ public class Net4jIntrospectorView extends ViewPart
 
   public void setValue(Object value)
   {
-    Object oldValue = currentValue;
-    if (oldValue == value)
+    if (currentValue == value)
     {
       return;
     }
 
-    if (oldValue != null)
-    {
-      EventUtil.removeListener(oldValue, elementListener);
-    }
+    detachListener();
 
     if (value == null)
     {
       classLabel.setText(""); //$NON-NLS-1$
       identityLabel.setText(""); //$NON-NLS-1$
       objectLabel.setText(""); //$NON-NLS-1$
-      currentProvider = OBJECT_INTROSPECTION_PROVIDER;
     }
     else
     {
-      EventUtil.addListener(value, elementListener);
-
       Class<? extends Object> c = value.getClass();
       String className = c.isArray() ? c.getComponentType().getName() + "[]" : c.getName();
       classLabel.setText(className);
@@ -296,26 +279,8 @@ public class Net4jIntrospectorView extends ViewPart
       String identity = HexUtil.identityHashCode(value, true);
       identityLabel.setText(identity);
 
-      String str = StringUtil.safe(value);
-      String prefix = c.getName() + "@";
-      if (str.startsWith(prefix))
-      {
-        String text = str.substring(prefix.length());
-        if (identity.endsWith(text))
-        {
-          text = StringUtil.EMPTY;
-        }
-        else if (text.startsWith(identity))
-        {
-          text = text.substring(identity.length());
-        }
-
-        objectLabel.setText(text.trim());
-      }
-      else
-      {
-        objectLabel.setText(str);
-      }
+      String label = getLabel(value, identity);
+      objectLabel.setText(label);
     }
 
     classLabel.getParent().layout();
@@ -323,6 +288,8 @@ public class Net4jIntrospectorView extends ViewPart
 
     updateEnablements();
     updateProvider();
+
+    attachListener();
   }
 
   @Override
@@ -505,6 +472,28 @@ public class Net4jIntrospectorView extends ViewPart
     UIUtil.refreshViewer(getCurrentViewer());
   }
 
+  private String getLabel(Object value, String identity)
+  {
+    String str = StringUtil.safe(value);
+    String prefix = value.getClass().getName() + "@";
+    if (str.startsWith(prefix))
+    {
+      String text = str.substring(prefix.length());
+      if (identity.endsWith(text))
+      {
+        text = StringUtil.EMPTY;
+      }
+      else if (text.startsWith(identity))
+      {
+        text = text.substring(identity.length());
+      }
+  
+      return text.trim();
+    }
+  
+    return str;
+  }
+
   private TableViewer getCurrentViewer()
   {
     return viewers.get(currentProvider);
@@ -554,6 +543,30 @@ public class Net4jIntrospectorView extends ViewPart
   {
     backwardAction.setEnabled(history.canGoBackward());
     forwardAction.setEnabled(history.canGoForward());
+  }
+
+  private void attachListener()
+  {
+    if (currentValue != null)
+    {
+      TableViewer viewer = getCurrentViewer();
+      if (viewer != null)
+      {
+        currentProvider.attachListener(viewer, currentValue);
+      }
+    }
+  }
+
+  private void detachListener()
+  {
+    if (currentValue != null)
+    {
+      TableViewer viewer = getCurrentViewer();
+      if (viewer != null)
+      {
+        currentProvider.detachListener(viewer, currentValue);
+      }
+    }
   }
 
   private void fillLocalPullDown(IMenuManager manager)

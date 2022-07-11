@@ -20,6 +20,8 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.event.Event;
+import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -164,6 +166,15 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     if (manager != null)
     {
       manager.fireElementChangedEvent(structuralImpact, this);
+    }
+  }
+
+  protected final void fireStateChangedEvent()
+  {
+    IListener[] listeners = getListeners();
+    if (listeners.length != 0)
+    {
+      fireEvent(new StateChangedEventImpl(this), listeners);
     }
   }
 
@@ -382,5 +393,24 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
 
     return result.toArray(new AbstractElement[result.size()]);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class StateChangedEventImpl extends Event implements StateChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    public StateChangedEventImpl(AbstractElement element)
+    {
+      super(element);
+    }
+
+    @Override
+    public AbstractElement getSource()
+    {
+      return (AbstractElement)super.getSource();
+    }
   }
 }

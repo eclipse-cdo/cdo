@@ -10,8 +10,13 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.RowIntrospectionProvider;
 
+import org.eclipse.emf.common.notify.Adapter;
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -19,10 +24,12 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -30,6 +37,25 @@ import java.util.List;
  */
 public class EMFIntrospectionProvider extends RowIntrospectionProvider
 {
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ValueAdapter extends AdapterImpl
+  {
+    private final TableViewer viewer;
+
+    private ValueAdapter(TableViewer viewer)
+    {
+      this.viewer = viewer;
+    }
+
+    @Override
+    public void notifyChanged(Notification msg)
+    {
+      UIUtil.refreshViewer(viewer);
+    }
+  }
+
   protected static final int PRIORITY = DEFAULT_PRIORITY - 20;
 
   protected static final int CATEGORY = DEFAULT_CATEGORY - 20;
@@ -64,6 +90,40 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
   public int getPriority()
   {
     return PRIORITY;
+  }
+
+  @Override
+  public void attachListener(TableViewer viewer, Object value)
+  {
+    super.attachListener(viewer, value);
+
+    if (value instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)value;
+
+      Adapter adapter = new ValueAdapter(viewer);
+      notifier.eAdapters().add(adapter);
+    }
+  }
+
+  @Override
+  public void detachListener(TableViewer viewer, Object value)
+  {
+    if (value instanceof Notifier)
+    {
+      Notifier notifier = (Notifier)value;
+
+      for (Iterator<Adapter> it = notifier.eAdapters().iterator(); it.hasNext();)
+      {
+        Adapter adapter = it.next();
+        if (adapter.getClass() == ValueAdapter.class)
+        {
+          it.remove();
+        }
+      }
+    }
+
+    super.detachListener(viewer, value);
   }
 
   @Override

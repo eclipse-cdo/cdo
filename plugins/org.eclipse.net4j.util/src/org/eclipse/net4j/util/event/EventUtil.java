@@ -12,7 +12,10 @@ package org.eclipse.net4j.util.event;
 
 import org.eclipse.net4j.util.event.INotifier.INotifier2;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * Various static helper methods for dealing with {@link IEvent events}, {@link INotifier notifiers} and
@@ -110,11 +113,55 @@ public final class EventUtil
     return false;
   }
 
+  /**
+   * @since 3.20
+   */
+  public static IListener[] removeListeners(Object notifier, Predicate<IListener> predicate)
+  {
+    IListener[] listeners = getListeners(notifier, predicate);
+    for (IListener listener : listeners)
+    {
+      removeListener(notifier, listener);
+    }
+
+    return listeners;
+  }
+
   public static IListener[] getListeners(Object notifier)
   {
     if (notifier instanceof INotifier)
     {
       return ((INotifier)notifier).getListeners();
+    }
+
+    return NO_LISTENERS;
+  }
+
+  /**
+   * @since 3.20
+   */
+  public static IListener[] getListeners(Object notifier, Predicate<IListener> predicate)
+  {
+    if (notifier instanceof INotifier)
+    {
+      List<IListener> result = null;
+      for (IListener listener : ((INotifier)notifier).getListeners())
+      {
+        if (predicate.test(listener))
+        {
+          if (result == null)
+          {
+            result = new ArrayList<>(1);
+          }
+
+          result.add(listener);
+        }
+      }
+
+      if (result != null)
+      {
+        return result.toArray(new IListener[result.size()]);
+      }
     }
 
     return NO_LISTENERS;

@@ -599,6 +599,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
           try
           {
             state = State.Opening;
+            fireStateChangedEvent();
+
             if (manager != null)
             {
               manager.fireCheckoutOpenEvent(this, null, oldState, state);
@@ -677,9 +679,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     }
     finally
     {
-      if (manager != null && oldState != null && newState != null && newState != oldState)
+      if (oldState != null && newState != null && newState != oldState)
       {
-        manager.fireCheckoutOpenEvent(this, view, oldState, newState);
+        fireStateChangedEvent();
+
+        if (manager != null)
+        {
+          manager.fireCheckoutOpenEvent(this, view, oldState, newState);
+        }
       }
     }
   }
@@ -735,6 +742,8 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     if (closed)
     {
+      fireStateChangedEvent();
+
       CDOCheckoutManagerImpl manager = getManager();
       if (manager != null)
       {

@@ -350,6 +350,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     if (connected)
     {
+      fireStateChangedEvent();
+
       CDORepositoryManagerImpl manager = getManager();
       if (manager != null)
       {
@@ -407,6 +409,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     if (disconnected)
     {
+      fireStateChangedEvent();
+
       CDORepositoryManagerImpl manager = getManager();
       if (manager != null)
       {

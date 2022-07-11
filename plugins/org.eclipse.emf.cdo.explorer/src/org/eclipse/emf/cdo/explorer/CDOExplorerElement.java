@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer;
 
+import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -67,4 +68,16 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
   public Properties getProperties();
 
   public void delete(boolean deleteContents);
+
+  /**
+   * @author Eike Stepper
+   * @since 4.12
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
+   */
+  public interface StateChangedEvent extends IEvent
+  {
+    @Override
+    public CDOExplorerElement getSource();
+  }
 }

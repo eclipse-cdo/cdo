@@ -14,7 +14,6 @@ import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOException;
@@ -268,5 +267,31 @@ public class LMVersionEvolutionTest extends AbstractLMTest
     testDropType.accept(sampleClientDropType);
 
     transaction.close();
+  }
+
+  private static void assertNotEquals(Object unexpected, Object actual)
+  {
+    if (objectsAreEqual(unexpected, actual))
+    {
+      fail("expected: not equal but was: <" + actual + ">");
+    }
+  }
+
+  private static void assertNotEquals(int unexpected, int actual)
+  {
+    if (unexpected == actual)
+    {
+      fail("expected: not equal but was: <" + actual + ">");
+    }
+  }
+
+  private static boolean objectsAreEqual(Object obj1, Object obj2)
+  {
+    if (obj1 == null)
+    {
+      return obj2 == null;
+    }
+  
+    return obj1.equals(obj2);
   }
 }

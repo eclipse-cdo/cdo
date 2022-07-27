@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.CharArrayWriter;
+import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
@@ -54,6 +55,12 @@ public final class CDOClob extends CDOLob<Reader>
   CDOClob(ExtendedDataInput in) throws IOException
   {
     super(in);
+  }
+
+  @Override
+  public File getStoreFile()
+  {
+    return getStore().getCharacterFile(getID());
   }
 
   @Override

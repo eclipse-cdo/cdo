@@ -145,7 +145,6 @@ public class CDOLobStoreImpl implements CDOLobStore
     ExpectedFileReader reader = new ExpectedFileReader(file, expectedSize);
     reader.setTimeout(timeout);
     return reader;
-
   }
 
   @Override

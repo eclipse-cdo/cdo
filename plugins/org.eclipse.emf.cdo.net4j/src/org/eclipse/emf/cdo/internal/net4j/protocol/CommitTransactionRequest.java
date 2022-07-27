@@ -273,6 +273,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
           CDOClob clob = (CDOClob)lob;
           out.writeLong(-size);
 
+          long byteCount = clob.getByteCount();
+          out.writeLong(byteCount);
+
           Reader contents = clob.getContents();
           closeable = contents;
           IOUtil.copyCharacter(contents, new OutputStreamWriter(out), size);

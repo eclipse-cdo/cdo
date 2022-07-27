@@ -18,6 +18,7 @@ import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -63,6 +64,12 @@ public final class CDOBlob extends CDOLob<InputStream>
   CDOBlob(ExtendedDataInput in) throws IOException
   {
     super(in);
+  }
+
+  @Override
+  public File getStoreFile()
+  {
+    return getStore().getBinaryFile(getID());
   }
 
   @Override

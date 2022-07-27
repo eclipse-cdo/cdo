@@ -19,16 +19,27 @@ import java.io.Reader;
  */
 public class LimitedReader extends Reader
 {
-  private Reader in;
+  private final Reader in;
+
+  private final boolean closeBackingReader;
 
   private long remaining;
 
   private long remainingAtMark = 0;
 
-  public LimitedReader(Reader in, long length)
+  /**
+   * @since 3.20
+   */
+  public LimitedReader(Reader in, long length, boolean closeBackingReader)
   {
     this.in = in;
     remaining = length;
+    this.closeBackingReader = closeBackingReader;
+  }
+
+  public LimitedReader(Reader in, long length)
+  {
+    this(in, length, true);
   }
 
   @Override
@@ -107,6 +118,10 @@ public class LimitedReader extends Reader
   public void close() throws IOException
   {
     remaining = 0;
-    in.close();
+
+    if (closeBackingReader)
+    {
+      in.close();
+    }
   }
 }

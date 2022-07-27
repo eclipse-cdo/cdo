@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.common.lob;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -63,12 +64,31 @@ public abstract class CDOLob<IO> extends CDOLobInfo
     return store;
   }
 
+  /**
+   * @since 4.19
+   */
+  public abstract File getStoreFile();
+
   public abstract IO getContents() throws IOException;
 
   /**
    * @since 4.13
    */
   public abstract String getString() throws IOException;
+
+  /**
+   * @since 4.19
+   */
+  public final long getByteCount()
+  {
+    File file = getStoreFile();
+    if (file == null || !file.isFile())
+    {
+      throw new IllegalStateException("Lob file does not exist: " + file);
+    }
+
+    return file.length();
+  }
 
   protected abstract CDOLobInfo put(IO contents) throws IOException;
 }

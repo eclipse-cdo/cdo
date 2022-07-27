@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 
 import java.io.InputStream;
@@ -34,23 +33,17 @@ import java.io.Reader;
  */
 public class LobTest extends AbstractCDOTest
 {
-  private byte[] lobID;
-
   @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
     skipStoreWithoutLargeObjects();
-    lobID = null;
   }
 
-  public void testCommitBlob() throws Exception
+  private byte[] commitBlob() throws Exception
   {
-    InputStream inputStream = null;
-
-    try
+    try (InputStream inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml"))
     {
-      inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml");
       CDOBlob blob = new CDOBlob(inputStream);
 
       Image image = getModel3Factory().createImage();
@@ -62,21 +55,21 @@ public class LobTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("res"));
       resource.getContents().add(image);
-
       transaction.commit();
 
-      lobID = blob.getID();
+      return blob.getID();
     }
-    finally
-    {
-      IOUtil.close(inputStream);
-    }
+  }
+
+  public void testCommitBlob() throws Exception
+  {
+    commitBlob();
   }
 
   public void testReadBlob() throws Exception
   {
-    testCommitBlob();
-    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), HexUtil.bytesToHex(lobID) + ".blob").delete();
+    byte[] lobID = commitBlob();
+    CDOLobStoreImpl.INSTANCE.getBinaryFile(lobID).delete();
 
     CDOSession session = openSession();
     CDOView view = session.openView();
@@ -87,25 +80,17 @@ public class LobTest extends AbstractCDOTest
     assertEquals(200, image.getHeight());
 
     CDOBlob blob = image.getData();
-    InputStream inputStream = blob.getContents();
 
-    try
+    try (InputStream inputStream = blob.getContents())
     {
       IOUtil.copyBinary(inputStream, System.out);
     }
-    finally
-    {
-      IOUtil.close(inputStream);
-    }
   }
 
-  public void testCommitClob() throws Exception
+  private byte[] commitClob() throws Exception
   {
-    InputStream inputStream = null;
-
-    try
+    try (InputStream inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml"))
     {
-      inputStream = OM.BUNDLE.getInputStream("backup-tests/Ecore.uml");
       CDOClob clob = new CDOClob(new InputStreamReader(inputStream));
 
       File file = getModel3Factory().createFile();
@@ -116,21 +101,21 @@ public class LobTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("res"));
       resource.getContents().add(file);
-
       transaction.commit();
 
-      lobID = clob.getID();
+      return clob.getID();
     }
-    finally
-    {
-      IOUtil.close(inputStream);
-    }
+  }
+
+  public void testCommitClob() throws Exception
+  {
+    commitClob();
   }
 
   public void testReadClob() throws Exception
   {
-    testCommitClob();
-    new java.io.File(CDOLobStoreImpl.INSTANCE.getFolder(), HexUtil.bytesToHex(lobID) + ".clob").delete();
+    byte[] lobID = commitClob();
+    CDOLobStoreImpl.INSTANCE.getCharacterFile(lobID).delete();
 
     CDOSession session = openSession();
     CDOView view = session.openView();
@@ -140,15 +125,10 @@ public class LobTest extends AbstractCDOTest
     assertEquals("Ecore.uml", file.getName());
 
     CDOClob clob = file.getData();
-    Reader reader = clob.getContents();
 
-    try
+    try (Reader reader = clob.getContents())
     {
       IOUtil.copyCharacter(reader, new OutputStreamWriter(System.out));
-    }
-    finally
-    {
-      IOUtil.close(reader);
     }
   }
 }

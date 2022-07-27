@@ -154,7 +154,8 @@ public abstract class StoreAccessor extends StoreAccessorBase
             }
             else
             {
-              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, -size, false)));
+              long byteCount = in.readLong();
+              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, byteCount, false)));
             }
           }
         }

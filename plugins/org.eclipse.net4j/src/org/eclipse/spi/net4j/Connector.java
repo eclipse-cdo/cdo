@@ -387,7 +387,11 @@ public abstract class Connector extends ChannelMultiplexer implements InternalCo
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()"); //$NON-NLS-1$
+
+    if (needsBufferProvider())
+    {
+      checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()"); //$NON-NLS-1$
+    }
 
     if (userID != null && getConfig().getNegotiator() == null)
     {

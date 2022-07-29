@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
@@ -97,5 +98,11 @@ public class SSLServerConnector extends SSLConnector implements IServerConnector
       OM.LOG.error(ex);
       deactivateAsync();
     }
+  }
+
+  @Override
+  protected IBufferProvider createBufferProvider(SSLEngineManager sslEngineManager)
+  {
+    return new SSLBufferFactory(sslEngineManager);
   }
 }

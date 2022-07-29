@@ -11,6 +11,8 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
+import org.eclipse.net4j.Net4jUtil;
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
 
@@ -75,6 +77,13 @@ public class SSLClientConnector extends SSLConnector
     {
       throw new IllegalStateException("port == 0"); //$NON-NLS-1$
     }
+  }
+
+  @Override
+  protected IBufferProvider createBufferProvider(SSLEngineManager sslEngineManager)
+  {
+    SSLBufferFactory bufferFactory = new SSLBufferFactory(sslEngineManager);
+    return Net4jUtil.createBufferPool(bufferFactory);
   }
 
   @Override

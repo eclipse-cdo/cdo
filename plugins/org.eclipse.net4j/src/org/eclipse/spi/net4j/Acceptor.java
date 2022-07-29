@@ -68,6 +68,12 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   }
 
   @Override
+  public boolean needsBufferProvider()
+  {
+    return true;
+  }
+
+  @Override
   public synchronized ITransportConfig getConfig()
   {
     if (config == null)
@@ -191,9 +197,10 @@ public abstract class Acceptor extends Container<IConnector> implements Internal
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    if (getConfig().getBufferProvider() == null)
+
+    if (needsBufferProvider())
     {
-      throw new IllegalStateException("getConfig().getBufferProvider() == null"); //$NON-NLS-1$
+      checkState(getConfig().getBufferProvider(), "getConfig().getBufferProvider()"); //$NON-NLS-1$
     }
   }
 

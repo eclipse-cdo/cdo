@@ -28,6 +28,12 @@ import java.text.MessageFormat;
 public class SSLAcceptor extends TCPAcceptor
 {
   @Override
+  public boolean needsBufferProvider()
+  {
+    return false;
+  }
+
+  @Override
   public String toString()
   {
     return MessageFormat.format("SSLAcceptor[{0}:{1}]", getAddress(), getPort()); //$NON-NLS-1$

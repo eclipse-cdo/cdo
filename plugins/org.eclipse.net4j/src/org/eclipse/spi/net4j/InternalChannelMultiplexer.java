@@ -37,6 +37,11 @@ public interface InternalChannelMultiplexer extends IChannelMultiplexer, IBuffer
   public static final short RESERVED_CHANNEL = 0;
 
   /**
+   * @since 4.16
+   */
+  public boolean needsBufferProvider();
+
+  /**
    * Called by a {@link IChannel channel} each time a new {@link IBuffer buffer} is available for multiplexing. This or another buffer can be
    * dequeued from the {@link InternalChannel#getSendQueue() send queue} of the channel.
    */

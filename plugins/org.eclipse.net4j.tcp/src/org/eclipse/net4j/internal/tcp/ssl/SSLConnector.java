@@ -12,6 +12,7 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
+import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
@@ -21,6 +22,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
+import java.util.concurrent.ExecutorService;
 
 /**
  * SSLConnector responses to perform tasks same as TCPConnector but it attached the SSL functionality into read and
@@ -30,11 +32,21 @@ import java.nio.channels.SocketChannel;
  * @author Caspar De Groot (No Magic Asia Ltd.)
  * @since 4.0
  */
-public class SSLConnector extends TCPConnector
+public abstract class SSLConnector extends TCPConnector
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, SSLConnector.class);
 
   private SSLEngineManager sslEngineManager;
+
+  public SSLConnector()
+  {
+  }
+
+  @Override
+  public boolean needsBufferProvider()
+  {
+    return false;
+  }
 
   @Override
   public String getProtocolString()
@@ -117,12 +129,12 @@ public class SSLConnector extends TCPConnector
       boolean isClient = isClient();
       String host = getHost();
       int port = getPort();
+      ExecutorService receiveExecutor = getConfig().getReceiveExecutor();
 
-      sslEngineManager = new SSLEngineManager(isClient, host, port, getConfig().getReceiveExecutor());
+      sslEngineManager = new SSLEngineManager(isClient, host, port, receiveExecutor);
 
-      // Set the buffer provider of the config instance in order to replace
-      // BufferFactory instance with SSLBufferFactory instance.
-      getConfig().setBufferProvider(new SSLBufferFactory(sslEngineManager));
+      IBufferProvider bufferProvider = createBufferProvider(sslEngineManager);
+      getConfig().setBufferProvider(bufferProvider);
     }
     catch (Exception ex)
     {
@@ -136,6 +148,8 @@ public class SSLConnector extends TCPConnector
 
     super.doActivate();
   }
+
+  protected abstract IBufferProvider createBufferProvider(SSLEngineManager sslEngineManager);
 
   @Override
   protected void doDeactivate() throws Exception

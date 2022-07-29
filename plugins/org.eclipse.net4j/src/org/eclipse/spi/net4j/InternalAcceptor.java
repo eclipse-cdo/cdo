@@ -23,4 +23,8 @@ import org.eclipse.net4j.util.security.INegotiatorAware;
  */
 public interface InternalAcceptor extends IAcceptor, ITransportConfigAware, INegotiatorAware
 {
+  /**
+   * @since 4.16
+   */
+  public boolean needsBufferProvider();
 }

@@ -116,11 +116,12 @@ public class SSLBuffer extends Buffer
   {
     try
     {
-      if (sslEngineManager.getPacketSendBuf().position() > 0)
+      ByteBuffer packetSendBuf = sslEngineManager.getPacketSendBuf();
+      if (packetSendBuf.position() > 0)
       {
         sslEngineManager.handleWrite(socketChannel);
 
-        if (sslEngineManager.getPacketSendBuf().position() > 0)
+        if (packetSendBuf.position() > 0)
         {
           clear();
           return false;
@@ -166,7 +167,7 @@ public class SSLBuffer extends Buffer
       sslEngineManager.getAppSendBuf().put(getByteBuffer());
       sslEngineManager.write(socketChannel);
 
-      if (sslEngineManager.getPacketSendBuf().position() > 0)
+      if (packetSendBuf.position() > 0)
       {
         clear();
         return false;

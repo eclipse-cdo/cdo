@@ -321,6 +321,7 @@ public class SSLEngineManager
         appSendBuf.flip();
         engineResult = sslEngine.wrap(appSendBuf, packetSendBuf);
         appSendBuf.compact();
+
         switch (engineResult.getStatus())
         {
         case BUFFER_UNDERFLOW:

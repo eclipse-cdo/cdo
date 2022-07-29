@@ -57,7 +57,8 @@ public class TransportInjector implements IElementProcessor
   protected void processAcceptor(IManagedContainer container, String factoryType, String description, InternalAcceptor acceptor)
   {
     ITransportConfig config = acceptor.getConfig();
-    if (config.getBufferProvider() == null)
+
+    if (acceptor.needsBufferProvider() && config.getBufferProvider() == null)
     {
       config.setBufferProvider(getBufferProvider(container));
     }
@@ -76,7 +77,8 @@ public class TransportInjector implements IElementProcessor
   protected void processConnector(IManagedContainer container, String factoryType, String description, InternalConnector connector)
   {
     ITransportConfig config = connector.getConfig();
-    if (config.getBufferProvider() == null)
+
+    if (connector.needsBufferProvider() && config.getBufferProvider() == null)
     {
       config.setBufferProvider(getBufferProvider(container));
     }

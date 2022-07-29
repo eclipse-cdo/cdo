@@ -86,6 +86,12 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   }
 
   @Override
+  public boolean needsBufferProvider()
+  {
+    return true;
+  }
+
+  @Override
   public synchronized ITransportConfig getConfig()
   {
     if (config == null)

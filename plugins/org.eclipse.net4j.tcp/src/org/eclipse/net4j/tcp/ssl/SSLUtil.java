@@ -15,28 +15,12 @@ import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory;
-import org.eclipse.net4j.internal.tcp.ssl.SSLProperties;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.om.OMPlatform;
 
-import javax.net.ssl.KeyManager;
-import javax.net.ssl.KeyManagerFactory;
-import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
-import javax.net.ssl.TrustManager;
-import javax.net.ssl.TrustManagerFactory;
-
-import java.io.InputStream;
-import java.net.URL;
-import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.cert.Certificate;
-import java.security.cert.X509Certificate;
-import java.util.Enumeration;
 
 /**
  * A utility class with various static factory and convenience methods for SSL transport.
@@ -47,50 +31,139 @@ import java.util.Enumeration;
  */
 public class SSLUtil
 {
-  /**
-   * The variable for SSL Engine
-   */
-  private static final String PROTOCOL = "TLSv1.2";
-
   private static String configFile;
 
-  private static String keyPathVar;
+  private static String defaultProtocol = "TLSv1.3";
 
-  private static String trustPathVar;
+  private static String defaultKeyPath;
 
-  private static String passPhraseVar;
+  private static String defaultTrustPath;
+
+  private static String defaultPassPhrase;
 
   /**
    * Default value of handshake timeout is 12 times.
    */
-  private static int handShakeTimeOutVar = 12;
+  private static int defaultHandShakeTimeOut = 12;
 
   /**
    * Default value of handshake wait time is 60 milliseconds.
    */
-  private static int handShakeWaitTimeVar = 60;
+  private static int defaultHandShakeWaitTime = 60;
 
-  public static synchronized void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase)
+  /**
+   * @since 4.4
+   */
+  public static String getConfigFile()
   {
-    keyPathVar = keyPath;
-    trustPathVar = trustPath;
-    passPhraseVar = passPhrase;
+    return configFile;
   }
 
-  public static synchronized void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase, int handShakeTimeOut, int handShakeWaitTime)
+  /**
+   * @since 4.4
+   */
+  public static void setConfigFile(String configFile)
   {
-    setDefaultSSLConfiguration(keyPath, trustPath, passPhrase);
-
-    handShakeTimeOutVar = handShakeTimeOut;
-    handShakeWaitTimeVar = handShakeWaitTime;
+    SSLUtil.configFile = configFile;
   }
 
-  public static synchronized void setSSLConfigurationFile(String file)
+  /**
+   * @since 4.4
+   */
+  public static String getDefaultProtocol()
   {
-    configFile = file;
+    return defaultProtocol;
   }
 
-  public static synchronized void prepareContainer(IManagedContainer container)
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultProtocol(String defaultProtocol)
+  {
+    SSLUtil.defaultProtocol = defaultProtocol;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static String getDefaultKeyPath()
+  {
+    return defaultKeyPath;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultKeyPath(String defaultKeyPath)
+  {
+    SSLUtil.defaultKeyPath = defaultKeyPath;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static String getDefaultTrustPath()
+  {
+    return defaultTrustPath;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultTrustPath(String defaultTrustPath)
+  {
+    SSLUtil.defaultTrustPath = defaultTrustPath;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static String getDefaultPassPhrase()
+  {
+    return defaultPassPhrase;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultPassPhrase(String defaultPassPhrase)
+  {
+    SSLUtil.defaultPassPhrase = defaultPassPhrase;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static int getDefaultHandShakeTimeOut()
+  {
+    return defaultHandShakeTimeOut;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultHandShakeTimeOut(int defaultHandShakeTimeOut)
+  {
+    SSLUtil.defaultHandShakeTimeOut = defaultHandShakeTimeOut;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static int getDefaultHandShakeWaitTime()
+  {
+    return defaultHandShakeWaitTime;
+  }
+
+  /**
+   * @since 4.4
+   */
+  public static void setDefaultHandShakeWaitTime(int defaultHandShakeWaitTime)
+  {
+    SSLUtil.defaultHandShakeWaitTime = defaultHandShakeWaitTime;
+  }
+
+  public static void prepareContainer(IManagedContainer container)
   {
     TCPUtil.prepareContainer(container);
 
@@ -99,162 +172,73 @@ public class SSLUtil
     container.registerFactory(new SSLConnectorFactory());
   }
 
-  public static synchronized ITCPAcceptor getAcceptor(IManagedContainer container, String description)
+  public static ITCPAcceptor getAcceptor(IManagedContainer container, String description)
   {
     return (ITCPAcceptor)container.getElement(TCPAcceptorFactory.PRODUCT_GROUP, SSLAcceptorFactory.TYPE, description);
   }
 
-  public static synchronized ITCPConnector getConnector(IManagedContainer container, String description)
+  public static ITCPConnector getConnector(IManagedContainer container, String description)
   {
     return (ITCPConnector)container.getElement(TCPConnectorFactory.PRODUCT_GROUP, SSLConnectorFactory.TYPE, description);
   }
 
-  public static synchronized SSLEngine createSSLEngine(boolean client, String host, int port) throws Exception
+  /**
+   * @deprecated As of 4.4 use {@link #setConfigFile(String)}.
+   */
+  @Deprecated
+  public static void setSSLConfigurationFile(String file)
   {
-    // Get values from the system properties.
-    SSLProperties sslProperties = new SSLProperties();
-    String keyPath = sslProperties.getKeyPath();
-    String trustPath = sslProperties.getTrustPath();
-    String passPhrase = sslProperties.getPassPhrase();
-
-    if ((keyPath == null || trustPath == null || passPhrase == null) && configFile != null)
-    {
-      sslProperties.load(configFile);
-    }
-
-    // In case, the system properties does not have the key path property. It will load from local config file.
-    if (keyPath == null)
-    {
-      keyPath = sslProperties.getKeyPath();
-      if (keyPath == null)
-      {
-        keyPath = keyPathVar;
-      }
-    }
-
-    // In case, the system properties does not have the trust path property. It will load from local config file.
-    if (trustPath == null)
-    {
-      trustPath = sslProperties.getTrustPath();
-      if (trustPath == null)
-      {
-        trustPath = trustPathVar;
-      }
-    }
-
-    // In case, the system properties does not have the passphrase property. It will load from local config file.
-    if (passPhrase == null)
-    {
-      passPhrase = sslProperties.getPassPhrase();
-      if (passPhrase == null)
-      {
-        passPhrase = passPhraseVar;
-      }
-    }
-
-    // Handle assign the value of handshake timeout and handshake timewait from local properties or system properties by
-    // giving the value form system properties is high priority.
-    String value = sslProperties.getHandShakeTimeOut();
-    if (value != null)
-    {
-      handShakeTimeOutVar = Integer.parseInt(value);
-    }
-
-    value = sslProperties.getHandShakeWaitTime();
-    if (value != null)
-    {
-      handShakeWaitTimeVar = Integer.parseInt(value);
-    }
-
-    if (keyPath == null && !client || trustPath == null && client || passPhrase == null)
-    {
-      if (client)
-      {
-        throw new KeyStoreException(
-            "Trust Store[" + (trustPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
-      }
-
-      throw new KeyStoreException(
-          "Key Store[" + (keyPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
-    }
-
-    char[] pass = passPhrase.toCharArray();
-
-    KeyManager[] keyManagers = null;
-    TrustManager[] trustManagers = null;
-    boolean checkValidtyStatus = OMPlatform.INSTANCE.isProperty(SSLProperties.CHECK_VALIDITY_CERTIFICATE, true);
-    if (client)
-    {
-      // Initial key material(private key) for the client.
-      KeyStore ksTrust = createKeyStore(trustPath, pass, checkValidtyStatus);
-      // Initial the trust manager factory
-      TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
-      tmf.init(ksTrust);
-
-      trustManagers = tmf.getTrustManagers();
-    }
-    else
-    {
-      // Initial key material (private key) for the server.
-      KeyStore ksKeys = createKeyStore(keyPath, pass, checkValidtyStatus);
-
-      // Initial the key manager factory.
-      KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
-      kmf.init(ksKeys, pass);
-
-      keyManagers = kmf.getKeyManagers();
-    }
-
-    SSLContext sslContext = SSLContext.getInstance(PROTOCOL);
-    sslContext.init(keyManagers, trustManagers, null);
-
-    SSLEngine sslEngine = sslContext.createSSLEngine(host, port);
-    sslEngine.setUseClientMode(client);
-    return sslEngine;
+    setConfigFile(file);
   }
 
-  private static KeyStore createKeyStore(String path, char[] password, boolean checkValidity) throws Exception
+  /**
+   * @deprecated As of 4.4 use {@link #setDefaultKeyPath(String)}, {@link #setDefaultTrustPath(String)}, and {@link #setDefaultPassPhrase(String)}.
+   */
+  @Deprecated
+  public static void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase)
   {
-    // Initial key material
-    KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-
-    InputStream in = null;
-
-    try
-    {
-      in = new URL(path).openStream();
-      keyStore.load(in, password);
-
-      if (checkValidity)
-      {
-        // Check validity license key
-        Enumeration<String> aliasesIter = keyStore.aliases();
-        while (aliasesIter.hasMoreElements())
-        {
-          String alias = aliasesIter.nextElement();
-          Certificate cert = keyStore.getCertificate(alias);
-          if (cert instanceof X509Certificate)
-          {
-            ((X509Certificate)cert).checkValidity();
-          }
-        }
-      }
-    }
-    finally
-    {
-      IOUtil.close(in);
-    }
-
-    return keyStore;
+    defaultKeyPath = keyPath;
+    defaultTrustPath = trustPath;
+    defaultPassPhrase = passPhrase;
   }
 
-  public static synchronized int getHandShakeTimeOut()
+  /**
+   * @deprecated As of 4.4 use {@link #setDefaultKeyPath(String)}, {@link #setDefaultTrustPath(String)}, {@link #setDefaultPassPhrase(String)},
+   * {@link #setDefaultHandShakeTimeOut(int)}, and {@link #setDefaultHandShakeWaitTime(int)}.
+   */
+  @Deprecated
+  public static void setDefaultSSLConfiguration(String keyPath, String trustPath, String passPhrase, int handShakeTimeOut, int handShakeWaitTime)
   {
-    return handShakeTimeOutVar;
+    setDefaultSSLConfiguration(keyPath, trustPath, passPhrase);
+
+    defaultHandShakeTimeOut = handShakeTimeOut;
+    defaultHandShakeWaitTime = handShakeWaitTime;
   }
 
-  public static synchronized int getHandShakeWaitTime()
+  /**
+   * @deprecated As of 4.4 no longer supported (was only used internally before).
+   */
+  @Deprecated
+  public static SSLEngine createSSLEngine(boolean client, String host, int port) throws Exception
   {
-    return handShakeWaitTimeVar;
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 4.4 use {@link #getDefaultHandShakeTimeOut}.
+   */
+  @Deprecated
+  public static int getHandShakeTimeOut()
+  {
+    return getDefaultHandShakeTimeOut();
+  }
+
+  /**
+   * @deprecated As of 4.4 use {@link #getDefaultHandShakeWaitTime}.
+   */
+  @Deprecated
+  public static int getHandShakeWaitTime()
+  {
+    return getDefaultHandShakeWaitTime();
   }
 }

@@ -13,19 +13,33 @@ package org.eclipse.net4j.internal.tcp.ssl;
 
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
+import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import javax.net.ssl.KeyManager;
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLEngine;
 import javax.net.ssl.SSLEngineResult;
 import javax.net.ssl.SSLEngineResult.HandshakeStatus;
 import javax.net.ssl.SSLEngineResult.Status;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.TrustManagerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SocketChannel;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.cert.Certificate;
+import java.security.cert.X509Certificate;
+import java.util.Enumeration;
 import java.util.concurrent.Executor;
 
 /**
@@ -44,7 +58,13 @@ public class SSLEngineManager
 
   private SSLEngine sslEngine;
 
-  private boolean handshakeComplete;
+  private int handShakeTimeOut;
+
+  private int handShakeWaitTime;
+
+  private boolean handShakeComplete;
+
+  private SSLEngineResult.HandshakeStatus handShakeStatus;
 
   private boolean needRehandShake;
 
@@ -58,8 +78,6 @@ public class SSLEngineManager
 
   private SSLEngineResult engineResult;
 
-  private SSLEngineResult.HandshakeStatus handshakeStatus;
-
   private Object readLock = new ReadLock();
 
   private Object writeLock = new WriteLock();
@@ -68,7 +86,58 @@ public class SSLEngineManager
   {
     this.executor = executor;
 
-    sslEngine = SSLUtil.createSSLEngine(client, host, port);
+    SSLProperties sslProperties = new SSLProperties(SSLUtil.getConfigFile());
+    String protocol = sslProperties.getProtocol(SSLUtil.getDefaultProtocol());
+    String keyPath = sslProperties.getKeyPath(SSLUtil.getDefaultKeyPath());
+    String trustPath = sslProperties.getTrustPath(SSLUtil.getDefaultTrustPath());
+    String passPhrase = sslProperties.getPassPhrase(SSLUtil.getDefaultPassPhrase());
+    handShakeTimeOut = sslProperties.getHandShakeTimeOut(SSLUtil.getDefaultHandShakeTimeOut());
+    handShakeWaitTime = sslProperties.getHandShakeWaitTime(SSLUtil.getDefaultHandShakeWaitTime());
+
+    if (keyPath == null && !client || trustPath == null && client || passPhrase == null)
+    {
+      if (client)
+      {
+        throw new KeyStoreException(
+            "Trust Store[" + (trustPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
+      }
+
+      throw new KeyStoreException(
+          "Key Store[" + (keyPath != null) + "] or Pass Phrase[" + (passPhrase != null) + "] is not provided. [false] means it does not exist.");
+    }
+
+    char[] pass = passPhrase.toCharArray();
+
+    KeyManager[] keyManagers = null;
+    TrustManager[] trustManagers = null;
+    boolean checkValidtyStatus = OMPlatform.INSTANCE.isProperty(SSLProperties.CHECK_VALIDITY_CERTIFICATE, true);
+    if (client)
+    {
+      // Initial key material(private key) for the client.
+      KeyStore ksTrust = createKeyStore(trustPath, pass, checkValidtyStatus);
+      // Initial the trust manager factory
+      TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+      tmf.init(ksTrust);
+
+      trustManagers = tmf.getTrustManagers();
+    }
+    else
+    {
+      // Initial key material (private key) for the server.
+      KeyStore ksKeys = createKeyStore(keyPath, pass, checkValidtyStatus);
+
+      // Initial the key manager factory.
+      KeyManagerFactory kmf = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+      kmf.init(ksKeys, pass);
+
+      keyManagers = kmf.getKeyManagers();
+    }
+
+    SSLContext sslContext = SSLContext.getInstance(protocol);
+    sslContext.init(keyManagers, trustManagers, null);
+
+    sslEngine = sslContext.createSSLEngine(host, port);
+    sslEngine.setUseClientMode(client);
     sslEngine.beginHandshake();
 
     SSLSession session = sslEngine.getSession();
@@ -85,6 +154,11 @@ public class SSLEngineManager
   public Executor getExecutor()
   {
     return executor;
+  }
+
+  public int getHandShakeWaitTime()
+  {
+    return handShakeWaitTime;
   }
 
   public ByteBuffer getAppSendBuf()
@@ -129,18 +203,18 @@ public class SSLEngineManager
 
   public synchronized void checkInitialHandshake(SocketChannel socketChannel) throws Exception
   {
-    if (!handshakeComplete)
+    if (!handShakeComplete)
     {
       try
       {
         int counter = 0;
-        while (!isHandshakeFinished() && counter <= SSLUtil.getHandShakeTimeOut())
+        while (!isHandshakeFinished() && counter <= handShakeTimeOut)
         {
           performHandshake(socketChannel, needRehandShake);
-          counter = handshakeStatus == HandshakeStatus.NEED_UNWRAP ? counter++ : 0;
+          counter = handShakeStatus == HandshakeStatus.NEED_UNWRAP ? counter++ : 0;
         }
 
-        if (!isHandshakeFinished() && counter == SSLUtil.getHandShakeTimeOut())
+        if (!isHandshakeFinished() && counter == handShakeTimeOut)
         {
           throw new SSLException("SSL handshake timeout");
         }
@@ -165,13 +239,13 @@ public class SSLEngineManager
         throw ex;
       }
 
-      handshakeComplete = true;
+      handShakeComplete = true;
     }
   }
 
   public int read(SocketChannel socketChannel) throws IOException
   {
-    if (!handshakeComplete)
+    if (!handShakeComplete)
     {
       throw new SSLException("Handshake still not completed");
     }
@@ -231,7 +305,7 @@ public class SSLEngineManager
 
   public int write(SocketChannel socketChannel) throws IOException
   {
-    if (!handshakeComplete)
+    if (!handShakeComplete)
     {
       throw new SSLException("Handshake still not completed");
     }
@@ -345,13 +419,13 @@ public class SSLEngineManager
 
   public void checkRehandShake(SocketChannel socket) throws Exception
   {
-    handshakeStatus = engineResult.getHandshakeStatus();
-    needRehandShake = handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK || handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP
-        || handshakeStatus == SSLEngineResult.HandshakeStatus.NEED_WRAP;
+    handShakeStatus = engineResult.getHandshakeStatus();
+    needRehandShake = handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_TASK || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_UNWRAP
+        || handShakeStatus == SSLEngineResult.HandshakeStatus.NEED_WRAP;
 
     if (needRehandShake)
     {
-      handshakeComplete = false;
+      handShakeComplete = false;
     }
 
     checkInitialHandshake(socket);
@@ -360,12 +434,12 @@ public class SSLEngineManager
 
   public boolean isHandshakeComplete()
   {
-    return handshakeComplete;
+    return handShakeComplete;
   }
 
   private boolean isHandshakeFinished()
   {
-    return handshakeStatus != null && handshakeStatus == SSLEngineResult.HandshakeStatus.FINISHED;
+    return handShakeStatus != null && handShakeStatus == SSLEngineResult.HandshakeStatus.FINISHED;
   }
 
   private boolean performHandshake(SocketChannel socketChannel, boolean rehandShake) throws IOException
@@ -373,15 +447,15 @@ public class SSLEngineManager
     int nBytes = 0;
     if (!rehandShake)
     {
-      handshakeStatus = sslEngine.getHandshakeStatus();
+      handShakeStatus = sslEngine.getHandshakeStatus();
     }
 
-    switch (handshakeStatus)
+    switch (handShakeStatus)
     {
     case NEED_WRAP:
       appSendBuf.flip();
       engineResult = sslEngine.wrap(appSendBuf, packetSendBuf);
-      handshakeStatus = engineResult.getHandshakeStatus();
+      handShakeStatus = engineResult.getHandshakeStatus();
       appSendBuf.compact();
 
       switch (engineResult.getStatus())
@@ -417,7 +491,7 @@ public class SSLEngineManager
 
       packetRecvBuf.flip();
       engineResult = sslEngine.unwrap(packetRecvBuf, appRecvBuf);
-      handshakeStatus = engineResult.getHandshakeStatus();
+      handShakeStatus = engineResult.getHandshakeStatus();
       packetRecvBuf.compact();
 
       if (engineResult.getStatus() == SSLEngineResult.Status.BUFFER_UNDERFLOW && sslEngine.isInboundDone())
@@ -458,6 +532,41 @@ public class SSLEngineManager
         TRACER.trace("Scheduled task: " + task); //$NON-NLS-1$
       }
     }
+  }
+
+  private static KeyStore createKeyStore(String path, char[] password, boolean checkValidity) throws Exception
+  {
+    // Initial key material
+    KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+
+    InputStream in = null;
+
+    try
+    {
+      in = new URL(path).openStream();
+      keyStore.load(in, password);
+
+      if (checkValidity)
+      {
+        // Check validity license key
+        Enumeration<String> aliasesIter = keyStore.aliases();
+        while (aliasesIter.hasMoreElements())
+        {
+          String alias = aliasesIter.nextElement();
+          Certificate cert = keyStore.getCertificate(alias);
+          if (cert instanceof X509Certificate)
+          {
+            ((X509Certificate)cert).checkValidity();
+          }
+        }
+      }
+    }
+    finally
+    {
+      IOUtil.close(in);
+    }
+
+    return keyStore;
   }
 
   /**

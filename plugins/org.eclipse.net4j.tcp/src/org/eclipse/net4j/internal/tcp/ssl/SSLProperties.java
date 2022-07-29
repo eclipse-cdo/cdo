@@ -11,8 +11,7 @@
  */
 package org.eclipse.net4j.internal.tcp.ssl;
 
-import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.IOException;
@@ -27,6 +26,8 @@ import java.util.Properties;
  */
 public class SSLProperties
 {
+  public static final String PROTOCOL = "org.eclipse.net4j.tcp.ssl.protocol";
+
   public static final String KEY_PATH = "org.eclipse.net4j.tcp.ssl.key";
 
   public static final String TRUST_PATH = "org.eclipse.net4j.tcp.ssl.trust";
@@ -41,88 +42,91 @@ public class SSLProperties
 
   private Properties localProperties;
 
-  public SSLProperties()
-  {
-  }
-
-  public void load(String localConfigPath) throws IOException
+  public SSLProperties(String localConfigUrl) throws IOException
   {
     // Loading SSL config from local property is optional.
-    localProperties = new Properties();
-
-    InputStream in = null;
-
-    try
+    if (!StringUtil.isEmpty(localConfigUrl))
     {
-      in = new URL(localConfigPath).openStream();
-      localProperties.load(in);
-    }
-    catch (IOException ex)
-    {
-      throw ex;
-    }
-    catch (Exception ex)
-    {
-      throw WrappedException.wrap(ex, "SSL config cannot be loaded");
-    }
-    finally
-    {
-      IOUtil.close(in);
+      try (InputStream in = new URL(localConfigUrl).openStream())
+      {
+        localProperties = new Properties();
+        localProperties.load(in);
+      }
+      catch (IOException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new IOException("SSL config cannot be loaded", ex);
+      }
     }
   }
 
-  public String getKeyPath()
+  public String getProtocol(String defaultValue)
   {
-    String keyPath = OMPlatform.INSTANCE.getProperty(KEY_PATH);
-    if (keyPath == null && localProperties != null)
-    {
-      keyPath = localProperties.getProperty(KEY_PATH);
-    }
-
-    return keyPath;
+    return getValue(PROTOCOL, defaultValue);
   }
 
-  public String getTrustPath()
+  public String getKeyPath(String defaultValue)
   {
-    String trustPath = OMPlatform.INSTANCE.getProperty(TRUST_PATH);
-    if (trustPath == null && localProperties != null)
-    {
-      trustPath = localProperties.getProperty(TRUST_PATH);
-    }
-
-    return trustPath;
+    return getValue(KEY_PATH, defaultValue);
   }
 
-  public String getPassPhrase()
+  public String getTrustPath(String defaultValue)
   {
-    String passPhrase = OMPlatform.INSTANCE.getProperty(PASS_PHRASE);
-    if (passPhrase == null && localProperties != null)
-    {
-      passPhrase = localProperties.getProperty(PASS_PHRASE);
-    }
-
-    return passPhrase;
+    return getValue(TRUST_PATH, defaultValue);
   }
 
-  public String getHandShakeTimeOut()
+  public String getPassPhrase(String defaultValue)
   {
-    String hsTimeOut = OMPlatform.INSTANCE.getProperty(HANDSHAKE_TIMEOUT);
-    if (hsTimeOut == null && localProperties != null)
-    {
-      hsTimeOut = localProperties.getProperty(HANDSHAKE_TIMEOUT);
-    }
-
-    return hsTimeOut;
+    return getValue(PASS_PHRASE, defaultValue);
   }
 
-  public String getHandShakeWaitTime()
+  public int getHandShakeTimeOut(int defaultValue)
   {
-    String waitTime = OMPlatform.INSTANCE.getProperty(HANDSHAKE_WAITTIME);
-    if (waitTime == null && localProperties != null)
+    return getValue(HANDSHAKE_TIMEOUT, defaultValue);
+  }
+
+  public int getHandShakeWaitTime(int defaultValue)
+  {
+    return getValue(HANDSHAKE_WAITTIME, defaultValue);
+  }
+
+  private String getValue(String key, String defaultValue)
+  {
+    String value = OMPlatform.INSTANCE.getProperty(key);
+    if (StringUtil.isEmpty(value) && localProperties != null)
     {
-      waitTime = localProperties.getProperty(HANDSHAKE_WAITTIME);
+      value = localProperties.getProperty(key);
     }
 
-    return waitTime;
+    if (StringUtil.isEmpty(value))
+    {
+      return defaultValue;
+    }
+
+    return value;
+  }
+
+  private int getValue(String key, int defaultValue)
+  {
+    String value = OMPlatform.INSTANCE.getProperty(key);
+    if (StringUtil.isEmpty(value) && localProperties != null)
+    {
+      value = localProperties.getProperty(key);
+    }
+
+    if (StringUtil.isEmpty(value))
+    {
+      return defaultValue;
+    }
+
+    if (value != null)
+    {
+      return Integer.parseInt(value);
+    }
+
+    return 0;
   }
 }

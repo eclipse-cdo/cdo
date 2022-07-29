@@ -15,7 +15,6 @@ package org.eclipse.net4j.internal.tcp.ssl;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
 import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.tcp.ITCPSelector;
-import org.eclipse.net4j.tcp.ssl.SSLUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -116,15 +115,14 @@ public class SSLConnector extends TCPConnector
     try
     {
       boolean isClient = isClient();
-
       String host = getHost();
       int port = getPort();
+
       sslEngineManager = new SSLEngineManager(isClient, host, port, getConfig().getReceiveExecutor());
 
       // Set the buffer provider of the config instance in order to replace
       // BufferFactory instance with SSLBufferFactory instance.
       getConfig().setBufferProvider(new SSLBufferFactory(sslEngineManager));
-
     }
     catch (Exception ex)
     {
@@ -201,12 +199,14 @@ public class SSLConnector extends TCPConnector
 
   private void waitForHandShakeFinish()
   {
+    int handShakeWaitTime = sslEngineManager.getHandShakeWaitTime();
+
     // Wait until handshake finished. If handshake finish it will not enter this loop.
     while (!sslEngineManager.isHandshakeComplete())
     {
       if (isNegotiating())
       {
-        ConcurrencyUtil.sleep(SSLUtil.getHandShakeWaitTime());
+        ConcurrencyUtil.sleep(handShakeWaitTime);
       }
       else if (!isNegotiating() && !isActive())
       {

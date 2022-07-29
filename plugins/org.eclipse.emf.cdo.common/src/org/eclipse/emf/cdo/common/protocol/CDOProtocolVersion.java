@@ -19,8 +19,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 46; // SIGNAL_REMOTE_TOPIC
+    VALUE = 47; // Bug 580439 - Truncated CDOLobs in repository
 
+    // VALUE = 46; // SIGNAL_REMOTE_TOPIC
     // VALUE = 45; // SIGNAL_AUTHORIZE_OPERATIONS
     // VALUE = 44; // SIGNAL_VIEW_CLOSED_NOTIFICATION
     // VALUE = 43; // SIGNAL_DELETE_BRANCH

@@ -454,24 +454,9 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
         InternalRepository repository = moduleRepositories.remove(moduleName);
         LifecycleUtil.deactivate(repository);
-
-        // try
-        // {
-        // removeModule(moduleName);
-        // }
-        // catch (Exception e)
-        // {
-        // // TODO Auto-generated catch block
-        // e.printStackTrace();
-        // }
-
         break;
       }
     }
-  }
-
-  private void removeModule(String moduleName)
-  {
   }
 
   protected void handleBaselineAddition(CommitContext commitContext, InternalCDORevision addedContent)

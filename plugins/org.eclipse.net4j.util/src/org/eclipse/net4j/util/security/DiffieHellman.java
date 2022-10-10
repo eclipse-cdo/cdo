@@ -10,8 +10,11 @@
  */
 package org.eclipse.net4j.util.security;
 
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
+import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
+import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import javax.crypto.Cipher;
@@ -20,6 +23,8 @@ import javax.crypto.interfaces.DHPublicKey;
 import javax.crypto.spec.DHParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.AlgorithmParameterGenerator;
@@ -310,13 +315,20 @@ public class DiffieHellman
         serverPubKeyEnc = in.readByteArray();
       }
 
-      public void write(ExtendedDataOutput out) throws IOException
+      /**
+       * @since 3.21
+       */
+      public Challenge(byte[] data) throws IOException
       {
-        out.writeString(serverRealm);
-        out.writeInt(secretAlgorithmKeyLen);
-        out.writeString(secretAlgorithm);
-        out.writeString(cipherTransformation);
-        out.writeByteArray(serverPubKeyEnc);
+        this(new ExtendedDataInputStream(new ByteArrayInputStream(data)));
+      }
+
+      /**
+       * @since 3.21
+       */
+      public Challenge(String hex) throws IOException
+      {
+        this(HexUtil.hexToBytes(hex));
       }
 
       public String getServerRealm()
@@ -357,6 +369,41 @@ public class DiffieHellman
       public byte[] getServerPubKeyEnc()
       {
         return serverPubKeyEnc;
+      }
+
+      public void write(ExtendedDataOutput out) throws IOException
+      {
+        out.writeString(serverRealm);
+        out.writeInt(secretAlgorithmKeyLen);
+        out.writeString(secretAlgorithm);
+        out.writeString(cipherTransformation);
+        out.writeByteArray(serverPubKeyEnc);
+      }
+
+      /**
+       * @since 3.21
+       */
+      public byte[] toByteArray()
+      {
+        try
+        {
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          write(new ExtendedDataOutputStream(baos));
+          return baos.toByteArray();
+        }
+        catch (IOException ex)
+        {
+          throw new IORuntimeException(ex);
+        }
+      }
+
+      /**
+       * @since 3.21
+       */
+      @Override
+      public String toString()
+      {
+        return HexUtil.bytesToHex(toByteArray());
       }
     }
   }
@@ -449,11 +496,20 @@ public class DiffieHellman
         paramsEnc = in.readByteArray();
       }
 
-      public void write(ExtendedDataOutput out) throws IOException
+      /**
+       * @since 3.21
+       */
+      public Response(byte[] data) throws IOException
       {
-        out.writeByteArray(clientPubKeyEnc);
-        out.writeByteArray(cipherText);
-        out.writeByteArray(paramsEnc);
+        this(new ExtendedDataInputStream(new ByteArrayInputStream(data)));
+      }
+
+      /**
+       * @since 3.21
+       */
+      public Response(String hex) throws IOException
+      {
+        this(HexUtil.hexToBytes(hex));
       }
 
       public byte[] getClientPubKeyEnc()
@@ -469,6 +525,39 @@ public class DiffieHellman
       public byte[] getParamsEnc()
       {
         return paramsEnc;
+      }
+
+      public void write(ExtendedDataOutput out) throws IOException
+      {
+        out.writeByteArray(clientPubKeyEnc);
+        out.writeByteArray(cipherText);
+        out.writeByteArray(paramsEnc);
+      }
+
+      /**
+       * @since 3.21
+       */
+      public byte[] toByteArray()
+      {
+        try
+        {
+          ByteArrayOutputStream baos = new ByteArrayOutputStream();
+          write(new ExtendedDataOutputStream(baos));
+          return baos.toByteArray();
+        }
+        catch (IOException ex)
+        {
+          throw new IORuntimeException(ex);
+        }
+      }
+
+      /**
+       * @since 3.21
+       */
+      @Override
+      public String toString()
+      {
+        return HexUtil.bytesToHex(toByteArray());
       }
     }
   }

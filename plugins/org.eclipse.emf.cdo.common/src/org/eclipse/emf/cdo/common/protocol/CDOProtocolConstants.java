@@ -343,6 +343,11 @@ public interface CDOProtocolConstants
    */
   public static final short SIGNAL_REMOTE_TOPIC = 69;
 
+  /**
+   * @since 4.20
+   */
+  public static final short SIGNAL_USER_OFFSET = 1000;
+
   // //////////////////////////////////////////////////////////////////////
   // Session Refresh
 

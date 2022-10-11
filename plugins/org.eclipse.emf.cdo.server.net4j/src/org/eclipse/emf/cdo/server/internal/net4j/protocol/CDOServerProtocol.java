@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.server.ISessionProtocol;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalTopic;
 
+import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.signal.security.AuthenticationRequest;
@@ -125,14 +126,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendRepositoryTypeNotification(CDOCommonRepository.Type oldType, CDOCommonRepository.Type newType) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new RepositoryTypeNotificationRequest(this, oldType, newType).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new RepositoryTypeNotificationRequest(this, oldType, newType));
   }
 
   @Override
@@ -145,14 +139,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new RepositoryStateNotificationRequest(this, oldState, newState, rootResourceID).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new RepositoryStateNotificationRequest(this, oldState, newState, rootResourceID));
   }
 
   @Override
@@ -172,27 +159,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendBranchNotification(ChangeKind changeKind, CDOBranch... branches) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new BranchNotificationRequest(this, changeKind, branches).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new BranchNotificationRequest(this, changeKind, branches));
   }
 
   @Override
   public void sendTagNotification(int modCount, String oldName, String newName, CDOBranchPoint branchPoint) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new TagNotificationRequest(this, modCount, oldName, newName, branchPoint).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new TagNotificationRequest(this, modCount, oldName, newName, branchPoint));
   }
 
   @Override
@@ -212,14 +185,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendCommitNotification(CommitNotificationInfo info) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new CommitNotificationRequest(this, info).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new CommitNotificationRequest(this, info));
   }
 
   @Override
@@ -232,14 +198,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendRemoteSessionNotification(InternalSession sender, InternalTopic topic, byte opcode) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new RemoteSessionNotificationRequest(this, sender, topic, opcode).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new RemoteSessionNotificationRequest(this, sender, topic, opcode));
   }
 
   @Override
@@ -252,14 +211,7 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new RemoteMessageNotificationRequest(this, sender, topic, message).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new RemoteMessageNotificationRequest(this, sender, topic, message));
   }
 
   @Deprecated
@@ -272,35 +224,13 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   @Override
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo, Set<CDOID> filter) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new LockNotificationRequest(this, lockChangeInfo, filter).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
+    send(new LockNotificationRequest(this, lockChangeInfo, filter));
   }
 
   @Override
   public void sendViewClosedNotification(int viewID) throws Exception
   {
-    if (LifecycleUtil.isActive(getChannel()))
-    {
-      new ViewClosedNotificationRequest(this, viewID).sendAsync();
-    }
-    else
-    {
-      handleInactiveSession();
-    }
-  }
-
-  protected void handleInactiveSession()
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace("Session channel is inactive: " + this); //$NON-NLS-1$
-    }
+    send(new ViewClosedNotificationRequest(this, viewID));
   }
 
   @Override
@@ -495,6 +425,26 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
 
     default:
       return super.createSignalReactor(signalID);
+    }
+  }
+
+  protected void send(Request request) throws Exception
+  {
+    if (LifecycleUtil.isActive(getChannel()))
+    {
+      request.sendAsync();
+    }
+    else
+    {
+      handleInactiveSession();
+    }
+  }
+
+  protected void handleInactiveSession()
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.trace("Session channel is inactive: " + this); //$NON-NLS-1$
     }
   }
 }

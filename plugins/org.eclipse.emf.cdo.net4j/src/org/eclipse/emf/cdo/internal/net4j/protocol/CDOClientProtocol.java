@@ -239,7 +239,17 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   public List<RevisionInfo> loadRevisions(List<RevisionInfo> infos, CDOBranchPoint branchPoint, int referenceChunk, int prefetchDepth,
       boolean prefetchLockStates)
   {
-    return send(new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates));
+    LoadRevisionsRequest request = new LoadRevisionsRequest(this, infos, branchPoint, referenceChunk, prefetchDepth, prefetchLockStates);
+
+    try
+    {
+      REVISION_LOADING.start(request);
+      return send((RequestWithConfirmation<List<RevisionInfo>>)request);
+    }
+    finally
+    {
+      REVISION_LOADING.stop(request);
+    }
   }
 
   @Override
@@ -653,7 +663,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
-  private void send(Request request)
+  protected void send(Request request)
   {
     try
     {
@@ -669,7 +679,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
-  private <RESULT> RESULT send(RequestWithConfirmation<RESULT> request)
+  protected <RESULT> RESULT send(RequestWithConfirmation<RESULT> request)
   {
     try
     {
@@ -685,7 +695,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     }
   }
 
-  private <RESULT> RESULT send(RequestWithMonitoring<RESULT> request, OMMonitor monitor)
+  protected <RESULT> RESULT send(RequestWithMonitoring<RESULT> request, OMMonitor monitor)
   {
     try
     {
@@ -698,19 +708,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     catch (Exception ex)
     {
       throw new TransportException(ex);
-    }
-  }
-
-  private List<RevisionInfo> send(LoadRevisionsRequest request)
-  {
-    try
-    {
-      REVISION_LOADING.start(request);
-      return send((RequestWithConfirmation<List<RevisionInfo>>)request);
-    }
-    finally
-    {
-      REVISION_LOADING.stop(request);
     }
   }
 

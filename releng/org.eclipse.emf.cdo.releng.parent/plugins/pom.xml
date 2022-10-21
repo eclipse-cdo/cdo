@@ -104,6 +104,7 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.ui</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.workspace</module>
     <module>../../../plugins/org.eclipse.emf.cdo.transfer.workspace.ui</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.ui</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.admin</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.compare</module>
     <module>../../../plugins/org.eclipse.emf.cdo.ui.jdt</module>

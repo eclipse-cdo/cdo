@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.6.v20220505-0518:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.v20220505-0518:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.v20220505-0518:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202111290942:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.5.6.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202209051432:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.7.0.v20210113-0340:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.edit:2.16.0.v20190920-0401:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.edit:2.17.0.v20220201-1551:default:true:default:default"/>
         <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202004160913:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
@@ -26,6 +26,7 @@
     <stringAttribute key="featurePluginResolution" value="workspace"/>
     <booleanAttribute key="includeOptional" value="true"/>
     <stringAttribute key="location" value="${workspace_loc}/../ws-cdo.client1"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
     <booleanAttribute key="org.eclipse.debug.core.appendEnvironmentVariables" value="true"/>
     <mapAttribute key="org.eclipse.debug.core.preferred_launchers">
         <mapEntry key="[debug]" value="org.eclipse.pde.ui.RuntimeWorkbench"/>
@@ -51,6 +52,7 @@
         <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
         <setEntry value="org.eclipse.emf.cdo.server:default"/>

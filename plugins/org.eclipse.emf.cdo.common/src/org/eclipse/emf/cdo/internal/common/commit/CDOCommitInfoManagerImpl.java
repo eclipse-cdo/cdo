@@ -337,8 +337,11 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
       if (lastCommit == CDOBranchPoint.UNSPECIFIED_DATE && loadOnDemand)
       {
         CDOCommitInfo last = loadLastOfBranch(branch);
-        infoCache.setLast(last);
-        lastCommit = last.getTimeStamp();
+        if (last != null)
+        {
+          infoCache.setLast(last);
+          lastCommit = last.getTimeStamp();
+        }
       }
 
       return lastCommit;
@@ -531,12 +534,15 @@ public class CDOCommitInfoManagerImpl extends CDOCommitHistoryProviderImpl<CDOBr
 
     public void setLast(CDOCommitInfo last)
     {
-      this.last = new SoftReference<>(last);
-
-      long timeStamp = last.getTimeStamp();
-      if (timeStamp > lastCommit)
+      if (last != null)
       {
-        lastCommit = timeStamp;
+        this.last = new SoftReference<>(last);
+
+        long timeStamp = last.getTimeStamp();
+        if (timeStamp > lastCommit)
+        {
+          lastCommit = timeStamp;
+        }
       }
     }
 

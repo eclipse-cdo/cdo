@@ -256,13 +256,18 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
       try
       {
-        out.writeByteArray(lob.getID());
+        byte[] id = lob.getID();
+        out.writeByteArray(id);
+
+        // Size of CDOBlob is in bytes.
+        // Size of CDOClob is in characters.
         long size = lob.getSize();
+        out.writeLong(size);
 
         if (lob instanceof CDOBlob)
         {
           CDOBlob blob = (CDOBlob)lob;
-          out.writeLong(size);
+          out.writeBoolean(true); // Binary
 
           InputStream contents = blob.getContents();
           closeable = contents;
@@ -271,7 +276,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
         else
         {
           CDOClob clob = (CDOClob)lob;
-          out.writeLong(-size);
+          out.writeBoolean(false); // Character
 
           long byteCount = clob.getByteCount();
           out.writeLong(byteCount);

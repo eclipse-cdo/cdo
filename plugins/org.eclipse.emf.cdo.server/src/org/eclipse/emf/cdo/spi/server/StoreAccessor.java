@@ -147,15 +147,20 @@ public abstract class StoreAccessor extends StoreAccessorBase
           for (int i = 0; i < count; i++)
           {
             byte[] id = in.readByteArray();
+
+            // Size of CDOBlob is in bytes.
+            // Size of CDOClob is in characters.
             long size = in.readLong();
-            if (size > 0)
+
+            boolean binary = in.readBoolean();
+            if (binary)
             {
               writeBlob(id, size, new LimitedInputStream(in, size, false));
             }
             else
             {
               long byteCount = in.readLong();
-              writeClob(id, -size, new InputStreamReader(new LimitedInputStream(in, byteCount, false)));
+              writeClob(id, size, new InputStreamReader(new LimitedInputStream(in, byteCount, false)));
             }
           }
         }

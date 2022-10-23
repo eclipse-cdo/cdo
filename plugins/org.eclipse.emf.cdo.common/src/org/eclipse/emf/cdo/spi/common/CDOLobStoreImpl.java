@@ -28,6 +28,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -41,6 +43,15 @@ import java.security.NoSuchAlgorithmException;
 public class CDOLobStoreImpl implements CDOLobStore
 {
   public static final CDOLobStoreImpl INSTANCE = new CDOLobStoreImpl();
+
+  private static final boolean ID_PREFIX_WITH_DEFAULT_CHARSET = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl.ID_PREFIX_WITH_DEFAULT_CHARSET");
+
+  private static final Charset ID_PREFIX_CHARSET = ID_PREFIX_WITH_DEFAULT_CHARSET ? Charset.defaultCharset() : StandardCharsets.UTF_8;
+
+  private static final byte[] ID_PREFIX_BINARY = "BINARY".getBytes(ID_PREFIX_CHARSET);
+
+  private static final byte[] ID_PREFIX_CHARACTER = "CHARACTER".getBytes(ID_PREFIX_CHARSET);
 
   private long timeout = IOUtil.DEFAULT_TIMEOUT;
 
@@ -110,7 +121,7 @@ public class CDOLobStoreImpl implements CDOLobStore
   {
     File tempFile = getTempFile();
     MessageDigest digest = createDigest();
-    digest.update("BINARY".getBytes());
+    digest.update(ID_PREFIX_BINARY);
 
     FileOutputStream fos = null;
     long size;
@@ -152,7 +163,7 @@ public class CDOLobStoreImpl implements CDOLobStore
   {
     File tempFile = getTempFile();
     MessageDigest digest = createDigest();
-    digest.update("CHARACTER".getBytes());
+    digest.update(ID_PREFIX_CHARACTER);
 
     FileWriter fw = null;
     long size;

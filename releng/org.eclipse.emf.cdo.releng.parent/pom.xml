@@ -108,6 +108,7 @@ Eike Stepper - initial API and implementation
           <artifactId>tycho-packaging-plugin</artifactId>
           <version>${tycho-version}</version>
           <configuration>
+            <skipPomGeneration>true</skipPomGeneration>
             <format>'v'yyyyMMdd-HHmm</format>
             <sourceReferences>
               <generate>true</generate>

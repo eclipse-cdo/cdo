@@ -176,6 +176,15 @@ Eike Stepper - initial API and implementation
           </execution>
         </executions>
       </plugin>
+      <!-- Disable all Maven-Surefire tests, see https://github.com/eclipse-tycho/tycho/discussions/1620 -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.22.2</version>
+        <configuration>
+          <skipTests>true</skipTests>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 

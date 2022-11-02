@@ -1706,47 +1706,42 @@ public class CDOViewImpl extends AbstractCDOView
       for (CDOObject object : getModifiableObjects().values())
       {
         EList<Adapter> adapters = object.eAdapters();
-        if (!adapters.isEmpty())
+        int size = adapters.size();
+
+        // Note: Do not use an iterator here!
+        // When it.remove() fails then the succeeding it.next() fails, too: ConcurrentModificationException
+
+        for (int i = 0; i < size;)
         {
-          for (Iterator<Adapter> it = adapters.iterator(); it.hasNext();)
+          Adapter adapter = adapters.get(i);
+
+          // Don't remove a legacy adapter because otherwise references to this CDOObject will break.
+          if (adapter instanceof CDOObjectWrapperBase || !adapterPolicy.isValid(object, adapter))
           {
-            Adapter adapter = it.next();
-            if (adapter instanceof CDOObjectWrapperBase)
-            {
-              // Don't remove a legacy adapter because otherwise references to this CDOObject will break.
-              continue;
-            }
-
-            boolean validAdapter;
-
-            try
-            {
-              validAdapter = adapterPolicy.isValid(object, adapter);
-            }
-            catch (Exception ex)
-            {
-              OM.LOG.error(ex);
-              continue;
-            }
-
-            if (validAdapter)
-            {
-              try
-              {
-                it.remove();
-              }
-              catch (Exception ex)
-              {
-                OM.LOG.error(ex);
-              }
-            }
+            ++i;
+            continue;
           }
+
+          try
+          {
+            // This can lead to exceptions from the adapter's unsetTarget() method!
+            adapters.remove(i);
+          }
+          catch (Exception ex)
+          {
+            // In fact it's impossible to tell whether this exception really comes from the adapter's unsetTarget()
+            // method. But it's highly likely at least. So we must assume that the actual list removal has happened
+            // before this exception occurred. Hence we only warn about it and DO NOT increase the loop index.
+            OM.LOG.warn("Ignoring exception from adapters.remove() in CDOViewImpl.clearAdapters()", ex);
+          }
+
+          --size;
         }
       }
     }
     catch (Exception ex)
     {
-      OM.LOG.error(ex);
+      OM.LOG.warn("Ignoring exception in CDOViewImpl.clearAdapters()", ex);
     }
   }
 

@@ -587,7 +587,18 @@ public final class DBUtil
     try
     {
       Set<String> names = new HashSet<>();
-      schemas = metaData.getSchemas();
+      String catalog = metaData.getConnection().getCatalog();
+
+      try
+      {
+        schemas = metaData.getSchemas(catalog, null);
+      }
+      catch (AbstractMethodError ex)
+      {
+        // H2 1.3 does not implement the newer DatabaseMetaData version.
+        schemas = metaData.getSchemas();
+      }
+
       while (schemas.next())
       {
         String name = schemas.getString(1);
@@ -629,7 +640,9 @@ public final class DBUtil
         dbName = ((IUserAware)connection).getUserID();
       }
 
-      tables = metaData.getTables(null, dbName, null, new String[] { "TABLE" }); //$NON-NLS-1$
+      String catalog = connection.getCatalog();
+      tables = metaData.getTables(catalog, dbName, null, new String[] { "TABLE" }); //$NON-NLS-1$
+
       while (tables.next())
       {
         String name = tables.getString(3);

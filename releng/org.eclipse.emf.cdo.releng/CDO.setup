@@ -276,7 +276,7 @@
               source="Documentation">
             <detail
                 key="Reason">
-              <value>Needed because the Apache Derby driver has benn removed in newer Orbit repos!</value>
+              <value>Needed because the H2, Apache Derby driver, and other bundles have been removed in newer Orbit repos!</value>
             </detail>
           </annotation>
         </repository>
@@ -307,7 +307,7 @@
               source="Documentation">
             <detail
                 key="Reason">
-              <value>Needed because the Apache Derby driver has benn removed in newer Orbit repos!</value>
+              <value>Needed because the H2, Apache Derby driver, and other bundles have been removed in newer Orbit repos!</value>
             </detail>
           </annotation>
         </repository>
@@ -338,7 +338,7 @@
               source="Documentation">
             <detail
                 key="Reason">
-              <value>Needed because the Apache Derby driver has benn removed in newer Orbit repos!</value>
+              <value>Needed because the H2, Apache Derby driver, and other bundles have been removed in newer Orbit repos!</value>
             </detail>
           </annotation>
         </repository>

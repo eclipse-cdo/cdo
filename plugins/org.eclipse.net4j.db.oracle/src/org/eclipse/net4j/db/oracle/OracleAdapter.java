@@ -186,12 +186,14 @@ public class OracleAdapter extends DBAdapter
   @Override
   protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName) throws SQLException
   {
+    String catalog = connection.getCatalog();
+
     if (schemaName == null && connection instanceof IUserAware)
     {
       schemaName = ((IUserAware)connection).getUserID();
     }
 
-    return metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
+    return metaData.getTables(catalog, schemaName, null, new String[] { "TABLE" });
   }
 
   @Override

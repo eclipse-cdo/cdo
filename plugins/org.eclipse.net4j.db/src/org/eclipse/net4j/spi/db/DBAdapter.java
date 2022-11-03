@@ -223,7 +223,8 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName) throws SQLException
   {
-    return metaData.getTables(null, schemaName, null, new String[] { "TABLE" });
+    String catalog = connection.getCatalog();
+    return metaData.getTables(catalog, schemaName, null, new String[] { "TABLE" });
   }
 
   /**
@@ -271,12 +272,13 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void readIndices(Connection connection, DatabaseMetaData metaData, IDBTable table, String schemaName) throws SQLException
   {
+    String catalog = connection.getCatalog();
     String tableName = table.getName();
 
-    ResultSet primaryKeys = metaData.getPrimaryKeys(null, schemaName, tableName);
+    ResultSet primaryKeys = metaData.getPrimaryKeys(catalog, schemaName, tableName);
     readIndices(connection, primaryKeys, table, 6, 0, 4, 5);
 
-    ResultSet indexInfo = metaData.getIndexInfo(null, schemaName, tableName, false, true);
+    ResultSet indexInfo = metaData.getIndexInfo(catalog, schemaName, tableName, false, true);
     readIndices(connection, indexInfo, table, 6, 4, 9, 8);
   }
 

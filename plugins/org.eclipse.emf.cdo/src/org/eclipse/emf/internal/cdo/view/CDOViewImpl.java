@@ -1735,7 +1735,10 @@ public class CDOViewImpl extends AbstractCDOView
             OM.LOG.warn("Ignoring exception from adapters.remove() in CDOViewImpl.clearAdapters()", ex);
           }
 
-          --size;
+          if (--size != adapters.size())
+          {
+            throw new IllegalStateException("An adapter could either not be removed properly or it added itself back: " + adapters);
+          }
         }
       }
     }

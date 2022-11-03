@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceNodeImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOClassInfoImpl;
@@ -1441,83 +1442,83 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
         }
 
         @Override
-        public void addUnique(Adapter object)
+        public void addUnique(Adapter adapter)
         {
-          // Do nothing.
+          ignore(adapter);
         }
 
         @Override
-        public void addUnique(int index, Adapter object)
+        public void addUnique(int index, Adapter adapter)
         {
-          // Do nothing.
+          ignore(adapter);
         }
 
         @Override
-        public boolean addAllUnique(Collection<? extends Adapter> collection)
+        public boolean addAllUnique(Collection<? extends Adapter> adapters)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public boolean addAllUnique(int index, Collection<? extends Adapter> collection)
+        public boolean addAllUnique(int index, Collection<? extends Adapter> adapters)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public boolean addAllUnique(Object[] objects, int start, int end)
+        public boolean addAllUnique(Object[] adapters, int start, int end)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public boolean addAllUnique(int index, Object[] objects, int start, int end)
+        public boolean addAllUnique(int index, Object[] adapters, int start, int end)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public boolean add(Adapter object)
+        public boolean add(Adapter adapter)
         {
-          // Do nothing.
+          ignore(adapter);
           return false;
         }
 
         @Override
-        public void add(int index, Adapter object)
+        public void add(int index, Adapter adapter)
         {
-          // Do nothing.
+          ignore(adapter);
         }
 
         @Override
-        public boolean addAll(Collection<? extends Adapter> collection)
+        public boolean addAll(Collection<? extends Adapter> adapters)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public boolean addAll(int index, Collection<? extends Adapter> collection)
+        public boolean addAll(int index, Collection<? extends Adapter> adapters)
         {
-          // Do nothing.
+          ignore(adapters);
           return false;
         }
 
         @Override
-        public Adapter setUnique(int index, Adapter object)
+        public Adapter setUnique(int index, Adapter adapter)
         {
-          // Do not modify the adapters.
+          ignore(adapter);
           return super.get(index);
         }
 
         @Override
-        public Adapter set(int index, Adapter object)
+        public Adapter set(int index, Adapter adapter)
         {
-          // Do not modify the adapters.
+          ignore(adapter);
           return super.get(index);
         }
 
@@ -1528,9 +1529,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
           return new EListIterator<Adapter>()
           {
             @Override
-            public void add(Adapter object)
+            public void add(Adapter adapter)
             {
-              // Do nothing.
+              ignore(adapter);
             }
           };
         }
@@ -1549,11 +1550,23 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
           {
 
             @Override
-            public void add(Adapter object)
+            public void add(Adapter adapter)
             {
-              // Do nothing.
+              ignore(adapter);
             }
           };
+        }
+
+        private void ignore(Object adapters)
+        {
+          try
+          {
+            throw new CDOException("Ignoring attempt to add adapter(s) while view is closing: " + adapters);
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.info(ex);
+          }
         }
       }
 

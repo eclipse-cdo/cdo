@@ -4416,14 +4416,16 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   protected void adjustLockOwner()
   {
-    CDOLockOwner oldLockOwner = getLockOwner();
+    CDOLockOwner oldOwner = getLockOwner();
     super.adjustLockOwner();
-    CDOLockOwner newLockOwner = getLockOwner();
+    CDOLockOwner newOwner = getLockOwner();
 
-    if (newLockOwner != oldLockOwner)
+    if (newOwner != oldOwner)
     {
-      lockStatesOfNewObjects.values().forEach(lockState -> lockState.remapOwner(oldLockOwner, newLockOwner));
-
+      for (InternalCDOLockState lockState : lockStatesOfNewObjects.values())
+      {
+        lockState.remapOwner(oldOwner, newOwner);
+      }
     }
   }
 

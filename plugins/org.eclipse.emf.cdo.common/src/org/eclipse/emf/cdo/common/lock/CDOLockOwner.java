@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.common.lock;
 
+import org.eclipse.net4j.util.ref.Interner;
+
 /**
  * A client-side representation of a view owning locks.
  * <p>
+ * Implementation note: All lock owners are {@link Interner interned}. That means they can safely be compared via "==".
  *
  * @author Caspar De Groot
  * @since 4.1

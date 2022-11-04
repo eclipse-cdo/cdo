@@ -40,6 +40,7 @@ import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -66,6 +67,7 @@ import org.eclipse.core.runtime.PlatformObject;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -88,7 +90,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
   private Map<String, InternalView> openDurableViews = new HashMap<>();
 
-  private Map<String, DurableView> durableViews = new HashMap<>();
+  private Map<String, DurableView> durableViews = Collections.synchronizedMap(new HashMap<>());
 
   private ConcurrentArray<DurableViewHandler> durableViewHandlers = new ConcurrentArray<DurableViewHandler>()
   {
@@ -96,6 +98,22 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     protected DurableViewHandler[] newArray(int length)
     {
       return new DurableViewHandler[length];
+    }
+  };
+
+  @ExcludeFromDump
+  private transient IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
+  {
+    @Override
+    protected void onAdded(IContainer<ISession> container, ISession session)
+    {
+      session.addListener(sessionListener);
+    }
+
+    @Override
+    protected void onRemoved(IContainer<ISession> container, ISession session)
+    {
+      session.removeListener(sessionListener);
     }
   };
 
@@ -117,22 +135,6 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         unregisterOpenDurableView(durableLockingID);
         durableViews.put(durableLockingID, durableView);
       }
-    }
-  };
-
-  @ExcludeFromDump
-  private transient IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
-  {
-    @Override
-    protected void onAdded(IContainer<ISession> container, ISession session)
-    {
-      session.addListener(sessionListener);
-    }
-
-    @Override
-    protected void onRemoved(IContainer<ISession> container, ISession session)
-    {
-      session.removeListener(sessionListener);
     }
   };
 
@@ -471,6 +473,29 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
         }
       }
     }
+  }
+
+  @Override
+  protected void changeContext(IView oldContext, IView newContext)
+  {
+    super.changeContext(oldContext, newContext);
+
+    InternalSession session = (InternalSession)oldContext.getSession();
+    if (session == null)
+    {
+      session = (InternalSession)newContext.getSession();
+    }
+
+    CDOBranch branch = oldContext.getBranch();
+    if (branch == null)
+    {
+      branch = newContext.getBranch();
+    }
+
+    CDOLockOwner oldOwner = oldContext.getLockOwner();
+    CDOLockOwner newOwner = newContext.getLockOwner();
+
+    repository.getSessionManager().sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner);
   }
 
   @Override

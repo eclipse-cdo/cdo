@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermissionProvider;
@@ -193,4 +194,9 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
    * @since 4.1
    */
   public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception;
+
+  /**
+   * @since 4.19
+   */
+  public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner) throws Exception;
 }

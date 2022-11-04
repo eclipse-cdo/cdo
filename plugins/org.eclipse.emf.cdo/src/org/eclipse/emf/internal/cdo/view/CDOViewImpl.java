@@ -863,11 +863,16 @@ public class CDOViewImpl extends AbstractCDOView
   {
     // Recreate lockOwner with new durableLockingID.
     CDOLockOwner oldOwner = lockOwner;
-    lockOwner = CDOLockUtil.createLockOwner(this);
+    CDOLockOwner newOwner = CDOLockUtil.createLockOwner(this);
 
-    CDOBranch branch = getBranch();
-    CDOLockStateCache lockStateCache = session.getLockStateCache();
-    lockStateCache.remapOwner(branch, oldOwner, lockOwner);
+    if (newOwner != oldOwner)
+    {
+      lockOwner = newOwner;
+
+      CDOBranch branch = getBranch();
+      CDOLockStateCache lockStateCache = session.getLockStateCache();
+      lockStateCache.remapOwner(branch, oldOwner, newOwner);
+    }
   }
 
   private void fireDurabilityChangedEvent(String oldID, String newID)

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -566,6 +567,25 @@ public class SessionManager extends Container<ISession> implements InternalSessi
         try
         {
           session.sendLockNotification(lockChangeInfo);
+        }
+        catch (Exception ex)
+        {
+          handleNotificationProblem(session, ex);
+        }
+      }
+    }
+  }
+
+  @Override
+  public void sendLockOwnerRemappedNotification(InternalSession sender, CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner)
+  {
+    for (InternalSession session : getSessions())
+    {
+      if (session != sender)
+      {
+        try
+        {
+          session.sendLockOwnerRemappedNotification(branch, oldOwner, newOwner);
         }
         catch (Exception ex)
         {

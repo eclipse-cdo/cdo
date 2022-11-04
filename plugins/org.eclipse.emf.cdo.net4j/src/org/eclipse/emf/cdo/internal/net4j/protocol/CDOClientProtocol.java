@@ -649,6 +649,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
     case SIGNAL_LOCK_NOTIFICATION:
       return new LockNotificationIndication(this);
 
+    case SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION:
+      return new LockOwnerRemappedNotificationIndication(this);
+
     case SIGNAL_CREDENTIALS_CHALLENGE:
       return new CredentialsChallengeIndication(this);
 

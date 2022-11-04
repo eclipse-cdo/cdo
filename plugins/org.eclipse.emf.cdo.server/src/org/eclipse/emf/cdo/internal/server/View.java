@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -163,7 +164,18 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public void setDurableLockingID(String durableLockingID)
   {
     this.durableLockingID = durableLockingID;
-    lockOwner = CDOLockUtil.createLockOwner(this);
+
+    CDOLockOwner oldOwner = lockOwner;
+    CDOLockOwner newOwner = CDOLockUtil.createLockOwner(this);
+
+    if (newOwner != oldOwner)
+    {
+      lockOwner = newOwner;
+
+      CDOBranch branch = getBranch();
+      InternalSessionManager manager = session.getManager();
+      manager.sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner);
+    }
   }
 
   @Override

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -743,6 +744,15 @@ public class Session extends Container<IView> implements InternalSession
         Set<CDOID> lockedIDs = (Set<CDOID>)lockNotificationRequired;
         protocol.sendLockNotification(lockChangeInfo, lockedIDs);
       }
+    }
+  }
+
+  @Override
+  public void sendLockOwnerRemappedNotification(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner) throws Exception
+  {
+    if (protocol != null)
+    {
+      protocol.sendLockOwnerRemappedNotification(branch, oldOwner, newOwner);
     }
   }
 

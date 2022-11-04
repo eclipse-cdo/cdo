@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
-import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -41,7 +40,6 @@ import org.eclipse.emf.cdo.spi.common.revision.SyntheticCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
-import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
@@ -815,41 +813,61 @@ public class CDOServerBrowser extends Worker
     @Override
     public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
+      out.println("<table border=\"1\">");
+      out.println("<tr><th>Locked Object</th><th>Read Lock Owners</th><th>Write Lock Owner</th><th>Write Option Owner</th></tr>");
+
       InternalLockManager lockingManager = repository.getLockingManager();
-      for (InternalSession session : repository.getSessionManager().getSessions())
+      lockingManager.getLockStates(lockState -> {
+        out.print("<tr>");
+        out.print("<td>" + format(lockState.getLockedObject()) + "</td>");
+        out.print("<td>" + format(lockState.getReadLockOwners()) + "</td>");
+        out.print("<td>" + format(lockState.getWriteLockOwner()) + "</td>");
+        out.print("<td>" + format(lockState.getWriteOptionOwner()) + "</td>");
+        out.print("</tr>");
+      });
+
+      out.println("</table>");
+    }
+
+    private static String format(Object object)
+    {
+      if (object == null)
       {
-        boolean sessionRendered = false;
-        for (InternalView view : session.getViews())
-        {
-          Map<CDOID, LockGrade> locks = lockingManager.getLocks(view);
-          if (locks != null && !locks.isEmpty())
-          {
-            if (!sessionRendered)
-            {
-              int sessionID = session.getSessionID();
-              String userID = session.getUserID();
-              out.println("<h3>Session&nbsp;" + sessionID + "&nbsp;&nbsp;[" + userID + "]</h3>");
-              out.println("<ul>");
-              sessionRendered = true;
-            }
-
-            out.println("<li>" + view + "</li>");
-            out.println("<ul>");
-
-            for (Map.Entry<CDOID, LockGrade> entry : locks.entrySet())
-            {
-              out.println("<li>" + entry.getKey() + " = " + entry.getValue() + "</li>");
-            }
-
-            out.println("</ul>");
-          }
-
-          if (sessionRendered)
-          {
-            out.println("</ul>");
-          }
-        }
+        return "&nbsp;";
       }
+
+      if (object instanceof Collection)
+      {
+        Collection<?> elements = (Collection<?>)object;
+        StringBuilder builder = new StringBuilder();
+
+        for (Object element : elements)
+        {
+          StringUtil.appendSeparator(builder, "<br>");
+          builder.append(format(element));
+        }
+
+        return builder.toString();
+      }
+
+      if (object instanceof IView)
+      {
+        IView view = (IView)object;
+
+        String value = view.isReadOnly() ? "View" : "Transaction";
+        value += "[" + view.getSessionID() + ":" + view.getViewID();
+
+        if (view.isDurableView())
+        {
+          value = "Durable" + value + ":" + view.getDurableLockingID();
+        }
+
+        value += "]";
+        return value;
+      }
+
+      String value = String.valueOf(object);
+      return value.replace(" ", "&nbsp;");
     }
   }
 

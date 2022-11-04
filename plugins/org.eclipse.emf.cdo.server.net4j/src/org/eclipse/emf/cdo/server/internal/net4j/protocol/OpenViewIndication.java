@@ -70,6 +70,7 @@ public class OpenViewIndication extends CDOServerReadIndication
 
     if (branchPoint != null)
     {
+      // Open normal view/transaction (not durable).
       IView newView;
 
       if (readOnly)
@@ -85,6 +86,7 @@ public class OpenViewIndication extends CDOServerReadIndication
     }
     else
     {
+      // Open durable view/transaction.
       InternalLockManager lockManager = getRepository().getLockingManager();
       String message = null;
 

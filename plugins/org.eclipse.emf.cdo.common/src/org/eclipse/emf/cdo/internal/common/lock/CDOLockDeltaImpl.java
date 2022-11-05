@@ -190,6 +190,16 @@ public abstract class CDOLockDeltaImpl implements CDOLockDelta
     {
       return null;
     }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("NULL[");
+      builder.append(target);
+      builder.append(']');
+      return builder.toString();
+    }
   }
 
   /**

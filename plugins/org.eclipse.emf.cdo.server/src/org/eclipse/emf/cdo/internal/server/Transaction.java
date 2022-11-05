@@ -33,6 +33,11 @@ public class Transaction extends View implements InternalTransaction
     super(session, viewID, branchPoint);
   }
 
+  public Transaction(InternalSession session, int viewID, CDOBranchPoint branchPoint, String durableLockingID)
+  {
+    super(session, viewID, branchPoint, durableLockingID);
+  }
+
   @Override
   public boolean isReadOnly()
   {

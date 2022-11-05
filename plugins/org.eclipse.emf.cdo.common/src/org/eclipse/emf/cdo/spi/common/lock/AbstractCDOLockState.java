@@ -286,16 +286,15 @@ public abstract class AbstractCDOLockState implements InternalCDOLockState
 
   public static void appendLockOwner(StringBuilder builder, CDOLockOwner lockOwner)
   {
+    builder.append(lockOwner.getSessionID());
+    builder.append(':');
+    builder.append(lockOwner.getViewID());
+
     String durableLockingID = lockOwner.getDurableLockingID();
     if (durableLockingID != null)
     {
-      builder.append(durableLockingID);
-    }
-    else
-    {
-      builder.append(lockOwner.getSessionID());
       builder.append(':');
-      builder.append(lockOwner.getViewID());
+      builder.append(durableLockingID);
     }
   }
 }

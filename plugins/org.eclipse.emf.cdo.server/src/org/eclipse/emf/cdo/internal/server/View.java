@@ -90,8 +90,14 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
    */
   public View(InternalSession session, int viewID, CDOBranchPoint branchPoint)
   {
+    this(session, viewID, branchPoint, null);
+  }
+
+  public View(InternalSession session, int viewID, CDOBranchPoint branchPoint, String durableLockingID)
+  {
     this.session = session;
     this.viewID = viewID;
+    this.durableLockingID = durableLockingID;
 
     sessionID = session.getSessionID();
     lockOwner = CDOLockUtil.createLockOwner(this);

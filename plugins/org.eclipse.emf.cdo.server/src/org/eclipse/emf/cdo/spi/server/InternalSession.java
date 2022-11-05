@@ -93,8 +93,20 @@ public interface InternalSession extends ISession, CDOIDProvider, CDOPermissionP
   @Override
   public InternalView openView(int viewID, CDOBranchPoint branchPoint);
 
+  /**
+   * @since 4.19
+   */
+  @Override
+  public InternalView openView(int viewID, CDOBranchPoint branchPoint, String durableLockingID);
+
   @Override
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.19
+   */
+  @Override
+  public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint, String durableLockingID);
 
   /**
    * @deprecated As of 4.15 use {@link #viewClosed(InternalView, boolean)}.

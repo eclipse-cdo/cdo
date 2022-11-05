@@ -438,16 +438,16 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
 
       if (readOnly)
       {
-        view = (InternalView)session.openView(viewID, area);
+        view = (InternalView)session.openView(viewID, area, durableLockingID);
       }
       else
       {
-        view = (InternalView)session.openTransaction(viewID, area);
+        view = (InternalView)session.openTransaction(viewID, area, durableLockingID);
       }
 
       DurableView durableView = durableViews.get(durableLockingID);
       changeContext(durableView, view);
-      view.setDurableLockingID(durableLockingID);
+
       view.addListener(new LifecycleEventAdapter()
       {
         @Override
@@ -816,7 +816,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     @Override
     public String toString()
     {
-      return MessageFormat.format("DurableView[{0}]", durableLockingID);
+      return MessageFormat.format("DurableView[0:0:{0}]", durableLockingID);
     }
 
     @Override

@@ -77,7 +77,7 @@ public final class DurableCDOLockOwner implements CDOLockOwner
     builder.append(sessionID);
     builder.append(':');
     builder.append(viewID);
-    builder.append(" --> ");
+    builder.append(':');
     builder.append(durableLockingID);
     builder.append(']');
     return builder.toString();

@@ -72,7 +72,17 @@ public interface ISession extends CDOCommonSession, IContainer<IView>
   public IView openView(int viewID, CDOBranchPoint branchPoint);
 
   /**
+   * @since 4.19
+   */
+  public IView openView(int viewID, CDOBranchPoint branchPoint, String durableLockingID);
+
+  /**
    * @since 3.0
    */
   public ITransaction openTransaction(int viewID, CDOBranchPoint branchPoint);
+
+  /**
+   * @since 4.19
+   */
+  public ITransaction openTransaction(int viewID, CDOBranchPoint branchPoint, String durableLockingID);
 }

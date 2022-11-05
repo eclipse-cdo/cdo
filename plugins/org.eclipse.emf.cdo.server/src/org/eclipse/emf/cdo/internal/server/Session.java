@@ -435,13 +435,22 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public InternalView openView(int viewID, CDOBranchPoint branchPoint)
   {
+    return openView(viewID, branchPoint, null);
+  }
+
+  /**
+   * @since 4.19
+   */
+  @Override
+  public InternalView openView(int viewID, CDOBranchPoint branchPoint, String durableLockingID)
+  {
     checkActive();
     if (viewID == TEMP_VIEW_ID)
     {
       viewID = -lastTempViewID.incrementAndGet();
     }
 
-    InternalView view = new View(this, viewID, branchPoint);
+    InternalView view = new View(this, viewID, branchPoint, durableLockingID);
     view.activate();
     addView(view);
     return view;
@@ -453,13 +462,22 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint)
   {
+    return openTransaction(viewID, branchPoint, null);
+  }
+
+  /**
+   * @since 4.19
+   */
+  @Override
+  public InternalTransaction openTransaction(int viewID, CDOBranchPoint branchPoint, String durableLockingID)
+  {
     checkActive();
     if (viewID == TEMP_VIEW_ID)
     {
       viewID = -lastTempViewID.incrementAndGet();
     }
 
-    InternalTransaction transaction = new Transaction(this, viewID, branchPoint);
+    InternalTransaction transaction = new Transaction(this, viewID, branchPoint, durableLockingID);
     transaction.activate();
     addView(transaction);
     return transaction;

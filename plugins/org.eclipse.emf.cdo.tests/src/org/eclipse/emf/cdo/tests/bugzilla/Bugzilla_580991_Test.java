@@ -58,7 +58,6 @@ public class Bugzilla_580991_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     tx = session.openTransaction(durableLockID);
-    sleep(500); // Let clients receive the LockOwnerRemappedNotification before the next unlock notification.
 
     resFromTX = tx.getResource(path);
     resFromTX.cdoWriteLock().unlock();

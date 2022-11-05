@@ -33,8 +33,6 @@ public class LockNotificationIndication extends CDOClientIndication
   {
     CDOLockChangeInfo lockChangeInfo = in.readCDOLockChangeInfo();
     InternalCDOSession session = getSession();
-    System.out.println("### " + session + " --> " + lockChangeInfo);
-
     session.handleLockNotification(lockChangeInfo, null, false);
   }
 }

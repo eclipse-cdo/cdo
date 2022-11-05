@@ -10,11 +10,15 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
+import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import java.io.IOException;
@@ -42,10 +46,20 @@ public class LockAreaIndication extends CDOServerWriteIndication
     boolean create = in.readBoolean();
     if (create)
     {
+      CDOLockOwner oldOwner = view.getLockOwner();
       LockArea area = lockManager.createLockArea(view);
 
       result = area.getDurableLockingID();
       view.setDurableLockingID(result);
+
+      CDOLockOwner newOwner = view.getLockOwner();
+      if (newOwner != oldOwner)
+      {
+        CDOBranch branch = view.getBranch();
+        InternalSession session = view.getSession();
+        InternalSessionManager manager = session.getManager();
+        manager.sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner);
+      }
     }
     else
     {

@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.tests;
 import org.eclipse.net4j.internal.util.test.CurrentTestName;
 import org.eclipse.net4j.internal.util.test.TestExecuter;
 import org.eclipse.net4j.tests.bundle.OM;
+import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
@@ -58,6 +59,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
+import java.util.function.BooleanSupplier;
 
 import junit.framework.AssertionFailedError;
 import junit.framework.TestCase;
@@ -633,12 +635,6 @@ public abstract class AbstractOMTest extends TestCase
     failNotEquals(message, expected, actual);
   }
 
-  public static void sleep(long millis)
-  {
-    msg("Sleeping " + millis);
-    ConcurrencyUtil.sleep(millis);
-  }
-
   public static void assertInstanceOf(Class<?> expected, Object object)
   {
     assertEquals("Not an instance of " + expected + ": " + object.getClass().getName(), true, expected.isInstance(object));
@@ -738,6 +734,54 @@ public abstract class AbstractOMTest extends TestCase
     {
       assertEquals(expected, actual);
     }
+  }
+
+  public static void assertNoTimeout(BooleanSupplier success)
+  {
+    assertNoTimeout(DEFAULT_TIMEOUT, success);
+  }
+
+  public static void assertNoTimeout(long timeout, BooleanSupplier success)
+  {
+    withTimeOuter(success, timeOuter -> timeOuter.assertNoTimeOut(timeout));
+  }
+
+  public static void assertTimeout(BooleanSupplier success)
+  {
+    assertTimeout(DEFAULT_TIMEOUT_EXPECTED, success);
+  }
+
+  public static void assertTimeout(long timeout, BooleanSupplier success)
+  {
+    withTimeOuter(success, timeOuter -> timeOuter.assertTimeOut(timeout));
+  }
+
+  private static void withTimeOuter(BooleanSupplier success, ConsumerWithException<TimeOuter, InterruptedException> consumer)
+  {
+    try
+    {
+      TimeOuter timeOuter = new PollingTimeOuter()
+      {
+        @Override
+        protected boolean successful()
+        {
+          return success.getAsBoolean();
+        }
+      };
+
+      consumer.accept(timeOuter);
+    }
+    catch (InterruptedException ex)
+    {
+      Thread.currentThread().interrupt();
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public static void sleep(long millis)
+  {
+    msg("Sleeping " + millis);
+    ConcurrencyUtil.sleep(millis);
   }
 
   public static void msg(Object m)

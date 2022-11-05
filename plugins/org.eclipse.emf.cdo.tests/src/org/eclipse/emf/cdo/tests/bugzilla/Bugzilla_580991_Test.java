@@ -8,25 +8,22 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.tests;
+package org.eclipse.emf.cdo.tests.bugzilla;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
+ * Bug 580991 - Outdated lock state when releasing a durable lock.
+ *
  * @author Eike Stepper
  */
-public class DurableLockReleaseTest extends AbstractCDOTest
+public class Bugzilla_580991_Test extends AbstractCDOTest
 {
-  /**
-   * Unfortunately this test case uses sleep() calls to make sure that asynchronous
-   * notification signals have (hopefully) enough time to reach their destination
-   * and be processed when respective assertions are made. It would be better to
-   * implement correct waitFor() idioms, but certainly a lot more effort...
-   */
   public void testDurableLockRelease() throws Exception
   {
     String path = getResourcePath("someRes");
@@ -49,37 +46,25 @@ public class DurableLockReleaseTest extends AbstractCDOTest
     tx = session.openTransaction(durableLockID);
     resFromTX = tx.getResource(path);
     assertTrue(resFromTX.cdoWriteLock().isLocked());
-
-    // view2.refreshLockStates(null);
-
-    sleep(200);
-    assertTrue("The resource should be locked!", resFromView.cdoWriteLock().isLockedByOthers());
+    assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
 
     resFromTX.cdoWriteLock().unlock();
-
-    sleep(200);
-    assertFalse("The resource should have been unlocked!", resFromView.cdoWriteLock().isLockedByOthers());
+    assertNoTimeout(() -> !resFromView.cdoWriteLock().isLockedByOthers());
 
     resFromTX.cdoWriteLock().lock(100);
+    assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
 
-    sleep(200);
-    assertTrue(resFromView.cdoWriteLock().isLockedByOthers());
-
-    // Reopen session
+    // Reopen session + transaction
     session.close();
     session = openSession();
     tx = session.openTransaction(durableLockID);
-    sleep(200);
+    sleep(500); // Let clients receive the LockOwnerRemappedNotification before the next unlock notification.
 
     resFromTX = tx.getResource(path);
     resFromTX.cdoWriteLock().unlock();
-
-    sleep(200);
-    assertFalse(resFromView.cdoWriteLock().isLockedByOthers());
+    assertNoTimeout(() -> !resFromView.cdoWriteLock().isLockedByOthers());
 
     resFromTX.cdoWriteLock().lock(100);
-
-    sleep(200);
-    assertTrue(resFromView.cdoWriteLock().isLockedByOthers());
+    assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
   }
 }

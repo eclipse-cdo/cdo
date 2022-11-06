@@ -62,14 +62,7 @@ public class Bugzilla_384496_Test extends AbstractCDOTest
     adapter.assertNotifications(0);
 
     transaction.commit();
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return adapter.getNotifications().length != 0;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> adapter.getNotifications().length != 0);
 
     if (getRepositoryConfig().listOrdering() == ListOrdering.ORDERED)
     {

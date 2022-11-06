@@ -358,15 +358,7 @@ public class DetachTest extends AbstractCDOTest
     assertEquals(true, transaction1.isDirty());
     transaction1.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return rSet2.getResources().isEmpty();
-      }
-    }.assertNoTimeOut();
-
+    assertNoTimeout(rSet2.getResources()::isEmpty);
     assertEquals(0, rSet1.getResources().size());// Bug 346636
     assertTransient(res);
     assertInvalid(res2);

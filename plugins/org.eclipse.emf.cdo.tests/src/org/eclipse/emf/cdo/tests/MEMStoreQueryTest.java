@@ -147,14 +147,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     result.close();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID()));
 
     CDOSession session = transaction.getSession();
     transaction.close();
@@ -169,14 +162,8 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     CDOSession session = transaction.getSession();
     transaction.close();
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
-      }
-    }.assertNoTimeOut();
+
+    assertNoTimeout(() -> !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID()));
 
     session.close();
   }
@@ -189,14 +176,7 @@ public class MEMStoreQueryTest extends AbstractCDOTest
     final CloseableIterator<Object> result = query.getResultAsync(Object.class);
     transaction.getSession().close();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID());
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> !getRepository().getQueryManager().isRunning(((CDOQueryResultIteratorImpl<?>)result).getQueryID()));
   }
 
   public void testQueryCancel_storeAccessorLeak() throws Exception

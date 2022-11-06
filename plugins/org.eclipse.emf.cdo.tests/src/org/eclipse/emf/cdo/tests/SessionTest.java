@@ -207,14 +207,7 @@ public class SessionTest extends AbstractCDOTest
 
   private void waitForUpdate(final long commitTime, final CDOSession session) throws InterruptedException
   {
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return commitTime >= session.getLastUpdateTime();
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> commitTime >= session.getLastUpdateTime());
   }
 
   public void testWaitForUpdateLocal() throws Exception

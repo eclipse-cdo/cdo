@@ -55,15 +55,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
-
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 1);
     assertEquals("company1", testAdapter.getNotifications()[0].getNewValue());
   }
 
@@ -92,15 +84,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
-
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 1);
     assertEquals(Notification.REMOVE, testAdapter.getNotifications()[0].getEventType());
     assertEquals(getModel1Package().getCompany_Customers(), testAdapter.getNotifications()[0].getFeature());
   }
@@ -130,15 +114,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
-
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 1);
     assertEquals(Notification.ADD, testAdapter.getNotifications()[0].getEventType());
     assertEquals(getModel1Package().getCompany_Customers(), testAdapter.getNotifications()[0].getFeature());
   }
@@ -170,14 +146,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 2;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 2);
 
     for (Notification notification : testAdapter.getNotifications())
     {
@@ -227,14 +196,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 1;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 1);
 
     assertEquals("company3", testAdapter.getNotifications()[0].getNewValue());
   }
@@ -276,14 +238,7 @@ public class Bugzilla_283131_Test extends AbstractCDOTest
     company.getName();
 
     // check rollback notifications.
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return testAdapter.getNotifications().length == 4;
-      }
-    }.assertNoTimeOut(DEFAULT_TIMEOUT_EXPECTED);
+    assertNoTimeout(DEFAULT_TIMEOUT_EXPECTED, () -> testAdapter.getNotifications().length == 4);
 
     int customerCounter = 0;
     for (Notification notification : testAdapter.getNotifications())

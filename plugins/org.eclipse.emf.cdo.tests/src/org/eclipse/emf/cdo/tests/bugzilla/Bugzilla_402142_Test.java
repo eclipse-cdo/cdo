@@ -59,14 +59,7 @@ public class Bugzilla_402142_Test extends AbstractCDOTest
     assertEquals(false, writeLock.isLockedByOthers());
 
     lockCompanyRemotely();
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return writeLock.isLockedByOthers();
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(writeLock::isLockedByOthers);
 
     transaction.commit();
   }
@@ -97,14 +90,7 @@ public class Bugzilla_402142_Test extends AbstractCDOTest
     assertEquals(false, writeLock.isLockedByOthers());
 
     lockCompanyRemotely();
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return writeLock.isLockedByOthers();
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(writeLock::isLockedByOthers);
 
     transaction.commit();
   }

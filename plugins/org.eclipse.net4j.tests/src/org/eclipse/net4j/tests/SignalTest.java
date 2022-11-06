@@ -108,14 +108,7 @@ public class SignalTest extends AbstractConfigTest
       final ILifecycle lifecycle = protocol;
 
       config.closeUnderlyingConnection(getServerConnector());
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
-        {
-          return !lifecycle.isActive();
-        }
-      }.assertNoTimeOut();
+      assertNoTimeout(() -> !lifecycle.isActive());
     }
     finally
     {

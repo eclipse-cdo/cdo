@@ -117,15 +117,7 @@ public class Bugzilla_297491_Test extends AbstractCDOTest
   private void waitForSession2() throws InterruptedException
   {
     int expected = branchManager1.getTagModCount();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return branchManager2.getTagModCount() >= expected;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> branchManager2.getTagModCount() >= expected);
   }
 
   @SuppressWarnings("unchecked")

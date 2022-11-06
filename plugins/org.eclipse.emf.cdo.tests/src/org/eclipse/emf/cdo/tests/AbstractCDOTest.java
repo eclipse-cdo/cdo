@@ -126,15 +126,7 @@ public abstract class AbstractCDOTest extends ConfigTest
   {
     final int sessionID = session.getSessionID();
     session.close();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return getRepository().getSessionManager().getSession(sessionID) == null;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> getRepository().getSessionManager().getSession(sessionID) == null);
   }
 
   public InternalSession serverSession(CDOSession session)

@@ -98,16 +98,8 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
     IConnector connector = sessionConfig.getConnector();
     String url = connector.getURL();
 
-    final CDOAdminClient admin = CDOAdminClientUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return admin.isConnected();
-      }
-    }.assertNoTimeOut();
+    CDOAdminClient admin = CDOAdminClientUtil.openAdmin(url, DEFAULT_TIMEOUT, clientContainer);
+    assertNoTimeout(admin::isConnected);
 
     return admin;
   }
@@ -169,21 +161,16 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       LifecycleUtil.deactivate(repo2);
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
+      assertNoTimeout(() -> {
+        CDOAdminRepository[] repos = admin.getRepositories();
+        if (repos.length != 1)
         {
-          CDOAdminRepository[] repositories = admin.getRepositories();
-          if (repositories.length != 1)
-          {
-            return false;
-          }
-
-          assertEquals(getRepository().getName(), repositories[0].getName());
-          return true;
+          return false;
         }
-      }.assertNoTimeOut();
+
+        assertEquals(getRepository().getName(), repos[0].getName());
+        return true;
+      });
     }
     finally
     {
@@ -207,21 +194,16 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       LifecycleUtil.deactivate(repo2);
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
+      assertNoTimeout(() -> {
+        CDOAdminRepository[] repos = admin.getRepositories();
+        if (repos.length != 1)
         {
-          CDOAdminRepository[] repositories = admin.getRepositories();
-          if (repositories.length != 1)
-          {
-            return false;
-          }
-
-          assertEquals(getRepository().getName(), repositories[0].getName());
-          return true;
+          return false;
         }
-      }.assertNoTimeOut();
+
+        assertEquals(getRepository().getName(), repos[0].getName());
+        return true;
+      });
 
       repo2 = getRepository("repo2");
       admin.waitForRepository("repo2");
@@ -253,21 +235,16 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
 
       LifecycleUtil.deactivate(repo2);
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
+      assertNoTimeout(() -> {
+        CDOAdminRepository[] repos = admin.getRepositories();
+        if (repos.length != 1)
         {
-          CDOAdminRepository[] repositories = admin.getRepositories();
-          if (repositories.length != 1)
-          {
-            return false;
-          }
-
-          assertEquals(getRepository().getName(), repositories[0].getName());
-          return true;
+          return false;
         }
-      }.assertNoTimeOut();
+
+        assertEquals(getRepository().getName(), repos[0].getName());
+        return true;
+      });
 
       InternalRepository repo3 = getRepository("repo3");
       admin.waitForRepository("repo3");
@@ -352,15 +329,7 @@ public class Bugzilla_381472_Test extends AbstractCDOTest
       InternalRepository repo1 = getRepository();
       LifecycleUtil.deactivate(repo1);
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
-        {
-          CDOAdminRepository[] repositories = admin.getRepositories();
-          return repositories.length == 0;
-        }
-      }.assertNoTimeOut();
+      assertNoTimeout(() -> admin.getRepositories().length == 0);
 
       listener.assertEvent(IContainerEvent.class, new EventAssertion<IContainerEvent<CDOAdminRepository>>()
       {

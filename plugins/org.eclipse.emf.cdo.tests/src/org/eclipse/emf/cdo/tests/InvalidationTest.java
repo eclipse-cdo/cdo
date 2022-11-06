@@ -192,17 +192,9 @@ public class InvalidationTest extends AbstractCDOTest
 
     category1A.setName("CHANGED NAME");
     assertEquals("category1", category1B.getName());
-    transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        String name = category1B.getName();
-        return "CHANGED NAME".equals(name);
-      }
-    }.assertNoTimeOut();
+    transaction.commit();
+    assertNoTimeout(() -> "CHANGED NAME".equals(category1B.getName()));
   }
 
   public void testSeparateViewNotification() throws Exception
@@ -318,28 +310,13 @@ public class InvalidationTest extends AbstractCDOTest
     res2.getContents().add(customerB2);
 
     trans1.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT);
 
     final Customer customerA2 = getModel1Factory().createCustomer();
     res1.getContents().add(customerA2);
     trans1.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> CDOUtil.getCDOObject(res2).cdoState() == CDOState.CONFLICT);
 
     trans2.rollback();
     assertEquals(2, res1.getContents().size());
@@ -457,14 +434,7 @@ public class InvalidationTest extends AbstractCDOTest
     category1A.setName("CHANGED NAME");
     transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return "CHANGED NAME".equals(category1B.getName());
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> "CHANGED NAME".equals(category1B.getName()));
   }
 
   /**
@@ -520,16 +490,11 @@ public class InvalidationTest extends AbstractCDOTest
     transactionB.commit();
 
     msg("Checking after commit");
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        Category categoryA = (Category)CDOUtil.getEObject(transactionA.getObject(cdoidA, true));
-        String name = categoryA.getName();
-        return "CHANGED NAME".equals(name);
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> {
+      Category categoryA = (Category)CDOUtil.getEObject(transactionA.getObject(cdoidA, true));
+      String name = categoryA.getName();
+      return "CHANGED NAME".equals(name);
+    });
   }
 
   public void testRefreshEmptyRepository() throws Exception
@@ -579,15 +544,8 @@ public class InvalidationTest extends AbstractCDOTest
 
     sessionB.refresh();
 
-    // TODO Why poll? refresh is synchonous...
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return "CHANGED NAME".equals(category1B.getName());
-      }
-    }.assertNoTimeOut();
+    // TODO Why poll? refresh is synchronous...
+    assertNoTimeout(() -> "CHANGED NAME".equals(category1B.getName()));
   }
 
   public void testPassiveUpdateOnAndOff() throws Exception
@@ -740,15 +698,7 @@ public class InvalidationTest extends AbstractCDOTest
     testAdapter.assertNotifications(0);
 
     transaction.commit();
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB)));
 
     testAdapter.assertNoTimeout(1);
   }
@@ -825,15 +775,7 @@ public class InvalidationTest extends AbstractCDOTest
     testAdapter.assertNotifications(0);
     sessionB.refresh();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB));
-      }
-    }.assertNoTimeOut();
-
+    assertNoTimeout(() -> FSMUtil.isInvalid(CDOUtil.getCDOObject(categoryB)));
     testAdapter.assertNoTimeout(1);
   }
 
@@ -868,30 +810,25 @@ public class InvalidationTest extends AbstractCDOTest
 
     transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      Notification[] notifications = testAdapter.getNotifications();
+      if (notifications.length != 0)
       {
-        Notification[] notifications = testAdapter.getNotifications();
-        if (notifications.length != 0)
+        if (!ObjectUtil.equals(notifications[0].getOldStringValue(), "category1"))
         {
-          if (!ObjectUtil.equals(notifications[0].getOldStringValue(), "category1"))
-          {
-            fail("No old value");
-          }
-
-          if (!ObjectUtil.equals(notifications[0].getNewStringValue(), "CHANGED"))
-          {
-            fail("No new value");
-          }
-
-          return true;
+          fail("No old value");
         }
 
-        return false;
+        if (!ObjectUtil.equals(notifications[0].getNewStringValue(), "CHANGED"))
+        {
+          fail("No new value");
+        }
+
+        return true;
       }
-    }.assertNoTimeOut();
+
+      return false;
+    });
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)

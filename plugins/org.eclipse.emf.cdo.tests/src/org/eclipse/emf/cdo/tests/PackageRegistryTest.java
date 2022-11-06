@@ -473,14 +473,7 @@ public class PackageRegistryTest extends AbstractCDOTest
         timeStamp = transaction.commit().getTimeStamp();
       }
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
-        {
-          return session2.getLastUpdateTime() >= timeStamp;
-        }
-      }.assertNoTimeOut();
+      assertNoTimeout(() -> session2.getLastUpdateTime() >= timeStamp);
 
       {
         CDOTransaction transaction = session2.openTransaction();

@@ -294,14 +294,7 @@ public class LockingManagerTest extends AbstractLockingTest
     keys.add(3);
     lockingManager.unlock(2, keys, LockType.READ, 1, null, null);
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return lockingManager.hasLock(LockType.WRITE, 1, 1);
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> lockingManager.hasLock(LockType.WRITE, 1, 1));
   }
 
   public void testBasicWrongUnlock() throws Exception
@@ -355,24 +348,19 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOTransaction transaction2 = session.openTransaction();
     Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      try
       {
-        try
-        {
-          CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
-          assertEquals(false, cdoCompany2.cdoWriteLock().isLockedByOthers());
-          assertEquals(true, cdoCompany2.cdoReadLock().isLockedByOthers());
-          return true;
-        }
-        catch (AssertionFailedError ex)
-        {
-          return false;
-        }
+        CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+        assertEquals(false, cdoCompany2.cdoWriteLock().isLockedByOthers());
+        assertEquals(true, cdoCompany2.cdoReadLock().isLockedByOthers());
+        return true;
       }
-    }.assertNoTimeOut();
+      catch (AssertionFailedError ex)
+      {
+        return false;
+      }
+    });
   }
 
   public void testDetachedObjects() throws Exception
@@ -402,22 +390,17 @@ public class LockingManagerTest extends AbstractLockingTest
 
     assertReadLock(false, company2);
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      try
       {
-        try
-        {
-          assertEquals(false, CDOUtil.getCDOObject(company2).cdoReadLock().isLockedByOthers());
-          return true;
-        }
-        catch (AssertionFailedError ex)
-        {
-          return false;
-        }
+        assertEquals(false, CDOUtil.getCDOObject(company2).cdoReadLock().isLockedByOthers());
+        return true;
       }
-    }.assertNoTimeOut();
+      catch (AssertionFailedError ex)
+      {
+        return false;
+      }
+    });
   }
 
   public void testWriteLockByOthers() throws Exception
@@ -435,24 +418,19 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOTransaction transaction2 = session.openTransaction();
     Company company2 = (Company)transaction2.getResource(getResourcePath("/res1")).getContents().get(0);
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      try
       {
-        try
-        {
-          CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
-          assertEquals(true, cdoCompany2.cdoWriteLock().isLockedByOthers());
-          assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
-          return true;
-        }
-        catch (AssertionFailedError ex)
-        {
-          return false;
-        }
+        CDOObject cdoCompany2 = CDOUtil.getCDOObject(company2);
+        assertEquals(true, cdoCompany2.cdoWriteLock().isLockedByOthers());
+        assertEquals(false, cdoCompany2.cdoReadLock().isLockedByOthers());
+        return true;
       }
-    }.assertNoTimeOut();
+      catch (AssertionFailedError ex)
+      {
+        return false;
+      }
+    });
   }
 
   public void testWriteLock() throws Exception
@@ -1498,47 +1476,37 @@ public class LockingManagerTest extends AbstractLockingTest
     CDOObject category2CV = CDOUtil.getCDOObject(resourceCV.getContents().get(1));
     CDOObject category3CV = CDOUtil.getCDOObject(resourceCV.getContents().get(2));
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      try
       {
-        try
-        {
-          assertEquals(true, category1CV.cdoReadLock().isLockedByOthers());
-          assertEquals(true, category2CV.cdoWriteLock().isLockedByOthers());
-          assertEquals(true, category3CV.cdoWriteOption().isLockedByOthers());
-          return true;
-        }
-        catch (AssertionFailedError ex)
-        {
-          return false;
-        }
+        assertEquals(true, category1CV.cdoReadLock().isLockedByOthers());
+        assertEquals(true, category2CV.cdoWriteLock().isLockedByOthers());
+        assertEquals(true, category3CV.cdoWriteOption().isLockedByOthers());
+        return true;
       }
-    }.assertNoTimeOut();
+      catch (AssertionFailedError ex)
+      {
+        return false;
+      }
+    });
 
     unlockRead(category1);
     unlockWrite(category2);
     unlockOption(category3);
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
+    assertNoTimeout(() -> {
+      try
       {
-        try
-        {
-          assertEquals(false, category1CV.cdoReadLock().isLockedByOthers());
-          assertEquals(false, category2CV.cdoReadLock().isLockedByOthers());
-          assertEquals(false, category3CV.cdoReadLock().isLockedByOthers());
-          return true;
-        }
-        catch (AssertionFailedError ex)
-        {
-          return false;
-        }
+        assertEquals(false, category1CV.cdoReadLock().isLockedByOthers());
+        assertEquals(false, category2CV.cdoReadLock().isLockedByOthers());
+        assertEquals(false, category3CV.cdoReadLock().isLockedByOthers());
+        return true;
       }
-    }.assertNoTimeOut();
+      catch (AssertionFailedError ex)
+      {
+        return false;
+      }
+    });
 
     session.close();
     controlSession.close();
@@ -1635,15 +1603,7 @@ public class LockingManagerTest extends AbstractLockingTest
 
     lockRead(category2);
     CDOLock readLock1 = lockRead(category1);
-
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return readLock1.isLockedByOthers();
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(readLock1::isLockedByOthers);
 
     resource1.getContents().add(getModel1Factory().createProduct1());
     transaction1.commit();
@@ -1670,16 +1630,9 @@ public class LockingManagerTest extends AbstractLockingTest
 
     lockWrite(product1);
     lockWrite(category2);
-    CDOLock otherWriteLock1 = CDOUtil.getCDOObject(category1).cdoWriteLock();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return otherWriteLock1.isLockedByOthers();
-      }
-    }.assertNoTimeOut();
+    CDOLock otherWriteLock1 = CDOUtil.getCDOObject(category1).cdoWriteLock();
+    assertNoTimeout(otherWriteLock1::isLockedByOthers);
 
     product1.setName("NewName");
     transaction1.commit();
@@ -1742,16 +1695,11 @@ public class LockingManagerTest extends AbstractLockingTest
 
     tx1.close(); // Client 1 releases its read lock.
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        CDOLock readLockAfterClose = resource2.cdoReadLock();
-        boolean isLockedByOthersAfterClose = readLockAfterClose.isLockedByOthers();
-        return isLockedByOthersAfterClose == false;
-      }
-    }.assertNoTimeOut();
+    assertNoTimeout(() -> {
+      CDOLock readLockAfterClose = resource2.cdoReadLock();
+      boolean isLockedByOthersAfterClose = readLockAfterClose.isLockedByOthers();
+      return isLockedByOthersAfterClose == false;
+    });
   }
 
   public void testRefreshLockStates() throws Exception

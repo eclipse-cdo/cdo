@@ -61,15 +61,7 @@ public class Bugzilla_267050_Test extends AbstractCDOTest
     res.getContents().add(specialPurchaseOrder);
     transaction.commit();
 
-    new PollingTimeOuter()
-    {
-      @Override
-      protected boolean successful()
-      {
-        return newPackagesUnits[0] != null;
-      }
-    }.assertNoTimeOut();
-
+    assertNoTimeout(() -> newPackagesUnits[0] != null);
     assertEquals(1, newPackagesUnits[0].size());
     assertEquals(getModel1Package().getNsURI(), newPackagesUnits[0].iterator().next().getTopLevelPackageInfo().getPackageURI());
   }

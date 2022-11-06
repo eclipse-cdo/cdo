@@ -112,27 +112,22 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
     {
       final int[] counts = { 0, 0, 0, 0 };
 
-      new PollingTimeOuter()
-      {
-        @Override
-        protected boolean successful()
+      assertNoTimeout(() -> {
+        IEvent[] events = listener.getEvents();
+        for (IEvent event : events)
         {
-          IEvent[] events = listener.getEvents();
-          for (IEvent event : events)
+          if (event instanceof CDOSessionInvalidationEvent)
           {
-            if (event instanceof CDOSessionInvalidationEvent)
-            {
-              CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
-              counts[0] += e.getNewPackageUnits().size();
-              counts[1] += e.getNewObjects().size();
-              counts[2] += e.getChangedObjects().size();
-              counts[3] += e.getDetachedObjects().size();
-            }
+            CDOSessionInvalidationEvent e = (CDOSessionInvalidationEvent)event;
+            counts[0] += e.getNewPackageUnits().size();
+            counts[1] += e.getNewObjects().size();
+            counts[2] += e.getChangedObjects().size();
+            counts[3] += e.getDetachedObjects().size();
           }
-
-          return counts[0] >= newPackageUnits && counts[1] >= newObjects && counts[2] >= changedObjects && counts[3] >= detachedObjects;
         }
-      }.assertNoTimeOut();
+
+        return counts[0] >= newPackageUnits && counts[1] >= newObjects && counts[2] >= changedObjects && counts[3] >= detachedObjects;
+      });
 
       assertEquals(newPackageUnits, counts[0]);
       assertEquals(newObjects, counts[1]);

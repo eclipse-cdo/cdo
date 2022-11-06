@@ -58,12 +58,17 @@ public class Bugzilla_580991_Test extends AbstractCDOTest
     session.close();
     session = openSession();
     tx = session.openTransaction(durableLockID);
-
     resFromTX = tx.getResource(path);
+    assertTrue(resFromTX.cdoWriteLock().isLocked());
+    assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
+
     resFromTX.cdoWriteLock().unlock();
     assertNoTimeout(() -> !resFromView.cdoWriteLock().isLockedByOthers());
 
     resFromTX.cdoWriteLock().lock(100);
     assertNoTimeout(() -> resFromView.cdoWriteLock().isLockedByOthers());
+
+    tx.disableDurableLocking(true);
+    assertNoTimeout(() -> !resFromView.cdoWriteLock().isLockedByOthers());
   }
 }

@@ -132,7 +132,7 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
       {
         DurableView durableView = new DurableView(durableLockingID, view, view.isReadOnly());
         changeContext(view, durableView);
-        unregisterOpenDurableView(durableLockingID);
+        unregisterOpenDurableView(durableLockingID, false);
         durableViews.put(durableLockingID, durableView);
       }
     }
@@ -403,7 +403,8 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     DurableLocking accessor = getDurableLocking();
     accessor.deleteLockArea(durableLockingID);
-    unregisterOpenDurableView(durableLockingID);
+
+    unregisterOpenDurableView(durableLockingID, true);
   }
 
   @Override
@@ -592,14 +593,30 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
   }
 
-  private void unregisterOpenDurableView(String durableLockingID)
+  private void unregisterOpenDurableView(String durableLockingID, boolean notifyOtherSessions)
   {
+    InternalView view;
+    CDOLockOwner oldOwner = null;
+
     synchronized (openDurableViews)
     {
-      InternalView view = openDurableViews.remove(durableLockingID);
+      view = openDurableViews.remove(durableLockingID);
       if (view != null)
       {
+        oldOwner = view.getLockOwner();
         view.setDurableLockingID(null);
+      }
+    }
+
+    if (notifyOtherSessions && view != null)
+    {
+      CDOLockOwner newOwner = view.getLockOwner();
+      if (newOwner != oldOwner)
+      {
+        CDOBranch branch = view.getBranch();
+        InternalSession session = view.getSession();
+        InternalSessionManager manager = session.getManager();
+        manager.sendLockOwnerRemappedNotification(session, branch, oldOwner, newOwner);
       }
     }
   }

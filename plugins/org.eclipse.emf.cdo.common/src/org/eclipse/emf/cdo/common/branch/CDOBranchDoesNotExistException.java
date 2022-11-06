@@ -14,14 +14,22 @@ import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
  * @author Eike Stepper
- * @since 4.16
+ * @since 4.20
  */
-public class CDODuplicateBranchException extends CDOException
+public final class CDOBranchDoesNotExistException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
-  public CDODuplicateBranchException(CDOBranch branch)
+  private final int branchID;
+
+  public CDOBranchDoesNotExistException(int branchID)
   {
-    super("The branch " + branch.getPathName() + " already exists");
+    super("The branch " + branchID + " does not exist");
+    this.branchID = branchID;
+  }
+
+  public int getBranchID()
+  {
+    return branchID;
   }
 }

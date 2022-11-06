@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.common.branch;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
+import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
@@ -117,7 +118,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   }
 
   @Override
-  public synchronized String getName()
+  public synchronized String getName() throws CDOBranchDoesNotExistException
   {
     if (name == null)
     {
@@ -228,7 +229,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   }
 
   @Override
-  public synchronized CDOBranchPoint getBase()
+  public synchronized CDOBranchPoint getBase() throws CDOBranchDoesNotExistException
   {
     if (base == null)
     {
@@ -496,15 +497,23 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
     return MessageFormat.format("Branch[id={0}, name={1}]", id, name); //$NON-NLS-1$
   }
 
-  private synchronized void load()
+  private synchronized void load() throws CDOBranchDoesNotExistException
   {
     if (deleted)
     {
       return;
     }
 
-    BranchInfo branchInfo = branchManager.getBranchLoader().loadBranch(id);
-    CDOBranch baseBranch = branchManager.getBranch(branchInfo.getBaseBranchID());
+    BranchLoader branchLoader = branchManager.getBranchLoader();
+    BranchInfo branchInfo = branchLoader.loadBranch(id);
+
+    if (branchInfo == null)
+    {
+      throw new CDOBranchDoesNotExistException(id);
+    }
+
+    int baseBranchID = branchInfo.getBaseBranchID();
+    CDOBranch baseBranch = branchManager.getBranch(baseBranchID);
 
     name = branchInfo.getName();
     base = baseBranch.getPoint(branchInfo.getBaseTimeStamp());
@@ -519,6 +528,7 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
 
     SubBranchInfo[] infos = branchManager.getBranchLoader().loadSubBranches(id);
     branches = new InternalCDOBranch[infos.length];
+
     for (int i = 0; i < infos.length; i++)
     {
       SubBranchInfo info = infos[i];

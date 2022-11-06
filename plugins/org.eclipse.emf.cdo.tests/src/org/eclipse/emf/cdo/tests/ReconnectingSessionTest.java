@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
@@ -482,7 +483,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       configuration.setHeartBeatEnabled(true);
 
       session = (CDONet4jSession)openSession(configuration);
-      final CDOBranch branch = session.getBranchManager().getBranch(9999999);
+      CDOBranch branch = session.getBranchManager().getBranch(9999999); // Will be in state PROXY.
 
       try
       {
@@ -491,7 +492,9 @@ public class ReconnectingSessionTest extends AbstractCDOTest
           @Override
           public void run()
           {
-            branch.getName(); // This would hang without the fix in RecoveringExceptionHandler.handleException()
+            // Resolve (load) the proxy.
+            // This would hang without the fix in RecoveringExceptionHandler.handleException().
+            branch.getName();
           }
         }.assertNoTimeOut();
 
@@ -499,7 +502,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       }
       catch (RemoteException expected)
       {
-        assertInstanceOf(NullPointerException.class, expected.getCause());
+        assertInstanceOf(CDOBranchDoesNotExistException.class, expected.getCause());
       }
     }
     finally

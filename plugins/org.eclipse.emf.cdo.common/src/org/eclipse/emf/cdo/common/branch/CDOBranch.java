@@ -96,7 +96,7 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    * branch}.
    */
   @Override
-  public String getName();
+  public String getName() throws CDOBranchDoesNotExistException;
 
   /**
    * @since 4.4
@@ -126,7 +126,7 @@ public interface CDOBranch extends CDOBranchPoint, CDONameProvider, IContainer<C
    * @see CDOBranch#getHead()
    * @see #getPoint(long)
    */
-  public CDOBranchPoint getBase();
+  public CDOBranchPoint getBase() throws CDOBranchDoesNotExistException;
 
   /**
    * Returns the floating <i>end point</i> of this branch, a pair of this branch and the fixed special time stamp <i>

@@ -10,8 +10,9 @@
  */
 package org.eclipse.emf.cdo.tests;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
@@ -38,6 +40,9 @@ import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.security.IAuthenticator;
+import org.eclipse.net4j.util.security.NotAuthenticatedException;
+import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.tests.TestListener;
 
 import org.eclipse.emf.spi.cdo.InternalCDOView;
@@ -55,17 +60,8 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 {
   private static final String ADDRESS2 = SessionConfig.Net4j.TCP.CONNECTOR_HOST + ":2040";
 
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    disableConsole();
-    super.doSetUp();
-  }
-
   public void testReconnect() throws Exception
   {
-    disableConsole();
-
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource1 = transaction.createResource(getResourcePath("res1"));
@@ -95,12 +91,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
       dumpEvents(reconnectingSession);
 
-      final CountDownLatch recoveryStarted = new CountDownLatch(1);
-      final CountDownLatch recoveryFinished = new CountDownLatch(1);
+      CountDownLatch recoveryStarted = new CountDownLatch(1);
+      CountDownLatch recoveryFinished = new CountDownLatch(1);
       reconnectingSession.addListener(new IListener()
       {
         @Override
-        public void notifyEvent(final IEvent event)
+        public void notifyEvent(IEvent event)
         {
           if (event instanceof CDOSessionRecoveryEvent)
           {
@@ -214,12 +210,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     }
 
     @Override
-    protected void onMessageReceived(final CDORemoteSession remoteSession, final CDORemoteSessionMessage message)
+    protected void onMessageReceived(CDORemoteSession remoteSession, CDORemoteSessionMessage message)
     {
       received.add(message.getType());
     }
 
-    public void assertReceivedMessages(final List<String> expected) throws InterruptedException
+    public void assertReceivedMessages(List<String> expected) throws InterruptedException
     {
       long timeout = System.currentTimeMillis() + 2000;
       while (System.currentTimeMillis() < timeout)
@@ -262,8 +258,6 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
   public void testReconnectTwice() throws Exception
   {
-    disableConsole();
-
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
     CDOResource[] resource1 = { transaction.createResource(getResourcePath("res0")), transaction.createResource(getResourcePath("res1")) };
@@ -273,6 +267,7 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
     ITCPAcceptor acceptor = null;
     CDONet4jSession reconnectingSession = null;
+    InternalRepository repository = null;
 
     try
     {
@@ -286,8 +281,28 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       IManagedContainer clientContainer = getClientContainer();
       dumpEvents(clientContainer);
 
+      // See https://www.eclipse.org/forums/index.php/mv/msg/1111831
+      repository = getRepository(repositoryName);
+      repository.getSessionManager().setAuthenticator(new IAuthenticator()
+      {
+        @Override
+        public void authenticate(String userID, char[] password) throws SecurityException
+        {
+          if (!"Eike".equals(userID))
+          {
+            throw new NotAuthenticatedException();
+          }
+        }
+      });
+
       ReconnectingCDOSessionConfiguration configuration = CDONet4jUtil.createReconnectingSessionConfiguration(ADDRESS2, repositoryName, clientContainer);
       configuration.setHeartBeatEnabled(true);
+
+      // See https://www.eclipse.org/forums/index.php/mv/msg/1111831
+      configuration.setCredentialsProvider(new PasswordCredentialsProvider("Eike", "irrelevant"));
+      configuration.setActivateOnOpen(true);
+      configuration.setPassiveUpdateEnabled(true);
+      configuration.setPassiveUpdateMode(PassiveUpdateMode.ADDITIONS);
 
       reconnectingSession = (CDONet4jSession)openSession(configuration);
       dumpEvents(reconnectingSession);
@@ -305,12 +320,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
           System.out.println();
         }
 
-        final CountDownLatch recoveryStarted = new CountDownLatch(1);
-        final CountDownLatch recoveryFinished = new CountDownLatch(1);
+        CountDownLatch recoveryStarted = new CountDownLatch(1);
+        CountDownLatch recoveryFinished = new CountDownLatch(1);
         reconnectingSession.addListener(new IListener()
         {
           @Override
-          public void notifyEvent(final IEvent event)
+          public void notifyEvent(IEvent event)
           {
             if (event instanceof CDOSessionRecoveryEvent)
             {
@@ -364,6 +379,8 @@ public class ReconnectingSessionTest extends AbstractCDOTest
     }
     finally
     {
+      repository.getSessionManager().setAuthenticationServer(null);
+
       IOUtil.OUT().println();
       IOUtil.OUT().println("Finally...");
       LifecycleUtil.deactivate(reconnectingSession);
@@ -373,8 +390,6 @@ public class ReconnectingSessionTest extends AbstractCDOTest
 
   public void testReconnectWithCommitsWhileUnconnected() throws Exception
   {
-    disableConsole();
-
     CDOSession session1 = openSession();
     CDOTransaction transaction = session1.openTransaction();
     CDOResource resource1 = transaction.createResource(getResourcePath("res1"));
@@ -402,12 +417,12 @@ public class ReconnectingSessionTest extends AbstractCDOTest
       session2 = (CDONet4jSession)openSession(configuration);
       dumpEvents(session2);
 
-      final CountDownLatch recoveryStarted = new CountDownLatch(1);
-      final CountDownLatch recoveryFinished = new CountDownLatch(1);
+      CountDownLatch recoveryStarted = new CountDownLatch(1);
+      CountDownLatch recoveryFinished = new CountDownLatch(1);
       session2.addListener(new IListener()
       {
         @Override
-        public void notifyEvent(final IEvent event)
+        public void notifyEvent(IEvent event)
         {
           if (event instanceof CDOSessionRecoveryEvent)
           {

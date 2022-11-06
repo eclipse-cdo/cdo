@@ -264,6 +264,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     OpenSessionResult result = openSession();
     if (result == null)
     {
+      // Existing clients may expect this deprecated exception type.
       throw new NotAuthenticatedException();
     }
 

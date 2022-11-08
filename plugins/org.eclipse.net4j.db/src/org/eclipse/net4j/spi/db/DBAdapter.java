@@ -33,6 +33,7 @@ import org.eclipse.net4j.internal.db.bundle.OM;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import javax.sql.DataSource;
@@ -96,6 +97,8 @@ public abstract class DBAdapter implements IDBAdapter
       "TRANSLATE", "TRANSLATION", "TREAT", "TRIGGER", "TRIM", "TRUE", "UNDER", "UNDO", "UNION", "UNIQUE", "UNKNOWN", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$
       "UNNEST", "UNTIL", "UPDATE", "UPPER", "USAGE", "USER", "USING", "VALUE", "VALUES", "VARCHAR", "VARYING", "VIEW", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
       "WHEN", "WHENEVER", "WHERE", "WHILE", "WINDOW", "WITH", "WITHIN", "WITHOUT", "WORK", "WRITE", "YEAR", "ZONE" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
+
+  private static final String NULLABLE_DEFAULT = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.spi.db.DBAdapter.NO_NULLABLE_DEFAULT") ? "" : " NULL";
 
   private String name;
 
@@ -962,7 +965,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected String createFieldDefinition(IDBField field)
   {
-    return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : ""); //$NON-NLS-1$ //$NON-NLS-2$
+    return getTypeName(field) + (field.isNotNull() ? " NOT NULL" : NULLABLE_DEFAULT); //$NON-NLS-1$
   }
 
   // protected String getTypeName(DBType type)

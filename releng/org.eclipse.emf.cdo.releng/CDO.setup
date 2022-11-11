@@ -62,6 +62,34 @@
       xsi:type="setup.p2:P2Task"
       label="CDO">
     <requirement
+        name="org.eclipse.egit.feature.group"/>
+    <requirement
+        name="org.eclipse.oomph.projectcopy.feature.group"/>
+    <requirement
+        name="org.eclipse.oomph.version.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecoretools.sdk.feature.group"
+        optional="true"/>
+    <requirement
+        name="org.eclipse.emf.cdo.migrator.feature.group"
+        optional="true"/>
+    <requirement
+        name="org.eclipse.emf.cdo.releng.apireports"
+        optional="true"/>
+    <repository
+        url="https://download.eclipse.org/egit/updates-stable-nightly/"/>
+    <repository
+        url="https://download.eclipse.org/oomph/updates/latest/"/>
+    <repository
+        url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      disabled="true"
+      label="CDO-BAK">
+    <requirement
         name="org.eclipse.mylyn.ide_feature.feature.group"/>
     <requirement
         name="org.eclipse.mylyn.java_feature.feature.group"/>
@@ -960,7 +988,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Tests'] //@setupTasks.11/@workingSets[name='CDO%20Examples'] //@setupTasks.11/@workingSets[name='CDO%20Dawn'] //@setupTasks.11/@workingSets[name='CDO%20Features'] //@setupTasks.11/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Tests'] //@setupTasks.12/@workingSets[name='CDO%20Examples'] //@setupTasks.12/@workingSets[name='CDO%20Dawn'] //@setupTasks.12/@workingSets[name='CDO%20Features'] //@setupTasks.12/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -973,7 +1001,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -992,7 +1020,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1005,7 +1033,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1034,7 +1062,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='CDO%20Features'] //@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features'] //@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1047,7 +1075,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20DB'] //@setupTasks.11/@workingSets[name='Net4j%20Examples'] //@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20DB'] //@setupTasks.12/@workingSets[name='Net4j%20Examples'] //@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1060,7 +1088,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1082,7 +1110,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.11/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1114,6 +1142,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
+      disabled="true"
       name="Mylyn Queries">
     <setupTask
         xsi:type="setup:VariableTask"
@@ -1184,6 +1213,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
+      disabled="true"
       name="Mylyn Builds">
     <setupTask
         xsi:type="mylyn:MylynBuildsTask"

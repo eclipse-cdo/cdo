@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.lm.Change;
+import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.Drop;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.LMFactory;
@@ -50,22 +51,18 @@ import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.net4j.CDONet4jServerUtil;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.tests.lm.bundle.OM;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.io.TMPUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
@@ -103,11 +100,7 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
   @SuppressWarnings("restriction")
   private static final String BROWSER_PORT = org.eclipse.emf.cdo.internal.server.bundle.CDOServerApplication.PROP_BROWSER_PORT;
 
-  private static final boolean STAND_ALONE = !OMPlatform.INSTANCE.isOSGiRunning();
-
-  private static final File TEST_FOLDER = STAND_ALONE ? //
-      TMPUtil.createTempFolder("lm-tests-") : //
-      new File(OM.BUNDLE.getStateLocation());
+  private static final File TEST_FOLDER = new File(OM.BUNDLE.getStateLocation());
 
   private static final String ACCEPTOR_NAME = "lm-test";
 
@@ -121,15 +114,10 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
   {
     msg("Test Folder: " + TEST_FOLDER);
 
-    if (STAND_ALONE)
+    if (!OMPlatform.INSTANCE.isOSGiRunning())
     {
-      Net4jUtil.prepareContainer(CONTAINER);
-      JVMUtil.prepareContainer(CONTAINER);
-      CDONet4jServerUtil.prepareContainer(CONTAINER);
-      CDODBUtil.prepareContainer(CONTAINER);
-      CONTAINER.activate();
-
-      ITypeMapping.Registry.INSTANCE.getClass();
+      // Equinox P2 requires OSGi running.
+      fail("The test must be run iside OSGi, i.e., as 'JUnit Plug-in Test', to make p2 happy!");
     }
 
     String port = OMPlatform.INSTANCE.getProperty(BROWSER_PORT);
@@ -198,34 +186,20 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     lifecycleManager.activate();
 
     acceptor = JVMUtil.getAcceptor(CONTAINER, ACCEPTOR_NAME);
-
-    if (STAND_ALONE)
-    {
-      org.eclipse.emf.cdo.internal.explorer.bundle.OM.initializeManagers(new File(testFolder, "explorer"));
-      org.eclipse.emf.cdo.lm.internal.client.bundle.OM.initializeManagers();
-    }
   }
 
   @Override
   @SuppressWarnings("restriction")
   protected void tearDown() throws Exception
   {
-    if (STAND_ALONE)
+    for (CDOCheckout checkout : CDOExplorerUtil.getCheckoutManager().getCheckouts())
     {
-      org.eclipse.emf.cdo.lm.internal.client.bundle.OM.disposeManagers();
-      org.eclipse.emf.cdo.internal.explorer.bundle.OM.disposeManagers();
+      checkout.delete(true);
     }
-    else
-    {
-      for (CDOCheckout checkout : CDOExplorerUtil.getCheckoutManager().getCheckouts())
-      {
-        checkout.delete(true);
-      }
 
-      for (CDORepository repository : CDOExplorerUtil.getRepositoryManager().getRepositories())
-      {
-        repository.delete(true);
-      }
+    for (CDORepository repository : CDOExplorerUtil.getRepositoryManager().getRepositories())
+    {
+      repository.delete(true);
     }
 
     LifecycleUtil.deactivate(acceptor);
@@ -354,9 +328,9 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     transaction.close();
   }
 
-  protected void deliverChange(ISystemDescriptor systemDescriptor, Stream stream, Change change) throws Exception
+  protected Delivery deliverChange(ISystemDescriptor systemDescriptor, Stream stream, Change change) throws Exception
   {
-    systemDescriptor.createDelivery(stream, change, LMMerger.CORE, monitor());
+    return systemDescriptor.createDelivery(stream, change, LMMerger.CORE, monitor());
   }
 
   protected void removeDependencies(IAssemblyDescriptor clientStreamDescriptor) throws Exception

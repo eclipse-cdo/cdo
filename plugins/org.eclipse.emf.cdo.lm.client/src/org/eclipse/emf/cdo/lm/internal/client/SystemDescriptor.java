@@ -87,6 +87,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.FSMUtil;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -781,8 +782,8 @@ public final class SystemDescriptor implements ISystemDescriptor
     String moduleName = module.getName();
 
     // Here we check that there is no module that depends on this module.
-    List<CDOObjectReference> result = view.queryXRefs(module, LMPackage.eINSTANCE.getDependency_Target());
-    if (result.size() > 0)
+    List<CDOObjectReference> result = view.queryXRefs(module, LMPackage.Literals.DEPENDENCY__TARGET);
+    if (!result.isEmpty())
     {
       // The deletion is not possible because another module references this one.
       throw new ModuleDeletionException(moduleName, result);
@@ -926,24 +927,34 @@ public final class SystemDescriptor implements ISystemDescriptor
   }
 
   @Override
-  public void deleteChange(Change change, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
+  public void deleteChange(Change change, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException, ChangeDeletionException
   {
-    modify(change, c -> {
+    String moduleName = change.getModule().getName();
+
+    // Here we check that the change has never been delivered.
+    if (!change.getDeliveries().isEmpty())
+    {
+      throw new ChangeDeletionException(change);
+    }
+
+    CDOBranchRef changeBranchRef = modify(change, c -> {
       String label = c.getLabel();
       Stream stream = c.getStream();
-
-      String moduleName = c.getModule().getName();
-      withModuleSession(moduleName, session -> {
-        CDOBranchRef changeBranchRef = change.getBranch();
-        CDOBranch changeBranch = changeBranchRef.resolve(session.getBranchManager());
-
-        changeBranch.delete(new EclipseMonitor(monitor));
-        EcoreUtil.remove(c);
-      });
+      CDOBranchRef branchRef = c.getBranch();
 
       setCommitComment(stream, "Delete change '" + label + "'");
-      return null;
+      EcoreUtil.remove(c);
+
+      return branchRef;
     }, monitor);
+
+    if (changeBranchRef != null && FSMUtil.isInvalid(change))
+    {
+      withModuleSession(moduleName, session -> {
+        CDOBranch branchToDelete = changeBranchRef.resolve(session.getBranchManager());
+        branchToDelete.delete(new EclipseMonitor(monitor));
+      });
+    }
   }
 
   @Override

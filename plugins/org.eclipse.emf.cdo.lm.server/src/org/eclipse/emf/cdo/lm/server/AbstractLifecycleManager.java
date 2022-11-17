@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.lm.LMFactory;
@@ -71,7 +72,6 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EStructuralFeature;
 
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.equinox.p2.metadata.Version;
@@ -360,7 +360,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
         {
           handleListDelta(commitContext, revisionDelta, STREAM__CONTENTS, //
               addedContent -> handleBaselineAddition(commitContext, addedContent), //
-              AbstractLifecycleManager::preventRemoval);
+              removeFeatureDelta -> handleBaselineDeletion(commitContext, revisionDelta, removeFeatureDelta));
         }
 
         // TODO Implement more server-side validations.
@@ -493,6 +493,15 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     // }
     // });
     // }
+  }
+
+  /**
+   * @since 1.1
+   */
+  protected void handleBaselineDeletion(CommitContext commitContext, CDORevisionDelta revisionDelta, CDORemoveFeatureDelta removeFeatureDelta)
+  {
+    // It would be better to check here that the deleted baseline is a change and that this change has never been
+    // delivered. But that's not trivial, so we rely on the client to have executed the required checks.
   }
 
   protected void createNewModules(CommitContext commitContext, List<Pair<String, CDOID>> newModules)
@@ -706,13 +715,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
         }
       }
     }
-  }
-
-  private static void preventRemoval(CDORemoveFeatureDelta removeFeatureDelta) throws CDOException
-  {
-    EStructuralFeature feature = removeFeatureDelta.getFeature();
-    EClass eClass = feature.getEContainingClass();
-    throw new CDOException("Removing from " + eClass.getName() + "." + feature.getName() + " is not supported");
   }
 
   private static void deactivate(Map<String, ?> map)

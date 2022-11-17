@@ -19,9 +19,12 @@ import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
+import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ChangeDeletionException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
+
+import org.eclipse.core.runtime.NullProgressMonitor;
 
 /**
  * @author Eike Stepper
@@ -90,5 +93,29 @@ public class LMFlowsTest extends AbstractLMTest
 
     // Add dependency on ModuleSupplier back to ModuleClient and update ModuleClient.
     createDependencyAndUpdate(clientStreamDescriptor, MODULE_SUPPLIER);
+
+    // Create a new change that can be deleted because it was never delivered.
+    Change change2 = createChange(systemDescriptor, supplierStream, "Change2", MODULE_SUPPLIER + " - Change2", transaction -> {
+      transaction.createResource("To Be Deleted");
+    });
+
+    systemDescriptor.deleteChange(change2, new NullProgressMonitor());
+
+    // Create another new change that can not be deleted because it has been delivered already.
+    Change change3 = createChange(systemDescriptor, supplierStream, "Change3", MODULE_SUPPLIER + " - Change3", transaction -> {
+      transaction.createResource("Not Deleteable");
+    });
+
+    deliverChange(systemDescriptor, supplierStream, change3);
+
+    try
+    {
+      systemDescriptor.deleteChange(change3, new NullProgressMonitor());
+      fail("ChangeDeletionException expected");
+    }
+    catch (ChangeDeletionException expected)
+    {
+      // SUCCESS.
+    }
   }
 }

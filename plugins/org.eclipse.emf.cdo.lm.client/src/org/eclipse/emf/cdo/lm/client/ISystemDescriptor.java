@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.client;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.lm.Baseline;
@@ -70,9 +71,11 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
 
   public void close();
 
-  public <E extends ModelElement, R> R modify(E element, Function<E, R> modifier, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
+  public <E extends ModelElement, R> R modify(E element, Function<E, R> modifier, IProgressMonitor monitor) //
+      throws ConcurrentAccessException, CommitException;
 
-  public <R> R modify(Function<System, R> modifier, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
+  public <R> R modify(Function<System, R> modifier, IProgressMonitor monitor) //
+      throws ConcurrentAccessException, CommitException;
 
   public CDORepository getModuleRepository(String moduleName);
 
@@ -84,7 +87,8 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
 
   public ModuleDefinition extractModuleDefinition(CDOView view);
 
-  public Assembly resolve(ModuleDefinition rootDefinition, Baseline baseline, IProgressMonitor monitor) throws ResolutionException;
+  public Assembly resolve(ModuleDefinition rootDefinition, Baseline baseline, IProgressMonitor monitor) //
+      throws ResolutionException;
 
   public Module createModule(String name, StreamSpec streamSpec, IProgressMonitor monitor) //
       throws ConcurrentAccessException, CommitException;
@@ -108,7 +112,7 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
       throws ConcurrentAccessException, CommitException;
 
   public void deleteChange(Change change, IProgressMonitor monitor) //
-      throws ConcurrentAccessException, CommitException;
+      throws ConcurrentAccessException, CommitException, ChangeDeletionException;
 
   public Delivery createDelivery(Stream stream, Change change, LMMerger merger, IProgressMonitor monitor) //
       throws ConcurrentAccessException, CommitException;
@@ -281,7 +285,7 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
   /**
    * @author Eike Stepper
    */
-  public static final class ModuleDeletionException extends Exception
+  public static final class ModuleDeletionException extends CDOException
   {
     private static final long serialVersionUID = 1L;
 
@@ -307,7 +311,34 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
         }
       }
 
-      return MessageFormat.format("The module {0} can not be deleted because the following modules depend on it:\n{1}", deletedModuleName, builder); //$NON-NLS-1$
+      return MessageFormat.format("The module '{0}' can not be deleted because the following modules depend on it:\n{1}", deletedModuleName, builder); //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 1.1
+   */
+  public static final class ChangeDeletionException extends CDOException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public ChangeDeletionException(Change change)
+    {
+      super(createMessage(change));
+    }
+
+    private static String createMessage(Change change)
+    {
+      StringBuilder builder = new StringBuilder();
+
+      for (Delivery delivery : change.getDeliveries())
+      {
+        StringUtil.appendSeparator(builder, ",\n");
+        builder.append(delivery.getStream().getName());
+      }
+
+      return MessageFormat.format("The change '{0}' can not be deleted because deliveries to the following streams exist:\n{1}", change.getName(), builder); //$NON-NLS-1$
     }
   }
 }

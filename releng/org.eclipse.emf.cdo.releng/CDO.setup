@@ -667,6 +667,28 @@
   </setupTask>
   <setupTask
       xsi:type="setup.targlets:TargletTask"
+      disabled="true">
+    <annotation
+        source="Documentation">
+      <detail
+          key="Reason">
+        <value>The Sirius targlet task can be enabled when testing of the Sirius Model Explorer with CDO Checkouts content binding is required!</value>
+      </detail>
+    </annotation>
+    <targlet
+        name="Sirius">
+      <requirement
+          name="org.eclipse.sirius.properties.feature.feature.group"/>
+      <requirement
+          name="org.eclipse.sirius.runtime.feature.group"/>
+      <requirement
+          name="org.eclipse.sirius.runtime.aql.feature.group"/>
+      <requirement
+          name="org.eclipse.sirius.runtime.ide.ui.feature.group"/>
+    </targlet>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.targlets:TargletTask"
       targetName="Baseline Target"
       activateTarget="false">
     <targlet
@@ -988,7 +1010,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Tests'] //@setupTasks.12/@workingSets[name='CDO%20Examples'] //@setupTasks.12/@workingSets[name='CDO%20Dawn'] //@setupTasks.12/@workingSets[name='CDO%20Features'] //@setupTasks.12/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Tests'] //@setupTasks.13/@workingSets[name='CDO%20Examples'] //@setupTasks.13/@workingSets[name='CDO%20Dawn'] //@setupTasks.13/@workingSets[name='CDO%20Features'] //@setupTasks.13/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1001,7 +1023,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1020,7 +1042,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1033,7 +1055,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1062,7 +1084,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='CDO%20Features'] //@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features'] //@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1075,7 +1097,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20DB'] //@setupTasks.12/@workingSets[name='Net4j%20Examples'] //@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20DB'] //@setupTasks.13/@workingSets[name='Net4j%20Examples'] //@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1088,7 +1110,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1110,7 +1132,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.12/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet

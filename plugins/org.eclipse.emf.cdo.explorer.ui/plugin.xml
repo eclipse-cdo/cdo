@@ -471,6 +471,11 @@
             <contentExtension pattern="org\.eclipse\.emf\.cdo\.explorer\.ui\..*"/>
          </includes>
       </viewerContentBinding>
+      <viewerContentBinding viewerId="org.eclipse.sirius.ui.tools.views.model.explorer">
+         <includes>
+            <contentExtension pattern="org\.eclipse\.emf\.cdo\.explorer\.ui\..*"/>
+         </includes>
+      </viewerContentBinding>
   </extension>
 
   <extension point="org.eclipse.ui.decorators">

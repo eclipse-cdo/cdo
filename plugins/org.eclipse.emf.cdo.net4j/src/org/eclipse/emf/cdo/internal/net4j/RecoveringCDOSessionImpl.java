@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryEvent;
+import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryException;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionEvent;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -219,7 +220,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     return Net4jUtil.getConnector(container, "tcp", description, connectorTimeout);
   }
 
-  protected List<AfterRecoveryRunnable> recoverSession()
+  protected List<AfterRecoveryRunnable> recoverSession() throws CDOSessionRecoveryException
   {
     try
     {
@@ -237,13 +238,13 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
 
       return runnables;
     }
-    catch (RuntimeException ex)
+    catch (CDOSessionRecoveryException ex)
     {
       throw ex;
     }
-    catch (Error ex)
+    catch (Exception ex)
     {
-      throw ex;
+      throw new CDOSessionRecoveryException(this, ex);
     }
   }
 
@@ -281,7 +282,7 @@ public abstract class RecoveringCDOSessionImpl extends CDONet4jSessionImpl
     super.doActivate();
   }
 
-  protected abstract void updateConnectorAndRepositoryName();
+  protected abstract void updateConnectorAndRepositoryName() throws CDOSessionRecoveryException;
 
   /**
    * @author Eike Stepper

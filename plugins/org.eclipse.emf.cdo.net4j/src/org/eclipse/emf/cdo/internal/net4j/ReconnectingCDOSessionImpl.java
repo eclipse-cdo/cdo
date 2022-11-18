@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryException;
+
+import org.eclipse.net4j.channel.ChannelException;
 import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -67,13 +70,14 @@ public class ReconnectingCDOSessionImpl extends RecoveringCDOSessionImpl
   }
 
   @Override
-  protected void updateConnectorAndRepositoryName()
+  protected void updateConnectorAndRepositoryName() throws CDOSessionRecoveryException
   {
     removeTCPConnector();
 
     IConnector newConnector = null;
     int failedAttempts = 0;
     long startOfLastAttempt = 0;
+    Exception lastException = null;
 
     while (newConnector == null && failedAttempts < maxReconnectAttempts)
     {
@@ -85,21 +89,29 @@ public class ReconnectingCDOSessionImpl extends RecoveringCDOSessionImpl
         }
 
         startOfLastAttempt = System.currentTimeMillis();
-        newConnector = createTCPConnector(getUseHeartBeat());
+        boolean useHeartBeat = getUseHeartBeat();
+
+        newConnector = createTCPConnector(useHeartBeat);
       }
-      catch (ConnectorException ex)
+      catch (ConnectorException | ChannelException | LifecycleException ex)
       {
         failedAttempts++;
+        lastException = ex;
       }
-      catch (LifecycleException ex)
+      catch (Exception ex)
       {
-        failedAttempts++;
+        throw new CDOSessionRecoveryException(this, ex);
       }
     }
 
     if (newConnector == null)
     {
-      throw new RuntimeException("Recovery failed"); // TODO (CD) Create custom exception type?
+      if (lastException != null)
+      {
+        throw new CDOSessionRecoveryException(this, lastException);
+      }
+
+      throw new CDOSessionRecoveryException(this);
     }
 
     super.setConnector(newConnector);

@@ -11,6 +11,8 @@
  */
 package org.eclipse.emf.cdo.internal.net4j;
 
+import org.eclipse.emf.cdo.net4j.CDOSessionRecoveryException;
+
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
 import org.eclipse.net4j.signal.SignalProtocol;
@@ -43,11 +45,21 @@ public class FailoverCDOSessionImpl extends RecoveringCDOSessionImpl
   }
 
   @Override
-  protected void updateConnectorAndRepositoryName()
+  protected void updateConnectorAndRepositoryName() throws CDOSessionRecoveryException
   {
-    queryRepositoryInfoFromMonitor();
-    IConnector connector = createTCPConnector(getUseHeartBeat());
-    setConnector(connector);
+    try
+    {
+      queryRepositoryInfoFromMonitor();
+
+      boolean useHeartBeat = getUseHeartBeat();
+      IConnector connector = createTCPConnector(useHeartBeat);
+
+      setConnector(connector);
+    }
+    catch (Exception ex)
+    {
+      throw new CDOSessionRecoveryException(this, ex);
+    }
   }
 
   protected void queryRepositoryInfoFromMonitor()
@@ -89,6 +101,7 @@ public class FailoverCDOSessionImpl extends RecoveringCDOSessionImpl
     finally
     {
       protocol.close();
+
       if (connector.getChannels().isEmpty())
       {
         connector.close();

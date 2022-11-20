@@ -37,6 +37,7 @@ import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.ui.IImportWizard;
+import org.eclipse.ui.INewWizard;
 import org.eclipse.ui.IWorkbench;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchWindow;
@@ -48,7 +49,7 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class CheckoutWizard extends Wizard implements IImportWizard
+public class CheckoutWizard extends Wizard implements IImportWizard, INewWizard
 {
   private final IPageChangedListener pageChangedListener = new IPageChangedListener()
   {

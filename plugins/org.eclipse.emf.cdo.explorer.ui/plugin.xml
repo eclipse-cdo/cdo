@@ -185,6 +185,16 @@
   <extension point="org.eclipse.ui.newWizards">
      <wizard
            category="org.eclipse.emf.cdo.category"
+           class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizard"
+           icon="icons/checkout.gif"
+           id="org.eclipse.emf.cdo.explorer.ui.checkout"
+           name="%wizard.name.new">
+        <description>
+           %wizard.description
+        </description>
+     </wizard>
+     <wizard
+           category="org.eclipse.emf.cdo.category"
            class="org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.NewFolderWizard"
            hasPages="true"
            icon="icons/CDOResourceFolder.gif"

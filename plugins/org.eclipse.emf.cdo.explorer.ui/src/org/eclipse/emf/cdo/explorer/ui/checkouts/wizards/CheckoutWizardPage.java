@@ -117,6 +117,11 @@ public abstract class CheckoutWizardPage extends WizardPage
     }
   }
 
+  protected boolean pageAboutToDeactivate(Object targetPage)
+  {
+    return true;
+  }
+
   protected void pageActivated()
   {
   }

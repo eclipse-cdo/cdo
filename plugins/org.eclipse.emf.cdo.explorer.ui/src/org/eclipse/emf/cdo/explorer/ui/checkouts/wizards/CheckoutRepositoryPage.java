@@ -13,11 +13,19 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.wizards;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
 import org.eclipse.emf.cdo.session.CDOSession;
 
+import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
+
+import org.eclipse.core.runtime.IStatus;
+import org.eclipse.core.runtime.Status;
+import org.eclipse.jface.dialogs.ErrorDialog;
 import org.eclipse.jface.layout.TableColumnLayout;
 import org.eclipse.jface.viewers.ColumnWeightData;
 import org.eclipse.jface.viewers.DoubleClickEvent;
@@ -38,6 +46,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Properties;
 
 /**
@@ -82,7 +91,12 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
 
   public CDOSession getSession()
   {
-    if (session == null && repository != null)
+    return getSession(true);
+  }
+
+  public CDOSession getSession(boolean acquireOnDemand)
+  {
+    if (session == null && repository != null && acquireOnDemand)
     {
       log("Acquiring session from " + repository);
       session = repository.acquireSession();
@@ -201,6 +215,45 @@ public class CheckoutRepositoryPage extends CheckoutWizardPage
         pageActivated();
       }
     });
+  }
+
+  @Override
+  protected boolean pageAboutToDeactivate(Object targetPage)
+  {
+    if (targetPage != getWizard().getTypePage())
+    {
+      return true;
+    }
+
+    try
+    {
+      CDOSession[] session = { null };
+
+      getContainer().run(true, true, progressMonitor -> {
+        OMMonitor monitor = new EclipseMonitor(progressMonitor, "Connecting repository '" + repository.getLabel() + "'...");
+        monitor.begin();
+
+        if (!Async.exec(monitor, () -> session[0] = getSession()))
+        {
+          throw new InterruptedException();
+        }
+      });
+
+      return session[0] != null;
+    }
+    catch (InterruptedException ex)
+    {
+      return false;
+    }
+    catch (InvocationTargetException ex)
+    {
+      Throwable targetException = ex.getTargetException();
+      OM.LOG.error(targetException);
+
+      IStatus status = new Status(IStatus.ERROR, OM.BUNDLE_ID, targetException.getMessage(), targetException);
+      ErrorDialog.openError(getShell(), "Error", "An error occured while connecting repository '" + repository.getLabel() + "'.", status);
+      return false;
+    }
   }
 
   @Override

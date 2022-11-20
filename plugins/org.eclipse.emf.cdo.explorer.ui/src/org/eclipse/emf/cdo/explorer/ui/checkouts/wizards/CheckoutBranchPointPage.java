@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -99,9 +100,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void createUI(Composite parent)
   {
-    CDOBranchPoint branchPoint = getBranchPoint();
-
-    branchPointComposite = new ComposeBranchPointComposite(parent, true, branchPoint)
+    branchPointComposite = new ComposeBranchPointComposite(parent, true, null)
     {
       @Override
       protected void timeStampError(String message)
@@ -147,8 +146,7 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
   @Override
   protected void pageActivated()
   {
-    final CheckoutWizard wizard = getWizard();
-    String type = wizard.getTypePage().getType();
+    String type = getWizard().getTypePage().getType();
 
     if (CDOCheckout.TYPE_ONLINE_TRANSACTIONAL.equals(type))
     {
@@ -160,28 +158,60 @@ public class CheckoutBranchPointPage extends CheckoutWizardPage
       branchPointComposite.getSelectTimeComposite().setTimeStamp(timeStamp);
     }
 
-    final Display display = branchPointComposite.getDisplay();
+    Display display = branchPointComposite.getDisplay();
     display.asyncExec(new Runnable()
     {
       @Override
       public void run()
       {
-        final CDOSession session = wizard.getRepositoryPage().getSession();
-        final CDOBranchPoint branchPoint = wizard.getBranchPointPage().getBranchPoint();
-        final TreeViewer branchViewer = branchPointComposite.getBranchViewer();
+        CDOSession session = getSession();
+        if (session == null)
+        {
+          int answer = MessageDialog.open(MessageDialog.ERROR, getShell(), "Connection Problem", "The repository could not be connected.", SWT.NONE, "&Retry",
+              "Go &Back");
+          if (answer == 1)
+          {
+          }
+        }
 
+        CDOBranchPoint branchPoint;
+        if (branchPointComposite.getBranchPoint() == null)
+        {
+          branchPoint = getBranchPoint();
+          branchPointComposite.setBranchPoint(branchPoint);
+        }
+        else
+        {
+          branchPoint = CheckoutBranchPointPage.this.getBranchPoint();
+        }
+
+        TreeViewer branchViewer = branchPointComposite.getBranchViewer();
         branchViewer.setInput(session.getBranchManager());
+
+        CDOBranch branch = branchPoint.getBranch();
+
         display.asyncExec(new Runnable()
         {
           @Override
           public void run()
           {
-            CDOBranch branch = branchPoint.getBranch();
             branchViewer.setSelection(new StructuredSelection(branch));
             branchViewer.expandToLevel(branch, 1);
             validate();
           }
         });
+      }
+
+      private CDOSession getSession()
+      {
+        try
+        {
+          return getWizard().getRepositoryPage().getSession();
+        }
+        catch (Exception ex)
+        {
+          return null;
+        }
       }
     });
   }

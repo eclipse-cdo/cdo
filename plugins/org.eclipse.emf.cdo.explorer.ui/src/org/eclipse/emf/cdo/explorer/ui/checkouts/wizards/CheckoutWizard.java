@@ -27,8 +27,11 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.jface.dialogs.ErrorDialog;
+import org.eclipse.jface.dialogs.IPageChangeProvider;
 import org.eclipse.jface.dialogs.IPageChangedListener;
+import org.eclipse.jface.dialogs.IPageChangingListener;
 import org.eclipse.jface.dialogs.PageChangedEvent;
+import org.eclipse.jface.dialogs.PageChangingEvent;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.wizard.IWizardContainer;
 import org.eclipse.jface.wizard.Wizard;
@@ -45,8 +48,24 @@ import java.util.Properties;
 /**
  * @author Eike Stepper
  */
-public class CheckoutWizard extends Wizard implements IImportWizard, IPageChangedListener
+public class CheckoutWizard extends Wizard implements IImportWizard
 {
+  private final IPageChangedListener pageChangedListener = new IPageChangedListener()
+  {
+    @Override
+    public void pageChanged(PageChangedEvent event)
+    {
+      Object page = event.getSelectedPage();
+      if (page instanceof CheckoutWizardPage)
+      {
+        CheckoutWizardPage checkoutWizardPage = (CheckoutWizardPage)page;
+        checkoutWizardPage.pageActivated();
+      }
+    }
+  };
+
+  private IPageChangingListener pageChangingListener;
+
   private CDORepositoryElement selectedElement;
 
   private CheckoutRepositoryPage repositoryPage;
@@ -61,6 +80,7 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
 
   public CheckoutWizard()
   {
+    setNeedsProgressMonitor(true);
     setWindowTitle("New Checkout");
   }
 
@@ -102,27 +122,41 @@ public class CheckoutWizard extends Wizard implements IImportWizard, IPageChange
   @Override
   public void setContainer(IWizardContainer wizardContainer)
   {
-    if (getContainer() instanceof WizardDialog)
+    if (getContainer() instanceof IPageChangeProvider)
     {
-      ((WizardDialog)getContainer()).removePageChangedListener(this);
+      ((IPageChangeProvider)getContainer()).removePageChangedListener(pageChangedListener);
+    }
+
+    if (getContainer() instanceof WizardDialog && pageChangingListener != null)
+    {
+      ((WizardDialog)getContainer()).removePageChangingListener(pageChangingListener);
+      pageChangingListener = null;
     }
 
     super.setContainer(wizardContainer);
 
     if (getContainer() instanceof WizardDialog)
     {
-      ((WizardDialog)getContainer()).addPageChangedListener(this);
-    }
-  }
+      pageChangingListener = new IPageChangingListener()
+      {
+        @Override
+        public void handlePageChanging(PageChangingEvent event)
+        {
+          Object page = event.getCurrentPage();
+          if (page instanceof CheckoutWizardPage)
+          {
+            CheckoutWizardPage checkoutWizardPage = (CheckoutWizardPage)page;
+            event.doit = checkoutWizardPage.pageAboutToDeactivate(event.getTargetPage());
+          }
+        }
+      };
 
-  @Override
-  public void pageChanged(PageChangedEvent event)
-  {
-    Object page = event.getSelectedPage();
-    if (page instanceof CheckoutWizardPage)
+      ((WizardDialog)getContainer()).addPageChangingListener(pageChangingListener);
+    }
+
+    if (getContainer() instanceof WizardDialog)
     {
-      CheckoutWizardPage checkoutWizardPage = (CheckoutWizardPage)page;
-      checkoutWizardPage.pageActivated();
+      ((WizardDialog)getContainer()).addPageChangedListener(pageChangedListener);
     }
   }
 

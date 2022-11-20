@@ -191,6 +191,12 @@ public abstract class AbstractMonitor implements OMMonitor
       {
         if (!canceled && monitor != null)
         {
+          if (monitor.isCanceled())
+          {
+            stop();
+            return;
+          }
+
           double work = 1 - monitor.getWork();
           monitor.worked(work / TEN);
         }

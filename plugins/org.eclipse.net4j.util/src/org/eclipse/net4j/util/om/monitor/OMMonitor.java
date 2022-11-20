@@ -10,6 +10,9 @@
  */
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+
 /**
  * @author Eike Stepper
  * @noextend This interface is not intended to be extended by clients.
@@ -102,5 +105,127 @@ public interface OMMonitor extends OMMonitorProgress
   public interface Async
   {
     public void stop();
+
+    /**
+    * @since 3.21
+    */
+    public static AsyncMonitor fork(OMMonitor monitor, double work)
+    {
+      Async async = monitor.forkAsync(work);
+      return new AsyncMonitor()
+      {
+        @Override
+        public void stop()
+        {
+          async.stop();
+        }
+
+        @Override
+        public void close()
+        {
+          stop();
+        }
+      };
+    }
+
+    /**
+    * Same as calling <code>fork(monitor, ONE)</code>.
+    *
+    * @since 3.21
+    */
+    public static AsyncMonitor fork(OMMonitor monitor)
+    {
+      return fork(monitor, ONE);
+    }
+
+    /**
+     * @since 3.21
+     */
+    public static boolean exec(OMMonitor monitor, double work, Runnable runnable)
+    {
+      try (AsyncMonitor async = fork(monitor))
+      {
+        boolean[] finished = { false };
+        boolean[] canceled = { false };
+        RuntimeException[] exception = { null };
+
+        Runnable finishingRunnable = () -> {
+          try
+          {
+            runnable.run();
+          }
+          catch (Exception ex)
+          {
+            Exception unwrapped = WrappedException.unwrap(ex);
+            if (unwrapped instanceof InterruptedException)
+            {
+              canceled[0] = true;
+              return;
+            }
+
+            if (unwrapped instanceof RuntimeException)
+            {
+              exception[0] = (RuntimeException)unwrapped;
+            }
+            else if (ex instanceof RuntimeException)
+            {
+              exception[0] = (RuntimeException)ex;
+            }
+            else
+            {
+              exception[0] = WrappedException.wrap(ex);
+            }
+          }
+          finally
+          {
+            finished[0] = true;
+          }
+        };
+
+        Thread thread = new Thread(finishingRunnable, runnable.getClass().getSimpleName());
+        thread.setDaemon(true);
+        thread.start();
+
+        while (!finished[0])
+        {
+          if (monitor.isCanceled())
+          {
+            thread.interrupt();
+            break;
+          }
+
+          ConcurrencyUtil.sleep(10);
+        }
+
+        if (exception[0] != null)
+        {
+          throw exception[0];
+        }
+
+        return !canceled[0];
+      }
+    }
+
+    /**
+     * Same as calling <code>exec(monitor, ONE, runnable)</code>.
+     *
+     * @since 3.21
+     */
+    public static boolean exec(OMMonitor monitor, Runnable runnable)
+    {
+      return exec(monitor, ONE, runnable);
+    }
+  }
+
+  /**
+  * @author Eike Stepper
+  * @since 3.21
+  * @noextend This interface is not intended to be extended by clients.
+  * @noimplement This interface is not intended to be implemented by clients.
+  */
+  public interface AsyncMonitor extends Async, AutoCloseable
+  {
+    @Override
+    public void close();
   }
 }

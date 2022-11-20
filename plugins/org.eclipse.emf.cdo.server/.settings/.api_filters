@@ -430,6 +430,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/ISessionProtocol.java" type="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.ISessionProtocol"/>
+                <message_argument value="sendLockOwnerRemappedNotification(CDOBranch, CDOLockOwner, CDOLockOwner)"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="CDOProtocol"/>

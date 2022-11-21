@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - re-enable WebSocket tests after move to Jetty 10.0.12
  */
 package org.eclipse.net4j.tests.config;
 
@@ -41,6 +42,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -317,6 +319,9 @@ public abstract class TestConfig
 
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+
           handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
           server.setHandler(handler);
           server.start();

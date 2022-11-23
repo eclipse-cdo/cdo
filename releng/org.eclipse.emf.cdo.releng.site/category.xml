@@ -53,6 +53,5 @@
   <category-def name="org.eclipse.emf.cdo.releng.hidden.category" label="Others"/>
   <feature id="org.eclipse.emf.cdo.all" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
   <feature id="org.eclipse.emf.cdo.all.source" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
-  <feature id="org.eclipse.emf.cdo.epp" version="0.0.0"><category name="org.eclipse.emf.cdo.releng.hidden.category"/></feature>
 
 </site>

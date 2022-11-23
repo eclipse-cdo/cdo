@@ -54,7 +54,6 @@
         <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
-        <setEntry value="org.eclipse.emf.cdo.epp:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples:default"/>
         <setEntry value="org.eclipse.emf.cdo.license:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>

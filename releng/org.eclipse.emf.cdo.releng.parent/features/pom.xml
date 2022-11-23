@@ -35,7 +35,6 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.dawn-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.doc-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.ecore.dependencies-feature</module>
-    <module>../../../features/org.eclipse.emf.cdo.epp-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.examples-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.examples.installer-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.license-feature</module>
@@ -84,7 +83,6 @@ Eike Stepper - initial API and implementation
             <labelSuffix xml:space="preserve"> Source</labelSuffix>
               <excludes>
                 <feature id="org.eclipse.emf.cdo.doc"/>
-                <feature id="org.eclipse.emf.cdo.epp"/>
                 <feature id="org.eclipse.emf.cdo.examples.installer"/>
                 <feature id="org.eclipse.net4j.db.doc"/>
                 <feature id="org.eclipse.net4j.doc"/>

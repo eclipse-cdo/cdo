@@ -231,9 +231,10 @@ public class Notifier implements INotifier2
   {
     for (int i = 0; i < listeners.length; i++)
     {
+      IListener listener = listeners[i];
+
       try
       {
-        IListener listener = listeners[i];
         if (listener != null)
         {
           listener.notifyEvent(event);
@@ -241,7 +242,7 @@ public class Notifier implements INotifier2
       }
       catch (Exception ex)
       {
-        OM.LOG.error(ex);
+        OM.LOG.warn(listener + " failed to process " + event + ": " + ex, ex);
       }
     }
   }

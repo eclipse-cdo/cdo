@@ -2210,23 +2210,26 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   {
     if (view != null)
     {
-      ResourceSet resourceSet = view.getResourceSet();
-      Resource resource = resourceSet.getResources().get(0);
-
-      if (resource instanceof CDOResource)
+      EList<Resource> resources = view.getResourceSet().getResources();
+      if (!resources.isEmpty())
       {
-        CDOResource cdoResource = (CDOResource)resource;
-        String path = cdoResource.getPath();
+        Resource resource = resources.get(0);
 
-        CDOBranch branch = view.getBranch();
-        long timeStamp = view.getTimeStamp();
+        if (resource instanceof CDOResource)
+        {
+          CDOResource cdoResource = (CDOResource)resource;
+          String path = cdoResource.getPath();
 
-        String id = "org.eclipse.emf.cdo.resource" + path + "/" + branch.getID() + "/" + timeStamp;
-        Image image = getTitleImage();
-        String text = path + "  [" + branch.getName() + "/" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
-        String description = text;
+          CDOBranch branch = view.getBranch();
+          long timeStamp = view.getTimeStamp();
 
-        return new Topic(view.getSession(), id, image, text, description);
+          String id = "org.eclipse.emf.cdo.resource" + path + "/" + branch.getID() + "/" + timeStamp;
+          Image image = getTitleImage();
+          String text = path + "  [" + branch.getName() + "/" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
+          String description = text;
+
+          return new Topic(view.getSession(), id, image, text, description);
+        }
       }
     }
 

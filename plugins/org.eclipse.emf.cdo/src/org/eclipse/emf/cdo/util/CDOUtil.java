@@ -18,11 +18,13 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRange;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDORenameContext;
 import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
@@ -736,6 +738,23 @@ public final class CDOUtil
     }
 
     return result;
+  }
+
+  /**
+   * @since 4.20
+   */
+  public static CDORevisionDelta getRevisionDelta(CDOObject object)
+  {
+    CDOView view = object.cdoView();
+    if (view instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)view;
+
+      Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
+      return revisionDeltas.get(object.cdoID());
+    }
+
+    return null;
   }
 
   /**

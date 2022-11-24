@@ -16,12 +16,19 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewEvent;
+
+import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.ecore.EObject;
 
+import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
@@ -45,6 +52,8 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
 
   private static final String CDO_REVISION = "cdoRevision";
 
+  private static final String CDO_REVISION_DELTA = "cdoRevisionDelta";
+
   private static final String CDO_CLASS_INFO = "cdoClassInfo";
 
   private static final String CDO_STATE = "cdoState";
@@ -52,6 +61,8 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
   private static final String CDO_VIEW = "cdoView";
 
   private final Color foreground = Display.getDefault().getSystemColor(SWT.COLOR_DARK_CYAN);
+
+  private ViewListener viewListener;
 
   public CDOIntrospectionProvider()
   {
@@ -62,6 +73,34 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
   public int getPriority()
   {
     return PRIORITY;
+  }
+
+  @Override
+  public void attachListener(TableViewer viewer, Object value)
+  {
+    super.attachListener(viewer, value);
+
+    CDOObject cdoObject = getCDOObject(value);
+    if (cdoObject != null)
+    {
+      CDOView view = cdoObject.cdoView();
+      if (view != null)
+      {
+        viewListener = new ViewListener(viewer, view);
+      }
+    }
+  }
+
+  @Override
+  public void detachListener(TableViewer viewer, Object value)
+  {
+    if (viewListener != null)
+    {
+      viewListener.dispose();
+      viewListener = null;
+    }
+
+    super.detachListener(viewer, value);
   }
 
   @Override
@@ -82,6 +121,7 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
       rows.add(createCDOLockStateRow(cdoObject));
       rows.add(createCDOPermissionRow(cdoObject));
       rows.add(createCDORevisionRow(cdoObject));
+      rows.add(createCDORevisionDeltaRow(cdoObject));
       rows.add(createCDOClassInfoRow(cdoObject));
       rows.add(createCDOStateRow(cdoObject));
       rows.add(createCDOViewRow(cdoObject));
@@ -115,6 +155,11 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
         if (CDO_REVISION.equals(name))
         {
           return createCDORevisionRow(cdoObject);
+        }
+
+        if (CDO_REVISION_DELTA.equals(name))
+        {
+          return createCDORevisionDeltaRow(cdoObject);
         }
 
         if (CDO_CLASS_INFO.equals(name))
@@ -152,6 +197,11 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
     return createRow(CDO_REVISION, cdoObject.cdoRevision(), CDORevision.class.getName(), CATEGORY, foreground);
   }
 
+  private Row createCDORevisionDeltaRow(CDOObject cdoObject)
+  {
+    return createRow(CDO_REVISION_DELTA, CDOUtil.getRevisionDelta(cdoObject), CDORevisionDelta.class.getName(), CATEGORY, foreground);
+  }
+
   private Row createCDOClassInfoRow(CDOObject cdoObject)
   {
     CDORevision revision = cdoObject.cdoRevision();
@@ -181,5 +231,37 @@ public class CDOIntrospectionProvider extends EMFIntrospectionProvider
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ViewListener implements IListener
+  {
+    private final TableViewer viewer;
+
+    private final CDOView view;
+
+    public ViewListener(TableViewer viewer, CDOView view)
+    {
+      this.viewer = viewer;
+      this.view = view;
+
+      view.addListener(this);
+    }
+
+    @Override
+    public void notifyEvent(IEvent event)
+    {
+      if (event instanceof CDOViewEvent)
+      {
+        UIUtil.refreshViewer(viewer);
+      }
+    }
+
+    public void dispose()
+    {
+      view.removeListener(this);
+    }
   }
 }

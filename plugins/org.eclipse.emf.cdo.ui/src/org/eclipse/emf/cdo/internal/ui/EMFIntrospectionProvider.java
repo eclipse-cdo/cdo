@@ -37,25 +37,6 @@ import java.util.List;
  */
 public class EMFIntrospectionProvider extends RowIntrospectionProvider
 {
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ValueAdapter extends AdapterImpl
-  {
-    private final TableViewer viewer;
-
-    private ValueAdapter(TableViewer viewer)
-    {
-      this.viewer = viewer;
-    }
-
-    @Override
-    public void notifyChanged(Notification msg)
-    {
-      UIUtil.refreshViewer(viewer);
-    }
-  }
-
   protected static final int PRIORITY = DEFAULT_PRIORITY - 20;
 
   protected static final int CATEGORY = DEFAULT_CATEGORY - 20;
@@ -280,5 +261,24 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
     }
 
     return getClassName(value);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ValueAdapter extends AdapterImpl
+  {
+    private final TableViewer viewer;
+  
+    private ValueAdapter(TableViewer viewer)
+    {
+      this.viewer = viewer;
+    }
+  
+    @Override
+    public void notifyChanged(Notification msg)
+    {
+      UIUtil.refreshViewer(viewer);
+    }
   }
 }

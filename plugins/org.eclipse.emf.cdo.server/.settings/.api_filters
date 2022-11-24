@@ -552,6 +552,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSessionManager.java" type="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSessionManager"/>
+                <message_argument value="sendLockOwnerRemappedNotification(InternalSession, CDOBranch, CDOLockOwner, CDOLockOwner)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSynchronizableRepository.java" type="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
         <filter id="571473929">
             <message_arguments>

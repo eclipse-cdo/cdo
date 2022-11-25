@@ -545,6 +545,24 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/InternalSession.java" type="org.eclipse.emf.cdo.spi.server.InternalSession">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+                <message_argument value="openTransaction(int, CDOBranchPoint, String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+                <message_argument value="openView(int, CDOBranchPoint, String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+                <message_argument value="sendLockOwnerRemappedNotification(CDOBranch, CDOLockOwner, CDOLockOwner)"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="Options"/>

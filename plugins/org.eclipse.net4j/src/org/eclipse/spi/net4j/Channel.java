@@ -233,6 +233,8 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   @Override
   public void handleBuffer(IBuffer buffer)
   {
+    checkID();
+
     BufferState state = buffer.getState();
     if (state != BufferState.PUTTING)
     {
@@ -382,7 +384,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(id != IBuffer.NO_CHANNEL, "channelID == NO_CHANNEL"); //$NON-NLS-1$
+    checkID();
     checkState(channelMultiplexer, "channelMultiplexer"); //$NON-NLS-1$
   }
 
@@ -426,6 +428,11 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   public boolean isClosed()
   {
     return !isActive();
+  }
+
+  private void checkID()
+  {
+    checkState(id != IBuffer.NO_CHANNEL, "channelID == NO_CHANNEL"); //$NON-NLS-1$
   }
 
   private void fireCountersChangedEvent()

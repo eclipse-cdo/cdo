@@ -18,6 +18,7 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocol2;
+import org.eclipse.net4j.protocol.IProtocol3;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ProtocolVersionException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
@@ -205,6 +206,8 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
         String message = "Channel registration timeout after " + getOpenChannelTimeout() + " milliseconds";
         throw new TimeoutRuntimeException(message, ex);
       }
+
+      protocolConnected(protocol);
     }
     catch (ChannelException ex)
     {
@@ -246,6 +249,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
       channel.setID(channelID);
 
       addChannel(channel);
+      protocolConnected(protocol);
       return channel;
     }
     finally
@@ -465,6 +469,14 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     {
       OM.LOG.error(ex);
       throw ex;
+    }
+  }
+
+  private void protocolConnected(IProtocol<?> protocol)
+  {
+    if (protocol instanceof IProtocol3)
+    {
+      ((IProtocol3<?>)protocol).doWhenFullyConnected();
     }
   }
 }

@@ -18,7 +18,7 @@ package org.eclipse.net4j.protocol;
  */
 public interface IProtocol3<INFRA_STRUCTURE> extends IProtocol2<INFRA_STRUCTURE>
 {
-  public default void doWhenFullyConnected()
+  public default void doWhenFullyConnected() throws Exception
   {
   }
 }

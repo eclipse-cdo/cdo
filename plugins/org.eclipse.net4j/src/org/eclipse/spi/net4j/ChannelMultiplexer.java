@@ -29,6 +29,7 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.lifecycle.LifecycleException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
@@ -476,7 +477,18 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
   {
     if (protocol instanceof IProtocol3)
     {
-      ((IProtocol3<?>)protocol).doWhenFullyConnected();
+      try
+      {
+        ((IProtocol3<?>)protocol).doWhenFullyConnected();
+      }
+      catch (RuntimeException ex)
+      {
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw new LifecycleException(ex);
+      }
     }
   }
 }

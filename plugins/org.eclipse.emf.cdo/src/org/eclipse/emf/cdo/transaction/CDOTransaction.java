@@ -310,6 +310,11 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
    */
   public CDOCommitInfo commit(Runnable runnable, int attempts, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException;
 
+  /**
+   * @since 4.21
+   */
+  public CDOCommitInfo commitAndClose(IProgressMonitor monitor, boolean keepOpenAfterCommitProblem) throws CommitException;
+
   @Override
   public Options options();
 

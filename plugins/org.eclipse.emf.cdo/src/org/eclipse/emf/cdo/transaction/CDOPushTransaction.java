@@ -329,6 +329,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   @Override
+  public CDOCommitInfo commitAndClose(IProgressMonitor monitor, boolean keepOpenAfterCommitProblem) throws CommitException
+  {
+    return delegate.commitAndClose(monitor, keepOpenAfterCommitProblem);
+  }
+
+  @Override
   public void rollback()
   {
     throw new UnsupportedOperationException("Rollback not supported for push transactions");

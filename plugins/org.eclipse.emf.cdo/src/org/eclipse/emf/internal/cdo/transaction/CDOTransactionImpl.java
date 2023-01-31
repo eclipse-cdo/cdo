@@ -1699,6 +1699,50 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   @Override
   public CDOCommitInfo commit(IProgressMonitor monitor) throws CommitException
   {
+    CDOCommitInfo info = commitAfterResolveConflicts(monitor);
+    if (info != null)
+    {
+      waitForCommitInfo(info.getTimeStamp());
+    }
+
+    return info;
+  }
+
+  @Override
+  public CDOCommitInfo commitAndClose(IProgressMonitor monitor, boolean keepOpenAfterCommitProblem) throws CommitException
+  {
+    CDOCommitInfo info;
+
+    try
+    {
+      info = commitAfterResolveConflicts(monitor);
+    }
+    catch (Error | RuntimeException | CommitException ex)
+    {
+      if (!keepOpenAfterCommitProblem)
+      {
+        try
+        {
+          close();
+        }
+        catch (Exception ex1)
+        {
+          if (isActive())
+          {
+            OM.LOG.error(ex1);
+          }
+        }
+      }
+
+      throw ex;
+    }
+
+    close();
+    return info;
+  }
+
+  private CDOCommitInfo commitAfterResolveConflicts(IProgressMonitor monitor) throws CommitException
+  {
     CDOConflictResolver[] conflictResolvers = options().getConflictResolvers();
     if (conflictResolvers.length != 0)
     {
@@ -1724,13 +1768,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       }
     }
 
-    CDOCommitInfo info = commitSynced(monitor);
-    if (info != null)
-    {
-      waitForCommitInfo(info.getTimeStamp());
-    }
-
-    return info;
+    return commitSynced(monitor);
   }
 
   private void waitForCommitInfo(long timeStamp)

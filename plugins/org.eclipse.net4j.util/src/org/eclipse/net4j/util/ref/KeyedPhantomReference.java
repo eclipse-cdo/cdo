@@ -42,6 +42,6 @@ public class KeyedPhantomReference<K, T> extends PhantomReference<T> implements 
   @Override
   public String toString()
   {
-    return MessageFormat.format("KeyedPhantomReference[{0} -> {1}]", key, isEnqueued() ? "ENQUEUED" : get()); //$NON-NLS-1$ //$NON-NLS-2$
+    return MessageFormat.format("KeyedPhantomReference[{0} -> {1}]", key, get()); //$NON-NLS-1$
   }
 }

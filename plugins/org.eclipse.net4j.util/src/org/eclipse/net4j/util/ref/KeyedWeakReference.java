@@ -48,6 +48,6 @@ public class KeyedWeakReference<K, T> extends WeakReference<T> implements KeyedR
   @Override
   public String toString()
   {
-    return MessageFormat.format("KeyedWeakReference[{0} -> {1}]", key, isEnqueued() ? "ENQUEUED" : get()); //$NON-NLS-1$ //$NON-NLS-2$
+    return MessageFormat.format("KeyedWeakReference[{0} -> {1}]", key, get()); //$NON-NLS-1$
   }
 }

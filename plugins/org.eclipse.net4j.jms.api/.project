@@ -37,6 +37,10 @@
 					<value>true</value>
 				</dictionary>
 				<dictionary>
+					<key>ignore.missing.export.versions</key>
+					<value>true</value>
+				</dictionary>
+				<dictionary>
 					<key>release.path</key>
 					<value>/org.eclipse.emf.cdo.releng/versions/release.xml</value>
 				</dictionary>

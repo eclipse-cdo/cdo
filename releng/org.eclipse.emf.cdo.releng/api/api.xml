@@ -1,1249 +1,528 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="39" key="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic" kind="ADDED" message="A superclass has been added for type org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic" newModifiers="25" oldModifiers="25" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="FIELD_ELEMENT_TYPE" flags="31" key="in" kind="CHANGED" message="The 'final' keyword has been added for the non-visble field org.eclipse.net4j.util.io.LimitedReader.in" newModifiers="18" oldModifiers="2" restrictions="0" type_name="org.eclipse.net4j.util.io.LimitedReader">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.LimitedReader"/>
-            <message_argument value="in"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="FIELD_ELEMENT_TYPE" flags="19" key="description" kind="CHANGED" message="The 'final' keyword has been removed for an instance field org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.description" newModifiers="2" oldModifiers="18" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="description"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="FIELD_ELEMENT_TYPE" flags="19" key="image" kind="CHANGED" message="The 'final' keyword has been removed for an instance field org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.image" newModifiers="2" oldModifiers="18" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="image"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="FIELD_ELEMENT_TYPE" flags="19" key="text" kind="CHANGED" message="The 'final' keyword has been removed for an instance field org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.text" newModifiers="2" oldModifiers="18" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="text"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="createSSLEngine(ZLjava/lang/String;I)Ljavax/net/ssl/SSLEngine;" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.createSSLEngine(boolean, String, int)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="createSSLEngine(boolean, String, int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="getAcceptor(Lorg/eclipse/net4j/util/container/IManagedContainer;Ljava/lang/String;)Lorg/eclipse/net4j/tcp/ITCPAcceptor;" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.getAcceptor(IManagedContainer, String)" newModifiers="9" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getAcceptor(IManagedContainer, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="getConnector(Lorg/eclipse/net4j/util/container/IManagedContainer;Ljava/lang/String;)Lorg/eclipse/net4j/tcp/ITCPConnector;" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.getConnector(IManagedContainer, String)" newModifiers="9" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getConnector(IManagedContainer, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="getHandShakeTimeOut()I" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeTimeOut()" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getHandShakeTimeOut()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="getHandShakeWaitTime()I" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeWaitTime()" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getHandShakeWaitTime()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="prepareContainer(Lorg/eclipse/net4j/util/container/IManagedContainer;)V" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.prepareContainer(IManagedContainer)" newModifiers="9" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="prepareContainer(IManagedContainer)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="setDefaultSSLConfiguration(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration(String, String, String)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultSSLConfiguration(String, String, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="setDefaultSSLConfiguration(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration(String, String, String, int, int)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultSSLConfiguration(String, String, String, int, int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="40" key="setSSLConfigurationFile(Ljava/lang/String;)V" kind="CHANGED" message="The 'synchronized' keyword has been removed for method org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile(String)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setSSLConfigurationFile(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getStoreFile()Ljava/io/File;" kind="ADDED" message="The abstract method org.eclipse.emf.cdo.common.lob.CDOLob.getStoreFile() has been added in a class tagged with '@noextend'" newModifiers="1025" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.lob.CDOLob">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.lob.CDOLob"/>
-            <message_argument value="getStoreFile()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="8" key="LimitedReader(Ljava/io/Reader;JZ)V" kind="ADDED" message="The constructor org.eclipse.net4j.util.io.LimitedReader.LimitedReader(Reader, long, boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.LimitedReader">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.LimitedReader"/>
-            <message_argument value="LimitedReader(Reader, long, boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="changeTopic(Lorg/eclipse/emf/cdo/ui/CDOTopicProvider$Topic;Lorg/eclipse/swt/graphics/Image;Ljava/lang/String;Ljava/lang/String;)V" kind="ADDED" message="The default method org.eclipse.emf.cdo.ui.CDOTopicProvider.changeTopic(CDOTopicProvider.Topic, Image, String, String) in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider"/>
-            <message_argument value="changeTopic(CDOTopicProvider.Topic, Image, String, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="72" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent" newModifiers="1050113" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setDefaultSSLConfiguration(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration(String, String, String)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultSSLConfiguration(String, String, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getHandShakeTimeOut()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeTimeOut()" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getHandShakeTimeOut()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setSSLConfigurationFile(Ljava/lang/String;)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.setSSLConfigurationFile(String)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setSSLConfigurationFile(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="createSSLEngine(ZLjava/lang/String;I)Ljavax/net/ssl/SSLEngine;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.createSSLEngine(boolean, String, int)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="createSSLEngine(boolean, String, int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setDefaultSSLConfiguration(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;II)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultSSLConfiguration(String, String, String, int, int)" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultSSLConfiguration(String, String, String, int, int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getHandShakeWaitTime()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.tcp.ssl.SSLUtil.getHandShakeWaitTime()" newModifiers="1048585" oldModifiers="41" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getHandShakeWaitTime()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="72" key="org.eclipse.net4j.util.factory.FactoryDescriptor" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.util.factory.FactoryDescriptor" newModifiers="1048609" oldModifiers="33" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.12.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="CONNECTION_RETRY_COUNT" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IDBStore.Props.CONNECTION_RETRY_COUNT has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.db.IDBStore.Props"/>
-            <message_argument value="CONNECTION_RETRY_COUNT"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.12.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="CONNECTION_RETRY_SECONDS" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IDBStore.Props.CONNECTION_RETRY_SECONDS has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.db.IDBStore.Props"/>
-            <message_argument value="CONNECTION_RETRY_SECONDS"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="PROP_LIFECYCLE_EXCEPTION_HANDLER" kind="ADDED" message="The field org.eclipse.emf.cdo.view.CDOView.PROP_LIFECYCLE_EXCEPTION_HANDLER has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
-            <message_argument value="PROP_LIFECYCLE_EXCEPTION_HANDLER"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.12.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="StateChangedEvent" kind="ADDED" message="The member type StateChangedEvent has been added" newModifiers="1545" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.explorer.CDOExplorerElement">
-        <message_arguments>
-            <message_argument value="StateChangedEvent"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="TopicChangedEvent" kind="ADDED" message="The member type TopicChangedEvent has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="TopicChangedEvent"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getStoreFile()Ljava/io/File;" kind="ADDED" message="The method org.eclipse.emf.cdo.common.lob.CDOBlob.getStoreFile() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.lob.CDOBlob">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.lob.CDOBlob"/>
-            <message_argument value="getStoreFile()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getStoreFile()Ljava/io/File;" kind="ADDED" message="The method org.eclipse.emf.cdo.common.lob.CDOClob.getStoreFile() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.lob.CDOClob">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.lob.CDOClob"/>
-            <message_argument value="getStoreFile()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getSubscribedTopic(Ljava/lang/String;)Lorg/eclipse/emf/cdo/session/remote/CDORemoteTopic;" kind="ADDED" message="The method org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager.getSubscribedTopic(String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"/>
-            <message_argument value="getSubscribedTopic(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getLockStates(Ljava/util/Collection&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;Z)[Lorg/eclipse/emf/cdo/common/lock/CDOLockState;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.getLockStates(Collection&lt;CDOID&gt;, boolean) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.21.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="commitAndClose(Lorg/eclipse/core/runtime/IProgressMonitor;Z)Lorg/eclipse/emf/cdo/common/commit/CDOCommitInfo;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.commitAndClose(IProgressMonitor, boolean) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
-            <message_argument value="getLockStates(Collection&lt;CDOID&gt;, boolean)"/>
+            <message_argument value="commitAndClose(IProgressMonitor, boolean)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="26" key="getConflictingObject()Lorg/eclipse/emf/cdo/CDOObject;" kind="REMOVED" message="The method org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent.getConflictingObject() has been moved up in the hierarchy" newModifiers="1025" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.21.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="commitAndClose(Lorg/eclipse/core/runtime/IProgressMonitor;Z)Lorg/eclipse/emf/cdo/common/commit/CDOCommitInfo;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOTransaction.commitAndClose(IProgressMonitor, boolean) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent"/>
-            <message_argument value="getConflictingObject()"/>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+            <message_argument value="commitAndClose(IProgressMonitor, boolean)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="26" key="isFirstConflict()Z" kind="REMOVED" message="The method org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent.isFirstConflict() has been moved up in the hierarchy" newModifiers="1025" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictEvent"/>
-            <message_argument value="isFirstConflict()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getAdapter&lt;T:Ljava/lang/Object;&gt;(Ljava/lang/Class&lt;TT;&gt;;)TT;" kind="ADDED" message="The method org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.getAdapter(Class&lt;T&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="getAdapter(Class&lt;T&gt;)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getLockStates(Ljava/util/Collection&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;Z)[Lorg/eclipse/emf/cdo/common/lock/CDOLockState;" kind="ADDED" message="The method org.eclipse.emf.cdo.view.CDOView.getLockStates(Collection&lt;CDOID&gt;, boolean) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
-            <message_argument value="getLockStates(Collection&lt;CDOID&gt;, boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="eAdapters()Lorg/eclipse/emf/common/util/EList&lt;Lorg/eclipse/emf/common/notify/Adapter;&gt;;" kind="ADDED" message="The method org.eclipse.emf.internal.cdo.CDOObjectImpl.eAdapters() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
-            <message_argument value="eAdapters()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="26" key="getLockStates(Ljava/util/Collection&lt;Lorg/eclipse/emf/cdo/common/id/CDOID;&gt;;Z)[Lorg/eclipse/emf/cdo/common/lock/CDOLockState;" kind="REMOVED" message="The method org.eclipse.emf.spi.cdo.InternalCDOView.getLockStates(Collection&lt;CDOID&gt;, boolean) has been moved up in the hierarchy" newModifiers="1025" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
-            <message_argument value="getLockStates(Collection&lt;CDOID&gt;, boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="26" key="getDescriptionFor(Ljava/lang/Object;)Ljava/lang/String;" kind="REMOVED" message="The method org.eclipse.net4j.util.factory.FactoryDescriptor.getDescriptionFor(Object) has been moved up in the hierarchy" newModifiers="1" oldModifiers="1" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="getDescriptionFor(Object)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="needsBufferProvider()Z" kind="ADDED" message="The method org.eclipse.spi.net4j.Acceptor.needsBufferProvider() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.spi.net4j.Acceptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.spi.net4j.Acceptor"/>
-            <message_argument value="needsBufferProvider()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.16.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="needsBufferProvider()Z" kind="ADDED" message="The method org.eclipse.spi.net4j.ChannelMultiplexer.needsBufferProvider() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.spi.net4j.ChannelMultiplexer">
-        <message_arguments>
-            <message_argument value="org.eclipse.spi.net4j.ChannelMultiplexer"/>
-            <message_argument value="needsBufferProvider()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.16.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="needsBufferProvider()Z" kind="ADDED" message="The method org.eclipse.spi.net4j.InternalAcceptor.needsBufferProvider() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.spi.net4j.InternalAcceptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.spi.net4j.InternalAcceptor"/>
-            <message_argument value="needsBufferProvider()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.16.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="needsBufferProvider()Z" kind="ADDED" message="The method org.eclipse.spi.net4j.InternalChannelMultiplexer.needsBufferProvider() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.spi.net4j.InternalChannelMultiplexer">
-        <message_arguments>
-            <message_argument value="org.eclipse.spi.net4j.InternalChannelMultiplexer"/>
-            <message_argument value="needsBufferProvider()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo (from version 4.18.0 to 4.19.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo (from version 4.20.0 to 4.21.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo"/>
-            <message_argument value="4.18.0"/>
-            <message_argument value="4.19.0"/>
+            <message_argument value="4.20.0"/>
+            <message_argument value="4.21.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.common" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.common (from version 4.18.0 to 4.19.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server.net4j" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server.net4j (from version 4.5.4 to 4.6.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common"/>
-            <message_argument value="4.18.0"/>
-            <message_argument value="4.19.0"/>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j"/>
+            <message_argument value="4.5.4"/>
+            <message_argument value="4.6.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.explorer(4.12.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.explorer" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.explorer (from version 4.11.3 to 4.12.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.explorer"/>
-            <message_argument value="4.11.3"/>
-            <message_argument value="4.12.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.12.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server.db" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server.db (from version 4.11.3 to 4.12.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.server.db"/>
-            <message_argument value="4.11.3"/>
-            <message_argument value="4.12.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui (from version 4.13.0 to 4.14.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui"/>
-            <message_argument value="4.13.0"/>
-            <message_argument value="4.14.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j (from version 4.15.0 to 4.16.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j (from version 4.16.0 to 4.17.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.net4j"/>
-            <message_argument value="4.15.0"/>
             <message_argument value="4.16.0"/>
+            <message_argument value="4.17.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.tcp" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.tcp (from version 4.3.3 to 4.4.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="checkID()V" kind="ADDED" message="The non-abstract method org.eclipse.spi.net4j.Channel.checkID() has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.spi.net4j.Channel">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp"/>
-            <message_argument value="4.3.3"/>
-            <message_argument value="4.4.0"/>
+            <message_argument value="org.eclipse.spi.net4j.Channel"/>
+            <message_argument value="checkID()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util (from version 3.19.0 to 3.20.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="protocolConnected(Lorg/eclipse/net4j/protocol/IProtocol&lt;*&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.spi.net4j.ChannelMultiplexer.protocolConnected(IProtocol&lt;?&gt;) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.spi.net4j.ChannelMultiplexer">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util"/>
-            <message_argument value="3.19.0"/>
-            <message_argument value="3.20.0"/>
+            <message_argument value="org.eclipse.spi.net4j.ChannelMultiplexer"/>
+            <message_argument value="protocolConnected(IProtocol&lt;?&gt;)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util.ui" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util.ui (from version 3.15.0 to 3.16.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.compare.contentmergeviewer.IIgnoreWhitespaceContributor" kind="ADDED" message="The re-exported type org.eclipse.compare.contentmergeviewer.IIgnoreWhitespaceContributor has been added to org.eclipse.emf.cdo.ui.compare_4.7.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.compare.contentmergeviewer.IIgnoreWhitespaceContributor">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui"/>
-            <message_argument value="3.15.0"/>
-            <message_argument value="3.16.0"/>
+            <message_argument value="org.eclipse.compare.contentmergeviewer.IIgnoreWhitespaceContributor"/>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare_4.7.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getByteCount()J" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.lob.CDOLob.getByteCount() has been added" newModifiers="17" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.lob.CDOLob">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.GEFColorProvider" kind="ADDED" message="The re-exported type org.eclipse.gef.GEFColorProvider has been added to org.eclipse.emf.cdo.dawn.graphiti_2.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.gef.GEFColorProvider">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.lob.CDOLob"/>
-            <message_argument value="getByteCount()"/>
+            <message_argument value="org.eclipse.gef.GEFColorProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="addAdapterProvider(Ljava/util/function/Function&lt;Ljava/lang/Class&lt;*&gt;;Ljava/lang/Object;&gt;;)Lorg/eclipse/emf/cdo/ui/CDOTopicProvider$Topic;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.addAdapterProvider(Function&lt;Class&lt;?&gt;,Object&gt;) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ThemeConstants" kind="ADDED" message="The re-exported type org.eclipse.gef.ThemeConstants has been added to org.eclipse.emf.cdo.dawn.graphiti_2.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.gef.ThemeConstants">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="addAdapterProvider(Function&lt;Class&lt;?&gt;,Object&gt;)"/>
+            <message_argument value="org.eclipse.gef.ThemeConstants"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="change(Lorg/eclipse/swt/graphics/Image;Ljava/lang/String;Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.change(Image, String, String) has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.emf.cdo.admin_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="change(Image, String, String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getProperties()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/Object;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.getProperties() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="getProperties()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="provideAdapter&lt;T:Ljava/lang/Object;&gt;(Ljava/lang/Class&lt;TT;&gt;;)TT;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.provideAdapter(Class&lt;T&gt;) has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="provideAdapter(Class&lt;T&gt;)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="handleLifecycleException(Lorg/eclipse/net4j/util/lifecycle/LifecycleException;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.internal.cdo.CDOObjectImpl.handleLifecycleException(LifecycleException) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
-            <message_argument value="handleLifecycleException(LifecycleException)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getConfigFile()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getConfigFile() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getConfigFile()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultHandShakeTimeOut()I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultHandShakeTimeOut() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultHandShakeTimeOut()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultHandShakeWaitTime()I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultHandShakeWaitTime() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultHandShakeWaitTime()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultKeyPath()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultKeyPath() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultKeyPath()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultPassPhrase()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultPassPhrase() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultPassPhrase()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultProtocol()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultProtocol() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultProtocol()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getDefaultTrustPath()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.getDefaultTrustPath() has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="getDefaultTrustPath()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setConfigFile(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setConfigFile(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setConfigFile(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultHandShakeTimeOut(I)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultHandShakeTimeOut(int) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultHandShakeTimeOut(int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultHandShakeWaitTime(I)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultHandShakeWaitTime(int) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultHandShakeWaitTime(int)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultKeyPath(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultKeyPath(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultKeyPath(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultPassPhrase(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultPassPhrase(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultPassPhrase(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultProtocol(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultProtocol(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultProtocol(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setDefaultTrustPath(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.tcp.ssl.SSLUtil.setDefaultTrustPath(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="setDefaultTrustPath(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="identityHashCode(Ljava/lang/Object;Z)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.HexUtil.identityHashCode(Object, boolean) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.HexUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.HexUtil"/>
-            <message_argument value="identityHashCode(Object, boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="unwrap()Ljava/lang/Exception;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ReflectUtil.ReflectionException.unwrap() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ReflectUtil$ReflectionException">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ReflectUtil.ReflectionException"/>
-            <message_argument value="unwrap()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="doGetMethod(Ljava/lang/Class&lt;*&gt;;Ljava/lang/String;[Ljava/lang/Class&lt;*&gt;;)Ljava/lang/reflect/Method;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ReflectUtil.doGetMethod(Class&lt;?&gt;, String, Class&lt;?&gt;[]) has been added" newModifiers="138" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ReflectUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ReflectUtil"/>
-            <message_argument value="doGetMethod(Class&lt;?&gt;, String, Class&lt;?&gt;[])"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getMethodOrNull(Ljava/lang/Class&lt;*&gt;;Ljava/lang/String;[Ljava/lang/Class&lt;*&gt;;)Ljava/lang/reflect/Method;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ReflectUtil.getMethodOrNull(Class&lt;?&gt;, String, Class&lt;?&gt;[]) has been added" newModifiers="137" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ReflectUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ReflectUtil"/>
-            <message_argument value="getMethodOrNull(Class&lt;?&gt;, String, Class&lt;?&gt;[])"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getListeners(Ljava/lang/Object;Ljava/util/function/Predicate&lt;Lorg/eclipse/net4j/util/event/IListener;&gt;;)[Lorg/eclipse/net4j/util/event/IListener;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.event.EventUtil.getListeners(Object, Predicate&lt;IListener&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.event.EventUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.event.EventUtil"/>
-            <message_argument value="getListeners(Object, Predicate&lt;IListener&gt;)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="removeListeners(Ljava/lang/Object;Ljava/util/function/Predicate&lt;Lorg/eclipse/net4j/util/event/IListener;&gt;;)[Lorg/eclipse/net4j/util/event/IListener;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.event.EventUtil.removeListeners(Object, Predicate&lt;IListener&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.event.EventUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.event.EventUtil"/>
-            <message_argument value="removeListeners(Object, Predicate&lt;IListener&gt;)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getPropertiesFor(Ljava/lang/Object;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.factory.PropertiesFactory.getPropertiesFor(Object) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.PropertiesFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.PropertiesFactory"/>
-            <message_argument value="getPropertiesFor(Object)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="parseProperties(Ljava/lang/String;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.factory.PropertiesFactory.parseProperties(String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.PropertiesFactory">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.PropertiesFactory"/>
-            <message_argument value="parseProperties(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="characters(Z)Ljava/io/Writer;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.characters(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="characters(boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="currentAttributes()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.currentAttributes() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="currentAttributes()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="currentElement()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.currentElement() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="currentElement()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getIndentation()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.getIndentation() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="getIndentation()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getNewLine()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.getNewLine() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="getNewLine()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="level()I" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.XMLOutput.level() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.XMLOutput">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.XMLOutput"/>
-            <message_argument value="level()"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="adapterProvider" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.adapterProvider has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="adapterProvider"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="properties" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.properties has been added" newModifiers="18" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="properties"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="PROTOCOL" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.PROTOCOL has been removed" newModifiers="0" oldModifiers="26" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="PROTOCOL"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="handShakeTimeOutVar" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.handShakeTimeOutVar has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="handShakeTimeOutVar"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="handShakeWaitTimeVar" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.handShakeWaitTimeVar has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="handShakeWaitTimeVar"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="keyPathVar" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.keyPathVar has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="keyPathVar"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="passPhraseVar" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.passPhraseVar has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="passPhraseVar"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="trustPathVar" kind="REMOVED" message="The non-visible field org.eclipse.net4j.tcp.ssl.SSLUtil.trustPathVar has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="trustPathVar"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ATTR_CLASS" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ATTR_CLASS has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ATTR_CLASS"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ATTR_PRODUCT_GROUP" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ATTR_PRODUCT_GROUP has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ATTR_PRODUCT_GROUP"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ATTR_TYPE" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ATTR_TYPE has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ATTR_TYPE"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ATTR_VALUE" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ATTR_VALUE has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ATTR_VALUE"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ELEM_FACTORY" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ELEM_FACTORY has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ELEM_FACTORY"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ELEM_TYPE" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.ELEM_TYPE has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="ELEM_TYPE"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="configurationElement" kind="REMOVED" message="The non-visible field org.eclipse.net4j.util.factory.FactoryDescriptor.configurationElement has been removed" newModifiers="0" oldModifiers="18" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="configurationElement"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="closeBackingReader" kind="ADDED" message="The non-visible field org.eclipse.net4j.util.io.LimitedReader.closeBackingReader has been added" newModifiers="18" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.io.LimitedReader">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.io.LimitedReader"/>
-            <message_argument value="closeBackingReader"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.0.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="removeModule(Ljava/lang/String;)V" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.removeModule(String) has been removed" newModifiers="0" oldModifiers="2" restrictions="4" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
-            <message_argument value="removeModule(String)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createKeyStore(Ljava/lang/String;[CZ)Ljava/security/KeyStore;" kind="REMOVED" message="The non-visible method org.eclipse.net4j.tcp.ssl.SSLUtil.createKeyStore(String, char[], boolean) has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="createKeyStore(String, char[], boolean)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createFactoryKey(Lorg/eclipse/core/runtime/IConfigurationElement;)Lorg/eclipse/net4j/util/factory/FactoryKey;" kind="REMOVED" message="The non-visible method org.eclipse.net4j.util.factory.FactoryDescriptor.createFactoryKey(IConfigurationElement) has been removed" newModifiers="0" oldModifiers="10" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
-            <message_argument value="createFactoryKey(IConfigurationElement)"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.admin_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
             <message_argument value="org.eclipse.emf.cdo.admin_4.3.2"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.compare_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.emf.cdo.net4j_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.7.0"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.emf.cdo.net4j_4.6.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.dawn_2.3.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.emf.cdo.server.admin_4.3.7" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.edit_4.5.6" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.5.6"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.expressions_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.gmf.notation_1.10.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.0.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.lm_1.0.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.lm_1.0.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.5.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.net4j_4.5.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.net4j_4.5.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.security_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.security_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.server.admin_4.3.7" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
             <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.7"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.server_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.5.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.emf.cdo.server.net4j_4.5.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.server_4.18.0"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j_4.5.4"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.transfer.repository_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.emf.cdo.ui_4.14.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.2"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.14.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="true" componentId="org.eclipse.net4j.jvm(4.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j.jvm_4.3.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.net4j.jvm_4.3.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.admin_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
+    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j.tcp_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.admin_4.3.2"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.net4j.tcp_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.compare_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j.trace_1.1.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.7.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.dawn_2.3.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.edit_4.5.6" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.5.6"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.expressions_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.gmf.notation_1.10.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.0.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.lm_1.0.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.lm_1.0.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.5.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.net4j_4.5.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.net4j_4.5.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.security_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.security_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.server.admin_4.3.7" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.7"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.server_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.server_4.18.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.transfer.repository_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.admin_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.admin_4.3.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.compare_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.7.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.dawn_2.3.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.edit_4.5.6" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.5.6"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.expressions_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.gmf.notation_1.10.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.0.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.lm_1.0.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.lm_1.0.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.5.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.net4j_4.5.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.net4j_4.5.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.security_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.security_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.server.admin_4.3.7" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.7"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.server_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.server_4.18.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.transfer.repository_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.admin_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.admin_4.3.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.compare_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.compare_4.7.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.dawn_2.3.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.edit_4.5.6" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.edit_4.5.6"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.expressions_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.gmf.notation_1.10.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.0.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.lm_1.0.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.lm_1.0.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.5.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.net4j_4.5.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.net4j_4.5.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.security_4.6.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.security_4.6.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.server.admin_4.3.7" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.7"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.server_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.server_4.18.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.transfer.repository_4.3.2" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.2"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.emf.cdo.common_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.18.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.emf.cdo.transfer_4.4.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.4"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j.db_4.11.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.net4j.db_4.11.1"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j.trace_1.1.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
             <message_argument value="org.eclipse.net4j.trace_1.1.3"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j.ui.shared_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
+    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j.ui_4.4.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.net4j.ui.shared_4.7.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j.util.ui_3.15.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.15.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j_4.15.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.net4j_4.15.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.emf.cdo.common_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.common_4.18.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.emf.cdo.transfer_4.4.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.4"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j.db_4.11.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j.db_4.11.1"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j.trace_1.1.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j.trace_1.1.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j.ui.shared_4.7.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j.ui.shared_4.7.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j.util.ui_3.15.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.15.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j(4.15.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j_4.15.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j_4.15.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.actions.ToggleAction" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.actions.ToggleAction has been added to org.eclipse.emf.cdo.transfer.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.ToggleAction">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.actions.ToggleAction"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.ui_4.4.3"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.actions.ToggleAction" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.actions.ToggleAction has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.ToggleAction">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.actions.ToggleAction"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.debug(3.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.actions.ToggleAction" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.actions.ToggleAction has been added to org.eclipse.net4j.debug_3.2.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.ToggleAction">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.actions.ToggleAction"/>
-            <message_argument value="org.eclipse.net4j.debug_3.2.0"/>
-        </message_arguments>
-    </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.actions.ToggleAction" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.actions.ToggleAction has been added to org.eclipse.net4j.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.ToggleAction">
-        <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.actions.ToggleAction"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
             <message_argument value="org.eclipse.net4j.ui_4.4.3"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.IntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.IntrospectionProvider has been added to org.eclipse.emf.cdo.transfer.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.IntrospectionProvider">
+    <delta compatible="true" componentId="org.eclipse.net4j.ws(1.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The re-exported type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j.ws_1.2.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.IntrospectionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.ui_4.4.3"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.net4j.ws_1.2.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.IntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.IntrospectionProvider has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.IntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.FileSelectionDialog" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.FileSelectionDialog has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.dialogs.FileSelectionDialog">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.IntrospectionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
+            <message_argument value="org.eclipse.ui.dialogs.FileSelectionDialog"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.debug(3.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.IntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.IntrospectionProvider has been added to org.eclipse.net4j.debug_3.2.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.IntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.FileSelectionDialog" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.FileSelectionDialog has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.dialogs.FileSelectionDialog">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.IntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.debug_3.2.0"/>
+            <message_argument value="org.eclipse.ui.dialogs.FileSelectionDialog"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.IntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.IntrospectionProvider has been added to org.eclipse.net4j.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.IntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.WizardExportPage" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.WizardExportPage has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.dialogs.WizardExportPage">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.IntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.ui_4.4.3"/>
+            <message_argument value="org.eclipse.ui.dialogs.WizardExportPage"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.RowIntrospectionProvider has been added to org.eclipse.emf.cdo.transfer.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.WizardExportPage" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.WizardExportPage has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.dialogs.WizardExportPage">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.ui_4.4.3"/>
+            <message_argument value="org.eclipse.ui.dialogs.WizardExportPage"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.RowIntrospectionProvider has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.WizardImportPage" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.WizardImportPage has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.dialogs.WizardImportPage">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
+            <message_argument value="org.eclipse.ui.dialogs.WizardImportPage"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.debug(3.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.RowIntrospectionProvider has been added to org.eclipse.net4j.debug_3.2.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.dialogs.WizardImportPage" kind="REMOVED" message="The re-exported type org.eclipse.ui.dialogs.WizardImportPage has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.dialogs.WizardImportPage">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.debug_3.2.0"/>
+            <message_argument value="org.eclipse.ui.dialogs.WizardImportPage"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.RowIntrospectionProvider has been added to org.eclipse.net4j.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.CollapseAllAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.CollapseAllAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.CollapseAllAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.ui_4.4.3"/>
+            <message_argument value="org.eclipse.ui.views.navigator.CollapseAllAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.ValueFormatter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.ValueFormatter has been added to org.eclipse.emf.cdo.transfer.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ValueFormatter">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.CollapseAllAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.CollapseAllAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.CollapseAllAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.ValueFormatter"/>
-            <message_argument value="org.eclipse.emf.cdo.transfer.ui_4.4.3"/>
+            <message_argument value="org.eclipse.ui.views.navigator.CollapseAllAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.ValueFormatter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.ValueFormatter has been added to org.eclipse.emf.cdo.ui_4.13.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ValueFormatter">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.FilterSelectionAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.FilterSelectionAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.FilterSelectionAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.ValueFormatter"/>
-            <message_argument value="org.eclipse.emf.cdo.ui_4.13.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.FilterSelectionAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.debug(3.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.ValueFormatter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.ValueFormatter has been added to org.eclipse.net4j.debug_3.2.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ValueFormatter">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.FilterSelectionAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.FilterSelectionAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.FilterSelectionAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.ValueFormatter"/>
-            <message_argument value="org.eclipse.net4j.debug_3.2.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.FilterSelectionAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.views.ValueFormatter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.views.ValueFormatter has been added to org.eclipse.net4j.ui_4.4.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ValueFormatter">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.GotoActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.GotoActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.GotoActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.ValueFormatter"/>
-            <message_argument value="org.eclipse.net4j.ui_4.4.3"/>
+            <message_argument value="org.eclipse.ui.views.navigator.GotoActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="IGNORE_LIFECYCLE_EXCEPTIONS" kind="ADDED" message="The static field org.eclipse.emf.internal.cdo.CDOObjectImpl.IGNORE_LIFECYCLE_EXCEPTIONS has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.GotoActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.GotoActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.GotoActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
-            <message_argument value="IGNORE_LIFECYCLE_EXCEPTIONS"/>
+            <message_argument value="org.eclipse.ui.views.navigator.GotoActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultHandShakeTimeOut" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultHandShakeTimeOut has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.GotoResourceAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.GotoResourceAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.GotoResourceAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultHandShakeTimeOut"/>
+            <message_argument value="org.eclipse.ui.views.navigator.GotoResourceAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultHandShakeWaitTime" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultHandShakeWaitTime has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.GotoResourceAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.GotoResourceAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.GotoResourceAction">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultHandShakeWaitTime"/>
+            <message_argument value="org.eclipse.ui.views.navigator.GotoResourceAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultKeyPath" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultKeyPath has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.IResourceNavigator" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.IResourceNavigator has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.ui.views.navigator.IResourceNavigator">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultKeyPath"/>
+            <message_argument value="org.eclipse.ui.views.navigator.IResourceNavigator"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultPassPhrase" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultPassPhrase has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.IResourceNavigator" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.IResourceNavigator has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1050113" restrictions="0" type_name="org.eclipse.ui.views.navigator.IResourceNavigator">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultPassPhrase"/>
+            <message_argument value="org.eclipse.ui.views.navigator.IResourceNavigator"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultProtocol" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultProtocol has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.LocalSelectionTransfer" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.LocalSelectionTransfer has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.LocalSelectionTransfer">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultProtocol"/>
+            <message_argument value="org.eclipse.ui.views.navigator.LocalSelectionTransfer"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.tcp(4.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="defaultTrustPath" kind="ADDED" message="The static field org.eclipse.net4j.tcp.ssl.SSLUtil.defaultTrustPath has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.tcp.ssl.SSLUtil">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.LocalSelectionTransfer" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.LocalSelectionTransfer has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.LocalSelectionTransfer">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.tcp.ssl.SSLUtil"/>
-            <message_argument value="defaultTrustPath"/>
+            <message_argument value="org.eclipse.ui.views.navigator.LocalSelectionTransfer"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.core.runtime.IAdaptable,org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.event.INotifier$INotifier2) for class org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic" newModifiers="25" oldModifiers="25" restrictions="2" type_name="org.eclipse.emf.cdo.ui.CDOTopicProvider$Topic">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.MainActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.MainActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.MainActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic"/>
-            <message_argument value="org.eclipse.core.runtime.IAdaptable,org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.event.INotifier$INotifier2"/>
+            <message_argument value="org.eclipse.ui.views.navigator.MainActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent" kind="ADDED" message="The type org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent has been added to org.eclipse.emf.cdo_4.19.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.MainActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.MainActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.MainActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictAddedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo_4.19.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.MainActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent" kind="ADDED" message="The type org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent has been added to org.eclipse.emf.cdo_4.19.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorDragAdapter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorDragAdapter has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorDragAdapter">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictChangedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo_4.19.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorDragAdapter"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent" kind="ADDED" message="The type org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent has been added to org.eclipse.emf.cdo_4.19.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorDragAdapter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorDragAdapter has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorDragAdapter">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransactionConflictRemovedEvent"/>
-            <message_argument value="org.eclipse.emf.cdo_4.19.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorDragAdapter"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.view.CDOListWrapper" kind="ADDED" message="The type org.eclipse.emf.cdo.view.CDOListWrapper has been added to org.eclipse.emf.cdo_4.19.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.CDOListWrapper">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorDropAdapter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorDropAdapter has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorDropAdapter">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOListWrapper"/>
-            <message_argument value="org.eclipse.emf.cdo_4.19.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorDropAdapter"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.factory.ProductDescriptionAware" kind="ADDED" message="The type org.eclipse.net4j.util.factory.ProductDescriptionAware has been added to org.eclipse.net4j.util_3.20.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionAware">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorDropAdapter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorDropAdapter has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorDropAdapter">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionAware"/>
-            <message_argument value="org.eclipse.net4j.util_3.20.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorDropAdapter"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util(3.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.factory.ProductDescriptionProvider" kind="ADDED" message="The type org.eclipse.net4j.util.factory.ProductDescriptionProvider has been added to org.eclipse.net4j.util_3.20.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.ProductDescriptionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorFrameSource" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorFrameSource has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorFrameSource">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.factory.ProductDescriptionProvider"/>
-            <message_argument value="org.eclipse.net4j.util_3.20.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorFrameSource"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.actions.ToggleAction" kind="ADDED" message="The type org.eclipse.net4j.util.ui.actions.ToggleAction has been added to org.eclipse.net4j.util.ui_3.16.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.actions.ToggleAction">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.NavigatorFrameSource" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.NavigatorFrameSource has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.NavigatorFrameSource">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.actions.ToggleAction"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.16.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.NavigatorFrameSource"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.views.IntrospectionProvider" kind="ADDED" message="The type org.eclipse.net4j.util.ui.views.IntrospectionProvider has been added to org.eclipse.net4j.util.ui_3.16.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.IntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.OpenActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.OpenActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.OpenActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.IntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.16.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.OpenActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider" kind="ADDED" message="The type org.eclipse.net4j.util.ui.views.RowIntrospectionProvider has been added to org.eclipse.net4j.util.ui_3.16.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.OpenActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.OpenActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.OpenActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.RowIntrospectionProvider"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.16.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.OpenActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.views.ValueFormatter" kind="ADDED" message="The type org.eclipse.net4j.util.ui.views.ValueFormatter has been added to org.eclipse.net4j.util.ui_3.16.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.views.ValueFormatter">
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.RefactorActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.RefactorActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.RefactorActionGroup">
         <message_arguments>
-            <message_argument value="org.eclipse.net4j.util.ui.views.ValueFormatter"/>
-            <message_argument value="org.eclipse.net4j.util.ui_3.16.0"/>
+            <message_argument value="org.eclipse.ui.views.navigator.RefactorActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.RefactorActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.RefactorActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.RefactorActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.RefactorActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigator" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigator has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigator">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigator"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigator" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigator has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigator">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigator"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1049633" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorMessages" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorMessages has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorMessages">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMessages"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorMessages" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorMessages has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorMessages">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMessages"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourcePatternFilter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourcePatternFilter has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourcePatternFilter">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourcePatternFilter"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourcePatternFilter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourcePatternFilter has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourcePatternFilter">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourcePatternFilter"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceSelectionUtil" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceSelectionUtil has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceSelectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceSelectionUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceSelectionUtil" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceSelectionUtil has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceSelectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceSelectionUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceSorter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceSorter has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceSorter">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceSorter"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ResourceSorter" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ResourceSorter has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ResourceSorter">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ResourceSorter"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ShowInNavigatorAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ShowInNavigatorAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ShowInNavigatorAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ShowInNavigatorAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ShowInNavigatorAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ShowInNavigatorAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ShowInNavigatorAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ShowInNavigatorAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.SortAndFilterActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.SortAndFilterActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.SortAndFilterActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.SortAndFilterActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.SortAndFilterActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.SortAndFilterActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.SortAndFilterActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.SortAndFilterActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.SortViewAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.SortViewAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.SortViewAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.SortViewAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.SortViewAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.SortViewAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.SortViewAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.SortViewAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ToggleLinkingAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ToggleLinkingAction has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ToggleLinkingAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ToggleLinkingAction"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.ToggleLinkingAction" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.ToggleLinkingAction has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.ToggleLinkingAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.ToggleLinkingAction"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.expressions.editor(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.WorkspaceActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.WorkspaceActionGroup has been removed from org.eclipse.emf.cdo.expressions.editor_4.5.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.WorkspaceActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.WorkspaceActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.security.editor(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.ui.views.navigator.WorkspaceActionGroup" kind="REMOVED" message="The re-exported type org.eclipse.ui.views.navigator.WorkspaceActionGroup has been removed from org.eclipse.emf.cdo.security.editor_4.4.0" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.ui.views.navigator.WorkspaceActionGroup">
+        <message_arguments>
+            <message_argument value="org.eclipse.ui.views.navigator.WorkspaceActionGroup"/>
+            <message_argument value="org.eclipse.emf.cdo.security.editor_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverAgent$Protocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.emf.cdo.server.net4j.FailoverAgent.Protocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverAgent$Protocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverAgent.Protocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverMonitor.AgentProtocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.emf.cdo.server.net4j.FailoverMonitor.ClientProtocol" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j.FailoverMonitor.ClientProtocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.signal.SignalProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.net4j.signal.SignalProtocol" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.signal.SignalProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.signal.SignalProtocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol$Server" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol.Server" newModifiers="9" oldModifiers="9" restrictions="0" type_name="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol$Server">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol.Server"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.spi.net4j.Protocol" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.protocol.IProtocol3) for class org.eclipse.spi.net4j.Protocol" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.spi.net4j.Protocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.spi.net4j.Protocol"/>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.protocol.IProtocol3" kind="ADDED" message="The type org.eclipse.net4j.protocol.IProtocol3 has been added to org.eclipse.net4j_4.17.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.protocol.IProtocol3">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.protocol.IProtocol3"/>
+            <message_argument value="org.eclipse.net4j_4.17.0"/>
         </message_arguments>
     </delta>
 </deltas>

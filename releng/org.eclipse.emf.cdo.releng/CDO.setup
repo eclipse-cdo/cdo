@@ -13,9 +13,20 @@
     xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
     xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"
     xmlns:workingsets="http://www.eclipse.org/oomph/workingsets/1.0"
-    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/WorkingSets.ecore"
+    xsi:schemaLocation="http://www.eclipse.org/oomph/setup/git/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Git.ecore http://www.eclipse.org/oomph/setup/jdt/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/JDT.ecore http://www.eclipse.org/oomph/setup/mylyn/1.0 http://git.eclipse.org/c/oomph/org.eclipse.oomph.git/plain/setups/models/Mylyn.ecore http://www.eclipse.org/oomph/setup/pde/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/PDE.ecore http://www.eclipse.org/oomph/predicates/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/Predicates.ecore http://www.eclipse.org/oomph/setup/targlets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupTarglets.ecore http://www.eclipse.org/oomph/setup/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/SetupWorkingSets.ecore http://www.eclipse.org/oomph/workingsets/1.0 https://raw.githubusercontent.com/eclipse-oomph/oomph/master/setups/models/WorkingSets.ecore"
     name="cdo"
     label="CDO Model Repository">
+  <annotation
+      source="http://www.eclipse.org/oomph/setup/BrandingInfo">
+    <detail
+        key="imageURI">
+      <value>https://github.com/eclipse-cdo/cdo.www/blob/2a5eb60c9f225efb9fd10591f667410c862d73c6/images/Logo-CDO-opaque.png</value>
+    </detail>
+    <detail
+        key="siteURI">
+      <value>https://eclipse.dev/cdo</value>
+    </detail>
+  </annotation>
   <annotation
       source="ConfigurationReference">
     <reference
@@ -62,28 +73,50 @@
       xsi:type="setup.p2:P2Task"
       label="CDO">
     <requirement
-        name="org.eclipse.egit.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.projectcopy.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.version.feature.group"/>
-    <requirement
-        name="org.eclipse.emf.sdk.feature.group"/>
-    <requirement
-        name="org.eclipse.emf.ecoretools.sdk.feature.group"
-        optional="true"/>
-    <requirement
         name="org.eclipse.emf.cdo.migrator.feature.group"
         optional="true"/>
     <requirement
         name="org.eclipse.emf.cdo.releng.apireports"
         optional="true"/>
     <repository
-        url="https://download.eclipse.org/egit/updates-stable-nightly/"/>
-    <repository
-        url="https://download.eclipse.org/oomph/updates/latest/"/>
+        url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="EMF">
+    <requirement
+        name="org.eclipse.emf.sdk.feature.group"/>
+    <requirement
+        name="org.eclipse.emf.ecoretools.sdk.feature.group"
+        optional="true"/>
     <repository
         url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="EGit">
+    <requirement
+        name="org.eclipse.egit.feature.group"/>
+    <repository
+        url="https://download.eclipse.org/egit/updates-stable-nightly/"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="Oomph">
+    <requirement
+        name="org.eclipse.oomph.projectcopy.feature.group"/>
+    <requirement
+        name="org.eclipse.oomph.version.feature.group"/>
+    <repository
+        url="https://download.eclipse.org/oomph/updates/latest/"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="PDE/JDT">
+    <requirement
+        name="org.eclipse.pde.feature.group"/>
+    <requirement
+        name="org.eclipse.jdt.feature.group"/>
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
@@ -143,7 +176,7 @@
   <setupTask
       xsi:type="setup:EclipseIniTask"
       option="-Doomph.redirection.cdosetup"
-      value="=https://git.eclipse.org/c/cdo/cdo.git/plain/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.git.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
+      value="=https://raw.githubusercontent.com/eclipse-cdo/cdo/master/releng/org.eclipse.emf.cdo.releng/CDO.setup->${cdo.github.clone.location|uri}/releng/org.eclipse.emf.cdo.releng/CDO.setup"
       vm="true"/>
   <setupTask
       xsi:type="setup:ResourceCreationTask"
@@ -166,18 +199,17 @@
   </setupTask>
   <setupTask
       xsi:type="git:GitCloneTask"
-      id="cdo.git.clone"
-      remoteURI="cdo/cdo"
-      checkoutBranch="${cdo.git.branch}">
+      id="cdo.github.clone"
+      remoteURI="eclipse-cdo/cdo">
     <annotation
         source="http://www.eclipse.org/oomph/setup/InducedChoices">
       <detail
           key="inherit">
-        <value>eclipse.git.gerrit.remoteURIs</value>
+        <value>github.remoteURIs</value>
       </detail>
       <detail
           key="label">
-        <value>CDO Git or Gerrit Repository</value>
+        <value>CDO GitHub Repository</value>
       </detail>
       <detail
           key="target">
@@ -189,7 +221,7 @@
   <setupTask
       xsi:type="setup:StringSubstitutionTask"
       name="git.clone.cdo"
-      value="${cdo.git.clone.location}"/>
+      value="${cdo.github.clone.location}"/>
   <setupTask
       xsi:type="setup:VariableTask"
       name="eclipse.target.platform"
@@ -215,29 +247,29 @@
           source="http:/www.eclipse.org/oomph/targlets/PomModulesUpdater">
         <detail
             key="location">
-          <value>${cdo.git.clone.location/releng/org.eclipse.emf.cdo.releng.parent/plugins/pom.xml}</value>
+          <value>${cdo.github.clone.location/releng/org.eclipse.emf.cdo.releng.parent/plugins/pom.xml}</value>
         </detail>
         <detail
             key="moduleRoots">
-          <value>${cdo.git.clone.location/plugins}</value>
+          <value>${cdo.github.clone.location/plugins}</value>
         </detail>
       </annotation>
       <annotation
           source="http:/www.eclipse.org/oomph/targlets/PomModulesUpdater">
         <detail
             key="location">
-          <value>${cdo.git.clone.location/releng/org.eclipse.emf.cdo.releng.parent/features/pom.xml}</value>
+          <value>${cdo.github.clone.location/releng/org.eclipse.emf.cdo.releng.parent/features/pom.xml}</value>
         </detail>
         <detail
             key="moduleRoots">
-          <value>${cdo.git.clone.location/features}</value>
+          <value>${cdo.github.clone.location/features}</value>
         </detail>
       </annotation>
       <annotation
           source="http:/www.eclipse.org/oomph/targlets/TargetDefinitionGenerator">
         <detail
             key="location">
-          <value>${cdo.git.clone.location/releng/org.eclipse.emf.cdo.releng.parent/tp//org.eclipse.emf.cdo.releng.tp.target}</value>
+          <value>${cdo.github.clone.location/releng/org.eclipse.emf.cdo.releng.parent/tp//org.eclipse.emf.cdo.releng.tp.target}</value>
         </detail>
         <detail
             key="extraUnits">
@@ -289,7 +321,38 @@
       <requirement
           name="org.eclipse.emf.sdk.feature.group"/>
       <sourceLocator
-          rootFolder="${cdo.git.clone.location}"/>
+          rootFolder="${cdo.github.clone.location}"/>
+      <repositoryList
+          name="2023-09">
+        <repository
+            url="https://download.eclipse.org/releases/2023-09"/>
+        <repository
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository">
+          <annotation
+              source="Documentation">
+            <detail
+                key="Reason">
+              <value>Needed because the H2, Apache Derby driver, and other bundles have been removed in newer Orbit repos!</value>
+            </detail>
+          </annotation>
+        </repository>
+        <repository
+            url="https://download.eclipse.org/nebula/snapshot"/>
+        <repository
+            url="https://download.eclipse.org/oomph/jetty/release/10.0.15"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository/tools"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
       <repositoryList
           name="2023-06">
         <repository
@@ -769,6 +832,23 @@
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
       <repositoryList
+          name="4.23">
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20230606-0205"/>
+        <repository
+            url="https://download.eclipse.org/releases/2023-06/202306141000"/>
+        <repository
+            url="https://download.eclipse.org/nebula/releases/3.0.0"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.eclipse.org/oomph/jetty/release/10.0.15"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
           name="4.22">
         <repository
             url="https://download.eclipse.org/modeling/emf/cdo/drops/R20230307-0126"/>
@@ -1106,7 +1186,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Tests'] //@setupTasks.13/@workingSets[name='CDO%20Examples'] //@setupTasks.13/@workingSets[name='CDO%20Dawn'] //@setupTasks.13/@workingSets[name='CDO%20Features'] //@setupTasks.13/@workingSets[name='CDO%20Releng']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='CDO%20Tests'] //@setupTasks.17/@workingSets[name='CDO%20Examples'] //@setupTasks.17/@workingSets[name='CDO%20Dawn'] //@setupTasks.17/@workingSets[name='CDO%20Features'] //@setupTasks.17/@workingSets[name='CDO%20Releng']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1119,7 +1199,7 @@
             pattern="org\.eclipse\.emf\.cdo\.tests.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1138,7 +1218,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1151,7 +1231,7 @@
             pattern="org\.eclipse\.emf\.cdo\.dawn.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='CDO%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1180,7 +1260,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='CDO%20Features'] //@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='CDO%20Features'] //@setupTasks.17/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1193,7 +1273,7 @@
             pattern="org\.eclipse\.net4j.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20DB'] //@setupTasks.13/@workingSets[name='Net4j%20Examples'] //@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='Net4j%20DB'] //@setupTasks.17/@workingSets[name='Net4j%20Examples'] //@setupTasks.17/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1206,7 +1286,7 @@
             pattern="org\.eclipse\.net4j\.db.*"/>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1228,7 +1308,7 @@
         </operand>
         <operand
             xsi:type="workingsets:ExclusionPredicate"
-            excludedWorkingSet="//@setupTasks.13/@workingSets[name='Net4j%20Features']"/>
+            excludedWorkingSet="//@setupTasks.17/@workingSets[name='Net4j%20Features']"/>
       </predicate>
     </workingSet>
     <workingSet
@@ -1379,20 +1459,16 @@
       label="Master">
     <setupTask
         xsi:type="setup:VariableTask"
-        name="cdo.git.branch"
-        value="master"/>
-    <setupTask
-        xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2023-06"/>
+        value="2023-09"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.23"/>
+        value="4.24"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.22"/>
+        value="4.23"/>
     <setupTask
         xsi:type="jdt:JRETask"
         version="JavaSE-11"

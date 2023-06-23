@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.gastro.server.web;singleton:=true
-Bundle-Version: 4.3.2.qualifier
+Bundle-Version: 4.4.0.qualifier
 Bundle-Activator: org.gastro.server.internal.web.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -16,12 +16,12 @@ Require-Bundle: org.apache.commons.logging;bundle-version="[1.1.0,2.0.0)",
  org.gastro.server;bundle-version="[4.0.0,5.0.0)",
  org.gastro.business;bundle-version="[4.0.0,5.0.0)",
  org.gastro.inventory;bundle-version="[4.0.0,5.0.0)"
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-RequiredExecutionEnvironment: JavaSE-17
 Import-Package: javax.servlet;version="[2.3.0,5.0.0)",
  javax.servlet.http;version="[2.3.0,5.0.0)",
  org.apache.commons.lang;version="[2.3.0,3.0.0)"
 Bundle-ActivationPolicy: lazy
 Bundle-ClassPath: .
-Export-Package: org.gastro.server.internal.web;version="4.3.2";x-internal:=true,
- templates;version="4.3.2";x-internal:=true
+Export-Package: org.gastro.server.internal.web;version="4.4.0";x-internal:=true,
+ templates;version="4.4.0";x-internal:=true
 Automatic-Module-Name: org.gastro.server.web

@@ -55,12 +55,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.CollapseAllAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.FilterSelectionAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.FilterSelectionAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.FilterSelectionAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -71,12 +83,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.GotoActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.GotoResourceAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.GotoResourceAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.GotoResourceAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -87,12 +111,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.IResourceNavigator"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.LocalSelectionTransfer">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.LocalSelectionTransfer"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.LocalSelectionTransfer"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -103,12 +139,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.MainActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.NavigatorDragAdapter">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.NavigatorDragAdapter"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorDragAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -119,12 +167,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorDropAdapter"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.NavigatorFrameSource">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.NavigatorFrameSource"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.NavigatorFrameSource"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -135,12 +195,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.OpenActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.RefactorActionGroup">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.RefactorActionGroup"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.RefactorActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -151,12 +223,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigator"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -167,12 +251,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorMessages">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMessages"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMessages"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -183,12 +279,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorMoveAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceNavigatorRenameAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -199,12 +307,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourcePatternFilter"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ResourceSelectionUtil">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.ResourceSelectionUtil"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceSelectionUtil"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -215,12 +335,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ResourceSorter"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.ShowInNavigatorAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.ShowInNavigatorAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ShowInNavigatorAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -231,12 +363,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.SortAndFilterActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.SortViewAction">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.SortViewAction"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.SortViewAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>
@@ -247,12 +391,24 @@
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
             </message_arguments>
         </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.ToggleLinkingAction"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.views.navigator.WorkspaceActionGroup">
         <filter id="305422471">
             <message_arguments>
                 <message_argument value="org.eclipse.ui.views.navigator.WorkspaceActionGroup"/>
                 <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.views.navigator.WorkspaceActionGroup"/>
+                <message_argument value="org.eclipse.emf.cdo.expressions.editor_4.5.1"/>
             </message_arguments>
         </filter>
     </resource>

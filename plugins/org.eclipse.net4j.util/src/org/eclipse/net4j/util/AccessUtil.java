@@ -1,17 +1,20 @@
 /*
- * Copyright (c) 2021 Ed Merks and others.
+ * Copyright (c) 2019 Ed Merks and others.
  * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
+ * are made available under the terms of the Eclipse Public License v2.0
  * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
+ * http://www.eclipse.org/legal/epl-v20.html
  *
  * Contributors:
- *    Ed Merks - initial API and implementation
+ *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.net4j.util;
 
 import java.io.IOException;
+import java.lang.invoke.MethodHandles;
+import java.lang.invoke.MethodHandles.Lookup;
 import java.lang.reflect.AccessibleObject;
+import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -2192,6 +2195,12 @@ final class AccessUtil
 
   private static final Method DEFINE_ANONYMOUS_CLASS_METHOD;
 
+  private static final Method DEFINE_HIDDEN_CLASS_METHOD;
+
+  private static final MethodHandles.Lookup LOOKUP;
+
+  private static final Object CLASS_OPTIONS;
+
   private static final Method ALLOCATE_INSTANCE_METHOD;
 
   private static final Method CONSUMER_ACCEPT_METHOD;
@@ -2200,13 +2209,17 @@ final class AccessUtil
   {
     Object unsafeInstance = null;
     Method defineAnonymousClassMethod = null;
+    Method defineHiddenClassMethod = null;
+    MethodHandles.Lookup lookup = null;
+    Object classOptions = null;
     Method allocateInstanceMethod = null;
     Method consumerAcceptMethod = null;
 
     try
     {
       // InaccessibleObjectException is new to Java 9.
-      // If it can't be loaded we don't need any special support so we will drop out of this block and initialize the fields to null.
+      // If it can't be loaded we don't need any special support so we will drop out of this block and initialize the
+      // fields to null.
       Class.forName("java.lang.reflect.InaccessibleObjectException");
 
       // Use reflection on Unsafe to avoid having to compile against it.
@@ -2219,8 +2232,21 @@ final class AccessUtil
       // Get the singleton from the static field.
       unsafeInstance = theUnsafeField.get(null);
 
-      // We will use the Unsafe.defineAnonymousClass method to a create class that will be able to make an AccessibleObject accessible.
-      defineAnonymousClassMethod = unsafeClass.getMethod("defineAnonymousClass", Class.class, byte[].class, Object[].class);
+      try
+      {
+        // We will use the Unsafe.defineAnonymousClass method to a create class that will be able to make an
+        // AccessibleObject accessible.
+        defineAnonymousClassMethod = unsafeClass.getMethod("defineAnonymousClass", Class.class, byte[].class, Object[].class);
+      }
+      catch (NoSuchMethodException ex)
+      {
+        long offset = (Long)unsafeClass.getMethod("staticFieldOffset", Field.class).invoke(unsafeInstance,
+            MethodHandles.Lookup.class.getDeclaredField("IMPL_LOOKUP"));
+        lookup = (MethodHandles.Lookup)unsafeClass.getMethod("getObject", Object.class, long.class).invoke(unsafeInstance, MethodHandles.Lookup.class, offset);
+        Class<?> classOption = Class.forName("java.lang.invoke.MethodHandles$Lookup$ClassOption");
+        classOptions = Array.newInstance(classOption, 0);
+        defineHiddenClassMethod = Lookup.class.getMethod("defineHiddenClass", byte[].class, boolean.class, classOptions.getClass());
+      }
 
       allocateInstanceMethod = unsafeClass.getDeclaredMethod("allocateInstance", Class.class);
 
@@ -2231,17 +2257,21 @@ final class AccessUtil
     {
       //$FALL-THROUGH$
       //
-      // If the Unsafe class can't be loaded, then it must be unsupported and we won't be able to do anything special to support making members accessible.
+      // If the Unsafe class can't be loaded, then it must be unsupported and we won't be able to do anything special to
+      // support making members accessible.
       // The static final fields will be initialized to null.
     }
 
     UNSAFE_INSTANCE = unsafeInstance;
     DEFINE_ANONYMOUS_CLASS_METHOD = defineAnonymousClassMethod;
+    DEFINE_HIDDEN_CLASS_METHOD = defineHiddenClassMethod;
+    LOOKUP = lookup;
+    CLASS_OPTIONS = classOptions;
     ALLOCATE_INSTANCE_METHOD = allocateInstanceMethod;
     CONSUMER_ACCEPT_METHOD = consumerAcceptMethod;
   }
 
-  private static final Map<String, Object> PACKAGE_ACCESSIBILITY_CONTROL_MAP = Collections.synchronizedMap(new HashMap<String, Object>());
+  private static final Map<String, Object> PACKAGE_ACCESSIBILITY_CONTROL_MAP = Collections.synchronizedMap(new HashMap<>());
 
   private AccessUtil()
   {
@@ -2264,7 +2294,7 @@ final class AccessUtil
       }
       catch (Exception ex)
       {
-        throw WrappedException.wrap(ex);
+        throw new ReflectUtil.ReflectionException(ex);
       }
     }
   }
@@ -2375,7 +2405,17 @@ final class AccessUtil
 
         // Define an anonymous class in the declaring class' package
         // using the computed class bytes.
-        Class<?> theAnonymousClass = (Class<?>)DEFINE_ANONYMOUS_CLASS_METHOD.invoke(UNSAFE_INSTANCE, declaringClass, bytes, null);
+        Class<?> theAnonymousClass;
+        if (DEFINE_ANONYMOUS_CLASS_METHOD != null)
+        {
+          theAnonymousClass = (Class<?>)DEFINE_ANONYMOUS_CLASS_METHOD.invoke(UNSAFE_INSTANCE, declaringClass, bytes, null);
+        }
+        else
+        {
+          MethodHandles.Lookup lookup = LOOKUP.in(declaringClass);
+          lookup = (Lookup)DEFINE_HIDDEN_CLASS_METHOD.invoke(lookup, bytes, Boolean.FALSE, CLASS_OPTIONS);
+          theAnonymousClass = lookup.lookupClass();
+        }
 
         // Because the template bytes were computed class local to this
         // file, the class isn't public and we're not allowed by Java 9
@@ -2435,135 +2475,135 @@ final class AccessUtil
   }
 }
 
-//Disable the formatter for the remainder of this file.
-//@formatter:off
+// Disable the formatter for the remainder of this file.
+// @formatter:off
 /*
 
 class ClassBytesGenerator
 {
-public static void generate()
-{
- generate(AccessController.class);
-}
+  public static void generate()
+  {
+    generate(AccessController.class);
+  }
 
-private static void generate(Class<?> targetClass)
-{
- String name = targetClass.getName();
- StringBuilder builder = new StringBuilder();
- java.net.URL resource = targetClass.getResource(name.substring(name.lastIndexOf('.') + 1) + ".class");
- try
- {
-   java.io.InputStream input = resource.openStream();
-   for (int value = input.read(); value != -1; value = input.read())
-   {
-     builder.append((char)value);
-   }
+  private static void generate(Class<?> targetClass)
+  {
+    String name = targetClass.getName();
+    StringBuilder builder = new StringBuilder();
+    java.net.URL resource = targetClass.getResource(name.substring(name.lastIndexOf('.') + 1) + ".class");
+    try
+    {
+      java.io.InputStream input = resource.openStream();
+      for (int value = input.read(); value != -1; value = input.read())
+      {
+        builder.append((char)value);
+      }
 
-   input.close();
+      input.close();
 
-   String namePath = name.replace('.', '/');
-   String nameSignature = 'L' + namePath + ';';
-   int namePathIndex = builder.indexOf(namePath);
-   int nameSignatureIndex = builder.indexOf(nameSignature);
+      String namePath = name.replace('.', '/');
+      String nameSignature = 'L' + namePath + ';';
+      int namePathIndex = builder.indexOf(namePath);
+      int nameSignatureIndex = builder.indexOf(nameSignature);
 
-   int namePathStart = namePathIndex - 2;
-   int namePathEnd = namePathIndex + namePath.length();
+      int namePathStart = namePathIndex - 2;
+      int namePathEnd = namePathIndex + namePath.length();
 
-   int nameSignatureStart = nameSignatureIndex - 2;
-   int nameSignatureEnd = nameSignatureIndex + +nameSignature.length();
+      int nameSignatureStart = nameSignatureIndex - 2;
+      int nameSignatureEnd = nameSignatureIndex + +nameSignature.length();
 
-   System.out.println("private static final int NAME_PATH_INDEX = " + namePathStart + ";");
-   System.out.println("private static final int NAME_SIGNATURE_INDEX = " + (nameSignatureStart - (namePathEnd - namePathStart)) + ";");
-   System.out.println("private static final byte[] ACCESS_CONTROLLER_BYTES = new byte[]");
-   System.out.println("  { //");
+      System.out.println("private static final int NAME_PATH_INDEX = " + namePathStart + ";");
+      System.out.println("private static final int NAME_SIGNATURE_INDEX = " + (nameSignatureStart - (namePathEnd - namePathStart)) + ";");
+      System.out.println("private static final byte[] ACCESS_CONTROLLER_BYTES = new byte[]");
+      System.out.println("  { //");
 
-   for (int i = 0, length = builder.length(), count = 0; i < length; ++i)
-   {
-     int value = builder.charAt(i);
-     System.out.print("    ");
-     boolean exclude = i >= namePathStart && i < namePathEnd || i >= nameSignatureStart && i < nameSignatureEnd;
-     if (exclude)
-     {
-       System.out.print("// 0x");
-     }
-     else
-     {
-       ++count;
-       if (value > 127)
-       {
-         System.out.print("(byte)");
-       }
+      for (int i = 0, length = builder.length(), count = 0; i < length; ++i)
+      {
+        int value = builder.charAt(i);
+        System.out.print("    ");
+        boolean exclude = i >= namePathStart && i < namePathEnd || i >= nameSignatureStart && i < nameSignatureEnd;
+        if (exclude)
+        {
+          System.out.print("// 0x");
+        }
+        else
+        {
+          ++count;
+          if (value > 127)
+          {
+            System.out.print("(byte)");
+          }
 
-       System.out.print("0x");
-     }
+          System.out.print("0x");
+        }
 
-     String hexString = Integer.toHexString(Byte.toUnsignedInt((byte)value));
-     if (hexString.length() == 1)
-     {
-       System.out.print('0');
-     }
+        String hexString = Integer.toHexString(Byte.toUnsignedInt((byte)value));
+        if (hexString.length() == 1)
+        {
+          System.out.print('0');
+        }
 
-     System.out.print(hexString);
-     System.out.print(", //");
-     if (value > 32 && value < 128)
-     {
-       System.out.print(' ');
-       System.out.print((char)value);
-     }
+        System.out.print(hexString);
+        System.out.print(", //");
+        if (value > 32 && value < 128)
+        {
+          System.out.print(' ');
+          System.out.print((char)value);
+        }
 
-     if (!exclude)
-     {
-       System.out.print(" " + (count - 1));
-     }
+        if (!exclude)
+        {
+          System.out.print(" " + (count - 1));
+        }
 
-     System.out.println();
-   }
+        System.out.println();
+      }
 
-   System.out.println("  };");
+      System.out.println("  };");
 
- }
- catch (IOException ex)
- {
-   ex.printStackTrace();
- }
-}
+    }
+    catch (IOException ex)
+    {
+      ex.printStackTrace();
+    }
+  }
 }
 
 class AccessController implements Consumer<AccessibleObject>
 {
-private static final VarHandle MODIFIERS;
+  private static final VarHandle MODIFIERS;
 
-static
-{
- try
- {
-   Lookup lookup = MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup());
-   MODIFIERS = lookup.findVarHandle(Field.class, "modifiers", int.class);
- }
- catch (Throwable ex)
- {
-   throw new RuntimeException(ex);
- }
+  static
+  {
+    try
+    {
+      Lookup lookup = MethodHandles.privateLookupIn(Field.class, MethodHandles.lookup());
+      MODIFIERS = lookup.findVarHandle(Field.class, "modifiers", int.class);
+    }
+    catch (Throwable ex)
+    {
+      throw new RuntimeException(ex);
+    }
+  }
+
+  public static void makeNonFinal(Field field)
+  {
+    int mods = field.getModifiers();
+    if (Modifier.isFinal(mods))
+    {
+      MODIFIERS.set(field, mods & ~Modifier.FINAL);
+    }
+  }
+
+  @Override
+  public void accept(AccessibleObject accessibleObject)
+  {
+    accessibleObject.setAccessible(true);
+    if (accessibleObject instanceof Field)
+    {
+      makeNonFinal((Field)accessibleObject);
+    }
+  }
 }
 
-public static void makeNonFinal(Field field)
-{
- int mods = field.getModifiers();
- if (Modifier.isFinal(mods))
- {
-   MODIFIERS.set(field, mods & ~Modifier.FINAL);
- }
-}
-
-@Override
-public void accept(AccessibleObject accessibleObject)
-{
- accessibleObject.setAccessible(true);
- if (accessibleObject instanceof Field)
- {
-   makeNonFinal((Field)accessibleObject);
- }
-}
-}
-
-//*/
+// */

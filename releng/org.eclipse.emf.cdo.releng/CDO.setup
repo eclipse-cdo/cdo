@@ -102,26 +102,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
-      label="Oomph">
-    <requirement
-        name="org.eclipse.oomph.projectcopy.feature.group"/>
-    <requirement
-        name="org.eclipse.oomph.version.feature.group"/>
-    <repository
-        url="https://download.eclipse.org/oomph/updates/latest/"/>
-  </setupTask>
-  <setupTask
-      xsi:type="setup.p2:P2Task"
-      label="PDE/JDT">
-    <requirement
-        name="org.eclipse.pde.feature.group"/>
-    <requirement
-        name="org.eclipse.jdt.feature.group"/>
-  </setupTask>
-  <setupTask
-      xsi:type="setup.p2:P2Task"
-      disabled="true"
-      label="CDO-BAK">
+      label="Mylyn">
     <requirement
         name="org.eclipse.mylyn.ide_feature.feature.group"/>
     <requirement
@@ -140,33 +121,26 @@
         name="org.eclipse.mylyn.bugzilla_feature.feature.group"/>
     <requirement
         name="org.eclipse.mylyn.git.feature.group"/>
-    <requirement
-        name="org.eclipse.egit.feature.group"/>
-    <requirement
-        name="org.eclipse.egit.mylyn.feature.group"/>
+    <repository
+        url="https://download.eclipse.org/mylyn/snapshots/weekly/"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="Oomph">
     <requirement
         name="org.eclipse.oomph.projectcopy.feature.group"/>
     <requirement
         name="org.eclipse.oomph.version.feature.group"/>
-    <requirement
-        name="org.eclipse.emf.sdk.feature.group"/>
-    <requirement
-        name="org.eclipse.emf.ecoretools.sdk.feature.group"
-        optional="true"/>
-    <requirement
-        name="org.eclipse.emf.cdo.migrator.feature.group"
-        optional="true"/>
-    <requirement
-        name="org.eclipse.emf.cdo.releng.apireports"
-        optional="true"/>
-    <repository
-        url="https://download.eclipse.org/mylyn/snapshots/weekly/"/>
-    <repository
-        url="https://download.eclipse.org/egit/updates-stable-nightly/"/>
     <repository
         url="https://download.eclipse.org/oomph/updates/latest/"/>
-    <repository
-        url="https://download.eclipse.org/modeling/emf/cdo/updates/integration/latest"/>
+  </setupTask>
+  <setupTask
+      xsi:type="setup.p2:P2Task"
+      label="JDT/PDE">
+    <requirement
+        name="org.eclipse.jdt.feature.group"/>
+    <requirement
+        name="org.eclipse.pde.feature.group"/>
   </setupTask>
   <setupTask
       xsi:type="setup:EclipseIniTask"
@@ -1340,7 +1314,6 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
-      disabled="true"
       name="Mylyn Queries">
     <setupTask
         xsi:type="setup:VariableTask"
@@ -1396,7 +1369,7 @@
         userID="${bugzilla.id}"
         password="${eclipse.user.password}">
       <query
-          summary="CDO_Reviews in ${cdo.git.clone.checkoutBranch}">
+          summary="CDO_Reviews in ${scope.project.stream.name}">
         <attribute
             key="gerrit query type"
             value="custom"/>
@@ -1405,13 +1378,12 @@
             value="cdo/cdo"/>
         <attribute
             key="gerrit query string"
-            value="project:cdo/cdo status:open branch:${cdo.git.clone.checkoutBranch}"/>
+            value="project:cdo/cdo status:open branch:${scope.project.stream.name}"/>
       </query>
     </setupTask>
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
-      disabled="true"
       name="Mylyn Builds">
     <setupTask
         xsi:type="mylyn:MylynBuildsTask"

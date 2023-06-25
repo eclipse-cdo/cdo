@@ -14,7 +14,9 @@
     <setAttribute key="deselected_workspace_bundles"/>
     <booleanAttribute key="includeOptional" value="true"/>
     <stringAttribute key="location" value="${workspace_loc}/../ws-cdo.explorer"/>
+    <booleanAttribute key="org.eclipse.debug.core.ATTR_FORCE_SYSTEM_CONSOLE_ENCODING" value="false"/>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/J2SE-1.5"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
@@ -25,9 +27,7 @@
     <setAttribute key="selected_target_bundles">
         <setEntry value="com.ibm.icu@default:default"/>
         <setEntry value="javax.annotation@default:default"/>
-        <setEntry value="javax.el@default:default"/>
         <setEntry value="javax.inject@default:default"/>
-        <setEntry value="javax.servlet.jsp@default:default"/>
         <setEntry value="javax.xml@default:default"/>
         <setEntry value="org.apache.ant@default:default"/>
         <setEntry value="org.apache.batik.css@default:default"/>
@@ -94,18 +94,12 @@
         <setEntry value="org.eclipse.equinox.security@default:default"/>
         <setEntry value="org.eclipse.help.base@default:default"/>
         <setEntry value="org.eclipse.help@default:default"/>
-        <setEntry value="org.eclipse.jetty.http*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.http*9.4.43.v20210629@default:default"/>
-        <setEntry value="org.eclipse.jetty.io*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.io*9.4.43.v20210629@default:default"/>
-        <setEntry value="org.eclipse.jetty.security*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.security*9.4.43.v20210629@default:default"/>
-        <setEntry value="org.eclipse.jetty.server*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.server*9.4.43.v20210629@default:default"/>
-        <setEntry value="org.eclipse.jetty.servlet*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.servlet*9.4.43.v20210629@default:default"/>
-        <setEntry value="org.eclipse.jetty.util*10.0.6@default:default"/>
-        <setEntry value="org.eclipse.jetty.util*9.4.43.v20210629@default:default"/>
+        <setEntry value="org.eclipse.jetty.http@default:default"/>
+        <setEntry value="org.eclipse.jetty.io@default:default"/>
+        <setEntry value="org.eclipse.jetty.security@default:default"/>
+        <setEntry value="org.eclipse.jetty.server@default:default"/>
+        <setEntry value="org.eclipse.jetty.servlet@default:default"/>
+        <setEntry value="org.eclipse.jetty.util@default:default"/>
         <setEntry value="org.eclipse.jface.databinding@default:default"/>
         <setEntry value="org.eclipse.jface.text@default:default"/>
         <setEntry value="org.eclipse.jface@default:default"/>

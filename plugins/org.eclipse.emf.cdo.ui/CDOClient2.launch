@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.6.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202209051432:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.databinding.edit:1.7.0.v20210113-0340:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.ecore.edit:2.13.0.v20190822-1451:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.ecore.editor:2.17.0.v20190528-0725:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.edit:2.17.0.v20220201-1551:default:true:default:default"/>
-        <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202004160913:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.5.7.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202212280858:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.databinding.edit:1.8.0.v20230211-1150:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.ecore.edit:2.14.0.v20230211-1150:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.ecore.editor:2.18.0.v20230224-1122:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.edit:2.18.0.v20230211-1150:default:true:default:default"/>
+        <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202211151334:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
     <booleanAttribute key="askclear" value="true"/>
@@ -38,7 +38,8 @@
         <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
     </listAttribute>
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_ATTR_USE_ARGFILE" value="false"/>
-    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-11"/>
+    <booleanAttribute key="org.eclipse.jdt.launching.ATTR_SHOW_CODEDETAILS_IN_EXCEPTION_MESSAGES" value="true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
     <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>

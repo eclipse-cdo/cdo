@@ -563,7 +563,7 @@ public final class CDOCheckoutState
       ImageDescriptor imageDescriptor = EDITOR_REGISTRY.getImageDescriptor(name);
       if (imageDescriptor != null)
       {
-        return (Image)resourceManager.get(imageDescriptor);
+        return resourceManager.get(imageDescriptor);
       }
 
       return null;

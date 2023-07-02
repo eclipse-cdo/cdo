@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="89">
+<target name="Generated from CDO" sequenceNumber="91">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="biz.aQute.bnd.util" version="0.0.0"/>
       <unit id="com.google.guava" version="0.0.0"/>
       <unit id="com.mysql.jdbc" version="0.0.0"/>
       <unit id="jakarta.activation" version="0.0.0"/>
+      <unit id="jakarta.inject.jakarta.inject-api" version="0.0.0"/>
       <unit id="jakarta.xml.bind" version="0.0.0"/>
       <unit id="javax.activation" version="0.0.0"/>
       <unit id="javax.annotation" version="0.0.0"/>
-      <unit id="javax.inject" version="0.0.0"/>
       <unit id="javax.xml" version="0.0.0"/>
       <unit id="oracle.database.driver" version="0.0.0"/>
       <unit id="org.apache.commons.commons-io" version="0.0.0"/>

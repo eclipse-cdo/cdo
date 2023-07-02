@@ -715,7 +715,7 @@ public class CommitHistoryComposite extends Composite
             return null;
           }
 
-          return (Image)getResource(COMMIT);
+          return getResource(COMMIT);
         }
       });
 
@@ -754,10 +754,10 @@ public class CommitHistoryComposite extends Composite
           {
             if (userID.equals(localUserID))
             {
-              return (Image)getResource(PERSON_ME);
+              return getResource(PERSON_ME);
             }
 
-            return (Image)getResource(PERSON);
+            return getResource(PERSON);
           }
 
           return null;
@@ -810,10 +810,10 @@ public class CommitHistoryComposite extends Composite
 
           if (inputBranch == null || inputBranch == commitInfo.getBranch())
           {
-            return (Image)getResource(BRANCH);
+            return getResource(BRANCH);
           }
 
-          return (Image)getResource(BRANCH_GRAY);
+          return getResource(BRANCH_GRAY);
         }
       });
 

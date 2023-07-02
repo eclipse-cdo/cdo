@@ -505,7 +505,7 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       }
 
       ResourceManager resourceManager = getResourceManager();
-      return (Image)resourceManager.get(imageDescriptor);
+      return resourceManager.get(imageDescriptor);
     }
 
     return null;

@@ -40,7 +40,7 @@ public class ManagedLabelProvider extends LabelProvider
     super.dispose();
   }
 
-  public Object getResource(DeviceResourceDescriptor descriptor)
+  public <R> R getResource(DeviceResourceDescriptor<R> descriptor)
   {
     ResourceManager resourceManager = getResourceManager();
     return resourceManager.get(descriptor);

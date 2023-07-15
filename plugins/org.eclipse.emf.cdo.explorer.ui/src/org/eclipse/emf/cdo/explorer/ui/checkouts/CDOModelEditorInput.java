@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
-import org.eclipse.emf.cdo.internal.ui.AbstractCDOEditorInput;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.ui.CDOEditorInput2;
 import org.eclipse.emf.cdo.ui.CDOEditorInput3;
@@ -211,9 +210,15 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
   @Override
   public String getToolTipText()
   {
-    CDOView view = getView();
     String resourcePath = getResourcePath();
-    return AbstractCDOEditorInput.formatToolTipText(view, resourcePath);
+
+    CDOCheckout checkout = getCheckout();
+    if (checkout == null || !checkout.isOpen())
+    {
+      return uri.toString();
+    }
+
+    return resourcePath + " [" + checkout.getLabel() + "]";
   }
 
   @Override

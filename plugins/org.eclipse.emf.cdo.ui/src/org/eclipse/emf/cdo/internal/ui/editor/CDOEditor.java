@@ -774,7 +774,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
     // Create the editing domain with a special command stack.
     //
-    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<Resource, Boolean>());
+    editingDomain = new AdapterFactoryEditingDomain(adapterFactory, commandStack, new HashMap<>());
   }
 
   /**
@@ -1214,7 +1214,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
                 ((CDOContentOutlinePage)contentOutlinePage).setView(newView);
               }
 
-              firePropertyChange(IEditorPart.PROP_INPUT);
+              firePropertyChange(IEditorPart.PROP_TITLE);
             });
           }
 

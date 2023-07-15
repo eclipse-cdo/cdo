@@ -146,6 +146,8 @@ public abstract class AbstractCDOEditorInput extends PlatformObject implements C
     }
 
     builder.append(" ["); //$NON-NLS-1$
+    builder.append(session.getRepositoryInfo().getUUID());
+    builder.append(":"); //$NON-NLS-1$
     builder.append(session.getSessionID());
     builder.append(":"); //$NON-NLS-1$
     builder.append(view.getViewID());

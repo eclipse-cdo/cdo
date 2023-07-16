@@ -136,6 +136,8 @@ public abstract class AbstractCDOEditorInput extends PlatformObject implements C
 
     CDOSession session = view.getSession();
     String repositoryName = session.getRepositoryInfo().getName();
+    int sessionID = session.getSessionID();
+    int viewID = view.getViewID();
 
     StringBuilder builder = new StringBuilder();
     builder.append(repositoryName);
@@ -146,11 +148,9 @@ public abstract class AbstractCDOEditorInput extends PlatformObject implements C
     }
 
     builder.append(" ["); //$NON-NLS-1$
-    builder.append(session.getRepositoryInfo().getUUID());
+    builder.append(sessionID);
     builder.append(":"); //$NON-NLS-1$
-    builder.append(session.getSessionID());
-    builder.append(":"); //$NON-NLS-1$
-    builder.append(view.getViewID());
+    builder.append(viewID);
     builder.append("]"); //$NON-NLS-1$
 
     if (view.isReadOnly())

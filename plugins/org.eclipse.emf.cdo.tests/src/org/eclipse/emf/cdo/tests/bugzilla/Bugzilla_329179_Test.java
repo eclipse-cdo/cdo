@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
-import org.eclipse.emf.cdo.tests.config.IModelConfig;
+import org.eclipse.emf.cdo.tests.config.IConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Skips;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.tests.model1.Category;
@@ -32,7 +32,7 @@ import java.util.Map;
  *
  * @author Eike Stepper
  */
-@Skips(IModelConfig.CAPABILITY_ALL) // This test runs very long on purpose; don't run it in suites.
+@Skips(IConfig.CAPABILITY_ALL) // This test runs very long on purpose; don't run it in suites.
 public class Bugzilla_329179_Test extends AbstractCDOTest
 {
   private static final int LEVELS = 3;

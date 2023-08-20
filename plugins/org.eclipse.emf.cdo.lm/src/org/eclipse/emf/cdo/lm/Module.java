@@ -101,13 +101,13 @@ public interface Module extends SystemElement
   EList<Stream> getStreams();
 
   /**
-   * Returns the value of the '<em><b>Module Type</b></em>' reference. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @return the value of the '<em>Module Type</em>' reference.
+   * Returns the value of the '<em><b>Type</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Type</em>' reference.
    * @see #setType(ModuleType)
    * @see org.eclipse.emf.cdo.lm.LMPackage#getModule_Type()
-   * @model required="true"
+   * @model
    * @generated
    */
   ModuleType getType();

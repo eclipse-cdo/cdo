@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.migrator.tasks;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.ant.core.AntCorePlugin;
 import org.eclipse.core.resources.IWorkspace;
@@ -40,9 +41,9 @@ import java.util.Collection;
  */
 public abstract class CDOTask extends Task
 {
-  public static final String FALSE = Boolean.FALSE.toString();
+  public static final String FALSE = StringUtil.FALSE;
 
-  public static final String TRUE = Boolean.TRUE.toString();
+  public static final String TRUE = StringUtil.TRUE;
 
   public static final String NL = System.getProperty("line.separator");
 

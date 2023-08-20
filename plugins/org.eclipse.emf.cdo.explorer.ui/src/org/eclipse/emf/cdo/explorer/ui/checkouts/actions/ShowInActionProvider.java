@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistryPopulator;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -32,7 +33,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspace;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryAdapterFactory;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -97,9 +97,9 @@ public class ShowInActionProvider extends AbstractActionProvider<Object>
 
   public static final String ID = "org.eclipse.emf.cdo.explorer.ui.checkouts.ShowInActions";
 
-  private static final boolean PROPERTIES_SUPPORT_AVAILABLE = Support.PROPERTIES.isAvailable();
+  private static final boolean PROPERTIES_SUPPORT_AVAILABLE = Support.UI_PROPERTIES.isAvailable();
 
-  private static final boolean HISTORY_SUPPORT_AVAILABLE = Support.HISTORY.isAvailable();
+  private static final boolean HISTORY_SUPPORT_AVAILABLE = Support.UI_HISTORY.isAvailable();
 
   private static final String DASHBOARD_KEY = CDOCheckoutDashboard.class.getName();
 

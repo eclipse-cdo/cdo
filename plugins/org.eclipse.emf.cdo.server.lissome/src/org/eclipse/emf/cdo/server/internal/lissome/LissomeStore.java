@@ -41,6 +41,7 @@ import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -391,7 +392,7 @@ public class LissomeStore extends Store
   protected void doDeactivate() throws Exception
   {
     Map<String, String> map = new HashMap<>();
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
 
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)

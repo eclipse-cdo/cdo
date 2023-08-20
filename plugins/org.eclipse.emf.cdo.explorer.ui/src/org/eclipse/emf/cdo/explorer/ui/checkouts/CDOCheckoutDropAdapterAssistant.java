@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts;
 import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -27,7 +28,6 @@ import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ReplaceWithActionProvid
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.SwitchToActionProvider;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
@@ -69,7 +69,7 @@ import java.util.Set;
  */
 public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
 {
-  private static final boolean COMPARE_SUPPORT_AVAILABLE = Support.COMPARE.isAvailable();
+  private static final boolean COMPARE_SUPPORT_AVAILABLE = Support.UI_COMPARE.isAvailable();
 
   private static final EObject[] NO_OBJECTS = {};
 

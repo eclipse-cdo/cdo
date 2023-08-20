@@ -16,6 +16,7 @@
  */
 package org.eclipse.net4j.util.om.monitor;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -937,7 +938,7 @@ public class SubMonitor implements IProgressMonitorWithBlocking
         return FULL;
       }
 
-      if (STANDARD.toString().equalsIgnoreCase(mode) || Boolean.TRUE.toString().equalsIgnoreCase(mode))
+      if (STANDARD.toString().equalsIgnoreCase(mode) || StringUtil.isTrue(mode))
       {
         return STANDARD;
       }

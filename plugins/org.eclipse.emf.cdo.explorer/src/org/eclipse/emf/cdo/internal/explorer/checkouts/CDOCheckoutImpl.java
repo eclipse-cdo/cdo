@@ -1109,7 +1109,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     rootLabel = properties.getProperty(PROP_ROOT_LABEL);
 
-    prefetch = Boolean.parseBoolean(properties.getProperty(PROP_PREFETCH, Boolean.FALSE.toString()));
+    prefetch = Boolean.parseBoolean(properties.getProperty(PROP_PREFETCH, StringUtil.FALSE));
 
     uri = createResourceURI(null);
     ((CDORepositoryImpl)repository).addCheckout(this);
@@ -1136,7 +1136,7 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
     if (prefetch)
     {
-      properties.setProperty(PROP_PREFETCH, Boolean.TRUE.toString());
+      properties.setProperty(PROP_PREFETCH, StringUtil.TRUE);
     }
 
     if (!CDOIDUtil.isNull(rootID))

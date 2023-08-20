@@ -132,6 +132,21 @@ public interface Process extends SystemElement
    */
   EList<ModuleType> getModuleTypes();
 
+  /**
+   * @since 1.1
+   */
+  public boolean addDropType(String name, boolean release);
+
   public DropType getDropType(String name);
+
+  /**
+   * @since 1.1
+   */
+  public boolean addModuleType(String name);
+
+  /**
+   * @since 1.1
+   */
+  public ModuleType getModuleType(String name);
 
 } // Process

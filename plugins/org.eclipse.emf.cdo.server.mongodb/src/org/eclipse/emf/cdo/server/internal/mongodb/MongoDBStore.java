@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -502,7 +503,7 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
   protected void doDeactivate() throws Exception
   {
     Map<String, String> map = new HashMap<>();
-    map.put(Props.GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(Props.GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
     map.put(Props.REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
     map.put(Props.NEXT_LOCAL_CDOID, Store.idToString(idHandler.getNextLocalObjectID()));
     map.put(Props.LAST_CDOID, Store.idToString(idHandler.getLastObjectID()));

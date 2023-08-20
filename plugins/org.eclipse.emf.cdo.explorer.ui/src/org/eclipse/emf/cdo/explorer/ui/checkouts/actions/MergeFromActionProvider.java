@@ -11,10 +11,10 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.TransactionOpenerAndEditorCloser;
 
@@ -68,7 +68,7 @@ public class MergeFromActionProvider extends AbstractBranchPointActionProvider
 
   public static void mergeFrom(CDOCheckout checkout, CDOBranchPoint branchPoint)
   {
-    if (Support.COMPARE.isAvailable())
+    if (Support.UI_COMPARE.isAvailable())
     {
       CDORepository repository = checkout.getRepository();
       CDOBranchPoint left = branchPoint;

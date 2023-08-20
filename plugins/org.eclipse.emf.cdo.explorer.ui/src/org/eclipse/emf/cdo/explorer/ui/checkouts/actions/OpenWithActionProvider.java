@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.eresource.CDOFileResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
@@ -340,7 +341,7 @@ public class OpenWithActionProvider extends CommonActionProvider
   {
     boolean edited = false;
 
-    if (!(object instanceof CDOResourceNode))
+    if (Support.UI_FORMS.isAvailable() && !(object instanceof CDOResourceNode))
     {
       CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);
       if (checkout != null)

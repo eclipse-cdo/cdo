@@ -1,15 +1,15 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.lm.server;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.2.0.qualifier
 Bundle-ClassPath: .
 Bundle-Name: %name
 Bundle-Vendor: %vendor
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.emf.cdo.lm.server;version="1.1.0",
- org.eclipse.emf.cdo.lm.server.bundle;version="1.1.0";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.lm.server;version="1.2.0",
+ org.eclipse.emf.cdo.lm.server.bundle;version="1.2.0";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.net4j.jvm;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,

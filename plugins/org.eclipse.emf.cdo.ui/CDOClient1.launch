@@ -2,7 +2,9 @@
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
         <setEntry value="org.eclipse.emf.cdo.edit:4.5.7.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.server:1.2.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202212280858:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.8.0.v20230211-1150:default:true:default:default"/>
@@ -41,7 +43,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
     <booleanAttribute key="restart" value="true"/>
@@ -50,10 +52,14 @@
         <setEntry value="org.eclipse.ecf.core.feature:default"/>
         <setEntry value="org.eclipse.ecf.core.ssl.feature:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer.feature:default"/>
+        <setEntry value="org.eclipse.ecf.filetransfer.httpclient5.feature:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
+        <setEntry value="org.eclipse.emf.cdo.ecore.dependencies:default"/>
+        <setEntry value="org.eclipse.emf.cdo.examples.installer:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples:default"/>
+        <setEntry value="org.eclipse.emf.cdo.license:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
@@ -61,12 +67,41 @@
         <setEntry value="org.eclipse.emf.cdo:default"/>
         <setEntry value="org.eclipse.emf.common:default"/>
         <setEntry value="org.eclipse.emf.ecore:default"/>
+        <setEntry value="org.eclipse.emf.ecp.emfforms.runtime.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.categorization.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.compoundcontrol.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.custom.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.group.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.horizontal.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.label.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.rule.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.stack.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.treemasterdetail.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.unset.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.validation.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.view.vertical.feature:default"/>
+        <setEntry value="org.eclipse.emf.ecp.viewmodel.feature:default"/>
+        <setEntry value="org.eclipse.equinox.executable:default"/>
         <setEntry value="org.eclipse.equinox.p2.core.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.extras.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.rcp.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.user.ui:default"/>
         <setEntry value="org.eclipse.help:default"/>
+        <setEntry value="org.eclipse.jdt:default"/>
+        <setEntry value="org.eclipse.net4j.db.doc:default"/>
         <setEntry value="org.eclipse.net4j.db.h2:default"/>
+        <setEntry value="org.eclipse.net4j.db:default"/>
+        <setEntry value="org.eclipse.net4j.doc:default"/>
+        <setEntry value="org.eclipse.net4j.examples.installer:default"/>
+        <setEntry value="org.eclipse.net4j.sdk:default"/>
+        <setEntry value="org.eclipse.net4j.ui:default"/>
+        <setEntry value="org.eclipse.net4j.util.doc:default"/>
+        <setEntry value="org.eclipse.net4j.util.ui:default"/>
+        <setEntry value="org.eclipse.net4j.util:default"/>
+        <setEntry value="org.eclipse.net4j:default"/>
+        <setEntry value="org.eclipse.pde:default"/>
         <setEntry value="org.eclipse.platform:default"/>
         <setEntry value="org.eclipse.rcp:default"/>
     </setAttribute>

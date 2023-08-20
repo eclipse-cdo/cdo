@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.explorer.ui.repositories.wizards;
 
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
@@ -18,7 +19,6 @@ import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.wizards.CheckoutWizardPage.ValidationProblem;
 import org.eclipse.emf.cdo.internal.explorer.repositories.CDORepositoryImpl;
 import org.eclipse.emf.cdo.internal.explorer.repositories.LocalCDORepository;
-import org.eclipse.emf.cdo.ui.Support;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -47,9 +47,15 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 {
   private static final boolean SERVER_SECURITY_AVAILABLE = Support.SERVER_SECURITY.isAvailable();
 
+  private static final boolean SERVER_LM_AVAILABLE = Support.SERVER_LM.isAvailable();
+
   private static final String DEFAULT_SECURITY_DESCRIPTION = OMPlatform.INSTANCE.getProperty( //
       "org.eclipse.emf.cdo.explorer.ui.repositories.wizards.RepositoryLocalPage.DEFAULT_SECURITY_DESCRIPTION", //
-      "/security:annotation:home(/home)");
+      "security:annotation:home(/home)");
+
+  private static final String DEFAULT_LM_DESCRIPTION = OMPlatform.INSTANCE.getProperty( //
+      "org.eclipse.emf.cdo.explorer.ui.repositories.wizards.RepositoryLocalPage.DEFAULT_LM_DESCRIPTION", //
+      "system:module.md:dropTypes(Tag,Milestone):releaseTypes(Release)");
 
   private final Set<Integer> configuredPorts = new HashSet<>();
 
@@ -66,6 +72,8 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
   private Button uuidButton;
 
   private TextAndDisable securityText;
+
+  private TextAndDisable lmText;
 
   private TextAndDisable portText;
 
@@ -167,6 +175,25 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
       securityText.addSelectionListener(this);
     }
 
+    if (SERVER_LM_AVAILABLE)
+    {
+      createLabel(container, "Lifecycle Management:");
+      lmText = new TextAndDisable(container, SWT.BORDER, null)
+      {
+        @Override
+        protected GridData createTextLayoutData()
+        {
+          return new GridData(SWT.FILL, SWT.CENTER, true, false);
+        }
+      };
+
+      lmText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
+      lmText.setValue(DEFAULT_LM_DESCRIPTION);
+      lmText.setDisabled(true);
+      lmText.addModifyListener(this);
+      lmText.addSelectionListener(this);
+    }
+
     createLabel(container, "TCP port:");
     portText = new TextAndDisable(container, SWT.BORDER, null);
     portText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
@@ -229,13 +256,33 @@ public class RepositoryLocalPage extends AbstractRepositoryPage
 
       if (!securityDisabled)
       {
-        String securityConfig = securityText.getText().getText();
+        String securityConfig = securityText.getText().getText().trim();
         if (securityConfig.isBlank())
         {
           throw new ValidationProblem("Security configuration must start with the realm path.");
         }
 
         properties.setProperty(LocalCDORepository.PROP_SECURITY_CONFIG, securityConfig);
+      }
+    }
+
+    if (SERVER_LM_AVAILABLE)
+    {
+      boolean branching = branchingButton.getSelection();
+      lmText.getButton().setEnabled(branching);
+
+      boolean lmEnabled = !lmText.isDisabled();
+      if (lmEnabled && !branching)
+      {
+        lmEnabled = false;
+        lmText.setDisabled(true);
+      }
+
+      properties.setProperty(LocalCDORepository.PROP_LM_ENABLED, Boolean.toString(lmEnabled));
+
+      if (lmEnabled)
+      {
+        properties.setProperty(LocalCDORepository.PROP_LM_CONFIG, lmText.getText().getText().trim());
       }
     }
 

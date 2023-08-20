@@ -36,6 +36,8 @@
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
     <stringAttribute key="selectedPlugin" value="org.eclipse.emf.cdo"/>
     <setAttribute key="selected_target_bundles">
+        <setEntry value="bcpg@default:default"/>
+        <setEntry value="bcprov@default:default"/>
         <setEntry value="com.ibm.icu@default:default"/>
         <setEntry value="com.mysql.jdbc@default:default"/>
         <setEntry value="org.apache.derby@default:default"/>

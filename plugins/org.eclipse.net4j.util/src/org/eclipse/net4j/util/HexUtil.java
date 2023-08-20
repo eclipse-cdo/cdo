@@ -17,6 +17,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
+import java.util.Locale;
 
 /**
  * Provides static methods that convert to and from hexadecimal string formats.
@@ -29,6 +30,22 @@ public final class HexUtil
 
   private HexUtil()
   {
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static String charToHex(char ch)
+  {
+    return Integer.toHexString(ch).toUpperCase(Locale.ENGLISH);
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static char hexToChar(String s)
+  {
+    return (char)Integer.parseInt(s, 16);
   }
 
   /**

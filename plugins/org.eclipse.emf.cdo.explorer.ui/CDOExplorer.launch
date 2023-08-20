@@ -27,7 +27,6 @@
     <setAttribute key="selected_target_bundles">
         <setEntry value="com.ibm.icu@default:default"/>
         <setEntry value="javax.annotation@default:default"/>
-        <setEntry value="javax.inject@default:default"/>
         <setEntry value="javax.xml@default:default"/>
         <setEntry value="org.apache.ant@default:default"/>
         <setEntry value="org.apache.batik.css@default:default"/>

@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.impl;
 
 import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.DropType;
+import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
@@ -346,6 +347,19 @@ public class ProcessImpl extends ModelElementImpl implements org.eclipse.emf.cdo
   }
 
   @Override
+  public boolean addDropType(String name, boolean release)
+  {
+    if (getDropType(name) != null)
+    {
+      return false;
+    }
+
+    DropType dropType = LMFactory.eINSTANCE.createDropType(name, release);
+    getDropTypes().add(dropType);
+    return true;
+  }
+
+  @Override
   public DropType getDropType(String name)
   {
     for (DropType dropType : getDropTypes())
@@ -353,6 +367,33 @@ public class ProcessImpl extends ModelElementImpl implements org.eclipse.emf.cdo
       if (Objects.equals(dropType.getName(), name))
       {
         return dropType;
+      }
+    }
+
+    return null;
+  }
+
+  @Override
+  public boolean addModuleType(String name)
+  {
+    if (getModuleType(name) != null)
+    {
+      return false;
+    }
+
+    ModuleType moduleType = LMFactory.eINSTANCE.createModuleType(name);
+    getModuleTypes().add(moduleType);
+    return true;
+  }
+
+  @Override
+  public ModuleType getModuleType(String name)
+  {
+    for (ModuleType moduleType : getModuleTypes())
+    {
+      if (Objects.equals(moduleType.getName(), name))
+      {
+        return moduleType;
       }
     }
 

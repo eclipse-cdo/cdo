@@ -82,6 +82,11 @@ public interface OMBundle
   public TranslationSupport getTranslationSupport();
 
   /**
+   * @since 3.22
+   */
+  public Class<?> loadClass(String pluginID, String className) throws ClassNotFoundException;
+
+  /**
    * @deprecated For internal use only.
    */
   @Deprecated

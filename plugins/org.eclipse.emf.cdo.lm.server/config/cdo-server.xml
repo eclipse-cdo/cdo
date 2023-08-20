@@ -36,6 +36,15 @@
     </store>
 
     <lifecycleManager type="default" systemName="CDO-LM" moduleDefinitionPath="module.md">
+      <dropType name="Tag" />    
+      <dropType name="Milestone" />    
+      <dropType name="Release" release="true" />
+      
+      <!-- 
+      <moduleType name="Normal" />
+      <moduleType name="Test" />
+       -->
+          
       <moduleTemplate name="$MODULE$">
         <property name="overrideUUID" value="" />
         <property name="supportingAudits" value="true" />

@@ -11,9 +11,9 @@
 package org.eclipse.emf.cdo.explorer.ui.checkouts.actions;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 
 /**
@@ -60,7 +60,7 @@ public class CompareWithActionProvider extends AbstractBranchPointActionProvider
 
   public static void compareWith(CDOCheckout checkout, CDOBranchPoint branchPoint)
   {
-    if (Support.COMPARE.isAvailable())
+    if (Support.UI_COMPARE.isAvailable())
     {
       CDORepository repository = checkout.getRepository();
       CDOBranchPoint left = branchPoint;

@@ -66,6 +66,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
@@ -665,7 +666,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     Map<String, String> map = new HashMap<>();
     map.put(PROP_LAST_REPLICATED_BRANCH_ID, Integer.toString(lastReplicatedBranchID));
     map.put(PROP_LAST_REPLICATED_COMMIT_TIME, Long.toString(lastReplicatedCommitTime));
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
 
     InternalStore store = getStore();
     store.setPersistentProperties(map);

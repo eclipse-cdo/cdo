@@ -56,6 +56,7 @@ import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -823,7 +824,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     LifecycleUtil.deactivate(idHandler);
 
     Map<String, String> map = new HashMap<>();
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, Boolean.TRUE.toString());
+    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
 
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)

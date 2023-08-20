@@ -35,6 +35,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.InvalidURIException;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.event.Event;
@@ -315,6 +316,8 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
     {
       descriptor = new SystemDescriptor(repository, systemName);
       open = Boolean.parseBoolean(properties.getProperty(PROP_OPEN, "false"));
+
+      repository.addKeyword("org.eclipse.emf.cdo.lm.System");
     }
 
     synchronized (this)
@@ -438,7 +441,7 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
             if (systemName != null)
             {
               properties.put(PROP_SYSTEM_NAME, systemName);
-              properties.put(PROP_OPEN, Boolean.FALSE.toString());
+              properties.put(PROP_OPEN, StringUtil.FALSE);
             }
 
             saveProperties(repository, properties);

@@ -24,6 +24,8 @@ import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
@@ -31,8 +33,12 @@ import org.eclipse.emf.common.notify.Notification;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Properties;
+import java.util.Set;
+import java.util.StringTokenizer;
 
 /**
  * @author Eike Stepper
@@ -47,7 +53,13 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
   public static final String PROP_DESCRIPTION = "description";
 
+  public static final String PROP_KEYWORDS = "keywords";
+
   public static final String PROP_SERVER_BROWSER_PORT = "serverBrowserPort";
+
+  private static final String KEYWORD_DELIMITER = " ";
+
+  private final IRegistry<String, Object> transientProperties = new HashMapRegistry.AutoCommit<>();
 
   private org.eclipse.emf.common.notify.Notifier target;
 
@@ -60,6 +72,8 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   private String label;
 
   private String description;
+
+  private Set<String> keywords;
 
   private int serverBrowserPort;
 
@@ -129,6 +143,54 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 
       fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE);
     }
+  }
+
+  @Override
+  public final boolean hasKeyword(String keyword)
+  {
+    if (keywords != null)
+    {
+      return keywords.contains(keyword);
+    }
+
+    return false;
+  }
+
+  @Override
+  public final Set<String> getKeywords()
+  {
+    return keywords;
+  }
+
+  @Override
+  public final boolean setKeywords(Set<String> keywords)
+  {
+    if (!ObjectUtil.equals(this.keywords, keywords))
+    {
+      this.keywords = sanitizeKeywords(keywords);
+      save();
+
+      fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.NONE);
+      return true;
+    }
+
+    return false;
+  }
+
+  @Override
+  public final boolean addKeyword(String keyword)
+  {
+    Set<String> newKeywords = new HashSet<>(keywords);
+    newKeywords.add(keyword);
+    return setKeywords(newKeywords);
+  }
+
+  @Override
+  public final boolean removeKeyword(String keyword)
+  {
+    Set<String> newKeywords = new HashSet<>(keywords);
+    newKeywords.remove(keyword);
+    return setKeywords(newKeywords);
   }
 
   public final int getServerBrowserPort()
@@ -219,28 +281,28 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   }
 
   @Override
-  public void notifyChanged(Notification notification)
+  public final void notifyChanged(Notification notification)
   {
   }
 
   @Override
-  public org.eclipse.emf.common.notify.Notifier getTarget()
+  public final org.eclipse.emf.common.notify.Notifier getTarget()
   {
     return target;
   }
 
   @Override
-  public void setTarget(org.eclipse.emf.common.notify.Notifier newTarget)
+  public final void setTarget(org.eclipse.emf.common.notify.Notifier newTarget)
   {
     target = newTarget;
   }
 
   @Override
-  public void unsetTarget(org.eclipse.emf.common.notify.Notifier oldTarget)
+  public final void unsetTarget(org.eclipse.emf.common.notify.Notifier oldTarget)
   {
     if (target == oldTarget)
     {
-      setTarget(null);
+      target = null;
     }
   }
 
@@ -251,7 +313,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   }
 
   @Override
-  public boolean equals(Object obj)
+  public final boolean equals(Object obj)
   {
     if (obj == this)
     {
@@ -273,13 +335,13 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   }
 
   @Override
-  public int hashCode()
+  public final int hashCode()
   {
     return getClass().hashCode() ^ id.hashCode();
   }
 
   @Override
-  public int compareTo(CDOExplorerElement o)
+  public final int compareTo(CDOExplorerElement o)
   {
     String label1 = StringUtil.safe(label).toLowerCase();
     String label2 = StringUtil.safe(o.getLabel()).toLowerCase();
@@ -290,13 +352,13 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
    * @since 4.5
    */
   @Override
-  public File getStateFolder(String path)
+  public final File getStateFolder(String path)
   {
     return getStateFolder(path, true);
   }
 
   @Override
-  public File getStateFolder(String path, boolean createOnDemand)
+  public final File getStateFolder(String path, boolean createOnDemand)
   {
     File stateFolder = new File(folder, path);
     if (!stateFolder.exists())
@@ -329,7 +391,7 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
   }
 
-  public void save()
+  public final void save()
   {
     String propertiesFileName = getManager().getPropertiesFileName();
     Properties properties = getProperties();
@@ -337,11 +399,17 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
   }
 
   @Override
-  public Properties getProperties()
+  public final Properties getProperties()
   {
     Properties properties = new Properties();
     collectProperties(properties);
     return properties;
+  }
+
+  @Override
+  public final IRegistry<String, Object> getTransientProperties()
+  {
+    return transientProperties;
   }
 
   protected final void saveProperties(String fileName, Properties properties)
@@ -358,6 +426,9 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     label = properties.getProperty(PROP_LABEL);
     description = properties.getProperty(PROP_DESCRIPTION);
 
+    Set<String> set = parseKeywords(properties.getProperty(PROP_KEYWORDS));
+    keywords = sanitizeKeywords(set);
+
     String property = properties.getProperty(PROP_SERVER_BROWSER_PORT);
     if (property != null)
     {
@@ -372,6 +443,11 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     if (!StringUtil.isEmpty(description))
     {
       properties.setProperty(PROP_DESCRIPTION, description);
+    }
+
+    if (!ObjectUtil.isEmpty(keywords))
+    {
+      properties.setProperty(PROP_KEYWORDS, formatKeywords(keywords));
     }
 
     if (serverBrowserPort != 0)
@@ -393,6 +469,39 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
     }
 
     return result.toArray(new AbstractElement[result.size()]);
+  }
+
+  public static String formatKeywords(Set<String> keywords)
+  {
+    List<String> list = new ArrayList<>(keywords);
+    list.sort(null);
+
+    return String.join(KEYWORD_DELIMITER, list);
+  }
+
+  public static Set<String> parseKeywords(String string)
+  {
+    Set<String> keywords = new HashSet<>();
+
+    if (!StringUtil.isEmpty(string))
+    {
+      StringTokenizer tokenizer = new StringTokenizer(string, KEYWORD_DELIMITER);
+      while (tokenizer.hasMoreTokens())
+      {
+        String keyword = tokenizer.nextToken();
+        if (keyword.length() != 0)
+        {
+          keywords.add(keyword);
+        }
+      }
+    }
+
+    return keywords;
+  }
+
+  private static Set<String> sanitizeKeywords(Set<String> set)
+  {
+    return ObjectUtil.isEmpty(set) ? Collections.emptySet() : Collections.unmodifiableSet(set);
   }
 
   /**

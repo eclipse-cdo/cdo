@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.explorer.ui.handlers;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.OfflineCDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOMerger.ConflictException;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.internal.compare.CompareCDOMerger;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -59,7 +59,7 @@ public class WorkspaceUpdateHandler extends AbstractBaseHandler<OfflineCDOChecko
       }
       catch (ConflictException ex)
       {
-        if (Support.COMPARE.isAvailable())
+        if (Support.UI_COMPARE.isAvailable())
         {
           mergeCompare(checkout, workspace);
         }

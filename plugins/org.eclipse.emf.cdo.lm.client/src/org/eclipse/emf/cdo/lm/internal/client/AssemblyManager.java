@@ -348,7 +348,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     properties.setProperty("timeStamp", Long.toString(ref.getTimeStamp()));
     properties.setProperty("readOnly", Boolean.toString(readOnly));
     properties.setProperty("rootID", CDOExplorerUtil.getCDOIDString(rootID));
-    properties.setProperty("prefetch", Boolean.TRUE.toString());
+    properties.setProperty("prefetch", StringUtil.TRUE);
 
     return checkoutManager.addCheckout(properties);
   }

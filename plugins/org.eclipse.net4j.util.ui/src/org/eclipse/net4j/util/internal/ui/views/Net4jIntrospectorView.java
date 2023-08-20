@@ -208,19 +208,19 @@ public class Net4jIntrospectorView extends ViewPart
 
   private Text objectLabel;
 
-  private IAction backwardAction = new BackwardAction();
+  private final IAction backwardAction = new BackwardAction();
 
-  private IAction forwardAction = new ForwardAction();
+  private final IAction forwardAction = new ForwardAction();
 
-  private IAction logicalStructureAction = new LogicalStructureAction();
+  private final IAction logicalStructureAction = new LogicalStructureAction();
 
-  private IAction activePartAction = new ActivePartAction();
+  private final IAction activePartAction = new ActivePartAction();
 
-  private IAction linkSelectionAction = new LinkSelectionAction();
+  private final IAction linkSelectionAction = new LinkSelectionAction();
 
-  private IAction containerAction = new ContainerAction();
+  private final IAction containerAction = new ContainerAction();
 
-  private IAction refreshAction = new RefreshAction();
+  private final IAction refreshAction = new RefreshAction();
 
   private StackLayout stackLayout;
 
@@ -487,10 +487,10 @@ public class Net4jIntrospectorView extends ViewPart
       {
         text = text.substring(identity.length());
       }
-  
+
       return text.trim();
     }
-  
+
     return str;
   }
 

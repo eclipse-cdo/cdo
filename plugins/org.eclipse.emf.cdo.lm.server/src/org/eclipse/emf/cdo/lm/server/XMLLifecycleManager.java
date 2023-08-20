@@ -78,9 +78,13 @@ public class XMLLifecycleManager extends AbstractLifecycleManager
   /**
    * @author Eike Stepper
    */
-  public static class Factory extends org.eclipse.net4j.util.factory.Factory
+  public static class Factory extends AbstractLifecycleManager.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.lm.server.lifecycleManagers";
+    /**
+     * @deprecated As of 1.2 use {@link AbstractLifecycleManager.Factory#PRODUCT_GROUP}
+     */
+    @Deprecated
+    public static final String PRODUCT_GROUP = AbstractLifecycleManager.Factory.PRODUCT_GROUP;
 
     public static final String DEFAULT_TYPE = "default";
 
@@ -91,7 +95,7 @@ public class XMLLifecycleManager extends AbstractLifecycleManager
 
     protected Factory(String type)
     {
-      super(PRODUCT_GROUP, type);
+      super(type);
     }
 
     @Override

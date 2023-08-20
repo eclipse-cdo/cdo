@@ -49,14 +49,17 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.jvm.IJVMAcceptor;
 import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -77,6 +80,7 @@ import org.eclipse.core.runtime.CoreException;
 import org.eclipse.equinox.p2.metadata.Version;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,7 +94,7 @@ import java.util.function.Function;
  */
 public abstract class AbstractLifecycleManager extends Lifecycle implements LMPackage.Literals
 {
-  private static final String ACCEPTOR_NAME = "org.eclipse.emf.cdo.lm.server";
+  private static final String ACCEPTOR_NAME = Net4jUtil.LOCAL_ACCEPTOR_DESCRIPTION;
 
   private static final boolean SECURITY_AVAILABLE;
 
@@ -185,7 +189,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   public String getModuleDefinitionPath()
   {
-    return moduleDefinitionPath;
+    return moduleDefinitionPath == null ? "module.md" : moduleDefinitionPath;
   }
 
   public void setModuleDefinitionPath(String moduleDefinitionPath)
@@ -284,7 +288,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       OM.LOG.info("Initializing system resource");
 
       Process process = LMFactory.eINSTANCE.createProcess();
-      process.setModuleDefinitionPath(moduleDefinitionPath);
+      process.setModuleDefinitionPath(getModuleDefinitionPath());
       process.setInitialModuleVersion(Version.createOSGi(0, 1, 0));
 
       initProcess(process);
@@ -328,6 +332,36 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     {
       processInitializer.accept(process);
     }
+    else
+    {
+      List<String> moduleTypes = getInitialModuleTypes();
+      if (!ObjectUtil.isEmpty(moduleTypes))
+      {
+        moduleTypes.forEach(process::addModuleType);
+      }
+
+      Map<String, Boolean> dropTypes = getInitialDropTypes();
+      if (!ObjectUtil.isEmpty(dropTypes))
+      {
+        dropTypes.forEach(process::addDropType);
+      }
+    }
+  }
+
+  /**
+   * @since 1.2
+   */
+  protected List<String> getInitialModuleTypes()
+  {
+    return Collections.emptyList();
+  }
+
+  /**
+   * @since 1.2
+   */
+  protected Map<String, Boolean> getInitialDropTypes()
+  {
+    return Collections.emptyMap();
   }
 
   protected void handleCommit(CommitContext commitContext)
@@ -870,6 +904,28 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           securityManager.addSecondaryRepository(moduleRepository);
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 1.2
+   */
+  public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.lm.server.lifecycleManagers";
+
+    protected Factory(String type)
+    {
+      super(PRODUCT_GROUP, type);
+    }
+
+    @Override
+    public abstract AbstractLifecycleManager create(String description) throws ProductCreationException;
+
+    public static AbstractLifecycleManager get(IManagedContainer container, String type, String description)
+    {
+      return container.getElementOrNull(PRODUCT_GROUP, type, description);
     }
   }
 }

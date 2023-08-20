@@ -80,6 +80,12 @@ public class LegacyBundle extends AbstractBundle
   }
 
   @Override
+  public Class<?> loadClass(String pluginID, String className) throws ClassNotFoundException
+  {
+    return Class.forName(className);
+  }
+
+  @Override
   public Iterator<Class<?>> getClasses()
   {
     List<Class<?>> result = new ArrayList<>();

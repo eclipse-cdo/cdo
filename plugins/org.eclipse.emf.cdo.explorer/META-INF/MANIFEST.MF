@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.explorer;singleton:=true
-Bundle-Version: 4.12.0.qualifier
+Bundle-Version: 4.13.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.internal.explorer.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -12,14 +12,15 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.equinox.security;bundle-version="[1.0.0,2.0.0)",
+ org.eclipse.core.filesystem;bundle-version="[1.0.0,2.0.0)";resolution:=optional,
+ org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)";resolution:=optional,
  org.eclipse.emf.cdo.net4j;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.workspace;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server.db;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server.security;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
- org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)",
- org.eclipse.core.filesystem;bundle-version="[1.0.0,2.0.0)";resolution:=optional,
- org.eclipse.core.resources;bundle-version="[3.4.0,4.0.0)";resolution:=optional
+ org.eclipse.emf.cdo.lm.server;bundle-version="[1.0.0,2.0.0)";resolution:=optional,
+ org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)"
 Import-Package: org.h2;version="[1.0.0,2.0.0)";resolution:=optional,
  org.h2.command;version="[1.0.0,2.0.0)";resolution:=optional,
  org.h2.expression;version="[1.0.0,2.0.0)";resolution:=optional,
@@ -27,13 +28,13 @@ Import-Package: org.h2;version="[1.0.0,2.0.0)";resolution:=optional,
  org.h2.jdbcx;version="[1.0.0,2.0.0)";resolution:=optional,
  org.h2.util;version="[1.0.0,2.0.0)";resolution:=optional,
  org.h2.value;version="[1.0.0,2.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.explorer;version="4.12.0",
- org.eclipse.emf.cdo.explorer.checkouts;version="4.12.0",
- org.eclipse.emf.cdo.explorer.repositories;version="4.12.0",
- org.eclipse.emf.cdo.internal.explorer;version="4.12.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.bundle;version="4.12.0";x-internal:=true,
- org.eclipse.emf.cdo.internal.explorer.checkouts;version="4.12.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.repositories;version="4.12.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.resources;version="4.12.0";x-friends:="org.eclipse.emf.cdo.explorer.ui"
+Export-Package: org.eclipse.emf.cdo.explorer;version="4.13.0",
+ org.eclipse.emf.cdo.explorer.checkouts;version="4.13.0",
+ org.eclipse.emf.cdo.explorer.repositories;version="4.13.0",
+ org.eclipse.emf.cdo.internal.explorer;version="4.13.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.bundle;version="4.13.0";x-internal:=true,
+ org.eclipse.emf.cdo.internal.explorer.checkouts;version="4.13.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.repositories;version="4.13.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.resources;version="4.13.0";x-friends:="org.eclipse.emf.cdo.explorer.ui"
 Eclipse-BuddyPolicy: registered
 Automatic-Module-Name: org.eclipse.emf.cdo.explorer

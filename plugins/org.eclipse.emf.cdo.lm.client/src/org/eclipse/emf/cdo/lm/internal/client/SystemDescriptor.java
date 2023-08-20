@@ -34,7 +34,6 @@ import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
@@ -71,8 +70,11 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewCommitInfoListener;
 
+import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
@@ -143,6 +145,10 @@ public final class SystemDescriptor implements ISystemDescriptor
   private static final String KEY_MODULE_NAME = "org.eclipse.emf.cdo.lm.client.ModuleName";
 
   private static final String PROP_BASELINE_INDEX = "baseline.index";
+
+  private static final String JVM_ACCEPTOR_TYPE = Net4jUtil.LOCAL_ACCEPTOR_TYPE;
+
+  private static final String JVM_ACCEPTOR_NAME = Net4jUtil.LOCAL_ACCEPTOR_DESCRIPTION;
 
   private final IListener systemListener = new CDOViewCommitInfoListener()
   {
@@ -461,16 +467,10 @@ public final class SystemDescriptor implements ISystemDescriptor
     // TODO Move to NamingStrategy.
     String label = "_LM_Module_" + systemName + "_" + moduleName;
 
-    CDORepositoryManager repositoryManager = CDOExplorerUtil.getRepositoryManager();
-    CDORepository moduleRepository = repositoryManager.getRepositoryByLabel(label);
+    CDORepository moduleRepository = CDOExplorerUtil.getRepositoryManager().getRepositoryByLabel(label);
     if (moduleRepository == null)
     {
-      Properties properties = systemRepository.getProperties();
-      properties.setProperty("label", label);
-      properties.setProperty("name", moduleName);
-
-      IPasswordCredentials credentials = systemRepository.getCredentials();
-      moduleRepository = repositoryManager.addRepository(properties, credentials);
+      moduleRepository = createModuleRepository(moduleName, label);
     }
 
     moduleRepository.connect();
@@ -484,6 +484,46 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     return moduleRepository;
+  }
+
+  private CDORepository createModuleRepository(String moduleName, String label)
+  {
+    Properties properties = initModuleRepositoryProperties();
+    properties.setProperty("label", label);
+    properties.setProperty("name", moduleName);
+    properties.setProperty("keywords", "org.eclipse.emf.cdo.lm.Module");
+
+    IPasswordCredentials credentials = systemRepository.getCredentials();
+    return CDOExplorerUtil.getRepositoryManager().addRepository(properties, credentials);
+  }
+
+  private Properties initModuleRepositoryProperties()
+  {
+    String systemRepositoryType = systemRepository.getType();
+    if (CDORepository.TYPE_REMOTE.equals(systemRepositoryType))
+    {
+      // The module repository is reachable through the same connector as the system itself.
+      return systemRepository.getProperties();
+    }
+
+    if (CDORepository.TYPE_LOCAL.equals(systemRepositoryType))
+    {
+      // The module repository is reachable via this special JVM acceptor.
+      IManagedContainer container = systemRepository.getContainer();
+      Net4jUtil.getAcceptor(container, JVM_ACCEPTOR_TYPE, JVM_ACCEPTOR_NAME);
+
+      Properties properties = new Properties();
+      properties.setProperty("type", CDORepository.TYPE_REMOTE);
+      properties.setProperty("connectorType", JVM_ACCEPTOR_TYPE);
+      properties.setProperty("connectorDescription", JVM_ACCEPTOR_NAME);
+
+      Properties systemRepositoryProperties = systemRepository.getProperties();
+      boolean securityDisabled = systemRepositoryProperties.get("securityDisabled") != Boolean.FALSE;
+      properties.setProperty("authenticating", Boolean.toString(!securityDisabled));
+      return properties;
+    }
+
+    throw new IllegalStateException("Illegal system repository type: " + systemRepositoryType);
   }
 
   @Override
@@ -699,7 +739,7 @@ public final class SystemDescriptor implements ISystemDescriptor
       IPlanner planner = (IPlanner)provisioningAgent.getService(IPlanner.SERVICE_NAME);
       IProfileChangeRequest profileChangeRequest = planner.createChangeRequest(profile);
       profileChangeRequest.add(rootIU);
-      profileChangeRequest.setInstallableUnitProfileProperty(rootIU, IProfile.PROP_PROFILE_ROOT_IU, Boolean.TRUE.toString());
+      profileChangeRequest.setInstallableUnitProfileProperty(rootIU, IProfile.PROP_PROFILE_ROOT_IU, StringUtil.TRUE);
 
       CollectionResult<IInstallableUnit> metadata = new CollectionResult<>(ius);
       ProvisioningContext provisioningContext = new ProvisioningContext(provisioningAgent)

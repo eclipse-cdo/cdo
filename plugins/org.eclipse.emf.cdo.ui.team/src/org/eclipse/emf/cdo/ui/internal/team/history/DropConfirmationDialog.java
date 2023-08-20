@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.ui.internal.team.history;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.transaction.CDOTransactionCommentator;
-import org.eclipse.emf.cdo.ui.Support;
 
 import org.eclipse.net4j.util.ui.widgets.AbstractDialog;
 import org.eclipse.net4j.util.ui.widgets.DoubleClickButtonAdapter;
@@ -106,7 +106,7 @@ public class DropConfirmationDialog extends AbstractDialog
 
     new Label(container, SWT.NONE).setLayoutData(grab.create());
 
-    if (!Support.COMPARE.isAvailable())
+    if (!Support.UI_COMPARE.isAvailable())
     {
       mergeFromButton.setEnabled(false);
       operation = Operation.REVERT_TO;

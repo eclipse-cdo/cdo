@@ -98,13 +98,13 @@ public class CloneCDORepository extends CDORepositoryImpl
   @Override
   public final String getConnectorType()
   {
-    return "jvm";
+    return Net4jUtil.LOCAL_ACCEPTOR_TYPE;
   }
 
   @Override
   public final String getConnectorDescription()
   {
-    return "local";
+    return Net4jUtil.LOCAL_ACCEPTOR_DESCRIPTION;
   }
 
   @Override

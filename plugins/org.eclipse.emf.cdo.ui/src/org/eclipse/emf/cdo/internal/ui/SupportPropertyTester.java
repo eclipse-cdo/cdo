@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
-import org.eclipse.emf.cdo.ui.Support;
+import org.eclipse.emf.cdo.common.util.Support;
 
 import org.eclipse.core.expressions.PropertyTester;
 
@@ -33,12 +33,12 @@ public class SupportPropertyTester extends PropertyTester
 
     if ("history".equals(property))
     {
-      return expectedValue.equals(Support.HISTORY.isAvailable());
+      return expectedValue.equals(Support.UI_HISTORY.isAvailable());
     }
 
     if ("compare".equals(property))
     {
-      return expectedValue.equals(Support.COMPARE.isAvailable());
+      return expectedValue.equals(Support.UI_COMPARE.isAvailable());
     }
 
     return false;

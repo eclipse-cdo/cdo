@@ -200,6 +200,16 @@ public class SharedIcons
   public static final String OVR_LOCK_SELF = OVR + "lock_self" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   /**
+   * @since 4.8
+   */
+  public static final String OVR_SYSTEM = OVR + "system" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
+   * @since 4.8
+   */
+  public static final String OVR_MODULE = OVR + "module" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
+  /**
    * @since 4.6
    */
   public static final String OVR_SECURITY = OVR + "security" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

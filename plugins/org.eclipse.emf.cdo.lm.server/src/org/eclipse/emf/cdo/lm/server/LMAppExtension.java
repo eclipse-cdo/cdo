@@ -10,27 +10,42 @@
  */
 package org.eclipse.emf.cdo.lm.server;
 
+import org.eclipse.emf.cdo.lm.DropType;
+import org.eclipse.emf.cdo.lm.LMFactory;
+import org.eclipse.emf.cdo.lm.ModuleType;
+import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.AppExtension;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.BiFunction;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
  */
 public class LMAppExtension extends AppExtension
 {
+  private static final String DEFAULT_LIFECYCLE_MANAGER_TYPE = OMPlatform.INSTANCE.getProperty( //
+      "org.eclipse.emf.cdo.lm.server.LMAppExtension.DEFAULT_LIFECYCLE_MANAGER_TYPE", //
+      XMLLifecycleManager.Factory.DEFAULT_TYPE);
+
   private final Map<InternalRepository, XMLLifecycleManager> lifecycleManagers = new HashMap<>();
 
   public LMAppExtension()
@@ -82,7 +97,7 @@ public class LMAppExtension extends AppExtension
     String moduleDefinitionPath = lmElement.getAttribute("moduleDefinitionPath");
     if (moduleDefinitionPath == null || moduleDefinitionPath.isEmpty())
     {
-      moduleDefinitionPath = ".module.md";
+      moduleDefinitionPath = "module.md";
     }
 
     NodeList moduleTemplateElements = lmElement.getElementsByTagName("moduleTemplate"); //$NON-NLS-1$
@@ -101,34 +116,89 @@ public class LMAppExtension extends AppExtension
     lifecycleManager.setModuleDefinitionPath(moduleDefinitionPath);
     lifecycleManager.setModuleTemplateElement(moduleTemplateElement);
 
+    Consumer<Process> processInitializer = createProcessInitializater(lmElement);
+    lifecycleManager.setProcessInitializer(processInitializer);
+
     OM.LOG.info("Activating lifecycle manager of repository " + repository.getName());
     lifecycleManager.activate();
 
     lifecycleManagers.put(repository, lifecycleManager);
   }
 
+  /**
+   * @since 1.2
+   */
+  protected String getDefaultLifecycleManagerType()
+  {
+    return DEFAULT_LIFECYCLE_MANAGER_TYPE;
+  }
+
   protected XMLLifecycleManager createLifecycleManager(InternalRepository repository, Element lmElement)
   {
-    XMLLifecycleManager lifecycleManager = getContainerElement(lmElement, XMLLifecycleManager.Factory.DEFAULT_TYPE, repository.getContainer());
-    return lifecycleManager;
+    IManagedContainer container = repository.getContainer();
+    String lifecycleManagerType = getDefaultLifecycleManagerType();
+    return getContainerElement(lmElement, lifecycleManagerType, container);
   }
 
-  protected Map<String, String> initializeModuleTypesDefinition()
+  /**
+   * @since 1.2
+   */
+  protected Consumer<Process> createProcessInitializater(Element lmElement)
   {
-    return Collections.emptyMap();
+    Collection<ModuleType> moduleTypes = getModuleTypes(lmElement);
+    Collection<DropType> dropTypes = getDropTypes(lmElement);
+
+    if (!ObjectUtil.isEmpty(moduleTypes) || !ObjectUtil.isEmpty(dropTypes))
+    {
+      return process -> {
+        process.getModuleTypes().addAll(moduleTypes);
+        process.getDropTypes().addAll(dropTypes);
+      };
+    }
+
+    return null;
   }
 
-  protected Map<String, Boolean> initializeDropTypesDefinition()
+  /**
+   * @since 1.2
+   */
+  protected Collection<ModuleType> getModuleTypes(Element lmElement)
   {
-    Map<String, Boolean> dropTypes = new HashMap<>();
-    dropTypes.put("Tag", false);
-    dropTypes.put("Milestone", false);
-    dropTypes.put("Release", true);
-
-    return dropTypes;
+    return getNamedChildren(lmElement, "moduleType", (child, name) -> LMFactory.eINSTANCE.createModuleType(name));
   }
 
-  private <T> T getContainerElement(Element element, String defaultType, IManagedContainer container)
+  /**
+   * @since 1.2
+   */
+  protected Collection<DropType> getDropTypes(Element lmElement)
+  {
+    return getNamedChildren(lmElement, "dropType", (child, name) -> {
+      boolean release = StringUtil.isTrue(child.getAttribute("release"));
+      return LMFactory.eINSTANCE.createDropType(name, release);
+    });
+  }
+
+  private static <T> Collection<T> getNamedChildren(Element lmElement, String childTagName, BiFunction<Element, String, T> childCreator)
+  {
+    List<T> result = new ArrayList<>();
+
+    NodeList elements = lmElement.getElementsByTagName(childTagName);
+    for (int i = 0, length = elements.getLength(); i < length; i++)
+    {
+      Element element = (Element)elements.item(i);
+
+      String name = element.getAttribute("name");
+      if (!StringUtil.isEmpty(name))
+      {
+        T child = childCreator.apply(element, name);
+        result.add(child);
+      }
+    }
+
+    return result;
+  }
+
+  private static <T> T getContainerElement(Element element, String defaultType, IManagedContainer container)
   {
     String type = element.getAttribute("type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
@@ -144,8 +214,31 @@ public class LMAppExtension extends AppExtension
     }
 
     @SuppressWarnings("unchecked")
-    T containerElement = (T)container.getElement(XMLLifecycleManager.Factory.PRODUCT_GROUP, type, description, false);
+    T containerElement = (T)container.getElement(AbstractLifecycleManager.Factory.PRODUCT_GROUP, type, description, false);
 
     return containerElement;
+  }
+
+  /**
+   * @deprecated As of 1.2 no longer supported.
+   */
+  @Deprecated
+  protected Map<String, String> initializeModuleTypesDefinition()
+  {
+    return Collections.emptyMap();
+  }
+
+  /**
+   * @deprecated As of 1.2 no longer supported.
+   */
+  @Deprecated
+  protected Map<String, Boolean> initializeDropTypesDefinition()
+  {
+    Map<String, Boolean> dropTypes = new HashMap<>();
+    dropTypes.put("Tag", false);
+    dropTypes.put("Milestone", false);
+    dropTypes.put("Release", true);
+
+    return dropTypes;
   }
 }

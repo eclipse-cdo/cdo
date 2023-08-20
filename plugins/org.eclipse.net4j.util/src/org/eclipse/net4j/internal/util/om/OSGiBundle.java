@@ -66,6 +66,18 @@ public class OSGiBundle extends AbstractBundle
   }
 
   @Override
+  public Class<?> loadClass(String pluginID, String className) throws ClassNotFoundException
+  {
+    Bundle bundle = Platform.getBundle(pluginID);
+    if (bundle == null)
+    {
+      throw new ClassNotFoundException(className + " cannot be loaded because because bundle " + pluginID + " cannot be resolved");
+    }
+
+    return bundle.loadClass(className);
+  }
+
+  @Override
   public Iterator<Class<?>> getClasses()
   {
     final Queue<String> folders = new LinkedList<>();

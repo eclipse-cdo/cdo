@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.jvm.IJVMChannel;
 import org.eclipse.net4j.signal.ISignalProtocol;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -53,8 +54,6 @@ import java.util.Set;
 public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContainerProvider
 {
   public static final String PROP_IGNORE = "org.eclipse.emf.cdo.server.admin.ignore";
-
-  private static final String TRUE = Boolean.TRUE.toString();
 
   private static Class<?> IJVMCHANNEL_CLASS;
 
@@ -250,7 +249,7 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
   protected boolean validateDelegate(IRepository delegate)
   {
     String ignore = delegate.getProperties().get(PROP_IGNORE);
-    if (TRUE.equalsIgnoreCase(ignore))
+    if (StringUtil.isTrue(ignore))
     {
       return false;
     }

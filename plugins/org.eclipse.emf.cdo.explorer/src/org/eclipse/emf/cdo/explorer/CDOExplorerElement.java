@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.explorer;
 
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 
@@ -19,6 +20,7 @@ import org.eclipse.core.runtime.IAdaptable;
 
 import java.io.File;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * A CDO server independent representation of a repository.
@@ -41,6 +43,31 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
   public String getDescription();
 
   public void setDescription(String description);
+
+  /**
+   * @since 4.13
+   */
+  public boolean hasKeyword(String keyword);
+
+  /**
+   * @since 4.13
+   */
+  public Set<String> getKeywords();
+
+  /**
+   * @since 4.13
+   */
+  public boolean setKeywords(Set<String> keywords);
+
+  /**
+   * @since 4.13
+   */
+  public boolean addKeyword(String keyword);
+
+  /**
+   * @since 4.13
+   */
+  public boolean removeKeyword(String keyword);
 
   /**
    * @since 4.11
@@ -66,6 +93,11 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
    * @since 4.7
    */
   public Properties getProperties();
+
+  /**
+   * @since 4.13
+   */
+  public IRegistry<String, Object> getTransientProperties();
 
   public void delete(boolean deleteContents);
 

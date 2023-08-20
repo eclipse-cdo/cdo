@@ -46,6 +46,16 @@ public final class Net4jUtil
 
   public static final short DEFAULT_BUFFER_CAPACITY = 4096;
 
+  /**
+   * @since 4.18
+   */
+  public static final String LOCAL_ACCEPTOR_TYPE = "jvm";
+
+  /**
+   * @since 4.18
+   */
+  public static final String LOCAL_ACCEPTOR_DESCRIPTION = "local";
+
   private Net4jUtil()
   {
   }
@@ -117,6 +127,22 @@ public final class Net4jUtil
     }
 
     return getConnector(container, factoryType, connectorDescription);
+  }
+
+  /**
+   * @since 4.18
+   */
+  public static IAcceptor getLocalAcceptor(IManagedContainer container)
+  {
+    return getAcceptor(container, LOCAL_ACCEPTOR_TYPE, LOCAL_ACCEPTOR_DESCRIPTION);
+  }
+
+  /**
+   * @since 4.18
+   */
+  public static IConnector getLocalConnector(IManagedContainer container)
+  {
+    return getConnector(container, LOCAL_ACCEPTOR_TYPE, LOCAL_ACCEPTOR_DESCRIPTION);
   }
 
   public static IBufferProvider createBufferFactory(short bufferCapacity)

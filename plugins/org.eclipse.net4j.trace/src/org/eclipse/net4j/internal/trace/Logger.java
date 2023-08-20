@@ -160,7 +160,7 @@ public class Logger extends RollingLog implements Listener
       String append = properties.get("append"); //$NON-NLS-1$
       if (StringUtil.isEmpty(append))
       {
-        append = Boolean.TRUE.toString();
+        append = StringUtil.TRUE;
       }
 
       return new Logger(logFile, Long.parseLong(logSize), Boolean.parseBoolean(append));

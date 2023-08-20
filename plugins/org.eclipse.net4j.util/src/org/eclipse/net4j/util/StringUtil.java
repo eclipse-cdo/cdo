@@ -17,6 +17,8 @@ import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
+import java.util.function.Consumer;
 
 /**
  * Various static helper methods for dealing with strings.
@@ -28,6 +30,18 @@ public final class StringUtil
   public static final String EMPTY = ""; //$NON-NLS-1$
 
   public static final String NL = OMPlatform.INSTANCE.getProperty("line.separator"); //$NON-NLS-1$
+
+  /**
+   * @since 3.22
+   */
+  public static final String TRUE = Boolean.TRUE.toString();
+
+  /**
+   * @since 3.22
+   */
+  public static final String FALSE = Boolean.FALSE.toString();
+
+  private static final int NO_SEPARATOR = -1;
 
   private StringUtil()
   {
@@ -81,6 +95,19 @@ public final class StringUtil
     }
 
     return text;
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static void tokenize(String text, String separators, Consumer<String> tokenConsumer)
+  {
+    StringTokenizer tokenizer = new StringTokenizer(text, separators);
+    while (tokenizer.hasMoreTokens())
+    {
+      String token = tokenizer.nextToken();
+      tokenConsumer.accept(token);
+    }
   }
 
   /**
@@ -171,6 +198,242 @@ public final class StringUtil
     return safe(str, def);
   }
 
+  /**
+   * @since 3.22
+   */
+  public static String escape(String str)
+  {
+    return escape(str, NO_SEPARATOR);
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static String escape(String str, char separator)
+  {
+    return escape(str, (int)separator);
+  }
+
+  private static String escape(String str, int separator)
+  {
+    if (str == null)
+    {
+      return null;
+    }
+
+    int len = str.length();
+    StringBuilder builder = new StringBuilder(len);
+
+    for (int i = 0; i < len; i++)
+    {
+      char c = str.charAt(i);
+
+      if (separator != NO_SEPARATOR && c == separator)
+      {
+        builder.append('\\');
+        builder.append('s');
+      }
+      else if (c > 0xfff)
+      {
+        builder.append("\\u" + HexUtil.charToHex(c)); //$NON-NLS-1$
+      }
+      else if (c > 0xff)
+      {
+        builder.append("\\u0" + HexUtil.charToHex(c)); //$NON-NLS-1$
+      }
+      else if (c > 0x7f)
+      {
+        builder.append("\\u00" + HexUtil.charToHex(c)); //$NON-NLS-1$
+      }
+      else if (c < 32)
+      {
+        switch (c)
+        {
+        case '\r':
+          builder.append('\\');
+          builder.append('r');
+          break;
+
+        case '\n':
+          builder.append('\\');
+          builder.append('n');
+          break;
+
+        case '\t':
+          builder.append('\\');
+          builder.append('t');
+          break;
+
+        case '\f':
+          builder.append('\\');
+          builder.append('f');
+          break;
+
+        case '\b':
+          builder.append('\\');
+          builder.append('b');
+          break;
+
+        default:
+          if (c > 0xf)
+          {
+            builder.append("\\u00" + HexUtil.charToHex(c)); //$NON-NLS-1$
+          }
+          else
+          {
+            builder.append("\\u000" + HexUtil.charToHex(c)); //$NON-NLS-1$
+          }
+        }
+      }
+      else if (c == '\\')
+      {
+        builder.append('\\');
+        builder.append('\\');
+      }
+      else
+      {
+        builder.append(c);
+      }
+    }
+
+    return builder.toString();
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static String unescape(String str)
+  {
+    return unescape(str, NO_SEPARATOR);
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static String unescape(String str, char separator)
+  {
+    return unescape(str, (int)separator);
+  }
+
+  private static String unescape(String str, int separator)
+  {
+    if (str == null)
+    {
+      return null;
+    }
+
+    int len = str.length();
+    StringBuilder builder = new StringBuilder(len);
+
+    StringBuilder unicodeBuilder = new StringBuilder(4);
+    boolean unicode = false;
+    boolean slash = false;
+
+    for (int i = 0; i < len; i++)
+    {
+      char c = str.charAt(i);
+      if (unicode)
+      {
+        unicodeBuilder.append(c);
+        if (unicodeBuilder.length() == 4)
+        {
+          try
+          {
+            char value = HexUtil.hexToChar(unicodeBuilder.toString());
+            builder.append(value);
+            unicodeBuilder.setLength(0);
+            unicode = false;
+            slash = false;
+          }
+          catch (NumberFormatException ex)
+          {
+            builder.append('\\');
+            builder.append('u');
+            builder.append(unicodeBuilder);
+          }
+        }
+
+        continue;
+      }
+
+      if (slash)
+      {
+        slash = false;
+
+        switch (c)
+        {
+        case '\\':
+          builder.append('\\');
+          break;
+
+        case 'r':
+          builder.append('\r');
+          break;
+
+        case 'n':
+          builder.append('\n');
+          break;
+
+        case 't':
+          builder.append('\t');
+          break;
+
+        case 'f':
+          builder.append('\f');
+          break;
+
+        case 'b':
+          builder.append('\b');
+          break;
+
+        case 's':
+          if (separator != NO_SEPARATOR)
+          {
+            builder.append((char)separator);
+          }
+          break;
+
+        case 'u':
+          unicode = true;
+          break;
+
+        case '0':
+        case '1':
+        case '2':
+        case '3':
+          if (i + 2 < len && str.charAt(i + 1) >= '0' && str.charAt(i + 1) <= '7' && str.charAt(i + 2) >= '0' && str.charAt(i + 2) <= '7')
+          {
+            builder.append((char)Integer.parseInt(str.substring(i, i + 3), 8));
+            i += 2;
+            continue;
+          }
+
+          //$FALL-THROUGH$
+        default:
+        {
+          builder.append(c);
+        }
+        }
+
+        continue;
+      }
+      else if (c == '\\')
+      {
+        slash = true;
+        continue;
+      }
+
+      builder.append(c);
+    }
+
+    if (slash)
+    {
+      builder.append('\\');
+    }
+
+    return builder.toString();
+  }
+
   public static int compare(String s1, String s2)
   {
     if (s1 == null)
@@ -197,6 +460,22 @@ public final class StringUtil
     }
 
     return s.equals(upperOrLowerCase.toLowerCase()) || s.equals(upperOrLowerCase.toUpperCase());
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static boolean isTrue(String s)
+  {
+    return TRUE.equalsIgnoreCase(s);
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static boolean isFalse(String s)
+  {
+    return FALSE.equalsIgnoreCase(s);
   }
 
   /**

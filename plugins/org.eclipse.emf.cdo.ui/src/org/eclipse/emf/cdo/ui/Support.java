@@ -10,21 +10,23 @@
  */
 package org.eclipse.emf.cdo.ui;
 
-import org.eclipse.emf.common.CommonPlugin;
+import org.eclipse.net4j.util.AbstractSupport;
 
 /**
  * @author Eike Stepper
  * @since 4.5
  * @noextend This class is not intended to be subclassed by clients.
+ * @deprecated As of 4.15 use {@link org.eclipse.emf.cdo.common.util.Support}.
  */
-public abstract class Support
+@Deprecated
+public abstract class Support extends AbstractSupport
 {
   public static final Support PROPERTIES = new Support()
   {
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.ui.views", "org.eclipse.ui.views.properties.PropertySheet") != null;
+      return org.eclipse.emf.cdo.common.util.Support.UI_PROPERTIES.isAvailable();
     }
   };
 
@@ -33,7 +35,7 @@ public abstract class Support
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.team", "org.eclipse.emf.cdo.ui.internal.team.history.CDOHistoryPage") != null;
+      return org.eclipse.emf.cdo.common.util.Support.UI_HISTORY.isAvailable();
     }
   };
 
@@ -42,7 +44,7 @@ public abstract class Support
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.emf.cdo.ui.compare", "org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil") != null;
+      return org.eclipse.emf.cdo.common.util.Support.UI_COMPARE.isAvailable();
     }
   };
 
@@ -54,32 +56,14 @@ public abstract class Support
     @Override
     protected boolean determineAvailability() throws Throwable
     {
-      return CommonPlugin.loadClass("org.eclipse.emf.cdo.server.security", "org.eclipse.emf.cdo.server.security.SecurityManagerUtil") != null;
+      return org.eclipse.emf.cdo.common.util.Support.SERVER_SECURITY.isAvailable();
     }
   };
-
-  private Boolean available;
 
   private Support()
   {
   }
 
-  public boolean isAvailable()
-  {
-    if (available == null)
-    {
-      try
-      {
-        available = determineAvailability();
-      }
-      catch (Throwable ex)
-      {
-        available = false;
-      }
-    }
-
-    return available;
-  }
-
+  @Override
   protected abstract boolean determineAvailability() throws Throwable;
 }

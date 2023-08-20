@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.explorer.repositories;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import java.io.File;
 import java.util.Properties;
 
@@ -82,7 +84,7 @@ public class RemoteCDORepository extends CDORepositoryImpl
     super.init(folder, type, properties);
     connectorType = properties.getProperty(PROP_CONNECTOR_TYPE);
     connectorDescription = properties.getProperty(PROP_CONNECTOR_DESCRIPTION);
-    authenticating = Boolean.parseBoolean(properties.getProperty(PROP_AUTHENTICATING, Boolean.TRUE.toString()));
+    authenticating = Boolean.parseBoolean(properties.getProperty(PROP_AUTHENTICATING, StringUtil.FALSE));
   }
 
   @Override

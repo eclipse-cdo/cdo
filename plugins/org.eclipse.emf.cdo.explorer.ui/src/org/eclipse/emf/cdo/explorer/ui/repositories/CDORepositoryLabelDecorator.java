@@ -22,7 +22,15 @@ import org.eclipse.swt.graphics.Image;
  */
 public class CDORepositoryLabelDecorator extends BaseLabelDecorator
 {
-  private static final Image SECURITY_OVERLAY = SharedIcons.getImage(SharedIcons.OVR_SECURITY);
+  private static final String KEYWORD_SYSTEM = "org.eclipse.emf.cdo.lm.System";
+
+  private static final String KEYWORD_MODULE = "org.eclipse.emf.cdo.lm.Module";
+
+  private final Image systemOverlay = SharedIcons.getImage(SharedIcons.OVR_SYSTEM);
+
+  private final Image moduleOverlay = SharedIcons.getImage(SharedIcons.OVR_MODULE);
+
+  private final Image securityOverlay = SharedIcons.getImage(SharedIcons.OVR_SECURITY);
 
   public CDORepositoryLabelDecorator()
   {
@@ -46,9 +54,19 @@ public class CDORepositoryLabelDecorator extends BaseLabelDecorator
     if (element instanceof CDORepository)
     {
       CDORepository repository = (CDORepository)element;
+
+      if (repository.hasKeyword(KEYWORD_SYSTEM))
+      {
+        image = OM.getOverlayImage(image, systemOverlay, 7, 0);
+      }
+      else if (repository.hasKeyword(KEYWORD_MODULE))
+      {
+        image = OM.getOverlayImage(image, moduleOverlay, 7, 0);
+      }
+
       if (repository.isAuthenticating())
       {
-        image = OM.getOverlayImage(image, SECURITY_OVERLAY, 1, 7);
+        image = OM.getOverlayImage(image, securityOverlay, 1, 7);
       }
     }
 

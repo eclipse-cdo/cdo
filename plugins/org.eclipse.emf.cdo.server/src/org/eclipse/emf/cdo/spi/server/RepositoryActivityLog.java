@@ -310,7 +310,7 @@ public abstract class RepositoryActivityLog extends LifecycleHook<IRepository> i
         String append = properties.get("append"); //$NON-NLS-1$
         if (StringUtil.isEmpty(append))
         {
-          append = Boolean.TRUE.toString();
+          append = StringUtil.TRUE;
         }
 
         return new RepositoryActivityLog.Rolling(file, Long.parseLong(size), Boolean.parseBoolean(append));

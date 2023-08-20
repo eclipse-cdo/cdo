@@ -11,10 +11,10 @@
  */
 package org.eclipse.emf.cdo.internal.ui.bundle;
 
+import org.eclipse.emf.cdo.common.util.Support;
 import org.eclipse.emf.cdo.ui.CDOEditorOpener;
 import org.eclipse.emf.cdo.ui.CDOLabelDecorator;
 import org.eclipse.emf.cdo.ui.OverlayImage;
-import org.eclipse.emf.cdo.ui.Support;
 import org.eclipse.emf.cdo.ui.UserInfo;
 
 import org.eclipse.net4j.util.om.OMBundle;
@@ -83,21 +83,21 @@ public abstract class OM
       PREFS.init("PREF_USER_DISPLAY_NAME", System.getProperty("user.name")); //$NON-NLS-1$
 
   /**
-   * @deprecated As of 4.13 use {@link Support#HISTORY Support.HISTORY.isAvailable()}.
+   * @deprecated As of 4.13 use {@link Support#UI_HISTORY Support.UI_HISTORY.isAvailable()}.
    */
   @Deprecated
   public static boolean isHistorySupportAvailable()
   {
-    return Support.HISTORY.isAvailable();
+    return Support.UI_HISTORY.isAvailable();
   }
 
   /**
-   * @deprecated As of 4.13 use {@link Support#COMPARE Support.COMPARE.isAvailable()}.
+   * @deprecated As of 4.13 use {@link Support#UI_COMPARE Support.UI_COMPARE.isAvailable()}.
    */
   @Deprecated
   public static boolean isCompareSupportAvailable()
   {
-    return Support.COMPARE.isAvailable();
+    return Support.UI_COMPARE.isAvailable();
   }
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)

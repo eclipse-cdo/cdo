@@ -408,6 +408,40 @@ public final class CDORevisionUtil
   }
 
   /**
+   * @since 4.21
+   */
+  public static boolean hasChildRevisions(CDORevision container)
+  {
+    InternalCDORevision revisionData = (InternalCDORevision)container;
+    CDOClassInfo classInfo = revisionData.getClassInfo();
+
+    for (EStructuralFeature feature : classInfo.getAllPersistentContainments())
+    {
+      if (feature instanceof EReference)
+      {
+        if (feature.isMany())
+        {
+          CDOList list = revisionData.getListOrNull(feature);
+          if (list != null && !list.isEmpty())
+          {
+            return true;
+          }
+        }
+        else
+        {
+          Object value = revisionData.getValue(feature);
+          if (value != null)
+          {
+            return true;
+          }
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * @since 4.5
    */
   /**

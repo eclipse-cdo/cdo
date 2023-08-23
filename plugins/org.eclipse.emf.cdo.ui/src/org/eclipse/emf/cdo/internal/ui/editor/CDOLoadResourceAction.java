@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider;
+import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider.ImageProvider;
 
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
@@ -99,14 +101,16 @@ public class CDOLoadResourceAction extends LoadResourceAction
       resourceURILabel.setLayoutData(GridDataFactory.fillDefaults().align(SWT.LEFT, SWT.CENTER).create());
 
       Button browseFileSystemButton = new Button(composite, SWT.PUSH);
-      browseFileSystemButton.setText(CommonUIPlugin.INSTANCE.getString("_UI_BrowseFileSystem_label"));
+      browseFileSystemButton.setText("&File System...");
+      browseFileSystemButton.setImage(SharedIcons.getImage(SharedIcons.OBJ_FOLDER));
       browseFileSystemButton.setLayoutData(GridDataFactory.fillDefaults().create());
       prepareBrowseFileSystemButton(browseFileSystemButton);
 
       if (EMFPlugin.IS_RESOURCES_BUNDLE_AVAILABLE)
       {
         Button browseWorkspaceButton = new Button(composite, SWT.PUSH);
-        browseWorkspaceButton.setText(CommonUIPlugin.INSTANCE.getString("_UI_BrowseWorkspace_label"));
+        browseWorkspaceButton.setText("&Workspace...");
+        browseWorkspaceButton.setImage(SharedIcons.getImage(SharedIcons.OBJ_PROJECT));
         browseWorkspaceButton.setLayoutData(GridDataFactory.fillDefaults().create());
         prepareBrowseWorkspaceButton(browseWorkspaceButton);
       }
@@ -115,6 +119,13 @@ public class CDOLoadResourceAction extends LoadResourceAction
       {
         Button button = new Button(composite, SWT.PUSH);
         button.setText(provider.getButtonText(resourceSet));
+
+        if (provider instanceof ImageProvider)
+        {
+          ImageProvider imageProvider = (ImageProvider)provider;
+          button.setImage(imageProvider.getButtonImage(resourceSet));
+        }
+
         button.setLayoutData(GridDataFactory.fillDefaults().create());
         button.addSelectionListener(new SelectionAdapter()
         {

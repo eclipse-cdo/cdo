@@ -1229,7 +1229,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if ((flags & READ_PERMISSION_FLAG) == 0)
     {
-      throw new NoPermissionException(this);
+      throw new NoPermissionException(this, false);
     }
   }
 
@@ -1242,7 +1242,7 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
     if ((flags & WRITE_PERMISSION_FLAG) == 0)
     {
-      throw new NoPermissionException(this);
+      throw new NoPermissionException(this, true);
     }
   }
 

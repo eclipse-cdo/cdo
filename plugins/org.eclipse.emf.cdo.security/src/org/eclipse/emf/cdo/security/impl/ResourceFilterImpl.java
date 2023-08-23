@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -467,6 +468,8 @@ public class ResourceFilterImpl extends PermissionFilterImpl implements Resource
     }
 
     String path = getPath();
+    path = CDOURIUtil.sanitizePath(path);
+
     PatternStyle patternStyle = getPatternStyle();
     boolean includeParents = isIncludeParents();
 

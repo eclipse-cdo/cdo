@@ -1296,7 +1296,7 @@ public class TransactionCommitContext implements InternalCommitContext
         }
         else if (!newRevision.isWritable())
         {
-          throw new NoPermissionException(newRevision);
+          throw new NoPermissionException(newRevision, true);
         }
 
         dirtyObjects[i] = newRevision;
@@ -1573,7 +1573,7 @@ public class TransactionCommitContext implements InternalCommitContext
       if (containerDelta != null)
       {
         InternalCDORevision revision = dirtyObjects[i];
-        if (!isTheRootReachable(revision, objectsThatReachTheRoot, new HashSet<CDOID>()))
+        if (!isTheRootReachable(revision, objectsThatReachTheRoot, new HashSet<>()))
         {
           throw new RollbackException(CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE,
               "Attempt by " + transaction + " to introduce a containment cycle");

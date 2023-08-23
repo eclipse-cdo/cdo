@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -13,255 +13,125 @@ package org.eclipse.emf.cdo.lm.ui.dialogs;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
-import org.eclipse.emf.cdo.internal.ui.CDOAdapterFactoryContentProvider;
-import org.eclipse.emf.cdo.internal.ui.CDOContentProvider;
-import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.AbstractResourceSelectionDialog;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.widgets.BaseDialog;
-
-import org.eclipse.emf.common.notify.AdapterFactory;
-import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.EMFEditPlugin;
-import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.edit.provider.resource.ResourceItemProviderAdapterFactory;
-import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
-
-import org.eclipse.jface.dialogs.IDialogConstants;
-import org.eclipse.jface.viewers.ITreeContentProvider;
-import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Shell;
 
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
  */
-public final class SelectModuleResourcesDialog extends BaseDialog<TreeViewer>
+public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog<LMResourceSetConfiguration>
 {
-  private final Set<URI> uris = new HashSet<>();
-
-  private final boolean multi;
-
   private final LMResourceSetConfiguration configuration;
+
+  private final Map<AssemblyModule, CDOView> views = new LinkedHashMap<>();
 
   public SelectModuleResourcesDialog(Shell shell, boolean multi, LMResourceSetConfiguration configuration)
   {
-    super(shell, DEFAULT_SHELL_STYLE | SWT.APPLICATION_MODAL, "Select Module Resources", "Select resources from the current module and its dependencies.",
-        OM.Activator.INSTANCE.getDialogSettings(), OM.Activator.INSTANCE.loadImageDescriptor("icons/NewModule.png"));
-    this.multi = multi;
+    super(shell, multi, "Select Module Resources", "Select resources from the current module and its dependencies.",
+        OM.Activator.INSTANCE.loadImageDescriptor("icons/NewModule.png"));
     this.configuration = configuration;
-  }
 
-  public Set<URI> getURIs()
-  {
-    return uris;
+    if (configuration != null)
+    {
+      Assembly assembly = configuration.getAssembly();
+      AssemblyModule rootModule = assembly.getRootModule();
+      views.put(rootModule, CDOUtil.getViewSet(configuration.getResourceSet()).getViews()[0]);
+      assembly.forEachDependency(module -> views.put(module, configuration.getView(module)));
+    }
   }
 
   @Override
-  protected void createUI(Composite parent)
+  protected LMResourceSetConfiguration getInput()
   {
-    ComposedAdapterFactory adapterFactory = new ComposedAdapterFactory(EMFEditPlugin.getComposedAdapterFactoryDescriptorRegistry());
-    adapterFactory.addAdapterFactory(new ResourceItemProviderAdapterFactory());
-
-    TreeViewer viewer = new TreeViewer(parent, multi ? SWT.MULTI : SWT.SINGLE);
-    viewer.getTree().setLayoutData(UIUtil.createGridData());
-    viewer.setContentProvider(new ModuleResourcesContentProvider(adapterFactory));
-    viewer.setLabelProvider(new ModuleResourcesLabelProvider(adapterFactory));
-    viewer.setInput(configuration);
-    viewer.addDoubleClickListener(e -> okPressed());
-    viewer.addSelectionChangedListener(e -> selectionChanged());
-
-    setCurrentViewer(viewer);
-    UIUtil.asyncExec(parent.getDisplay(), () -> selectionChanged());
+    return configuration;
   }
 
-  protected void selectionChanged()
+  @Override
+  protected boolean elementHasChildren(Object object, Predicate<Object> defaultHasChildren)
   {
-    uris.clear();
-
-    ITreeSelection selection = getCurrentViewer().getStructuredSelection();
-    for (Object object : selection)
+    if (object == views)
     {
-      if (object instanceof CDOResource)
-      {
-        uris.add(((CDOResource)object).getURI());
-      }
+      return !views.isEmpty();
     }
 
-    Button okButton = getButton(IDialogConstants.OK_ID);
-    if (okButton != null)
-    {
-      okButton.setEnabled(!uris.isEmpty());
-    }
+    return super.elementHasChildren(object, defaultHasChildren);
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ModuleResourcesContentProvider extends CDOContentProvider.ContextFree
+  @Override
+  protected Object[] elementGetChildren(Object object, Function<Object, Object[]> defaultGetChildren)
   {
-    private final ComposedAdapterFactory adapterFactory;
-
-    private final CDOAdapterFactoryContentProvider delegate;
-
-    private final Map<AssemblyModule, CDOView> views = new LinkedHashMap<>();
-
-    private LMResourceSetConfiguration configuration;
-
-    public ModuleResourcesContentProvider(ComposedAdapterFactory adapterFactory)
+    if (object == configuration)
     {
-      this.adapterFactory = adapterFactory;
-      delegate = new CDOAdapterFactoryContentProvider(adapterFactory);
+      // Return the assembly modules.
+      return views.keySet().toArray();
     }
 
-    @Override
-    public void inputChanged(Viewer newViewer, Object oldInput, Object newInput)
+    if (object instanceof AssemblyModule)
     {
-      super.inputChanged(newViewer, oldInput, newInput);
-      delegate.inputChanged(newViewer, oldInput, newInput);
-      configuration = (LMResourceSetConfiguration)getInput();
-
-      views.clear();
-
-      if (configuration != null)
-      {
-        Assembly assembly = configuration.getAssembly();
-        AssemblyModule rootModule = assembly.getRootModule();
-        views.put(rootModule, CDOUtil.getViewSet(configuration.getResourceSet()).getViews()[0]);
-        assembly.forEachDependency(module -> views.put(module, configuration.getView(module)));
-      }
+      AssemblyModule module = (AssemblyModule)object;
+      CDOView view = views.get(module);
+      CDOResource rootResource = view.getRootResource();
+      return defaultGetChildren.apply(rootResource);
     }
 
-    @Override
-    public boolean hasChildren(Object object)
+    return super.elementGetChildren(object, defaultGetChildren);
+  }
+
+  @Override
+  protected Object elementGetParent(Object object, Function<Object, Object> defaultGetParent)
+  {
+    if (object instanceof CDOResourceNode)
     {
-      if (object instanceof CDOResource)
+      CDOResourceNode node = (CDOResourceNode)object;
+      CDOResourceFolder folder = node.getFolder();
+
+      if (folder == null)
       {
-        return false;
-      }
+        CDOView view = node.cdoView();
 
-      return super.hasChildren(object);
-    }
-
-    @Override
-    public Object[] getChildren(Object object)
-    {
-      if (object == configuration)
-      {
-        // Return the assembly modules.
-        return views.keySet().toArray();
-      }
-
-      if (object instanceof AssemblyModule)
-      {
-        AssemblyModule module = (AssemblyModule)object;
-        CDOView view = views.get(module);
-        CDOResource rootResource = view.getRootResource();
-        return rootResource.getContents().toArray();
-      }
-
-      if (object instanceof CDOResourceFolder)
-      {
-        CDOResourceFolder folder = (CDOResourceFolder)object;
-        return folder.getNodes().toArray();
-      }
-
-      return new Object[0];
-    }
-
-    @Override
-    public Object getParent(Object object)
-    {
-      if (object instanceof CDOResourceNode)
-      {
-        CDOResourceNode node = (CDOResourceNode)object;
-
-        if (node.isRoot())
+        for (Map.Entry<AssemblyModule, CDOView> entry : views.entrySet())
         {
-          CDOView view = node.cdoView();
-
-          for (Map.Entry<AssemblyModule, CDOView> entry : views.entrySet())
+          if (entry.getValue() == view)
           {
-            if (entry.getValue() == view)
-            {
-              return entry.getKey();
-            }
+            return entry.getKey();
           }
-
-          return null;
         }
 
-        return node.getFolder();
+        return null;
       }
 
-      if (object instanceof AssemblyModule)
-      {
-        return configuration;
-      }
-
-      return super.getParent(object);
+      return folder;
     }
 
-    @Override
-    protected Object adapt(Object target, Object type)
+    if (object instanceof AssemblyModule)
     {
-      return adapterFactory.adapt(target, type);
+      return configuration;
     }
 
-    @Override
-    protected Object[] modifyChildren(Object parent, Object[] children)
-    {
-      return children;
-    }
-
-    @Override
-    protected ITreeContentProvider getContentProvider(Object object)
-    {
-      return delegate;
-    }
-
-    @Override
-    protected RunnableViewerRefresh getViewerRefresh()
-    {
-      return delegate.getViewerRefresh();
-    }
+    return super.elementGetParent(object, defaultGetParent);
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private static final class ModuleResourcesLabelProvider extends AdapterFactoryLabelProvider
+  @Override
+  protected String elementGetText(Object object, Function<Object, String> defaultGetText)
   {
-    public ModuleResourcesLabelProvider(AdapterFactory adapterFactory)
+    if (object instanceof AssemblyModule)
     {
-      super(adapterFactory);
+      AssemblyModule module = (AssemblyModule)object;
+      return module.getName() + " " + module.getVersion();
     }
 
-    @Override
-    public String getText(Object object)
-    {
-      if (object instanceof AssemblyModule)
-      {
-        AssemblyModule module = (AssemblyModule)object;
-        return module.getName() + " " + module.getVersion();
-      }
-
-      return super.getText(object);
-    }
+    return super.elementGetText(object, defaultGetText);
   }
 }

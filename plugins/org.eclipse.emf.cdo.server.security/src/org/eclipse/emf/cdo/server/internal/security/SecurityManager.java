@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
@@ -54,12 +55,12 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
+import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
 import org.eclipse.emf.cdo.server.spi.security.InternalSecurityManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -74,6 +75,7 @@ import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.acceptor.IAcceptor;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ArrayUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -711,9 +713,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     Role treeWriterRole = realm.addRole(Role.RESOURCE_TREE_WRITER);
     treeWriterRole.getPermissions().add(SF.createFilterPermission(Access.WRITE, SF.createPackageFilter(EresourcePackage.eINSTANCE)));
 
-    Role adminRole = realm.addRole(Role.ADMINISTRATION);
-    adminRole.getPermissions().add(SF.createFilterPermission(Access.WRITE, SF.createResourceFilter(realmPath, PatternStyle.EXACT, false)));
-    adminRole.getPermissions().add(SF.createFilterPermission(Access.READ, SF.createResourceFilter(realmPath, PatternStyle.EXACT, true)));
+    Role adminRole = SecurityManagerUtil.addResourceRole(realm, Role.ADMINISTRATION, realmPath, true);
 
     // Create groups
 
@@ -1291,7 +1291,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         return CDOPermission.NONE;
       }
 
-      InternalCDORevisionManager revisionManager = repository.getRevisionManager();
+      IRepository repository = session.getRepository();
+      CDORevisionManager revisionManager = repository.getRevisionManager();
       CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
 
       PermissionUtil.initViewCreation(new ViewCreator()
@@ -1501,7 +1502,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
-      handleNewPackageUnits(commitContext);
+      InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
+      if (!ObjectUtil.isEmpty(newPackageUnits))
+      {
+        handleNewPackageUnits(newPackageUnits);
+      }
 
       UserInfo userInfo = getUserInfo(transaction.getSession());
       authorizeCommit(commitContext, userInfo);
@@ -1524,42 +1529,38 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       removeSecondaryRepository(delegate);
     }
 
-    private void handleNewPackageUnits(CommitContext commitContext)
+    private void handleNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
     {
-      InternalCDOPackageUnit[] newPackageUnits = commitContext.getNewPackageUnits();
-      if (newPackageUnits != null && newPackageUnits.length != 0)
+      InternalCDOPackageRegistry realmPackageRegistry = getRepository().getPackageRegistry();
+      List<InternalCDOPackageUnit> unknownPackageUnits = new ArrayList<>();
+
+      for (InternalCDOPackageUnit packageUnit : newPackageUnits)
       {
-        InternalCDOPackageRegistry realmPackageRegistry = getRepository().getPackageRegistry();
-        List<InternalCDOPackageUnit> unknownPackageUnits = new ArrayList<>();
-
-        for (InternalCDOPackageUnit packageUnit : newPackageUnits)
+        String nsURI = packageUnit.getID();
+        if (!realmPackageRegistry.containsKey(nsURI))
         {
-          String nsURI = packageUnit.getID();
-          if (!realmPackageRegistry.containsKey(nsURI))
-          {
-            unknownPackageUnits.add((InternalCDOPackageUnit)CDOModelUtil.copyPackageUnit(packageUnit));
-          }
+          unknownPackageUnits.add((InternalCDOPackageUnit)CDOModelUtil.copyPackageUnit(packageUnit));
         }
+      }
 
-        if (!unknownPackageUnits.isEmpty())
+      if (!unknownPackageUnits.isEmpty())
+      {
+        InternalCDOPackageUnit[] unitArray = unknownPackageUnits.toArray(new InternalCDOPackageUnit[unknownPackageUnits.size()]);
+
+        try
         {
-          InternalCDOPackageUnit[] unitArray = unknownPackageUnits.toArray(new InternalCDOPackageUnit[unknownPackageUnits.size()]);
+          RunnableWithException.forkAndWait(() -> {
+            synchronized (realmPackageRegistry)
+            {
+              realmPackageRegistry.putPackageUnits(unitArray, CDOPackageUnit.State.LOADED);
+            }
 
-          try
-          {
-            RunnableWithException.forkAndWait(() -> {
-              synchronized (realmPackageRegistry)
-              {
-                realmPackageRegistry.putPackageUnits(unitArray, CDOPackageUnit.State.LOADED);
-              }
-
-              commitRealmPackageUnits(unitArray);
-            });
-          }
-          catch (Exception ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
+            commitRealmPackageUnits(unitArray);
+          });
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
         }
       }
     }

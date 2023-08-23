@@ -10,6 +10,11 @@
  */
 package org.eclipse.emf.cdo.server.security;
 
+import org.eclipse.emf.cdo.security.Access;
+import org.eclipse.emf.cdo.security.PatternStyle;
+import org.eclipse.emf.cdo.security.Realm;
+import org.eclipse.emf.cdo.security.Role;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer;
 import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
@@ -47,6 +52,31 @@ public final class SecurityManagerUtil
   public static ISecurityManager createSecurityManager(String realmPath, IManagedContainer container)
   {
     return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(realmPath, container);
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static Role addResourceRole(Realm realm, String roleName, String resourcePath, boolean writable)
+  {
+    Role role = realm.addRole(roleName);
+    addResourcePermissions(role, resourcePath, writable);
+    return role;
+  }
+
+  /**
+   * @since 4.10
+   */
+  public static void addResourcePermissions(Role role, String resourcePath, boolean writable)
+  {
+    role.getPermissions().add(SecurityFactory.eINSTANCE.createFilterPermission(Access.READ, //
+        SecurityFactory.eINSTANCE.createResourceFilter(resourcePath, PatternStyle.EXACT, true)));
+
+    if (writable)
+    {
+      role.getPermissions().add(SecurityFactory.eINSTANCE.createFilterPermission(Access.WRITE, //
+          SecurityFactory.eINSTANCE.createResourceFilter(resourcePath, PatternStyle.EXACT, false)));
+    }
   }
 
   @SuppressWarnings("deprecation")

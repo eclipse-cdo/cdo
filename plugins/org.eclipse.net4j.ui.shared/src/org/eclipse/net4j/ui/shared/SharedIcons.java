@@ -62,7 +62,12 @@ public final class SharedIcons
 
   public static final String OBJ_FACTORY = OBJ + "factory"; //$NON-NLS-1$
 
-  public static final String OBJ_FOLDER = OBJ + "folder"; //$NON-NLS-1$
+  /**
+   * @since 4.8
+   */
+  public static final String OBJ_PROJECT = OBJ + "project.png"; //$NON-NLS-1$
+
+  public static final String OBJ_FOLDER = OBJ + "folder.png"; //$NON-NLS-1$
 
   public static final String OBJ_BEAN = OBJ + "javabean"; //$NON-NLS-1$
 

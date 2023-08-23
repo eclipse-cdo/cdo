@@ -13,12 +13,14 @@ package org.eclipse.emf.cdo.lm.ui;
 import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration;
 import org.eclipse.emf.cdo.lm.ui.dialogs.SelectModuleResourcesDialog;
 import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider;
+import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider.ImageProvider;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class LMLoadResourceProvider implements CDOLoadResourceProvider
+public class LMLoadResourceProvider implements CDOLoadResourceProvider, ImageProvider
 {
   public LMLoadResourceProvider()
   {
@@ -36,7 +38,13 @@ public class LMLoadResourceProvider implements CDOLoadResourceProvider
   @Override
   public String getButtonText(ResourceSet resourceSet)
   {
-    return "Browse &Modules...";
+    return "&Modules...";
+  }
+
+  @Override
+  public Image getButtonImage(ResourceSet resourceSet)
+  {
+    return null;
   }
 
   @Override
@@ -50,6 +58,7 @@ public class LMLoadResourceProvider implements CDOLoadResourceProvider
   public List<URI> browseResources(ResourceSet resourceSet, Shell shell, boolean multi)
   {
     LMResourceSetConfiguration configuration = LMResourceSetConfiguration.of(resourceSet);
+
     SelectModuleResourcesDialog dialog = new SelectModuleResourcesDialog(shell, multi, configuration);
     if (dialog.open() == SelectModuleResourcesDialog.OK)
     {

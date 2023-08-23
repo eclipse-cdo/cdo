@@ -469,7 +469,7 @@
            </possibleDropTargets>
         </dropAssistant>
         <commonSorter
-              class="org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter"
+              class="org.eclipse.emf.cdo.internal.ui.CDOViewerComparator"
               id="org.eclipse.emf.cdo.explorer.ui.checkouts.ViewerSorter">
         </commonSorter>
      </navigatorContent>

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.explorer.ui.checkouts;
+package org.eclipse.emf.cdo.internal.ui;
 
 import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
@@ -16,13 +16,24 @@ import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.jface.viewers.ViewerComparator;
+
+import java.util.Comparator;
 
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("deprecation")
-public class CDOCheckoutViewerSorter extends org.eclipse.jface.viewers.ViewerSorter
+public class CDOViewerComparator extends ViewerComparator
 {
+  public CDOViewerComparator()
+  {
+  }
+
+  public CDOViewerComparator(Comparator<? super String> comparator)
+  {
+    super(comparator);
+  }
+
   @Override
   public int category(Object element)
   {

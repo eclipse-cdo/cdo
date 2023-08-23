@@ -788,7 +788,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
     if (forWrite && !revision.isWritable())
     {
-      throw new NoPermissionException(revision);
+      throw new NoPermissionException(revision, true);
     }
 
     object.cdoInternalSetRevision(revision);
@@ -1200,7 +1200,7 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       InternalCDORevision revision = object.cdoRevision();
       if (!revision.isWritable())
       {
-        throw new NoPermissionException(revision);
+        throw new NoPermissionException(revision, true);
       }
 
       InternalCDOTransaction transaction = object.cdoView().toTransaction();

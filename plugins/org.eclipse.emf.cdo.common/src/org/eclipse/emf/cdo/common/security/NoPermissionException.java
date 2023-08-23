@@ -20,21 +20,65 @@ public class NoPermissionException extends SecurityException
 {
   private static final long serialVersionUID = 1L;
 
-  private Object protectableObject;
+  private static final Boolean UNKNOWN = null;
+
+  private final Object protectableObject;
+
+  private final Boolean write;
 
   public NoPermissionException(Object protectableObject)
   {
-    this(protectableObject, "No permission to access " + protectableObject);
+    this(protectableObject, UNKNOWN);
+  }
+
+  /**
+   * @since 4.21
+   */
+  public NoPermissionException(Object protectableObject, Boolean write)
+  {
+    this(protectableObject, "No permission to " + getAccess(write) + " " + protectableObject);
   }
 
   public NoPermissionException(Object protectableObject, String message)
   {
+    this(protectableObject, UNKNOWN, message);
+  }
+
+  /**
+   * @since 4.21
+   */
+  public NoPermissionException(Object protectableObject, Boolean write, String message)
+  {
     super(message);
     this.protectableObject = protectableObject;
+    this.write = write;
   }
 
   public Object getProtectableObject()
   {
     return protectableObject;
+  }
+
+  /**
+   * @since 4.21
+   */
+  public Boolean getWrite()
+  {
+    return write;
+  }
+
+  private static String getAccess(Boolean write)
+  {
+    if (Boolean.TRUE == write)
+    {
+      return "write";
+    }
+
+    if (Boolean.FALSE == write)
+    {
+      return "read";
+    }
+
+    return "access";
   }
 }

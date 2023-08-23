@@ -36,6 +36,8 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
@@ -644,16 +646,16 @@ public class SecurityFactoryImpl extends EFactoryImpl implements SecurityFactory
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   public Access createAccessFromString(EDataType eDataType, String initialValue)
   {
-    Access result = Access.get(initialValue);
-    if (result == null)
+    if (!StringUtil.isEmpty(initialValue))
     {
-      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'"); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      return Access.get(initialValue);
     }
-    return result;
+
+    return null;
   }
 
   /**

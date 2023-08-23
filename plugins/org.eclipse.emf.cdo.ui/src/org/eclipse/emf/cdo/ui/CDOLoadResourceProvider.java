@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
 
 import java.util.ArrayList;
@@ -60,5 +61,14 @@ public interface CDOLoadResourceProvider
 
       return providers;
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.15
+   */
+  public interface ImageProvider
+  {
+    public Image getButtonImage(ResourceSet resourceSet);
   }
 }

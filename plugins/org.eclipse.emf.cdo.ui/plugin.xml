@@ -54,6 +54,10 @@
             productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
             type="org.eclipse.emf.cdo.CDOObject"
             productClass="org.eclipse.emf.cdo.internal.ui.CDOIntrospectionProvider"/>
+      <simpleFactory
+            productGroup="org.eclipse.emf.cdo.ui.loadResourceProviders"
+            type="repository"
+            productClass="org.eclipse.emf.cdo.internal.ui.RepositoryLoadResourceProvider"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.elementProcessors">

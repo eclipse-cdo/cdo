@@ -20,6 +20,8 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
+    <securityManager type="default" description="/security:annotation:home(/home)"/>
+    
     <store type="db">
       <property name="connectionKeepAlivePeriod" value="60"/>
       <property name="readerPoolCapacity" value="20"/>

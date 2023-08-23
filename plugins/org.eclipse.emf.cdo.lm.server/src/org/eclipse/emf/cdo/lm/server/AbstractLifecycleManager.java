@@ -47,6 +47,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.Net4jUtil;
@@ -159,11 +160,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     checkInactive();
     container = repository.getContainer();
     systemRepository = repository;
-
-    if (SECURITY_AVAILABLE)
-    {
-      securitySupport = new SecuritySupport.Available(systemRepository);
-    }
   }
 
   public String getSystemName()
@@ -195,7 +191,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   public void setModuleDefinitionPath(String moduleDefinitionPath)
   {
     checkInactive();
-    this.moduleDefinitionPath = moduleDefinitionPath;
+    this.moduleDefinitionPath = CDOURIUtil.sanitizePath(moduleDefinitionPath);
   }
 
   public final Map<String, InternalRepository> getModuleRepositories()
@@ -240,6 +236,12 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     super.doBeforeActivate();
     checkState(systemRepository, "systemRepository");
     checkState(systemName, "systemName");
+
+    if (SECURITY_AVAILABLE)
+    {
+      String moduleDefinitionPath = getModuleDefinitionPath();
+      securitySupport = new SecuritySupport.Available(systemRepository, moduleDefinitionPath);
+    }
   }
 
   @Override
@@ -834,13 +836,15 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     {
       private static final String USER_NAME = "Lifecycle Manager";
 
+      private static final String ROLE_NAME = "Lifecycle Management";
+
       private static final char[] KEY = { 'c', 'd', 'o', ' ', 'r', 'o', 'c', 'k', 's', ' ', '(', 'e', 's', ')' };
 
       private final InternalSecurityManager securityManager;
 
       private final IPasswordCredentials credentials;
 
-      public Available(InternalRepository systemRepository)
+      public Available(InternalRepository systemRepository, String moduleDefinitionPath)
       {
         securityManager = (InternalSecurityManager)SecurityManagerUtil.getSecurityManager(systemRepository);
 
@@ -865,10 +869,18 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           credentials = new PasswordCredentials(USER_NAME, SecurityUtil.toCharArray(hex));
 
           securityManager.modify(realm -> {
+            Role lmRole = realm.getRole(ROLE_NAME);
+            if (lmRole == null)
+            {
+              lmRole = SecurityManagerUtil.addResourceRole(realm, ROLE_NAME, System.RESOURCE_PATH, true);
+              SecurityManagerUtil.addResourcePermissions(lmRole, moduleDefinitionPath, false);
+            }
+
             User lmUser = realm.getUser(credentials.getUserID());
             if (lmUser == null)
             {
               lmUser = realm.addUser(credentials);
+              lmUser.getRoles().add(lmRole);
 
               Role allObjectsReader = realm.getRole(Role.ALL_OBJECTS_READER);
               if (allObjectsReader != null)
@@ -881,6 +893,12 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
               {
                 lmUser.getRoles().add(normalObjectsWriter);
               }
+            }
+
+            Role administrationRole = realm.getRole(Role.ADMINISTRATION);
+            if (administrationRole != null)
+            {
+              SecurityManagerUtil.addResourcePermissions(administrationRole, System.RESOURCE_PATH, false);
             }
           });
         }

@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
-import org.eclipse.emf.cdo.explorer.ui.checkouts.CDOCheckoutViewerSorter;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoryItemProvider;
 import org.eclipse.emf.cdo.internal.explorer.AbstractElement;
 import org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl;
+import org.eclipse.emf.cdo.internal.ui.CDOViewerComparator;
 import org.eclipse.emf.cdo.internal.ui.editor.CDOEditor;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
@@ -245,7 +245,7 @@ public class CheckoutRootObjectPage extends CheckoutWizardPage
     treeViewer.getTree().setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 2, 1));
     treeViewer.setContentProvider(itemProvider);
     treeViewer.setLabelProvider(itemProvider);
-    treeViewer.setComparator(new CDOCheckoutViewerSorter());
+    treeViewer.setComparator(new CDOViewerComparator());
     treeViewer.addSelectionChangedListener(new ISelectionChangedListener()
     {
       @Override

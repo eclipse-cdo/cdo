@@ -13,13 +13,19 @@ package org.eclipse.emf.cdo.etypes.provider;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.ecore.EAnnotation;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
+import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -34,6 +40,9 @@ import java.util.List;
  */
 public class AnnotationItemProvider extends ModelElementItemProvider
 {
+  private static final boolean DISABLE_LABEL_DECORATION = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.etypes.provider.AnnotationItemProvider.DISABLE_LABEL_DECORATION");
+
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -154,19 +163,61 @@ public class AnnotationItemProvider extends ModelElementItemProvider
   {
     Annotation annotation = (Annotation)object;
     StringBuffer result = new StringBuffer();
-    if (annotation.getSource() != null)
+
+    String source = annotation.getSource();
+    if (source != null)
     {
-      int index = getParent(annotation) instanceof EAnnotation ? -1 : annotation.getSource().lastIndexOf("/");
+      int index = getParent(annotation) instanceof Annotation ? -1 : source.lastIndexOf("/");
       if (index == -1)
       {
-        result.append(annotation.getSource());
+        result.append(source);
       }
       else
       {
-        result.append(annotation.getSource().substring(index + 1));
+        result.append(source.substring(index + 1));
       }
     }
+
     return result.toString();
+  }
+
+  @Override
+  public Object getStyledText(Object object)
+  {
+    StyledString styledString = new StyledString(getText(object));
+
+    if (!DISABLE_LABEL_DECORATION)
+    {
+      EList<EObject> references = ((Annotation)object).getReferences();
+      if (!references.isEmpty())
+      {
+        AdapterFactory rootAdapterFactory = getRootAdapterFactory();
+        if (rootAdapterFactory != null)
+        {
+          StringBuilder builder = new StringBuilder();
+
+          for (EObject reference : references)
+          {
+            IItemLabelProvider labelProvider = (IItemLabelProvider)rootAdapterFactory.adapt(reference, IItemLabelProvider.class);
+            String label = labelProvider == null ? null : labelProvider.getText(reference);
+            if (!StringUtil.isEmpty(label))
+            {
+              StringUtil.appendSeparator(builder, ", ");
+              builder.append(label);
+            }
+
+          }
+
+          if (!builder.isEmpty())
+          {
+            builder.insert(0, "  ");
+            styledString.append(builder.toString(), StyledString.Style.DECORATIONS_STYLER);
+          }
+        }
+      }
+    }
+
+    return styledString;
   }
 
   /**
@@ -183,6 +234,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider
     switch (notification.getFeatureID(Annotation.class))
     {
     case EtypesPackage.ANNOTATION__SOURCE:
+    case EtypesPackage.ANNOTATION__REFERENCES:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case EtypesPackage.ANNOTATION__DETAILS:

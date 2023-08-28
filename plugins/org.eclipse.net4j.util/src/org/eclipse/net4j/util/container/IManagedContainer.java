@@ -87,6 +87,16 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
    */
   public <T> T getElementOrNull(String productGroup, String factoryType, String description);
 
+  /**
+   * @since 3.22
+   */
+  public int countElements(String productGroup);
+
+  /**
+   * @since 3.22
+   */
+  public int countElements(String productGroup, String factoryType);
+
   public Object removeElement(String productGroup, String factoryType, String description);
 
   /**

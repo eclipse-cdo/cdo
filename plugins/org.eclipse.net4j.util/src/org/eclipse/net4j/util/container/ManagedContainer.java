@@ -229,6 +229,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     checkActive();
     Set<String> result = new HashSet<>();
+
     for (IFactoryKey key : factoryRegistry.keySet())
     {
       if (ObjectUtil.equals(key.getProductGroup(), productGroup))
@@ -298,18 +299,7 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   @Override
   public Object[] getElements(String productGroup)
   {
-    checkActive();
-    List<Object> result = new ArrayList<>();
-    for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
-    {
-      ElementKey key = entry.getKey();
-      if (ObjectUtil.equals(key.getProductGroup(), productGroup))
-      {
-        result.add(entry.getValue());
-      }
-    }
-
-    return result.toArray();
+    return getElements(productGroup, null);
   }
 
   @Override
@@ -317,10 +307,11 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   {
     checkActive();
     List<Object> result = new ArrayList<>();
+
     for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
     {
       ElementKey key = entry.getKey();
-      if (ObjectUtil.equals(key.getProductGroup(), productGroup) && ObjectUtil.equals(key.getFactoryType(), factoryType))
+      if (ObjectUtil.equals(key.getProductGroup(), productGroup) && (factoryType == null || ObjectUtil.equals(key.getFactoryType(), factoryType)))
       {
         result.add(entry.getValue());
       }
@@ -378,6 +369,30 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     {
       return null;
     }
+  }
+
+  @Override
+  public int countElements(String productGroup)
+  {
+    return countElements(productGroup, null);
+  }
+
+  @Override
+  public int countElements(String productGroup, String factoryType)
+  {
+    checkActive();
+    int count = 0;
+
+    for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
+    {
+      ElementKey key = entry.getKey();
+      if (ObjectUtil.equals(key.getProductGroup(), productGroup) && (factoryType == null || ObjectUtil.equals(key.getFactoryType(), factoryType)))
+      {
+        ++count;
+      }
+    }
+
+    return count;
   }
 
   /**

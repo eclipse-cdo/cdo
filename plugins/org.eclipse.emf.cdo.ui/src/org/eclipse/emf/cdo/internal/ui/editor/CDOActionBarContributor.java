@@ -12,10 +12,13 @@
 package org.eclipse.emf.cdo.internal.ui.editor;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.internal.ui.actions.AutoReleaseLockExemptionAction;
 import org.eclipse.emf.cdo.internal.ui.actions.ImportRootsAction;
 
 import org.eclipse.emf.common.ui.viewer.IViewerProvider;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.domain.IEditingDomainProvider;
 import org.eclipse.emf.edit.ui.action.ControlAction;
@@ -41,11 +44,16 @@ import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IEditorPart;
+import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PartInitException;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
@@ -62,6 +70,11 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * @ADDED
    */
   public static final String REFRESH_VIEWER_ID = "refresh-viewer"; //$NON-NLS-1$
+
+  /**
+   * @ADDED
+   */
+  private static final String ANNOTATIONS_MENU_ID = "annotations";
 
   /**
    * @ADDED
@@ -409,7 +422,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     {
       for (Object descriptor : descriptors)
       {
-        actions.add(new CreateChildAction(activeEditorPart, selection, descriptor));
+        actions.add(new CDOCreateChildAction(activeEditorPart, selection, descriptor));
       }
     }
     return actions;
@@ -429,7 +442,7 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
     {
       for (Object descriptor : descriptors)
       {
-        actions.add(new CreateSiblingAction(activeEditorPart, selection, descriptor));
+        actions.add(new CDOCreateSiblingAction(activeEditorPart, selection, descriptor));
       }
     }
     return actions;
@@ -440,22 +453,79 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
    * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection,
    * by inserting them before the specified contribution item <code>contributionID</code>.
    * If <code>contributionID</code> is <code>null</code>, they are simply added.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
    */
   protected void populateManager(IContributionManager manager, Collection<? extends IAction> actions, String contributionID)
   {
     if (actions != null)
     {
+      // Look for actions that create EAnnotations.
+      Set<IAction> ignoredActions = new HashSet<>();
+      Set<IAction> annotationActions = new LinkedHashSet<>();
       for (IAction action : actions)
       {
+        if (action instanceof EObjectProvider)
+        {
+          EObjectProvider eObjectProvider = (EObjectProvider)action;
+          EObject eObject = eObjectProvider.getEObject();
+          if (eObject instanceof Annotation)
+          {
+            annotationActions.add(action);
+            ignoredActions.add(action);
+          }
+        }
+      }
+
+      // If there is more than one action that creates an annotation...
+      if (annotationActions.size() > 1)
+      {
+        // Create a menu manager to group them.
+        // This assumes the first action is one for the null source.
+        IAction action = annotationActions.iterator().next();
+        String actionText = action.getText();
+        MenuManager annotationMenuManager = new MenuManager(actionText, action.getImageDescriptor(), ANNOTATIONS_MENU_ID);
+
+        // Add that menu manager instead of the individual actions.
         if (contributionID != null)
         {
-          manager.insertBefore(contributionID, action);
+          manager.insertBefore(contributionID, annotationMenuManager);
         }
         else
         {
-          manager.add(action);
+          manager.add(annotationMenuManager);
+        }
+
+        // Add an item for each annotation action.
+        for (IAction annotationAction : annotationActions)
+        {
+          annotationMenuManager.add(annotationAction);
+          String source = ((Annotation)((EObjectProvider)annotationAction).getEObject()).getSource();
+          if (source != null)
+          {
+            // Set the label to include the source.
+            annotationAction.setText(actionText + " - " + source);
+          }
+        }
+      }
+      else
+      {
+        ignoredActions.clear();
+      }
+
+      for (IAction action : actions)
+      {
+        if (!ignoredActions.contains(action))
+        {
+          if (contributionID != null)
+          {
+            manager.insertBefore(contributionID, action);
+          }
+          else
+          {
+            manager.add(action);
+          }
         }
       }
     }
@@ -464,11 +534,12 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   /**
    * This removes from the specified <code>manager</code> all {@link org.eclipse.jface.action.ActionContributionItem}s
    * based on the {@link org.eclipse.jface.action.IAction}s contained in the <code>actions</code> collection. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
+   * begin-user-doc -->
+   * <!-- end-user-doc -->
    *
    * @generated
    */
-  protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions)
+  protected void depopulateManagerGen(IContributionManager manager, Collection<? extends IAction> actions)
   {
     if (actions != null)
     {
@@ -476,7 +547,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
       for (int i = 0; i < items.length; i++)
       {
         // Look into SubContributionItems
-        //
         IContributionItem contributionItem = items[i];
         while (contributionItem instanceof SubContributionItem)
         {
@@ -484,7 +554,6 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
         }
 
         // Delete the ActionContributionItems with matching action.
-        //
         if (contributionItem instanceof ActionContributionItem)
         {
           IAction action = ((ActionContributionItem)contributionItem).getAction();
@@ -498,8 +567,26 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   }
 
   /**
+   * @ADDED
+   */
+  protected void depopulateManager(IContributionManager manager, Collection<? extends IAction> actions)
+  {
+    depopulateManagerGen(manager, actions);
+    IContributionItem[] items = manager.getItems();
+    for (int i = 0; i < items.length; i++)
+    {
+      IContributionItem contributionItem = items[i];
+      if (ANNOTATIONS_MENU_ID.equals(contributionItem.getId()))
+      {
+        manager.remove(contributionItem);
+      }
+    }
+  }
+
+  /**
    * This populates the pop-up menu before it appears.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -622,5 +709,109 @@ public class CDOActionBarContributor extends EditingDomainActionBarContributor i
   {
     super.update();
     importRootsAction.update();
+  }
+
+  /**
+   * An interface implemented by {@link CDOCreateChildAction} and {@link CDOCreateSiblingAction} to provide access to the data in the descriptor.
+   */
+  public interface EObjectProvider
+  {
+    public EObject getEObject();
+  }
+
+  /**
+   * A create child action subclass that provides access to the {@link #descriptor} and specializes {@link #run()} to show the properties view.
+   */
+  public class CDOCreateChildAction extends CreateChildAction implements EObjectProvider
+  {
+    public CDOCreateChildAction(IWorkbenchPart workbenchPart, ISelection selection, Object descriptor)
+    {
+      super(workbenchPart, selection, descriptor);
+    }
+
+    @Override
+    public EObject getEObject()
+    {
+      if (descriptor instanceof CommandParameter)
+      {
+        CommandParameter commandParameter = (CommandParameter)descriptor;
+        return commandParameter.getEValue();
+      }
+
+      return null;
+    }
+
+    @Override
+    public void run()
+    {
+      super.run();
+
+      // This is dispatched twice because the command stack listener dispatches once and then the viewer selection is
+      // also dispatches once, and we need to delay until the selection is established.
+      Display display = getPage().getWorkbenchWindow().getShell().getDisplay();
+      display.asyncExec(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          display.asyncExec(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              showPropertiesViewAction.run();
+            }
+          });
+        }
+      });
+    }
+  }
+
+  /**
+   * A create sibling action subclass that provides access to the {@link #descriptor} and specializes {@link #run()} to show the properties view.
+   */
+  public class CDOCreateSiblingAction extends CreateSiblingAction implements EObjectProvider
+  {
+    public CDOCreateSiblingAction(IWorkbenchPart workbenchPart, ISelection selection, Object descriptor)
+    {
+      super(workbenchPart, selection, descriptor);
+    }
+
+    @Override
+    public EObject getEObject()
+    {
+      if (descriptor instanceof CommandParameter)
+      {
+        CommandParameter commandParameter = (CommandParameter)descriptor;
+        return commandParameter.getEValue();
+      }
+
+      return null;
+    }
+
+    @Override
+    public void run()
+    {
+      super.run();
+
+      // This is dispatched twice because the command stack listener dispatches once and then the viewer selection is
+      // also dispatches once, and we need to delay until the selection is established.
+      final Display display = getPage().getWorkbenchWindow().getShell().getDisplay();
+      display.asyncExec(new Runnable()
+      {
+        @Override
+        public void run()
+        {
+          display.asyncExec(new Runnable()
+          {
+            @Override
+            public void run()
+            {
+              showPropertiesViewAction.run();
+            }
+          });
+        }
+      });
+    }
   }
 }

@@ -34,6 +34,8 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
+import org.eclipse.emf.common.util.URI;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 
 import java.io.IOException;
@@ -186,6 +188,27 @@ public final class CDOCommonUtil
         return unchunker;
       }
     };
+  }
+
+  /**
+   * A well formed URI string must have a non-zero length, and must encode any special characters such as the space character.
+   * As such, creating a {@link URI#createURI(String, boolean) URI}, ignoring the properly encoded characters, and converting
+   * that to a {@link URI#toString() string}, must yield this URI string itself.
+   *
+   * @param uri the URI string in question.
+   * @return whether the URI is well formed.
+   * @since 4.21
+   */
+  public static boolean isWellFormedURI(String uri)
+  {
+    try
+    {
+      return !StringUtil.isEmpty(uri) && uri.equals(URI.createURI(uri, true).toString());
+    }
+    catch (Throwable exception)
+    {
+      return false;
+    }
   }
 
   public static boolean isValidTimeStamp(long timeStamp, long startTime, long endTime)

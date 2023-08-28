@@ -19,6 +19,7 @@
    <extension point="org.eclipse.net4j.util.productGroups">
      <productGroup id="org.eclipse.emf.cdo.resourceSetClassNameProviders" name="%productGroup.name"/>
      <productGroup id="org.eclipse.emf.cdo.conflictHandlers" name="%productGroup.name.0"/>
+     <productGroup id="org.eclipse.emf.cdo.annotationValidators" name="%productGroup.name.1"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

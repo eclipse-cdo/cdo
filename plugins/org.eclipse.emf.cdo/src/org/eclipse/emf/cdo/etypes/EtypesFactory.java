@@ -40,6 +40,12 @@ public interface EtypesFactory extends EFactory
   Annotation createAnnotation();
 
   /**
+   * @ADDED
+   * @since 4.22
+   */
+  Annotation createAnnotation(String source);
+
+  /**
    * Returns the package supported by this factory.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return the package supported by this factory.

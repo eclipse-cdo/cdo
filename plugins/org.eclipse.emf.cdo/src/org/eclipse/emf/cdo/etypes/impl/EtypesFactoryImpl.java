@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc -->
@@ -94,6 +95,8 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
     {
     case EtypesPackage.ANNOTATION:
       return createAnnotation();
+    case EtypesPackage.STRING_TO_STRING_MAP_ENTRY:
+      return (EObject)createStringToStringMapEntry();
     default:
       throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier"); //$NON-NLS-1$ //$NON-NLS-2$
     }
@@ -159,6 +162,29 @@ public class EtypesFactoryImpl extends EFactoryImpl implements EtypesFactory
   {
     AnnotationImpl annotation = new AnnotationImpl();
     return annotation;
+  }
+
+  /**
+   * @ADDED
+   */
+  @Override
+  public Annotation createAnnotation(String source)
+  {
+    Annotation annotation = createAnnotation();
+    annotation.setSource(source);
+    return annotation;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Map.Entry<String, String> createStringToStringMapEntry()
+  {
+    StringToStringMapEntryImpl stringToStringMapEntry = new StringToStringMapEntryImpl();
+    return stringToStringMapEntry;
   }
 
   /**

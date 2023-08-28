@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.etypes.util.EtypesValidator;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -27,10 +28,12 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EValidator;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model <b>Package</b>.
@@ -52,6 +55,13 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
    * @generated
    */
   private EClass annotationEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass stringToStringMapEntryEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -145,7 +155,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public static EtypesPackage init()
   {
     if (isInited)
+    {
       return (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
+    }
 
     // Obtain or create and register package
     Object registeredEtypesPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
@@ -159,6 +171,16 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
     // Initialize created meta-data
     theEtypesPackage.initializePackageContents();
+
+    // Register package validator
+    EValidator.Registry.INSTANCE.put(theEtypesPackage, new EValidator.Descriptor()
+    {
+      @Override
+      public EValidator getEValidator()
+      {
+        return EtypesValidator.INSTANCE;
+      }
+    });
 
     // Mark meta-data to indicate it can't be changed
     theEtypesPackage.freeze();
@@ -257,6 +279,39 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public EReference getAnnotation_References()
   {
     return (EReference)annotationEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStringToStringMapEntry()
+  {
+    return stringToStringMapEntryEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getStringToStringMapEntry_Key()
+  {
+    return (EAttribute)stringToStringMapEntryEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getStringToStringMapEntry_Value()
+  {
+    return (EAttribute)stringToStringMapEntryEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -373,7 +428,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public void createPackageContents()
   {
     if (isCreated)
+    {
       return;
+    }
     isCreated = true;
 
     // Create classes and their features
@@ -387,6 +444,10 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     createEReference(annotationEClass, ANNOTATION__MODEL_ELEMENT);
     createEReference(annotationEClass, ANNOTATION__CONTENTS);
     createEReference(annotationEClass, ANNOTATION__REFERENCES);
+
+    stringToStringMapEntryEClass = createEClass(STRING_TO_STRING_MAP_ENTRY);
+    createEAttribute(stringToStringMapEntryEClass, STRING_TO_STRING_MAP_ENTRY__KEY);
+    createEAttribute(stringToStringMapEntryEClass, STRING_TO_STRING_MAP_ENTRY__VALUE);
 
     // Create data types
     blobEDataType = createEDataType(BLOB);
@@ -414,7 +475,9 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
   public void initializePackageContents()
   {
     if (isInitialized)
+    {
       return;
+    }
     isInitialized = true;
 
     // Initialize package
@@ -428,27 +491,33 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    annotationEClass.getESuperTypes().add(this.getModelElement());
+    annotationEClass.getESuperTypes().add(getModelElement());
 
     // Initialize classes, features, and operations; add parameters
     initEClass(modelElementEClass, ModelElement.class, "ModelElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getModelElement_Annotations(), this.getAnnotation(), this.getAnnotation_ModelElement(), "annotations", null, 0, -1, ModelElement.class, //$NON-NLS-1$
+    initEReference(getModelElement_Annotations(), getAnnotation(), getAnnotation_ModelElement(), "annotations", null, 0, -1, ModelElement.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    EOperation op = initEOperation(getModelElement__GetAnnotation__String(), this.getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    EOperation op = initEOperation(getModelElement__GetAnnotation__String(), getAnnotation(), "getAnnotation", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
     addEParameter(op, ecorePackage.getEString(), "source", 0, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
     initEClass(annotationEClass, Annotation.class, "Annotation", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
     initEAttribute(getAnnotation_Source(), ecorePackage.getEString(), "source", null, 0, 1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnnotation_Details(), ecorePackage.getEStringToStringMapEntry(), null, "details", null, 0, -1, Annotation.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAnnotation_ModelElement(), this.getModelElement(), this.getModelElement_Annotations(), "modelElement", null, 0, 1, Annotation.class, //$NON-NLS-1$
+    initEReference(getAnnotation_Details(), getStringToStringMapEntry(), null, "details", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnnotation_ModelElement(), getModelElement(), getModelElement_Annotations(), "modelElement", null, 0, 1, Annotation.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnnotation_Contents(), ecorePackage.getEObject(), null, "contents", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAnnotation_References(), ecorePackage.getEObject(), null, "references", null, 0, -1, Annotation.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
         IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(stringToStringMapEntryEClass, Map.Entry.class, "StringToStringMapEntry", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getStringToStringMapEntry_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStringToStringMapEntry_Value(), ecorePackage.getEString(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize data types
     initEDataType(blobEDataType, CDOBlob.class, "Blob", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
@@ -462,6 +531,24 @@ public class EtypesPackageImpl extends EPackageImpl implements EtypesPackage
 
     // Create resource
     createResource(eNS_URI);
+
+    // Create annotations
+    // http://www.eclipse.org/emf/2002/Ecore
+    createEcoreAnnotations();
+  }
+
+  /**
+   * Initializes the annotations for <b>http://www.eclipse.org/emf/2002/Ecore</b>.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void createEcoreAnnotations()
+  {
+    String source = "http://www.eclipse.org/emf/2002/Ecore"; //$NON-NLS-1$
+    addAnnotation(annotationEClass, source, new String[] { "constraints", "WellFormed WellFormedSourceURI" //$NON-NLS-1$ //$NON-NLS-2$
+    });
   }
 
 } // EtypesPackageImpl

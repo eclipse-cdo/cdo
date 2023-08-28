@@ -33,7 +33,7 @@ import org.eclipse.emf.ecore.EObject;
  * </ul>
  *
  * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation()
- * @model
+ * @model annotation="http://www.eclipse.org/emf/2002/Ecore constraints='WellFormed WellFormedSourceURI'"
  * @generated
  */
 public interface Annotation extends ModelElement
@@ -75,7 +75,7 @@ public interface Annotation extends ModelElement
    * <!-- end-user-doc -->
    * @return the value of the '<em>Details</em>' map.
    * @see org.eclipse.emf.cdo.etypes.EtypesPackage#getAnnotation_Details()
-   * @model mapType="org.eclipse.emf.ecore.EStringToStringMapEntry&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString&gt;"
+   * @model mapType="org.eclipse.emf.cdo.etypes.StringToStringMapEntry&lt;org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString&gt;"
    * @generated
    */
   EMap<String, String> getDetails();

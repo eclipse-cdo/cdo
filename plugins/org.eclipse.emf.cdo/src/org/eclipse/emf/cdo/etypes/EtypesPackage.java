@@ -205,7 +205,7 @@ public interface EtypesPackage extends EPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.lob.CDOBlob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBlob()
-   * @generated
+   * @generated NOT
    */
   int BLOB = 2;
 
@@ -214,7 +214,7 @@ public interface EtypesPackage extends EPackage
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.lob.CDOClob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClob()
-   * @generated
+   * @generated NOT
    */
   int CLOB = 3;
 
@@ -225,7 +225,7 @@ public interface EtypesPackage extends EPackage
    * @since 4.1 <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.lob.CDOLob
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getLob()
-   * @generated
+   * @generated NOT
    */
   int LOB = 4;
 
@@ -236,7 +236,7 @@ public interface EtypesPackage extends EPackage
    * <!-- end-user-doc -->
    * @see java.io.InputStream
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getInputStream()
-   * @generated
+   * @generated NOT
    */
   int INPUT_STREAM = 5;
 
@@ -247,7 +247,7 @@ public interface EtypesPackage extends EPackage
    * <!-- end-user-doc -->
    * @see java.io.Reader
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getReader()
-   * @generated
+   * @generated NOT
    */
   int READER = 6;
 
@@ -258,7 +258,7 @@ public interface EtypesPackage extends EPackage
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.model.CDOClassifierRef
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getClassifierRef()
-   * @generated
+   * @generated NOT
    */
   int CLASSIFIER_REF = 7;
 
@@ -269,7 +269,7 @@ public interface EtypesPackage extends EPackage
   	 * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.branch.CDOBranchRef
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchRef()
-   * @generated
+   * @generated NOT
    */
   int BRANCH_REF = 8;
 
@@ -280,9 +280,60 @@ public interface EtypesPackage extends EPackage
   	 * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.common.branch.CDOBranchPointRef
    * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getBranchPointRef()
-   * @generated
+   * @generated NOT
    */
   int BRANCH_POINT_REF = 9;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.etypes.impl.StringToStringMapEntryImpl <em>String To String Map Entry</em>}' class.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.etypes.impl.StringToStringMapEntryImpl
+   * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getStringToStringMapEntry()
+   * @generated NOT
+   */
+  int STRING_TO_STRING_MAP_ENTRY = 10;
+
+  /**
+   * The feature id for the '<em><b>Key</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated NOT
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP_ENTRY__KEY = 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated NOT
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP_ENTRY__VALUE = 1;
+
+  /**
+   * The number of structural features of the '<em>String To String Map Entry</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated NOT
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP_ENTRY_FEATURE_COUNT = 2;
+
+  /**
+   * The number of operations of the '<em>String To String Map Entry</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @generated NOT
+   * @ordered
+   */
+  int STRING_TO_STRING_MAP_ENTRY_OPERATION_COUNT = 0;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.etypes.ModelElement <em>Model Element</em>}'. <!--
@@ -376,6 +427,43 @@ public interface EtypesPackage extends EPackage
    * @generated
    */
   EReference getAnnotation_References();
+
+  /**
+   * Returns the meta object for class '{@link java.util.Map.Entry <em>String To String Map Entry</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>String To String Map Entry</em>'.
+   * @see java.util.Map.Entry
+   * @model keyDataType="org.eclipse.emf.ecore.EString"
+   *        valueDataType="org.eclipse.emf.ecore.EString"
+   * @generated
+   */
+  EClass getStringToStringMapEntry();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Key</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToStringMapEntry()
+   * @generated
+   */
+  EAttribute getStringToStringMapEntry_Key();
+
+  /**
+   * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see java.util.Map.Entry
+   * @see #getStringToStringMapEntry()
+   * @generated
+   */
+  EAttribute getStringToStringMapEntry_Value();
 
   /**
    * Returns the meta object for data type '{@link org.eclipse.emf.cdo.common.lob.CDOBlob <em>Blob</em>}'. <!--
@@ -566,6 +654,35 @@ public interface EtypesPackage extends EPackage
      * @generated
      */
     EReference ANNOTATION__REFERENCES = eINSTANCE.getAnnotation_References();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.etypes.impl.StringToStringMapEntryImpl <em>String To String Map Entry</em>}' class.
+     * <!-- begin-user-doc -->
+     * @since 4.22
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.etypes.impl.StringToStringMapEntryImpl
+     * @see org.eclipse.emf.cdo.etypes.impl.EtypesPackageImpl#getStringToStringMapEntry()
+     * @generated
+     */
+    EClass STRING_TO_STRING_MAP_ENTRY = eINSTANCE.getStringToStringMapEntry();
+
+    /**
+     * The meta object literal for the '<em><b>Key</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.22
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STRING_TO_STRING_MAP_ENTRY__KEY = eINSTANCE.getStringToStringMapEntry_Key();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 4.22
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STRING_TO_STRING_MAP_ENTRY__VALUE = eINSTANCE.getStringToStringMapEntry_Value();
 
     /**
      * The meta object literal for the '<em>Blob</em>' data type.

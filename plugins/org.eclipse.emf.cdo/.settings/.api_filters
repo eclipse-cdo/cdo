@@ -285,6 +285,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/etypes/util/BasicAnnotationValidator.java" type="org.eclipse.emf.cdo.etypes.util.BasicAnnotationValidator">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="AnnotationValidator"/>
+                <message_argument value="BasicAnnotationValidator"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/session/CDORepositoryInfo.java" type="org.eclipse.emf.cdo.session.CDORepositoryInfo">
         <filter id="571473929">
             <message_arguments>

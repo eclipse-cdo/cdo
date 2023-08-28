@@ -19,6 +19,8 @@ import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 import org.eclipse.emf.ecore.EObject;
 
+import java.util.Map;
+
 /**
  * <!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  * method for each class of the model.
@@ -91,6 +93,12 @@ public class EtypesAdapterFactory extends AdapterFactoryImpl
     }
 
     @Override
+    public Adapter caseStringToStringMapEntry(Map.Entry<String, String> object)
+    {
+      return createStringToStringMapEntryAdapter();
+    }
+
+    @Override
     public Adapter defaultCase(EObject object)
     {
       return createEObjectAdapter();
@@ -132,6 +140,22 @@ public class EtypesAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createAnnotationAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To String Map Entry</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see java.util.Map.Entry
+   * @generated
+   */
+  public Adapter createStringToStringMapEntryAdapter()
   {
     return null;
   }

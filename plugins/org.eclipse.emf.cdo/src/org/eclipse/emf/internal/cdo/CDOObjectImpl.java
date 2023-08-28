@@ -1896,7 +1896,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     InternalCDOView view = object.cdoView();
     CDOID id = object.cdoID();
 
-    return view.getLockStates(Collections.singletonList(id))[0];
+    CDOLockState[] lockStates = view.getLockStates(Collections.singletonList(id));
+    return ObjectUtil.isEmpty(lockStates) ? null : lockStates[0];
   }
 
   /**

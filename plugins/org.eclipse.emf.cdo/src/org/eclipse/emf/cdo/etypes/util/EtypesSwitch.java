@@ -18,6 +18,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <!-- begin-user-doc --> The <b>Switch</b> for the model's inheritance hierarchy. It supports the call
@@ -94,7 +95,9 @@ public class EtypesSwitch<T>
       ModelElement modelElement = (ModelElement)theEObject;
       T result = caseModelElement(modelElement);
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
       return result;
     }
     case EtypesPackage.ANNOTATION:
@@ -102,9 +105,24 @@ public class EtypesSwitch<T>
       Annotation annotation = (Annotation)theEObject;
       T result = caseAnnotation(annotation);
       if (result == null)
+      {
         result = caseModelElement(annotation);
+      }
       if (result == null)
+      {
         result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case EtypesPackage.STRING_TO_STRING_MAP_ENTRY:
+    {
+      @SuppressWarnings("unchecked")
+      Map.Entry<String, String> stringToStringMapEntry = (Map.Entry<String, String>)theEObject;
+      T result = caseStringToStringMapEntry(stringToStringMapEntry);
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
       return result;
     }
     default:
@@ -136,6 +154,23 @@ public class EtypesSwitch<T>
    * @generated
    */
   public T caseAnnotation(Annotation object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String To String Map Entry</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * @since 4.22
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String To String Map Entry</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringToStringMapEntry(Map.Entry<String, String> object)
   {
     return null;
   }

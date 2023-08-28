@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
-        <setEntry value="org.eclipse.emf.cdo.edit:4.5.7.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.6.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.server:1.2.0.qualifier:default:true:default:default"/>

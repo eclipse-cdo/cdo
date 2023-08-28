@@ -13,6 +13,10 @@
 
 <plugin>
 
+   <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories" name="%productGroup.name"/>
+   </extension>
+
    <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
       <!-- @generated etypes -->
       <factory

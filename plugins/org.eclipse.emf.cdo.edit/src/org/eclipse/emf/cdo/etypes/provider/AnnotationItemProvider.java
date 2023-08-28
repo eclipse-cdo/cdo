@@ -286,7 +286,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider
 
           }
 
-          if (!builder.isEmpty())
+          if (builder.length() != 0)
           {
             builder.insert(0, "  ");
             styledString.append(builder.toString(), StyledString.Style.DECORATIONS_STYLER);

@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -82,7 +83,8 @@ public final class CDOExplorerUtil
         return CDOCheckoutImpl.VIEW_CHECKOUT.get();
       }
 
-      return (CDOCheckout)view.properties().get(CDOCheckoutImpl.CHECKOUT_KEY);
+      IRegistry<String, Object> properties = view.properties();
+      return (CDOCheckout)properties.get(CDOCheckoutImpl.CHECKOUT_KEY);
     }
 
     if (object instanceof URI)

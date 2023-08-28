@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.CDOElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -111,27 +113,45 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    CDOTransaction transaction = checkout.openTransaction();
+    CDOView originalView = CDOUtil.getView(elements.get(0));
+    boolean newTransaction = originalView.isReadOnly();
+    CDOTransaction transaction = newTransaction ? checkout.openTransaction() : (CDOTransaction)originalView;
 
     try
     {
-      List<EObject> transactionalElements = new ArrayList<>();
-      for (EObject element : elements)
-      {
-        ConcurrencyUtil.checkCancelation(monitor);
+      List<EObject> transactionalElements;
 
-        EObject transactionalElement = transaction.getObject(element);
-        transactionalElements.add(transactionalElement);
+      if (newTransaction)
+      {
+        transactionalElements = new ArrayList<>();
+
+        for (EObject element : elements)
+        {
+          ConcurrencyUtil.checkCancelation(monitor);
+
+          EObject transactionalElement = transaction.getObject(element);
+          transactionalElements.add(transactionalElement);
+        }
+      }
+      else
+      {
+        transactionalElements = elements;
       }
 
       if (doExecute(event, transactionalElements, monitor))
       {
-        transaction.commit(monitor);
+        if (newTransaction)
+        {
+          transaction.commit(monitor);
+        }
       }
     }
     finally
     {
-      transaction.close();
+      if (newTransaction)
+      {
+        transaction.close();
+      }
     }
   }
 

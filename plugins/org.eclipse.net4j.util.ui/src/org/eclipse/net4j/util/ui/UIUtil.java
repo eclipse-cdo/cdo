@@ -825,8 +825,11 @@ public final class UIUtil
       }
       catch (RuntimeException ex)
       {
-        // An element may have been deactivated - refresh the entire tree
-        doRefresh(viewer, null, updateLabels);
+        if (element != null)
+        {
+          // An element may have been deactivated - refresh the entire tree
+          doRefresh(viewer, null, updateLabels);
+        }
       }
     });
   }

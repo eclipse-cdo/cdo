@@ -10,46 +10,31 @@
  */
 package org.eclipse.net4j.util.internal.ui.views;
 
-import org.eclipse.net4j.ui.shared.SharedIcons;
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
-import org.eclipse.net4j.util.ui.views.IElementFilter;
+import org.eclipse.net4j.util.ui.views.ManagedContainerItemProvider;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.viewers.ITreeSelection;
-import org.eclipse.swt.graphics.Image;
 
 import java.util.Iterator;
 
 /**
  * @author Eike Stepper
  */
-public class Net4jContainerItemProvider extends ContainerItemProvider<IContainer<Object>>
+public class Net4jContainerItemProvider extends ManagedContainerItemProvider
 {
   public Net4jContainerItemProvider()
   {
-  }
-
-  public Net4jContainerItemProvider(IElementFilter rootElementFilter)
-  {
-    super(rootElementFilter);
   }
 
   @Override
   public void fillContextMenu(IMenuManager manager, ITreeSelection selection)
   {
     manager.add(new RemoveAction(selection));
-  }
-
-  @Override
-  public Image getImage(Object obj)
-  {
-    return SharedIcons.getImage(SharedIcons.OBJ_BEAN);
   }
 
   /**

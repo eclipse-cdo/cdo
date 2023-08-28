@@ -31,15 +31,15 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPUT>
     implements ITreeContentProvider, ILabelProvider, IColorProvider, IFontProvider, IStyledLabelProvider
 {
   public static final Object[] NO_ELEMENTS = {};
 
-  private List<ILabelProviderListener> listeners = new ArrayList<>(0);
+  private List<ILabelProviderListener> listeners = new CopyOnWriteArrayList<>();
 
   public ItemProvider()
   {
@@ -121,28 +121,19 @@ public abstract class ItemProvider<INPUT> extends StructuredContentProvider<INPU
 
   public ILabelProviderListener[] getListeners()
   {
-    synchronized (listeners)
-    {
-      return listeners.toArray(new ILabelProviderListener[listeners.size()]);
-    }
+    return listeners.toArray(new ILabelProviderListener[listeners.size()]);
   }
 
   @Override
   public void addListener(ILabelProviderListener listener)
   {
-    synchronized (listeners)
-    {
-      listeners.add(listener);
-    }
+    listeners.add(listener);
   }
 
   @Override
   public void removeListener(ILabelProviderListener listener)
   {
-    synchronized (listeners)
-    {
-      listeners.remove(listener);
-    }
+    listeners.remove(listener);
   }
 
   protected void fillContextMenu(IMenuManager manager, ITreeSelection selection)

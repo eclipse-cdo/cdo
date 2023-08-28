@@ -121,7 +121,8 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         Object[] result = new Object[children.size()];
         for (int i = 0; i < result.length; i++)
         {
-          result[i] = children.get(i).getElement();
+          Node child = children.get(i);
+          result[i] = child.getElement();
         }
 
         return result;
@@ -1034,19 +1035,19 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
    * @deprecated As of 3.12 use {@link #pendingColor()}.
    */
   @Deprecated
-  public static final Color PENDING_COLOR = UIUtil.getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY);
+  public static final Color PENDING_COLOR = null;
 
   /**
    * @since 3.5
    * @deprecated As of 3.12 use {@link #pendingImage()}.
    */
   @Deprecated
-  public static final Image PENDING_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_PENDING);
+  public static final Image PENDING_IMAGE = null;
 
   /**
    * @since 3.5
    * @deprecated As of 3.12 use {@link UIUtil#errorImage()}.
    */
   @Deprecated
-  public static final Image ERROR_IMAGE = SharedIcons.getImage(SharedIcons.OBJ_ERROR);
+  public static final Image ERROR_IMAGE = null;
 }

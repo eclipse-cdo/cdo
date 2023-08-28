@@ -10,15 +10,15 @@
  */
 package org.eclipse.net4j.util.internal.ui.views;
 
+import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
 import org.eclipse.net4j.util.ui.actions.ToggleAction;
-import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
 import org.eclipse.net4j.util.ui.views.ContainerView;
+import org.eclipse.net4j.util.ui.views.ManagedContainerItemProvider.Wrapper;
 
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IToolBarManager;
@@ -26,18 +26,31 @@ import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
 
+/**
+ * @author Eike Stepper
+ */
 public class Net4jContainerView extends ContainerView
 {
-  private final IAction decorateAction = new DecorateAction();
+  private final IAction showFactoriesAction = new ShowFactoriesAction();
+
+  private final IAction decorateElementsAction = new DecorateElementsAction();
 
   public Net4jContainerView()
   {
   }
 
   @Override
-  protected ContainerItemProvider<IContainer<Object>> createContainerItemProvider()
+  public Net4jContainerItemProvider getItemProvider()
   {
-    return new Net4jContainerItemProvider();
+    return (Net4jContainerItemProvider)super.getItemProvider();
+  }
+
+  @Override
+  protected Net4jContainerItemProvider createContainerItemProvider()
+  {
+    Net4jContainerItemProvider itemProvider = new Net4jContainerItemProvider();
+    itemProvider.setShowFactories(OM.PREF_SHOW_CONTAINER_FACTORIES.getValue());
+    return itemProvider;
   }
 
   @Override
@@ -56,20 +69,35 @@ public class Net4jContainerView extends ContainerView
       {
         if (OM.PREF_DECORATE_CONTAINER_ELEMENTS.getValue() == Boolean.TRUE)
         {
-          String[] key = getContainer().getElementKey(element);
-          if (key != null)
+          Net4jContainerItemProvider itemProvider = getItemProvider();
+          if (itemProvider.isShowFactories())
           {
-            String productGroup = key[0];
-            String factoryType = key[1];
-            String description = key[2];
-
-            String decoration = productGroup + ": " + factoryType;
-            if (!StringUtil.isEmpty(description))
+            if (element instanceof Wrapper)
             {
-              decoration += "(" + description + ")";
+              int elementCount = ((Wrapper)element).getElementCount();
+              if (elementCount > 0)
+              {
+                text += "  [" + elementCount + "]";
+              }
             }
+          }
+          else
+          {
+            String[] key = getContainer().getElementKey(element);
+            if (key != null)
+            {
+              String productGroup = key[0];
+              String factoryType = key[1];
+              String description = key[2];
 
-            text += "  " + decoration;
+              String decoration = productGroup + ": " + factoryType;
+              if (!StringUtil.isEmpty(description))
+              {
+                decoration += "(" + description + ")";
+              }
+
+              text += "  " + decoration;
+            }
           }
         }
 
@@ -109,15 +137,35 @@ public class Net4jContainerView extends ContainerView
   protected void fillLocalToolBar(IToolBarManager manager)
   {
     super.fillLocalToolBar(manager);
-    manager.add(decorateAction);
+    manager.add(showFactoriesAction);
+    manager.add(decorateElementsAction);
   }
 
   /**
    * @author Eike Stepper
    */
-  private final class DecorateAction extends ToggleAction
+  private final class ShowFactoriesAction extends ToggleAction
   {
-    public DecorateAction()
+    public ShowFactoriesAction()
+    {
+      super(Messages.getString("Net4jContainerView_0"), //$NON-NLS-1$
+          SharedIcons.getDescriptor(SharedIcons.OBJ_FACTORY), OM.PREF_SHOW_CONTAINER_FACTORIES);
+    }
+
+    @Override
+    protected void run(boolean checked)
+    {
+      getItemProvider().setShowFactories(checked);
+      refreshViewer(true);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DecorateElementsAction extends ToggleAction
+  {
+    public DecorateElementsAction()
     {
       super(Messages.getString("Net4jContainerView_1"), //$NON-NLS-1$
           OM.getImageDescriptor("icons/decorate_container_element.png"), //$NON-NLS-1$

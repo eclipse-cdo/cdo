@@ -268,6 +268,32 @@ public final class CDOModelUtil implements CDOModelConstants
   }
 
   /**
+   * @since 4.21
+   */
+  public static boolean isBasedInPackage(EClass eClass, String nsURI)
+  {
+    if (nsURI == null)
+    {
+      return false;
+    }
+
+    if (nsURI.equals(eClass.getEPackage().getNsURI()))
+    {
+      return true;
+    }
+
+    for (EClass superType : eClass.getESuperTypes())
+    {
+      if (isBasedInPackage(superType, nsURI))
+      {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
    * @since 4.0
    */
   public static boolean isLob(EClassifier eClassifier)

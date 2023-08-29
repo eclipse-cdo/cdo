@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.migrator;
 
-import org.eclipse.emf.cdo.internal.messages.Messages;
+import org.eclipse.emf.cdo.internal.migrator.messages.Messages;
 
 import org.eclipse.emf.codegen.ecore.genmodel.GenDelegationKind;
 import org.eclipse.emf.codegen.ecore.genmodel.GenModel;

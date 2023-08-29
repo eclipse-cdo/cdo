@@ -14,10 +14,8 @@
 	<target name="build-ant-tasks">
 		<jar destfile="ant_tasks/cdo.ant.tasks.jar">
 			<fileset dir="bin">
-				<include name="**/*.class" />
-				<exclude name="**/actions/*.class" />
-				<exclude name="**/wizards/*.class" />
-				<exclude name="**/CDOImporter*.class" />
+				<include name="org/eclipse/emf/cdo/internal/migrator/tasks/*.class" />
+				<include name="org/eclipse/emf/cdo/internal/migrator/CDOMigratorUtil.class" />
 			</fileset>
 		</jar>
 	</target>

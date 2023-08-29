@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.actions;
 
-import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOMigratorUtil;
+import org.eclipse.emf.cdo.internal.migrator.messages.Messages;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 

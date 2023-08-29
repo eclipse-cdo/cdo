@@ -75,5 +75,17 @@
      <antType library="ant_tasks/cdo.ant.tasks.jar" name="sourcefield" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask$SourceClass$SourceField" />
      <antType library="ant_tasks/cdo.ant.tasks.jar" name="sourcemethod" class="org.eclipse.emf.cdo.internal.migrator.tasks.TransferMembersTask$SourceClass$SourceMethod" />
   </extension>
+  
+  <extension point="org.eclipse.emf.ecore.annotation_validator">
+     <validator
+           class="org.eclipse.emf.cdo.internal.migrator.dbstore.DBStoreAnnotationValidator"
+           uri="http://www.eclipse.org/CDO/DBStore" />
+  </extension>
+  
+  <extension point="org.eclipse.emf.ecore.edit.annotation_item_provider_adapter_factory">
+     <factory
+           class="org.eclipse.emf.cdo.internal.migrator.dbstore.DBStoreItemProviderAdapterFactory"
+           uri="http://www.eclipse.org/CDO/DBStore" />
+  </extension>
 
 </plugin>

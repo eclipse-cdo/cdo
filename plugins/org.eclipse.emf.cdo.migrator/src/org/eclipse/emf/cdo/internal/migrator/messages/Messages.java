@@ -9,7 +9,7 @@
  *    Victor Roldan Betancort - initial API and implementation
  *    Eike Stepper - maintenance
  */
-package org.eclipse.emf.cdo.internal.messages;
+package org.eclipse.emf.cdo.internal.migrator.messages;
 
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;

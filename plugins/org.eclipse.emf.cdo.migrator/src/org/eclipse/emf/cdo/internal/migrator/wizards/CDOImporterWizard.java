@@ -10,8 +10,8 @@
  */
 package org.eclipse.emf.cdo.internal.migrator.wizards;
 
-import org.eclipse.emf.cdo.internal.messages.Messages;
 import org.eclipse.emf.cdo.internal.migrator.CDOImporter;
+import org.eclipse.emf.cdo.internal.migrator.messages.Messages;
 
 import org.eclipse.emf.converter.ModelConverter;
 import org.eclipse.emf.importer.ui.contribution.base.ModelImporterDetailPage;

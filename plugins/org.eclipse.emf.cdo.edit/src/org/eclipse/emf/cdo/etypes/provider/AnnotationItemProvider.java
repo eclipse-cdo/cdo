@@ -31,12 +31,9 @@ import org.eclipse.emf.common.util.UniqueEList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EOperation;
-import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 import org.eclipse.emf.ecore.provider.annotation.EAnnotationItemProviderAdapterFactory;
-import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
@@ -47,7 +44,6 @@ import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -376,25 +372,25 @@ public class AnnotationItemProvider extends ModelElementItemProvider
       BasicAnnotationValidator.Assistant assistant = getAssistant();
       if (assistant != null)
       {
-        final Annotation eAnnotation = (Annotation)object;
-        if (assistant.isValidLocation(eAnnotation))
+        final Annotation annotation = (Annotation)object;
+        if (assistant.isValidLocation(annotation))
         {
-          List<EClass> propertyClasses = assistant.getPropertyClasses(eAnnotation.getModelElement());
+          List<EClass> propertyClasses = assistant.getPropertyClasses(annotation.getModelElement());
           if (!propertyClasses.isEmpty())
           {
             AnnotationItemProviderAdapterFactory.Group group = new AnnotationItemProviderAdapterFactory.Group(propertyValue);
             Map<String, Group> categories = new HashMap<>();
-            AnnotationItemProviderAdapterFactory eAnnotationItemProviderAdapterFactory = getAnnotationItemProviderAdapterFactory();
-            boolean showInstances = eAnnotationItemProviderAdapterFactory.isShowInstances(eAnnotation);
+            AnnotationItemProviderAdapterFactory annotationItemProviderAdapterFactory = getAnnotationItemProviderAdapterFactory();
+            boolean showInstances = annotationItemProviderAdapterFactory.isShowInstances(annotation);
             boolean onlyMisc = true;
             for (EClass propertyClass : propertyClasses)
             {
-              EObject instance = assistant.createInstance(propertyClass, eAnnotation);
+              EObject instance = assistant.createInstance(propertyClass, annotation);
               Group targetGroup = group;
               if (showInstances)
               {
                 Group classGroup = new Group(instance);
-                String groupName = eAnnotationItemProviderAdapterFactory.getGroupName(instance);
+                String groupName = annotationItemProviderAdapterFactory.getGroupName(instance);
                 GroupPropertyDescriptor groupPropertyDescriptor = new GroupPropertyDescriptor(groupName, groupName, classGroup);
                 group.add(groupPropertyDescriptor);
                 targetGroup = classGroup;
@@ -402,8 +398,8 @@ public class AnnotationItemProvider extends ModelElementItemProvider
                 onlyMisc = true;
               }
 
-              List<IItemPropertyDescriptor> propertyDescriptors = eAnnotationItemProviderAdapterFactory.getPropertyDescriptors(instance, eAnnotation,
-                  eAnnotationItemProviderAdapterFactory.getResourceLocator());
+              List<IItemPropertyDescriptor> propertyDescriptors = annotationItemProviderAdapterFactory.getPropertyDescriptors(instance, annotation,
+                  annotationItemProviderAdapterFactory.getResourceLocator());
               for (IItemPropertyDescriptor propertyDescriptor : propertyDescriptors)
               {
                 String category = null;
@@ -467,8 +463,8 @@ public class AnnotationItemProvider extends ModelElementItemProvider
     @Override
     public void setPropertyValue(Object object, Object value)
     {
-      Annotation eAnnotation = (Annotation)object;
-      String source = eAnnotation.getSource();
+      Annotation annotation = (Annotation)object;
+      String source = annotation.getSource();
       String strippedValue = stripToNull((String)value);
       if (strippedValue == null ? source != null : !strippedValue.equals(source))
       {
@@ -488,58 +484,13 @@ public class AnnotationItemProvider extends ModelElementItemProvider
     @Override
     public Collection<?> getChoiceOfValues(Object object)
     {
-      Annotation eAnnotation = (Annotation)object;
+      Annotation annotation = (Annotation)object;
       List<Object> result = new UniqueEList<>();
-
-      // Gather up all well-formed annotation sources already present in the tree on other annotations.
-      for (Iterator<EObject> i = EcoreUtil.getRootContainer(eAnnotation).eAllContents(); i.hasNext();)
-      {
-        EObject eObject = i.next();
-        if (eObject instanceof Annotation)
-        {
-          Annotation otherAnnotation = (Annotation)eObject;
-          String otherSource = otherAnnotation.getSource();
-          if (otherSource != null && EtypesValidator.INSTANCE.validateAnnotation_WellFormedSourceURI(otherAnnotation, null, null))
-          {
-            result.add(otherSource);
-          }
-        }
-      }
-
-      EObject eContainer = eAnnotation.eContainer();
-      for (EObject eObject = eContainer; eObject != null; eObject = eObject.eContainer())
-      {
-        if (eObject instanceof EPackage)
-        {
-          EPackage ePackage = (EPackage)eObject;
-          if (eContainer instanceof EDataType)
-          {
-            for (String conversionDelegate : EcoreUtil.getConversionDelegates(ePackage))
-            {
-              result.add(conversionDelegate);
-            }
-          }
-          else if (eContainer instanceof EOperation)
-          {
-            for (String invocationDelegate : EcoreUtil.getInvocationDelegates(ePackage))
-            {
-              result.add(invocationDelegate);
-            }
-          }
-          else if (eContainer instanceof EStructuralFeature)
-          {
-            for (String settingDelegate : EcoreUtil.getSettingDelegates(ePackage))
-            {
-              result.add(settingDelegate);
-            }
-          }
-        }
-      }
 
       for (String annotationSource : AnnotationValidator.Registry.INSTANCE.getAnnotationSources())
       {
-        AnnotationValidator eAnnotationValidator = AnnotationValidator.Registry.INSTANCE.getAnnotationValidator(annotationSource);
-        if (eAnnotationValidator.isValidLocation(eAnnotation))
+        AnnotationValidator annotationValidator = AnnotationValidator.Registry.INSTANCE.getAnnotationValidator(annotationSource);
+        if (annotationValidator.isValidLocation(annotation))
         {
           result.add(annotationSource);
         }
@@ -549,7 +500,7 @@ public class AnnotationItemProvider extends ModelElementItemProvider
         }
       }
 
-      String source = eAnnotation.getSource();
+      String source = annotation.getSource();
       if (source != null)
       {
         result.add(source);
@@ -585,10 +536,10 @@ public class AnnotationItemProvider extends ModelElementItemProvider
         @Override
         protected Diagnostic validate(EDataType eDataType, Object instance)
         {
-          Annotation eAnnotation = EtypesFactory.eINSTANCE.createAnnotation();
-          eAnnotation.setSource((String)instance);
+          Annotation annotation = EtypesFactory.eINSTANCE.createAnnotation();
+          annotation.setSource((String)instance);
           BasicDiagnostic diagnostic = new BasicDiagnostic();
-          EtypesValidator.INSTANCE.validateAnnotation_WellFormedSourceURI(eAnnotation, diagnostic, null);
+          EtypesValidator.INSTANCE.validateAnnotation_WellFormedSourceURI(annotation, diagnostic, null);
           return diagnostic;
         }
       };

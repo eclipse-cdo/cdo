@@ -66,6 +66,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
@@ -100,6 +101,8 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   private static final String ACCEPTOR_NAME = Net4jUtil.LOCAL_ACCEPTOR_DESCRIPTION;
 
   private static final boolean SECURITY_AVAILABLE;
+
+  private static final boolean CREATE_TEST_USER = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.CREATE_TEST_USER");
 
   private IManagedContainer container;
 
@@ -1031,6 +1034,17 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
             if (administrationRole != null)
             {
               SecurityManagerUtil.addResourcePermissions(administrationRole, System.RESOURCE_PATH, false);
+            }
+
+            if (CREATE_TEST_USER)
+            {
+              User stepper = realm.getUser("Stepper");
+              if (stepper == null)
+              {
+                stepper = realm.addUser(new PasswordCredentials("Stepper", "xxx"));
+                stepper.getRoles().add(lmRole);
+                stepper.getRoles().add(realm.getRole("Administration"));
+              }
             }
           });
         }

@@ -72,7 +72,6 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.sdk</module>
     <module>../../../plugins/org.eclipse.emf.cdo.security</module>
     <module>../../../plugins/org.eclipse.emf.cdo.security.edit</module>
-    <module>../../../plugins/org.eclipse.emf.cdo.security.editor</module>
     <module>../../../plugins/org.eclipse.emf.cdo.security.ui</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server</module>
     <module>../../../plugins/org.eclipse.emf.cdo.server.admin</module>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.edit.itemProviderAdapterFactories">
+      <!-- @generated LMSecurity -->
+      <factory
+            uri="http://www.eclipse.org/emf/CDO/lm/security/1.0.0"
+            class="org.eclipse.emf.cdo.lm.security.provider.LMSecurityItemProviderAdapterFactory"
+            supportedTypes=
+              "org.eclipse.emf.edit.provider.IEditingDomainItemProvider
+               org.eclipse.emf.edit.provider.IStructuredItemContentProvider
+               org.eclipse.emf.edit.provider.ITreeItemContentProvider
+               org.eclipse.emf.edit.provider.IItemLabelProvider
+               org.eclipse.emf.edit.provider.IItemPropertySource
+               org.eclipse.emf.edit.provider.IItemStyledLabelProvider"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated LMSecurity -->
+      <extender
+            uri="http://www.eclipse.org/emf/CDO/expressions/4.3.0"
+            class="org.eclipse.emf.cdo.lm.security.provider.LMSecurityItemProviderAdapterFactory$ExpressionsChildCreationExtender"/>
+      <extender
+            uri="http://www.eclipse.org/emf/CDO/security/4.1.0"
+            class="org.eclipse.emf.cdo.lm.security.provider.LMSecurityItemProviderAdapterFactory$SecurityChildCreationExtender"/>
+   </extension>
+
+</plugin>

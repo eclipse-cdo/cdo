@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.lm.LMPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -78,8 +78,20 @@ public class BaselineItemProvider extends ModelElementItemProvider
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     Baseline baseline = (Baseline)object;
-    return getString("_UI_Baseline_type") + " " + baseline.isFloating();
+    return new StyledString(getString("_UI_Baseline_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Boolean.toString(baseline.isFloating()));
   }
 
   /**
@@ -113,18 +125,6 @@ public class BaselineItemProvider extends ModelElementItemProvider
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return LMEditPlugin.INSTANCE;
   }
 
 }

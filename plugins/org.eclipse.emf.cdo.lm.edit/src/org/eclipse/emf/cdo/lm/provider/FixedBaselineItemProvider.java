@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -127,8 +128,21 @@ public class FixedBaselineItemProvider extends BaselineItemProvider
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     FixedBaseline fixedBaseline = (FixedBaseline)object;
-    return getString("_UI_FixedBaseline_type") + " " + fixedBaseline.isFloating();
+    return new StyledString(getString("_UI_FixedBaseline_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
+        .append(Boolean.toString(fixedBaseline.isFloating()));
   }
 
   /**

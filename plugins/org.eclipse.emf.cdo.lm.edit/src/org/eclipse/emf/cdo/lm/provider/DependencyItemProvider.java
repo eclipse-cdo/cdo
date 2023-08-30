@@ -15,12 +15,14 @@ import org.eclipse.emf.cdo.lm.Dependency;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Module;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.equinox.p2.metadata.VersionRange;
@@ -115,26 +117,40 @@ public class DependencyItemProvider extends ModelElementItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
-    Dependency dependency = (Dependency)object;
-    Module target = dependency.getTarget();
-    VersionRange versionRange = dependency.getVersionRange();
+    return ((StyledString)getStyledText(object)).getString();
+  }
 
-    String label = target == null ? "?" : target.getName();
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
+    Dependency dependency = (Dependency)object;
+
+    Module target = dependency.getTarget();
+    String targetName = target == null ? null : target.getName();
+    String label = StringUtil.isEmpty(targetName) ? "?" : targetName;
+    StyledString styledLabel = new StyledString(label);
+
+    VersionRange versionRange = dependency.getVersionRange();
     if (versionRange != null)
     {
-      label += " " + versionRange;
+      styledLabel.append("  ").append(versionRange.toString(), StyledString.Style.DECORATIONS_STYLER);
     }
 
-    // getString("_UI_Dependency_type") + " " + label;
-    return label;
+    return styledLabel;
   }
 
   /**
@@ -168,18 +184,6 @@ public class DependencyItemProvider extends ModelElementItemProvider
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return LMEditPlugin.INSTANCE;
   }
 
 }

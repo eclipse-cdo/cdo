@@ -10,25 +10,32 @@
  */
 package org.eclipse.emf.cdo.lm.modules.provider;
 
+import org.eclipse.emf.cdo.lm.modules.ModulesPackage;
 import org.eclipse.emf.cdo.lm.modules.util.ModulesAdapterFactory;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
+import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
+import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
 import org.eclipse.emf.edit.provider.IChangeNotifier;
+import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IDisposable;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemLabelProvider;
 import org.eclipse.emf.edit.provider.IItemPropertySource;
+import org.eclipse.emf.edit.provider.IItemStyledLabelProvider;
 import org.eclipse.emf.edit.provider.INotifyChangedListener;
 import org.eclipse.emf.edit.provider.IStructuredItemContentProvider;
 import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * This is the factory that is used to provide the interfaces needed to support Viewers.
@@ -39,7 +46,8 @@ import java.util.Collection;
  * end-user-doc -->
  * @generated
  */
-public class ModulesItemProviderAdapterFactory extends ModulesAdapterFactory implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
+public class ModulesItemProviderAdapterFactory extends ModulesAdapterFactory
+    implements ComposeableAdapterFactory, IChangeNotifier, IDisposable, IChildCreationExtender
 {
   /**
    * This keeps track of the root adapter factory that delegates to this adapter factory.
@@ -55,6 +63,15 @@ public class ModulesItemProviderAdapterFactory extends ModulesAdapterFactory imp
    * @generated
    */
   protected IChangeNotifier changeNotifier = new ChangeNotifier();
+
+  /**
+   * This helps manage the child creation extenders.
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected ChildCreationExtenderManager childCreationExtenderManager = new ChildCreationExtenderManager(ModulesEditPlugin.INSTANCE, ModulesPackage.eNS_URI);
 
   /**
    * This keeps track of all the supported types checked by {@link #isFactoryForType isFactoryForType}.
@@ -76,6 +93,7 @@ public class ModulesItemProviderAdapterFactory extends ModulesAdapterFactory imp
     supportedTypes.add(ITreeItemContentProvider.class);
     supportedTypes.add(IItemLabelProvider.class);
     supportedTypes.add(IItemPropertySource.class);
+    supportedTypes.add(IItemStyledLabelProvider.class);
   }
 
   /**
@@ -192,6 +210,39 @@ public class ModulesItemProviderAdapterFactory extends ModulesAdapterFactory imp
     }
 
     return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public List<IChildCreationExtender> getChildCreationExtenders()
+  {
+    return childCreationExtenderManager.getChildCreationExtenders();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Collection<?> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+  {
+    return childCreationExtenderManager.getNewChildDescriptors(object, editingDomain);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ResourceLocator getResourceLocator()
+  {
+    return childCreationExtenderManager;
   }
 
   /**

@@ -39,7 +39,6 @@ import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -223,7 +222,6 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
     isInited = true;
 
     // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
     ModulesPackage.eINSTANCE.eClass();
 
@@ -1283,7 +1281,6 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
 
     // Obtain other dependent packages
     EtypesPackage theEtypesPackage = (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
-    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
     ModulesPackage theModulesPackage = (ModulesPackage)EPackage.Registry.INSTANCE.getEPackage(ModulesPackage.eNS_URI);
 
     // Create type parameters
@@ -1335,7 +1332,7 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     EOperation op = initEOperation(getSystem__GetModule__String(), getModule(), "getModule", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, theEcorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getEString(), "name", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(processEClass, org.eclipse.emf.cdo.lm.Process.class, "Process", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getProcess_System(), getSystem(), getSystem_Process(), "system", null, 1, 1, org.eclipse.emf.cdo.lm.Process.class, !IS_TRANSIENT,
@@ -1344,7 +1341,7 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getProcess_DropTypes(), getDropType(), getDropType_Process(), "dropTypes", null, 0, -1, org.eclipse.emf.cdo.lm.Process.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getProcess_ModuleDefinitionPath(), theEcorePackage.getEString(), "moduleDefinitionPath", null, 1, 1, org.eclipse.emf.cdo.lm.Process.class,
+    initEAttribute(getProcess_ModuleDefinitionPath(), ecorePackage.getEString(), "moduleDefinitionPath", null, 1, 1, org.eclipse.emf.cdo.lm.Process.class,
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getProcess_InitialModuleVersion(), theModulesPackage.getVersion(), "initialModuleVersion", "0.1.0", 1, 1,
         org.eclipse.emf.cdo.lm.Process.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1379,14 +1376,14 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
     initEAttribute(getBaseline_Floating(), ecorePackage.getEBoolean(), "floating", null, 0, 1, Baseline.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-    initEOperation(getBaseline__GetName(), theEcorePackage.getEString(), "getName", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getBaseline__GetName(), ecorePackage.getEString(), "getName", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getBaseline__GetBranchPoint(), theEtypesPackage.getBranchPointRef(), "getBranchPoint", 0, 1, IS_UNIQUE, IS_ORDERED);
 
-    initEOperation(getBaseline__GetBaseTimeStamp(), theEcorePackage.getELong(), "getBaseTimeStamp", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getBaseline__GetBaseTimeStamp(), ecorePackage.getELong(), "getBaseTimeStamp", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEClass(floatingBaselineEClass, FloatingBaseline.class, "FloatingBaseline", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFloatingBaseline_Closed(), theEcorePackage.getEBoolean(), "closed", null, 0, 1, FloatingBaseline.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEAttribute(getFloatingBaseline_Closed(), ecorePackage.getEBoolean(), "closed", null, 0, 1, FloatingBaseline.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEOperation(getFloatingBaseline__GetBase(), getFixedBaseline(), "getBase", 0, 1, IS_UNIQUE, IS_ORDERED);
@@ -1408,8 +1405,8 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
         !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStream_Base(), getDrop(), null, "base", null, 0, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStream_StartTimeStamp(), theEcorePackage.getELong(), "startTimeStamp", null, 1, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getStream_StartTimeStamp(), ecorePackage.getELong(), "startTimeStamp", null, 1, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStream_MajorVersion(), ecorePackage.getEInt(), "majorVersion", null, 1, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getStream_MinorVersion(), ecorePackage.getEInt(), "minorVersion", null, 1, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
@@ -1426,14 +1423,14 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStream_Contents(), getBaseline(), getBaseline_Stream(), "contents", null, 0, -1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getStream_MaintenanceTimeStamp(), theEcorePackage.getELong(), "maintenanceTimeStamp", null, 0, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEAttribute(getStream_MaintenanceTimeStamp(), ecorePackage.getELong(), "maintenanceTimeStamp", null, 0, 1, Stream.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    op = initEOperation(getStream__InsertContent__Baseline(), theEcorePackage.getEInt(), "insertContent", 0, 1, IS_UNIQUE, IS_ORDERED);
+    op = initEOperation(getStream__InsertContent__Baseline(), ecorePackage.getEInt(), "insertContent", 0, 1, IS_UNIQUE, IS_ORDERED);
     addEParameter(op, getBaseline(), "baseline", 1, 1, IS_UNIQUE, IS_ORDERED);
 
     op = initEOperation(getStream__GetBranchPoint__long(), theEtypesPackage.getBranchPointRef(), "getBranchPoint", 0, 1, IS_UNIQUE, IS_ORDERED);
-    addEParameter(op, theEcorePackage.getELong(), "timeStamp", 0, 1, IS_UNIQUE, IS_ORDERED);
+    addEParameter(op, ecorePackage.getELong(), "timeStamp", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getStream__GetFirstRelease(), getDrop(), "getFirstRelease", 0, 1, IS_UNIQUE, IS_ORDERED);
 
@@ -1446,8 +1443,8 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
     initEClass(changeEClass, Change.class, "Change", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getChange_Base(), getFixedBaseline(), null, "base", null, 0, 1, Change.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE,
         IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getChange_Label(), theEcorePackage.getEString(), "label", null, 0, 1, Change.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getChange_Label(), ecorePackage.getEString(), "label", null, 0, 1, Change.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getChange_Impact(), getImpact(), "impact", null, 1, 1, Change.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getChange_Branch(), theEtypesPackage.getBranchRef(), "branch", "", 1, 1, Change.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
@@ -1471,7 +1468,7 @@ public class LMPackageImpl extends EPackageImpl implements LMPackage
     initEAttribute(getDrop_BranchPoint(), theEtypesPackage.getBranchPointRef(), "branchPoint", "", 1, 1, Drop.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEOperation(getDrop__IsRelease(), theEcorePackage.getEBoolean(), "isRelease", 0, 1, IS_UNIQUE, IS_ORDERED);
+    initEOperation(getDrop__IsRelease(), ecorePackage.getEBoolean(), "isRelease", 0, 1, IS_UNIQUE, IS_ORDERED);
 
     initEOperation(getDrop__GetBasedStreams(), getStream(), "getBasedStreams", 0, -1, IS_UNIQUE, IS_ORDERED);
 

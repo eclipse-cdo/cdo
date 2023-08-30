@@ -25,6 +25,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager$SecondaryRepository">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IPermissionManager"/>
+                <message_argument value="SecondaryRepository"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/security/ISecurityManager.java" type="org.eclipse.emf.cdo.server.security.ISecurityManager">
         <filter id="571473929">
             <message_arguments>

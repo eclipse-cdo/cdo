@@ -16,11 +16,11 @@ import org.eclipse.emf.cdo.lm.LMPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -154,8 +154,29 @@ public class ProcessItemProvider extends ModelElementItemProvider
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     String label = ((org.eclipse.emf.cdo.lm.Process)object).getModuleDefinitionPath();
-    return label == null || label.length() == 0 ? getString("_UI_Process_type") : getString("_UI_Process_type") + " " + label;
+    StyledString styledLabel = new StyledString();
+    if (label == null || label.length() == 0)
+    {
+      styledLabel.append(getString("_UI_Process_type"), StyledString.Style.QUALIFIER_STYLER);
+    }
+    else
+    {
+      styledLabel.append(getString("_UI_Process_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
+    }
+    return styledLabel;
   }
 
   /**
@@ -198,18 +219,6 @@ public class ProcessItemProvider extends ModelElementItemProvider
     newChildDescriptors.add(createChildParameter(LMPackage.Literals.PROCESS__MODULE_TYPES, LMFactory.eINSTANCE.createModuleType()));
 
     newChildDescriptors.add(createChildParameter(LMPackage.Literals.PROCESS__DROP_TYPES, LMFactory.eINSTANCE.createDropType()));
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return LMEditPlugin.INSTANCE;
   }
 
 }

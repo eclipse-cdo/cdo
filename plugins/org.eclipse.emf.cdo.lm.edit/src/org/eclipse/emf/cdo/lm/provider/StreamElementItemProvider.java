@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.lm.provider;
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 
 import java.util.Collection;
 import java.util.List;
@@ -66,15 +67,15 @@ public class StreamElementItemProvider extends ModuleElementItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
    * @generated
    */
   @Override
   public String getText(Object object)
   {
-    return getString("_UI_StreamElement_type");
+    return ((StyledString)getStyledText(object)).getString();
   }
 
   /**

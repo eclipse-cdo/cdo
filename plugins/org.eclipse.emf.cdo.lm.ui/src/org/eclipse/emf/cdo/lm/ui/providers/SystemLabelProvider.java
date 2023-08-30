@@ -18,7 +18,7 @@ import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.edit.ui.provider.AdapterFactoryLabelProvider;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
-import org.eclipse.jface.viewers.IColorProvider;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
@@ -27,13 +27,13 @@ import org.eclipse.swt.widgets.Display;
 /**
  * @author Eike Stepper
  */
-public class SystemLabelProvider extends AdapterFactoryLabelProvider implements IColorProvider
+public class SystemLabelProvider extends AdapterFactoryLabelProvider.StyledLabelProvider
 {
   private final Color gray = Display.getCurrent().getSystemColor(SWT.COLOR_DARK_GRAY);
 
-  public SystemLabelProvider(AdapterFactory adapterFactory)
+  public SystemLabelProvider(AdapterFactory adapterFactory, Viewer viewer)
   {
-    super(adapterFactory);
+    super(adapterFactory, viewer);
   }
 
   @Override

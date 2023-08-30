@@ -15,13 +15,15 @@ import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
 import org.eclipse.emf.cdo.lm.modules.ModulesPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import org.eclipse.equinox.p2.metadata.Version;
@@ -150,27 +152,43 @@ public class ModuleDefinitionItemProvider extends ModelElementItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     ModuleDefinition moduleDefinition = (ModuleDefinition)object;
 
     String label = moduleDefinition.getName();
-    if (label != null)
+    if (StringUtil.isEmpty(label))
     {
-      Version version = moduleDefinition.getVersion();
-      if (version != null)
-      {
-        label += " " + version;
-      }
+      label = getString("_UI_ModuleDefinition_type");
     }
 
-    return label == null || label.length() == 0 ? getString("_UI_ModuleDefinition_type") : getString("_UI_ModuleDefinition_type") + " " + label;
+    StyledString styledLabel = new StyledString(label);
+
+    Version version = moduleDefinition.getVersion();
+    if (version != null)
+    {
+      styledLabel.append("  ").append(version.toString(), StyledString.Style.DECORATIONS_STYLER);
+    }
+
+    return styledLabel;
   }
 
   /**
@@ -211,17 +229,5 @@ public class ModuleDefinitionItemProvider extends ModelElementItemProvider
 
     newChildDescriptors
         .add(createChildParameter(ModulesPackage.Literals.MODULE_DEFINITION__DEPENDENCIES, ModulesFactory.eINSTANCE.createDependencyDefinition()));
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return ModulesEditPlugin.INSTANCE;
   }
 }

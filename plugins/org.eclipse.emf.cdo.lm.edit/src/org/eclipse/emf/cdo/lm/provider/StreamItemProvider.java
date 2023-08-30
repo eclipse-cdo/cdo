@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -259,21 +260,33 @@ public class StreamItemProvider extends FloatingBaselineItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
-    Stream stream = (Stream)object;
+    return ((StyledString)getStyledText(object)).getString();
+  }
 
-    String label = stream.getMajorVersion() + "." + stream.getMinorVersion();
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
+    Stream stream = (Stream)object;
+    StyledString styledLabel = new StyledString(stream.getMajorVersion() + "." + stream.getMinorVersion());
+
     String codeName = stream.getCodeName();
     if (!StringUtil.isEmpty(codeName))
     {
-      label += " " + codeName;
+      styledLabel.append(" ").append(codeName);
     }
 
     switch (stream.getMode())
@@ -282,16 +295,15 @@ public class StreamItemProvider extends FloatingBaselineItemProvider
       break;
 
     case MAINTENANCE:
-      label += " (maintenance)";
+      styledLabel.append("  ").append("maintenance", StyledString.Style.DECORATIONS_STYLER);
       break;
 
     case CLOSED:
-      label += " (closed)";
+      styledLabel.append("  ").append("closed", StyledString.Style.DECORATIONS_STYLER);
       break;
-
     }
 
-    return label;
+    return styledLabel;
   }
 
   /**

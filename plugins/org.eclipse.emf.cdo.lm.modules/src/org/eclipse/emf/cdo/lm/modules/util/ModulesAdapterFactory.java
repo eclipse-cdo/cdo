@@ -79,7 +79,7 @@ public class ModulesAdapterFactory extends AdapterFactoryImpl
    *
    * @generated
    */
-  protected ModulesSwitch<Adapter> modelSwitch = new ModulesSwitch<Adapter>()
+  protected ModulesSwitch<Adapter> modelSwitch = new ModulesSwitch<>()
   {
     @Override
     public Adapter caseModuleDefinition(ModuleDefinition object)

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Module;
+import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
@@ -87,6 +88,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -255,13 +257,14 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     CDONet4jSessionConfiguration sessionConfiguration = createSessionConfiguration(systemRepository.getName());
     systemSession = sessionConfiguration.openNet4jSession();
 
-    List<String> moduleNames = initSystemRepository(systemSession);
-    if (moduleNames != null)
+    List<Pair<String, String>> moduleInfos = new ArrayList<>();
+    initSystemRepository(systemSession, (moduleName, moduleTypeName) -> moduleInfos.add(Pair.create(moduleName, moduleTypeName)));
+
+    for (Pair<String, String> info : moduleInfos)
     {
-      for (String moduleName : moduleNames)
-      {
-        addModule(moduleName);
-      }
+      String moduleName = info.getElement1();
+      String moduleTypeName = info.getElement2();
+      addModule(moduleName, moduleTypeName);
     }
 
     systemRepository.addHandler(writeAccessHandler);
@@ -279,53 +282,69 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     super.doDeactivate();
   }
 
-  protected List<String> initSystemRepository(CDOSession session) throws Exception
+  /**
+   * @since 1.2
+   */
+  protected void initSystemRepository(CDOSession session, BiConsumer<String, String> moduleInfoComsumer) throws Exception
   {
     CDOTransaction transaction = session.openTransaction();
-    CDOResource resource = transaction.getOrCreateResource(System.RESOURCE_PATH);
 
-    EList<EObject> contents = resource.getContents();
-    if (contents.isEmpty())
+    try
     {
-      OM.LOG.info("Initializing system resource");
+      System system = null;
+      CDOResource resource = transaction.getOrCreateResource(System.RESOURCE_PATH);
 
-      Process process = LMFactory.eINSTANCE.createProcess();
-      process.setModuleDefinitionPath(getModuleDefinitionPath());
-      process.setInitialModuleVersion(Version.createOSGi(0, 1, 0));
-
-      initProcess(process);
-
-      System system = LMFactory.eINSTANCE.createSystem();
-      system.setName(systemName);
-      system.setProcess(process);
-
-      contents.add(system);
-      transaction.setCommitComment("<initialize system>");
-      transaction.commit();
-      return null;
-    }
-
-    EObject root = contents.get(0);
-    if (root instanceof System)
-    {
-      System system = (System)root;
-
-      String name = system.getName();
-      if (!Objects.equals(name, systemName))
+      EList<EObject> contents = resource.getContents();
+      if (contents.isEmpty())
       {
-        throw new IllegalStateException("System name '" + name + "' does not match configured name '" + systemName + "'");
+        OM.LOG.info("Initializing system resource");
+
+        Process process = LMFactory.eINSTANCE.createProcess();
+        process.setModuleDefinitionPath(getModuleDefinitionPath());
+        process.setInitialModuleVersion(Version.createOSGi(0, 1, 0));
+
+        initProcess(process);
+
+        system = LMFactory.eINSTANCE.createSystem();
+        system.setName(systemName);
+        system.setProcess(process);
+
+        contents.add(system);
+        transaction.setCommitComment("<initialize system>");
+        transaction.commit();
+      }
+      else
+      {
+        EObject root = contents.get(0);
+        if (root instanceof System)
+        {
+          system = (System)root;
+
+          String name = system.getName();
+          if (!Objects.equals(name, systemName))
+          {
+            throw new IllegalStateException("System name '" + name + "' does not match configured name '" + systemName + "'");
+          }
+        }
       }
 
-      List<String> moduleNames = new ArrayList<>();
+      if (system == null)
+      {
+        throw new IllegalStateException("System resource does not contain a system");
+      }
+
       for (Module module : system.getModules())
       {
-        moduleNames.add(module.getName());
+        String moduleName = module.getName();
+        ModuleType moduleType = module.getType();
+        String moduleTypeName = moduleType == null ? null : moduleType.getName();
+        moduleInfoComsumer.accept(moduleName, moduleTypeName);
       }
-
-      return moduleNames;
     }
-
-    throw new IllegalStateException("System resource does not contain a system");
+    finally
+    {
+      transaction.close();
+    }
   }
 
   protected void initProcess(Process process)
@@ -371,7 +390,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     InternalCDORevisionDelta[] dirtyObjectDeltas = commitContext.getDirtyObjectDeltas();
     if (dirtyObjectDeltas != null)
     {
-      List<Pair<String, CDOID>> newModules = new ArrayList<>(); // Module name + ID of initial stream.
+      List<ModuleInfo> newModules = new ArrayList<>();
 
       for (int i = 0; i < dirtyObjectDeltas.length; i++)
       {
@@ -381,7 +400,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
         if (eClass == SYSTEM)
         {
           handleListDelta(commitContext, revisionDelta, SYSTEM__MODULES, //
-              addedModule -> handleModuleAddition(addedModule, newModules), //
+              addedModule -> handleModuleAddition(addedModule, newModules::add), //
               removeModuleDelta -> handleModuleDeletion(commitContext, revisionDelta, removeModuleDelta));
         }
         else if (eClass == MODULE)
@@ -402,7 +421,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
         // TODO Implement more server-side validations.
       }
 
-      createNewModules(commitContext, newModules);
+      createNewModuleInfos(commitContext, newModules);
 
       // InternalCDORevision[] newObjects = commitContext.getNewObjects();
       // if (newObjects != null) {
@@ -447,19 +466,24 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
   }
 
-  protected void handleModuleAddition(InternalCDORevision addedModule, List<Pair<String, CDOID>> newModules)
+  /**
+   * @since 1.2
+   */
+  protected void handleModuleAddition(InternalCDORevision addedModule, Consumer<ModuleInfo> newModulesInfoConsumer)
   {
-    String name = (String)addedModule.get(MODULE__NAME, 0);
+    String moduleName = (String)addedModule.get(MODULE__NAME, 0);
 
-    if (!isValidModuleName(name))
+    if (!isValidModuleName(moduleName))
     {
-      throw new CDOException("Module name is invalid: " + name);
+      throw new CDOException("Module name is invalid: " + moduleName);
     }
 
-    if (moduleRepositories.containsKey(name))
+    if (moduleRepositories.containsKey(moduleName))
     {
-      throw new CDOException("Module name is not unique: " + name);
+      throw new CDOException("Module name is not unique: " + moduleName);
     }
+
+    CDOID moduleTypeID = (CDOID)addedModule.getValue(MODULE__TYPE);
 
     CDOID initialStreamID = null;
     CDOList streams = addedModule.getListOrNull(MODULE__STREAMS);
@@ -468,7 +492,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       initialStreamID = (CDOID)streams.get(0);
     }
 
-    newModules.add(Pair.create(name, initialStreamID));
+    newModulesInfoConsumer.accept(new ModuleInfo(moduleName, moduleTypeID, initialStreamID));
   }
 
   protected void handleModuleDeletion(CommitContext commitContext, InternalCDORevisionDelta systemRevisionDelta, CDORemoveFeatureDelta removeModuleDelta)
@@ -540,19 +564,22 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     // delivered. But that's not trivial, so we rely on the client to have executed the required checks.
   }
 
-  protected void createNewModules(CommitContext commitContext, List<Pair<String, CDOID>> newModules)
+  /**
+   * @since 1.2
+   */
+  protected void createNewModuleInfos(CommitContext commitContext, List<ModuleInfo> newModules)
   {
-    for (Pair<String, CDOID> newModule : newModules)
+    for (ModuleInfo newModule : newModules)
     {
       try
       {
-        String newModuleName = newModule.getElement1();
-        CDOID initialStreamID = newModule.getElement2();
-
-        createNewModule(newModuleName);
+        String moduleName = newModule.getModuleName();
+        CDOID moduleTypeID = newModule.getModuleTypeID();
+        CDOID initialStreamID = newModule.getInitialStreamID();
 
         CDOView systemView = systemSession.openView();
         Version initialModuleVersion;
+        String moduleTypeName;
 
         try
         {
@@ -560,13 +587,18 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           System system = (System)systemResource.getContents().get(0);
           Process process = system.getProcess();
           initialModuleVersion = process.getInitialModuleVersion();
+
+          ModuleType moduleType = moduleTypeID == null ? null : (ModuleType)systemView.getObject(moduleTypeID);
+          moduleTypeName = moduleType == null ? null : moduleType.getName();
         }
         finally
         {
           systemView.close();
         }
 
-        CDOSession moduleSession = getModuleSession(newModuleName);
+        createNewModule(moduleName, moduleTypeName);
+
+        CDOSession moduleSession = getModuleSession(moduleName);
         CDOTransaction moduleTransaction = moduleSession.openTransaction();
 
         try
@@ -575,7 +607,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           if (!moduleTransaction.hasResource(moduleDefinitionPath))
           {
             ModuleDefinition moduleDefinition = ModulesFactory.eINSTANCE.createModuleDefinition();
-            moduleDefinition.setName(newModuleName);
+            moduleDefinition.setName(moduleName);
             moduleDefinition.setVersion(initialModuleVersion);
 
             CDOResource moduleDefinitionResource = moduleTransaction.createResource(moduleDefinitionPath);
@@ -607,9 +639,12 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
   }
 
-  protected void createNewModule(String moduleName) throws Exception
+  /**
+   * @since 1.2
+   */
+  protected void createNewModule(String moduleName, String moduleTypeName) throws Exception
   {
-    addModule(moduleName);
+    addModule(moduleName, moduleTypeName);
   }
 
   protected boolean isValidModuleName(String moduleName)
@@ -633,7 +668,10 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     return true;
   }
 
-  protected void addModule(String moduleName) throws Exception
+  /**
+   * @since 1.2
+   */
+  protected void addModule(String moduleName, String moduleTypeName) throws Exception
   {
     // Fork and wait to avoid a mess with StoreThreadLocal.
     RunnableWithException.forkAndWait(() -> {
@@ -641,7 +679,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
       InternalRepository moduleRepository = createModuleRepository(moduleName);
       CDOServerUtil.addRepository(container, moduleRepository);
-      securitySupport.addModuleRepository(moduleRepository);
+      securitySupport.addModuleRepository(moduleRepository, moduleName, moduleTypeName);
       moduleRepositories.put(moduleName, moduleRepository);
     });
   }
@@ -806,6 +844,100 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   }
 
   /**
+   * @deprecated As of 1.2 use {@link #initSystemRepository(CDOSession, BiConsumer)}.
+   */
+  @Deprecated
+  protected List<String> initSystemRepository(CDOSession session) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 1.2 use {@link #handleModuleAddition(InternalCDORevision, Consumer)}.
+   */
+  @Deprecated
+  protected void handleModuleAddition(InternalCDORevision addedModule, List<Pair<String, CDOID>> newModules)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 1.2 use {@link #createNewModuleInfos(CommitContext, List)}.
+   */
+  @Deprecated
+  protected void createNewModules(CommitContext commitContext, List<Pair<String, CDOID>> newModules)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 1.2 use {@link #createNewModule(String, String)}.
+   */
+  @Deprecated
+  protected void createNewModule(String moduleName) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @deprecated As of 1.2 use {@link #addModule(String, String)}.
+   */
+  @Deprecated
+  protected void addModule(String moduleName) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 1.2
+   */
+  public static final class ModuleInfo
+  {
+    private final String moduleName;
+
+    private final CDOID moduleTypeID;
+
+    private final CDOID initialStreamID;
+
+    private ModuleInfo(String moduleName, CDOID moduleTypeID, CDOID initialStreamID)
+    {
+      this.moduleName = moduleName;
+      this.moduleTypeID = moduleTypeID;
+      this.initialStreamID = initialStreamID;
+    }
+
+    public String getModuleName()
+    {
+      return moduleName;
+    }
+
+    public CDOID getModuleTypeID()
+    {
+      return moduleTypeID;
+    }
+
+    public CDOID getInitialStreamID()
+    {
+      return initialStreamID;
+    }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("ModuleInfo[moduleName=");
+      builder.append(moduleName);
+      builder.append(", moduleTypeID=");
+      builder.append(moduleTypeID);
+      builder.append(", initialStreamID=");
+      builder.append(initialStreamID);
+      builder.append("]");
+      return builder.toString();
+    }
+  }
+
+  /**
    * @author Eike Stepper
    */
   private interface SecuritySupport
@@ -819,7 +951,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       }
 
       @Override
-      public void addModuleRepository(InternalRepository moduleRepository)
+      public void addModuleRepository(InternalRepository moduleRepository, String moduleName, String moduleTypeName)
       {
         // Do nothing.
       }
@@ -827,7 +959,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
     public IPasswordCredentials getCredentials();
 
-    public void addModuleRepository(InternalRepository moduleRepository);
+    public void addModuleRepository(InternalRepository moduleRepository, String moduleName, String moduleTypeName);
 
     /**
      * @author Eike Stepper
@@ -915,11 +1047,19 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       }
 
       @Override
-      public void addModuleRepository(InternalRepository moduleRepository)
+      public void addModuleRepository(InternalRepository moduleRepository, String moduleName, String moduleTypeName)
       {
         if (securityManager != null)
         {
-          securityManager.addSecondaryRepository(moduleRepository);
+          Map<String, Object> authorizationContext = new HashMap<>();
+          authorizationContext.put("moduleName", moduleName);
+
+          if (moduleTypeName != null)
+          {
+            authorizationContext.put("moduleTypeName", moduleTypeName);
+          }
+
+          securityManager.addSecondaryRepository(moduleRepository, authorizationContext);
         }
       }
     }

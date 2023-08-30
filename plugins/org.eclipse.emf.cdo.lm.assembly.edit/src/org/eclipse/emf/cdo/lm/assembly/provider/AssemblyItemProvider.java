@@ -15,13 +15,15 @@ import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyFactory;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -139,8 +141,25 @@ public class AssemblyItemProvider extends ModelElementItemProvider
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     String label = ((Assembly)object).getSystemName();
-    return label == null || label.length() == 0 ? getString("_UI_Assembly_type") : getString("_UI_Assembly_type") + " " + label;
+    if (StringUtil.isEmpty(label))
+    {
+      label = getString("_UI_Assembly_type");
+    }
+
+    return new StyledString(label);
   }
 
   /**
@@ -180,17 +199,5 @@ public class AssemblyItemProvider extends ModelElementItemProvider
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     newChildDescriptors.add(createChildParameter(AssemblyPackage.Literals.ASSEMBLY__MODULES, AssemblyFactory.eINSTANCE.createAssemblyModule()));
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources. <!--
-   * begin-user-doc --> <!-- end-user-doc -->
-   *
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return AssemblyEditPlugin.INSTANCE;
   }
 }

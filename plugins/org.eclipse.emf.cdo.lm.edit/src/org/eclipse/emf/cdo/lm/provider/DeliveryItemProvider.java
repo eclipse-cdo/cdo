@@ -14,11 +14,14 @@ import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.LMPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -124,17 +127,34 @@ public class DeliveryItemProvider extends FixedBaselineItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     Delivery delivery = (Delivery)object;
+    StyledString styledString = new StyledString(getString("_UI_Delivery_type"), StyledString.Style.QUALIFIER_STYLER);
+
     Change change = delivery.getChange();
-    return getString("_UI_Delivery_type") + " " + (change == null ? "???" : change.getName());
+    String name = change == null ? null : change.getName();
+    styledString.append(" ").append(StringUtil.isEmpty(name) ? "???" : name);
+
+    return styledString;
   }
 
   /**

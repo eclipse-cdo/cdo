@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.lm.modules.provider.ModulesEditPlugin;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
  * This is the central singleton for the LM edit plugin.
@@ -46,7 +45,7 @@ public final class LMEditPlugin extends EMFPlugin
    */
   public LMEditPlugin()
   {
-    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, CDOEditPlugin.INSTANCE, ModulesEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] { CDOEditPlugin.INSTANCE, ModulesEditPlugin.INSTANCE, });
   }
 
   /**

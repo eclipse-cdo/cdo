@@ -285,7 +285,7 @@ public class MasterRepositoryController
 
   protected void validateController()
   {
-    if (repositoryNameText != null)
+    if (repositoryNameText != null && !repositoryNameText.isDisposed())
     {
       repositoryName = repositoryNameText.getText();
     }

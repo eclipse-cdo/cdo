@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
+import org.eclipse.emf.cdo.security.util.AuthorizationContext;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
@@ -285,9 +286,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   @Override
   public void addSecondaryRepository(InternalRepository repository)
   {
-    secondaryRepositories.computeIfAbsent(repository, k -> {
-      return new SecondaryRepository(k);
-    });
+    addSecondaryRepository(repository, null);
+  }
+
+  @Override
+  public void addSecondaryRepository(InternalRepository repository, Map<String, Object> authorizationContext)
+  {
+    secondaryRepositories.computeIfAbsent(repository, k -> new SecondaryRepository(k, authorizationContext));
   }
 
   @Override
@@ -1481,22 +1486,52 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   /**
    * @author Eike Stepper
    */
-  private final class SecondaryRepository extends LifecycleEventAdapter implements IRepository.WriteAccessHandler
+  private final class SecondaryRepository extends LifecycleEventAdapter implements IPermissionManager, IRepository.WriteAccessHandler
   {
     private final InternalRepository delegate;
 
-    public SecondaryRepository(InternalRepository delegate)
+    private final Map<String, Object> authorizationContext;
+
+    public SecondaryRepository(InternalRepository delegate, Map<String, Object> authorizationContext)
     {
       this.delegate = delegate;
+      this.authorizationContext = authorizationContext == null ? null : new HashMap<>(authorizationContext);
 
       InternalSessionManager sessionManager = delegate.getSessionManager();
       sessionManager.setAuthenticator(authenticator);
-      sessionManager.setPermissionManager(permissionManager);
+      sessionManager.setPermissionManager(this);
       sessionManager.addListener(sessionManagerListener);
 
       delegate.addListener(this);
       delegate.addHandler(this);
       register(delegate);
+    }
+
+    @Override
+    @Deprecated
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, String userID)
+    {
+      return null;
+    }
+
+    @Override
+    public CDOPermission getPermission(CDORevision revision, CDOBranchPoint securityContext, ISession session)
+    {
+      try
+      {
+        AuthorizationContext.set(authorizationContext);
+        return permissionManager.getPermission(revision, securityContext, session);
+      }
+      finally
+      {
+        AuthorizationContext.set(null);
+      }
+    }
+
+    @Override
+    public boolean hasAnyRule(ISession session, Set<? extends Object> rules)
+    {
+      return permissionManager.hasAnyRule(session, rules);
     }
 
     @Override
@@ -1509,7 +1544,16 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       }
 
       UserInfo userInfo = getUserInfo(transaction.getSession());
-      authorizeCommit(commitContext, userInfo);
+
+      try
+      {
+        AuthorizationContext.set(authorizationContext);
+        authorizeCommit(commitContext, userInfo);
+      }
+      finally
+      {
+        AuthorizationContext.set(null);
+      }
     }
 
     @Override

@@ -3,9 +3,11 @@
     <setAttribute key="additional_plugins">
         <setEntry value="org.eclipse.emf.cdo.edit:4.6.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.1.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.2.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.security.edit:1.0.0.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.security:1.1.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.server:1.2.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.security.edit:4.5.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.security.edit:4.6.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202212280858:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.8.0.v20230211-1150:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.14.0.v20230211-1150:default:true:default:default"/>

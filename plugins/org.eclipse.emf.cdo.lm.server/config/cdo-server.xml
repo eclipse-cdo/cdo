@@ -42,10 +42,8 @@
       <dropType name="Milestone" />    
       <dropType name="Release" release="true" />
       
-      <!-- 
       <moduleType name="Normal" />
       <moduleType name="Test" />
-       -->
           
       <moduleTemplate name="$MODULE$">
         <property name="overrideUUID" value="" />

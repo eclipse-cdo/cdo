@@ -14,11 +14,14 @@ import org.eclipse.emf.cdo.lm.Drop;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.LMPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -126,20 +129,39 @@ public class DropItemProvider extends FixedBaselineItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     Drop drop = (Drop)object;
     DropType type = drop.getType();
-    String result = type == null ? getString("_UI_Drop_type") : type.getName();
+    String typeName = type == null ? null : type.getName();
+    String typeLabel = StringUtil.isEmpty(typeName) ? getString("_UI_Drop_type") : typeName;
+    StyledString styledString = new StyledString(typeLabel, StyledString.Style.QUALIFIER_STYLER);
+
     String label = drop.getLabel();
-    result += label == null ? "" : " " + label;
-    return result;
+    if (!StringUtil.isEmpty(label))
+    {
+      styledString.append(" ").append(label);
+    }
+
+    return styledString;
   }
 
   /**

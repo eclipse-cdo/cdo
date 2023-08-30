@@ -3,14 +3,15 @@
     xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.lm/src" creationIcons="false"
     editorDirectory="" modelPluginID="org.eclipse.emf.cdo.lm" modelName="LM" updateClasspath="false"
     rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.internal.cdo.CDOObjectImpl"
-    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic"
+    testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Dynamic"
     complianceLevel="11.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter"
-    optimizedHasChildren="true" usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
-    operationReflection="true" importOrganizing="true" cleanup="true">
+    optimizedHasChildren="true" usedGenPackages="../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
+    operationReflection="true" importOrganizing="true" styleProviders="true" cleanup="true">
   <foreignModel>LM.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <editPluginVariables>CDO_EDIT=org.eclipse.emf.cdo.edit</editPluginVariables>
   <genPackages prefix="LM" basePackage="org.eclipse.emf.cdo" disposableProviderFactory="true"
-      ecorePackage="LM.ecore#/">
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="LM.ecore#/">
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="LM.ecore#//Impact">
       <genEnumLiterals ecoreEnumLiteral="LM.ecore#//Impact/Micro"/>
       <genEnumLiterals ecoreEnumLiteral="LM.ecore#//Impact/Minor"/>

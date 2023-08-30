@@ -79,7 +79,7 @@ public class AssemblyAdapterFactory extends AdapterFactoryImpl
    *
    * @generated
    */
-  protected AssemblySwitch<Adapter> modelSwitch = new AssemblySwitch<Adapter>()
+  protected AssemblySwitch<Adapter> modelSwitch = new AssemblySwitch<>()
   {
     @Override
     public Adapter caseAssembly(Assembly object)

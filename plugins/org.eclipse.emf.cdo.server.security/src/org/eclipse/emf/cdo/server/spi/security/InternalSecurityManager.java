@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import java.util.Map;
+
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
  *
@@ -39,6 +41,11 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
    * @since 4.6
    */
   public void addSecondaryRepository(InternalRepository repository);
+
+  /**
+   * @since 4.10
+   */
+  public void addSecondaryRepository(InternalRepository repository, Map<String, Object> authorizationContext);
 
   /**
    * @since 4.6

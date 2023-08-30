@@ -7,11 +7,13 @@
     minimalReflectiveMethods="false" complianceLevel="11.0" copyrightFields="false"
     providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter" optimizedHasChildren="true"
     usedGenPackages="../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes" operationReflection="true"
-    importOrganizing="true" cleanup="true">
+    importOrganizing="true" styleProviders="true" cleanup="true">
   <foreignModel>Modules.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <editPluginVariables>CDO_EDIT=org.eclipse.emf.cdo.edit</editPluginVariables>
   <genPackages prefix="Modules" basePackage="org.eclipse.emf.cdo.lm" resource="XML"
-      disposableProviderFactory="true" fileExtensions="md" ecorePackage="Modules.ecore#/">
+      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+      fileExtensions="md" ecorePackage="Modules.ecore#/">
     <genDataTypes ecoreDataType="Modules.ecore#//Version"/>
     <genDataTypes ecoreDataType="Modules.ecore#//VersionRange"/>
     <genClasses ecoreClass="Modules.ecore#//ModuleDefinition">

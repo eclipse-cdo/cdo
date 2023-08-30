@@ -75,7 +75,8 @@ public class LMFactoryImpl extends EFactoryImpl implements LMFactory
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override

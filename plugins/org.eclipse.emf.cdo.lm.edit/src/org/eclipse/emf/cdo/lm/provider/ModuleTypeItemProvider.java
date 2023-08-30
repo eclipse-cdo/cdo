@@ -16,10 +16,10 @@ import org.eclipse.emf.cdo.lm.ModuleType;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.StyledString;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -97,16 +97,37 @@ public class ModuleTypeItemProvider extends ModelElementItemProvider
   }
 
   /**
-   * This returns the label text for the adapted class. <!-- begin-user-doc -->
+   * This returns the label text for the adapted class.
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   *
-   * @generated NOT
+   * @generated
    */
   @Override
   public String getText(Object object)
   {
+    return ((StyledString)getStyledText(object)).getString();
+  }
+
+  /**
+   * This returns the label styled text for the adapted class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Object getStyledText(Object object)
+  {
     String label = ((ModuleType)object).getName();
-    return label == null || label.length() == 0 ? getString("_UI_ModuleType_type") : label;
+    StyledString styledLabel = new StyledString();
+    if (label == null || label.length() == 0)
+    {
+      styledLabel.append(getString("_UI_ModuleType_type"), StyledString.Style.QUALIFIER_STYLER);
+    }
+    else
+    {
+      styledLabel.append(getString("_UI_ModuleType_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
+    }
+    return styledLabel;
   }
 
   /**
@@ -140,18 +161,6 @@ public class ModuleTypeItemProvider extends ModelElementItemProvider
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
-  }
-
-  /**
-   * Return the resource locator for this item provider's resources.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ResourceLocator getResourceLocator()
-  {
-    return LMEditPlugin.INSTANCE;
   }
 
 }

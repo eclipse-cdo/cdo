@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.lm.ui.actions.RenameChangeAction;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.providers.SystemContentProvider;
 import org.eclipse.emf.cdo.lm.ui.providers.SystemLabelProvider;
+import org.eclipse.emf.cdo.ui.DecoratingStyledLabelProvider;
 
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -46,11 +47,13 @@ import org.eclipse.net4j.util.ui.views.MultiViewersView;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.ui.provider.DelegatingStyledCellLabelProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.Separator;
+import org.eclipse.jface.viewers.ILabelDecorator;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
@@ -61,6 +64,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.IWorkbenchPage;
+import org.eclipse.ui.PlatformUI;
 
 /**
  * @author Eike Stepper
@@ -135,7 +139,14 @@ public class SystemsView extends MultiViewersView
 
   protected ILabelProvider createLabelProvider()
   {
-    return new SystemLabelProvider(adapterFactory);
+    ILabelProvider provider = new SystemLabelProvider(adapterFactory, treeViewer);
+    ILabelDecorator decorator = createLabelDecorator();
+    return new DelegatingStyledCellLabelProvider(new DecoratingStyledLabelProvider(provider, decorator));
+  }
+
+  protected ILabelDecorator createLabelDecorator()
+  {
+    return PlatformUI.getWorkbench().getDecoratorManager().getLabelDecorator();
   }
 
   @Override

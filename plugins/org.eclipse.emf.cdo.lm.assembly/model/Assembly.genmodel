@@ -6,13 +6,14 @@
     testsDirectory="" importerID="org.eclipse.emf.importer.cdo" featureDelegation="Dynamic"
     minimalReflectiveMethods="false" complianceLevel="11.0" copyrightFields="false"
     providerRootExtendsClass="org.eclipse.emf.cdo.edit.CDOItemProviderAdapter" optimizedHasChildren="true"
-    usedGenPackages="../../org.eclipse.emf.ecore/model/Ecore.genmodel#//ecore ../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
-    operationReflection="true" importOrganizing="true" cleanup="true">
+    usedGenPackages="../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
+    operationReflection="true" importOrganizing="true" styleProviders="true" cleanup="true">
   <foreignModel>Assembly.ecore</foreignModel>
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <editPluginVariables>CDO_EDIT=org.eclipse.emf.cdo.edit</editPluginVariables>
   <genPackages prefix="Assembly" basePackage="org.eclipse.emf.cdo.lm" resource="XML"
-      disposableProviderFactory="true" ecorePackage="Assembly.ecore#/">
+      disposableProviderFactory="true" extensibleProviderFactory="true" childCreationExtenders="true"
+      ecorePackage="Assembly.ecore#/">
     <genClasses ecoreClass="Assembly.ecore#//Assembly">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Assembly.ecore#//Assembly/systemName"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Assembly.ecore#//Assembly/modules"/>

@@ -8,4 +8,12 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/provider/LMItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.lm.provider.LMItemProviderAdapterFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.provider.LMItemProviderAdapterFactory"/>
+                <message_argument value="childCreationExtenderManager"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

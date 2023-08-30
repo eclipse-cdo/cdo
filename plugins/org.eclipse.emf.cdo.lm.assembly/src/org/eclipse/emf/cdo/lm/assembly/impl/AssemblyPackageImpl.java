@@ -21,7 +21,6 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -97,7 +96,6 @@ public class AssemblyPackageImpl extends EPackageImpl implements AssemblyPackage
     isInited = true;
 
     // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
     ModulesPackage.eINSTANCE.eClass();
 
@@ -278,7 +276,6 @@ public class AssemblyPackageImpl extends EPackageImpl implements AssemblyPackage
     // Obtain other dependent packages
     EtypesPackage theEtypesPackage = (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
     ModulesPackage theModulesPackage = (ModulesPackage)EPackage.Registry.INSTANCE.getEPackage(ModulesPackage.eNS_URI);
-    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
 
     // Create type parameters
 
@@ -304,8 +301,8 @@ public class AssemblyPackageImpl extends EPackageImpl implements AssemblyPackage
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAssemblyModule_BranchPoint(), theEtypesPackage.getBranchPointRef(), "branchPoint", null, 1, 1, AssemblyModule.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getAssemblyModule_Root(), theEcorePackage.getEBoolean(), "root", null, 0, 1, AssemblyModule.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAssemblyModule_Root(), ecorePackage.getEBoolean(), "root", null, 0, 1, AssemblyModule.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource
     createResource(eNS_URI);

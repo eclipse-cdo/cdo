@@ -80,8 +80,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_path_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_path_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__PATH, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -95,8 +94,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_patternStyle_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_patternStyle_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__PATTERN_STYLE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
@@ -110,8 +108,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_folders_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_folders_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__FOLDERS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -125,8 +122,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_modelResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__MODEL_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -140,8 +136,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_modelObjects_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_modelObjects_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__MODEL_OBJECTS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -155,8 +150,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_includeParents_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeParents_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_PARENTS, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -170,8 +164,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_includeRoot_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_includeRoot_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__INCLUDE_ROOT, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -185,8 +178,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_textResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_textResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__TEXT_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 
@@ -200,8 +192,7 @@ public class ResourceFilterItemProvider extends PermissionFilterItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourceFilter_binaryResources_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourceFilter_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourceFilter_binaryResources_feature", "_UI_ResourceFilter_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_FILTER__BINARY_RESOURCES, true, false, false, ItemPropertyDescriptor.BOOLEAN_VALUE_IMAGE, null, null));
   }
 

@@ -49,6 +49,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EValidator;
@@ -314,13 +315,14 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     }
 
     // Obtain or create and register package
-    SecurityPackageImpl theSecurityPackage = (SecurityPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SecurityPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI)
-        : new SecurityPackageImpl());
+    Object registeredSecurityPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    SecurityPackageImpl theSecurityPackage = registeredSecurityPackage instanceof SecurityPackageImpl ? (SecurityPackageImpl)registeredSecurityPackage
+        : new SecurityPackageImpl();
 
     isInited = true;
 
     // Initialize simple dependencies
+    EcorePackage.eINSTANCE.eClass();
     EtypesPackage.eINSTANCE.eClass();
     ExpressionsPackage.eINSTANCE.eClass();
 
@@ -357,6 +359,17 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
   public EClass getSecurityElement()
   {
     return securityElementEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EOperation getSecurityElement__GetRealm()
+  {
+    return securityElementEClass.getEOperations().get(0);
   }
 
   /**
@@ -1373,6 +1386,7 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
 
     // Create classes and their features
     securityElementEClass = createEClass(SECURITY_ELEMENT);
+    createEOperation(securityElementEClass, SECURITY_ELEMENT___GET_REALM);
 
     securityItemEClass = createEClass(SECURITY_ITEM);
 
@@ -1551,195 +1565,170 @@ public class SecurityPackageImpl extends EPackageImpl implements SecurityPackage
     andFilterEClass.getESuperTypes().add(getCombinedFilter());
     orFilterEClass.getESuperTypes().add(getCombinedFilter());
 
-    // Initialize classes and features; add operations and parameters
-    initEClass(securityElementEClass, SecurityElement.class, "SecurityElement", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
+    // Initialize classes, features, and operations; add parameters
+    initEClass(securityElementEClass, SecurityElement.class, "SecurityElement", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-    addEOperation(securityElementEClass, getRealm(), "getRealm", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
+    initEOperation(getSecurityElement__GetRealm(), getRealm(), "getRealm", 1, 1, IS_UNIQUE, IS_ORDERED); //$NON-NLS-1$
 
-    initEClass(securityItemEClass, SecurityItem.class, "SecurityItem", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(securityItemEClass, SecurityItem.class, "SecurityItem", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
     initEClass(realmEClass, Realm.class, "Realm", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getRealm_Items(), getSecurityItem(), null, "items", null, 0, -1, Realm.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_AllUsers(), getUser(), null, "allUsers", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, Realm.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRealm_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Realm.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getRealm_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, Realm.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultUserDirectory(), getDirectory(), null, "defaultUserDirectory", null, 0, 1, //$NON-NLS-1$
-        Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultGroupDirectory(), getDirectory(), null, "defaultGroupDirectory", null, 0, 1, //$NON-NLS-1$
-        Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRealm_DefaultRoleDirectory(), getDirectory(), null, "defaultRoleDirectory", null, 0, 1, //$NON-NLS-1$
-        Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_Items(), getSecurityItem(), null, "items", null, 0, -1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, //$NON-NLS-1$
+        !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_AllUsers(), getUser(), null, "allUsers", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, Realm.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRealm_Name(), ecorePackage.getEString(), "name", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRealm_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_DefaultUserDirectory(), getDirectory(), null, "defaultUserDirectory", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_DefaultGroupDirectory(), getDirectory(), null, "defaultGroupDirectory", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRealm_DefaultRoleDirectory(), getDirectory(), null, "defaultRoleDirectory", null, 0, 1, Realm.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(directoryEClass, Directory.class, "Directory", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getDirectory_Items(), getSecurityItem(), null, "items", null, 0, -1, Directory.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getDirectory_Name(), theEcorePackage.getEString(), "name", null, 0, 1, Directory.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDirectory_Items(), getSecurityItem(), null, "items", null, 0, -1, Directory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDirectory_Name(), ecorePackage.getEString(), "name", null, 0, 1, Directory.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(roleEClass, Role.class, "Role", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEAttribute(getRole_Id(), theEcorePackage.getEString(), "id", null, 0, 1, Role.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRole_Permissions(), getPermission(), getPermission_Role(), "permissions", null, 0, -1, //$NON-NLS-1$
-        Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getRole_Assignees(), getAssignee(), getAssignee_Roles(), "assignees", null, 0, -1, //$NON-NLS-1$
-        Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getRole_Id(), ecorePackage.getEString(), "id", null, 0, 1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, //$NON-NLS-1$
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRole_Permissions(), getPermission(), getPermission_Role(), "permissions", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getRole_Assignees(), getAssignee(), getAssignee_Roles(), "assignees", null, 0, -1, Role.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(assigneeEClass, Assignee.class, "Assignee", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEAttribute(getAssignee_Id(), theEcorePackage.getEString(), "id", null, 0, 1, Assignee.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAssignee_Roles(), getRole(), getRole_Assignees(), "roles", null, 0, -1, Assignee.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAssignee_Id(), ecorePackage.getEString(), "id", null, 0, 1, Assignee.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAssignee_Roles(), getRole(), getRole_Assignees(), "roles", null, 0, -1, Assignee.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(groupEClass, Group.class, "Group", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getGroup_Users(), getUser(), getUser_Groups(), "users", null, 0, -1, Group.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_InheritedGroups(), getGroup(), getGroup_InheritingGroups(), "inheritedGroups", //$NON-NLS-1$
-        null, 0, -1, Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getGroup_InheritingGroups(), getGroup(), getGroup_InheritedGroups(), "inheritingGroups", //$NON-NLS-1$
-        null, 0, -1, Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-    initEReference(getGroup_AllInheritedGroups(), getGroup(), null, "allInheritedGroups", null, 0, -1, Group.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_AllInheritingGroups(), getGroup(), null, "allInheritingGroups", null, 0, -1, //$NON-NLS-1$
-        Group.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getGroup_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Group.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_Users(), getUser(), getUser_Groups(), "users", null, 0, -1, Group.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_InheritedGroups(), getGroup(), getGroup_InheritingGroups(), "inheritedGroups", null, 0, -1, Group.class, !IS_TRANSIENT, //$NON-NLS-1$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_InheritingGroups(), getGroup(), getGroup_InheritedGroups(), "inheritingGroups", null, 0, -1, Group.class, !IS_TRANSIENT, //$NON-NLS-1$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_AllInheritedGroups(), getGroup(), null, "allInheritedGroups", null, 0, -1, Group.class, IS_TRANSIENT, IS_VOLATILE, //$NON-NLS-1$
+        !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_AllInheritingGroups(), getGroup(), null, "allInheritingGroups", null, 0, -1, Group.class, IS_TRANSIENT, IS_VOLATILE, //$NON-NLS-1$
+        !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getGroup_AllRoles(), getRole(), null, "allRoles", null, 0, -1, Group.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(userEClass, User.class, "User", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
-    initEReference(getUser_Groups(), getGroup(), getGroup_Users(), "groups", null, 0, -1, User.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_Label(), theEcorePackage.getEString(), "label", null, 0, 1, User.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_FirstName(), theEcorePackage.getEString(), "firstName", null, 0, 1, User.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_LastName(), theEcorePackage.getEString(), "lastName", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_Email(), theEcorePackage.getEString(), "email", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_DefaultAccessOverride(), getAccessObject(), "defaultAccessOverride", null, 0, 1, //$NON-NLS-1$
-        User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, User.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEAttribute(getUser_Locked(), theEcorePackage.getEBoolean(), "locked", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_Password(), getUserPassword(), null, "password", null, 0, 1, User.class, !IS_TRANSIENT, //$NON-NLS-1$
-        !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_AllRoles(), getRole(), null, "allRoles", null, 0, -1, User.class, IS_TRANSIENT, //$NON-NLS-1$
-        IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, User.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
-    initEReference(getUser_UnassignedRoles(), getRole(), null, "unassignedRoles", null, 0, -1, User.class, //$NON-NLS-1$
-        IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_Groups(), getGroup(), getGroup_Users(), "groups", null, 0, -1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_Label(), ecorePackage.getEString(), "label", null, 0, 1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+        !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_FirstName(), ecorePackage.getEString(), "firstName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_LastName(), ecorePackage.getEString(), "lastName", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_Email(), ecorePackage.getEString(), "email", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_DefaultAccessOverride(), getAccessObject(), "defaultAccessOverride", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_DefaultAccess(), getAccessObject(), "defaultAccess", null, 0, 1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getUser_Locked(), ecorePackage.getEBoolean(), "locked", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, //$NON-NLS-1$
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_Password(), getUserPassword(), null, "password", null, 0, 1, User.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_AllGroups(), getGroup(), null, "allGroups", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_AllRoles(), getRole(), null, "allRoles", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_COMPOSITE, //$NON-NLS-1$
+        IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_AllPermissions(), getPermission(), null, "allPermissions", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getUser_UnassignedRoles(), getRole(), null, "unassignedRoles", null, 0, -1, User.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
-    initEClass(userPasswordEClass, UserPassword.class, "UserPassword", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getUserPassword_Encrypted(), theEcorePackage.getEString(), "encrypted", null, 0, 1, //$NON-NLS-1$
-        UserPassword.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(userPasswordEClass, UserPassword.class, "UserPassword", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getUserPassword_Encrypted(), ecorePackage.getEString(), "encrypted", null, 0, 1, UserPassword.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(permissionEClass, Permission.class, "Permission", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPermission_Role(), getRole(), getRole_Permissions(), "role", null, 1, 1, //$NON-NLS-1$
-        Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getPermission_Access(), getAccess(), "access", "WRITE", 1, 1, Permission.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(permissionEClass, Permission.class, "Permission", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getPermission_Role(), getRole(), getRole_Permissions(), "role", null, 1, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPermission_Access(), getAccess(), "access", "WRITE", 1, 1, Permission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(classPermissionEClass, ClassPermission.class, "ClassPermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getClassPermission_ApplicableClass(), theEcorePackage.getEClass(), null, "applicableClass", null, 1, //$NON-NLS-1$
-        1, ClassPermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(classPermissionEClass, ClassPermission.class, "ClassPermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getClassPermission_ApplicableClass(), theEcorePackage.getEClass(), null, "applicableClass", null, 1, 1, ClassPermission.class, !IS_TRANSIENT, //$NON-NLS-1$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(packagePermissionEClass, PackagePermission.class, "PackagePermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPackagePermission_ApplicablePackage(), theEcorePackage.getEPackage(), null, "applicablePackage", //$NON-NLS-1$
-        null, 1, 1, PackagePermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE,
-        !IS_DERIVED, IS_ORDERED);
-
-    initEClass(resourcePermissionEClass, ResourcePermission.class, "ResourcePermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getResourcePermission_Pattern(), theEcorePackage.getEString(), "pattern", null, 0, 1, //$NON-NLS-1$
-        ResourcePermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(objectPermissionEClass, ObjectPermission.class, "ObjectPermission", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(filterPermissionEClass, FilterPermission.class, "FilterPermission", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getFilterPermission_Filters(), getPermissionFilter(), null, "filters", null, 1, -1, //$NON-NLS-1$
-        FilterPermission.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
-
-    initEClass(permissionFilterEClass, PermissionFilter.class, "PermissionFilter", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-
-    initEClass(linkedFilterEClass, LinkedFilter.class, "LinkedFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLinkedFilter_Filter(), getPermissionFilter(), null, "filter", null, 1, 1, LinkedFilter.class, //$NON-NLS-1$
+    initEClass(packagePermissionEClass, PackagePermission.class, "PackagePermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getPackagePermission_ApplicablePackage(), theEcorePackage.getEPackage(), null, "applicablePackage", null, 1, 1, PackagePermission.class, //$NON-NLS-1$
         !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(packageFilterEClass, PackageFilter.class, "PackageFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getPackageFilter_ApplicablePackage(), theEcorePackage.getEPackage(), null, "applicablePackage", null, //$NON-NLS-1$
-        1, 1, PackageFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(resourcePermissionEClass, ResourcePermission.class, "ResourcePermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getResourcePermission_Pattern(), ecorePackage.getEString(), "pattern", null, 0, 1, ResourcePermission.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(classFilterEClass, ClassFilter.class, "ClassFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getClassFilter_ApplicableClass(), theEcorePackage.getEClass(), null, "applicableClass", null, 1, 1, //$NON-NLS-1$
-        ClassFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getClassFilter_SubTypes(), theEcorePackage.getEBoolean(), "subTypes", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ClassFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(objectPermissionEClass, ObjectPermission.class, "ObjectPermission", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-    initEClass(resourceFilterEClass, ResourceFilter.class, "ResourceFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getResourceFilter_Path(), theEcorePackage.getEString(), "path", null, 0, 1, ResourceFilter.class, //$NON-NLS-1$
-        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_PatternStyle(), getPatternStyle(), "patternStyle", "TREE", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_Folders(), theEcorePackage.getEBoolean(), "folders", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_TextResources(), theEcorePackage.getEBoolean(), "textResources", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_BinaryResources(), theEcorePackage.getEBoolean(), "binaryResources", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_ModelResources(), theEcorePackage.getEBoolean(), "modelResources", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_ModelObjects(), theEcorePackage.getEBoolean(), "modelObjects", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_IncludeParents(), theEcorePackage.getEBoolean(), "includeParents", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getResourceFilter_IncludeRoot(), theEcorePackage.getEBoolean(), "includeRoot", "true", 0, 1, //$NON-NLS-1$//$NON-NLS-2$
-        ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(filterPermissionEClass, FilterPermission.class, "FilterPermission", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getFilterPermission_Filters(), getPermissionFilter(), null, "filters", null, 1, -1, FilterPermission.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(objectFilterEClass, ObjectFilter.class, "ObjectFilter", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
+    initEClass(permissionFilterEClass, PermissionFilter.class, "PermissionFilter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 
-    initEClass(expressionFilterEClass, ExpressionFilter.class, "ExpressionFilter", !IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getExpressionFilter_Expression(), theExpressionsPackage.getExpression(), null, "expression", null, 1, //$NON-NLS-1$
-        1, ExpressionFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(linkedFilterEClass, LinkedFilter.class, "LinkedFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getLinkedFilter_Filter(), getPermissionFilter(), null, "filter", null, 1, 1, LinkedFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(combinedFilterEClass, CombinedFilter.class, "CombinedFilter", IS_ABSTRACT, !IS_INTERFACE, //$NON-NLS-1$
-        IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCombinedFilter_Operands(), getPermissionFilter(), null, "operands", null, 1, -1, //$NON-NLS-1$
-        CombinedFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED,
-        IS_ORDERED);
+    initEClass(packageFilterEClass, PackageFilter.class, "PackageFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getPackageFilter_ApplicablePackage(), theEcorePackage.getEPackage(), null, "applicablePackage", null, 1, 1, PackageFilter.class, //$NON-NLS-1$
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(classFilterEClass, ClassFilter.class, "ClassFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getClassFilter_ApplicableClass(), theEcorePackage.getEClass(), null, "applicableClass", null, 1, 1, ClassFilter.class, !IS_TRANSIENT, //$NON-NLS-1$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getClassFilter_SubTypes(), ecorePackage.getEBoolean(), "subTypes", "true", 0, 1, ClassFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$//$NON-NLS-2$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(resourceFilterEClass, ResourceFilter.class, "ResourceFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEAttribute(getResourceFilter_Path(), ecorePackage.getEString(), "path", null, 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, //$NON-NLS-1$
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_PatternStyle(), getPatternStyle(), "patternStyle", "TREE", 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$//$NON-NLS-2$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_Folders(), ecorePackage.getEBoolean(), "folders", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$//$NON-NLS-2$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_TextResources(), ecorePackage.getEBoolean(), "textResources", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_BinaryResources(), ecorePackage.getEBoolean(), "binaryResources", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_ModelResources(), ecorePackage.getEBoolean(), "modelResources", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_ModelObjects(), ecorePackage.getEBoolean(), "modelObjects", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_IncludeParents(), ecorePackage.getEBoolean(), "includeParents", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, //$NON-NLS-1$//$NON-NLS-2$
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getResourceFilter_IncludeRoot(), ecorePackage.getEBoolean(), "includeRoot", "true", 0, 1, ResourceFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$//$NON-NLS-2$
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(objectFilterEClass, ObjectFilter.class, "ObjectFilter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+
+    initEClass(expressionFilterEClass, ExpressionFilter.class, "ExpressionFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getExpressionFilter_Expression(), theExpressionsPackage.getExpression(), null, "expression", null, 1, 1, ExpressionFilter.class, //$NON-NLS-1$
+        !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(combinedFilterEClass, CombinedFilter.class, "CombinedFilter", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
+    initEReference(getCombinedFilter_Operands(), getPermissionFilter(), null, "operands", null, 1, -1, CombinedFilter.class, !IS_TRANSIENT, !IS_VOLATILE, //$NON-NLS-1$
+        IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(notFilterEClass, NotFilter.class, "NotFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS); //$NON-NLS-1$
 

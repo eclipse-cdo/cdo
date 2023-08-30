@@ -72,8 +72,7 @@ public class ResourcePermissionItemProvider extends PermissionItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_ResourcePermission_pattern_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_ResourcePermission_pattern_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_ResourcePermission_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_ResourcePermission_pattern_feature", "_UI_ResourcePermission_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 

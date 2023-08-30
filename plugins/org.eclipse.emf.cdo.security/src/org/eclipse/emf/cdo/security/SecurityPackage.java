@@ -16,6 +16,7 @@ import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 
@@ -99,6 +100,36 @@ public interface SecurityPackage extends EPackage
   int SECURITY_ELEMENT_FEATURE_COUNT = EtypesPackage.MODEL_ELEMENT_FEATURE_COUNT + 0;
 
   /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ELEMENT___GET_ANNOTATION__STRING = EtypesPackage.MODEL_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ELEMENT___GET_REALM = EtypesPackage.MODEL_ELEMENT_OPERATION_COUNT + 0;
+
+  /**
+   * The number of operations of the '<em>Element</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ELEMENT_OPERATION_COUNT = EtypesPackage.MODEL_ELEMENT_OPERATION_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.RealmImpl <em>Realm</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -145,6 +176,36 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int SECURITY_ITEM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ITEM___GET_ANNOTATION__STRING = SECURITY_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ITEM___GET_REALM = SECURITY_ELEMENT___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Item</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SECURITY_ITEM_OPERATION_COUNT = SECURITY_ELEMENT_OPERATION_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -259,6 +320,36 @@ public interface SecurityPackage extends EPackage
   int REALM_FEATURE_COUNT = SECURITY_ELEMENT_FEATURE_COUNT + 10;
 
   /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM___GET_ANNOTATION__STRING = SECURITY_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM___GET_REALM = SECURITY_ELEMENT___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Realm</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REALM_OPERATION_COUNT = SECURITY_ELEMENT_OPERATION_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -293,6 +384,36 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int DIRECTORY_FEATURE_COUNT = SECURITY_ITEM_FEATURE_COUNT + 2;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTORY___GET_ANNOTATION__STRING = SECURITY_ITEM___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTORY___GET_REALM = SECURITY_ITEM___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Directory</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIRECTORY_OPERATION_COUNT = SECURITY_ITEM_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.RoleImpl <em>Role</em>}' class.
@@ -350,6 +471,36 @@ public interface SecurityPackage extends EPackage
   int ROLE_FEATURE_COUNT = SECURITY_ITEM_FEATURE_COUNT + 3;
 
   /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROLE___GET_ANNOTATION__STRING = SECURITY_ITEM___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROLE___GET_REALM = SECURITY_ITEM___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Role</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ROLE_OPERATION_COUNT = SECURITY_ITEM_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.AssigneeImpl <em>Assignee</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -394,6 +545,36 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int ASSIGNEE_FEATURE_COUNT = SECURITY_ITEM_FEATURE_COUNT + 2;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNEE___GET_ANNOTATION__STRING = SECURITY_ITEM___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNEE___GET_REALM = SECURITY_ITEM___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Assignee</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ASSIGNEE_OPERATION_COUNT = SECURITY_ITEM_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.GroupImpl <em>Group</em>}' class.
@@ -494,6 +675,36 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int GROUP_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 6;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP___GET_ANNOTATION__STRING = ASSIGNEE___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP___GET_REALM = ASSIGNEE___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>Group</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int GROUP_OPERATION_COUNT = ASSIGNEE_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.UserImpl <em>User</em>}' class.
@@ -659,6 +870,36 @@ public interface SecurityPackage extends EPackage
   int USER_FEATURE_COUNT = ASSIGNEE_FEATURE_COUNT + 13;
 
   /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER___GET_ANNOTATION__STRING = ASSIGNEE___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get Realm</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER___GET_REALM = ASSIGNEE___GET_REALM;
+
+  /**
+   * The number of operations of the '<em>User</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER_OPERATION_COUNT = ASSIGNEE_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.UserPasswordImpl <em>User Password</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -685,6 +926,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int USER_PASSWORD_FEATURE_COUNT = 1;
+
+  /**
+   * The number of operations of the '<em>User Password</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int USER_PASSWORD_OPERATION_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PermissionImpl <em>Permission</em>}' class.
@@ -722,6 +973,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int PERMISSION_FEATURE_COUNT = 2;
+
+  /**
+   * The number of operations of the '<em>Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERMISSION_OPERATION_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ClassPermissionImpl <em>Class Permission</em>}' class.
@@ -770,6 +1031,16 @@ public interface SecurityPackage extends EPackage
   int CLASS_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
 
   /**
+   * The number of operations of the '<em>Class Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_PERMISSION_OPERATION_COUNT = PERMISSION_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PackagePermissionImpl <em>Package Permission</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -814,6 +1085,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int PACKAGE_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of operations of the '<em>Package Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_PERMISSION_OPERATION_COUNT = PERMISSION_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ResourcePermissionImpl <em>Resource Permission</em>}' class.
@@ -862,6 +1143,16 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
 
   /**
+   * The number of operations of the '<em>Resource Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_PERMISSION_OPERATION_COUNT = PERMISSION_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ObjectPermissionImpl <em>Object Permission</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.2
@@ -901,6 +1192,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int OBJECT_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of operations of the '<em>Object Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_PERMISSION_OPERATION_COUNT = PERMISSION_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.FilterPermissionImpl <em>Filter Permission</em>}' class.
@@ -954,6 +1255,16 @@ public interface SecurityPackage extends EPackage
   int FILTER_PERMISSION_FEATURE_COUNT = PERMISSION_FEATURE_COUNT + 1;
 
   /**
+   * The number of operations of the '<em>Filter Permission</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILTER_PERMISSION_OPERATION_COUNT = PERMISSION_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PermissionFilterImpl <em>Permission Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -973,6 +1284,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int PERMISSION_FILTER_FEATURE_COUNT = 0;
+
+  /**
+   * The number of operations of the '<em>Permission Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PERMISSION_FILTER_OPERATION_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.LinkedFilterImpl <em>Linked Filter</em>}' class.
@@ -1006,6 +1327,16 @@ public interface SecurityPackage extends EPackage
   int LINKED_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
 
   /**
+   * The number of operations of the '<em>Linked Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LINKED_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.PackageFilterImpl <em>Package Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -1035,6 +1366,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int PACKAGE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of operations of the '<em>Package Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PACKAGE_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ClassFilterImpl <em>Class Filter</em>}' class.
@@ -1076,6 +1417,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int CLASS_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 2;
+
+  /**
+   * The number of operations of the '<em>Class Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CLASS_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ResourceFilterImpl <em>Resource Filter</em>}' class.
@@ -1189,6 +1540,16 @@ public interface SecurityPackage extends EPackage
   int RESOURCE_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 9;
 
   /**
+   * The number of operations of the '<em>Resource Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int RESOURCE_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ObjectFilterImpl <em>Object Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -1208,6 +1569,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int OBJECT_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of operations of the '<em>Object Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OBJECT_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.ExpressionFilterImpl <em>Expression Filter</em>}' class.
@@ -1241,6 +1612,16 @@ public interface SecurityPackage extends EPackage
   int EXPRESSION_FILTER_FEATURE_COUNT = OBJECT_FILTER_FEATURE_COUNT + 1;
 
   /**
+   * The number of operations of the '<em>Expression Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FILTER_OPERATION_COUNT = OBJECT_FILTER_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.CombinedFilterImpl <em>Combined Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -1270,6 +1651,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int COMBINED_FILTER_FEATURE_COUNT = PERMISSION_FILTER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of operations of the '<em>Combined Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMBINED_FILTER_OPERATION_COUNT = PERMISSION_FILTER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.NotFilterImpl <em>Not Filter</em>}' class.
@@ -1303,6 +1694,16 @@ public interface SecurityPackage extends EPackage
   int NOT_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
 
   /**
+   * The number of operations of the '<em>Not Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT_FILTER_OPERATION_COUNT = COMBINED_FILTER_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.AndFilterImpl <em>And Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -1334,6 +1735,16 @@ public interface SecurityPackage extends EPackage
   int AND_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
 
   /**
+   * The number of operations of the '<em>And Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_FILTER_OPERATION_COUNT = COMBINED_FILTER_OPERATION_COUNT + 0;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.impl.OrFilterImpl <em>Or Filter</em>}' class.
    * <!-- begin-user-doc -->
    * @since 4.3
@@ -1363,6 +1774,16 @@ public interface SecurityPackage extends EPackage
    * @ordered
    */
   int OR_FILTER_FEATURE_COUNT = COMBINED_FILTER_FEATURE_COUNT + 0;
+
+  /**
+   * The number of operations of the '<em>Or Filter</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_FILTER_OPERATION_COUNT = COMBINED_FILTER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.security.PatternStyle <em>Pattern Style</em>}' enum.
@@ -1406,6 +1827,17 @@ public interface SecurityPackage extends EPackage
    * @generated
    */
   EClass getSecurityElement();
+
+  /**
+   * Returns the meta object for the '{@link org.eclipse.emf.cdo.security.SecurityElement#getRealm() <em>Get Realm</em>}' operation.
+   * <!-- begin-user-doc -->
+   * @since 4.7
+   * <!-- end-user-doc -->
+   * @return the meta object for the '<em>Get Realm</em>' operation.
+   * @see org.eclipse.emf.cdo.security.SecurityElement#getRealm()
+   * @generated
+   */
+  EOperation getSecurityElement__GetRealm();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.security.Realm <em>Realm</em>}'.
@@ -2394,6 +2826,15 @@ public interface SecurityPackage extends EPackage
      * @generated
      */
     EClass SECURITY_ELEMENT = eINSTANCE.getSecurityElement();
+
+    /**
+     * The meta object literal for the '<em><b>Get Realm</b></em>' operation.
+     * <!-- begin-user-doc -->
+     * @since 4.7
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EOperation SECURITY_ELEMENT___GET_REALM = eINSTANCE.getSecurityElement__GetRealm();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.security.impl.RealmImpl <em>Realm</em>}' class.

@@ -135,8 +135,7 @@ public class RealmItemProvider extends SecurityElementItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Realm_defaultGroupDirectory_feature"), //$NON-NLS-1$
-        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultGroupDirectory_feature", //$NON-NLS-1$//$NON-NLS-2$
-            "_UI_Realm_type"), //$NON-NLS-1$
+        getString("_UI_PropertyDescriptor_description", "_UI_Realm_defaultGroupDirectory_feature", "_UI_Realm_type"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
         SecurityPackage.Literals.REALM__DEFAULT_GROUP_DIRECTORY, true, false, true, null, null, null));
   }
 

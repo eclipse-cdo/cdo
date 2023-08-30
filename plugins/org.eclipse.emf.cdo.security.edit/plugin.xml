@@ -30,4 +30,11 @@
                org.eclipse.emf.edit.provider.IItemFontProvider"/>
    </extension>
 
+   <extension point="org.eclipse.emf.edit.childCreationExtenders">
+      <!-- @generated security -->
+      <extender
+            uri="http://www.eclipse.org/emf/CDO/expressions/4.3.0"
+            class="org.eclipse.emf.cdo.security.provider.SecurityItemProviderAdapterFactory$ExpressionsChildCreationExtender"/>
+   </extension>
+
 </plugin>

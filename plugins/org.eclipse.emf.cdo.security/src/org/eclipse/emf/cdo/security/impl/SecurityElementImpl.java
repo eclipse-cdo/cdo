@@ -15,8 +15,11 @@ import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityElement;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -63,6 +66,22 @@ public abstract class SecurityElementImpl extends ModelElementImpl implements Se
     }
 
     return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case SecurityPackage.SECURITY_ELEMENT___GET_REALM:
+      return getRealm();
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
 } // SecurityElementImpl

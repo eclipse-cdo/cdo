@@ -10,6 +10,10 @@
  */
 package org.eclipse.emf.cdo.security.provider;
 
+import org.eclipse.emf.cdo.expressions.ContainedObject;
+import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
+import org.eclipse.emf.cdo.expressions.util.ExpressionsSwitch;
+import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.util.SecurityAdapterFactory;
 
@@ -17,6 +21,8 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.ResourceLocator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.edit.command.CommandParameter;
 import org.eclipse.emf.edit.domain.EditingDomain;
 import org.eclipse.emf.edit.provider.ChangeNotifier;
 import org.eclipse.emf.edit.provider.ChildCreationExtenderManager;
@@ -39,6 +45,7 @@ import org.eclipse.emf.edit.provider.ITreeItemContentProvider;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -799,6 +806,163 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
     if (orFilterItemProvider != null)
     {
       orFilterItemProvider.dispose();
+    }
+  }
+
+  /**
+   * A child creation extender for the {@link ExpressionsPackage}.
+   * <!-- begin-user-doc -->
+  	 * @since 4.6
+  	 * <!-- end-user-doc -->
+   * @generated
+   */
+  public static class ExpressionsChildCreationExtender implements IChildCreationExtender
+  {
+    /**
+     * The switch for creating child descriptors specific to each extended class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    protected static class CreationSwitch extends ExpressionsSwitch<Object>
+    {
+      /**
+       * The child descriptors being populated.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected List<Object> newChildDescriptors;
+
+      /**
+       * The domain in which to create the children.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected EditingDomain editingDomain;
+
+      /**
+       * Creates the a switch for populating child descriptors in the given domain.
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      CreationSwitch(List<Object> newChildDescriptors, EditingDomain editingDomain)
+      {
+        this.newChildDescriptors = newChildDescriptors;
+        this.editingDomain = editingDomain;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      @SuppressWarnings("deprecation")
+      public Object caseContainedObjectGen(ContainedObject object)
+      {
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createRealm()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createDirectory()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createRole()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createGroup()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createUser()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createUserPassword()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createClassPermission()));
+
+        newChildDescriptors
+            .add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createPackagePermission()));
+
+        newChildDescriptors
+            .add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createResourcePermission()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createFilterPermission()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createLinkedFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createPackageFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createClassFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createResourceFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createExpressionFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createNotFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createAndFilter()));
+
+        newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, SecurityFactory.eINSTANCE.createOrFilter()));
+
+        return null;
+      }
+
+      /**
+       * @ADDED
+       */
+      @Override
+      @SuppressWarnings("deprecation")
+      public Object caseContainedObject(ContainedObject object)
+      {
+        for (Iterator<Object> it = newChildDescriptors.iterator(); it.hasNext();)
+        {
+          Object descriptor = it.next();
+          if (descriptor instanceof CommandParameter)
+          {
+            CommandParameter commandParameter = (CommandParameter)descriptor;
+            Object value = commandParameter.getValue();
+            if (value instanceof org.eclipse.emf.cdo.security.PackagePermission //
+                || value instanceof org.eclipse.emf.cdo.security.ClassPermission //
+                || value instanceof org.eclipse.emf.cdo.security.ResourcePermission)
+            {
+              it.remove();
+            }
+          }
+        }
+
+        return null;
+      }
+
+      /**
+       * <!-- begin-user-doc -->
+       * <!-- end-user-doc -->
+       * @generated
+       */
+      protected CommandParameter createChildParameter(Object feature, Object child)
+      {
+        return new CommandParameter(null, feature, child);
+      }
+
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public Collection<Object> getNewChildDescriptors(Object object, EditingDomain editingDomain)
+    {
+      ArrayList<Object> result = new ArrayList<>();
+      new CreationSwitch(result, editingDomain).doSwitch((EObject)object);
+      return result;
+    }
+
+    /**
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    @Override
+    public ResourceLocator getResourceLocator()
+    {
+      return SecurityEditPlugin.INSTANCE;
     }
   }
 

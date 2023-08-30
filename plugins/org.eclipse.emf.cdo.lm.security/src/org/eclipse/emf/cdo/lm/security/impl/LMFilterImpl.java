@@ -10,11 +10,13 @@ import org.eclipse.emf.cdo.lm.security.LMSecurityPackage;
 import org.eclipse.emf.cdo.security.impl.PermissionFilterImpl;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.security.util.AuthorizationContext;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 
 /**
  * <!-- begin-user-doc -->
@@ -40,6 +42,10 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
    * @ordered
    */
   protected static final boolean REGEX_EDEFAULT = false;
+
+  private transient Pattern pattern;
+
+  private transient int lastVersion;
 
   /**
    * <!-- begin-user-doc -->
@@ -150,12 +156,18 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
     return super.eIsSet(featureID);
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   public boolean isImpacted(CommitImpactContext context)
   {
     return false;
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   public String format()
   {
@@ -163,6 +175,9 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
     return getComparisonKey() + operator + getComparisonValue();
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   protected final boolean filter(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, int level) throws Exception
   {
@@ -174,10 +189,48 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
 
     String actualComparisonValue = (String)authorizationContext.get(getComparisonKey());
     String expectedComparisonValue = getComparisonValue();
+
+    if (isRegex())
+    {
+      Pattern pattern = getPattern(expectedComparisonValue);
+      return pattern.matcher(actualComparisonValue).matches();
+    }
+
     return Objects.equals(actualComparisonValue, expectedComparisonValue);
   }
 
+  /**
+   * @ADDED
+   */
   protected abstract String getComparisonKey();
 
+  /**
+   * @ADDED
+   */
   protected abstract String getComparisonValue();
+
+  /**
+   * @ADDED
+   */
+  private Pattern getPattern(String expectedComparisonValue)
+  {
+    InternalCDORevision revision = cdoRevision();
+    if (revision != null)
+    {
+      int currentVersion = revision.getVersion();
+      if (currentVersion > lastVersion)
+      {
+        pattern = null;
+        lastVersion = currentVersion;
+      }
+
+      if (pattern != null)
+      {
+        return pattern;
+      }
+    }
+
+    pattern = Pattern.compile(expectedComparisonValue);
+    return pattern;
+  }
 } // LMFilterImpl

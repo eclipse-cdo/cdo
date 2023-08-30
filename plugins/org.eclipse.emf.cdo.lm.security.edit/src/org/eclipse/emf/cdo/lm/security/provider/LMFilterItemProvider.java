@@ -95,13 +95,13 @@ public class LMFilterItemProvider extends PermissionFilterItemProvider implement
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getStyledText(Object object)
   {
     LMFilter lmFilter = (LMFilter)object;
-    return new StyledString(getString("_UI_LMFilter_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Boolean.toString(lmFilter.isRegex()));
+    return new StyledString(lmFilter.format());
   }
 
   /**

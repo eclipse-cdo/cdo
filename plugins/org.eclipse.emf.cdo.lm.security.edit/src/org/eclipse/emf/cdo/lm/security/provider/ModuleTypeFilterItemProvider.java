@@ -106,22 +106,12 @@ public class ModuleTypeFilterItemProvider extends LMFilterItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getStyledText(Object object)
   {
-    String label = ((ModuleTypeFilter)object).getModuleTypeName();
-    StyledString styledLabel = new StyledString();
-    if (label == null || label.length() == 0)
-    {
-      styledLabel.append(getString("_UI_ModuleTypeFilter_type"), StyledString.Style.QUALIFIER_STYLER);
-    }
-    else
-    {
-      styledLabel.append(getString("_UI_ModuleTypeFilter_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
-    }
-    return styledLabel;
+    return super.getStyledText(object);
   }
 
   /**

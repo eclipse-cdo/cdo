@@ -94,10 +94,10 @@ public class ContainedObjectImpl extends CDOObjectImpl implements ContainedObjec
   }
 
   /**
-  	 * <!-- begin-user-doc -->
+   * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-  	 * @generated
-  	 */
+   * @generated
+   */
   @Override
   public void setObject(EObject newObject)
   {

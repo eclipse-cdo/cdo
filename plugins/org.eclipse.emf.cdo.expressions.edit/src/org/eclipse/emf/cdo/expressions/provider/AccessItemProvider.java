@@ -118,6 +118,20 @@ public class AccessItemProvider extends ItemProviderAdapter implements IEditingD
   }
 
   /**
+   * This returns <code>getImage(object)</code> for the column index <code>0</code> or <code>super.getImage(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getText(Object)
+   * @see #getColumnText(Object, int)
+   * @generated NOT
+   */
+  @Override
+  public Object getColumnImage(Object object, int columnIndex)
+  {
+    return columnIndex == 0 ? getImage(object) : super.getImage(object);
+  }
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -138,6 +152,20 @@ public class AccessItemProvider extends ItemProviderAdapter implements IEditingD
   public String getText(Object object)
   {
     return getString("_UI_Access_type");
+  }
+
+  /**
+   * This returns <code>getText(object)</code> for the column index <code>0</code> or <code>super.getText(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getImage(Object)
+   * @see #getColumnImage(Object, int)
+   * @generated NOT
+   */
+  @Override
+  public String getColumnText(Object object, int columnIndex)
+  {
+    return columnIndex == 0 ? getText(object) : super.getText(object);
   }
 
   /**

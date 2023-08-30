@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.expressions.provider;
 
 import org.eclipse.emf.common.EMFPlugin;
 import org.eclipse.emf.common.util.ResourceLocator;
-import org.eclipse.emf.ecore.provider.EcoreEditPlugin;
 
 /**
  * This is the central singleton for the Expressions edit plugin.
@@ -46,7 +45,7 @@ public final class ExpressionsEditPlugin extends EMFPlugin
    */
   public ExpressionsEditPlugin()
   {
-    super(new ResourceLocator[] { EcoreEditPlugin.INSTANCE, });
+    super(new ResourceLocator[] {});
   }
 
   /**

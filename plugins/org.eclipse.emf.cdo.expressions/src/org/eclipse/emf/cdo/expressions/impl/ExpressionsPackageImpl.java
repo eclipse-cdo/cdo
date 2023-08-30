@@ -42,7 +42,6 @@ import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EOperation;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
-import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
 /**
@@ -261,14 +260,12 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     }
 
     // Obtain or create and register package
-    ExpressionsPackageImpl theExpressionsPackage = (ExpressionsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof ExpressionsPackageImpl
-        ? EPackage.Registry.INSTANCE.get(eNS_URI)
-        : new ExpressionsPackageImpl());
+    Object registeredExpressionsPackage = EPackage.Registry.INSTANCE.get(eNS_URI);
+    ExpressionsPackageImpl theExpressionsPackage = registeredExpressionsPackage instanceof ExpressionsPackageImpl
+        ? (ExpressionsPackageImpl)registeredExpressionsPackage
+        : new ExpressionsPackageImpl();
 
     isInited = true;
-
-    // Initialize simple dependencies
-    EcorePackage.eINSTANCE.eClass();
 
     // Create package meta-data objects
     theExpressionsPackage.createPackageContents();
@@ -886,9 +883,6 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     setNsPrefix(eNS_PREFIX);
     setNsURI(eNS_URI);
 
-    // Obtain other dependent packages
-    EcorePackage theEcorePackage = (EcorePackage)EPackage.Registry.INSTANCE.getEPackage(EcorePackage.eNS_URI);
-
     // Create type parameters
 
     // Set bounds for type parameters
@@ -987,11 +981,11 @@ public class ExpressionsPackageImpl extends EPackageImpl implements ExpressionsP
     initEClass(contextAccessEClass, ContextAccess.class, "ContextAccess", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(containedObjectEClass, ContainedObject.class, "ContainedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getContainedObject_Object(), theEcorePackage.getEObject(), null, "object", null, 0, 1, ContainedObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEReference(getContainedObject_Object(), ecorePackage.getEObject(), null, "object", null, 0, 1, ContainedObject.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(linkedObjectEClass, LinkedObject.class, "LinkedObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLinkedObject_Object(), theEcorePackage.getEObject(), null, "object", null, 0, 1, LinkedObject.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEReference(getLinkedObject_Object(), ecorePackage.getEObject(), null, "object", null, 0, 1, LinkedObject.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(linkedExpressionEClass, LinkedExpression.class, "LinkedExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

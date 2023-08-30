@@ -11,13 +11,13 @@
 package org.eclipse.emf.cdo.expressions.provider;
 
 import org.eclipse.emf.cdo.expressions.ContainedObject;
+import org.eclipse.emf.cdo.expressions.ExpressionsFactory;
 import org.eclipse.emf.cdo.expressions.ExpressionsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EStructuralFeature;
-import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.edit.provider.IChildCreationExtender;
 import org.eclipse.emf.edit.provider.IEditingDomainItemProvider;
 import org.eclipse.emf.edit.provider.IItemColorProvider;
@@ -131,6 +131,20 @@ public class ContainedObjectItemProvider extends ItemProviderAdapter
   }
 
   /**
+   * This returns <code>getImage(object)</code> for the column index <code>0</code> or <code>super.getImage(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getText(Object)
+   * @see #getColumnText(Object, int)
+   * @generated NOT
+   */
+  @Override
+  public Object getColumnImage(Object object, int columnIndex)
+  {
+    return columnIndex == 0 ? getImage(object) : super.getImage(object);
+  }
+
+  /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -151,6 +165,20 @@ public class ContainedObjectItemProvider extends ItemProviderAdapter
   public String getText(Object object)
   {
     return getString("_UI_ContainedObject_type");
+  }
+
+  /**
+   * This returns <code>getText(object)</code> for the column index <code>0</code> or <code>super.getText(object)</code> otherwise.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getImage(Object)
+   * @see #getColumnImage(Object, int)
+   * @generated NOT
+   */
+  @Override
+  public String getColumnText(Object object, int columnIndex)
+  {
+    return columnIndex == 0 ? getText(object) : super.getText(object);
   }
 
   /**
@@ -186,7 +214,42 @@ public class ContainedObjectItemProvider extends ItemProviderAdapter
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
-    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, EcoreFactory.eINSTANCE.createEObject()));
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createBooleanValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createByteValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createShortValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createIntValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createLongValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createFloatValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createDoubleValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createCharValue()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createStringValue()));
+
+    newChildDescriptors
+        .add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createFunctionInvocation()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createMemberInvocation()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createStaticAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createMemberAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createContextAccess()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createContainedObject()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createLinkedObject()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createLinkedExpression()));
+
+    newChildDescriptors.add(createChildParameter(ExpressionsPackage.Literals.CONTAINED_OBJECT__OBJECT, ExpressionsFactory.eINSTANCE.createListConstruction()));
   }
 
   /**

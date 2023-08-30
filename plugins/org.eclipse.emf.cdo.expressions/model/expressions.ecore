@@ -61,11 +61,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContextAccess" eSuperTypes="#//Access"/>
   <eClassifiers xsi:type="ecore:EClass" name="ContainedObject" eSuperTypes="#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LinkedObject" eSuperTypes="#//Expression">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="ecore:EClass ../../org.eclipse.emf.ecore/model/Ecore.ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LinkedExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" lowerBound="1"

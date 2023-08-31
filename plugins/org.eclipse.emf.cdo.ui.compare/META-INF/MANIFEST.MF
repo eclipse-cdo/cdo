@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.ui.compare;singleton:=true
-Bundle-Version: 4.7.1.qualifier
+Bundle-Version: 4.7.2.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.ui.internal.compare.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -21,7 +21,7 @@ Import-Package: com.google.common.base;version="[27.0.0,30.2.0)",
  com.google.common.collect;version="[27.0.0,30.2.0)",
  com.google.common.cache;version="[27.0.0,30.2.0)",
  com.google.common.util.concurrent;version="[27.0.0,30.2.0)"
-Export-Package: org.eclipse.emf.cdo.ui.compare;version="4.7.1",
- org.eclipse.emf.cdo.ui.internal.compare;version="4.7.1";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.ui.internal.compare.bundle;version="4.7.1";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.ui.compare;version="4.7.2",
+ org.eclipse.emf.cdo.ui.internal.compare;version="4.7.2";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.ui.internal.compare.bundle;version="4.7.2";x-internal:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.ui.compare

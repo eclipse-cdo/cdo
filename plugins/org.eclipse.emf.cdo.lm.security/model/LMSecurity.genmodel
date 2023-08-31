@@ -24,6 +24,7 @@
     </genClasses>
     <genClasses ecoreClass="LMSecurity.ecore#//ModuleTypeFilter">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleTypeFilter/moduleTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleTypeFilter/includeUntyped"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

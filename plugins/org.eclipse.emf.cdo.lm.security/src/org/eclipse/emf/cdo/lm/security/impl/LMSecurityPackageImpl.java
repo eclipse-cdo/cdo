@@ -200,6 +200,17 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
    * @generated
    */
   @Override
+  public EAttribute getModuleTypeFilter_IncludeUntyped()
+  {
+    return (EAttribute)moduleTypeFilterEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public LMSecurityFactory getLMSecurityFactory()
   {
     return (LMSecurityFactory)getEFactoryInstance();
@@ -236,6 +247,7 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
 
     moduleTypeFilterEClass = createEClass(MODULE_TYPE_FILTER);
     createEAttribute(moduleTypeFilterEClass, MODULE_TYPE_FILTER__MODULE_TYPE_NAME);
+    createEAttribute(moduleTypeFilterEClass, MODULE_TYPE_FILTER__INCLUDE_UNTYPED);
   }
 
   /**
@@ -288,6 +300,8 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
 
     initEClass(moduleTypeFilterEClass, ModuleTypeFilter.class, "ModuleTypeFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getModuleTypeFilter_ModuleTypeName(), ecorePackage.getEString(), "moduleTypeName", null, 0, 1, ModuleTypeFilter.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModuleTypeFilter_IncludeUntyped(), ecorePackage.getEBoolean(), "includeUntyped", null, 0, 1, ModuleTypeFilter.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Create resource

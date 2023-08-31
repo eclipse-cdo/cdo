@@ -178,13 +178,22 @@ public interface LMSecurityPackage extends EPackage
   int MODULE_TYPE_FILTER__MODULE_TYPE_NAME = LM_FILTER_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Include Untyped</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULE_TYPE_FILTER__INCLUDE_UNTYPED = LM_FILTER_FEATURE_COUNT + 1;
+
+  /**
    * The number of structural features of the '<em>Module Type Filter</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE_TYPE_FILTER_FEATURE_COUNT = LM_FILTER_FEATURE_COUNT + 1;
+  int MODULE_TYPE_FILTER_FEATURE_COUNT = LM_FILTER_FEATURE_COUNT + 2;
 
   /**
    * The number of operations of the '<em>Module Type Filter</em>' class.
@@ -257,6 +266,17 @@ public interface LMSecurityPackage extends EPackage
    * @generated
    */
   EAttribute getModuleTypeFilter_ModuleTypeName();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped <em>Include Untyped</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Include Untyped</em>'.
+   * @see org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped()
+   * @see #getModuleTypeFilter()
+   * @generated
+   */
+  EAttribute getModuleTypeFilter_IncludeUntyped();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -335,6 +355,14 @@ public interface LMSecurityPackage extends EPackage
      * @generated
      */
     EAttribute MODULE_TYPE_FILTER__MODULE_TYPE_NAME = eINSTANCE.getModuleTypeFilter_ModuleTypeName();
+
+    /**
+     * The meta object literal for the '<em><b>Include Untyped</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MODULE_TYPE_FILTER__INCLUDE_UNTYPED = eINSTANCE.getModuleTypeFilter_IncludeUntyped();
 
   }
 

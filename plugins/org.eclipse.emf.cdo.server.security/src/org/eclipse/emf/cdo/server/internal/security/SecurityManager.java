@@ -1575,13 +1575,13 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     private void handleNewPackageUnits(InternalCDOPackageUnit[] newPackageUnits)
     {
-      InternalCDOPackageRegistry realmPackageRegistry = getRepository().getPackageRegistry();
+      InternalCDOPackageRegistry realmPackageRegistry = getRepository().getPackageRegistry(false);
       List<InternalCDOPackageUnit> unknownPackageUnits = new ArrayList<>();
 
       for (InternalCDOPackageUnit packageUnit : newPackageUnits)
       {
         String nsURI = packageUnit.getID();
-        if (!realmPackageRegistry.containsKey(nsURI))
+        if (realmPackageRegistry.getPackageUnit(nsURI) == null)
         {
           unknownPackageUnits.add((InternalCDOPackageUnit)CDOModelUtil.copyPackageUnit(packageUnit));
         }

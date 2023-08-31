@@ -10,5 +10,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModuleTypeFilter" eSuperTypes="#//LMFilter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleTypeName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="includeUntyped" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
 </ecore:EPackage>

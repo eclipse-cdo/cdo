@@ -20,6 +20,8 @@ import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.security.util.AuthorizationContext;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Map;
@@ -196,6 +198,11 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
     }
 
     String actualComparisonValue = (String)authorizationContext.get(getComparisonKey());
+    if (StringUtil.isEmpty(actualComparisonValue))
+    {
+      return filterMissingComparisonValue();
+    }
+
     String expectedComparisonValue = getComparisonValue();
 
     if (isRegex())
@@ -205,6 +212,14 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
     }
 
     return Objects.equals(actualComparisonValue, expectedComparisonValue);
+  }
+
+  /**
+   * @ADDED
+   */
+  protected boolean filterMissingComparisonValue()
+  {
+    return false;
   }
 
   /**

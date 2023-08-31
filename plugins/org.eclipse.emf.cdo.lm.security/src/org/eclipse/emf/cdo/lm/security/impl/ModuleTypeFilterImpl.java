@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.EClass;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.security.impl.ModuleTypeFilterImpl#getModuleTypeName <em>Module Type Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.security.impl.ModuleTypeFilterImpl#isIncludeUntyped <em>Include Untyped</em>}</li>
  * </ul>
  *
  * @generated
@@ -39,6 +40,16 @@ public class ModuleTypeFilterImpl extends LMFilterImpl implements ModuleTypeFilt
    * @ordered
    */
   protected static final String MODULE_TYPE_NAME_EDEFAULT = null;
+
+  /**
+   * The default value of the '{@link #isIncludeUntyped() <em>Include Untyped</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #isIncludeUntyped()
+   * @generated
+   * @ordered
+   */
+  protected static final boolean INCLUDE_UNTYPED_EDEFAULT = false;
 
   /**
    * <!-- begin-user-doc -->
@@ -90,12 +101,37 @@ public class ModuleTypeFilterImpl extends LMFilterImpl implements ModuleTypeFilt
    * @generated
    */
   @Override
+  public boolean isIncludeUntyped()
+  {
+    return (Boolean)eDynamicGet(LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED, LMSecurityPackage.Literals.MODULE_TYPE_FILTER__INCLUDE_UNTYPED, true,
+        true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setIncludeUntyped(boolean newIncludeUntyped)
+  {
+    eDynamicSet(LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED, LMSecurityPackage.Literals.MODULE_TYPE_FILTER__INCLUDE_UNTYPED, newIncludeUntyped);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Object eGet(int featureID, boolean resolve, boolean coreType)
   {
     switch (featureID)
     {
     case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE_NAME:
       return getModuleTypeName();
+    case LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED:
+      return isIncludeUntyped();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -112,6 +148,9 @@ public class ModuleTypeFilterImpl extends LMFilterImpl implements ModuleTypeFilt
     {
     case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE_NAME:
       setModuleTypeName((String)newValue);
+      return;
+    case LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED:
+      setIncludeUntyped((Boolean)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -130,6 +169,9 @@ public class ModuleTypeFilterImpl extends LMFilterImpl implements ModuleTypeFilt
     case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE_NAME:
       setModuleTypeName(MODULE_TYPE_NAME_EDEFAULT);
       return;
+    case LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED:
+      setIncludeUntyped(INCLUDE_UNTYPED_EDEFAULT);
+      return;
     }
     super.eUnset(featureID);
   }
@@ -146,16 +188,33 @@ public class ModuleTypeFilterImpl extends LMFilterImpl implements ModuleTypeFilt
     {
     case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE_NAME:
       return MODULE_TYPE_NAME_EDEFAULT == null ? getModuleTypeName() != null : !MODULE_TYPE_NAME_EDEFAULT.equals(getModuleTypeName());
+    case LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED:
+      return isIncludeUntyped() != INCLUDE_UNTYPED_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
 
+  /**
+   * @ADDED
+   */
+  @Override
+  protected boolean filterMissingComparisonValue()
+  {
+    return isIncludeUntyped();
+  }
+
+  /**
+   * @ADDED
+   */
   @Override
   protected String getComparisonKey()
   {
     return LMSecurityPackage.Literals.MODULE_TYPE_FILTER__MODULE_TYPE_NAME.getName();
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   protected String getComparisonValue()
   {

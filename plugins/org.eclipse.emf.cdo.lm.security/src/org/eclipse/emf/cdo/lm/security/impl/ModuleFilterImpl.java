@@ -149,12 +149,18 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
     return super.eIsSet(featureID);
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   protected String getComparisonKey()
   {
     return LMSecurityPackage.Literals.MODULE_FILTER__MODULE_NAME.getName();
   }
 
+  /**
+   * @ADDED
+   */
   @Override
   protected String getComparisonValue()
   {

@@ -1968,7 +1968,23 @@ public class TransactionCommitContext implements InternalCommitContext
     @Override
     public Collection<Object> values()
     {
-      throw new UnsupportedOperationException();
+      Collection<Object> values1 = super.values();
+      Collection<Object> values2 = delegateRegistry.values();
+
+      if (values1.isEmpty())
+      {
+        return values2;
+      }
+
+      if (values2.isEmpty())
+      {
+        return values1;
+      }
+
+      Set<Object> union = new HashSet<>();
+      union.addAll(values1);
+      union.addAll(values2);
+      return union;
     }
 
     @Override

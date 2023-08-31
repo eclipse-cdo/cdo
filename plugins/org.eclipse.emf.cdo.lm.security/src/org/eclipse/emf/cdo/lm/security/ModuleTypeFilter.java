@@ -20,6 +20,7 @@ package org.eclipse.emf.cdo.lm.security;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleTypeName <em>Module Type Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped <em>Include Untyped</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.lm.security.LMSecurityPackage#getModuleTypeFilter()
@@ -49,5 +50,27 @@ public interface ModuleTypeFilter extends LMFilter
    * @generated
    */
   void setModuleTypeName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Include Untyped</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Include Untyped</em>' attribute.
+   * @see #setIncludeUntyped(boolean)
+   * @see org.eclipse.emf.cdo.lm.security.LMSecurityPackage#getModuleTypeFilter_IncludeUntyped()
+   * @model
+   * @generated
+   */
+  boolean isIncludeUntyped();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped <em>Include Untyped</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Include Untyped</em>' attribute.
+   * @see #isIncludeUntyped()
+   * @generated
+   */
+  void setIncludeUntyped(boolean value);
 
 } // ModuleTypeFilter

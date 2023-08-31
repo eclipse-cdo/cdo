@@ -1691,7 +1691,12 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
           int oldLength = owners.length;
           if (oldLength == 1)
           {
-            // Removal will leave no readLockOwners.
+            if (writeOptionOwner == null)
+            {
+              return NoOwnerInfo.INSTANCE;
+            }
+
+            // Removal will leave no readLockOwners, just the writeOptionOwner.
             return cache.getSingleOwnerInfo(writeOptionOwner, SingleOwnerInfo.WriteOption.TYPE);
           }
 

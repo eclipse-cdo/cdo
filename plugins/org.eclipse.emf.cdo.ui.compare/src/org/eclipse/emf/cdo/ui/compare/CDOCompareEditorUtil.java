@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -749,6 +750,7 @@ public final class CDOCompareEditorUtil
   {
     Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
     Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
+    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
 
     boolean unmergedConflicts = false;
 
@@ -775,8 +777,17 @@ public final class CDOCompareEditorUtil
           int remoteVersion = leftRevision.getVersion();
 
           InternalCDORevision rightRevision = rightObject.cdoRevision();
-          rightRevision.setBranchPoint(leftRevision);
-          rightRevision.setVersion(remoteVersion);
+          if (rightRevision.getBranch() != leftRevision.getBranch() //
+              || rightRevision.getTimeStamp() != leftRevision.getTimeStamp() //
+              || rightRevision.getVersion() != leftRevision.getVersion())
+          {
+            rightRevision = rightRevision.copy();
+            rightRevision.setBranchPoint(leftRevision);
+            rightRevision.setVersion(remoteVersion);
+
+            rightObject.cdoInternalSetRevision(rightRevision);
+            revisionManager.internRevision(rightRevision);
+          }
 
           InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
           if (revisionDelta != null)

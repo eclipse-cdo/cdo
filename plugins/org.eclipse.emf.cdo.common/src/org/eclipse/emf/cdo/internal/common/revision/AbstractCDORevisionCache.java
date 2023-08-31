@@ -175,14 +175,14 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
 
   protected Reference<InternalCDORevision> createReference(CDORevision revision)
   {
-    if (disableGC)
-    {
-      return createStrongReference(revision);
-    }
-
     if (TRACER.isEnabled())
     {
       TRACER.format("Adding revision {0} to {1}", revision, this); //$NON-NLS-1$
+    }
+
+    if (disableGC)
+    {
+      return createStrongReference(revision);
     }
 
     return new CacheSoftReference((InternalCDORevision)revision, referenceQueue);
@@ -248,11 +248,11 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
    */
   private static final class CacheSoftReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
   {
-    private CDOID id;
+    private final CDOID id;
 
-    private CDOBranch branch;
+    private final CDOBranch branch;
 
-    private int version;
+    private final int version;
 
     public CacheSoftReference(InternalCDORevision revision, ReferenceQueue<InternalCDORevision> queue)
     {
@@ -292,11 +292,11 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
    */
   private static final class CacheStrongReference extends SoftReference<InternalCDORevision> implements CDORevisionKey
   {
-    private CDOID id;
+    private final CDOID id;
 
-    private CDOBranch branch;
+    private final CDOBranch branch;
 
-    private int version;
+    private final int version;
 
     public CacheStrongReference(InternalCDORevision revision)
     {

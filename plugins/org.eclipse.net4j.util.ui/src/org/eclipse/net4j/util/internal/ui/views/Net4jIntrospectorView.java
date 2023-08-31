@@ -13,9 +13,9 @@ package org.eclipse.net4j.util.internal.ui.views;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.ReflectUtil.Setting;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.internal.ui.messages.Messages;
@@ -59,7 +59,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import java.lang.reflect.Array;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -1059,32 +1058,31 @@ public class Net4jIntrospectorView extends ViewPart
     @Override
     protected void fillRows(Object parent, List<Row> rows) throws Exception
     {
-      for (Pair<Field, Object> pair : ReflectUtil.dumpToArray(parent))
-      {
-        rows.add(createRow(pair));
-      }
+      ReflectUtil.dump(parent, setting -> rows.add(createRow(setting)));
     }
 
     @Override
     public Row getElementByName(Object parent, String name) throws Exception
     {
-      for (Pair<Field, Object> pair : ReflectUtil.dumpToArray(parent))
-      {
-        if (pair.getElement1().getName().equals(name))
-        {
-          return createRow(pair);
-        }
-      }
+      Row[] result = { null };
 
-      return null;
+      ReflectUtil.dump(parent, setting -> {
+        if (setting.getName().equals(name))
+        {
+          result[0] = createRow(setting);
+          return false;
+        }
+
+        return true;
+      });
+
+      return result[0];
     }
 
-    private static Row createRow(Pair<Field, Object> pair)
+    private static Row createRow(Setting setting)
     {
-      Field field = pair.getElement1();
-      Object value = pair.getElement2();
-
-      return new Row(field.getName(), value, getName(field.getType()), getClassName(value));
+      Object value = setting.getValue();
+      return new Row(setting.getName(), value, getName(setting.getType()), getClassName(value));
     }
   }
 }

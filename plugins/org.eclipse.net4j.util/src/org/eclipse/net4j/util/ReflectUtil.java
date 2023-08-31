@@ -34,6 +34,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
+import java.util.function.Predicate;
 
 /**
  * Various static helper methods for dealing with Java reflection.
@@ -76,9 +77,27 @@ public final class ReflectUtil
   @SuppressWarnings("all")
   public static <T> void makeAccessible(AccessibleObject accessibleObject)
   {
-    if (!accessibleObject.isAccessible())
+    try
     {
-      accessibleObject.setAccessible(true);
+      if (!accessibleObject.isAccessible())
+      {
+        accessibleObject.setAccessible(true);
+      }
+    }
+    catch (Throwable ex)
+    {
+      if (accessibleObject instanceof Field)
+      {
+        AccessUtil.setAccessible((Field)accessibleObject);
+      }
+      else if (accessibleObject instanceof Method)
+      {
+        AccessUtil.setAccessible((Method)accessibleObject);
+      }
+      else if (accessibleObject instanceof Constructor)
+      {
+        AccessUtil.setAccessible((Constructor)accessibleObject);
+      }
     }
   }
 
@@ -246,8 +265,15 @@ public final class ReflectUtil
           continue;
         }
 
-        makeAccessible(field);
-        fields.add(field);
+        try
+        {
+          makeAccessible(field);
+          fields.add(field);
+        }
+        catch (Exception ex)
+        {
+          //$FALL-THROUGH$
+        }
       }
     }
     catch (Exception ex)
@@ -500,6 +526,96 @@ public final class ReflectUtil
   public static void dump(Object object, String prefix, PrintStream out)
   {
     out.print(toString(object, prefix));
+  }
+
+  /**
+   * @since 3.22
+   */
+  public static void dump(Object object, Predicate<Setting> consumer)
+  {
+    Class<?> c = object.getClass();
+    dump(object, c, consumer);
+  }
+
+  private static boolean dump(Object object, Class<?> c, Predicate<Setting> consumer)
+  {
+    if (c == ROOT_CLASS)
+    {
+      return true;
+    }
+
+    // Recurse
+    if (!dump(object, c.getSuperclass(), consumer))
+    {
+      return false;
+    }
+
+    try
+    {
+      Field[] declaredFields = c.getDeclaredFields();
+      for (Field field : declaredFields)
+      {
+        if (field.isSynthetic())
+        {
+          continue;
+        }
+
+        if ((field.getModifiers() & Modifier.STATIC) != 0 && !DUMP_STATICS)
+        {
+          continue;
+        }
+
+        if (field.getAnnotation(ExcludeFromDump.class) != null)
+        {
+          continue;
+        }
+
+        try
+        {
+          makeAccessible(field);
+          if (!consumer.test(new Setting(object, field)))
+          {
+            return false;
+          }
+        }
+        catch (Throwable ex)
+        {
+          String getterName = StringUtil.cap(field.getName());
+
+          Method getter = getMethodOrNull(c, getterName);
+          if (getter == null)
+          {
+            getterName = StringUtil.cap(getterName);
+
+            Class<?> fieldType = field.getType();
+            if (fieldType == boolean.class || fieldType == Boolean.class)
+            {
+              getterName = "is" + getterName;
+            }
+            else
+            {
+              getterName = "is" + getterName;
+            }
+
+            getter = getMethodOrNull(c, getterName);
+          }
+
+          if (getter != null)
+          {
+            if (!consumer.test(new Setting(object, field, getter)))
+            {
+              return false;
+            }
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      throw ReflectionException.wrap(ex);
+    }
+
+    return true;
   }
 
   @SuppressWarnings("unchecked")
@@ -884,6 +1000,65 @@ public final class ReflectUtil
       }
 
       return new ReflectionException(exception);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.22
+   */
+  public static final class Setting
+  {
+    private final String name;
+
+    private final Class<?> type;
+
+    private final Object value;
+
+    private Setting(String name, Class<?> type, Object value)
+    {
+      this.name = name;
+      this.type = type;
+      this.value = value;
+    }
+
+    private Setting(Object object, Field field) throws IllegalAccessException, IllegalArgumentException
+    {
+      this(field.getName(), field.getType(), field.get(object));
+    }
+
+    private Setting(Object object, Field field, Method getter) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException
+    {
+      this(field.getName(), field.getType(), getter.invoke(object));
+    }
+
+    public String getName()
+    {
+      return name;
+    }
+
+    public Class<?> getType()
+    {
+      return type;
+    }
+
+    public Object getValue()
+    {
+      return value;
+    }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("Setting[name=");
+      builder.append(name);
+      builder.append(", type=");
+      builder.append(type);
+      builder.append(", value=");
+      builder.append(value);
+      builder.append("]");
+      return builder.toString();
     }
   }
 }

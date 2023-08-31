@@ -792,6 +792,7 @@
                      <and>
                         <instanceof value="org.eclipse.emf.cdo.explorer.repositories.CDORepository"/>
                         <test property="org.eclipse.emf.cdo.explorer.repository.state" value="Connected"/>
+                        <test property="org.eclipse.emf.cdo.explorer.repository.sessionRefs" value="0"/>
                      </and>
                   </iterate>
                </with>

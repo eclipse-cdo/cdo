@@ -452,6 +452,11 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     doDisconnect(false);
   }
 
+  public int getSessionRefCount()
+  {
+    return sessionRefCount;
+  }
+
   @Override
   public CDOTransaction openTransaction(CDOBranchPoint target, ResourceSet resourceSet)
   {

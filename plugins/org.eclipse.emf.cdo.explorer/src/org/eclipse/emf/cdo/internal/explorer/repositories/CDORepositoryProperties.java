@@ -60,6 +60,15 @@ public class CDORepositoryProperties extends Properties<CDORepository>
       }
     });
 
+    add(new Property<CDORepository>("sessionRefs")
+    {
+      @Override
+      protected Object eval(CDORepository repository)
+      {
+        return ((CDORepositoryImpl)repository).getSessionRefCount();
+      }
+    });
+
     add(new Property<CDORepository>("connected", "Connected", "Whether this repository is connected", CATEGORY_REPOSITORY)
     {
       @Override

@@ -37,6 +37,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLocker;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -261,6 +262,11 @@ public interface InternalCDOSession
   public void handleViewClosed(int viewID);
 
   /**
+   * @since 4.22
+   */
+  public void syncExec(RunnableWithException runnable) throws Exception;
+
+  /**
    * @since 4.3
    */
   public Object startLocalCommit();
@@ -351,6 +357,11 @@ public interface InternalCDOSession
    * @since 4.6
    */
   public MergeData getMergeData(CDOBranchPoint target, CDOBranchPoint source, CDOBranchPoint targetBase, CDOBranchPoint sourceBase, boolean computeChangeSets);
+
+  /**
+   * @since 4.22
+   */
+  public Map<CDORevision, CDOPermission> updatePermissions();
 
   /**
    * A token that is maintained during local commits of transactions.

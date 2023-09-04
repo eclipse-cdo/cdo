@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
+import org.eclipse.emf.cdo.session.CDOSessionPermissionsChangedEvent;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transfer.CDOTransferElement;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
@@ -918,6 +919,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
 
     private boolean disposed;
 
+    public ElementListener()
+    {
+    }
+
     public void attach(INotifier notifier)
     {
       synchronized (notifiers)
@@ -1016,6 +1021,10 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
         }
       }
       else if (event instanceof CDOSessionInvalidationEvent)
+      {
+        refreshViewer(true);
+      }
+      else if (event instanceof CDOSessionPermissionsChangedEvent)
       {
         refreshViewer(true);
       }

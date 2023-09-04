@@ -20,8 +20,10 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
@@ -325,6 +327,8 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
 
     private byte securityImpact = CommitNotificationInfo.IMPACT_NONE;
 
+    private Map<CDORevision, CDOPermission> oldPermissions;
+
     public ViewInvalidationData()
     {
     }
@@ -425,6 +429,22 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
       this.securityImpact = securityImpact;
     }
 
+    /**
+     * @since 4.22
+     */
+    public Map<CDORevision, CDOPermission> getOldPermissions()
+    {
+      return oldPermissions;
+    }
+
+    /**
+     * @since 4.22
+     */
+    public void setOldPermissions(Map<CDORevision, CDOPermission> oldPermissions)
+    {
+      this.oldPermissions = oldPermissions;
+    }
+
     @Override
     public String toString()
     {
@@ -447,6 +467,8 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IEx
       builder.append(lockChangeInfo);
       builder.append(", securityImpact=");
       builder.append(securityImpact);
+      builder.append(", oldPermissions=");
+      builder.append(oldPermissions);
       builder.append("]");
       return builder.toString();
     }

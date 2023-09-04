@@ -23,16 +23,18 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
+import org.eclipse.net4j.util.collection.Pair;
+
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Caspar De Groot
  */
 public class LoadPermissionsIndication extends CDOServerReadIndication
 {
-  private CDOID[] ids;
-
-  private CDOPermission[] oldPermissions;
+  private Map<CDOBranchPoint, Pair<CDOID[], CDOPermission[]>> permissionsBySecurityContext;
 
   private int referenceChunk;
 
@@ -44,14 +46,24 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
   @Override
   protected void indicating(CDODataInput in) throws IOException
   {
-    int length = in.readXInt();
-    ids = new CDOID[length];
-    oldPermissions = new CDOPermission[length];
+    int mapSize = in.readXInt();
+    permissionsBySecurityContext = new HashMap<>(mapSize);
 
-    for (int i = 0; i < length; i++)
+    for (int m = 0; m < mapSize; m++)
     {
-      ids[i] = in.readCDOID();
-      oldPermissions[i] = CDOPermission.get(in.readByte());
+      CDOBranchPoint securityContext = in.readCDOBranchPoint();
+      int listSize = in.readXInt();
+
+      CDOID[] ids = new CDOID[listSize];
+      CDOPermission[] oldPermissions = new CDOPermission[listSize];
+
+      permissionsBySecurityContext.put(securityContext, Pair.create(ids, oldPermissions));
+
+      for (int i = 0; i < listSize; i++)
+      {
+        ids[i] = in.readCDOID();
+        oldPermissions[i] = CDOPermission.get(in.readByte());
+      }
     }
 
     referenceChunk = in.readXInt();
@@ -64,27 +76,35 @@ public class LoadPermissionsIndication extends CDOServerReadIndication
     InternalRepository repository = getRepository();
     InternalCDORevisionManager revisionManager = repository.getRevisionManager();
     IPermissionManager permissionManager = repository.getSessionManager().getPermissionManager();
-    CDOBranchPoint head = repository.getBranchManager().getMainBranch().getHead();
 
-    int length = ids.length;
-    for (int i = 0; i < length; i++)
+    for (Map.Entry<CDOBranchPoint, Pair<CDOID[], CDOPermission[]>> entry : permissionsBySecurityContext.entrySet())
     {
-      CDOID id = ids[i];
-      CDOPermission oldPermission = oldPermissions[i];
+      CDOBranchPoint securityContext = entry.getKey();
 
-      InternalCDORevision revision = revisionManager.getRevision(id, head, 0, CDORevision.DEPTH_NONE, true);
-      if (revision == null)
+      Pair<CDOID[], CDOPermission[]> value = entry.getValue();
+      CDOID[] ids = value.getElement1();
+      CDOPermission[] oldPermissions = value.getElement2();
+
+      int listSize = ids.length;
+      for (int i = 0; i < listSize; i++)
       {
-        out.writeByte(CDOProtocolConstants.REVISION_DOES_NOT_EXIST);
-        continue;
-      }
+        CDOID id = ids[i];
+        CDOPermission oldPermission = oldPermissions[i];
 
-      CDOPermission newPermission = permissionManager.getPermission(revision, head, session);
-      out.writeByte(newPermission.getBits());
+        InternalCDORevision revision = revisionManager.getRevision(id, securityContext, 0, CDORevision.DEPTH_NONE, true);
+        if (revision == null)
+        {
+          out.writeByte(CDOProtocolConstants.REVISION_DOES_NOT_EXIST);
+          continue;
+        }
 
-      if (oldPermission == CDOPermission.NONE && newPermission != CDOPermission.NONE)
-      {
-        revision.writeValues(out, referenceChunk);
+        CDOPermission newPermission = permissionManager.getPermission(revision, securityContext, session);
+        out.writeByte(newPermission.getBits());
+
+        if (oldPermission == CDOPermission.NONE && newPermission != CDOPermission.NONE)
+        {
+          revision.writeValues(out, referenceChunk);
+        }
       }
     }
   }

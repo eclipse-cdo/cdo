@@ -292,9 +292,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void enableLockNotifications(int viewID, boolean enable);
 
   /**
-   * @since 4.3
+   * @since 4.22
    */
-  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
+  public Map<CDORevision, CDOPermission> loadPermissions3(Map<CDOBranchPoint, Set<InternalCDORevision>> revisions);
 
   /**
    * @since 4.15
@@ -1614,4 +1614,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
   @Deprecated
   public void requestChangeCredentials();
+
+  /**
+   * @since 4.3
+   * @deprecated As of 4.22 use {@link #loadPermissions3(Map)}.
+   */
+  @Deprecated
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
 }

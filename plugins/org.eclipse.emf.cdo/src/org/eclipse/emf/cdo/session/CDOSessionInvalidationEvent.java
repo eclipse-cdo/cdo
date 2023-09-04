@@ -13,13 +13,9 @@ package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.CDOInvalidationNotification;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
-import org.eclipse.emf.cdo.common.revision.CDORevision;
-import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import java.util.Map;
 
 /**
  * A {@link CDOSessionEvent session event} fired when passive updates (commit notifications) are being received from a
@@ -33,9 +29,9 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOCommitInfo
+public interface CDOSessionInvalidationEvent extends CDOSessionPermissionsChangedEvent, CDOCommitInfo
 {
-  public static final long LOCAL_ROLLBACK = CDORevision.UNSPECIFIED_DATE;
+  public static final long LOCAL_ROLLBACK = UNSPECIFIED_DATE;
 
   /**
    * Returns the transaction that was committed and thereby caused this event to be emitted if this transaction is
@@ -55,9 +51,4 @@ public interface CDOSessionInvalidationEvent extends CDOSessionEvent, CDOCommitI
    * @since 3.0
    */
   public boolean isRemote();
-
-  /**
-   * @since 4.3
-   */
-  public Map<CDORevision, CDOPermission> getOldPermissions();
 }

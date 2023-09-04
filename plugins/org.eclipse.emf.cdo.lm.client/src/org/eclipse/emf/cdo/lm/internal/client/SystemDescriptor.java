@@ -20,12 +20,14 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -64,6 +66,8 @@ import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
 import org.eclipse.emf.cdo.lm.util.LMMerger;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOSession.Options;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
@@ -89,7 +93,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
+import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.FSMUtil;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.IStatus;
@@ -296,6 +304,9 @@ public final class SystemDescriptor implements ISystemDescriptor
           CDOSession systemSession = systemRepository.acquireSession();
           systemSession.properties().put(KEY_SYSTEM_DESCRIPTOR, this);
 
+          Options options = systemSession.options();
+          options.setPermissionUpdater(createPermissionUpdater(options));
+
           systemView = systemSession.openView();
           systemView.addListener(systemListener);
 
@@ -305,7 +316,9 @@ public final class SystemDescriptor implements ISystemDescriptor
           newSystem = system;
           state = State.Open;
         }
-        catch (RuntimeException | Error ex)
+        catch (RuntimeException |
+
+            Error ex)
         {
           state = State.Closed;
           LifecycleUtil.deactivate(systemView);
@@ -445,6 +458,24 @@ public final class SystemDescriptor implements ISystemDescriptor
   }
 
   @Override
+  public String[] getModuleNames()
+  {
+    synchronized (this)
+    {
+      return moduleRepositories.keySet().toArray(new String[moduleRepositories.size()]);
+    }
+  }
+
+  @Override
+  public CDORepository[] getModuleRepositories()
+  {
+    synchronized (this)
+    {
+      return moduleRepositories.values().toArray(new CDORepository[moduleRepositories.size()]);
+    }
+  }
+
+  @Override
   public CDORepository getModuleRepository(String moduleName)
   {
     CDORepository moduleRepository;
@@ -526,10 +557,81 @@ public final class SystemDescriptor implements ISystemDescriptor
     throw new IllegalStateException("Illegal system repository type: " + systemRepositoryType);
   }
 
+  private CDOPermissionUpdater createPermissionUpdater(CDOSession.Options options)
+  {
+    CDOPermissionUpdater oldPermissionUpdater = options.getPermissionUpdater();
+    if (oldPermissionUpdater instanceof CDOPermissionUpdater3)
+    {
+      CDOPermissionUpdater3 oldPermissionUpdater3 = (CDOPermissionUpdater3)oldPermissionUpdater;
+      return new CDOPermissionUpdater3()
+      {
+        @Override
+        public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Map<CDOBranchPoint, Set<InternalCDORevision>> revisions,
+            CDOCommitInfo commitInfo)
+        {
+          updateModulePermissions();
+          return oldPermissionUpdater3.updatePermissions(session, revisions, commitInfo);
+        }
+      };
+    }
+
+    if (oldPermissionUpdater instanceof CDOPermissionUpdater2)
+    {
+      CDOPermissionUpdater2 oldPermissionUpdater2 = (CDOPermissionUpdater2)oldPermissionUpdater;
+      return new CDOPermissionUpdater2()
+      {
+        @Override
+        public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions)
+        {
+          updateModulePermissions();
+          return oldPermissionUpdater2.updatePermissions(session, revisions);
+        }
+
+        @Override
+        public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions, CDOCommitInfo commitInfo)
+        {
+          updateModulePermissions();
+          return oldPermissionUpdater2.updatePermissions(session, revisions, commitInfo);
+        }
+      };
+    }
+
+    return new CDOPermissionUpdater()
+    {
+      @Override
+      public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions)
+      {
+        updateModulePermissions();
+        return oldPermissionUpdater.updatePermissions(session, revisions);
+      }
+    };
+  }
+
+  private void updateModulePermissions()
+  {
+    for (CDORepository moduleRepository : getModuleRepositories())
+    {
+      try
+      {
+        withModuleSession(moduleRepository, session -> ((InternalCDOSession)session).updatePermissions());
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+      }
+    }
+  }
+
   @Override
   public boolean withModuleSession(String moduleName, Consumer<CDOSession> consumer)
   {
     CDORepository moduleRepository = getModuleRepository(moduleName);
+    return withModuleSession(moduleRepository, consumer);
+  }
+
+  @Override
+  public boolean withModuleSession(CDORepository moduleRepository, Consumer<CDOSession> consumer)
+  {
     CDOSession session = moduleRepository.acquireSession();
     if (session != null)
     {

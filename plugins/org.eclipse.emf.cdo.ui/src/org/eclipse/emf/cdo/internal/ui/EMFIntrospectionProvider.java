@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.internal.ui;
 
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
+import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.views.RowIntrospectionProvider;
 
@@ -29,6 +32,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Display;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
@@ -56,6 +60,8 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
   private static final String E_URI = "eURI";
 
   private final Color foreground = Display.getDefault().getSystemColor(SWT.COLOR_DARK_BLUE);
+
+  private final Color error = Display.getDefault().getSystemColor(SWT.COLOR_RED);
 
   public EMFIntrospectionProvider()
   {
@@ -128,7 +134,19 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
 
     for (EStructuralFeature feature : eObject.eClass().getEAllStructuralFeatures())
     {
-      rows.add(createRow(eObject, feature));
+      Row row;
+
+      try
+      {
+        row = createRow(eObject, feature);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+        row = createRow(feature.getName(), ex.getMessage(), getDeclaredType(feature), DEFAULT_CATEGORY, error);
+      }
+
+      rows.add(row);
     }
   }
 
@@ -216,9 +234,15 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
     return createRow(E_ADAPTERS, eObject.eAdapters(), "EList<Adapter>", CATEGORY, foreground);
   }
 
-  private static Row createRow(EObject eObject, EStructuralFeature feature)
+  private static Row createRow(EObject eObject, EStructuralFeature feature) throws NoPermissionException
   {
     Object value = eObject.eGet(feature);
+    if (value instanceof Collection)
+    {
+      // Attempt an early READ access to trigger a potential NoPermissionException.
+      ((Collection<?>)value).size();
+    }
+
     return new Row(feature.getName(), value, getDeclaredType(feature), getConcreteType(value));
   }
 
@@ -269,12 +293,12 @@ public class EMFIntrospectionProvider extends RowIntrospectionProvider
   private static final class ValueAdapter extends AdapterImpl
   {
     private final TableViewer viewer;
-  
+
     private ValueAdapter(TableViewer viewer)
     {
       this.viewer = viewer;
     }
-  
+
     @Override
     public void notifyChanged(Notification msg)
     {

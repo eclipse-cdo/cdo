@@ -167,7 +167,7 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
    * @generated
    */
   @Override
-  public EAttribute getModuleFilter_ModuleName()
+  public EAttribute getModuleFilter_Module()
   {
     return (EAttribute)moduleFilterEClass.getEStructuralFeatures().get(0);
   }
@@ -189,7 +189,7 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
    * @generated
    */
   @Override
-  public EAttribute getModuleTypeFilter_ModuleTypeName()
+  public EAttribute getModuleTypeFilter_ModuleType()
   {
     return (EAttribute)moduleTypeFilterEClass.getEStructuralFeatures().get(0);
   }
@@ -243,10 +243,10 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
     createEAttribute(lmFilterEClass, LM_FILTER__REGEX);
 
     moduleFilterEClass = createEClass(MODULE_FILTER);
-    createEAttribute(moduleFilterEClass, MODULE_FILTER__MODULE_NAME);
+    createEAttribute(moduleFilterEClass, MODULE_FILTER__MODULE);
 
     moduleTypeFilterEClass = createEClass(MODULE_TYPE_FILTER);
-    createEAttribute(moduleTypeFilterEClass, MODULE_TYPE_FILTER__MODULE_TYPE_NAME);
+    createEAttribute(moduleTypeFilterEClass, MODULE_TYPE_FILTER__MODULE_TYPE);
     createEAttribute(moduleTypeFilterEClass, MODULE_TYPE_FILTER__INCLUDE_UNTYPED);
   }
 
@@ -295,12 +295,12 @@ public class LMSecurityPackageImpl extends EPackageImpl implements LMSecurityPac
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moduleFilterEClass, ModuleFilter.class, "ModuleFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getModuleFilter_ModuleName(), ecorePackage.getEString(), "moduleName", null, 0, 1, ModuleFilter.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModuleFilter_Module(), ecorePackage.getEString(), "module", null, 0, 1, ModuleFilter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moduleTypeFilterEClass, ModuleTypeFilter.class, "ModuleTypeFilter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getModuleTypeFilter_ModuleTypeName(), ecorePackage.getEString(), "moduleTypeName", null, 0, 1, ModuleTypeFilter.class, !IS_TRANSIENT,
-        !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModuleTypeFilter_ModuleType(), ecorePackage.getEString(), "moduleType", null, 0, 1, ModuleTypeFilter.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getModuleTypeFilter_IncludeUntyped(), ecorePackage.getEBoolean(), "includeUntyped", null, 0, 1, ModuleTypeFilter.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 

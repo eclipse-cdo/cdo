@@ -19,7 +19,7 @@ package org.eclipse.emf.cdo.lm.security;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleTypeName <em>Module Type Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleType <em>Module Type</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped <em>Include Untyped</em>}</li>
  * </ul>
  *
@@ -30,26 +30,26 @@ package org.eclipse.emf.cdo.lm.security;
 public interface ModuleTypeFilter extends LMFilter
 {
   /**
-   * Returns the value of the '<em><b>Module Type Name</b></em>' attribute.
+   * Returns the value of the '<em><b>Module Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Module Type Name</em>' attribute.
-   * @see #setModuleTypeName(String)
-   * @see org.eclipse.emf.cdo.lm.security.LMSecurityPackage#getModuleTypeFilter_ModuleTypeName()
+   * @return the value of the '<em>Module Type</em>' attribute.
+   * @see #setModuleType(String)
+   * @see org.eclipse.emf.cdo.lm.security.LMSecurityPackage#getModuleTypeFilter_ModuleType()
    * @model
    * @generated
    */
-  String getModuleTypeName();
+  String getModuleType();
 
   /**
-   * Sets the value of the '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleTypeName <em>Module Type Name</em>}' attribute.
+   * Sets the value of the '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleType <em>Module Type</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Module Type Name</em>' attribute.
-   * @see #getModuleTypeName()
+   * @param value the new value of the '<em>Module Type</em>' attribute.
+   * @see #getModuleType()
    * @generated
    */
-  void setModuleTypeName(String value);
+  void setModuleType(String value);
 
   /**
    * Returns the value of the '<em><b>Include Untyped</b></em>' attribute.

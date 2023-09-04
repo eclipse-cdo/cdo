@@ -102,7 +102,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   private static final boolean SECURITY_AVAILABLE;
 
-  private static final boolean CREATE_TEST_USER = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.CREATE_TEST_USER");
+  private static final boolean CREATE_TEST_USER = OMPlatform.INSTANCE.isProperty("AbstractLifecycleManager.CREATE_TEST_USER");
 
   private IManagedContainer container;
 

@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.transaction.CDOTransactionContainer;
@@ -60,9 +61,14 @@ import java.util.concurrent.locks.Lock;
  * <p>
  * A session has the following responsibilities:
  * <ul>
- * <li> {@link CDOSession#getRepositoryInfo() CDORepositoryInfo information}
+ * <li> {@link CDOSession#getRepositoryInfo() Repository information}
  * <li> {@link CDOSession#getPackageRegistry() Package registry}
- * <li> {@link CDOSession#getRevisionManager() Data management}
+ * <li> {@link CDOSession#getBranchManager() Branch management}
+ * <li> {@link CDOSession#getRevisionManager() Revision management}
+ * <li> {@link CDOSession#getFetchRuleManager() Fetch rule management}
+ * <li> {@link CDOSession#getCommitInfoManager() Commit information management}
+ * <li> {@link CDOSession#getExceptionHandler() Exception handling}
+ * <li> {@link CDOSession#getIDGenerator() ID generation}
  * <li> {@link CDOSession#getViews() View management}
  * </ul>
  * <p>
@@ -74,6 +80,7 @@ import java.util.concurrent.locks.Lock;
  * <li> {@link CDOSessionInvalidationEvent} after {@link Options#setPassiveUpdateEnabled(boolean) commit notifications}
  * have been received and processed.
  * <li> {@link CDOSessionLocksChangedEvent} after {@link CDOLock locks} have been acquired or released.
+ * <li> {@link CDOSessionPermissionsChangedEvent} after {@link CDOPermission revision permissions} have changed.
  * </ul>
  *
  * @author Eike Stepper
@@ -169,6 +176,8 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
    * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
    * higher).
+   *
+   * @param updateTime the time stamp of the update to wait for in milliseconds since Unix epoch.
    */
   @Override
   public void waitForUpdate(long updateTime);
@@ -177,6 +186,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * Equivalent to calling {@link CDOView#waitForUpdate(long)} on each of this session's views. That is, this blocks the
    * calling thread until all of this session's views have incorporated a commit operation with the given time stamp (or
    * higher) or the given total timeout has expired.
+   *
+   * @param updateTime the time stamp of the update to wait for in milliseconds since Unix epoch.
+   * @param timeoutMillis the maximum number of milliseconds to wait for the update to occur,
+   *        or {@link CDOUpdatable#NO_TIMEOUT} to wait indefinitely.
+   * @return <code>true</code> if the update occurred within the specified timeout period, <code>false</code> otherwise.
    */
   @Override
   public boolean waitForUpdate(long updateTime, long timeoutMillis);

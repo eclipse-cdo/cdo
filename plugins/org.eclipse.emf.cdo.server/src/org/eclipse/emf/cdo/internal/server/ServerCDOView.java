@@ -63,6 +63,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
+import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -557,6 +558,13 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   }
 
   @Override
+  protected void doBeforeDeactivate() throws Exception
+  {
+    closing = true;
+    super.doBeforeDeactivate();
+  }
+
+  @Override
   @Deprecated
   public boolean isInvalidationRunnerActive()
   {
@@ -629,13 +637,6 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public void setStaleReferenceBehaviour(CDOStaleReferencePolicy policy)
   {
     throw new UnsupportedOperationException();
-  }
-
-  @Override
-  protected void doBeforeDeactivate() throws Exception
-  {
-    closing = true;
-    super.doBeforeDeactivate();
   }
 
   /**
@@ -1310,6 +1311,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public void syncExec(RunnableWithException runnable) throws Exception
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
     public Object startLocalCommit()
     {
       throw new UnsupportedOperationException();
@@ -1527,6 +1534,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public void setPermissionUpdater(CDOPermissionUpdater permissionUpdater)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public Map<CDORevision, CDOPermission> updatePermissions()
     {
       throw new UnsupportedOperationException();
     }

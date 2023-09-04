@@ -10,10 +10,12 @@
  */
 package org.eclipse.emf.spi.cdo;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
@@ -31,9 +33,11 @@ public interface CDOPermissionUpdater
     @Override
     public Map<CDORevision, CDOPermission> updatePermissions(InternalCDOSession session, Set<InternalCDORevision> revisions)
     {
-      InternalCDORevision[] revisionArray = revisions.toArray(new InternalCDORevision[revisions.size()]);
+      CDOBranchPoint head = session.getBranchManager().getMainBranch().getHead();
+      Map<CDOBranchPoint, Set<InternalCDORevision>> map = Collections.singletonMap(head, revisions);
+
       CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-      return sessionProtocol.loadPermissions(revisionArray);
+      return sessionProtocol.loadPermissions3(map);
     }
   };
 

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry.ResourceSetConfiguration;
+import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
@@ -33,6 +34,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.cdo.view.CDOPrefetcherManager;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -924,7 +926,11 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
       @Override
       public void notifyEvent(IEvent event)
       {
-        if (event instanceof CDOViewLocksChangedEvent)
+        if (event instanceof CDOViewPermissionsChangedEvent)
+        {
+          fireElementChangedEvent(ElementsChangedEvent.StructuralImpact.PARENT);
+        }
+        else if (event instanceof CDOViewLocksChangedEvent)
         {
           CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
           EObject[] objects = e.getAffectedObjects();

@@ -31,6 +31,8 @@ public interface CDOUpdatable
 
   /**
    * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred.
+   *
+   * @param updateTime the time stamp of the update to wait for in milliseconds since Unix epoch.
    */
   public void waitForUpdate(long updateTime);
 
@@ -38,6 +40,9 @@ public interface CDOUpdatable
    * Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred or the given
    * timeout has expired.
    *
+   * @param updateTime the time stamp of the update to wait for in milliseconds since Unix epoch.
+   * @param timeoutMillis the maximum number of milliseconds to wait for the update to occur,
+   *        or {@link CDOUpdatable#NO_TIMEOUT} to wait indefinitely.
    * @return <code>true</code> if the specified commit operation has occurred within the given timeout period,
    *         <code>false</code> otherwise.
    */

@@ -77,9 +77,24 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
   public <R> R modify(Function<System, R> modifier, IProgressMonitor monitor) //
       throws ConcurrentAccessException, CommitException;
 
+  /**
+   * @since 1.2
+   */
+  public String[] getModuleNames();
+
+  /**
+   * @since 1.2
+   */
+  public CDORepository[] getModuleRepositories();
+
   public CDORepository getModuleRepository(String moduleName);
 
   public boolean withModuleSession(String moduleName, Consumer<CDOSession> consumer);
+
+  /**
+   * @since 1.2
+   */
+  public boolean withModuleSession(CDORepository moduleRepository, Consumer<CDOSession> consumer);
 
   public ModuleDefinition extractModuleDefinition(Baseline baseline);
 

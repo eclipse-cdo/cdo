@@ -31,7 +31,7 @@ public final class CDOPackageNotFoundException extends CDOException
 
   public CDOPackageNotFoundException(String packageURI)
   {
-    super(MessageFormat.format(Messages.getString("CDOSessionImpl.0"), packageURI));
+    super(MessageFormat.format(Messages.getString("CDOPackageNotFoundException.0"), packageURI));
     this.packageURI = packageURI;
   }
 

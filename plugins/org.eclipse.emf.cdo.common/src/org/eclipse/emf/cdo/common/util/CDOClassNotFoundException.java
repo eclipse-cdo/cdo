@@ -35,7 +35,7 @@ public final class CDOClassNotFoundException extends CDOException
 
   public CDOClassNotFoundException(String packageURI, String classifierName)
   {
-    super(MessageFormat.format(Messages.getString("CDOSessionImpl.1"), packageURI + CDOClassifierRef.URI_SEPARATOR + classifierName));
+    super(MessageFormat.format(Messages.getString("CDOClassNotFoundException.0"), packageURI + CDOClassifierRef.URI_SEPARATOR + classifierName));
     this.packageURI = packageURI;
     this.classifierName = classifierName;
   }

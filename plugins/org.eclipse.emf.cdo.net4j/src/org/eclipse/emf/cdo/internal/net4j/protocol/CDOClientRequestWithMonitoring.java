@@ -71,7 +71,7 @@ public abstract class CDOClientRequestWithMonitoring<RESULT> extends RequestWith
 
   protected InternalCDOSession getSession()
   {
-    return (InternalCDOSession)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
   protected CDOIDProvider getIDProvider()

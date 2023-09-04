@@ -63,7 +63,7 @@ public class CredentialsChallengeIndication extends IndicationWithMonitoring
 
   protected InternalCDOSession getSession()
   {
-    return (InternalCDOSession)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
   @Override

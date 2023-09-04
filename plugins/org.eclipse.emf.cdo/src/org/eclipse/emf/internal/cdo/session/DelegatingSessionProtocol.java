@@ -1096,14 +1096,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  public Map<CDORevision, CDOPermission> loadPermissions3(Map<CDOBranchPoint, Set<InternalCDORevision>> revisions)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.loadPermissions(revisions);
+        return delegate.loadPermissions3(revisions);
       }
       catch (Exception ex)
       {
@@ -1304,6 +1304,13 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Override
   @Deprecated
   public void requestChangeCredentials()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     throw new UnsupportedOperationException();
   }

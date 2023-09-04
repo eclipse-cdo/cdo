@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.ui.CDOAdapterFactoryContentProvider;
@@ -56,6 +57,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -1476,9 +1478,15 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
         }
 
         @Override
-        protected void viewConflict(final CDOObject conflictingObject, boolean firstConflict)
+        protected void viewConflict(CDOObject conflictingObject, boolean firstConflict)
         {
           refreshViewer(conflictingObject);
+        }
+
+        @Override
+        protected void viewPermissionsChanged(Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges)
+        {
+          refreshViewer(null);
         }
 
         @Override

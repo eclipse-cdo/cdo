@@ -37,8 +37,13 @@ import java.util.Set;
 public interface CDOViewInvalidationEvent extends CDOViewEvent, CDOTimeProvider
 {
   /**
+   * @since 4.22
+   */
+  public static final long LOCAL_ROLLBACK = CDOSessionInvalidationEvent.LOCAL_ROLLBACK;
+
+  /**
    * Returns the time stamp of the server transaction if this event was sent as a result of a successfully committed
-   * transaction or <code>LOCAL_ROLLBACK</code> if this event was sent due to a local rollback.
+   * transaction or {@link #LOCAL_ROLLBACK} if this event was sent due to a local rollback.
    */
   @Override
   public long getTimeStamp();

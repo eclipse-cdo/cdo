@@ -123,7 +123,7 @@ public interface CDOObject extends EObject, CDOWithID
    * Returns the directly containing {@link CDOResource resource} of this object, or <code>null</code> if this object is
    * not an element of the {@link Resource#getContents() contents} list of any CDO resource.
    * <p>
-   * Please note that, independend of the containment depth of this object, the evaluation of the direct resource is an
+   * Please note that, independent of the containment depth of this object, the evaluation of the direct resource is an
    * operation with a constant cost.
    *
    * @since 2.0

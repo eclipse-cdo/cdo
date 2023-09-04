@@ -20,10 +20,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//LMFilter/regex"/>
     </genClasses>
     <genClasses ecoreClass="LMSecurity.ecore#//ModuleFilter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleFilter/moduleName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleFilter/module"/>
     </genClasses>
     <genClasses ecoreClass="LMSecurity.ecore#//ModuleTypeFilter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleTypeFilter/moduleTypeName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleTypeFilter/moduleType"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LMSecurity.ecore#//ModuleTypeFilter/includeUntyped"/>
     </genClasses>
   </genPackages>

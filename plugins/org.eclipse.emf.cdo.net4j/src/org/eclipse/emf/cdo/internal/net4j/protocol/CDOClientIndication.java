@@ -51,7 +51,7 @@ public abstract class CDOClientIndication extends Indication
 
   protected InternalCDOSession getSession()
   {
-    return (InternalCDOSession)getProtocol().getSession();
+    return getProtocol().getSession();
   }
 
   @Override

@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.TransportException;
 import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage;
 import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
@@ -49,8 +48,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
-
-import org.eclipse.emf.internal.cdo.session.CDOSessionImpl;
 
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.Request;
@@ -94,7 +91,7 @@ import java.util.function.Consumer;
 /**
  * @author Eike Stepper
  */
-public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionImpl> implements CDOSessionProtocol
+public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOSession> implements CDOSessionProtocol
 {
   private static final PerfTracer REVISION_LOADING = new PerfTracer(OM.PERF_REVISION_LOADING, CDOClientProtocol.class);
 
@@ -116,7 +113,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  public CDOSession getSession()
+  public InternalCDOSession getSession()
   {
     return getInfraStructure();
   }
@@ -193,7 +190,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   {
     CDOBranch[] branches = send(new DeleteBranchRequest(this, branchID), monitor);
 
-    InternalCDORevisionCache cache = ((InternalCDOSession)getSession()).getRevisionManager().getCache();
+    InternalCDORevisionCache cache = getSession().getRevisionManager().getCache();
     cache.removeRevisions(branches);
 
     return branches;
@@ -400,13 +397,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public UnlockObjectsResult unlockObjects2(CDOView view, Collection<CDOID> objectIDs, LockType lockType, boolean recursive)
   {
     return send(new UnlockObjectsRequest(this, view.getViewID(), objectIDs, lockType, recursive));
@@ -512,13 +502,6 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  @Deprecated
-  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
-  {
-    return sendRemoteMessage(message, null, recipients);
-  }
-
-  @Override
   public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, CDORemoteTopic topic, List<CDORemoteSession> recipients)
   {
     return send(new RemoteMessageRequest(this, message, topic, recipients));
@@ -580,7 +563,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   }
 
   @Override
-  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  public Map<CDORevision, CDOPermission> loadPermissions3(Map<CDOBranchPoint, Set<InternalCDORevision>> revisions)
   {
     return send(new LoadPermissionsRequest(this, revisions));
   }
@@ -791,6 +774,27 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<CDOSessionIm
   @Override
   @Deprecated
   public void requestChangeCredentials()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void unlockObjects(CDOView view, Collection<CDOID> objectIDs, LockType lockType)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Set<Integer> sendRemoteMessage(CDORemoteSessionMessage message, List<CDORemoteSession> recipients)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
   {
     throw new UnsupportedOperationException();
   }

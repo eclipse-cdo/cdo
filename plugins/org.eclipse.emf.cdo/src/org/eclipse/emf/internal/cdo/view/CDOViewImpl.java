@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -69,6 +70,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewDurabilityChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
@@ -1202,6 +1204,9 @@ public class CDOViewImpl extends AbstractCDOView
 
         fireAdaptersNotifiedEvent(lastUpdateTime);
 
+        Map<CDORevision, CDOPermission> oldPermissions = invalidationData.getOldPermissions();
+        firePermissionsChangedEvent(oldPermissions);
+
         CDOLockChangeInfo lockChangeInfo = invalidationData.getLockChangeInfo();
         if (lockChangeInfo != null)
         {
@@ -1338,6 +1343,35 @@ public class CDOViewImpl extends AbstractCDOView
       finally
       {
         unlockView();
+      }
+    }
+  }
+
+  public void firePermissionsChangedEvent(Map<CDORevision, CDOPermission> oldPermissions)
+  {
+    if (!ObjectUtil.isEmpty(oldPermissions))
+    {
+      Map<CDOID, InternalCDORevision> viewedRevisions = CDOIDUtil.createMap();
+      collectViewedRevisions(viewedRevisions);
+
+      Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges = CDOIDUtil.createMap();
+
+      for (InternalCDORevision viewedRevision : viewedRevisions.values())
+      {
+        CDOPermission oldPermission = oldPermissions.get(viewedRevision);
+        if (oldPermission != null)
+        {
+          CDOPermission newPermission = viewedRevision.getPermission();
+          if (newPermission != oldPermission)
+          {
+            permissionChanges.put(viewedRevision.getID(), Pair.create(oldPermission, newPermission));
+          }
+        }
+      }
+
+      if (!permissionChanges.isEmpty())
+      {
+        fireEvent(new ViewPermissionsChangedEvent(permissionChanges));
       }
     }
   }
@@ -2915,7 +2949,40 @@ public class CDOViewImpl extends AbstractCDOView
     @Override
     protected String formatAdditionalParameters()
     {
-      return "timeStamp=" + timeStamp + ", revisionDeltas=" + revisionDeltas + ", detachedObjects=" + detachedObjects + "]";
+      return "timeStamp=" + timeStamp + ", revisionDeltas=" + revisionDeltas + ", detachedObjects=" + detachedObjects;
+    }
+  }
+
+  /**
+   * @author Simon McDuff
+   */
+  private final class ViewPermissionsChangedEvent extends Event implements CDOViewPermissionsChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges;
+
+    public ViewPermissionsChangedEvent(Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges)
+    {
+      this.permissionChanges = permissionChanges;
+    }
+
+    @Override
+    public Map<CDOID, Pair<CDOPermission, CDOPermission>> getPermissionChanges()
+    {
+      return permissionChanges;
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return "CDOViewPermissionsChangedEvent";
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "permissionChanges=" + permissionChanges;
     }
   }
 

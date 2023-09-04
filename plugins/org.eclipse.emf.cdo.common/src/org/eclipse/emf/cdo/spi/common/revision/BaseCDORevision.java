@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
@@ -1034,6 +1035,27 @@ public abstract class BaseCDORevision extends AbstractCDORevision
   public void setPermission(CDOPermission permission)
   {
     flags = (byte)(flags & ~PERMISSION_MASK | permission.getBits() & PERMISSION_MASK);
+
+    if (permission == CDOPermission.NONE)
+    {
+      EStructuralFeature[] features = getClassInfo().getAllPersistentFeatures();
+
+      CDOClassInfo classInfo = getClassInfo();
+      if (classInfo.isResourceNode())
+      {
+        for (EStructuralFeature feature : features)
+        {
+          if (!CDOModelUtil.isResourcePathFeature(feature))
+          {
+            setValue(feature, null);
+          }
+        }
+      }
+      else
+      {
+        initValues(features);
+      }
+    }
   }
 
   /**

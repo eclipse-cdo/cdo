@@ -56,24 +56,24 @@ public class ModuleTypeFilterItemProvider extends LMFilterItemProvider
     {
       super.getPropertyDescriptors(object);
 
-      addModuleTypeNamePropertyDescriptor(object);
+      addModuleTypePropertyDescriptor(object);
       addIncludeUntypedPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Module Type Name feature.
+   * This adds a property descriptor for the Module Type feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addModuleTypeNamePropertyDescriptor(Object object)
+  protected void addModuleTypePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ModuleTypeFilter_moduleTypeName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ModuleTypeFilter_moduleTypeName_feature", "_UI_ModuleTypeFilter_type"),
-        LMSecurityPackage.Literals.MODULE_TYPE_FILTER__MODULE_TYPE_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_ModuleTypeFilter_moduleType_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ModuleTypeFilter_moduleType_feature", "_UI_ModuleTypeFilter_type"),
+        LMSecurityPackage.Literals.MODULE_TYPE_FILTER__MODULE_TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -151,7 +151,7 @@ public class ModuleTypeFilterItemProvider extends LMFilterItemProvider
 
     switch (notification.getFeatureID(ModuleTypeFilter.class))
     {
-    case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE_NAME:
+    case LMSecurityPackage.MODULE_TYPE_FILTER__MODULE_TYPE:
     case LMSecurityPackage.MODULE_TYPE_FILTER__INCLUDE_UNTYPED:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

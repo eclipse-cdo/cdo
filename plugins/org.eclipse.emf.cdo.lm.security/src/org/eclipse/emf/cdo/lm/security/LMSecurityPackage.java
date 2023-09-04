@@ -123,13 +123,13 @@ public interface LMSecurityPackage extends EPackage
   int MODULE_FILTER__REGEX = LM_FILTER__REGEX;
 
   /**
-   * The feature id for the '<em><b>Module Name</b></em>' attribute.
+   * The feature id for the '<em><b>Module</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE_FILTER__MODULE_NAME = LM_FILTER_FEATURE_COUNT + 0;
+  int MODULE_FILTER__MODULE = LM_FILTER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Module Filter</em>' class.
@@ -169,13 +169,13 @@ public interface LMSecurityPackage extends EPackage
   int MODULE_TYPE_FILTER__REGEX = LM_FILTER__REGEX;
 
   /**
-   * The feature id for the '<em><b>Module Type Name</b></em>' attribute.
+   * The feature id for the '<em><b>Module Type</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MODULE_TYPE_FILTER__MODULE_TYPE_NAME = LM_FILTER_FEATURE_COUNT + 0;
+  int MODULE_TYPE_FILTER__MODULE_TYPE = LM_FILTER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Include Untyped</b></em>' attribute.
@@ -236,15 +236,15 @@ public interface LMSecurityPackage extends EPackage
   EClass getModuleFilter();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleFilter#getModuleName <em>Module Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleFilter#getModule <em>Module</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Module Name</em>'.
-   * @see org.eclipse.emf.cdo.lm.security.ModuleFilter#getModuleName()
+   * @return the meta object for the attribute '<em>Module</em>'.
+   * @see org.eclipse.emf.cdo.lm.security.ModuleFilter#getModule()
    * @see #getModuleFilter()
    * @generated
    */
-  EAttribute getModuleFilter_ModuleName();
+  EAttribute getModuleFilter_Module();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter <em>Module Type Filter</em>}'.
@@ -257,15 +257,15 @@ public interface LMSecurityPackage extends EPackage
   EClass getModuleTypeFilter();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleTypeName <em>Module Type Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleType <em>Module Type</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Module Type Name</em>'.
-   * @see org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleTypeName()
+   * @return the meta object for the attribute '<em>Module Type</em>'.
+   * @see org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#getModuleType()
    * @see #getModuleTypeFilter()
    * @generated
    */
-  EAttribute getModuleTypeFilter_ModuleTypeName();
+  EAttribute getModuleTypeFilter_ModuleType();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.security.ModuleTypeFilter#isIncludeUntyped <em>Include Untyped</em>}'.
@@ -331,12 +331,12 @@ public interface LMSecurityPackage extends EPackage
     EClass MODULE_FILTER = eINSTANCE.getModuleFilter();
 
     /**
-     * The meta object literal for the '<em><b>Module Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Module</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MODULE_FILTER__MODULE_NAME = eINSTANCE.getModuleFilter_ModuleName();
+    EAttribute MODULE_FILTER__MODULE = eINSTANCE.getModuleFilter_Module();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.security.impl.ModuleTypeFilterImpl <em>Module Type Filter</em>}' class.
@@ -349,12 +349,12 @@ public interface LMSecurityPackage extends EPackage
     EClass MODULE_TYPE_FILTER = eINSTANCE.getModuleTypeFilter();
 
     /**
-     * The meta object literal for the '<em><b>Module Type Name</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Module Type</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MODULE_TYPE_FILTER__MODULE_TYPE_NAME = eINSTANCE.getModuleTypeFilter_ModuleTypeName();
+    EAttribute MODULE_TYPE_FILTER__MODULE_TYPE = eINSTANCE.getModuleTypeFilter_ModuleType();
 
     /**
      * The meta object literal for the '<em><b>Include Untyped</b></em>' attribute feature.

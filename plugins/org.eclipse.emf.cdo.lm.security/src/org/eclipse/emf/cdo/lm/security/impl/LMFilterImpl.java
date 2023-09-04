@@ -182,7 +182,14 @@ public abstract class LMFilterImpl extends PermissionFilterImpl implements LMFil
   public String format()
   {
     String operator = isRegex() ? " ~= " : " == ";
-    return getComparisonKey() + operator + getComparisonValue();
+    String result = getComparisonKey() + operator + getComparisonValue();
+
+    if (filterMissingComparisonValue())
+    {
+      result = "Or(" + result + ", " + getComparisonKey() + " == null)";
+    }
+
+    return result;
   }
 
   /**

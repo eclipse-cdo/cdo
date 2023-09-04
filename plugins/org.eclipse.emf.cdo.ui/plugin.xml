@@ -40,7 +40,6 @@
             class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory">
          <type value="org.eclipse.emf.cdo.ui.RenameBranches"/>
          <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
-         <type value="org.eclipse.emf.cdo.ui.DeleteBranches"/>
       </factories>
       <simpleFactory
             productGroup="org.eclipse.net4j.util.ui.valueFormatters"

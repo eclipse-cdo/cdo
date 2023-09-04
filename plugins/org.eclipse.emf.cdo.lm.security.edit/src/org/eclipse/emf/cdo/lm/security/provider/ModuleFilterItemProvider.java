@@ -56,23 +56,23 @@ public class ModuleFilterItemProvider extends LMFilterItemProvider
     {
       super.getPropertyDescriptors(object);
 
-      addModuleNamePropertyDescriptor(object);
+      addModulePropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Module Name feature.
+   * This adds a property descriptor for the Module feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addModuleNamePropertyDescriptor(Object object)
+  protected void addModulePropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_ModuleFilter_moduleName_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_ModuleFilter_moduleName_feature", "_UI_ModuleFilter_type"),
-        LMSecurityPackage.Literals.MODULE_FILTER__MODULE_NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_ModuleFilter_module_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ModuleFilter_module_feature", "_UI_ModuleFilter_type"),
+        LMSecurityPackage.Literals.MODULE_FILTER__MODULE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -136,7 +136,7 @@ public class ModuleFilterItemProvider extends LMFilterItemProvider
 
     switch (notification.getFeatureID(ModuleFilter.class))
     {
-    case LMSecurityPackage.MODULE_FILTER__MODULE_NAME:
+    case LMSecurityPackage.MODULE_FILTER__MODULE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

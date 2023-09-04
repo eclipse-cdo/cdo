@@ -23,7 +23,7 @@ import org.eclipse.emf.ecore.EClass;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.lm.security.impl.ModuleFilterImpl#getModuleName <em>Module Name</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.security.impl.ModuleFilterImpl#getModule <em>Module</em>}</li>
  * </ul>
  *
  * @generated
@@ -31,14 +31,14 @@ import org.eclipse.emf.ecore.EClass;
 public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
 {
   /**
-   * The default value of the '{@link #getModuleName() <em>Module Name</em>}' attribute.
+   * The default value of the '{@link #getModule() <em>Module</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getModuleName()
+   * @see #getModule()
    * @generated
    * @ordered
    */
-  protected static final String MODULE_NAME_EDEFAULT = null;
+  protected static final String MODULE_EDEFAULT = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -67,9 +67,9 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
    * @generated
    */
   @Override
-  public String getModuleName()
+  public String getModule()
   {
-    return (String)eDynamicGet(LMSecurityPackage.MODULE_FILTER__MODULE_NAME, LMSecurityPackage.Literals.MODULE_FILTER__MODULE_NAME, true, true);
+    return (String)eDynamicGet(LMSecurityPackage.MODULE_FILTER__MODULE, LMSecurityPackage.Literals.MODULE_FILTER__MODULE, true, true);
   }
 
   /**
@@ -78,9 +78,9 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
    * @generated
    */
   @Override
-  public void setModuleName(String newModuleName)
+  public void setModule(String newModule)
   {
-    eDynamicSet(LMSecurityPackage.MODULE_FILTER__MODULE_NAME, LMSecurityPackage.Literals.MODULE_FILTER__MODULE_NAME, newModuleName);
+    eDynamicSet(LMSecurityPackage.MODULE_FILTER__MODULE, LMSecurityPackage.Literals.MODULE_FILTER__MODULE, newModule);
   }
 
   /**
@@ -93,8 +93,8 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   {
     switch (featureID)
     {
-    case LMSecurityPackage.MODULE_FILTER__MODULE_NAME:
-      return getModuleName();
+    case LMSecurityPackage.MODULE_FILTER__MODULE:
+      return getModule();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -109,8 +109,8 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   {
     switch (featureID)
     {
-    case LMSecurityPackage.MODULE_FILTER__MODULE_NAME:
-      setModuleName((String)newValue);
+    case LMSecurityPackage.MODULE_FILTER__MODULE:
+      setModule((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -126,8 +126,8 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   {
     switch (featureID)
     {
-    case LMSecurityPackage.MODULE_FILTER__MODULE_NAME:
-      setModuleName(MODULE_NAME_EDEFAULT);
+    case LMSecurityPackage.MODULE_FILTER__MODULE:
+      setModule(MODULE_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -143,8 +143,8 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   {
     switch (featureID)
     {
-    case LMSecurityPackage.MODULE_FILTER__MODULE_NAME:
-      return MODULE_NAME_EDEFAULT == null ? getModuleName() != null : !MODULE_NAME_EDEFAULT.equals(getModuleName());
+    case LMSecurityPackage.MODULE_FILTER__MODULE:
+      return MODULE_EDEFAULT == null ? getModule() != null : !MODULE_EDEFAULT.equals(getModule());
     }
     return super.eIsSet(featureID);
   }
@@ -155,7 +155,7 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   @Override
   protected String getComparisonKey()
   {
-    return LMSecurityPackage.Literals.MODULE_FILTER__MODULE_NAME.getName();
+    return LMSecurityPackage.Literals.MODULE_FILTER__MODULE.getName();
   }
 
   /**
@@ -164,6 +164,6 @@ public class ModuleFilterImpl extends LMFilterImpl implements ModuleFilter
   @Override
   protected String getComparisonValue()
   {
-    return getModuleName();
+    return getModule();
   }
 } // ModuleFilterImpl

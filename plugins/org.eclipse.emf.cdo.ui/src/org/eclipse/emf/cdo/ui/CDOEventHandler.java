@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.ui;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.internal.ui.ItemsProcessor;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -25,8 +27,11 @@ import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewPermissionsChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
 import org.eclipse.net4j.util.event.IEvent;
@@ -45,6 +50,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.ui.PlatformUI;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -102,13 +108,22 @@ public class CDOEventHandler
         checkDetachedSelection(e.getDetachedObjects());
         viewInvalidated(e.getDirtyObjects());
       }
+      else if (event instanceof CDOViewPermissionsChangedEvent)
+      {
+        CDOViewPermissionsChangedEvent e = (CDOViewPermissionsChangedEvent)event;
+        Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges = e.getPermissionChanges();
+        if (!ObjectUtil.isEmpty(permissionChanges))
+        {
+          viewPermissionsChanged(permissionChanges);
+        }
+      }
       else if (event instanceof CDOViewLocksChangedEvent)
       {
         CDOViewLocksChangedEvent e = (CDOViewLocksChangedEvent)event;
         EObject[] objects = e.getAffectedObjects();
         if (objects.length != 0)
         {
-          updateElement(objects);
+          viewLocksChanged(objects);
         }
       }
       else if (event instanceof CDOTransactionFinishedEvent)
@@ -380,6 +395,21 @@ public class CDOEventHandler
 
   protected void viewConflict(CDOObject conflictingObject, boolean firstConflict)
   {
+  }
+
+  /**
+   * @since 4.15
+   */
+  protected void viewPermissionsChanged(Map<CDOID, Pair<CDOPermission, CDOPermission>> permissionChanges)
+  {
+  }
+
+  /**
+   * @since 4.15
+   */
+  protected void viewLocksChanged(EObject[] objects)
+  {
+    updateElement(objects);
   }
 
   /**

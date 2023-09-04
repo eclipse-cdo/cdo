@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -18,37 +19,54 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
+
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Eike Stepper
  */
 public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CDOPermission>>
 {
-  private InternalCDORevision[] revisions;
+  private Map<CDOBranchPoint, Set<InternalCDORevision>> revisionsBySecurityContext;
 
-  public LoadPermissionsRequest(CDOClientProtocol protocol, InternalCDORevision[] revisions)
+  private List<CDOBranchPoint> securityContexts;
+
+  public LoadPermissionsRequest(CDOClientProtocol protocol, Map<CDOBranchPoint, Set<InternalCDORevision>> revisionsBySecurityContext)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_PERMISSIONS);
-    this.revisions = revisions;
+    this.revisionsBySecurityContext = revisionsBySecurityContext;
   }
 
   @Override
   protected void requesting(CDODataOutput out) throws IOException
   {
-    int length = revisions.length;
-    out.writeXInt(length);
+    int mapSize = revisionsBySecurityContext.size();
+    out.writeXInt(mapSize);
+    securityContexts = new ArrayList<>(mapSize);
 
-    for (int i = 0; i < length; i++)
+    for (Map.Entry<CDOBranchPoint, Set<InternalCDORevision>> entry : revisionsBySecurityContext.entrySet())
     {
-      InternalCDORevision revision = revisions[i];
-      CDOID id = revision.getID();
-      out.writeCDOID(id);
+      CDOBranchPoint securityContext = entry.getKey();
+      out.writeCDOBranchPoint(securityContext);
+      securityContexts.add(securityContext);
 
-      byte bits = revision.getPermission().getBits();
-      out.writeByte(bits);
+      Set<InternalCDORevision> revisions = entry.getValue();
+      out.writeXInt(revisions.size());
+
+      for (InternalCDORevision revision : revisions)
+      {
+        CDOID id = revision.getID();
+        out.writeCDOID(id);
+
+        byte bits = revision.getPermission().getBits();
+        out.writeByte(bits);
+      }
     }
 
     int referenceChunk = getSession().options().getCollectionLoadingPolicy().getInitialChunkSize();
@@ -58,52 +76,58 @@ public class LoadPermissionsRequest extends CDOClientRequest<Map<CDORevision, CD
   @Override
   protected Map<CDORevision, CDOPermission> confirming(CDODataInput in) throws IOException
   {
-    Map<CDORevision, CDOPermission> oldPermissions = null;
+    Map<CDORevision, CDOPermission> oldPermissions = new HashMap<>();
+    InternalCDOSession session = getSession();
 
-    int length = revisions.length;
-    for (int i = 0; i < length; i++)
+    try
     {
-      byte bits = in.readByte();
-      if (bits == CDOProtocolConstants.REVISION_DOES_NOT_EXIST)
-      {
-        continue;
-      }
-
-      InternalCDORevision revision = revisions[i];
-      CDOPermission oldPermission = revision.getPermission();
-      CDOPermission newPermission = CDOPermission.get(bits);
-
-      if (oldPermission != newPermission)
-      {
-        boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
-
-        try
+      session.syncExec(() -> {
+        for (CDOBranchPoint securityContext : securityContexts)
         {
-          if (oldPermission == CDOPermission.NONE)
+          Set<InternalCDORevision> set = revisionsBySecurityContext.get(securityContext);
+
+          for (InternalCDORevision revision : set)
           {
-            revision.readValues(in);
+            byte bits = in.readByte();
+            if (bits == CDOProtocolConstants.REVISION_DOES_NOT_EXIST)
+            {
+              continue;
+            }
+
+            CDOPermission oldPermission = revision.getPermission();
+            CDOPermission newPermission = CDOPermission.get(bits);
+
+            if (oldPermission != newPermission)
+            {
+              boolean bypassPermissionChecks = revision.bypassPermissionChecks(true);
+
+              try
+              {
+                if (oldPermission == CDOPermission.NONE)
+                {
+                  revision.readValues(in);
+                }
+
+                revision.setPermission(newPermission);
+              }
+              finally
+              {
+                revision.bypassPermissionChecks(bypassPermissionChecks);
+              }
+
+              oldPermissions.put(revision, oldPermission);
+            }
           }
-          else if (newPermission == CDOPermission.NONE)
-          {
-            // TODO Handle newPermission == CDOPermission.NONE
-            // clearValues() also wipes out CDOResourceNode.name and CDOResourceFolder.nodes!
-            // revision.clearValues();
-          }
         }
-        finally
-        {
-          revision.bypassPermissionChecks(bypassPermissionChecks);
-        }
-
-        revision.setPermission(newPermission);
-
-        if (oldPermissions == null)
-        {
-          oldPermissions = new HashMap<>();
-        }
-
-        oldPermissions.put(revision, oldPermission);
-      }
+      });
+    }
+    catch (IOException ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw new IOException(ex);
     }
 
     return oldPermissions;

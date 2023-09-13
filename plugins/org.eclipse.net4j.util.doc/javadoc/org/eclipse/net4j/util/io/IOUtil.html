@@ -1,1674 +1,1205 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IOUtil (Net4j Utilities Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.net4j.util.io, class: IOUtil">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="IOUtil (Net4j Utilities Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":9,"i28":9,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":9,"i53":9,"i54":9,"i55":9,"i56":9,"i57":9,"i58":9,"i59":9,"i60":9,"i61":9,"i62":9,"i63":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IOUtil.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
-<h2 title="Class IOUtil" class="title">Class IOUtil</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.io</a></div>
+<h1 title="Class IOUtil" class="title">Class IOUtil</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.io.IOUtil</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.net4j.util.io.IOUtil</div>
+</div>
+<section class="class-description" id="class-description">
 <hr>
-<pre>public final class <span class="typeNameLabel">IOUtil</span>
-extends java.lang.Object</pre>
-<dl>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">IOUtil</span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<dl class="notes">
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IOUtil.FileCollector.html" title="class in org.eclipse.net4j.util.io">IOUtil.FileCollector</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_BUFFER_SIZE">DEFAULT_BUFFER_SIZE</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#DEFAULT_TIMEOUT">DEFAULT_TIMEOUT</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#EOF">EOF</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WILDCARD_MULTI_CHARS">WILDCARD_MULTI_CHARS</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WILDCARD_MULTI_DIRS">WILDCARD_MULTI_DIRS</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#WILDCARD_SINGLE_CHAR">WILDCARD_SINGLE_CHAR</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close(java.io.Closeable)">close</a></span>&#8203;(java.io.Closeable&nbsp;closeable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close(org.eclipse.net4j.util.collection.Closeable)">close</a></span>&#8203;(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeSilent(java.io.Closeable)">closeSilent</a></span>&#8203;(java.io.Closeable&nbsp;closeable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#closeSilent(org.eclipse.net4j.util.collection.Closeable)">closeSilent</a></span>&#8203;(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copy(java.io.InputStream,java.io.OutputStream)">copy</a></span>&#8203;(java.io.InputStream&nbsp;input,
-    java.io.OutputStream&nbsp;output)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copy(java.io.InputStream,java.io.OutputStream,byte%5B%5D)">copy</a></span>&#8203;(java.io.InputStream&nbsp;input,
-    java.io.OutputStream&nbsp;output,
-    byte[]&nbsp;buffer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copy(java.io.InputStream,java.io.OutputStream,int)">copy</a></span>&#8203;(java.io.InputStream&nbsp;input,
-    java.io.OutputStream&nbsp;output,
-    int&nbsp;bufferSize)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copy(java.io.InputStream,java.io.OutputStream,int,byte%5B%5D)">copy</a></span>&#8203;(java.io.InputStream&nbsp;input,
-    java.io.OutputStream&nbsp;output,
-    int&nbsp;size,
-    byte[]&nbsp;buffer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyBinary(java.io.InputStream,java.io.OutputStream)">copyBinary</a></span>&#8203;(java.io.InputStream&nbsp;inputStream,
-          java.io.OutputStream&nbsp;outputStream)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyBinary(java.io.InputStream,java.io.OutputStream,long)">copyBinary</a></span>&#8203;(java.io.InputStream&nbsp;inputStream,
-          java.io.OutputStream&nbsp;outputStream,
-          long&nbsp;size)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyCharacter(java.io.Reader,java.io.Writer)">copyCharacter</a></span>&#8203;(java.io.Reader&nbsp;reader,
-             java.io.Writer&nbsp;writer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyCharacter(java.io.Reader,java.io.Writer,long)">copyCharacter</a></span>&#8203;(java.io.Reader&nbsp;reader,
-             java.io.Writer&nbsp;writer,
-             long&nbsp;size)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyFile(java.io.File,java.io.File)">copyFile</a></span>&#8203;(java.io.File&nbsp;source,
-        java.io.File&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyText(java.io.BufferedReader,java.io.BufferedWriter,org.eclipse.net4j.util.io.IOFilter...)">copyText</a></span>&#8203;(java.io.BufferedReader&nbsp;reader,
-        java.io.BufferedWriter&nbsp;writer,
-        <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyText(java.io.File,java.io.File,org.eclipse.net4j.util.io.IOFilter...)">copyText</a></span>&#8203;(java.io.File&nbsp;source,
-        java.io.File&nbsp;target,
-        <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyTree(java.io.File,java.io.File)">copyTree</a></span>&#8203;(java.io.File&nbsp;source,
-        java.io.File&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copyTrees(java.util.Collection,java.io.File)">copyTrees</a></span>&#8203;(java.util.Collection&lt;java.io.File&gt;&nbsp;sources,
-         java.io.File&nbsp;target)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#delete(java.io.File)">delete</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.io.File,java.io.File)">equals</a></span>&#8203;(java.io.File&nbsp;file1,
-      java.io.File&nbsp;file2)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.io.InputStream,java.io.InputStream)">equals</a></span>&#8203;(java.io.InputStream&nbsp;stream1,
-      java.io.InputStream&nbsp;stream2)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#equals(java.io.Reader,java.io.Reader)">equals</a></span>&#8203;(java.io.Reader&nbsp;reader1,
-      java.io.Reader&nbsp;reader2)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>static java.io.PrintStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ERR()">ERR</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flush(java.io.Flushable)">flush</a></span>&#8203;(java.io.Flushable&nbsp;flushable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>static java.io.IOException</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#flushSilent(java.io.Flushable)">flushSilent</a></span>&#8203;(java.io.Flushable&nbsp;flushable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFreePort()">getFreePort</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.io.File&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#glob(java.lang.String,java.io.File)">glob</a></span>&#8203;(java.lang.String&nbsp;pattern,
-    java.io.File&nbsp;folder)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>static java.io.InputStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#IN()">IN</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>static java.io.IOException</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#ioException(java.lang.Exception)">ioException</a></span>&#8203;(java.lang.Exception&nbsp;ex)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i28" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFreePort(int)">isFreePort</a></span>&#8203;(int&nbsp;port)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.io.File&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listBreadthFirst(java.io.File)">listBreadthFirst</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i30" class="altColor">
-<td class="colFirst"><code>static java.util.List&lt;java.io.File&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#listDepthFirst(java.io.File)">listDepthFirst</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i31" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#makeRelative(java.io.File,java.io.File)">makeRelative</a></span>&#8203;(java.io.File&nbsp;file,
-            java.io.File&nbsp;toFolder)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i32" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#mkdirs(java.io.File)">mkdirs</a></span>&#8203;(java.io.File&nbsp;folder)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#normalizeSeparator(java.lang.String)">normalizeSeparator</a></span>&#8203;(java.lang.String&nbsp;string)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i34" class="altColor">
-<td class="colFirst"><code>static java.io.FileInputStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openInputStream(java.io.File)">openInputStream</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i35" class="rowColor">
-<td class="colFirst"><code>static java.io.FileInputStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openInputStream(java.lang.String)">openInputStream</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i36" class="altColor">
-<td class="colFirst"><code>static java.io.FileOutputStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openOutputStream(java.io.File)">openOutputStream</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i37" class="rowColor">
-<td class="colFirst"><code>static java.io.FileOutputStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openOutputStream(java.lang.String)">openOutputStream</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i38" class="altColor">
-<td class="colFirst"><code>static java.io.FileReader</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openReader(java.io.File)">openReader</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i39" class="rowColor">
-<td class="colFirst"><code>static java.io.FileReader</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openReader(java.lang.String)">openReader</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i40" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openSystemBrowser(java.lang.String)">openSystemBrowser</a></span>&#8203;(java.lang.String&nbsp;url)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>static java.io.FileWriter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openWriter(java.io.File)">openWriter</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><code>static java.io.FileWriter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openWriter(java.io.File,boolean)">openWriter</a></span>&#8203;(java.io.File&nbsp;file,
-          boolean&nbsp;append)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i43" class="rowColor">
-<td class="colFirst"><code>static java.io.FileWriter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openWriter(java.lang.String)">openWriter</a></span>&#8203;(java.lang.String&nbsp;fileName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i44" class="altColor">
-<td class="colFirst"><code>static java.io.PrintStream</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#OUT()">OUT</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i45" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#print(java.lang.StackTraceElement%5B%5D)">print</a></span>&#8203;(java.lang.StackTraceElement[]&nbsp;elements)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i46" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#print(java.lang.StackTraceElement%5B%5D,java.io.PrintStream)">print</a></span>&#8203;(java.lang.StackTraceElement[]&nbsp;elements,
-     java.io.PrintStream&nbsp;stream)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i47" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#print(java.lang.Throwable)">print</a></span>&#8203;(java.lang.Throwable&nbsp;t)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i48" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#print(java.lang.Throwable,java.io.PrintStream)">print</a></span>&#8203;(java.lang.Throwable&nbsp;t,
-     java.io.PrintStream&nbsp;stream)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i49" class="rowColor">
-<td class="colFirst"><code>static byte[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readFile(java.io.File)">readFile</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i50" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readText(java.net.URL)">readText</a></span>&#8203;(java.net.URL&nbsp;url)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i51" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readTextFile(java.io.File)">readTextFile</a></span>&#8203;(java.io.File&nbsp;file)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i52" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeInput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">safeInput</a></span>&#8203;(java.io.File&nbsp;file,
-         <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileInputStream&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i53" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeOutput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">safeOutput</a></span>&#8203;(java.io.File&nbsp;file,
-          <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileOutputStream&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i54" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeRead(java.io.File,org.eclipse.net4j.util.io.IORunnable)">safeRead</a></span>&#8203;(java.io.File&nbsp;file,
-        <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileReader&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i55" class="rowColor">
-<td class="colFirst"><code>static &lt;IO extends java.io.Closeable&gt;<br>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeRun(IO,org.eclipse.net4j.util.io.IORunnable)">safeRun</a></span>&#8203;(IO&nbsp;io,
-       <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;IO&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i56" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#safeWrite(java.io.File,org.eclipse.net4j.util.io.IORunnable)">safeWrite</a></span>&#8203;(java.io.File&nbsp;file,
-         <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileWriter&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i57" class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#toString(java.lang.Throwable)">toString</a></span>&#8203;(java.lang.Throwable&nbsp;t)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i58" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#visitBreadthFirst(java.io.File%5B%5D,org.eclipse.net4j.util.io.IOVisitor)">visitBreadthFirst</a></span>&#8203;(java.io.File[]&nbsp;files,
-                 <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i59" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#visitBreadthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">visitBreadthFirst</a></span>&#8203;(java.io.File&nbsp;file,
-                 <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i60" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#visitDepthFirst(java.io.File%5B%5D,org.eclipse.net4j.util.io.IOVisitor)">visitDepthFirst</a></span>&#8203;(java.io.File[]&nbsp;files,
-               <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i61" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#visitDepthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">visitDepthFirst</a></span>&#8203;(java.io.File&nbsp;file,
-               <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i62" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeFile(java.io.File,byte%5B%5D)">writeFile</a></span>&#8203;(java.io.File&nbsp;file,
-         byte[]&nbsp;bytes)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i63" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeText(java.io.File,boolean,java.lang.String)">writeText</a></span>&#8203;(java.io.File&nbsp;file,
-         boolean&nbsp;append,
-         java.lang.String&nbsp;text)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-</li>
-</ul>
-</section>
-</li>
-</ul>
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="IOUtil.FileCollector.html" class="type-name-link" title="class in org.eclipse.net4j.util.io">IOUtil.FileCollector</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-<!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="EOF">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>EOF</h4>
-<pre>public static final&nbsp;int EOF</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.1</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.EOF">Constant Field Values</a></dd>
-</dl>
+</section>
 </li>
-</ul>
-<a id="DEFAULT_TIMEOUT">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>DEFAULT_TIMEOUT</h4>
-<pre>public static final&nbsp;long DEFAULT_TIMEOUT</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>3.1</dd>
-</dl>
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#DEFAULT_BUFFER_SIZE" class="member-name-link">DEFAULT_BUFFER_SIZE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final long</code></div>
+<div class="col-second odd-row-color"><code><a href="#DEFAULT_TIMEOUT" class="member-name-link">DEFAULT_TIMEOUT</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#EOF" class="member-name-link">EOF</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#WILDCARD_MULTI_CHARS" class="member-name-link">WILDCARD_MULTI_CHARS</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#WILDCARD_MULTI_DIRS" class="member-name-link">WILDCARD_MULTI_DIRS</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#WILDCARD_SINGLE_CHAR" class="member-name-link">WILDCARD_SINGLE_CHAR</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
 </li>
-</ul>
-<a id="DEFAULT_BUFFER_SIZE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>DEFAULT_BUFFER_SIZE</h4>
-<pre>public static final&nbsp;int DEFAULT_BUFFER_SIZE</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.DEFAULT_BUFFER_SIZE">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="WILDCARD_SINGLE_CHAR">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>WILDCARD_SINGLE_CHAR</h4>
-<pre>public static final&nbsp;java.lang.String WILDCARD_SINGLE_CHAR</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>2.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_SINGLE_CHAR">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="WILDCARD_MULTI_CHARS">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>WILDCARD_MULTI_CHARS</h4>
-<pre>public static final&nbsp;java.lang.String WILDCARD_MULTI_CHARS</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>2.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_CHARS">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
-<a id="WILDCARD_MULTI_DIRS">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>WILDCARD_MULTI_DIRS</h4>
-<pre>public static final&nbsp;java.lang.String WILDCARD_MULTI_DIRS</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
-<dd>2.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_DIRS">Constant Field Values</a></dd>
-</dl>
-</li>
-</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#close(java.io.Closeable)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&nbsp;closeable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#close(org.eclipse.net4j.util.collection.Closeable)" class="member-name-link">close</a><wbr>(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#closeSilent(java.io.Closeable)" class="member-name-link">closeSilent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&nbsp;closeable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#closeSilent(org.eclipse.net4j.util.collection.Closeable)" class="member-name-link">closeSilent</a><wbr>(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(java.io.InputStream,java.io.OutputStream)" class="member-name-link">copy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(java.io.InputStream,java.io.OutputStream,byte%5B%5D)" class="member-name-link">copy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ byte[]&nbsp;buffer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(java.io.InputStream,java.io.OutputStream,int)" class="member-name-link">copy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ int&nbsp;bufferSize)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copy(java.io.InputStream,java.io.OutputStream,int,byte%5B%5D)" class="member-name-link">copy</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ int&nbsp;size,
+ byte[]&nbsp;buffer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyBinary(java.io.InputStream,java.io.OutputStream)" class="member-name-link">copyBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;inputStream,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;outputStream)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyBinary(java.io.InputStream,java.io.OutputStream,long)" class="member-name-link">copyBinary</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;inputStream,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;outputStream,
+ long&nbsp;size)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyCharacter(java.io.Reader,java.io.Writer)" class="member-name-link">copyCharacter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyCharacter(java.io.Reader,java.io.Writer,long)" class="member-name-link">copyCharacter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer,
+ long&nbsp;size)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyFile(java.io.File,java.io.File)" class="member-name-link">copyFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyText(java.io.BufferedReader,java.io.BufferedWriter,org.eclipse.net4j.util.io.IOFilter...)" class="member-name-link">copyText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html" title="class or interface in java.io" class="external-link">BufferedReader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedWriter.html" title="class or interface in java.io" class="external-link">BufferedWriter</a>&nbsp;writer,
+ <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;...&nbsp;lineFilters)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyText(java.io.File,java.io.File,org.eclipse.net4j.util.io.IOFilter...)" class="member-name-link">copyText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target,
+ <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;...&nbsp;lineFilters)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyTree(java.io.File,java.io.File)" class="member-name-link">copyTree</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copyTrees(java.util.Collection,java.io.File)" class="member-name-link">copyTrees</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;&nbsp;sources,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#delete(java.io.File)" class="member-name-link">delete</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#equals(java.io.File,java.io.File)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file2)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#equals(java.io.InputStream,java.io.InputStream)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;stream1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;stream2)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#equals(java.io.Reader,java.io.Reader)" class="member-name-link">equals</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader2)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#ERR()" class="member-name-link">ERR</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#flush(java.io.Flushable)" class="member-name-link">flush</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Flushable.html" title="class or interface in java.io" class="external-link">Flushable</a>&nbsp;flushable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#flushSilent(java.io.Flushable)" class="member-name-link">flushSilent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Flushable.html" title="class or interface in java.io" class="external-link">Flushable</a>&nbsp;flushable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFreePort()" class="member-name-link">getFreePort</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#glob(java.lang.String,java.io.File)" class="member-name-link">glob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#IN()" class="member-name-link">IN</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#ioException(java.lang.Exception)" class="member-name-link">ioException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;ex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isFreePort(int)" class="member-name-link">isFreePort</a><wbr>(int&nbsp;port)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#listBreadthFirst(java.io.File)" class="member-name-link">listBreadthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#listDepthFirst(java.io.File)" class="member-name-link">listDepthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#makeRelative(java.io.File,java.io.File)" class="member-name-link">makeRelative</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;toFolder)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#mkdirs(java.io.File)" class="member-name-link">mkdirs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#normalizeSeparator(java.lang.String)" class="member-name-link">normalizeSeparator</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openInputStream(java.io.File)" class="member-name-link">openInputStream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openInputStream(java.lang.String)" class="member-name-link">openInputStream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openOutputStream(java.io.File)" class="member-name-link">openOutputStream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openOutputStream(java.lang.String)" class="member-name-link">openOutputStream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openReader(java.io.File)" class="member-name-link">openReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openReader(java.lang.String)" class="member-name-link">openReader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openSystemBrowser(java.lang.String)" class="member-name-link">openSystemBrowser</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openWriter(java.io.File)" class="member-name-link">openWriter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openWriter(java.io.File,boolean)" class="member-name-link">openWriter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ boolean&nbsp;append)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openWriter(java.lang.String)" class="member-name-link">openWriter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#OUT()" class="member-name-link">OUT</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#print(java.lang.StackTraceElement%5B%5D)" class="member-name-link">print</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StackTraceElement.html" title="class or interface in java.lang" class="external-link">StackTraceElement</a>[]&nbsp;elements)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#print(java.lang.StackTraceElement%5B%5D,java.io.PrintStream)" class="member-name-link">print</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StackTraceElement.html" title="class or interface in java.lang" class="external-link">StackTraceElement</a>[]&nbsp;elements,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;stream)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#print(java.lang.Throwable)" class="member-name-link">print</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#print(java.lang.Throwable,java.io.PrintStream)" class="member-name-link">print</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;stream)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readFile(java.io.File)" class="member-name-link">readFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readText(java.net.URL)" class="member-name-link">readText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URL.html" title="class or interface in java.net" class="external-link">URL</a>&nbsp;url)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readTextFile(java.io.File)" class="member-name-link">readTextFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#safeInput(java.io.File,org.eclipse.net4j.util.io.IORunnable)" class="member-name-link">safeInput</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a>&gt;&nbsp;runnable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#safeOutput(java.io.File,org.eclipse.net4j.util.io.IORunnable)" class="member-name-link">safeOutput</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a>&gt;&nbsp;runnable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#safeRead(java.io.File,org.eclipse.net4j.util.io.IORunnable)" class="member-name-link">safeRead</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a>&gt;&nbsp;runnable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;IO extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&gt;<br>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#safeRun(IO,org.eclipse.net4j.util.io.IORunnable)" class="member-name-link">safeRun</a><wbr>(IO&nbsp;io,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;IO&gt;&nbsp;runnable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#safeWrite(java.io.File,org.eclipse.net4j.util.io.IORunnable)" class="member-name-link">safeWrite</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a>&gt;&nbsp;runnable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#toString(java.lang.Throwable)" class="member-name-link">toString</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#visitBreadthFirst(java.io.File%5B%5D,org.eclipse.net4j.util.io.IOVisitor)" class="member-name-link">visitBreadthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>[]&nbsp;files,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#visitBreadthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)" class="member-name-link">visitBreadthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#visitDepthFirst(java.io.File%5B%5D,org.eclipse.net4j.util.io.IOVisitor)" class="member-name-link">visitDepthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>[]&nbsp;files,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#visitDepthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)" class="member-name-link">visitDepthFirst</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#writeFile(java.io.File,byte%5B%5D)" class="member-name-link">writeFile</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ byte[]&nbsp;bytes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#writeText(java.io.File,boolean,java.lang.String)" class="member-name-link">writeText</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ boolean&nbsp;append,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+</section>
 </li>
 </ul>
 </section>
+<section class="details">
+<ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="EOF">
+<h3>EOF</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">EOF</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.1</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.EOF">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_TIMEOUT">
+<h3>DEFAULT_TIMEOUT</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">DEFAULT_TIMEOUT</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.1</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="DEFAULT_BUFFER_SIZE">
+<h3>DEFAULT_BUFFER_SIZE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">DEFAULT_BUFFER_SIZE</span></div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.DEFAULT_BUFFER_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="WILDCARD_SINGLE_CHAR">
+<h3>WILDCARD_SINGLE_CHAR</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">WILDCARD_SINGLE_CHAR</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_SINGLE_CHAR">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="WILDCARD_MULTI_CHARS">
+<h3>WILDCARD_MULTI_CHARS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">WILDCARD_MULTI_CHARS</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_CHARS">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="WILDCARD_MULTI_DIRS">
+<h3>WILDCARD_MULTI_DIRS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">WILDCARD_MULTI_DIRS</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>2.0</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.io.IOUtil.WILDCARD_MULTI_DIRS">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="IN()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>IN</h4>
-<pre class="methodSignature">public static&nbsp;java.io.InputStream&nbsp;IN()</pre>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="IN()">
+<h3>IN</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a></span>&nbsp;<span class="element-name">IN</span>()</div>
+</section>
 </li>
-</ul>
-<a id="OUT()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>OUT</h4>
-<pre class="methodSignature">public static&nbsp;java.io.PrintStream&nbsp;OUT()</pre>
+<li>
+<section class="detail" id="OUT()">
+<h3>OUT</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a></span>&nbsp;<span class="element-name">OUT</span>()</div>
+</section>
 </li>
-</ul>
-<a id="ERR()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ERR</h4>
-<pre class="methodSignature">public static&nbsp;java.io.PrintStream&nbsp;ERR()</pre>
+<li>
+<section class="detail" id="ERR()">
+<h3>ERR</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a></span>&nbsp;<span class="element-name">ERR</span>()</div>
+</section>
 </li>
-</ul>
-<a id="ioException(java.lang.Exception)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>ioException</h4>
-<pre class="methodSignature">public static&nbsp;java.io.IOException&nbsp;ioException&#8203;(java.lang.Exception&nbsp;ex)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="ioException(java.lang.Exception)">
+<h3>ioException</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span>&nbsp;<span class="element-name">ioException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&nbsp;ex)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="print(java.lang.StackTraceElement[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>print</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;print&#8203;(java.lang.StackTraceElement[]&nbsp;elements)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="print(java.lang.StackTraceElement[])">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StackTraceElement.html" title="class or interface in java.lang" class="external-link">StackTraceElement</a>[]&nbsp;elements)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="print(java.lang.StackTraceElement[],java.io.PrintStream)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>print</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;print&#8203;(java.lang.StackTraceElement[]&nbsp;elements,
-                         java.io.PrintStream&nbsp;stream)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="print(java.lang.StackTraceElement[],java.io.PrintStream)">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StackTraceElement.html" title="class or interface in java.lang" class="external-link">StackTraceElement</a>[]&nbsp;elements,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;stream)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="print(java.lang.Throwable,java.io.PrintStream)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>print</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;print&#8203;(java.lang.Throwable&nbsp;t,
-                         java.io.PrintStream&nbsp;stream)</pre>
+<li>
+<section class="detail" id="print(java.lang.Throwable,java.io.PrintStream)">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="class or interface in java.io" class="external-link">PrintStream</a>&nbsp;stream)</span></div>
+</section>
 </li>
-</ul>
-<a id="print(java.lang.Throwable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>print</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;print&#8203;(java.lang.Throwable&nbsp;t)</pre>
+<li>
+<section class="detail" id="print(java.lang.Throwable)">
+<h3>print</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">print</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t)</span></div>
+</section>
 </li>
-</ul>
-<a id="toString(java.lang.Throwable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>toString</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;toString&#8203;(java.lang.Throwable&nbsp;t)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="toString(java.lang.Throwable)">
+<h3>toString</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">toString</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;t)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isFreePort(int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isFreePort</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isFreePort&#8203;(int&nbsp;port)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="isFreePort(int)">
+<h3>isFreePort</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFreePort</span><wbr><span class="parameters">(int&nbsp;port)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getFreePort()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getFreePort</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;getFreePort()
-                       throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getFreePort()">
+<h3>getFreePort</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getFreePort</span>()
+                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openSystemBrowser(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openSystemBrowser</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;openSystemBrowser&#8203;(java.lang.String&nbsp;url)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openSystemBrowser(java.lang.String)">
+<h3>openSystemBrowser</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">openSystemBrowser</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;url)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openInputStream(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openInputStream</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileInputStream&nbsp;openInputStream&#8203;(java.lang.String&nbsp;fileName)
-                                               throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openInputStream(java.lang.String)">
+<h3>openInputStream</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a></span>&nbsp;<span class="element-name">openInputStream</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</span>
+                                       throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openInputStream(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openInputStream</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileInputStream&nbsp;openInputStream&#8203;(java.io.File&nbsp;file)
-                                               throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openInputStream(java.io.File)">
+<h3>openInputStream</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a></span>&nbsp;<span class="element-name">openInputStream</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                                       throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openOutputStream(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openOutputStream</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileOutputStream&nbsp;openOutputStream&#8203;(java.lang.String&nbsp;fileName)
-                                                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openOutputStream(java.lang.String)">
+<h3>openOutputStream</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a></span>&nbsp;<span class="element-name">openOutputStream</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</span>
+                                         throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openOutputStream(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openOutputStream</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileOutputStream&nbsp;openOutputStream&#8203;(java.io.File&nbsp;file)
-                                                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openOutputStream(java.io.File)">
+<h3>openOutputStream</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a></span>&nbsp;<span class="element-name">openOutputStream</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                                         throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openReader(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openReader</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileReader&nbsp;openReader&#8203;(java.lang.String&nbsp;fileName)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openReader(java.lang.String)">
+<h3>openReader</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a></span>&nbsp;<span class="element-name">openReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</span>
+                             throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openReader(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openReader</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileReader&nbsp;openReader&#8203;(java.io.File&nbsp;file)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openReader(java.io.File)">
+<h3>openReader</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a></span>&nbsp;<span class="element-name">openReader</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                             throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openWriter(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openWriter</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileWriter&nbsp;openWriter&#8203;(java.lang.String&nbsp;fileName)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openWriter(java.lang.String)">
+<h3>openWriter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></span>&nbsp;<span class="element-name">openWriter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fileName)</span>
+                             throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openWriter(java.io.File,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openWriter</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileWriter&nbsp;openWriter&#8203;(java.io.File&nbsp;file,
-                                            boolean&nbsp;append)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openWriter(java.io.File,boolean)">
+<h3>openWriter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></span>&nbsp;<span class="element-name">openWriter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ boolean&nbsp;append)</span>
+                             throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openWriter(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openWriter</h4>
-<pre class="methodSignature">public static&nbsp;java.io.FileWriter&nbsp;openWriter&#8203;(java.io.File&nbsp;file)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="openWriter(java.io.File)">
+<h3>openWriter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a></span>&nbsp;<span class="element-name">openWriter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                             throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="closeSilent(java.io.Closeable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>closeSilent</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;closeSilent&#8203;(java.io.Closeable&nbsp;closeable)</pre>
+<li>
+<section class="detail" id="closeSilent(java.io.Closeable)">
+<h3>closeSilent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">closeSilent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&nbsp;closeable)</span></div>
+</section>
 </li>
-</ul>
-<a id="close(java.io.Closeable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;close&#8203;(java.io.Closeable&nbsp;closeable)
-                  throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="close(java.io.Closeable)">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&nbsp;closeable)</span>
+                  throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="closeSilent(org.eclipse.net4j.util.collection.Closeable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>closeSilent</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;closeSilent&#8203;(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</pre>
+<li>
+<section class="detail" id="closeSilent(org.eclipse.net4j.util.collection.Closeable)">
+<h3>closeSilent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">closeSilent</span><wbr><span class="parameters">(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</span></div>
+</section>
 </li>
-</ul>
-<a id="close(org.eclipse.net4j.util.collection.Closeable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;close&#8203;(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)
-                  throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="close(org.eclipse.net4j.util.collection.Closeable)">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="../collection/Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a>&nbsp;closeable)</span>
+                  throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="flushSilent(java.io.Flushable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>flushSilent</h4>
-<pre class="methodSignature">public static&nbsp;java.io.IOException&nbsp;flushSilent&#8203;(java.io.Flushable&nbsp;flushable)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="flushSilent(java.io.Flushable)">
+<h3>flushSilent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span>&nbsp;<span class="element-name">flushSilent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Flushable.html" title="class or interface in java.io" class="external-link">Flushable</a>&nbsp;flushable)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="flush(java.io.Flushable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>flush</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;flush&#8203;(java.io.Flushable&nbsp;flushable)
-                  throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="flush(java.io.Flushable)">
+<h3>flush</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">flush</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Flushable.html" title="class or interface in java.io" class="external-link">Flushable</a>&nbsp;flushable)</span>
+                  throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.3</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="makeRelative(java.io.File,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>makeRelative</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;makeRelative&#8203;(java.io.File&nbsp;file,
-                                            java.io.File&nbsp;toFolder)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="makeRelative(java.io.File,java.io.File)">
+<h3>makeRelative</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">makeRelative</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;toFolder)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="normalizeSeparator(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>normalizeSeparator</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;normalizeSeparator&#8203;(java.lang.String&nbsp;string)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="normalizeSeparator(java.lang.String)">
+<h3>normalizeSeparator</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">normalizeSeparator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;string)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="mkdirs(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>mkdirs</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;mkdirs&#8203;(java.io.File&nbsp;folder)</pre>
+<li>
+<section class="detail" id="mkdirs(java.io.File)">
+<h3>mkdirs</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">mkdirs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder)</span></div>
+</section>
 </li>
-</ul>
-<a id="delete(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>delete</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;delete&#8203;(java.io.File&nbsp;file)</pre>
+<li>
+<section class="detail" id="delete(java.io.File)">
+<h3>delete</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">delete</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span></div>
+</section>
 </li>
-</ul>
-<a id="copyTree(java.io.File,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyTree</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copyTree&#8203;(java.io.File&nbsp;source,
-                            java.io.File&nbsp;target)
-                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copyTree(java.io.File,java.io.File)">
+<h3>copyTree</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyTree</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyTrees(java.util.Collection,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyTrees</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copyTrees&#8203;(java.util.Collection&lt;java.io.File&gt;&nbsp;sources,
-                             java.io.File&nbsp;target)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copyTrees(java.util.Collection,java.io.File)">
+<h3>copyTrees</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyTrees</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;&nbsp;sources,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyText(java.io.File,java.io.File,org.eclipse.net4j.util.io.IOFilter...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyText</h4>
-<pre class="methodSignature">@SafeVarargs
-public static&nbsp;void&nbsp;copyText&#8203;(java.io.File&nbsp;source,
-                            java.io.File&nbsp;target,
-                            <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)
-                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copyText(java.io.File,java.io.File,org.eclipse.net4j.util.io.IOFilter...)">
+<h3>copyText</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/SafeVarargs.html" title="class or interface in java.lang" class="external-link">@SafeVarargs</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target,
+ <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;...&nbsp;lineFilters)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyText(java.io.BufferedReader,java.io.BufferedWriter,org.eclipse.net4j.util.io.IOFilter...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyText</h4>
-<pre class="methodSignature">@SafeVarargs
-public static&nbsp;void&nbsp;copyText&#8203;(java.io.BufferedReader&nbsp;reader,
-                            java.io.BufferedWriter&nbsp;writer,
-                            <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;java.lang.String&gt;...&nbsp;lineFilters)</pre>
+<li>
+<section class="detail" id="copyText(java.io.BufferedReader,java.io.BufferedWriter,org.eclipse.net4j.util.io.IOFilter...)">
+<h3>copyText</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/SafeVarargs.html" title="class or interface in java.lang" class="external-link">@SafeVarargs</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedReader.html" title="class or interface in java.io" class="external-link">BufferedReader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/BufferedWriter.html" title="class or interface in java.io" class="external-link">BufferedWriter</a>&nbsp;writer,
+ <a href="IOFilter.html" title="interface in org.eclipse.net4j.util.io">IOFilter</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;...&nbsp;lineFilters)</span></div>
+</section>
 </li>
-</ul>
-<a id="copyBinary(java.io.InputStream,java.io.OutputStream)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyBinary</h4>
-<pre class="methodSignature">public static&nbsp;long&nbsp;copyBinary&#8203;(java.io.InputStream&nbsp;inputStream,
-                              java.io.OutputStream&nbsp;outputStream)
-                       throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="copyBinary(java.io.InputStream,java.io.OutputStream)">
+<h3>copyBinary</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">copyBinary</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;inputStream,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;outputStream)</span>
+                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyBinary(java.io.InputStream,java.io.OutputStream,long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyBinary</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copyBinary&#8203;(java.io.InputStream&nbsp;inputStream,
-                              java.io.OutputStream&nbsp;outputStream,
-                              long&nbsp;size)
-                       throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="copyBinary(java.io.InputStream,java.io.OutputStream,long)">
+<h3>copyBinary</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyBinary</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;inputStream,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;outputStream,
+ long&nbsp;size)</span>
+                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyCharacter(java.io.Reader,java.io.Writer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyCharacter</h4>
-<pre class="methodSignature">public static&nbsp;long&nbsp;copyCharacter&#8203;(java.io.Reader&nbsp;reader,
-                                 java.io.Writer&nbsp;writer)
-                          throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="copyCharacter(java.io.Reader,java.io.Writer)">
+<h3>copyCharacter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">copyCharacter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyCharacter(java.io.Reader,java.io.Writer,long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyCharacter</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copyCharacter&#8203;(java.io.Reader&nbsp;reader,
-                                 java.io.Writer&nbsp;writer,
-                                 long&nbsp;size)
-                          throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="copyCharacter(java.io.Reader,java.io.Writer,long)">
+<h3>copyCharacter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyCharacter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer,
+ long&nbsp;size)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copy(java.io.InputStream,java.io.OutputStream,int,byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copy</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;copy&#8203;(java.io.InputStream&nbsp;input,
-                       java.io.OutputStream&nbsp;output,
-                       int&nbsp;size,
-                       byte[]&nbsp;buffer)
-                throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copy(java.io.InputStream,java.io.OutputStream,int,byte[])">
+<h3>copy</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ int&nbsp;size,
+ byte[]&nbsp;buffer)</span>
+                throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copy(java.io.InputStream,java.io.OutputStream,byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copy</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copy&#8203;(java.io.InputStream&nbsp;input,
-                        java.io.OutputStream&nbsp;output,
-                        byte[]&nbsp;buffer)
-                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copy(java.io.InputStream,java.io.OutputStream,byte[])">
+<h3>copy</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ byte[]&nbsp;buffer)</span>
+                 throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copy(java.io.InputStream,java.io.OutputStream,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copy</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copy&#8203;(java.io.InputStream&nbsp;input,
-                        java.io.OutputStream&nbsp;output,
-                        int&nbsp;bufferSize)
-                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copy(java.io.InputStream,java.io.OutputStream,int)">
+<h3>copy</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output,
+ int&nbsp;bufferSize)</span>
+                 throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copy(java.io.InputStream,java.io.OutputStream)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copy</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copy&#8203;(java.io.InputStream&nbsp;input,
-                        java.io.OutputStream&nbsp;output)
-                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copy(java.io.InputStream,java.io.OutputStream)">
+<h3>copy</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copy</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="class or interface in java.io" class="external-link">OutputStream</a>&nbsp;output)</span>
+                 throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copyFile(java.io.File,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copyFile</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;copyFile&#8203;(java.io.File&nbsp;source,
-                            java.io.File&nbsp;target)
-                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="copyFile(java.io.File,java.io.File)">
+<h3>copyFile</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;source,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;target)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="NIOUtil.html#copyFile(java.io.File,java.io.File)"><code>NIOUtil.copyFile(File, File)</code></a></dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="NIOUtil.html#copyFile(java.io.File,java.io.File)"><code>NIOUtil.copyFile(File, File)</code></a></li>
+</ul>
+</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readText(java.net.URL)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readText</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;readText&#8203;(java.net.URL&nbsp;url)
-                                 throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="readText(java.net.URL)">
+<h3>readText</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">readText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URL.html" title="class or interface in java.net" class="external-link">URL</a>&nbsp;url)</span>
+                       throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.4</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readTextFile(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readTextFile</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;readTextFile&#8203;(java.io.File&nbsp;file)
-                                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="readTextFile(java.io.File)">
+<h3>readTextFile</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">readTextFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                           throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readFile(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readFile</h4>
-<pre class="methodSignature">public static&nbsp;byte[]&nbsp;readFile&#8203;(java.io.File&nbsp;file)
-                       throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="readFile(java.io.File)">
+<h3>readFile</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">byte[]</span>&nbsp;<span class="element-name">readFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                       throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="writeFile(java.io.File,byte[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>writeFile</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;writeFile&#8203;(java.io.File&nbsp;file,
-                             byte[]&nbsp;bytes)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="writeFile(java.io.File,byte[])">
+<h3>writeFile</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeFile</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ byte[]&nbsp;bytes)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="writeText(java.io.File,boolean,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>writeText</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;writeText&#8203;(java.io.File&nbsp;file,
-                             boolean&nbsp;append,
-                             java.lang.String&nbsp;text)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="writeText(java.io.File,boolean,java.lang.String)">
+<h3>writeText</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">writeText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ boolean&nbsp;append,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;text)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.9</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="listDepthFirst(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>listDepthFirst</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.io.File&gt;&nbsp;listDepthFirst&#8203;(java.io.File&nbsp;file)</pre>
+<li>
+<section class="detail" id="listDepthFirst(java.io.File)">
+<h3>listDepthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">listDepthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span></div>
+</section>
 </li>
-</ul>
-<a id="listBreadthFirst(java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>listBreadthFirst</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.io.File&gt;&nbsp;listBreadthFirst&#8203;(java.io.File&nbsp;file)</pre>
+<li>
+<section class="detail" id="listBreadthFirst(java.io.File)">
+<h3>listBreadthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">listBreadthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span></div>
+</section>
 </li>
-</ul>
-<a id="visitDepthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>visitDepthFirst</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;visitDepthFirst&#8203;(java.io.File&nbsp;file,
-                                   <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)
-                            throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="visitDepthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">
+<h3>visitDepthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitDepthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</span>
+                            throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="visitDepthFirst(java.io.File[],org.eclipse.net4j.util.io.IOVisitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>visitDepthFirst</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;visitDepthFirst&#8203;(java.io.File[]&nbsp;files,
-                                   <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</pre>
+<li>
+<section class="detail" id="visitDepthFirst(java.io.File[],org.eclipse.net4j.util.io.IOVisitor)">
+<h3>visitDepthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitDepthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>[]&nbsp;files,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</span></div>
+</section>
 </li>
-</ul>
-<a id="visitBreadthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>visitBreadthFirst</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;visitBreadthFirst&#8203;(java.io.File&nbsp;file,
-                                     <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)
-                              throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="visitBreadthFirst(java.io.File,org.eclipse.net4j.util.io.IOVisitor)">
+<h3>visitBreadthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitBreadthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</span>
+                              throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="visitBreadthFirst(java.io.File[],org.eclipse.net4j.util.io.IOVisitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>visitBreadthFirst</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;visitBreadthFirst&#8203;(java.io.File[]&nbsp;files,
-                                     <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)
-                              throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="visitBreadthFirst(java.io.File[],org.eclipse.net4j.util.io.IOVisitor)">
+<h3>visitBreadthFirst</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">visitBreadthFirst</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>[]&nbsp;files,
+ <a href="IOVisitor.html" title="interface in org.eclipse.net4j.util.io">IOVisitor</a>&nbsp;visitor)</span>
+                              throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="safeRun(java.io.Closeable,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a><a id="safeRun(IO,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>safeRun</h4>
-<pre class="methodSignature">public static&nbsp;&lt;IO extends java.io.Closeable&gt;&nbsp;void&nbsp;safeRun&#8203;(IO&nbsp;io,
-                                                          <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;IO&gt;&nbsp;runnable)
-                                                   throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="safeRun(IO,org.eclipse.net4j.util.io.IORunnable)">
+<h3 id="safeRun(java.io.Closeable,org.eclipse.net4j.util.io.IORunnable)">safeRun</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;IO extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a>&gt;</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">safeRun</span><wbr><span class="parameters">(IO&nbsp;io,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;IO&gt;&nbsp;runnable)</span>
+                                           throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="safeInput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>safeInput</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;safeInput&#8203;(java.io.File&nbsp;file,
-                             <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileInputStream&gt;&nbsp;runnable)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="safeInput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
+<h3>safeInput</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">safeInput</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a>&gt;&nbsp;runnable)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="safeOutput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>safeOutput</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;safeOutput&#8203;(java.io.File&nbsp;file,
-                              <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileOutputStream&gt;&nbsp;runnable)
-                       throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="safeOutput(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
+<h3>safeOutput</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">safeOutput</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileOutputStream.html" title="class or interface in java.io" class="external-link">FileOutputStream</a>&gt;&nbsp;runnable)</span>
+                       throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="safeRead(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>safeRead</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;safeRead&#8203;(java.io.File&nbsp;file,
-                            <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileReader&gt;&nbsp;runnable)
-                     throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="safeRead(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
+<h3>safeRead</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">safeRead</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileReader.html" title="class or interface in java.io" class="external-link">FileReader</a>&gt;&nbsp;runnable)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="safeWrite(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>safeWrite</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;safeWrite&#8203;(java.io.File&nbsp;file,
-                             <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;java.io.FileWriter&gt;&nbsp;runnable)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="safeWrite(java.io.File,org.eclipse.net4j.util.io.IORunnable)">
+<h3>safeWrite</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">safeWrite</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file,
+ <a href="IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a>&gt;&nbsp;runnable)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="equals(java.io.InputStream,java.io.InputStream)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>equals</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;equals&#8203;(java.io.InputStream&nbsp;stream1,
-                             java.io.InputStream&nbsp;stream2)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="equals(java.io.InputStream,java.io.InputStream)">
+<h3>equals</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;stream1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;stream2)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="equals(java.io.Reader,java.io.Reader)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>equals</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;equals&#8203;(java.io.Reader&nbsp;reader1,
-                             java.io.Reader&nbsp;reader2)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="equals(java.io.Reader,java.io.Reader)">
+<h3>equals</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Reader.html" title="class or interface in java.io" class="external-link">Reader</a>&nbsp;reader2)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="equals(java.io.File,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>equals</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;equals&#8203;(java.io.File&nbsp;file1,
-                             java.io.File&nbsp;file2)
-                      throws <a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="equals(java.io.File,java.io.File)">
+<h3>equals</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">equals</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file1,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file2)</span>
+                      throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="glob(java.lang.String,java.io.File)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>glob</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.io.File&gt;&nbsp;glob&#8203;(java.lang.String&nbsp;pattern,
-                                                java.io.File&nbsp;folder)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="glob(java.lang.String,java.io.File)">
+<h3>glob</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&gt;</span>&nbsp;<span class="element-name">glob</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;pattern,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/IOUtil.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

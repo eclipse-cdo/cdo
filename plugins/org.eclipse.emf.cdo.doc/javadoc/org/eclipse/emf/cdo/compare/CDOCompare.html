@@ -1,555 +1,378 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOCompare (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.compare, class: CDOCompare">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="CDOCompare (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOCompare.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.compare</a></div>
-<h2 title="Class CDOCompare" class="title">Class CDOCompare</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.compare</a></div>
+<h1 title="Class CDOCompare" class="title">Class CDOCompare</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.emf.cdo.compare.CDOCompare</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.emf.cdo.compare.CDOCompare</div>
+</div>
+<section class="class-description" id="class-description">
 <hr>
-<pre>public class <span class="typeNameLabel">CDOCompare</span>
-extends java.lang.Object</pre>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOCompare</span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A class with many overridable factory methods that help to create EMF <code>comparisons</code>.</div>
-<dl>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dl class="notes">
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDODiffEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOCompare.CDODiffEngine.html" class="type-name-link" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDODiffEngine</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">A <code>diff engine</code> that <a href="CDOCompare.CDODiffEngine.html#createFeatureFilter()"><code>creates</code></a> and uses CDO-specific <code>feature filters</code>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOFeatureFilter.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></span></code></th>
-<td class="colLast">
-<div class="block">A CDO-specific <code>feature filter</code> that uses <a href="../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
- to determine whether a <code>feature</code> is <a href="CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></span></code></th>
-<td class="colLast">
-<div class="block">An <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOMatchEngine.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></span></code></th>
-<td class="colLast">
-<div class="block">A <code>match engine</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOCompare.CDOMatcher.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></span></code></th>
-<td class="colLast">
-<div class="block">A <code>matcher</code> that treats <code>resources</code> as <code>EObjects</code>.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">CDOCompare</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.compare.Comparison</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#compare(org.eclipse.emf.compare.scope.IComparisonScope)">compare</a></span>&#8203;(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.EMFCompare</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">createComparator</a></span>&#8203;(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
-                org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.EMFCompare.Builder</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparatorBuilder()">createComparatorBuilder</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IComparisonFactory</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)">createComparisonFactory</a></span>&#8203;(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.conflict.IConflictDetector</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createConflictDetector()">createConflictDetector</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.diff.IDiffEngine</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDiffEngine()">createDiffEngine</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IEqualityHelperFactory</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createEqualityHelperFactory()">createEqualityHelperFactory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.equi.IEquiEngine</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createEquivalenceEngine()">createEquivalenceEngine</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>protected <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createIDFunction()">createIDFunction</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">createMatchEngineFactoryRegistry</a></span>&#8203;(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
-                                org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMatcher(com.google.common.base.Function)">createMatcher</a></span>&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idFunction)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createPostProcessorRegistry()">createPostProcessorRegistry</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.emf.compare.req.IReqEngine</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRequirementEngine()">createRequirementEngine</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getScope(org.eclipse.emf.compare.Comparison)">getScope</a></span>&#8203;(org.eclipse.emf.compare.Comparison&nbsp;comparison)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-</li>
-</ul>
-</section>
-</li>
-</ul>
 </div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>CDOCompare</h4>
-<pre>public&nbsp;CDOCompare()</pre>
+<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOCompare.CDOFeatureFilter.html" class="type-name-link" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOFeatureFilter</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A CDO-specific <code>feature filter</code> that uses <a href="../common/model/EMFUtil.html#isPersistent(org.eclipse.emf.ecore.EStructuralFeature)"><code>EMFUtil.isPersistent()</code></a>
+ to determine whether a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a> is <a href="CDOCompare.CDOFeatureFilter.html#isTransient(org.eclipse.emf.ecore.EStructuralFeature)"><code>transient</code></a>, or not.</div>
+</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOCompare.CDOIDFunction.html" class="type-name-link" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">An <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare"><code>ID function</code></a> that considers the <a href="../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>s of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOCompare.CDOMatchEngine.html" class="type-name-link" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatchEngine</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A <code>match engine</code> that treats <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObjects</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOCompare.CDOMatcher.html" class="type-name-link" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOMatcher</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A <code>matcher</code> that treats <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObjects</code></a>.</div>
+</div>
+</div>
+</section>
 </li>
-</ul>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<li>
+<section class="constructor-summary" id="constructor-summary">
+<h2>Constructor Summary</h2>
+<div class="caption"><span>Constructors</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CDOCompare</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.emf.compare.Comparison</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compare(org.eclipse.emf.compare.scope.IComparisonScope)" class="member-name-link">compare</a><wbr>(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#create()" class="member-name-link">create</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.EMFCompare</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)" class="member-name-link">createComparator</a><wbr>(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+ org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.EMFCompare.Builder</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createComparatorBuilder()" class="member-name-link">createComparatorBuilder</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.match.IComparisonFactory</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)" class="member-name-link">createComparisonFactory</a><wbr>(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.conflict.IConflictDetector</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createConflictDetector()" class="member-name-link">createConflictDetector</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.diff.IDiffEngine</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createDiffEngine()" class="member-name-link">createDiffEngine</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.match.IEqualityHelperFactory</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEqualityHelperFactory()" class="member-name-link">createEqualityHelperFactory</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.equi.IEquiEngine</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEquivalenceEngine()" class="member-name-link">createEquivalenceEngine</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIDFunction()" class="member-name-link">createIDFunction</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)" class="member-name-link">createMatchEngineFactoryRegistry</a><wbr>(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+ org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createMatcher(com.google.common.base.Function)" class="member-name-link">createMatcher</a><wbr>(com.google.common.base.Function&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;idFunction)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPostProcessorRegistry()" class="member-name-link">createPostProcessorRegistry</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.emf.compare.req.IReqEngine</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createRequirementEngine()" class="member-name-link">createRequirementEngine</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static org.eclipse.emf.compare.scope.IComparisonScope</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getScope(org.eclipse.emf.compare.Comparison)" class="member-name-link">getScope</a><wbr>(org.eclipse.emf.compare.Comparison&nbsp;comparison)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As 4.7 use <a href="CDOCompareUtil.html#getScope(org.eclipse.emf.compare.Comparison)"><code>CDOCompareUtil.getScope(Comparison)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setCompareSupplier(java.util.function.Supplier)" class="member-name-link">setCompareSupplier</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a>&gt;&nbsp;supplier)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#useRCPRegistries()" class="member-name-link">useRCPRegistries</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+</section>
 </li>
 </ul>
 </section>
+<section class="details">
+<ul class="details-list">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<li>
+<section class="constructor-details" id="constructor-detail">
+<h2>Constructor Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>CDOCompare</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOCompare</span>()</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="compare(org.eclipse.emf.compare.scope.IComparisonScope)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>compare</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.compare.Comparison&nbsp;compare&#8203;(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</pre>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="useRCPRegistries()">
+<h3>useRCPRegistries</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">useRCPRegistries</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.6</dd>
+</dl>
+</section>
 </li>
-</ul>
-<a id="createIDFunction()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createIDFunction</h4>
-<pre class="methodSignature">protected&nbsp;<a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a>&nbsp;createIDFunction()</pre>
+<li>
+<section class="detail" id="compare(org.eclipse.emf.compare.scope.IComparisonScope)">
+<h3>compare</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.Comparison</span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(org.eclipse.emf.compare.scope.IComparisonScope&nbsp;scope)</span></div>
+</section>
 </li>
-</ul>
-<a id="createMatcher(com.google.common.base.Function)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createMatcher</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher&nbsp;createMatcher&#8203;(com.google.common.base.Function&lt;org.eclipse.emf.ecore.EObject,&#8203;java.lang.String&gt;&nbsp;idFunction)</pre>
+<li>
+<section class="detail" id="createIDFunction()">
+<h3>createIDFunction</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="CDOCompare.CDOIDFunction.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare.CDOIDFunction</a></span>&nbsp;<span class="element-name">createIDFunction</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createEqualityHelperFactory()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createEqualityHelperFactory</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;createEqualityHelperFactory()</pre>
+<li>
+<section class="detail" id="createMatcher(com.google.common.base.Function)">
+<h3>createMatcher</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.match.eobject.IdentifierEObjectMatcher</span>&nbsp;<span class="element-name">createMatcher</span><wbr><span class="parameters">(com.google.common.base.Function&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;idFunction)</span></div>
+</section>
 </li>
-</ul>
-<a id="createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createComparisonFactory</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.IComparisonFactory&nbsp;createComparisonFactory&#8203;(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</pre>
+<li>
+<section class="detail" id="createEqualityHelperFactory()">
+<h3>createEqualityHelperFactory</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.match.IEqualityHelperFactory</span>&nbsp;<span class="element-name">createEqualityHelperFactory</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createComparatorBuilder()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createComparatorBuilder</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.EMFCompare.Builder&nbsp;createComparatorBuilder()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createComparisonFactory(org.eclipse.emf.compare.match.IEqualityHelperFactory)">
+<h3>createComparisonFactory</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.match.IComparisonFactory</span>&nbsp;<span class="element-name">createComparisonFactory</span><wbr><span class="parameters">(org.eclipse.emf.compare.match.IEqualityHelperFactory&nbsp;equalityHelperFactory)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="createComparatorBuilder()">
+<h3>createComparatorBuilder</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.EMFCompare.Builder</span>&nbsp;<span class="element-name">createComparatorBuilder</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createComparator</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.EMFCompare&nbsp;createComparator&#8203;(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
-                                                              org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</pre>
+<li>
+<section class="detail" id="createComparator(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">
+<h3>createComparator</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.EMFCompare</span>&nbsp;<span class="element-name">createComparator</span><wbr><span class="parameters">(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+ org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</span></div>
+</section>
 </li>
-</ul>
-<a id="createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createMatchEngineFactoryRegistry</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry&nbsp;createMatchEngineFactoryRegistry&#8203;(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
-                                                                                                       org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</pre>
+<li>
+<section class="detail" id="createMatchEngineFactoryRegistry(org.eclipse.emf.compare.match.eobject.IEObjectMatcher,org.eclipse.emf.compare.match.IComparisonFactory)">
+<h3>createMatchEngineFactoryRegistry</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.match.IMatchEngine.Factory.Registry</span>&nbsp;<span class="element-name">createMatchEngineFactoryRegistry</span><wbr><span class="parameters">(org.eclipse.emf.compare.match.eobject.IEObjectMatcher&nbsp;matcher,
+ org.eclipse.emf.compare.match.IComparisonFactory&nbsp;comparisonFactory)</span></div>
+</section>
 </li>
-</ul>
-<a id="createDiffEngine()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createDiffEngine</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.diff.IDiffEngine&nbsp;createDiffEngine()</pre>
+<li>
+<section class="detail" id="createDiffEngine()">
+<h3>createDiffEngine</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.diff.IDiffEngine</span>&nbsp;<span class="element-name">createDiffEngine</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createRequirementEngine()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createRequirementEngine</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.req.IReqEngine&nbsp;createRequirementEngine()</pre>
+<li>
+<section class="detail" id="createRequirementEngine()">
+<h3>createRequirementEngine</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.req.IReqEngine</span>&nbsp;<span class="element-name">createRequirementEngine</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createEquivalenceEngine()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createEquivalenceEngine</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.equi.IEquiEngine&nbsp;createEquivalenceEngine()</pre>
+<li>
+<section class="detail" id="createEquivalenceEngine()">
+<h3>createEquivalenceEngine</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.equi.IEquiEngine</span>&nbsp;<span class="element-name">createEquivalenceEngine</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createPostProcessorRegistry()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createPostProcessorRegistry</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;&nbsp;createPostProcessorRegistry()</pre>
+<li>
+<section class="detail" id="createPostProcessorRegistry()">
+<h3>createPostProcessorRegistry</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.postprocessor.IPostProcessor.Descriptor.Registry&lt;?&gt;</span>&nbsp;<span class="element-name">createPostProcessorRegistry</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createConflictDetector()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createConflictDetector</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.emf.compare.conflict.IConflictDetector&nbsp;createConflictDetector()</pre>
+<li>
+<section class="detail" id="createConflictDetector()">
+<h3>createConflictDetector</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.conflict.IConflictDetector</span>&nbsp;<span class="element-name">createConflictDetector</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getScope(org.eclipse.emf.compare.Comparison)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getScope</h4>
-<pre class="methodSignature">public static&nbsp;org.eclipse.emf.compare.scope.IComparisonScope&nbsp;getScope&#8203;(org.eclipse.emf.compare.Comparison&nbsp;comparison)</pre>
+<li>
+<section class="detail" id="create()">
+<h3>create</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a></span>&nbsp;<span class="element-name">create</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.7</dd>
+</dl>
+</section>
 </li>
-</ul>
+<li>
+<section class="detail" id="setCompareSupplier(java.util.function.Supplier)">
+<h3>setCompareSupplier</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCompareSupplier</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="class or interface in java.util.function" class="external-link">Supplier</a>&lt;<a href="CDOCompare.html" title="class in org.eclipse.emf.cdo.compare">CDOCompare</a>&gt;&nbsp;supplier)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.7</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getScope(org.eclipse.emf.compare.Comparison)">
+<h3>getScope</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.emf.compare.scope.IComparisonScope</span>&nbsp;<span class="element-name">getScope</span><wbr><span class="parameters">(org.eclipse.emf.compare.Comparison&nbsp;comparison)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As 4.7 use <a href="CDOCompareUtil.html#getScope(org.eclipse.emf.compare.Comparison)"><code>CDOCompareUtil.getScope(Comparison)</code></a>.</div>
+</div>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/CDOCompare.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

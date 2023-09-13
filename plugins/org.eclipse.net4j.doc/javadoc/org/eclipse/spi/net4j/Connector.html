@@ -1,1182 +1,770 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>Connector (Net4j Signalling Platform Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.spi.net4j, class: Connector">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="Connector (Net4j Signalling Platform Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":6,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/Connector.html">Use</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.spi.net4j</a></div>
-<h2 title="Class Connector" class="title">Class Connector</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.spi.net4j</a></div>
+<h1 title="Class Connector" class="title">Class Connector</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.event.Notifier</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.lifecycle.Lifecycle</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.lifecycle.ShareableLifecycle</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.container.Container&lt;<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</li>
-<li>
-<ul class="inheritance">
-<li><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">org.eclipse.spi.net4j.ChannelMultiplexer</a></li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.spi.net4j.Connector</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.net4j.util.event.Notifier
+<div class="inheritance">org.eclipse.net4j.util.lifecycle.Lifecycle
+<div class="inheritance">org.eclipse.net4j.util.lifecycle.ShareableLifecycle
+<div class="inheritance">org.eclipse.net4j.util.container.Container&lt;<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;
+<div class="inheritance"><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">org.eclipse.spi.net4j.ChannelMultiplexer</a>
+<div class="inheritance">org.eclipse.spi.net4j.Connector</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
 <dd><code><a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code>, <code><a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></code>, <code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code>, <code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../../net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&gt;</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code>, <code>org.eclipse.net4j.util.security.INegotiatorAware</code>, <code>org.eclipse.net4j.util.security.IUserAware</code>, <code><a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></code>, <code><a href="InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</a></code>, <code><a href="InverseCloseable.html" title="interface in org.eclipse.spi.net4j">InverseCloseable</a></code></dd>
 </dl>
 <hr>
-<pre>public abstract class <span class="typeNameLabel">Connector</span>
-extends <a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a>
-implements <a href="InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</a></pre>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Connector</span>
+<span class="extends-implements">extends <a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a>
+implements <a href="InternalConnector.html" title="interface in org.eclipse.spi.net4j">InternalConnector</a></span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.buffer.IBufferProvider">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.buffer.<a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></h3>
-<code><a href="../../net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a>, <a href="../../net4j/buffer/IBufferProvider.Notification.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Notification</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
-<code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E extends java.lang.Object&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E extends java.lang.Object&gt;</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
-<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.ILocationAware">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.<a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></h3>
-<code><a href="../../net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.spi.net4j.InternalChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h3>
-<code><a href="InternalChannelMultiplexer.BufferMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer.BufferMultiplexer</a></code></li>
-</ul>
-</li>
-</ul>
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.buffer.IBufferProvider">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.buffer.<a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></h2>
+<code><a href="../../net4j/buffer/IBufferProvider.Introspection.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Introspection</a>, <a href="../../net4j/buffer/IBufferProvider.Notification.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider.Notification</a></code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h2>
+<code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
+<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.ILocationAware">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.<a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></h2>
+<code><a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.spi.net4j.InternalChannelMultiplexer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h2>
+<code><a href="InternalChannelMultiplexer.BufferMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer.BufferMultiplexer</a></code></div>
 </section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
-<!--   -->
-</a>
-<h3>Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.Lifecycle</h3>
-<code>USE_LABEL</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.channel.IChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.channel.<a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></h3>
-<code><a href="../../net4j/channel/IChannelMultiplexer.html#DEFAULT_OPEN_CHANNEL_TIMEOUT">DEFAULT_OPEN_CHANNEL_TIMEOUT</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#NO_CHANNEL_TIMEOUT">NO_CHANNEL_TIMEOUT</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.net4j.connector.IConnector">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.net4j.connector.<a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></h3>
-<code><a href="../../net4j/connector/IConnector.html#NO_TIMEOUT">NO_TIMEOUT</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.org.eclipse.spi.net4j.InternalChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h3>
-<code><a href="InternalChannelMultiplexer.html#CONTEXT_MULTIPLEXER">CONTEXT_MULTIPLEXER</a>, <a href="InternalChannelMultiplexer.html#RESERVED_CHANNEL">RESERVED_CHANNEL</a></code></li>
-</ul>
-</li>
-</ul>
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.Lifecycle</h3>
+<code>USE_LABEL</code></div>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-org.eclipse.net4j.channel.IChannelMultiplexer">Fields inherited from interface&nbsp;org.eclipse.net4j.channel.<a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></h3>
+<code><a href="../../net4j/channel/IChannelMultiplexer.html#DEFAULT_OPEN_CHANNEL_TIMEOUT">DEFAULT_OPEN_CHANNEL_TIMEOUT</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#NO_CHANNEL_TIMEOUT">NO_CHANNEL_TIMEOUT</a></code></div>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-org.eclipse.net4j.connector.IConnector">Fields inherited from interface&nbsp;org.eclipse.net4j.connector.<a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></h3>
+<code><a href="../../net4j/connector/IConnector.html#NO_TIMEOUT">NO_TIMEOUT</a></code></div>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-org.eclipse.spi.net4j.InternalChannelMultiplexer">Fields inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h3>
+<code><a href="InternalChannelMultiplexer.html#CONTEXT_MULTIPLEXER">CONTEXT_MULTIPLEXER</a>, <a href="InternalChannelMultiplexer.html#RESERVED_CHANNEL">RESERVED_CHANNEL</a></code></div>
 </section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">Connector</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close()">close</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connect()">connect</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Synchronous connect with infinite timeout value.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connect(long)">connect</a></span>&#8203;(long&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Synchronous connect.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#connectAsync()">connectAsync</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Asynchronous connect.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>protected abstract org.eclipse.net4j.util.security.INegotiationContext</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createNegotiationContext()">createNegotiationContext</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</a></span>&#8203;(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doActivate()">doActivate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doBeforeActivate()">doBeforeActivate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">doBeforeOpenChannel</a></span>&#8203;(<a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#doDeactivate()">doDeactivate</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>short</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBufferCapacity()">getBufferCapacity</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the capacity of the buffers provided by <a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()"><code>IBufferProvider.provideBuffer()</code></a> .</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLocation()">getLocation</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the location of this object in a <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>org.eclipse.net4j.util.security.INegotiationContext</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNegotiationContext()">getNegotiationContext</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>protected org.eclipse.net4j.util.security.NegotiationException</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNegotiationException()">getNegotiationException</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>org.eclipse.net4j.util.security.INegotiator</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getNegotiator()">getNegotiator</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getState()">getState</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Returns the current state of this connector.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getURL()">getURL</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserID()">getUserID</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)">initChannel</a></span>&#8203;(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
-           <a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isClient()">isClient</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
-</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isClosed()">isClosed</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isConnected()">isConnected</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Same as <code><a href="../../net4j/connector/IConnector.html#getState()"><code>IConnector.getState()</code></a> == <a href="../../net4j/connector/ConnectorState.html#CONNECTED"><code>ConnectorState.CONNECTED</code></a></code>.</div>
-</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isConnecting()">isConnecting</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDeferredActivation()">isDeferredActivation</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isDisconnected()">isDisconnected</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isNegotiating()">isNegotiating</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isServer()">isServer</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
-</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#leaveConnecting()">leaveConnecting</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i28" class="altColor">
-<td class="colFirst"><code><a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#provideBuffer()">provideBuffer</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Provides a buffer from this <code>BufferProvider</code>.</div>
-</td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</a></span>&#8203;(<a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></th>
-<td class="colLast">
-<div class="block">Retains a buffer to this <code>BufferProvider</code>.</div>
-</td>
-</tr>
-<tr id="i30" class="altColor">
-<td class="colFirst"><code>protected void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)">setNegotiationException</a></span>&#8203;(org.eclipse.net4j.util.security.NegotiationException&nbsp;negotiationException)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i31" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setNegotiator(org.eclipse.net4j.util.security.INegotiator)">setNegotiator</a></span>&#8203;(org.eclipse.net4j.util.security.INegotiator&nbsp;negotiator)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i32" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setState(org.eclipse.net4j.connector.ConnectorState)">setState</a></span>&#8203;(<a href="../../net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserID(java.lang.String)">setUserID</a></span>&#8203;(java.lang.String&nbsp;userID)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i34" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#waitForConnection(long)">waitForConnection</a></span>&#8203;(long&nbsp;timeout)</code></th>
-<td class="colLast">
-<div class="block">Blocks until <code><a href="../../net4j/connector/IConnector.html#isConnected()"><code>IConnector.isConnected()</code></a> == true</code> or the given timeout expired.</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.spi.net4j.ChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.spi.net4j.<a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></h3>
-<code><a href="ChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</a>, <a href="ChannelMultiplexer.html#createChannel()">createChannel</a>, <a href="ChannelMultiplexer.html#createProtocol(java.lang.String,INFRA_STRUCTURE)">createProtocol</a>, <a href="ChannelMultiplexer.html#createProtocolFactoryKey(java.lang.String)">createProtocolFactoryKey</a>, <a href="ChannelMultiplexer.html#getChannel(short)">getChannel</a>, <a href="ChannelMultiplexer.html#getChannels()">getChannels</a>, <a href="ChannelMultiplexer.html#getConfig()">getConfig</a>, <a href="ChannelMultiplexer.html#getElements()">getElements</a>, <a href="ChannelMultiplexer.html#getExecutorService()">getExecutorService</a>, <a href="ChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</a>, <a href="ChannelMultiplexer.html#inverseClose()">inverseClose</a>, <a href="ChannelMultiplexer.html#inverseCloseChannel(short)">inverseCloseChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String,int)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#isEmpty()">isEmpty</a>, <a href="ChannelMultiplexer.html#openChannel()">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</a>, <a href="ChannelMultiplexer.html#properties()">properties</a>, <a href="ChannelMultiplexer.html#registerChannelWithPeer(short,long,org.eclipse.net4j.protocol.IProtocol)">registerChannelWithPeer</a>, <a href="ChannelMultiplexer.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</a>, <a href="ChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.container.Container">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.container.Container</h3>
-<code>fireContainerEvent, fireContainerEvent, fireContainerEvent, fireElementAddedEvent, fireElementRemovedEvent, fireElementsAddedEvent, fireElementsRemovedEvent, fireEvent, newContainerEvent, newContainerEvent</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.Lifecycle">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.Lifecycle</h3>
-<code>activate, checkActive, checkArg, checkArg, checkInactive, checkNull, checkState, checkState, deactivate, deferredActivate, doAfterActivate, doBeforeDeactivate, dump, getLifecycleState, isActive, toString</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.Notifier">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.event.Notifier</h3>
-<code>addListener, addUniqueListener, fireEvent, fireEvent, fireThrowable, firstListenerAdded, getListeners, getNotificationService, hasListener, hasListeners, lastListenerRemoved, listenerAdded, listenerRemoved, removeListener</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, wait, wait, wait</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.channel.IChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.channel.<a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></h3>
-<code><a href="../../net4j/channel/IChannelMultiplexer.html#getChannels()">getChannels</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel()">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.container.IContainer">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
-<code>getElements, isEmpty</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>addListener, getListeners, hasListeners, removeListener</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.spi.net4j.InternalChannelMultiplexer">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h3>
-<code><a href="InternalChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</a>, <a href="InternalChannelMultiplexer.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)">multiplexChannel</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.properties.IPropertiesContainer">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.properties.IPropertiesContainer</h3>
-<code>properties</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.ITransportConfigAware">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.<a href="../../net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></h3>
-<code><a href="../../net4j/ITransportConfigAware.html#getConfig()">getConfig</a>, <a href="../../net4j/ITransportConfigAware.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</a></code></li>
-</ul>
-</li>
-</ul>
-</section>
-</li>
-</ul>
+<li>
+<section class="constructor-summary" id="constructor-summary">
+<h2>Constructor Summary</h2>
+<div class="caption"><span>Constructors</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Connector</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
-<!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>Connector</h4>
-<pre>public&nbsp;Connector()</pre>
+</section>
 </li>
-</ul>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#close()" class="member-name-link">close</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#connect()" class="member-name-link">connect</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Synchronous connect with infinite timeout value.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#connect(long)" class="member-name-link">connect</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Synchronous connect.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#connectAsync()" class="member-name-link">connectAsync</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Asynchronous connect.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract org.eclipse.net4j.util.security.INegotiationContext</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createNegotiationContext()" class="member-name-link">createNegotiationContext</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)" class="member-name-link">deregisterChannelFromPeer</a><wbr>(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeActivate()" class="member-name-link">doBeforeActivate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)" class="member-name-link">doBeforeOpenChannel</a><wbr>(<a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>short</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBufferCapacity()" class="member-name-link">getBufferCapacity</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the capacity of the buffers provided by <a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()"><code>IBufferProvider.provideBuffer()</code></a> .</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocation()" class="member-name-link">getLocation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the location of this object in a <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.security.INegotiationContext</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNegotiationContext()" class="member-name-link">getNegotiationContext</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.security.NegotiationException</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNegotiationException()" class="member-name-link">getNegotiationException</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.security.INegotiator</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNegotiator()" class="member-name-link">getNegotiator</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current state of this connector.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getURL()" class="member-name-link">getURL</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUserID()" class="member-name-link">getUserID</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)" class="member-name-link">initChannel</a><wbr>(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+ <a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClient()" class="member-name-link">isClient</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClosed()" class="member-name-link">isClosed</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isConnected()" class="member-name-link">isConnected</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Same as <code><a href="../../net4j/connector/IConnector.html#getState()"><code>IConnector.getState()</code></a> == <a href="../../net4j/connector/ConnectorState.html#CONNECTED"><code>ConnectorState.CONNECTED</code></a></code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isConnecting()" class="member-name-link">isConnecting</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDeferredActivation()" class="member-name-link">isDeferredActivation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDisconnected()" class="member-name-link">isDisconnected</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isNegotiating()" class="member-name-link">isNegotiating</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isServer()" class="member-name-link">isServer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#leaveConnecting()" class="member-name-link">leaveConnecting</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#provideBuffer()" class="member-name-link">provideBuffer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Provides a buffer from this <code>BufferProvider</code>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#retainBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">retainBuffer</a><wbr>(<a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Retains a buffer to this <code>BufferProvider</code>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)" class="member-name-link">setNegotiationException</a><wbr>(org.eclipse.net4j.util.security.NegotiationException&nbsp;negotiationException)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setNegotiator(org.eclipse.net4j.util.security.INegotiator)" class="member-name-link">setNegotiator</a><wbr>(org.eclipse.net4j.util.security.INegotiator&nbsp;negotiator)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setState(org.eclipse.net4j.connector.ConnectorState)" class="member-name-link">setState</a><wbr>(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUserID(java.lang.String)" class="member-name-link">setUserID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForConnection(long)" class="member-name-link">waitForConnection</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Blocks until <code><a href="../../net4j/connector/IConnector.html#isConnected()"><code>IConnector.isConnected()</code></a> == true</code> or the given timeout expired.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.spi.net4j.ChannelMultiplexer">Methods inherited from class&nbsp;org.eclipse.spi.net4j.<a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></h3>
+<code><a href="ChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</a>, <a href="ChannelMultiplexer.html#createChannel()">createChannel</a>, <a href="ChannelMultiplexer.html#createProtocol(java.lang.String,INFRA_STRUCTURE)">createProtocol</a>, <a href="ChannelMultiplexer.html#createProtocolFactoryKey(java.lang.String)">createProtocolFactoryKey</a>, <a href="ChannelMultiplexer.html#getChannel(short)">getChannel</a>, <a href="ChannelMultiplexer.html#getChannels()">getChannels</a>, <a href="ChannelMultiplexer.html#getConfig()">getConfig</a>, <a href="ChannelMultiplexer.html#getElements()">getElements</a>, <a href="ChannelMultiplexer.html#getExecutorService()">getExecutorService</a>, <a href="ChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</a>, <a href="ChannelMultiplexer.html#inverseClose()">inverseClose</a>, <a href="ChannelMultiplexer.html#inverseCloseChannel(short)">inverseCloseChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#inverseOpenChannel(short,java.lang.String,int)">inverseOpenChannel</a>, <a href="ChannelMultiplexer.html#isEmpty()">isEmpty</a>, <a href="ChannelMultiplexer.html#needsBufferProvider()">needsBufferProvider</a>, <a href="ChannelMultiplexer.html#openChannel()">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)">openChannel</a>, <a href="ChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</a>, <a href="ChannelMultiplexer.html#properties()">properties</a>, <a href="ChannelMultiplexer.html#registerChannelWithPeer(short,long,org.eclipse.net4j.protocol.IProtocol)">registerChannelWithPeer</a>, <a href="ChannelMultiplexer.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</a>, <a href="ChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.container.Container">Methods inherited from class&nbsp;org.eclipse.net4j.util.container.Container</h3>
+<code>fireContainerEvent, fireContainerEvent, fireContainerEvent, fireElementAddedEvent, fireElementRemovedEvent, fireElementsAddedEvent, fireElementsRemovedEvent, fireEvent, newContainerEvent, newContainerEvent</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.Lifecycle</h3>
+<code>activate, checkActive, checkArg, checkArg, checkInactive, checkNull, checkState, checkState, deactivate, deferredActivate, doAfterActivate, doBeforeDeactivate, dump, getLifecycleState, isActive, toString</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Methods inherited from class&nbsp;org.eclipse.net4j.util.event.Notifier</h3>
+<code>addListener, addUniqueListener, fireEvent, fireEvent, fireThrowable, firstListenerAdded, getListeners, getNotificationService, hasListener, hasListeners, lastListenerRemoved, listenerAdded, listenerRemoved, removeListener</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.channel.IChannelMultiplexer">Methods inherited from interface&nbsp;org.eclipse.net4j.channel.<a href="../../net4j/channel/IChannelMultiplexer.html" title="interface in org.eclipse.net4j.channel">IChannelMultiplexer</a></h3>
+<code><a href="../../net4j/channel/IChannelMultiplexer.html#getChannels()">getChannels</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#getOpenChannelTimeout()">getOpenChannelTimeout</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel()">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel(java.lang.String,java.lang.Object)">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#openChannel(org.eclipse.net4j.protocol.IProtocol)">openChannel</a>, <a href="../../net4j/channel/IChannelMultiplexer.html#setOpenChannelTimeout(long)">setOpenChannelTimeout</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>getElements, isEmpty</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.spi.net4j.InternalChannelMultiplexer">Methods inherited from interface&nbsp;org.eclipse.spi.net4j.<a href="InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></h3>
+<code><a href="InternalChannelMultiplexer.html#closeChannel(org.eclipse.spi.net4j.InternalChannel)">closeChannel</a>, <a href="InternalChannelMultiplexer.html#multiplexChannel(org.eclipse.spi.net4j.InternalChannel)">multiplexChannel</a>, <a href="InternalChannelMultiplexer.html#needsBufferProvider()">needsBufferProvider</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.properties.IPropertiesContainer">Methods inherited from interface&nbsp;org.eclipse.net4j.util.properties.IPropertiesContainer</h3>
+<code>properties</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.ITransportConfigAware">Methods inherited from interface&nbsp;org.eclipse.net4j.<a href="../../net4j/ITransportConfigAware.html" title="interface in org.eclipse.net4j">ITransportConfigAware</a></h3>
+<code><a href="../../net4j/ITransportConfigAware.html#getConfig()">getConfig</a>, <a href="../../net4j/ITransportConfigAware.html#setConfig(org.eclipse.net4j.ITransportConfig)">setConfig</a></code></div>
+</section>
 </li>
 </ul>
 </section>
+<section class="details">
+<ul class="details-list">
+<!-- ========= CONSTRUCTOR DETAIL ======== -->
+<li>
+<section class="constructor-details" id="constructor-detail">
+<h2>Constructor Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>Connector</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Connector</span>()</div>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="getNegotiator()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getNegotiator</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.net4j.util.security.INegotiator&nbsp;getNegotiator()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getNegotiator()">
+<h3>getNegotiator</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.security.INegotiator</span>&nbsp;<span class="element-name">getNegotiator</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>getNegotiator</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.security.INegotiatorAware</code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setNegotiator(org.eclipse.net4j.util.security.INegotiator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setNegotiator</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setNegotiator&#8203;(org.eclipse.net4j.util.security.INegotiator&nbsp;negotiator)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="setNegotiator(org.eclipse.net4j.util.security.INegotiator)">
+<h3>setNegotiator</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNegotiator</span><wbr><span class="parameters">(org.eclipse.net4j.util.security.INegotiator&nbsp;negotiator)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>setNegotiator</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.security.INegotiatorAware</code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getNegotiationContext()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getNegotiationContext</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.net4j.util.security.INegotiationContext&nbsp;getNegotiationContext()</pre>
+<li>
+<section class="detail" id="getNegotiationContext()">
+<h3>getNegotiationContext</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.security.INegotiationContext</span>&nbsp;<span class="element-name">getNegotiationContext</span>()</div>
+</section>
 </li>
-</ul>
-<a id="isClient()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isClient</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isClient()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#isClient()">ILocationAware</a></code></span></div>
+<li>
+<section class="detail" id="isClient()">
+<h3>isClient</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isClient</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#isClient()">ILocationAware</a></code></span></div>
 <div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/ILocationAware.html#isClient()">isClient</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isServer()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isServer</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isServer()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#isServer()">ILocationAware</a></code></span></div>
+<li>
+<section class="detail" id="isServer()">
+<h3>isServer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isServer</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#isServer()">ILocationAware</a></code></span></div>
 <div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/ILocationAware.html#isServer()">isServer</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getUserID()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getUserID</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getUserID()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="getUserID()">
+<h3>getUserID</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUserID</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>getUserID</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.security.IUserAware</code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setUserID(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setUserID</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setUserID&#8203;(java.lang.String&nbsp;userID)</pre>
+<li>
+<section class="detail" id="setUserID(java.lang.String)">
+<h3>setUserID</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setUserID</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
+</section>
 </li>
-</ul>
-<a id="getState()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getState</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;getState()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#getState()">IConnector</a></code></span></div>
+<li>
+<section class="detail" id="getState()">
+<h3>getState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a></span>&nbsp;<span class="element-name">getState</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#getState()">IConnector</a></code></span></div>
 <div class="block">Returns the current state of this connector.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#getState()">getState</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setState(org.eclipse.net4j.connector.ConnectorState)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setState</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;setState&#8203;(<a href="../../net4j/connector/ConnectorState.html" title="enum in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)
-              throws <a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="setState(org.eclipse.net4j.connector.ConnectorState)">
+<h3>setState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setState</span><wbr><span class="parameters">(<a href="../../net4j/connector/ConnectorState.html" title="enum class in org.eclipse.net4j.connector">ConnectorState</a>&nbsp;newState)</span>
+              throws <span class="exceptions"><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isDisconnected()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isDisconnected</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isDisconnected()</pre>
+<li>
+<section class="detail" id="isDisconnected()">
+<h3>isDisconnected</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDisconnected</span>()</div>
+</section>
 </li>
-</ul>
-<a id="isConnecting()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isConnecting</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isConnecting()</pre>
+<li>
+<section class="detail" id="isConnecting()">
+<h3>isConnecting</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isConnecting</span>()</div>
+</section>
 </li>
-</ul>
-<a id="isNegotiating()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isNegotiating</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isNegotiating()</pre>
+<li>
+<section class="detail" id="isNegotiating()">
+<h3>isNegotiating</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isNegotiating</span>()</div>
+</section>
 </li>
-</ul>
-<a id="isConnected()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isConnected</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isConnected()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#isConnected()">IConnector</a></code></span></div>
+<li>
+<section class="detail" id="isConnected()">
+<h3>isConnected</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isConnected</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#isConnected()">IConnector</a></code></span></div>
 <div class="block">Same as <code><a href="../../net4j/connector/IConnector.html#getState()"><code>IConnector.getState()</code></a> == <a href="../../net4j/connector/ConnectorState.html#CONNECTED"><code>ConnectorState.CONNECTED</code></a></code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#isConnected()">isConnected</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="connectAsync()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connectAsync</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;connectAsync()
-                  throws <a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connectAsync()">IConnector</a></code></span></div>
+<li>
+<section class="detail" id="connectAsync()">
+<h3>connectAsync</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">connectAsync</span>()
+                  throws <span class="exceptions"><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connectAsync()">IConnector</a></code></span></div>
 <div class="block">Asynchronous connect. May leave this <a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>IConnector</code></a> in a state where <code><a href="../../net4j/connector/IConnector.html#isConnected()"><code>IConnector.isConnected()</code></a> == false
  </code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#connectAsync()">connectAsync</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></code></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../net4j/connector/IConnector.html#waitForConnection(long)"><code>IConnector.waitForConnection(long)</code></a>, 
-<a href="../../net4j/connector/IConnector.html#connect(long)"><code>IConnector.connect(long)</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../../net4j/connector/IConnector.html#waitForConnection(long)"><code>IConnector.waitForConnection(long)</code></a></li>
+<li><a href="../../net4j/connector/IConnector.html#connect(long)"><code>IConnector.connect(long)</code></a></li>
 </ul>
-<a id="waitForConnection(long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>waitForConnection</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;waitForConnection&#8203;(long&nbsp;timeout)
-                       throws <a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#waitForConnection(long)">IConnector</a></code></span></div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="waitForConnection(long)">
+<h3>waitForConnection</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">waitForConnection</span><wbr><span class="parameters">(long&nbsp;timeout)</span>
+                       throws <span class="exceptions"><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#waitForConnection(long)">IConnector</a></code></span></div>
 <div class="block">Blocks until <code><a href="../../net4j/connector/IConnector.html#isConnected()"><code>IConnector.isConnected()</code></a> == true</code> or the given timeout expired.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#waitForConnection(long)">waitForConnection</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dt>Parameters:</dt>
 <dd><code>timeout</code> - The maximum number of milli seconds to block or <a href="../../net4j/connector/IConnector.html#NO_TIMEOUT"><code>IConnector.NO_TIMEOUT</code></a> to block indefinetely in case no
           connection occurs.</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="connect(long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connect</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;connect&#8203;(long&nbsp;timeout)
-             throws <a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connect(long)">IConnector</a></code></span></div>
+<li>
+<section class="detail" id="connect(long)">
+<h3>connect</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">connect</span><wbr><span class="parameters">(long&nbsp;timeout)</span>
+             throws <span class="exceptions"><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connect(long)">IConnector</a></code></span></div>
 <div class="block">Synchronous connect. Blocks until <code><a href="../../net4j/connector/IConnector.html#isConnected()"><code>IConnector.isConnected()</code></a> == true</code> or the given timeout expired.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#connect(long)">connect</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dt>Parameters:</dt>
 <dd><code>timeout</code> - The maximum number of milli seconds to block or <a href="../../net4j/connector/IConnector.html#NO_TIMEOUT"><code>IConnector.NO_TIMEOUT</code></a> to block indefinetely in case no
           connection occurs.</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="connect()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>connect</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;connect()
-             throws <a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connect()">IConnector</a></code></span></div>
+<li>
+<section class="detail" id="connect()">
+<h3>connect</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">connect</span>()
+             throws <span class="exceptions"><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/connector/IConnector.html#connect()">IConnector</a></code></span></div>
 <div class="block">Synchronous connect with infinite timeout value. Same as <a href="../../net4j/connector/IConnector.html#connect()"><code>connect(NO_TIMEOUT)</code></a>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#connect()">connect</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/connector/ConnectorException.html" title="class in org.eclipse.net4j.connector">ConnectorException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="close()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;close()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="close()">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">close</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>close</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.collection.Closeable</code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isClosed()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isClosed</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isClosed()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="isClosed()">
+<h3>isClosed</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isClosed</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>isClosed</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.collection.Closeable</code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getBufferCapacity()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBufferCapacity</h4>
-<pre class="methodSignature">public&nbsp;short&nbsp;getBufferCapacity()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#getBufferCapacity()">IBufferProvider</a></code></span></div>
+<li>
+<section class="detail" id="getBufferCapacity()">
+<h3>getBufferCapacity</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">getBufferCapacity</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#getBufferCapacity()">IBufferProvider</a></code></span></div>
 <div class="block">Returns the capacity of the buffers provided by <a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()"><code>IBufferProvider.provideBuffer()</code></a> .</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/buffer/IBufferProvider.html#getBufferCapacity()">getBufferCapacity</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="provideBuffer()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>provideBuffer</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;provideBuffer()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()">IBufferProvider</a></code></span></div>
+<li>
+<section class="detail" id="provideBuffer()">
+<h3>provideBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></span>&nbsp;<span class="element-name">provideBuffer</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()">IBufferProvider</a></code></span></div>
 <div class="block">Provides a buffer from this <code>BufferProvider</code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/buffer/IBufferProvider.html#provideBuffer()">provideBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="retainBuffer(org.eclipse.net4j.buffer.IBuffer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>retainBuffer</h4>
-<pre class="methodSignature">public&nbsp;void&nbsp;retainBuffer&#8203;(<a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">IBufferProvider</a></code></span></div>
+<li>
+<section class="detail" id="retainBuffer(org.eclipse.net4j.buffer.IBuffer)">
+<h3>retainBuffer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">retainBuffer</span><wbr><span class="parameters">(<a href="../../net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">IBufferProvider</a></code></span></div>
 <div class="block">Retains a buffer to this <code>BufferProvider</code>.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/buffer/IBufferProvider.html#retainBuffer(org.eclipse.net4j.buffer.IBuffer)">retainBuffer</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/buffer/IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="leaveConnecting()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>leaveConnecting</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;leaveConnecting()</pre>
+<li>
+<section class="detail" id="leaveConnecting()">
+<h3>leaveConnecting</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">leaveConnecting</span>()</div>
+</section>
 </li>
-</ul>
-<a id="createNegotiationContext()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createNegotiationContext</h4>
-<pre class="methodSignature">protected abstract&nbsp;org.eclipse.net4j.util.security.INegotiationContext&nbsp;createNegotiationContext()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="createNegotiationContext()">
+<h3>createNegotiationContext</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.security.INegotiationContext</span>&nbsp;<span class="element-name">createNegotiationContext</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="ChannelMultiplexer.html#createNegotiationContext()">createNegotiationContext</a></code>&nbsp;in class&nbsp;<code><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getNegotiationException()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getNegotiationException</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.security.NegotiationException&nbsp;getNegotiationException()</pre>
+<li>
+<section class="detail" id="getNegotiationException()">
+<h3>getNegotiationException</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.security.NegotiationException</span>&nbsp;<span class="element-name">getNegotiationException</span>()</div>
+</section>
 </li>
-</ul>
-<a id="setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setNegotiationException</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;setNegotiationException&#8203;(org.eclipse.net4j.util.security.NegotiationException&nbsp;negotiationException)</pre>
+<li>
+<section class="detail" id="setNegotiationException(org.eclipse.net4j.util.security.NegotiationException)">
+<h3>setNegotiationException</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setNegotiationException</span><wbr><span class="parameters">(org.eclipse.net4j.util.security.NegotiationException&nbsp;negotiationException)</span></div>
+</section>
 </li>
-</ul>
-<a id="initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>initChannel</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;initChannel&#8203;(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
-                           <a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<li>
+<section class="detail" id="initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)">
+<h3>initChannel</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initChannel</span><wbr><span class="parameters">(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel,
+ <a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
 <dd><code><a href="ChannelMultiplexer.html#initChannel(org.eclipse.spi.net4j.InternalChannel,org.eclipse.net4j.protocol.IProtocol)">initChannel</a></code>&nbsp;in class&nbsp;<code><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deregisterChannelFromPeer</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;deregisterChannelFromPeer&#8203;(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel)
-                                  throws <a href="../../net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</a></pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">
+<h3>deregisterChannelFromPeer</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deregisterChannelFromPeer</span><wbr><span class="parameters">(<a href="InternalChannel.html" title="interface in org.eclipse.spi.net4j">InternalChannel</a>&nbsp;channel)</span>
+                                  throws <span class="exceptions"><a href="../../net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="ChannelMultiplexer.html#deregisterChannelFromPeer(org.eclipse.spi.net4j.InternalChannel)">deregisterChannelFromPeer</a></code>&nbsp;in class&nbsp;<code><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dt>Throws:</dt>
 <dd><code><a href="../../net4j/channel/ChannelException.html" title="class in org.eclipse.net4j.channel">ChannelException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getLocation()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLocation</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../net4j/ILocationAware.Location.html" title="enum in org.eclipse.net4j">ILocationAware.Location</a>&nbsp;getLocation()</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#getLocation()">ILocationAware</a></code></span></div>
+<li>
+<section class="detail" id="getLocation()">
+<h3>getLocation</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></span>&nbsp;<span class="element-name">getLocation</span>()</div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../net4j/ILocationAware.html#getLocation()">ILocationAware</a></code></span></div>
 <div class="block">Returns the location of this object in a <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/ILocationAware.html#getLocation()">getLocation</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getURL()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getURL</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;getURL()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="getURL()">
+<h3>getURL</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getURL</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../net4j/connector/IConnector.html#getURL()">getURL</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isDeferredActivation()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isDeferredActivation</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isDeferredActivation()</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="isDeferredActivation()">
+<h3>isDeferredActivation</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDeferredActivation</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code>isDeferredActivation</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<dt>Overrides:</dt>
 <dd><code>isDeferredActivation</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>doBeforeOpenChannel</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;doBeforeOpenChannel&#8203;(<a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<li>
+<section class="detail" id="doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">
+<h3>doBeforeOpenChannel</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doBeforeOpenChannel</span><wbr><span class="parameters">(<a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;?&gt;&nbsp;protocol)</span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
 <dd><code><a href="ChannelMultiplexer.html#doBeforeOpenChannel(org.eclipse.net4j.protocol.IProtocol)">doBeforeOpenChannel</a></code>&nbsp;in class&nbsp;<code><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="doBeforeActivate()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>doBeforeActivate</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;doBeforeActivate()
-                         throws java.lang.Exception</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<li>
+<section class="detail" id="doBeforeActivate()">
+<h3>doBeforeActivate</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doBeforeActivate</span>()
+                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
 <dd><code>doBeforeActivate</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Exception</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="doActivate()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>doActivate</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;doActivate()
-                   throws java.lang.Exception</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<li>
+<section class="detail" id="doActivate()">
+<h3>doActivate</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doActivate</span>()
+                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
 <dd><code>doActivate</code>&nbsp;in class&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Exception</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="doDeactivate()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>doDeactivate</h4>
-<pre class="methodSignature">protected&nbsp;void&nbsp;doDeactivate()
-                     throws java.lang.Exception</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
+<li>
+<section class="detail" id="doDeactivate()">
+<h3>doDeactivate</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doDeactivate</span>()
+                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span></div>
+<dl class="notes">
+<dt>Overrides:</dt>
 <dd><code><a href="ChannelMultiplexer.html#doDeactivate()">doDeactivate</a></code>&nbsp;in class&nbsp;<code><a href="ChannelMultiplexer.html" title="class in org.eclipse.spi.net4j">ChannelMultiplexer</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.lang.Exception</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/Connector.html">Use</a></li>
-<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

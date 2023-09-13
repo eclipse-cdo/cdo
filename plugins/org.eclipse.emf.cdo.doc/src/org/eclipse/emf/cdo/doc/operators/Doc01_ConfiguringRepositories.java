@@ -172,7 +172,7 @@ public class Doc01_ConfiguringRepositories
     }
 
     /**
-     * Property_allowInterruptRunningQueries
+     * Property allowInterruptRunningQueries
      * <p>
      * Specifies whether the repository will cancel a scheduled query job if it is already running.
      * Some underlying stores (e.g. DBStore with a Derby database) might not be able to deal with this cleanly.

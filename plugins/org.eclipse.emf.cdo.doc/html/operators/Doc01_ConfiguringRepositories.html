@@ -154,16 +154,18 @@ function maximize(id)
 <tr><td></td><td>1.6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_checkUnitMoves" title="Chapter in CDO Model Repository Documentation">Property checkUnitMoves</a></td></tr>
 <tr><td></td><td>1.7&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_ensureReferentialIntegrity" title="Chapter in CDO Model Repository Documentation">Property ensureReferentialIntegrity</a></td></tr>
 <tr><td></td><td>1.8&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_serializeCommits" title="Chapter in CDO Model Repository Documentation">Property serializeCommits</a></td></tr>
-<tr><td></td><td>1.9&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_allowInterruptRunningQueries" title="Chapter in CDO Model Repository Documentation">Property_allowInterruptRunningQueries</a></td></tr>
+<tr><td></td><td>1.9&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_allowInterruptRunningQueries" title="Chapter in CDO Model Repository Documentation">Property allowInterruptRunningQueries</a></td></tr>
 <tr><td></td><td>1.10&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_idGenerationLocation" title="Chapter in CDO Model Repository Documentation">Property idGenerationLocation</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_securityManager" title="Chapter in CDO Model Repository Documentation">Element securityManager</a></td></tr>
 <tr><td>3&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_authenticator" title="Chapter in CDO Model Repository Documentation">Element authenticator</a></td></tr>
 <tr><td>4&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_initialPackage" title="Chapter in CDO Model Repository Documentation">Element initialPackage</a></td></tr>
 <tr><td>5&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">Element store</a></td></tr>
 <tr><td></td><td>5.1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" title="Chapter in CDO Model Repository Documentation">Property connectionKeepAlivePeriod</a></td></tr>
-<tr><td></td><td>5.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
-<tr><td></td><td>5.3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
-<tr><td></td><td>5.4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" title="Chapter in CDO Model Repository Documentation">Property dropAllDataOnActivate</a></td></tr>
+<tr><td></td><td>5.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetryCount" title="Chapter in CDO Model Repository Documentation">Property connectionRetryCount</a></td></tr>
+<tr><td></td><td>5.3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetrySeconds" title="Chapter in CDO Model Repository Documentation">Property connectionRetrySeconds</a></td></tr>
+<tr><td></td><td>5.4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" title="Chapter in CDO Model Repository Documentation">Property dropAllDataOnActivate</a></td></tr>
 <tr><td>6&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_mappingStrategy" title="Chapter in CDO Model Repository Documentation">Element mappingStrategy</a></td></tr>
 <tr><td></td><td>6.1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_toManyReferences" title="Chapter in CDO Model Repository Documentation">Property toManyReferences</a></td></tr>
 <tr><td></td><td>6.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" title="Chapter in CDO Model Repository Documentation">Property maxTableNameLength</a></td></tr>
@@ -265,7 +267,7 @@ function maximize(id)
  <p>
  Valid values: <code>false</code> (default) or <code>true</code>.
 
-<h3><a name="Property_allowInterruptRunningQueries"></a>1.9&nbsp;&nbsp;Property_allowInterruptRunningQueries</h3>
+<h3><a name="Property_allowInterruptRunningQueries"></a>1.9&nbsp;&nbsp;Property allowInterruptRunningQueries</h3>
 <p>
  Specifies whether the repository will cancel a scheduled query job if it is already running.
  Some underlying stores (e.g. DBStore with a Derby database) might not be able to deal with this cleanly.
@@ -323,21 +325,29 @@ function maximize(id)
 
 <h3><a name="Property_connectionKeepAlivePeriod"></a>5.1&nbsp;&nbsp;Property connectionKeepAlivePeriod</h3>
 <p>
- Specifies, if the store is a DBStore, at what interval the store will issue an SQL statement to keep the connection to the database alive.
+ Specifies, if the store is a DBStore, at what interval in minutes the store will issue an SQL statement to keep the connection to the database alive.
 
-<h3><a name="Property_readerPoolCapacity"></a>5.2&nbsp;&nbsp;Property readerPoolCapacity</h3>
+<h3><a name="Property_connectionRetryCount"></a>5.2&nbsp;&nbsp;Property connectionRetryCount</h3>
+<p>
+ Specifies, if the store is a DBStore, the number of additional attempts to connect to the DB after initial connection failure.
+
+<h3><a name="Property_connectionRetrySeconds"></a>5.3&nbsp;&nbsp;Property connectionRetrySeconds</h3>
+<p>
+ Specifies, if the store is a DBStore, the number of seconds to wait before additional attempts to connect to the DB after initial connection failure.
+
+<h3><a name="Property_readerPoolCapacity"></a>5.4&nbsp;&nbsp;Property readerPoolCapacity</h3>
 <p>
  Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the reader pool.
  <p>
  The default value is 15.
 
-<h3><a name="Property_writerPoolCapacity"></a>5.3&nbsp;&nbsp;Property writerPoolCapacity</h3>
+<h3><a name="Property_writerPoolCapacity"></a>5.5&nbsp;&nbsp;Property writerPoolCapacity</h3>
 <p>
  Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the writer pool.
  <p>
  The default value is 15.
 
-<h3><a name="Property_dropAllDataOnActivate"></a>5.4&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
+<h3><a name="Property_dropAllDataOnActivate"></a>5.6&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
 <p>
  If set to <code>true</code> and the store is a DBStore, drops all database tables of the configured
  <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">schema</a> at the beginning of the store activation.
@@ -437,17 +447,17 @@ function maximize(id)
 
 <h3><a name="Property_eagerTableCreation"></a>6.12&nbsp;&nbsp;Property eagerTableCreation</h3>
 <p>
- Specifies whether all tables for a EPackage package are created eagerly.
+ Specifies whether all tables for a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> are created eagerly.
  <p>
  Possible configuration values are:
  <ul>
  <li> <code>false</code> (creates tables lazily, i.e., when they are actually needed for writing the first object; default value)
- <li> <code>true</code> (creates tables eagerly, i.e., when a new EPackage package is committed)
+ <li> <code>true</code> (creates tables eagerly, i.e., when a new <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>package</code></a> is committed)
  </ul>
 
 <h3><a name="Property_withRanges"></a>6.13&nbsp;&nbsp;Property withRanges</h3>
 <p>
- Specifies whether new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> create entire new copies of all their list EStructuralFeature features
+ Specifies whether new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> create entire new copies of all their list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a>
  or whether just the list deltas are stored.
  <p>
  Possible configuration values are:
@@ -462,7 +472,7 @@ function maximize(id)
 <h3><a name="Property_copyOnBranch"></a>6.14&nbsp;&nbsp;Property copyOnBranch</h3>
 <p>
  Specifies whether <b>the first</b> new <a href="../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in a <a href="../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> create entire new copies
- of all their list EStructuralFeature features or whether just the list deltas (relative to the base revisions in the parent branch) are stored.
+ of all their list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> or whether just the list deltas (relative to the base revisions in the parent branch) are stored.
  <p>
  Possible configuration values are:
  <ul>
@@ -475,7 +485,7 @@ function maximize(id)
 
 <h3><a name="Property_forceZeroBasedIndex"></a>6.15&nbsp;&nbsp;Property forceZeroBasedIndex</h3>
 <p>
- Specifies whether element removals from the beginning of list EStructuralFeature features adjust the
+ Specifies whether element removals from the beginning of list <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>features</code></a> adjust the
  list indexes of all following elements or whether the first element is allowed to have a non-zero list index.
  <p>
  Possible configuration values are:
@@ -498,7 +508,7 @@ function maximize(id)
 
 <h2><a name="Element_dataSource"></a>8&nbsp;&nbsp;Element dataSource</h2>
 <p>
- Defines the DataSource instance of the store.
+ Defines the <a href="https://download.oracle.com/javase/1.5.0/docs/api/javax/sql/DataSource.html" target="_blank" title="Interface in javax.sql"><code>DataSource</code></a> instance of the store.
  <p>
  The <code>class</code> attribute corresponds to the fully qualified name of the data source class.
  Please refer to your DB manual for details about the supported data sources and their attributes.
@@ -507,6 +517,6 @@ function maximize(id)
 <a href="Doc00_OperatingServer.html" title="Backward to Operating a CDO Server"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02_ConfiguringAcceptors.html" title="Forward to Configuring Acceptors"><img src="../../images/forward.png" border="0"></a></p>
 <!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Operator's Guide</a></div> -->
 
-<div class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
 </body>
 </html>

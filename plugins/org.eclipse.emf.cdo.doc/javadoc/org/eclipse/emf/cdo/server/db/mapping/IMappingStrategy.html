@@ -1,602 +1,463 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IMappingStrategy (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.server.db.mapping, interface: IMappingStrategy">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="IMappingStrategy (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6,"i23":6,"i24":6,"i25":6,"i26":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IMappingStrategy.html">Use</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></div>
-<h2 title="Interface IMappingStrategy" class="title">Interface IMappingStrategy</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></div>
+<h1 title="Interface IMappingStrategy" class="title">Interface IMappingStrategy</h1>
 </div>
-<div class="contentContainer">
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="IMappingStrategy2.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy2</a></code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">IMappingStrategy</span></pre>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IMappingStrategy</span></div>
 <div class="block">The mapping strategy acts as a connection between the DBStore and the database management (and OR-mapping) classes.
  The <code>DBStore</code> uses methods of this interface to create and lookup mappings (or mappers, as they could also be
  named as such) and to get properties and informations about the mappings used. The mapping classes (e.g., instances
  of IClassMapping and IListMapping) also use this class as a central point of information and as a resource of common
  functionalities.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper, Stefan Winkler</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Interface</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="IMappingStrategy.Props.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="IMappingStrategy.Props.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Contains symbolic constants that specifiy valid keys of <a href="#getProperties()"><code>mapping strategy properties</code></a>.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+</div>
 </section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_COLUMN_TYPE_MODIFIER">PROP_COLUMN_TYPE_MODIFIER</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#COLUMN_TYPE_MODIFIER"><code>IMappingStrategy.Props.COLUMN_TYPE_MODIFIER</code></a>.</div>
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PROP_COLUMN_TYPE_MODIFIER" class="member-name-link">PROP_COLUMN_TYPE_MODIFIER</a></code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#COLUMN_TYPE_MODIFIER"><code>IMappingStrategy.Props.COLUMN_TYPE_MODIFIER</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_FORCE_NAMES_WITH_ID">PROP_FORCE_NAMES_WITH_ID</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#FORCE_NAMES_WITH_ID"><code>IMappingStrategy.Props.FORCE_NAMES_WITH_ID</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_MAX_FIELD_NAME_LENGTH">PROP_MAX_FIELD_NAME_LENGTH</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_FIELD_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_FIELD_NAME_LENGTH</code></a>.</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PROP_FORCE_NAMES_WITH_ID" class="member-name-link">PROP_FORCE_NAMES_WITH_ID</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#FORCE_NAMES_WITH_ID"><code>IMappingStrategy.Props.FORCE_NAMES_WITH_ID</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_MAX_TABLE_NAME_LENGTH">PROP_MAX_TABLE_NAME_LENGTH</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_TABLE_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_TABLE_NAME_LENGTH</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_OBJECT_TYPE_CACHE_SIZE">PROP_OBJECT_TYPE_CACHE_SIZE</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#OBJECT_TYPE_CACHE_SIZE"><code>IMappingStrategy.Props.OBJECT_TYPE_CACHE_SIZE</code></a>.</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PROP_MAX_FIELD_NAME_LENGTH" class="member-name-link">PROP_MAX_FIELD_NAME_LENGTH</a></code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_FIELD_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_FIELD_NAME_LENGTH</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_QUALIFIED_NAMES">PROP_QUALIFIED_NAMES</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#QUALIFIED_NAMES"><code>IMappingStrategy.Props.QUALIFIED_NAMES</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_TABLE_NAME_PREFIX">PROP_TABLE_NAME_PREFIX</a></span></code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#TABLE_NAME_PREFIX"><code>IMappingStrategy.Props.TABLE_NAME_PREFIX</code></a>.</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PROP_MAX_TABLE_NAME_LENGTH" class="member-name-link">PROP_MAX_TABLE_NAME_LENGTH</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_TABLE_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_TABLE_NAME_LENGTH</code></a>.</div>
 </div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PROP_OBJECT_TYPE_CACHE_SIZE" class="member-name-link">PROP_OBJECT_TYPE_CACHE_SIZE</a></code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#OBJECT_TYPE_CACHE_SIZE"><code>IMappingStrategy.Props.OBJECT_TYPE_CACHE_SIZE</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PROP_QUALIFIED_NAMES" class="member-name-link">PROP_QUALIFIED_NAMES</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#QUALIFIED_NAMES"><code>IMappingStrategy.Props.QUALIFIED_NAMES</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PROP_TABLE_NAME_PREFIX" class="member-name-link">PROP_TABLE_NAME_PREFIX</a></code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#TABLE_NAME_PREFIX"><code>IMappingStrategy.Props.TABLE_NAME_PREFIX</code></a>.</div>
+</div>
+</div>
+</div>
 </section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">createListMapping</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
-                 org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">createListMapping</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containingClass,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)">createMapping</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-             <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
-             org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">createMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Create and initialize the mapping infrastructure for the given packages.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">createValueMapping</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">createValueMapping</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Factory for value mappings of single-valued attributes.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMapping(org.eclipse.emf.ecore.EClass)">getClassMapping</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getClassMapping(org.eclipse.emf.ecore.EClass)" class="member-name-link">getClassMapping</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Look up an existing class mapping for the given class.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMappings()">getClassMappings</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>,<wbr><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getClassMappings()" class="member-name-link">getClassMappings</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns all class mappings of this strategy.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getClassMappings(boolean)">getClassMappings</a></span>&#8203;(boolean&nbsp;createOnDemand)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>,<wbr><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getClassMappings(boolean)" class="member-name-link">getClassMappings</a><wbr>(boolean&nbsp;createOnDemand)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns all class mappings of this strategy.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">getFieldName</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFieldName(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getFieldName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Create a suitable column name which can be used to map the given element.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getListJoin(java.lang.String,java.lang.String)">getListJoin</a></span>&#8203;(java.lang.String&nbsp;attrTable,
-           java.lang.String&nbsp;listTable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getProperties()">getProperties</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListJoin(java.lang.String,java.lang.String)" class="member-name-link">getListJoin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;attrTable,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;listTable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperties()" class="member-name-link">getProperties</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the configuration properties of this mapping strategy.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getStore()">getStore</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">getTableName</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
-            org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">getTableName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containingClass,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
-</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getTableName(org.eclipse.emf.ecore.ENamedElement)">getTableName</a></span>&#8203;(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTableName(org.eclipse.emf.ecore.ENamedElement)" class="member-name-link">getTableName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ENamedElement.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">ENamedElement</a>&nbsp;element)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Create a suitable table name which can be used to map the given element.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">handleRevisions</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               org.eclipse.emf.ecore.EClass&nbsp;eClass,
-               <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-               long&nbsp;timeStamp,
-               boolean&nbsp;exactTime,
-               <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">handleRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ boolean&nbsp;exactTime,
+ <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
  conditions are met:
  
  The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasAuditSupport()">hasAuditSupport</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasAuditSupport()" class="member-name-link">hasAuditSupport</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Query if this mapping supports audits.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasBranchingSupport()">hasBranchingSupport</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasBranchingSupport()" class="member-name-link">hasBranchingSupport</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Query if this mapping supports branches.</div>
-</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasDeltaSupport()">hasDeltaSupport</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#hasDeltaSupport()" class="member-name-link">hasDeltaSupport</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Query if this mapping supports revision deltas.</div>
-</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">queryResources</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-              <a href="../../IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)" class="member-name-link">queryResources</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Executes a resource query.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">queryXRefs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-          <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Executes a cross reference query.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)">rawExport</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-         <a href="../../../common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
-         int&nbsp;lastReplicatedBranchID,
-         int&nbsp;lastBranchID,
-         long&nbsp;lastReplicatedCommitTime,
-         long&nbsp;lastCommitTime)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">rawImport</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-         <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-         long&nbsp;fromCommitTime,
-         long&nbsp;toCommitTime,
-         org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>java.util.Set&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)">readChangeSet</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-             org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
-             <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)" class="member-name-link">rawExport</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ int&nbsp;lastReplicatedBranchID,
+ int&nbsp;lastBranchID,
+ long&nbsp;lastReplicatedCommitTime,
+ long&nbsp;lastCommitTime)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">rawImport</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+ long&nbsp;fromCommitTime,
+ long&nbsp;toCommitTime,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
+ <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
-</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>org.eclipse.net4j.util.collection.CloseableIterator&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">readObjectIDs</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.collection.CloseableIterator&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">readObjectIDs</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Get an iterator over all instances of objects in the store.</div>
-</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)">readObjectType</a></span>&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-              <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType</a><wbr>(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Read the type (i.e.</div>
-</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D)">removeMapping</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-             <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D)" class="member-name-link">removeMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Remove the mapping infrastructure for the given packages.</div>
-</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)">repairAfterCrash</a></span>&#8203;(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
-                java.sql.Connection&nbsp;connection)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)" class="member-name-link">repairAfterCrash</a><wbr>(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Return the maximum object id used in the store.</div>
-</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setProperties(java.util.Map)">setProperties</a></span>&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;properties)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProperties(java.util.Map)" class="member-name-link">setProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set configuration properties for this mapping strategy.</div>
-</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)">setStore</a></span>&#8203;(<a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set the store to which this MappingStrategy instance belongs.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+</div>
+</div>
+</div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="PROP_MAX_TABLE_NAME_LENGTH">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_MAX_TABLE_NAME_LENGTH</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_MAX_TABLE_NAME_LENGTH</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_TABLE_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_TABLE_NAME_LENGTH</code></a>.</div>
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="PROP_MAX_TABLE_NAME_LENGTH">
+<h3>PROP_MAX_TABLE_NAME_LENGTH</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_MAX_TABLE_NAME_LENGTH</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_TABLE_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_TABLE_NAME_LENGTH</code></a>.</div>
 </div>
 <div class="block">Name of the integer property that configures the maximum length for table names. A value of zero indicates the
  value of the <code>db adapter</code> to be used.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_MAX_TABLE_NAME_LENGTH">Constant Field Values</a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_MAX_TABLE_NAME_LENGTH">Constant Field Values</a></li>
 </ul>
-<a id="PROP_MAX_FIELD_NAME_LENGTH">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_MAX_FIELD_NAME_LENGTH</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_MAX_FIELD_NAME_LENGTH</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_FIELD_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_FIELD_NAME_LENGTH</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_MAX_FIELD_NAME_LENGTH">
+<h3>PROP_MAX_FIELD_NAME_LENGTH</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_MAX_FIELD_NAME_LENGTH</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#MAX_FIELD_NAME_LENGTH"><code>IMappingStrategy.Props.MAX_FIELD_NAME_LENGTH</code></a>.</div>
 </div>
 <div class="block">Name of the integer property that configures the maximum length for column names. A value of zero indicates the
  value of the <code>db adapter</code> to be used.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_MAX_FIELD_NAME_LENGTH">Constant Field Values</a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_MAX_FIELD_NAME_LENGTH">Constant Field Values</a></li>
 </ul>
-<a id="PROP_TABLE_NAME_PREFIX">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_TABLE_NAME_PREFIX</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_TABLE_NAME_PREFIX</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#TABLE_NAME_PREFIX"><code>IMappingStrategy.Props.TABLE_NAME_PREFIX</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_TABLE_NAME_PREFIX">
+<h3>PROP_TABLE_NAME_PREFIX</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_TABLE_NAME_PREFIX</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#TABLE_NAME_PREFIX"><code>IMappingStrategy.Props.TABLE_NAME_PREFIX</code></a>.</div>
 </div>
 <div class="block">Name of the String property that specifies a common prefix for table names.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_TABLE_NAME_PREFIX">Constant Field Values</a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_TABLE_NAME_PREFIX">Constant Field Values</a></li>
 </ul>
-<a id="PROP_QUALIFIED_NAMES">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_QUALIFIED_NAMES</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_QUALIFIED_NAMES</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#QUALIFIED_NAMES"><code>IMappingStrategy.Props.QUALIFIED_NAMES</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_QUALIFIED_NAMES">
+<h3>PROP_QUALIFIED_NAMES</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_QUALIFIED_NAMES</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#QUALIFIED_NAMES"><code>IMappingStrategy.Props.QUALIFIED_NAMES</code></a>.</div>
 </div>
 <div class="block">Name of the boolean property that configures whether the table names are made of simple class names or of qualified
  class names.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_QUALIFIED_NAMES">Constant Field Values</a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_QUALIFIED_NAMES">Constant Field Values</a></li>
 </ul>
-<a id="PROP_FORCE_NAMES_WITH_ID">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_FORCE_NAMES_WITH_ID</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_FORCE_NAMES_WITH_ID</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#FORCE_NAMES_WITH_ID"><code>IMappingStrategy.Props.FORCE_NAMES_WITH_ID</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_FORCE_NAMES_WITH_ID">
+<h3>PROP_FORCE_NAMES_WITH_ID</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_FORCE_NAMES_WITH_ID</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#FORCE_NAMES_WITH_ID"><code>IMappingStrategy.Props.FORCE_NAMES_WITH_ID</code></a>.</div>
 </div>
 <div class="block">Name of the boolean property that configures whether table names and column names are always suffixed with the
  internal DBID or only in cases where generated names violate the naming constraints of the underlying backend.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_FORCE_NAMES_WITH_ID">Constant Field Values</a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_FORCE_NAMES_WITH_ID">Constant Field Values</a></li>
 </ul>
-<a id="PROP_OBJECT_TYPE_CACHE_SIZE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>PROP_OBJECT_TYPE_CACHE_SIZE</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_OBJECT_TYPE_CACHE_SIZE</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#OBJECT_TYPE_CACHE_SIZE"><code>IMappingStrategy.Props.OBJECT_TYPE_CACHE_SIZE</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_OBJECT_TYPE_CACHE_SIZE">
+<h3>PROP_OBJECT_TYPE_CACHE_SIZE</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_OBJECT_TYPE_CACHE_SIZE</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#OBJECT_TYPE_CACHE_SIZE"><code>IMappingStrategy.Props.OBJECT_TYPE_CACHE_SIZE</code></a>.</div>
 </div>
 <div class="block">Name of the integer property that configures the size of the object type in-memory cache. Possible configuration
  values are:
@@ -606,415 +467,349 @@ static final&nbsp;java.lang.String PROP_OBJECT_TYPE_CACHE_SIZE</pre>
  </ul>
  Default is a memory cache size of 10,000,000.
  <p></div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_OBJECT_TYPE_CACHE_SIZE">Constant Field Values</a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_OBJECT_TYPE_CACHE_SIZE">Constant Field Values</a></li>
 </ul>
-<a id="PROP_COLUMN_TYPE_MODIFIER">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>PROP_COLUMN_TYPE_MODIFIER</h4>
-<pre>@Deprecated
-static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.4 use <a href="IMappingStrategy.Props.html#COLUMN_TYPE_MODIFIER"><code>IMappingStrategy.Props.COLUMN_TYPE_MODIFIER</code></a>.</div>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PROP_COLUMN_TYPE_MODIFIER">
+<h3>PROP_COLUMN_TYPE_MODIFIER</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_COLUMN_TYPE_MODIFIER</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.4 use <a href="IMappingStrategy.Props.html#COLUMN_TYPE_MODIFIER"><code>IMappingStrategy.Props.COLUMN_TYPE_MODIFIER</code></a>.</div>
 </div>
 <div class="block">Name of a String property that specifies the name of a <a href="ColumnTypeModifier.html" title="class in org.eclipse.emf.cdo.server.db.mapping"><code>column type modifier</code></a>.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_COLUMN_TYPE_MODIFIER">Constant Field Values</a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.PROP_COLUMN_TYPE_MODIFIER">Constant Field Values</a></li>
 </ul>
+</dd>
+</dl>
+</section>
 </li>
 </ul>
 </section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="getStore()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getStore</h4>
-<pre class="methodSignature"><a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;getStore()</pre>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getStore()">
+<h3>getStore</h3>
+<div class="member-signature"><span class="return-type"><a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></span>&nbsp;<span class="element-name">getStore</span>()</div>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the store, this MappingStrategy instance belongs to.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setStore(org.eclipse.emf.cdo.server.db.IDBStore)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setStore</h4>
-<pre class="methodSignature">void&nbsp;setStore&#8203;(<a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</pre>
+<li>
+<section class="detail" id="setStore(org.eclipse.emf.cdo.server.db.IDBStore)">
+<h3>setStore</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setStore</span><wbr><span class="parameters">(<a href="../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</span></div>
 <div class="block">Set the store to which this MappingStrategy instance belongs. Should only be called by the <code>DBStore</code>, and
  only once to initialize the connection between <code>DBStore</code> and mapping strategy.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>dbStore</code> - the DBStore instance to which this MappingStrategy instance belongs.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createValueMapping</h4>
-<pre class="methodSignature"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>&nbsp;createValueMapping&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
+<li>
+<section class="detail" id="createValueMapping(org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>createValueMapping</h3>
+<div class="member-signature"><span class="return-type"><a href="ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></span>&nbsp;<span class="element-name">createValueMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Factory for value mappings of single-valued attributes.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>feature</code> - the feature for which a mapping should be created. It must hold <code>feature.isMany() == false</code>.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the mapping created.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createListMapping</h4>
-<pre class="methodSignature"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a>&nbsp;createListMapping&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
-                               org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
+<li>
+<section class="detail" id="createListMapping(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>createListMapping</h3>
+<div class="member-signature"><span class="return-type"><a href="IListMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></span>&nbsp;<span class="element-name">createListMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containingClass,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Factory for value mappings of multi-valued-attributes.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>containingClass</code> - the class containing the feature.</dd>
 <dd><code>feature</code> - the feature for which a mapping should be created. It must hold <code>feature.isMany() == true</code>.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getTableName(org.eclipse.emf.ecore.ENamedElement)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTableName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(org.eclipse.emf.ecore.ENamedElement&nbsp;element)</pre>
+<li>
+<section class="detail" id="getTableName(org.eclipse.emf.ecore.ENamedElement)">
+<h3>getTableName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getTableName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/ENamedElement.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">ENamedElement</a>&nbsp;element)</span></div>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>element</code> - the element for which the name should be created. It must hold:
           <code>element instanceof EClass || element instanceof EPackage</code>.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the created table name. It is guaranteed that the table name is compatible with the chosen database.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getTableName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getTableName&#8203;(org.eclipse.emf.ecore.EClass&nbsp;containingClass,
-                              org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
+<li>
+<section class="detail" id="getTableName(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>getTableName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getTableName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;containingClass,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Create a suitable table name which can be used to map the given element. Should only be called by mapping classes.
  Should only be called by mapping classes.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>containingClass</code> - the class containeng the feature.</dd>
 <dd><code>feature</code> - the feature for which the table name should be created.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the created table name. It is guaranteed that the table name is compatible with the chosen database.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getFieldName</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getFieldName&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</pre>
+<li>
+<section class="detail" id="getFieldName(org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>getFieldName</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFieldName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <div class="block">Create a suitable column name which can be used to map the given element. Should only be called by mapping classes.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>feature</code> - the feature for which the column name should be created.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the created column name. It is guaranteed that the name is compatible with the chosen database.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],org.eclipse.net4j.util.om.monitor.OMMonitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createMapping</h4>
-<pre class="methodSignature">void&nbsp;createMapping&#8203;(java.sql.Connection&nbsp;connection,
-                   <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
-                   org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</pre>
+<li>
+<section class="detail" id="createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[],org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>createMapping</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">createMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
 <div class="block">Create and initialize the mapping infrastructure for the given packages. Should be called from the DBStore or the
  DBStoreAccessor.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>connection</code> - the connection to use.</dd>
 <dd><code>packageUnits</code> - the packages whose elements should be mapped.</dd>
 <dd><code>monitor</code> - the monitor to report progress.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>removeMapping</h4>
-<pre class="methodSignature">void&nbsp;removeMapping&#8203;(java.sql.Connection&nbsp;connection,
-                   <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</pre>
+<li>
+<section class="detail" id="removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit[])">
+<h3>removeMapping</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">removeMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</span></div>
 <div class="block">Remove the mapping infrastructure for the given packages. Should be called from the DBStore or the DBStoreAccessor.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>connection</code> - the connection to use.</dd>
 <dd><code>packageUnits</code> - the packages for which the mappings should be removed</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getClassMapping(org.eclipse.emf.ecore.EClass)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getClassMapping</h4>
-<pre class="methodSignature"><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&nbsp;getClassMapping&#8203;(org.eclipse.emf.ecore.EClass&nbsp;eClass)</pre>
+<li>
+<section class="detail" id="getClassMapping(org.eclipse.emf.ecore.EClass)">
+<h3>getClassMapping</h3>
+<div class="member-signature"><span class="return-type"><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a></span>&nbsp;<span class="element-name">getClassMapping</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass)</span></div>
 <div class="block">Look up an existing class mapping for the given class. Before this method is called, the class mapping must have
  been initialized by calling <a href="#createMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>createMapping(Connection, InternalCDOPackageUnit[], OMMonitor)</code></a> on its
  containing package.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>eClass</code> - the class to look up.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the class mapping.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getClassMappings()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getClassMappings</h4>
-<pre class="methodSignature">java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings()</pre>
+<li>
+<section class="detail" id="getClassMappings()">
+<h3>getClassMappings</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>,<wbr><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</span>&nbsp;<span class="element-name">getClassMappings</span>()</div>
 <div class="block">Returns all class mappings of this strategy.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getClassMappings(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getClassMappings</h4>
-<pre class="methodSignature">java.util.Map&lt;org.eclipse.emf.ecore.EClass,&#8203;<a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;&nbsp;getClassMappings&#8203;(boolean&nbsp;createOnDemand)</pre>
+<li>
+<section class="detail" id="getClassMappings(boolean)">
+<h3>getClassMappings</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>,<wbr><a href="IClassMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IClassMapping</a>&gt;</span>&nbsp;<span class="element-name">getClassMappings</span><wbr><span class="parameters">(boolean&nbsp;createOnDemand)</span></div>
 <div class="block">Returns all class mappings of this strategy.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="hasDeltaSupport()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasDeltaSupport</h4>
-<pre class="methodSignature">boolean&nbsp;hasDeltaSupport()</pre>
+<li>
+<section class="detail" id="hasDeltaSupport()">
+<h3>hasDeltaSupport</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasDeltaSupport</span>()</div>
 <div class="block">Query if this mapping supports revision deltas. <br>
  If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
  <a href="#getClassMapping(org.eclipse.emf.ecore.EClass)"><code>getClassMapping(EClass)</code></a> implement <a href="IClassMappingDeltaSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMappingDeltaSupport</code></a>.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd><code>true</code> if revision deltas are supported, <code>false</code> else.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="hasAuditSupport()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasAuditSupport</h4>
-<pre class="methodSignature">boolean&nbsp;hasAuditSupport()</pre>
+<li>
+<section class="detail" id="hasAuditSupport()">
+<h3>hasAuditSupport</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasAuditSupport</span>()</div>
 <div class="block">Query if this mapping supports audits. <br>
  If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
  <a href="#getClassMapping(org.eclipse.emf.ecore.EClass)"><code>getClassMapping(EClass)</code></a> implement <a href="IClassMappingAuditSupport.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IClassMappingAuditSupport</code></a>.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd><code>true</code> if audits are supported, <code>false</code> else.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="hasBranchingSupport()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>hasBranchingSupport</h4>
-<pre class="methodSignature">boolean&nbsp;hasBranchingSupport()</pre>
+<li>
+<section class="detail" id="hasBranchingSupport()">
+<h3>hasBranchingSupport</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasBranchingSupport</span>()</div>
 <div class="block">Query if this mapping supports branches. <br></div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd><code>true</code> if branches are supported, <code>false</code> else.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>queryResources</h4>
-<pre class="methodSignature">void&nbsp;queryResources&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                    <a href="../../IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</pre>
+<li>
+<section class="detail" id="queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)">
+<h3>queryResources</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">queryResources</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../IStoreAccessor.QueryResourcesContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</span></div>
 <div class="block">Executes a resource query.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>accessor</code> - the accessor to use.</dd>
 <dd><code>context</code> - the context from which the query parameters are read and to which the result is written.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>queryXRefs</h4>
-<pre class="methodSignature">void&nbsp;queryXRefs&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</pre>
+<li>
+<section class="detail" id="queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)">
+<h3>queryXRefs</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">queryXRefs</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../IStoreAccessor.QueryXRefsContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</span></div>
 <div class="block">Executes a cross reference query.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>accessor</code> - the accessor to use.</dd>
 <dd><code>context</code> - the context from which the query parameters are read and to which the result is written.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readObjectType</h4>
-<pre class="methodSignature"><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a>&nbsp;readObjectType&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                                <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</pre>
+<li>
+<section class="detail" id="readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>readObjectType</h3>
+<div class="member-signature"><span class="return-type"><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></span>&nbsp;<span class="element-name">readObjectType</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
 <div class="block">Read the type (i.e. class) of the object referred to by a given ID.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>accessor</code> - the accessor to use to look up the type.</dd>
 <dd><code>id</code> - the ID of the object for which the type is to be determined.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the type of the object.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readObjectIDs</h4>
-<pre class="methodSignature">org.eclipse.net4j.util.collection.CloseableIterator&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;readObjectIDs&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</pre>
+<li>
+<section class="detail" id="readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">
+<h3>readObjectIDs</h3>
+<div class="member-signature"><span class="return-type">org.eclipse.net4j.util.collection.CloseableIterator&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</span>&nbsp;<span class="element-name">readObjectIDs</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</span></div>
 <div class="block">Get an iterator over all instances of objects in the store.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>accessor</code> - the accessor to use.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the iterator.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>repairAfterCrash</h4>
-<pre class="methodSignature">void&nbsp;repairAfterCrash&#8203;(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
-                      java.sql.Connection&nbsp;connection)</pre>
+<li>
+<section class="detail" id="repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)">
+<h3>repairAfterCrash</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">repairAfterCrash</span><wbr><span class="parameters">(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
 <div class="block">Return the maximum object id used in the store. This is used by the DBStore if a previous crash is discovered
  during the startup process. Should only be called by the DBStore and only during startup.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>dbAdapter</code> - the dbAdapter to use to access the database</dd>
 <dd><code>connection</code> - the connection to use to access the database</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getProperties()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getProperties</h4>
-<pre class="methodSignature">java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;getProperties()</pre>
+<li>
+<section class="detail" id="getProperties()">
+<h3>getProperties</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getProperties</span>()</div>
 <div class="block">Returns the configuration properties of this mapping strategy.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setProperties(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setProperties</h4>
-<pre class="methodSignature">void&nbsp;setProperties&#8203;(java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;properties)</pre>
+<li>
+<section class="detail" id="setProperties(java.util.Map)">
+<h3>setProperties</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setProperties</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</span></div>
 <div class="block">Set configuration properties for this mapping strategy. Should only be called by the factory creating the mapping
  strategy instance.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>properties</code> - the configuration properties to set.</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>handleRevisions</h4>
-<pre class="methodSignature">void&nbsp;handleRevisions&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                     org.eclipse.emf.ecore.EClass&nbsp;eClass,
-                     <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                     long&nbsp;timeStamp,
-                     boolean&nbsp;exactTime,
-                     <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</pre>
+<li>
+<section class="detail" id="handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)">
+<h3>handleRevisions</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">handleRevisions</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ boolean&nbsp;exactTime,
+ <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</span></div>
 <div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
  conditions are met:
  <ul>
@@ -1023,155 +818,90 @@ static final&nbsp;java.lang.String PROP_COLUMN_TYPE_MODIFIER</pre>
  <li>The <code>timeStamp</code> parameter is <a href="../../../common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE"><code>CDOBranchPoint.UNSPECIFIED_DATE</code></a> or equal to
  <code>revision.getTimeStamp()</code>.
  </ul></div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readChangeSet</h4>
-<pre class="methodSignature">java.util.Set&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;readChangeSet&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-                                   org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
-                                   <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</pre>
+<li>
+<section class="detail" id="readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment[])">
+<h3>readChangeSet</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</span>&nbsp;<span class="element-name">readChangeSet</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
+ <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="class in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</span></div>
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.
  DetachedCDORevisions must also be considered!</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)"><code>IStoreAccessor.readChangeSet(OMMonitor, CDOChangeSetSegment...)</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../../IStoreAccessor.html#readChangeSet(org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment...)"><code>IStoreAccessor.readChangeSet(OMMonitor, CDOChangeSetSegment...)</code></a></li>
 </ul>
-<a id="rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>rawExport</h4>
-<pre class="methodSignature">void&nbsp;rawExport&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="../../../common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
-               int&nbsp;lastReplicatedBranchID,
-               int&nbsp;lastBranchID,
-               long&nbsp;lastReplicatedCommitTime,
-               long&nbsp;lastCommitTime)
-        throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)">
+<h3>rawExport</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">rawExport</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ int&nbsp;lastReplicatedBranchID,
+ int&nbsp;lastBranchID,
+ long&nbsp;lastReplicatedCommitTime,
+ long&nbsp;lastCommitTime)</span>
+        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>rawImport</h4>
-<pre class="methodSignature">void&nbsp;rawImport&#8203;(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
-               <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
-               long&nbsp;fromCommitTime,
-               long&nbsp;toCommitTime,
-               org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)
-        throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>rawImport</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">rawImport</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+ long&nbsp;fromCommitTime,
+ long&nbsp;toCommitTime,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span>
+        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getListJoin(java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getListJoin</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getListJoin&#8203;(java.lang.String&nbsp;attrTable,
-                             java.lang.String&nbsp;listTable)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getListJoin(java.lang.String,java.lang.String)">
+<h3>getListJoin</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getListJoin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;attrTable,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;listTable)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/IMappingStrategy.html">Use</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

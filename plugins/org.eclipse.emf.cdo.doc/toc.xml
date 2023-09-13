@@ -3,14 +3,6 @@
 
 <toc label="CDO Model Repository Documentation" topic="html/Overview.html">
   <topic label="Overview" href="html/Overview.html" />
-  <topic label="Developing Client Applications" href="html/client/index.html">
-    <topic label="Understanding the Architecture of a Client Application" href="html/client/Doc01_Architecture.html" />
-    <topic label="Preparing EMF Models for CDO" href="html/client/Doc02_PreparingModels.html" />
-    <topic label="View Providers" href="html/client/Doc03_ViewProviders.html" />
-  </topic>
-  <topic label="Dealing with Servers" href="html/server/index.html">
-    <topic label="Understanding the Architecture of a Repository" href="html/server/Architecture.html" />
-  </topic>
   <topic label="User's Guide" href="html/users/index.html">
     <topic label="Elements of the User Interface" href="html/users/Doc01_UserInterface.html" />
     <topic label="Managing Repositories" href="html/users/Doc02_ManagingRepositories.html" />
@@ -27,6 +19,16 @@
     <topic label="Configuring Repositories" href="html/operators/Doc01_ConfiguringRepositories.html" />
     <topic label="Configuring Acceptors" href="html/operators/Doc02_ConfiguringAcceptors.html" />
     <topic label="Managing Security" href="http://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
+  </topic>
+  <topic label="Programmer's Guide" href="html/programmers/index.html">
+    <topic label="Developing Client Applications" href="html/programmers/client/index.html">
+      <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" />
+      <topic label="Preparing EMF Models for CDO" href="html/programmers/client/Doc02_PreparingModels.html" />
+      <topic label="View Providers" href="html/programmers/client/Doc03_ViewProviders.html" />
+    </topic>
+    <topic label="Dealing with Servers" href="html/programmers/server/index.html">
+      <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />
+    </topic>
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">
@@ -56,6 +58,7 @@
         <topic label="org.eclipse.emf.cdo.edit" href="javadoc/org/eclipse/emf/cdo/edit/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.eresource.provider" href="javadoc/org/eclipse/emf/cdo/eresource/provider/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.etypes.provider" href="javadoc/org/eclipse/emf/cdo/etypes/provider/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.etypes.provider.annotation" href="javadoc/org/eclipse/emf/cdo/etypes/provider/annotation/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Client Net4j Support" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.net4j" href="javadoc/org/eclipse/emf/cdo/net4j/package-summary.html" icon="package" />
@@ -110,6 +113,44 @@
       <topic label="CDO Model Repository Expressions Edit Support" href="javadoc/org/eclipse/emf/cdo/expressions/provider/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.expressions.provider" href="javadoc/org/eclipse/emf/cdo/expressions/provider/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Lifecycle Management" href="javadoc/org/eclipse/emf/cdo/lm/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm" href="javadoc/org/eclipse/emf/cdo/lm/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.impl" href="javadoc/org/eclipse/emf/cdo/lm/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.util" href="javadoc/org/eclipse/emf/cdo/lm/util/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Assembly" href="javadoc/org/eclipse/emf/cdo/lm/assembly/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.assembly" href="javadoc/org/eclipse/emf/cdo/lm/assembly/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.assembly.impl" href="javadoc/org/eclipse/emf/cdo/lm/assembly/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.assembly.util" href="javadoc/org/eclipse/emf/cdo/lm/assembly/util/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Assembly Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/assembly/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.assembly.provider" href="javadoc/org/eclipse/emf/cdo/lm/assembly/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Client" href="javadoc/org/eclipse/emf/cdo/lm/client/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.client" href="javadoc/org/eclipse/emf/cdo/lm/client/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.provider" href="javadoc/org/eclipse/emf/cdo/lm/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Modules" href="javadoc/org/eclipse/emf/cdo/lm/modules/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.modules" href="javadoc/org/eclipse/emf/cdo/lm/modules/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.modules.impl" href="javadoc/org/eclipse/emf/cdo/lm/modules/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.modules.util" href="javadoc/org/eclipse/emf/cdo/lm/modules/util/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.modules.provider" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.security.impl" href="javadoc/org/eclipse/emf/cdo/lm/security/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.security.util" href="javadoc/org/eclipse/emf/cdo/lm/security/util/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Security Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/security/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.security.provider" href="javadoc/org/eclipse/emf/cdo/lm/security/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Server" href="javadoc/org/eclipse/emf/cdo/lm/server/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.server" href="javadoc/org/eclipse/emf/cdo/lm/server/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Security" href="javadoc/org/eclipse/emf/cdo/security/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.security" href="javadoc/org/eclipse/emf/cdo/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.security.impl" href="javadoc/org/eclipse/emf/cdo/security/impl/package-summary.html" icon="package" />
@@ -157,15 +198,15 @@
         <topic label="org.eclipse.emf.cdo.spi.transfer" href="javadoc/org/eclipse/emf/cdo/spi/transfer/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.transfer" href="javadoc/org/eclipse/emf/cdo/transfer/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Transfer Framework (Repository Support)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html" icon="plugin">
+      <topic label="CDO Transfer Framework Repository Support" href="javadoc/org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.transfer.spi.repository" href="javadoc/org/eclipse/emf/cdo/transfer/spi/repository/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Transfer Framework (UI)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html" icon="plugin">
+      <topic label="CDO Transfer Framework UI" href="javadoc/org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.transfer.spi.ui" href="javadoc/org/eclipse/emf/cdo/transfer/spi/ui/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.transfer.ui" href="javadoc/org/eclipse/emf/cdo/transfer/ui/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.transfer.ui.swt" href="javadoc/org/eclipse/emf/cdo/transfer/ui/swt/package-summary.html" icon="package" />
       </topic>
-      <topic label="CDO Transfer Framework (Workspace Support)" href="javadoc/org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html" icon="plugin">
+      <topic label="CDO Transfer Framework Workspace Support" href="javadoc/org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.transfer.spi.workspace" href="javadoc/org/eclipse/emf/cdo/transfer/spi/workspace/package-summary.html" icon="package" />
       </topic>
     </topic>

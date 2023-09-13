@@ -27,6 +27,7 @@
     <packages name="org.eclipse.emf.cdo.edit"/>
     <packages name="org.eclipse.emf.cdo.eresource.provider"/>
     <packages name="org.eclipse.emf.cdo.etypes.provider"/>
+    <packages name="org.eclipse.emf.cdo.etypes.provider.annotation"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.net4j" label="CDO Model Repository Client Net4j Support">
     <packages name="org.eclipse.emf.cdo.net4j"/>
@@ -72,6 +73,7 @@
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
     <packages name="org.eclipse.emf.cdo.spi.common.util"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.ecore.dependencies" label="CDO Model Repository Ecore Dependencies"/>
   <article:Plugin name="org.eclipse.emf.cdo.explorer" label="CDO Model Repository Explorer">
     <packages name="org.eclipse.emf.cdo.explorer"/>
     <packages name="org.eclipse.emf.cdo.explorer.checkouts"/>
@@ -85,7 +87,45 @@
   <article:Plugin name="org.eclipse.emf.cdo.expressions.edit" label="CDO Model Repository Expressions Edit Support">
     <packages name="org.eclipse.emf.cdo.expressions.provider"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.expressions.editor" label="CDO Model Repository Expressions Editor"/>
+  <article:Plugin name="org.eclipse.emf.cdo.lm" label="CDO Model Repository Lifecycle Management">
+    <packages name="org.eclipse.emf.cdo.lm"/>
+    <packages name="org.eclipse.emf.cdo.lm.impl"/>
+    <packages name="org.eclipse.emf.cdo.lm.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.assembly" label="CDO Model Repository Lifecycle Management Assembly">
+    <packages name="org.eclipse.emf.cdo.lm.assembly"/>
+    <packages name="org.eclipse.emf.cdo.lm.assembly.impl"/>
+    <packages name="org.eclipse.emf.cdo.lm.assembly.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.assembly.edit" label="CDO Model Repository Lifecycle Management Assembly Edit Support">
+    <packages name="org.eclipse.emf.cdo.lm.assembly.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.client" label="CDO Model Repository Lifecycle Management Client">
+    <packages name="org.eclipse.emf.cdo.lm.client"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.edit" label="CDO Model Repository Lifecycle Management Edit Support">
+    <packages name="org.eclipse.emf.cdo.lm.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.modules" label="CDO Model Repository Lifecycle Management Modules">
+    <packages name="org.eclipse.emf.cdo.lm.modules"/>
+    <packages name="org.eclipse.emf.cdo.lm.modules.impl"/>
+    <packages name="org.eclipse.emf.cdo.lm.modules.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.modules.edit" label="CDO Model Repository Lifecycle Management Modules Edit Support">
+    <packages name="org.eclipse.emf.cdo.lm.modules.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.security" label="CDO Model Repository Lifecycle Management Security">
+    <packages name="org.eclipse.emf.cdo.lm.security"/>
+    <packages name="org.eclipse.emf.cdo.lm.security.impl"/>
+    <packages name="org.eclipse.emf.cdo.lm.security.util"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.security.edit" label="CDO Model Repository Lifecycle Management Security Edit Support">
+    <packages name="org.eclipse.emf.cdo.lm.security.provider"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.server" label="CDO Model Repository Lifecycle Management Server">
+    <packages name="org.eclipse.emf.cdo.lm.server"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.ui" label="CDO Model Repository Lifecycle Management UI"/>
   <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security">
     <packages name="org.eclipse.emf.cdo.security"/>
     <packages name="org.eclipse.emf.cdo.security.impl"/>
@@ -94,7 +134,6 @@
   <article:Plugin name="org.eclipse.emf.cdo.security.edit" label="CDO Model Repository Security Edit Support">
     <packages name="org.eclipse.emf.cdo.security.provider"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.security.editor" label="CDO Model Repository Security Editor"/>
   <article:Plugin name="org.eclipse.emf.cdo.security.ui" label="CDO Model Repository Security UI">
     <packages name="org.eclipse.emf.cdo.security.ui"/>
   </article:Plugin>
@@ -138,16 +177,16 @@
     <packages name="org.eclipse.emf.cdo.spi.transfer"/>
     <packages name="org.eclipse.emf.cdo.transfer"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.transfer.repository" label="CDO Transfer Framework (Repository Support)">
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.repository" label="CDO Transfer Framework Repository Support">
     <packages name="org.eclipse.emf.cdo.transfer.spi.repository"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.transfer.ui" label="CDO Transfer Framework (UI)">
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.ui" label="CDO Transfer Framework UI">
     <packages name="org.eclipse.emf.cdo.transfer.spi.ui"/>
     <packages name="org.eclipse.emf.cdo.transfer.ui"/>
     <packages name="org.eclipse.emf.cdo.transfer.ui.swt"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace.ui" label="CDO Transfer Framework (Workspace Support UI)"/>
-  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace" label="CDO Transfer Framework (Workspace Support)">
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace" label="CDO Transfer Framework Workspace Support">
     <packages name="org.eclipse.emf.cdo.transfer.spi.workspace"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace.ui" label="CDO Transfer Framework Workspace Support UI"/>
 </xmi:XMI>

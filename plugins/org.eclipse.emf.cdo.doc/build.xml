@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2006-2021 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -17,11 +17,9 @@
 
   <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
 
-  <property name="legal.date" value="2004-2021" />
-
-  <property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
-  <property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
+  <property name="jdk.link" value="https://download.oracle.com/javase/1.5.0/docs/api" />
+  <property name="emf.link" value="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
+  <property name="platform.link" value="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
 
   <property name="project.path" value="${plugins.dir}/org.eclipse.emf.cdo.doc" />
@@ -82,8 +80,9 @@
              encoding="UTF-8"
              classpathref="javadoc.classpath"
              additionalparam="-Xdoclint:missing"
-             maxmemory="1024m"
-             source="1.8"
+             maxmemory="4g" 
+             source="17"
+    	       verbose="false"
              useexternalfile="true"
              failonerror="true"
              docfilessubdirs="true"
@@ -127,6 +126,7 @@
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/edit/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/eresource/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.edit/src/org/eclipse/emf/cdo/etypes/provider/annotation/*.java" />
 				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/*.java" />
 				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/checkouts/*.java" />
 				<include name="org.eclipse.emf.cdo.explorer/src/org/eclipse/emf/cdo/explorer/repositories/*.java" />
@@ -134,6 +134,24 @@
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/impl/*.java" />
 				<include name="org.eclipse.emf.cdo.expressions/src/org/eclipse/emf/cdo/expressions/util/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.assembly.edit/src/org/eclipse/emf/cdo/lm/assembly/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.assembly/src/org/eclipse/emf/cdo/lm/assembly/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.assembly/src/org/eclipse/emf/cdo/lm/assembly/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.assembly/src/org/eclipse/emf/cdo/lm/assembly/util/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.client/src/org/eclipse/emf/cdo/lm/client/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.edit/src/org/eclipse/emf/cdo/lm/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.modules.edit/src/org/eclipse/emf/cdo/lm/modules/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/util/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.security.edit/src/org/eclipse/emf/cdo/lm/security/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/util/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.server/src/org/eclipse/emf/cdo/lm/server/*.java" />
+				<include name="org.eclipse.emf.cdo.lm/src/org/eclipse/emf/cdo/lm/*.java" />
+				<include name="org.eclipse.emf.cdo.lm/src/org/eclipse/emf/cdo/lm/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.lm/src/org/eclipse/emf/cdo/lm/util/*.java" />
 				<include name="org.eclipse.emf.cdo.net4j/src/org/eclipse/emf/cdo/net4j/*.java" />
 				<include name="org.eclipse.emf.cdo.security.edit/src/org/eclipse/emf/cdo/security/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.security.ui/src/org/eclipse/emf/cdo/security/ui/*.java" />
@@ -208,6 +226,7 @@
 				<package name="org.eclipse.emf.cdo.edit" />
 				<package name="org.eclipse.emf.cdo.eresource.provider" />
 				<package name="org.eclipse.emf.cdo.etypes.provider" />
+				<package name="org.eclipse.emf.cdo.etypes.provider.annotation" />
 			</group>
 			<group title="CDO Model Repository Client Net4j Support">
 				<package name="org.eclipse.emf.cdo.net4j" />
@@ -262,6 +281,44 @@
 			<group title="CDO Model Repository Expressions Edit Support">
 				<package name="org.eclipse.emf.cdo.expressions.provider" />
 			</group>
+			<group title="CDO Model Repository Lifecycle Management">
+				<package name="org.eclipse.emf.cdo.lm" />
+				<package name="org.eclipse.emf.cdo.lm.impl" />
+				<package name="org.eclipse.emf.cdo.lm.util" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Assembly">
+				<package name="org.eclipse.emf.cdo.lm.assembly" />
+				<package name="org.eclipse.emf.cdo.lm.assembly.impl" />
+				<package name="org.eclipse.emf.cdo.lm.assembly.util" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Assembly Edit Support">
+				<package name="org.eclipse.emf.cdo.lm.assembly.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Client">
+				<package name="org.eclipse.emf.cdo.lm.client" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Edit Support">
+				<package name="org.eclipse.emf.cdo.lm.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Modules">
+				<package name="org.eclipse.emf.cdo.lm.modules" />
+				<package name="org.eclipse.emf.cdo.lm.modules.impl" />
+				<package name="org.eclipse.emf.cdo.lm.modules.util" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Modules Edit Support">
+				<package name="org.eclipse.emf.cdo.lm.modules.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Security">
+				<package name="org.eclipse.emf.cdo.lm.security" />
+				<package name="org.eclipse.emf.cdo.lm.security.impl" />
+				<package name="org.eclipse.emf.cdo.lm.security.util" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Security Edit Support">
+				<package name="org.eclipse.emf.cdo.lm.security.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Server">
+				<package name="org.eclipse.emf.cdo.lm.server" />
+			</group>
 			<group title="CDO Model Repository Security">
 				<package name="org.eclipse.emf.cdo.security" />
 				<package name="org.eclipse.emf.cdo.security.impl" />
@@ -309,15 +366,15 @@
 				<package name="org.eclipse.emf.cdo.spi.transfer" />
 				<package name="org.eclipse.emf.cdo.transfer" />
 			</group>
-			<group title="CDO Transfer Framework (Repository Support)">
+			<group title="CDO Transfer Framework Repository Support">
 				<package name="org.eclipse.emf.cdo.transfer.spi.repository" />
 			</group>
-			<group title="CDO Transfer Framework (UI)">
+			<group title="CDO Transfer Framework UI">
 				<package name="org.eclipse.emf.cdo.transfer.spi.ui" />
 				<package name="org.eclipse.emf.cdo.transfer.ui" />
 				<package name="org.eclipse.emf.cdo.transfer.ui.swt" />
 			</group>
-			<group title="CDO Transfer Framework (Workspace Support)">
+			<group title="CDO Transfer Framework Workspace Support">
 				<package name="org.eclipse.emf.cdo.transfer.spi.workspace" />
 			</group>
 
@@ -446,19 +503,19 @@
     <javadoc locale="en"
              encoding="UTF-8"
              classpathref="javadoc.classpath"
-             maxmemory="1024m"
-             source="1.8"
+             maxmemory="4g"
+             source="17"
+             verbose="false"
              useexternalfile="true"
              failonerror="true"
              private="true">
 
-      <doclet name="org.eclipse.oomph.releng.doc.article.impl.ArticleDoclet"
+      <doclet name="org.eclipse.oomph.releng.doc.article.doclet.ArticleDoclet"
                 path="${releng.project}/bin;${releng.project}/org.eclipse.oomph.releng.doc.jar;${tp.classpath};${releng.project}/lib/dom4j-1.6.1.jar;${releng.project}/lib/poi-3.8-beta4-20110826.jar;${releng.project}/lib/poi-ooxml-3.8-beta4-20110826.jar;${releng.project}/lib/poi-ooxml-schemas-3.8-beta4-20110826.jar;${releng.project}/lib/xmlbeans-2.3.0.jar">
-        <param name="-starttime" value="${start.time}" />
-        <param name="-basefolder" value="${plugins.dir}/.." />
-        <param name="-project" value="org.eclipse.emf.cdo.doc" />
-        <param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
-
+        <param name="--starttime" value="${start.time}" />
+        <param name="--basefolder" value="${plugins.dir}/.." />
+        <param name="--project" value="org.eclipse.emf.cdo.doc" />
+        <param name="--externals" value="${jdk.link};${platform.link};${emf.link}" />
       </doclet>
 
       <fileset dir="${plugins.dir}">

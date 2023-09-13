@@ -21,11 +21,11 @@
     <packages name="org.eclipse.net4j.tcp"/>
     <packages name="org.eclipse.net4j.tcp.ssl"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signalling Platform (Websocket Transport)">
-    <packages name="org.eclipse.net4j.ws"/>
-    <packages name="org.eclipse.net4j.ws.jetty"/>
-  </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.ui" label="Net4j Signalling Platform UI">
     <packages name="org.eclipse.net4j.ui"/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signalling Platform Websocket Transport">
+    <packages name="org.eclipse.net4j.ws"/>
+    <packages name="org.eclipse.net4j.ws.jetty"/>
   </article:Plugin>
 </xmi:XMI>

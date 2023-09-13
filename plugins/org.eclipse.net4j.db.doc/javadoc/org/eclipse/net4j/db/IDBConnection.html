@@ -1,481 +1,305 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>IDBConnection (Net4j DB Framework Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.net4j.db, interface: IDBConnection">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="IDBConnection (Net4j DB Framework Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":6,"i1":6,"i2":38,"i3":38,"i4":38,"i5":6,"i6":38,"i7":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/IDBConnection.html">Use</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db</a></div>
-<h2 title="Interface IDBConnection" class="title">Interface IDBConnection</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db</a></div>
+<h1 title="Interface IDBConnection" class="title">Interface IDBConnection</h1>
 </div>
-<div class="contentContainer">
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code>java.lang.AutoCloseable</code>, <code>java.sql.Connection</code>, <code>org.eclipse.net4j.util.security.IUserAware</code>, <code>java.sql.Wrapper</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code>, <code>org.eclipse.net4j.util.security.IUserAware</code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Wrapper.html" title="class or interface in java.sql" class="external-link">Wrapper</a></code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">IDBConnection</span>
-extends java.sql.Connection, org.eclipse.net4j.util.security.IUserAware</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IDBConnection</span><span class="extends-implements">
+extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>, org.eclipse.net4j.util.security.IUserAware</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
-<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dt>No Implement</dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<ul class="blockList">
-<li class="blockList"><a id="fields.inherited.from.class.java.sql.Connection">
-<!--   -->
-</a>
-<h3>Fields inherited from interface&nbsp;java.sql.Connection</h3>
-<code>TRANSACTION_NONE, TRANSACTION_READ_COMMITTED, TRANSACTION_READ_UNCOMMITTED, TRANSACTION_REPEATABLE_READ, TRANSACTION_SERIALIZABLE</code></li>
-</ul>
-</li>
-</ul>
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-java.sql.Connection">Fields inherited from interface&nbsp;java.sql.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#TRANSACTION_NONE" title="class or interface in java.sql" class="external-link">TRANSACTION_NONE</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#TRANSACTION_READ_COMMITTED" title="class or interface in java.sql" class="external-link">TRANSACTION_READ_COMMITTED</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#TRANSACTION_READ_UNCOMMITTED" title="class or interface in java.sql" class="external-link">TRANSACTION_READ_UNCOMMITTED</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#TRANSACTION_REPEATABLE_READ" title="class or interface in java.sql" class="external-link">TRANSACTION_REPEATABLE_READ</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#TRANSACTION_SERIALIZABLE" title="class or interface in java.sql" class="external-link">TRANSACTION_SERIALIZABLE</a></code></div>
 </section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDatabase()">getDatabase</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openSchemaTransaction()">openSchemaTransaction</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,int)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                int&nbsp;autoGeneratedKeys)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDatabase()" class="member-name-link">getDatabase</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openSchemaTransaction()" class="member-name-link">openSchemaTransaction</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#prepareStatement(java.lang.String,int)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;autoGeneratedKeys)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,int%5B%5D)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                int[]&nbsp;columnIndexes)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
 </div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,int,int,int)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                int&nbsp;resultSetType,
-                int&nbsp;resultSetConcurrency,
-                int&nbsp;resultSetHoldability)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#prepareStatement(java.lang.String,int%5B%5D)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int[]&nbsp;columnIndexes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                int&nbsp;resultSetType,
-                int&nbsp;resultSetConcurrency,
-                <a href="IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>java.sql.PreparedStatement</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,java.lang.String%5B%5D)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                java.lang.String[]&nbsp;columnNames)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
 </div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#prepareStatement(java.lang.String,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">prepareStatement</a></span>&#8203;(java.lang.String&nbsp;sql,
-                <a href="IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.sql.Connection">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;java.sql.Connection</h3>
-<code>abort, beginRequest, clearWarnings, close, commit, createArrayOf, createBlob, createClob, createNClob, createSQLXML, createStatement, createStatement, createStatement, createStruct, endRequest, getAutoCommit, getCatalog, getClientInfo, getClientInfo, getHoldability, getMetaData, getNetworkTimeout, getSchema, getTransactionIsolation, getTypeMap, getWarnings, isClosed, isReadOnly, isValid, nativeSQL, prepareCall, prepareCall, prepareCall, prepareStatement, prepareStatement, releaseSavepoint, rollback, rollback, setAutoCommit, setCatalog, setClientInfo, setClientInfo, setHoldability, setNetworkTimeout, setReadOnly, setSavepoint, setSavepoint, setSchema, setShardingKey, setShardingKey, setShardingKeyIfValid, setShardingKeyIfValid, setTransactionIsolation, setTypeMap</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.security.IUserAware">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.security.IUserAware</h3>
-<code>getUserID</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.sql.Wrapper">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;java.sql.Wrapper</h3>
-<code>isWrapperFor, unwrap</code></li>
-</ul>
-</li>
-</ul>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#prepareStatement(java.lang.String,int,int,int)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ int&nbsp;resultSetHoldability)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#prepareStatement(java.lang.String,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#prepareStatement(java.lang.String,java.lang.String%5B%5D)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;columnNames)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#prepareStatement(java.lang.String,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)" class="member-name-link">prepareStatement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.sql.Connection">Methods inherited from interface&nbsp;java.sql.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#abort(java.util.concurrent.Executor)" title="class or interface in java.sql" class="external-link">abort</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#beginRequest()" title="class or interface in java.sql" class="external-link">beginRequest</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#clearWarnings()" title="class or interface in java.sql" class="external-link">clearWarnings</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#close()" title="class or interface in java.sql" class="external-link">close</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#commit()" title="class or interface in java.sql" class="external-link">commit</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createArrayOf(java.lang.String,java.lang.Object%5B%5D)" title="class or interface in java.sql" class="external-link">createArrayOf</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createBlob()" title="class or interface in java.sql" class="external-link">createBlob</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createClob()" title="class or interface in java.sql" class="external-link">createClob</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createNClob()" title="class or interface in java.sql" class="external-link">createNClob</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createSQLXML()" title="class or interface in java.sql" class="external-link">createSQLXML</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createStatement()" title="class or interface in java.sql" class="external-link">createStatement</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createStatement(int,int)" title="class or interface in java.sql" class="external-link">createStatement</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createStatement(int,int,int)" title="class or interface in java.sql" class="external-link">createStatement</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#createStruct(java.lang.String,java.lang.Object%5B%5D)" title="class or interface in java.sql" class="external-link">createStruct</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#endRequest()" title="class or interface in java.sql" class="external-link">endRequest</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getAutoCommit()" title="class or interface in java.sql" class="external-link">getAutoCommit</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getCatalog()" title="class or interface in java.sql" class="external-link">getCatalog</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getClientInfo()" title="class or interface in java.sql" class="external-link">getClientInfo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getClientInfo(java.lang.String)" title="class or interface in java.sql" class="external-link">getClientInfo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getHoldability()" title="class or interface in java.sql" class="external-link">getHoldability</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getMetaData()" title="class or interface in java.sql" class="external-link">getMetaData</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getNetworkTimeout()" title="class or interface in java.sql" class="external-link">getNetworkTimeout</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getSchema()" title="class or interface in java.sql" class="external-link">getSchema</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getTransactionIsolation()" title="class or interface in java.sql" class="external-link">getTransactionIsolation</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getTypeMap()" title="class or interface in java.sql" class="external-link">getTypeMap</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#getWarnings()" title="class or interface in java.sql" class="external-link">getWarnings</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#isClosed()" title="class or interface in java.sql" class="external-link">isClosed</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#isReadOnly()" title="class or interface in java.sql" class="external-link">isReadOnly</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#isValid(int)" title="class or interface in java.sql" class="external-link">isValid</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#nativeSQL(java.lang.String)" title="class or interface in java.sql" class="external-link">nativeSQL</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareCall(java.lang.String)" title="class or interface in java.sql" class="external-link">prepareCall</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareCall(java.lang.String,int,int)" title="class or interface in java.sql" class="external-link">prepareCall</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareCall(java.lang.String,int,int,int)" title="class or interface in java.sql" class="external-link">prepareCall</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String)" title="class or interface in java.sql" class="external-link">prepareStatement</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String,int,int)" title="class or interface in java.sql" class="external-link">prepareStatement</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#releaseSavepoint(java.sql.Savepoint)" title="class or interface in java.sql" class="external-link">releaseSavepoint</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#rollback()" title="class or interface in java.sql" class="external-link">rollback</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#rollback(java.sql.Savepoint)" title="class or interface in java.sql" class="external-link">rollback</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setAutoCommit(boolean)" title="class or interface in java.sql" class="external-link">setAutoCommit</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setCatalog(java.lang.String)" title="class or interface in java.sql" class="external-link">setCatalog</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setClientInfo(java.lang.String,java.lang.String)" title="class or interface in java.sql" class="external-link">setClientInfo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setClientInfo(java.util.Properties)" title="class or interface in java.sql" class="external-link">setClientInfo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setHoldability(int)" title="class or interface in java.sql" class="external-link">setHoldability</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setNetworkTimeout(java.util.concurrent.Executor,int)" title="class or interface in java.sql" class="external-link">setNetworkTimeout</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setReadOnly(boolean)" title="class or interface in java.sql" class="external-link">setReadOnly</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setSavepoint()" title="class or interface in java.sql" class="external-link">setSavepoint</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setSavepoint(java.lang.String)" title="class or interface in java.sql" class="external-link">setSavepoint</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setSchema(java.lang.String)" title="class or interface in java.sql" class="external-link">setSchema</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setShardingKey(java.sql.ShardingKey)" title="class or interface in java.sql" class="external-link">setShardingKey</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setShardingKey(java.sql.ShardingKey,java.sql.ShardingKey)" title="class or interface in java.sql" class="external-link">setShardingKey</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setShardingKeyIfValid(java.sql.ShardingKey,int)" title="class or interface in java.sql" class="external-link">setShardingKeyIfValid</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setShardingKeyIfValid(java.sql.ShardingKey,java.sql.ShardingKey,int)" title="class or interface in java.sql" class="external-link">setShardingKeyIfValid</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setTransactionIsolation(int)" title="class or interface in java.sql" class="external-link">setTransactionIsolation</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#setTypeMap(java.util.Map)" title="class or interface in java.sql" class="external-link">setTypeMap</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.security.IUserAware">Methods inherited from interface&nbsp;org.eclipse.net4j.util.security.IUserAware</h3>
+<code>getUserID</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.sql.Wrapper">Methods inherited from interface&nbsp;java.sql.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Wrapper.html" title="class or interface in java.sql" class="external-link">Wrapper</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Wrapper.html#isWrapperFor(java.lang.Class)" title="class or interface in java.sql" class="external-link">isWrapperFor</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Wrapper.html#unwrap(java.lang.Class)" title="class or interface in java.sql" class="external-link">unwrap</a></code></div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="getDatabase()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDatabase</h4>
-<pre class="methodSignature"><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;getDatabase()</pre>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getDatabase()">
+<h3>getDatabase</h3>
+<div class="member-signature"><span class="return-type"><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></span>&nbsp;<span class="element-name">getDatabase</span>()</div>
+</section>
 </li>
-</ul>
-<a id="openSchemaTransaction()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openSchemaTransaction</h4>
-<pre class="methodSignature"><a href="IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a>&nbsp;openSchemaTransaction()</pre>
+<li>
+<section class="detail" id="openSchemaTransaction()">
+<h3>openSchemaTransaction</h3>
+<div class="member-signature"><span class="return-type"><a href="IDBSchemaTransaction.html" title="interface in org.eclipse.net4j.db">IDBSchemaTransaction</a></span>&nbsp;<span class="element-name">openSchemaTransaction</span>()</div>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                      <a href="IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</pre>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="return-type"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</span></div>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a>&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                      int&nbsp;resultSetType,
-                                      int&nbsp;resultSetConcurrency,
-                                      <a href="IDBPreparedStatement.ReuseProbability.html" title="enum in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</pre>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,int,int,org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability)">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="return-type"><a href="IDBPreparedStatement.html" title="interface in org.eclipse.net4j.db">IDBPreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ <a href="IDBPreparedStatement.ReuseProbability.html" title="enum class in org.eclipse.net4j.db">IDBPreparedStatement.ReuseProbability</a>&nbsp;reuseProbability)</span></div>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature">@Deprecated
-java.sql.PreparedStatement&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                            int&nbsp;autoGeneratedKeys)
-                                     throws java.sql.SQLException</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,int)">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;autoGeneratedKeys)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String,int)" title="class or interface in java.sql" class="external-link">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,int,int,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature">@Deprecated
-java.sql.PreparedStatement&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                            int&nbsp;resultSetType,
-                                            int&nbsp;resultSetConcurrency,
-                                            int&nbsp;resultSetHoldability)
-                                     throws java.sql.SQLException</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,int,int,int)">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int&nbsp;resultSetType,
+ int&nbsp;resultSetConcurrency,
+ int&nbsp;resultSetHoldability)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String,int,int,int)" title="class or interface in java.sql" class="external-link">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,int[])">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature">@Deprecated
-java.sql.PreparedStatement&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                            int[]&nbsp;columnIndexes)
-                                     throws java.sql.SQLException</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,int[])">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ int[]&nbsp;columnIndexes)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String,int%5B%5D)" title="class or interface in java.sql" class="external-link">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="prepareStatement(java.lang.String,java.lang.String[])">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>prepareStatement</h4>
-<pre class="methodSignature">@Deprecated
-java.sql.PreparedStatement&nbsp;prepareStatement&#8203;(java.lang.String&nbsp;sql,
-                                            java.lang.String[]&nbsp;columnNames)
-                                     throws java.sql.SQLException</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Not supported.</div>
+<li>
+<section class="detail" id="prepareStatement(java.lang.String,java.lang.String[])">
+<h3>prepareStatement</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a></span>&nbsp;<span class="element-name">prepareStatement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]&nbsp;columnNames)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Not supported.</div>
 </div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>prepareStatement</code>&nbsp;in interface&nbsp;<code>java.sql.Connection</code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code></dd>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html#prepareStatement(java.lang.String,java.lang.String%5B%5D)" title="class or interface in java.sql" class="external-link">prepareStatement</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code></dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/IDBConnection.html">Use</a></li>
-<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

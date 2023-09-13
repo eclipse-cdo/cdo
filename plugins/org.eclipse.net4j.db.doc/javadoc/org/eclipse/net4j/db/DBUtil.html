@@ -1,1592 +1,1154 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>DBUtil (Net4j DB Framework Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.net4j.db, class: DBUtil">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../script.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="DBUtil (Net4j DB Framework Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":9,"i21":9,"i22":9,"i23":9,"i24":9,"i25":9,"i26":9,"i27":41,"i28":41,"i29":9,"i30":9,"i31":9,"i32":9,"i33":9,"i34":9,"i35":9,"i36":9,"i37":9,"i38":9,"i39":9,"i40":9,"i41":9,"i42":9,"i43":9,"i44":9,"i45":9,"i46":9,"i47":9,"i48":9,"i49":9,"i50":9,"i51":9,"i52":41,"i53":41,"i54":9,"i55":9,"i56":9};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/DBUtil.html">Use</a></li>
 <li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db</a></div>
-<h2 title="Class DBUtil" class="title">Class DBUtil</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.db</a></div>
+<h1 title="Class DBUtil" class="title">Class DBUtil</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.db.DBUtil</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.net4j.db.DBUtil</div>
+</div>
+<section class="class-description" id="class-description">
 <hr>
-<pre>public final class <span class="typeNameLabel">DBUtil</span>
-extends java.lang.Object</pre>
+<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">DBUtil</span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">A utility class with various static factory and convenience methods.</div>
-<dl>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dl class="notes">
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="DBUtil.DeserializeRowHandler.html" class="type-name-link" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row deserialized within <a href="#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)"><code>DBUtil.deserializeTable()</code></a>.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></span></code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="DBUtil.RowHandler.html" class="type-name-link" title="interface in org.eclipse.net4j.db">DBUtil.RowHandler</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Call-back interface with a <a href="DBUtil.RowHandler.html#done(boolean)"><code>method</code></a> that is called <i>after</i>
  a number of table rows have been handled by one of the subtypes of this interface.</div>
-</td>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;<a href="DBUtil.RunnableWithConnection.html" title="type parameter in DBUtil.RunnableWithConnection">T</a>&gt;</span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></span></code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="DBUtil.RunnableWithConnection.html" class="type-name-link" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;<a href="DBUtil.RunnableWithConnection.html" title="type parameter in DBUtil.RunnableWithConnection">T</a>&gt;</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="DBUtil.SerializeRowHandler.html" class="type-name-link" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">A <a href="DBUtil.RowHandler.html" title="interface in org.eclipse.net4j.db"><code>row handler</code></a> with a <a href="DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)"><code>method</code></a>
  that is called once per row serialized within <a href="#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)"><code>DBUtil.serializeTable()</code></a>.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+</div>
 </section>
+</li>
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#MAX_BATCH_SIZE">MAX_BATCH_SIZE</a></span></code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#PROP_ENABLE_NOISY_CLOSE">PROP_ENABLE_NOISY_CLOSE</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#MAX_BATCH_SIZE" class="member-name-link">MAX_BATCH_SIZE</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PROP_ENABLE_NOISY_CLOSE" class="member-name-link">PROP_ENABLE_NOISY_CLOSE</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">A system property to enable noisy close, i.e.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+</div>
 </section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#asInt(java.lang.Object)">asInt</a></span>&#8203;(java.lang.Object&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#asLong(java.lang.Object)">asLong</a></span>&#8203;(java.lang.Object&nbsp;value)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#batched(java.sql.PreparedStatement,int)">batched</a></span>&#8203;(java.sql.PreparedStatement&nbsp;delegate,
-       int&nbsp;batchSize)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTable(java.sql.Connection,java.lang.String)">clearTable</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-          java.lang.String&nbsp;tableName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)">clearTable</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-          <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close(java.sql.Connection)">close</a></span>&#8203;(java.sql.Connection&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close(java.sql.ResultSet)">close</a></span>&#8203;(java.sql.ResultSet&nbsp;resultSet)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#close(java.sql.Statement)">close</a></span>&#8203;(java.sql.Statement&nbsp;statement)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)">copySchema</a></span>&#8203;(<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;source)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createConnectionProvider(javax.sql.DataSource)">createConnectionProvider</a></span>&#8203;(javax.sql.DataSource&nbsp;dataSource)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static <a href="IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createConnectionProvider(javax.sql.DataSource,java.lang.String)">createConnectionProvider</a></span>&#8203;(javax.sql.DataSource&nbsp;dataSource,
-                        java.lang.String&nbsp;user)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static javax.sql.DataSource</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDataSource(java.util.Map)">createDataSource</a></span>&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>static javax.sql.DataSource</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDataSource(java.util.Map,java.lang.String)">createDataSource</a></span>&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties,
-                java.lang.String&nbsp;namespace)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static javax.sql.DataSource</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createDataSource(java.util.Map,java.lang.String,java.lang.String)">createDataSource</a></span>&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties,
-                java.lang.String&nbsp;namespace,
-                java.lang.String&nbsp;driverClassKey)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSchema(java.lang.String)">createSchema</a></span>&#8203;(java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor)">deserializeTable</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-                java.sql.Connection&nbsp;connection,
-                <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)">deserializeTable</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-                java.sql.Connection&nbsp;connection,
-                <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
-                <a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a>&nbsp;handler)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.lang.Exception&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dropAllTables(java.sql.Connection,java.lang.String)">dropAllTables</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-             java.lang.String&nbsp;dbName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dump(org.eclipse.net4j.db.ddl.IDBNamedElement)">dump</a></span>&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dump(org.eclipse.net4j.db.ddl.IDBNamedElement,java.io.Writer)">dump</a></span>&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement,
-    java.io.Writer&nbsp;writer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)">dumpToString</a></span>&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute(java.sql.Connection,java.lang.CharSequence)">execute</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-       java.lang.CharSequence&nbsp;sql)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>static &lt;T&gt;&nbsp;T</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute(org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.net4j.db.DBUtil.RunnableWithConnection)">execute</a></span>&#8203;(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-       <a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#executeBatch(java.sql.PreparedStatement,int)">executeBatch</a></span>&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-            int&nbsp;counter)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#executeBatch(java.sql.PreparedStatement,int,boolean)">executeBatch</a></span>&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-            int&nbsp;counter,
-            boolean&nbsp;checkExactlyOne)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllSchemaNames(java.sql.Connection)">getAllSchemaNames</a></span>&#8203;(java.sql.Connection&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>static java.util.Set&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllSchemaNames(java.sql.DatabaseMetaData)">getAllSchemaNames</a></span>&#8203;(java.sql.DatabaseMetaData&nbsp;metaData)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllSchemaTableNames(java.sql.Connection)">getAllSchemaTableNames</a></span>&#8203;(java.sql.Connection&nbsp;connection)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.Connection)"><code>getAllSchemaNames(Connection)</code></a>.</div>
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asInt(java.lang.Object)" class="member-name-link">asInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#asLong(java.lang.Object)" class="member-name-link">asLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#batched(java.sql.PreparedStatement,int)" class="member-name-link">batched</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;delegate,
+ int&nbsp;batchSize)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clearTable(java.sql.Connection,java.lang.String)" class="member-name-link">clearTable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#clearTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">clearTable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#close(java.sql.Connection)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#close(java.sql.ResultSet)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#close(java.sql.Statement)" class="member-name-link">close</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#copySchema(org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">copySchema</a><wbr>(<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;source)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createConnectionProvider(javax.sql.DataSource)" class="member-name-link">createConnectionProvider</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createConnectionProvider(javax.sql.DataSource,java.lang.String)" class="member-name-link">createConnectionProvider</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;user)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createDataSource(java.util.Map)" class="member-name-link">createDataSource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createDataSource(java.util.Map,java.lang.String)" class="member-name-link">createDataSource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createDataSource(java.util.Map,java.lang.String,java.lang.String)" class="member-name-link">createDataSource</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;driverClassKey)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSchema(java.lang.String)" class="member-name-link">createSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">deserializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)" class="member-name-link">deserializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
+ <a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a>&nbsp;handler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dropAllTables(java.sql.Connection,java.lang.String)" class="member-name-link">dropAllTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dbName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dump(org.eclipse.net4j.db.ddl.IDBNamedElement)" class="member-name-link">dump</a><wbr>(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dump(org.eclipse.net4j.db.ddl.IDBNamedElement,java.io.Writer)" class="member-name-link">dump</a><wbr>(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)" class="member-name-link">dumpToString</a><wbr>(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#execute(java.sql.Connection,java.lang.CharSequence)" class="member-name-link">execute</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;sql)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;T</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#execute(org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.net4j.db.DBUtil.RunnableWithConnection)" class="member-name-link">execute</a><wbr>(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;&nbsp;runnable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#executeBatch(java.sql.PreparedStatement,int)" class="member-name-link">executeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;counter)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#executeBatch(java.sql.PreparedStatement,int,boolean)" class="member-name-link">executeBatch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;counter,
+ boolean&nbsp;checkExactlyOne)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAllSchemaNames(java.sql.Connection)" class="member-name-link">getAllSchemaNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAllSchemaNames(java.sql.DatabaseMetaData)" class="member-name-link">getAllSchemaNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="class or interface in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getAllSchemaTableNames(java.sql.Connection)" class="member-name-link">getAllSchemaTableNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.Connection)"><code>getAllSchemaNames(Connection)</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr id="i28" class="altColor">
-<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllSchemaTableNames(java.sql.DatabaseMetaData)">getAllSchemaTableNames</a></span>&#8203;(java.sql.DatabaseMetaData&nbsp;metaData)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.DatabaseMetaData)"><code>getAllSchemaNames(DatabaseMetaData)</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code>static java.util.List&lt;java.lang.String&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAllTableNames(java.sql.Connection,java.lang.String)">getAllTableNames</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-                java.lang.String&nbsp;dbName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i30" class="altColor">
-<td class="colFirst"><code>static <a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getDBAdapter(java.lang.String)">getDBAdapter</a></span>&#8203;(java.lang.String&nbsp;adapterName)</code></th>
-<td class="colLast">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getAllSchemaTableNames(java.sql.DatabaseMetaData)" class="member-name-link">getAllSchemaTableNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="class or interface in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.DatabaseMetaData)"><code>getAllSchemaNames(DatabaseMetaData)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAllTableNames(java.sql.Connection,java.lang.String)" class="member-name-link">getAllTableNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dbName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getDBAdapter(java.lang.String)" class="member-name-link">getDBAdapter</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Retrieves an <a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapter</code></a> from the <a href="IDBAdapter.html#REGISTRY"><code>adapter registry</code></a>.</div>
-</td>
-</tr>
-<tr id="i31" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRowCount(java.sql.Connection,java.lang.String)">getRowCount</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-           java.lang.String&nbsp;tableName)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRowCount(java.sql.Connection,java.lang.String)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the number of rows contained in the given table.</div>
-</td>
-</tr>
-<tr id="i32" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRowCount(java.sql.ResultSet)">getRowCount</a></span>&#8203;(java.sql.ResultSet&nbsp;resultSet)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRowCount(java.sql.ResultSet)" class="member-name-link">getRowCount</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Returns the number of rows contained in the given result set.</div>
-</td>
-</tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isOptional(org.eclipse.net4j.db.ddl.IDBElement)">isOptional</a></span>&#8203;(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i34" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isTracerEnabled()">isTracerEnabled</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i35" class="rowColor">
-<td class="colFirst"><code>static <a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">openDatabase</a></span>&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-            <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-            java.lang.String&nbsp;schemaName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i36" class="altColor">
-<td class="colFirst"><code>static <a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String,boolean)">openDatabase</a></span>&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-            <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-            java.lang.String&nbsp;schemaName,
-            boolean&nbsp;fixNullableIndexColumns)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i37" class="rowColor">
-<td class="colFirst"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)">readSchema</a></span>&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-          java.sql.Connection&nbsp;connection,
-          java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i38" class="altColor">
-<td class="colFirst"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)">readSchema</a></span>&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-          java.sql.Connection&nbsp;connection,
-          java.lang.String&nbsp;name,
-          boolean&nbsp;fixNullableIndexColumns)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i39" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">readSchema</a></span>&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-          java.sql.Connection&nbsp;connection,
-          <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i40" class="altColor">
-<td class="colFirst"><code>static java.lang.Exception</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#rollbackSilently(java.sql.Connection)">rollbackSilently</a></span>&#8203;(java.sql.Connection&nbsp;connection)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>static java.lang.Object[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">select</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-      java.lang.String&nbsp;where,
-      <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i42" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">select</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-      <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
-      java.lang.String&nbsp;where,
-      <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i43" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)">select</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-      <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
-      <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i44" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">selectMaximumInt</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-                <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                java.lang.String...&nbsp;where)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i45" class="rowColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">selectMaximumLong</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-                 <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                 java.lang.String...&nbsp;where)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i46" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">selectMinimumInt</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-                <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                java.lang.String...&nbsp;where)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i47" class="rowColor">
-<td class="colFirst"><code>static long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">selectMinimumLong</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-                 <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                 java.lang.String...&nbsp;where)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i48" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)">serializeTable</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-              java.sql.Connection&nbsp;connection,
-              <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-              java.lang.String&nbsp;tableAlias,
-              java.lang.String&nbsp;sqlSuffix)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i49" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)">serializeTable</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-              java.sql.Connection&nbsp;connection,
-              <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-              java.lang.String&nbsp;tableAlias,
-              java.lang.String&nbsp;sqlSuffix,
-              <a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a>&nbsp;handler)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i50" class="altColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setAutoCommit(java.sql.Connection,boolean)">setAutoCommit</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-             boolean&nbsp;autoCommit)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i51" class="rowColor">
-<td class="colFirst"><code>static boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setOptional(org.eclipse.net4j.db.ddl.IDBElement,boolean)">setOptional</a></span>&#8203;(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element,
-           boolean&nbsp;optional)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i52" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlDump(java.sql.Connection,java.lang.String)">sqlDump</a></span>&#8203;(java.sql.Connection&nbsp;conn,
-       java.lang.String&nbsp;sql)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Should only be used when debugging.</div>
 </div>
-</td>
-</tr>
-<tr id="i53" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">sqlDump</a></span>&#8203;(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-       java.lang.String&nbsp;sql)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Should only be used when debugging.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isOptional(org.eclipse.net4j.db.ddl.IDBElement)" class="member-name-link">isOptional</a><wbr>(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isTracerEnabled()" class="member-name-link">isTracerEnabled</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" class="member-name-link">openDatabase</a><wbr>(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String,boolean)" class="member-name-link">openDatabase</a><wbr>(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName,
+ boolean&nbsp;fixNullableIndexColumns)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)" class="member-name-link">readSchema</a><wbr>(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;fixNullableIndexColumns)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">readSchema</a><wbr>(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#rollbackSilently(java.sql.Connection)" class="member-name-link">rollbackSilently</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">select</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMaximumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumInt</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)" class="member-name-link">selectMinimumLong</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)" class="member-name-link">serializeTable</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix,
+ <a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a>&nbsp;handler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setAutoCommit(java.sql.Connection,boolean)" class="member-name-link">setAutoCommit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ boolean&nbsp;autoCommit)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setOptional(org.eclipse.net4j.db.ddl.IDBElement,boolean)" class="member-name-link">setOptional</a><wbr>(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element,
+ boolean&nbsp;optional)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#sqlDump(java.sql.Connection,java.lang.String)" class="member-name-link">sqlDump</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;conn,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Should only be used when debugging.</div>
 </div>
-</td>
-</tr>
-<tr id="i54" class="altColor">
-<td class="colFirst"><code>static java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#trace(java.lang.String)">trace</a></span>&#8203;(java.lang.String&nbsp;sql)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i55" class="rowColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.sql.Connection,java.lang.String)">update</a></span>&#8203;(java.sql.Connection&nbsp;connection,
-      java.lang.String&nbsp;sql)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i56" class="altColor">
-<td class="colFirst"><code>static int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#update(java.sql.PreparedStatement,boolean)">update</a></span>&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-      boolean&nbsp;exactlyOne)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" class="member-name-link">sqlDump</a><wbr>(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Should only be used when debugging.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#trace(java.lang.String)" class="member-name-link">trace</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.Connection,java.lang.String)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#update(java.sql.PreparedStatement,boolean)" class="member-name-link">update</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ boolean&nbsp;exactlyOne)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Execute update on the given prepared statement and handle common cases of return values.</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="MAX_BATCH_SIZE">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>MAX_BATCH_SIZE</h4>
-<pre>public static final&nbsp;int MAX_BATCH_SIZE</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="MAX_BATCH_SIZE">
+<h3>MAX_BATCH_SIZE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">MAX_BATCH_SIZE</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="PROP_ENABLE_NOISY_CLOSE">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>PROP_ENABLE_NOISY_CLOSE</h4>
-<pre>public static final&nbsp;java.lang.String PROP_ENABLE_NOISY_CLOSE</pre>
+<li>
+<section class="detail" id="PROP_ENABLE_NOISY_CLOSE">
+<h3>PROP_ENABLE_NOISY_CLOSE</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROP_ENABLE_NOISY_CLOSE</span></div>
 <div class="block">A system property to enable noisy close, i.e. exception catch in close methods are thrown as <a href="DBException.html" title="class in org.eclipse.net4j.db"><code>DBException</code></a> exception.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.4</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../../../../constant-values.html#org.eclipse.net4j.db.DBUtil.PROP_ENABLE_NOISY_CLOSE">Constant Field Values</a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.db.DBUtil.PROP_ENABLE_NOISY_CLOSE">Constant Field Values</a></li>
 </ul>
+</dd>
+</dl>
+</section>
 </li>
 </ul>
 </section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="sqlDump(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sqlDump</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;void&nbsp;sqlDump&#8203;(java.sql.Connection&nbsp;conn,
-                           java.lang.String&nbsp;sql)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Should only be used when debugging.</div>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="sqlDump(java.sql.Connection,java.lang.String)">
+<h3>sqlDump</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sqlDump</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;conn,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Should only be used when debugging.</div>
 </div>
 <div class="block">For debugging purposes ONLY!</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>sqlDump</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;void&nbsp;sqlDump&#8203;(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-                           java.lang.String&nbsp;sql)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Should only be used when debugging.</div>
+<li>
+<section class="detail" id="sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">
+<h3>sqlDump</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">sqlDump</span><wbr><span class="parameters">(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Should only be used when debugging.</div>
 </div>
 <div class="block">For debugging purposes ONLY!</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dumpToString</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;dumpToString&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="dumpToString(org.eclipse.net4j.db.ddl.IDBNamedElement)">
+<h3>dumpToString</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">dumpToString</span><wbr><span class="parameters">(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="dump(org.eclipse.net4j.db.ddl.IDBNamedElement)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dump</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;dump&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="dump(org.eclipse.net4j.db.ddl.IDBNamedElement)">
+<h3>dump</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dump</span><wbr><span class="parameters">(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="dump(org.eclipse.net4j.db.ddl.IDBNamedElement,java.io.Writer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dump</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;dump&#8203;(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement,
-                        java.io.Writer&nbsp;writer)
-                 throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="dump(org.eclipse.net4j.db.ddl.IDBNamedElement,java.io.Writer)">
+<h3>dump</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dump</span><wbr><span class="parameters">(<a href="ddl/IDBNamedElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBNamedElement</a>&nbsp;namedElement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Writer.html" title="class or interface in java.io" class="external-link">Writer</a>&nbsp;writer)</span>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openDatabase</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;openDatabase&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-                                       <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-                                       java.lang.String&nbsp;schemaName)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)">
+<h3>openDatabase</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></span>&nbsp;<span class="element-name">openDatabase</span><wbr><span class="parameters">(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openDatabase</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;openDatabase&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-                                       <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-                                       java.lang.String&nbsp;schemaName,
-                                       boolean&nbsp;fixNullableIndexColumns)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String,boolean)">
+<h3>openDatabase</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></span>&nbsp;<span class="element-name">openDatabase</span><wbr><span class="parameters">(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName,
+ boolean&nbsp;fixNullableIndexColumns)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createSchema(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createSchema</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;createSchema&#8203;(java.lang.String&nbsp;name)</pre>
+<li>
+<section class="detail" id="createSchema(java.lang.String)">
+<h3>createSchema</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></span>&nbsp;<span class="element-name">createSchema</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</section>
 </li>
-</ul>
-<a id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readSchema</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;readSchema&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-                              java.sql.Connection&nbsp;connection,
-                              <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)">
+<h3>readSchema</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readSchema</span><wbr><span class="parameters">(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readSchema</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-                                   java.sql.Connection&nbsp;connection,
-                                   java.lang.String&nbsp;name)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)">
+<h3>readSchema</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></span>&nbsp;<span class="element-name">readSchema</span><wbr><span class="parameters">(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readSchema</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;readSchema&#8203;(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
-                                   java.sql.Connection&nbsp;connection,
-                                   java.lang.String&nbsp;name,
-                                   boolean&nbsp;fixNullableIndexColumns)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)">
+<h3>readSchema</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></span>&nbsp;<span class="element-name">readSchema</span><wbr><span class="parameters">(<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;fixNullableIndexColumns)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="copySchema(org.eclipse.net4j.db.ddl.IDBSchema)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>copySchema</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;copySchema&#8203;(<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;source)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="copySchema(org.eclipse.net4j.db.ddl.IDBSchema)">
+<h3>copySchema</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></span>&nbsp;<span class="element-name">copySchema</span><wbr><span class="parameters">(<a href="ddl/IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;source)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createDataSource(java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createDataSource</h4>
-<pre class="methodSignature">public static&nbsp;javax.sql.DataSource&nbsp;createDataSource&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties)</pre>
+<li>
+<section class="detail" id="createDataSource(java.util.Map)">
+<h3>createDataSource</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></span>&nbsp;<span class="element-name">createDataSource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties)</span></div>
+</section>
 </li>
-</ul>
-<a id="createDataSource(java.util.Map,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createDataSource</h4>
-<pre class="methodSignature">public static&nbsp;javax.sql.DataSource&nbsp;createDataSource&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties,
-                                                    java.lang.String&nbsp;namespace)</pre>
+<li>
+<section class="detail" id="createDataSource(java.util.Map,java.lang.String)">
+<h3>createDataSource</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></span>&nbsp;<span class="element-name">createDataSource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace)</span></div>
+</section>
 </li>
-</ul>
-<a id="createDataSource(java.util.Map,java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createDataSource</h4>
-<pre class="methodSignature">public static&nbsp;javax.sql.DataSource&nbsp;createDataSource&#8203;(java.util.Map&lt;java.lang.Object,&#8203;java.lang.Object&gt;&nbsp;properties,
-                                                    java.lang.String&nbsp;namespace,
-                                                    java.lang.String&nbsp;driverClassKey)</pre>
+<li>
+<section class="detail" id="createDataSource(java.util.Map,java.lang.String,java.lang.String)">
+<h3>createDataSource</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a></span>&nbsp;<span class="element-name">createDataSource</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;properties,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;namespace,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;driverClassKey)</span></div>
+</section>
 </li>
-</ul>
-<a id="createConnectionProvider(javax.sql.DataSource)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createConnectionProvider</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;createConnectionProvider&#8203;(javax.sql.DataSource&nbsp;dataSource)</pre>
+<li>
+<section class="detail" id="createConnectionProvider(javax.sql.DataSource)">
+<h3>createConnectionProvider</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a></span>&nbsp;<span class="element-name">createConnectionProvider</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource)</span></div>
+</section>
 </li>
-</ul>
-<a id="createConnectionProvider(javax.sql.DataSource,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createConnectionProvider</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a>&nbsp;createConnectionProvider&#8203;(javax.sql.DataSource&nbsp;dataSource,
-                                                              java.lang.String&nbsp;user)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createConnectionProvider(javax.sql.DataSource,java.lang.String)">
+<h3>createConnectionProvider</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBConnectionProvider2.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider2</a></span>&nbsp;<span class="element-name">createConnectionProvider</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="class or interface in javax.sql" class="external-link">DataSource</a>&nbsp;dataSource,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;user)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.3</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getDBAdapter(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getDBAdapter</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;getDBAdapter&#8203;(java.lang.String&nbsp;adapterName)</pre>
+<li>
+<section class="detail" id="getDBAdapter(java.lang.String)">
+<h3>getDBAdapter</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a></span>&nbsp;<span class="element-name">getDBAdapter</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;adapterName)</span></div>
 <div class="block">Retrieves an <a href="IDBAdapter.html" title="interface in org.eclipse.net4j.db"><code>adapter</code></a> from the <a href="IDBAdapter.html#REGISTRY"><code>adapter registry</code></a>.
  <p>
  If Eclipse is running adapters are automatically created from descriptors that are contributed to the extension point <code>org.eclipse.net4j.db.dbAdapters</code>.
  <p>
  In standalone scenarios the needed adapter instances must be registered with the <a href="IDBAdapter.html#REGISTRY"><code>adapter registry</code></a> manually.</div>
+</section>
 </li>
-</ul>
-<a id="batched(java.sql.PreparedStatement,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>batched</h4>
-<pre class="methodSignature">public static&nbsp;<a href="BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a>&nbsp;batched&#8203;(java.sql.PreparedStatement&nbsp;delegate,
-                                       int&nbsp;batchSize)
-                                throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="batched(java.sql.PreparedStatement,int)">
+<h3>batched</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="BatchedStatement.html" title="interface in org.eclipse.net4j.db">BatchedStatement</a></span>&nbsp;<span class="element-name">batched</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;delegate,
+ int&nbsp;batchSize)</span>
+                                throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="close(java.sql.ResultSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;close&#8203;(java.sql.ResultSet&nbsp;resultSet)</pre>
+<li>
+<section class="detail" id="close(java.sql.ResultSet)">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</span></div>
+</section>
 </li>
-</ul>
-<a id="close(java.sql.Statement)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;close&#8203;(java.sql.Statement&nbsp;statement)</pre>
+<li>
+<section class="detail" id="close(java.sql.Statement)">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="class or interface in java.sql" class="external-link">Statement</a>&nbsp;statement)</span></div>
+</section>
 </li>
-</ul>
-<a id="close(java.sql.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>close</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;close&#8203;(java.sql.Connection&nbsp;connection)</pre>
+<li>
+<section class="detail" id="close(java.sql.Connection)">
+<h3>close</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">close</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
+</section>
 </li>
-</ul>
-<a id="isOptional(org.eclipse.net4j.db.ddl.IDBElement)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isOptional</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isOptional&#8203;(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="isOptional(org.eclipse.net4j.db.ddl.IDBElement)">
+<h3>isOptional</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isOptional</span><wbr><span class="parameters">(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setOptional(org.eclipse.net4j.db.ddl.IDBElement,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setOptional</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;setOptional&#8203;(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element,
-                                  boolean&nbsp;optional)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setOptional(org.eclipse.net4j.db.ddl.IDBElement,boolean)">
+<h3>setOptional</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setOptional</span><wbr><span class="parameters">(<a href="ddl/IDBElement.html" title="interface in org.eclipse.net4j.db.ddl">IDBElement</a>&nbsp;element,
+ boolean&nbsp;optional)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setAutoCommit(java.sql.Connection,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setAutoCommit</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;setAutoCommit&#8203;(java.sql.Connection&nbsp;connection,
-                                    boolean&nbsp;autoCommit)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setAutoCommit(java.sql.Connection,boolean)">
+<h3>setAutoCommit</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">setAutoCommit</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ boolean&nbsp;autoCommit)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="rollbackSilently(java.sql.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>rollbackSilently</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Exception&nbsp;rollbackSilently&#8203;(java.sql.Connection&nbsp;connection)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="rollbackSilently(java.sql.Connection)">
+<h3>rollbackSilently</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">rollbackSilently</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAllSchemaTableNames(java.sql.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllSchemaTableNames</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllSchemaTableNames&#8203;(java.sql.Connection&nbsp;connection)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.Connection)"><code>getAllSchemaNames(Connection)</code></a>.</div>
+<li>
+<section class="detail" id="getAllSchemaTableNames(java.sql.Connection)">
+<h3>getAllSchemaTableNames</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAllSchemaTableNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.Connection)"><code>getAllSchemaNames(Connection)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAllSchemaTableNames(java.sql.DatabaseMetaData)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllSchemaTableNames</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllSchemaTableNames&#8203;(java.sql.DatabaseMetaData&nbsp;metaData)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.DatabaseMetaData)"><code>getAllSchemaNames(DatabaseMetaData)</code></a>.</div>
+<li>
+<section class="detail" id="getAllSchemaTableNames(java.sql.DatabaseMetaData)">
+<h3>getAllSchemaTableNames</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAllSchemaTableNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="class or interface in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getAllSchemaNames(java.sql.DatabaseMetaData)"><code>getAllSchemaNames(DatabaseMetaData)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAllSchemaNames(java.sql.Connection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllSchemaNames</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllSchemaNames&#8203;(java.sql.Connection&nbsp;connection)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getAllSchemaNames(java.sql.Connection)">
+<h3>getAllSchemaNames</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAllSchemaNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAllSchemaNames(java.sql.DatabaseMetaData)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllSchemaNames</h4>
-<pre class="methodSignature">public static&nbsp;java.util.Set&lt;java.lang.String&gt;&nbsp;getAllSchemaNames&#8203;(java.sql.DatabaseMetaData&nbsp;metaData)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getAllSchemaNames(java.sql.DatabaseMetaData)">
+<h3>getAllSchemaNames</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAllSchemaNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="class or interface in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAllTableNames(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAllTableNames</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.lang.String&gt;&nbsp;getAllTableNames&#8203;(java.sql.Connection&nbsp;connection,
-                                                                java.lang.String&nbsp;dbName)</pre>
+<li>
+<section class="detail" id="getAllTableNames(java.sql.Connection,java.lang.String)">
+<h3>getAllTableNames</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</span>&nbsp;<span class="element-name">getAllTableNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dbName)</span></div>
+</section>
 </li>
-</ul>
-<a id="dropAllTables(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>dropAllTables</h4>
-<pre class="methodSignature">public static&nbsp;java.util.List&lt;java.lang.Exception&gt;&nbsp;dropAllTables&#8203;(java.sql.Connection&nbsp;connection,
-                                                                java.lang.String&nbsp;dbName)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="dropAllTables(java.sql.Connection,java.lang.String)">
+<h3>dropAllTables</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>&gt;</span>&nbsp;<span class="element-name">dropAllTables</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;dbName)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="asInt(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>asInt</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;asInt&#8203;(java.lang.Object&nbsp;value)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="asInt(java.lang.Object)">
+<h3>asInt</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">asInt</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="asLong(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>asLong</h4>
-<pre class="methodSignature">public static&nbsp;long&nbsp;asLong&#8203;(java.lang.Object&nbsp;value)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="asLong(java.lang.Object)">
+<h3>asLong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">asLong</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>selectMinimumInt</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;selectMinimumInt&#8203;(java.sql.Connection&nbsp;connection,
-                                   <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                                   java.lang.String...&nbsp;where)
-                            throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="selectMinimumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
+<h3>selectMinimumInt</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">selectMinimumInt</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</span>
+                            throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>selectMinimumLong</h4>
-<pre class="methodSignature">public static&nbsp;long&nbsp;selectMinimumLong&#8203;(java.sql.Connection&nbsp;connection,
-                                     <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                                     java.lang.String...&nbsp;where)
-                              throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="selectMinimumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
+<h3>selectMinimumLong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">selectMinimumLong</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</span>
+                              throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>selectMaximumInt</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;selectMaximumInt&#8203;(java.sql.Connection&nbsp;connection,
-                                   <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                                   java.lang.String...&nbsp;where)
-                            throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="selectMaximumInt(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
+<h3>selectMaximumInt</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">selectMaximumInt</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</span>
+                            throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>selectMaximumLong</h4>
-<pre class="methodSignature">public static&nbsp;long&nbsp;selectMaximumLong&#8203;(java.sql.Connection&nbsp;connection,
-                                     <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
-                                     java.lang.String...&nbsp;where)
-                              throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="selectMaximumLong(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField,java.lang.String...)">
+<h3>selectMaximumLong</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">selectMaximumLong</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>...&nbsp;where)</span>
+                              throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="execute(org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.net4j.db.DBUtil.RunnableWithConnection)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>execute</h4>
-<pre class="methodSignature">public static&nbsp;&lt;T&gt;&nbsp;T&nbsp;execute&#8203;(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
-                            <a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;&nbsp;runnable)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="execute(org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.net4j.db.DBUtil.RunnableWithConnection)">
+<h3>execute</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="DBUtil.RunnableWithConnection.html" title="interface in org.eclipse.net4j.db">DBUtil.RunnableWithConnection</a>&lt;T&gt;&nbsp;runnable)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="execute(java.sql.Connection,java.lang.CharSequence)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>execute</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;execute&#8203;(java.sql.Connection&nbsp;connection,
-                           java.lang.CharSequence&nbsp;sql)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="execute(java.sql.Connection,java.lang.CharSequence)">
+<h3>execute</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/CharSequence.html" title="class or interface in java.lang" class="external-link">CharSequence</a>&nbsp;sql)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="executeBatch(java.sql.PreparedStatement,int)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>executeBatch</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;executeBatch&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-                                int&nbsp;counter)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="executeBatch(java.sql.PreparedStatement,int)">
+<h3>executeBatch</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">executeBatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;counter)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="executeBatch(java.sql.PreparedStatement,int,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>executeBatch</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;executeBatch&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-                                int&nbsp;counter,
-                                boolean&nbsp;checkExactlyOne)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="executeBatch(java.sql.PreparedStatement,int,boolean)">
+<h3>executeBatch</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">executeBatch</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ int&nbsp;counter,
+ boolean&nbsp;checkExactlyOne)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="update(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>update</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;update&#8203;(java.sql.Connection&nbsp;connection,
-                         java.lang.String&nbsp;sql)</pre>
+<li>
+<section class="detail" id="update(java.sql.Connection,java.lang.String)">
+<h3>update</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</span></div>
+</section>
 </li>
-</ul>
-<a id="update(java.sql.PreparedStatement,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>update</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;update&#8203;(java.sql.PreparedStatement&nbsp;stmt,
-                         boolean&nbsp;exactlyOne)
-                  throws java.sql.SQLException</pre>
+<li>
+<section class="detail" id="update(java.sql.PreparedStatement,boolean)">
+<h3>update</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+ boolean&nbsp;exactlyOne)</span>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Execute update on the given prepared statement and handle common cases of return values.</div>
-<dl>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Parameters:</dt>
 <dd><code>stmt</code> - the prepared statement</dd>
 <dd><code>exactlyOne</code> - if <code>true</code>, the update count is checked to be <code>1</code>. Else the update result is only
           checked so that the update was successful (i.e. result code != Statement.EXECUTE_FAILED).</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
-<dd>the update count / execution result as returned by <code>PreparedStatement.executeUpdate()</code>. Can be used
+<dt>Returns:</dt>
+<dd>the update count / execution result as returned by <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html#executeUpdate()" title="class or interface in java.sql" class="external-link"><code>PreparedStatement.executeUpdate()</code></a>. Can be used
          by the caller to perform more advanced checks.</dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.sql.SQLException</code> - if <code>PreparedStatement.executeUpdate()</code> throws it.</dd>
-<dd><code>java.lang.IllegalStateException</code> - if the check indicated by <code>excatlyOne</code> indicates an error.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html#executeUpdate()" title="class or interface in java.sql" class="external-link"><code>PreparedStatement.executeUpdate()</code></a> throws it.</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - if the check indicated by <code>excatlyOne</code> indicates an error.</dd>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="clearTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearTable</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;clearTable&#8203;(java.sql.Connection&nbsp;connection,
-                             <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="clearTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)">
+<h3>clearTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">clearTable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="clearTable(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearTable</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;clearTable&#8203;(java.sql.Connection&nbsp;connection,
-                             java.lang.String&nbsp;tableName)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="clearTable(java.sql.Connection,java.lang.String)">
+<h3>clearTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">clearTable</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableName)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>select</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;select&#8203;(java.sql.Connection&nbsp;connection,
-                         <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
-                         java.lang.String&nbsp;where,
-                         <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)
-                  throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">
+<h3>select</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">select</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span>
+                  throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>select</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;select&#8203;(java.sql.Connection&nbsp;connection,
-                         <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
-                         <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)
-                  throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="select(java.sql.Connection,org.eclipse.net4j.db.IDBRowHandler,org.eclipse.net4j.db.ddl.IDBField...)">
+<h3>select</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">select</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="IDBRowHandler.html" title="interface in org.eclipse.net4j.db">IDBRowHandler</a>&nbsp;rowHandler,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span>
+                  throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>select</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.Object[]&nbsp;select&#8203;(java.sql.Connection&nbsp;connection,
-                                        java.lang.String&nbsp;where,
-                                        <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)
-                                 throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="select(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField...)">
+<h3>select</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</span>&nbsp;<span class="element-name">select</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;where,
+ <a href="ddl/IDBField.html" title="interface in org.eclipse.net4j.db.ddl">IDBField</a>...&nbsp;fields)</span>
+                       throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getRowCount(java.sql.ResultSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRowCount</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;getRowCount&#8203;(java.sql.ResultSet&nbsp;resultSet)
-                       throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+<li>
+<section class="detail" id="getRowCount(java.sql.ResultSet)">
+<h3>getRowCount</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRowCount</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</span>
+                       throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
 <div class="block">Returns the number of rows contained in the given result set.
  <p>
- The <code>statement</code> of the result set must have been created with
- <code>TYPE_SCROLL_INSENSITIVE</code>.</div>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+ The <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html#getStatement()" title="class or interface in java.sql" class="external-link"><code>statement</code></a> of the result set must have been created with
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html#TYPE_SCROLL_INSENSITIVE" title="class or interface in java.sql" class="external-link"><code>TYPE_SCROLL_INSENSITIVE</code></a>.</div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getRowCount(java.sql.Connection,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRowCount</h4>
-<pre class="methodSignature">public static&nbsp;int&nbsp;getRowCount&#8203;(java.sql.Connection&nbsp;connection,
-                              java.lang.String&nbsp;tableName)
-                       throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></pre>
+<li>
+<section class="detail" id="getRowCount(java.sql.Connection,java.lang.String)">
+<h3>getRowCount</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getRowCount</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableName)</span>
+                       throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></span></div>
 <div class="block">Returns the number of rows contained in the given table.</div>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.5</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>serializeTable</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;serializeTable&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-                                  java.sql.Connection&nbsp;connection,
-                                  <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                                  java.lang.String&nbsp;tableAlias,
-                                  java.lang.String&nbsp;sqlSuffix)
-                           throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a>,
-                                  java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String)">
+<h3>serializeTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">serializeTable</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix)</span>
+                           throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>serializeTable</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;serializeTable&#8203;(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
-                                  java.sql.Connection&nbsp;connection,
-                                  <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                                  java.lang.String&nbsp;tableAlias,
-                                  java.lang.String&nbsp;sqlSuffix,
-                                  <a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a>&nbsp;handler)
-                           throws <a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a>,
-                                  java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
+<li>
+<section class="detail" id="serializeTable(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,java.lang.String,org.eclipse.net4j.db.DBUtil.SerializeRowHandler)">
+<h3>serializeTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">serializeTable</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;out,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;tableAlias,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sqlSuffix,
+ <a href="DBUtil.SerializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a>&nbsp;handler)</span>
+                           throws <span class="exceptions"><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
 <dd><code><a href="DBException.html" title="class in org.eclipse.net4j.db">DBException</a></code></dd>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deserializeTable</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;deserializeTable&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-                                    java.sql.Connection&nbsp;connection,
-                                    <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                                    org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)
-                             throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>deserializeTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deserializeTable</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span>
+                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>deserializeTable</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;deserializeTable&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
-                                    java.sql.Connection&nbsp;connection,
-                                    <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
-                                    org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
-                                    <a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a>&nbsp;handler)
-                             throws java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="deserializeTable(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.net4j.db.DBUtil.DeserializeRowHandler)">
+<h3>deserializeTable</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deserializeTable</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;in,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="ddl/IDBTable.html" title="interface in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
+ <a href="DBUtil.DeserializeRowHandler.html" title="interface in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a>&nbsp;handler)</span>
+                             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="trace(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>trace</h4>
-<pre class="methodSignature">public static&nbsp;java.lang.String&nbsp;trace&#8203;(java.lang.String&nbsp;sql)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="trace(java.lang.String)">
+<h3>trace</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">trace</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isTracerEnabled()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>isTracerEnabled</h4>
-<pre class="methodSignature">public static&nbsp;boolean&nbsp;isTracerEnabled()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="isTracerEnabled()">
+<h3>isTracerEnabled</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isTracerEnabled</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/DBUtil.html">Use</a></li>
-<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

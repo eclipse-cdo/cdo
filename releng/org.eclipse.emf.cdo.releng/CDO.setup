@@ -102,6 +102,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup.p2:P2Task"
+      disabled="true"
       label="Mylyn">
     <requirement
         name="org.eclipse.mylyn.ide_feature.feature.group"/>
@@ -1362,6 +1363,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
+      disabled="true"
       name="Mylyn Queries">
     <setupTask
         xsi:type="setup:VariableTask"
@@ -1432,6 +1434,7 @@
   </setupTask>
   <setupTask
       xsi:type="setup:CompoundTask"
+      disabled="true"
       name="Mylyn Builds">
     <setupTask
         xsi:type="mylyn:MylynBuildsTask"

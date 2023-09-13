@@ -8,6 +8,6 @@
 /**
  * Dealing with Servers
  *
- * @number 1
+ * @number 2
  */
 package org.eclipse.emf.cdo.doc.programmers.server;

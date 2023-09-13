@@ -49,6 +49,7 @@
     <topic label="Net4j Utilities" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="plugin">
       <topic label="elementProcessors" href="schemadoc/org_eclipse_net4j_util_elementProcessors.html" icon="extpoint" />
       <topic label="factories" href="schemadoc/org_eclipse_net4j_util_factories.html" icon="extpoint" />
+      <topic label="productGroups" href="schemadoc/org_eclipse_net4j_util_productGroups.html" icon="extpoint" />
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">

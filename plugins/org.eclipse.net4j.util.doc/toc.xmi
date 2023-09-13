@@ -28,6 +28,7 @@
     <packages name="org.eclipse.net4j.util.transaction"/>
     <extensionPoints name="elementProcessors"/>
     <extensionPoints name="factories"/>
+    <extensionPoints name="productGroups"/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.util.ui" label="Net4j Utilities UI">
     <packages name="org.eclipse.net4j.util.ui"/>

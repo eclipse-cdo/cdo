@@ -1,524 +1,312 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>RWLockManager.LockEntry (Net4j Utilities Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.net4j.util.concurrent, class: RWLockManager, interface: LockEntry">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="RWLockManager.LockEntry (Net4j Utilities Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":38,"i1":38,"i2":38,"i3":38,"i4":38,"i5":38,"i6":38,"i7":38,"i8":38,"i9":38,"i10":38,"i11":38,"i12":38,"i13":38};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/RWLockManager.LockEntry.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.concurrent</a></div>
-<h2 title="Interface RWLockManager.LockEntry" class="title">Interface RWLockManager.LockEntry&lt;OBJECT,&#8203;CONTEXT&gt;</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.concurrent</a></div>
+<h1 title="Interface RWLockManager.LockEntry" class="title">Interface RWLockManager.LockEntry&lt;OBJECT,<wbr>CONTEXT&gt;</h1>
 </div>
-<div class="contentContainer">
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>Enclosing class:</dt>
-<dd><a href="RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,&#8203;<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</dd>
+<dd><a href="RWLockManager.html" title="class in org.eclipse.net4j.util.concurrent">RWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</dd>
 </dl>
 <hr>
-<pre>@Deprecated
-protected static interface <span class="typeNameLabel">RWLockManager.LockEntry&lt;OBJECT,&#8203;CONTEXT&gt;</span></pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
+<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">protected static interface </span><span class="element-name type-name-label">RWLockManager.LockEntry&lt;OBJECT,<wbr>CONTEXT&gt;</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.1</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Simon McDuff</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canObtainReadLock(CONTEXT)">canObtainReadLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#canObtainWriteLock(CONTEXT)">canObtainWriteLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#changeContext(CONTEXT,CONTEXT)">changeContext</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;oldContext,
-             <a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;newContext)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#clearLock(CONTEXT)">clearLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getObject()">getObject</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#hasContext(CONTEXT)">hasContext</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isReadLock(CONTEXT)">isReadLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isReadLockByOthers(CONTEXT)">isReadLockByOthers</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isWriteLock(CONTEXT)">isWriteLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isWriteLockByOthers(CONTEXT)">isWriteLockByOthers</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readLock(CONTEXT)">readLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readUnlock(CONTEXT)">readUnlock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeLock(CONTEXT)">writeLock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#writeUnlock(CONTEXT)">writeUnlock</a></span>&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span></div>
-&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#canObtainReadLock(CONTEXT)" class="member-name-link">canObtainReadLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#canObtainWriteLock(CONTEXT)" class="member-name-link">canObtainWriteLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#changeContext(CONTEXT,CONTEXT)" class="member-name-link">changeContext</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;oldContext,
+ <a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;newContext)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#clearLock(CONTEXT)" class="member-name-link">clearLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getObject()" class="member-name-link">getObject</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#hasContext(CONTEXT)" class="member-name-link">hasContext</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#isReadLock(CONTEXT)" class="member-name-link">isReadLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#isReadLockByOthers(CONTEXT)" class="member-name-link">isReadLockByOthers</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#isWriteLock(CONTEXT)" class="member-name-link">isWriteLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#isWriteLockByOthers(CONTEXT)" class="member-name-link">isWriteLockByOthers</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#readLock(CONTEXT)" class="member-name-link">readLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#readUnlock(CONTEXT)" class="member-name-link">readUnlock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#writeLock(CONTEXT)" class="member-name-link">writeLock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#writeUnlock(CONTEXT)" class="member-name-link">writeUnlock</a><wbr>(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+&nbsp;</div>
+</div>
+</div>
+</div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="getObject()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getObject</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>&nbsp;getObject()</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getObject()">
+<h3>getObject</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a></span>&nbsp;<span class="element-name">getObject</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="isReadLock(java.lang.Object)">
-<!--   -->
-</a><a id="isReadLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isReadLock</h4>
-<pre class="methodSignature">boolean&nbsp;isReadLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="isReadLock(CONTEXT)">
+<h3 id="isReadLock(java.lang.Object)">isReadLock</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isReadLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="isWriteLock(java.lang.Object)">
-<!--   -->
-</a><a id="isWriteLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isWriteLock</h4>
-<pre class="methodSignature">boolean&nbsp;isWriteLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="isWriteLock(CONTEXT)">
+<h3 id="isWriteLock(java.lang.Object)">isWriteLock</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isWriteLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="isReadLockByOthers(java.lang.Object)">
-<!--   -->
-</a><a id="isReadLockByOthers(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isReadLockByOthers</h4>
-<pre class="methodSignature">boolean&nbsp;isReadLockByOthers&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="isReadLockByOthers(CONTEXT)">
+<h3 id="isReadLockByOthers(java.lang.Object)">isReadLockByOthers</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isReadLockByOthers</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="isWriteLockByOthers(java.lang.Object)">
-<!--   -->
-</a><a id="isWriteLockByOthers(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isWriteLockByOthers</h4>
-<pre class="methodSignature">boolean&nbsp;isWriteLockByOthers&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="isWriteLockByOthers(CONTEXT)">
+<h3 id="isWriteLockByOthers(java.lang.Object)">isWriteLockByOthers</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isWriteLockByOthers</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="canObtainReadLock(java.lang.Object)">
-<!--   -->
-</a><a id="canObtainReadLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>canObtainReadLock</h4>
-<pre class="methodSignature">boolean&nbsp;canObtainReadLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="canObtainReadLock(CONTEXT)">
+<h3 id="canObtainReadLock(java.lang.Object)">canObtainReadLock</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">canObtainReadLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="canObtainWriteLock(java.lang.Object)">
-<!--   -->
-</a><a id="canObtainWriteLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>canObtainWriteLock</h4>
-<pre class="methodSignature">boolean&nbsp;canObtainWriteLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="canObtainWriteLock(CONTEXT)">
+<h3 id="canObtainWriteLock(java.lang.Object)">canObtainWriteLock</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">canObtainWriteLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="readLock(java.lang.Object)">
-<!--   -->
-</a><a id="readLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readLock</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;&nbsp;readLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="readLock(CONTEXT)">
+<h3 id="readLock(java.lang.Object)">readLock</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">readLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="writeLock(java.lang.Object)">
-<!--   -->
-</a><a id="writeLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>writeLock</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;&nbsp;writeLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="writeLock(CONTEXT)">
+<h3 id="writeLock(java.lang.Object)">writeLock</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">writeLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="readUnlock(java.lang.Object)">
-<!--   -->
-</a><a id="readUnlock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readUnlock</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;&nbsp;readUnlock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="readUnlock(CONTEXT)">
+<h3 id="readUnlock(java.lang.Object)">readUnlock</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">readUnlock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="writeUnlock(java.lang.Object)">
-<!--   -->
-</a><a id="writeUnlock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>writeUnlock</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;&nbsp;writeUnlock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="writeUnlock(CONTEXT)">
+<h3 id="writeUnlock(java.lang.Object)">writeUnlock</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">writeUnlock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="clearLock(java.lang.Object)">
-<!--   -->
-</a><a id="clearLock(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>clearLock</h4>
-<pre class="methodSignature"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,&#8203;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;&nbsp;clearLock&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
+<li>
+<section class="detail" id="clearLock(CONTEXT)">
+<h3 id="clearLock(java.lang.Object)">clearLock</h3>
+<div class="member-signature"><span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">clearLock</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
 </li>
-</ul>
-<a id="changeContext(java.lang.Object,java.lang.Object)">
-<!--   -->
-</a><a id="changeContext(CONTEXT,CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>changeContext</h4>
-<pre class="methodSignature">void&nbsp;changeContext&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;oldContext,
-                   <a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;newContext)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="changeContext(CONTEXT,CONTEXT)">
+<h3 id="changeContext(java.lang.Object,java.lang.Object)">changeContext</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">changeContext</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;oldContext,
+ <a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;newContext)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="hasContext(java.lang.Object)">
-<!--   -->
-</a><a id="hasContext(CONTEXT)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>hasContext</h4>
-<pre class="methodSignature">boolean&nbsp;hasContext&#8203;(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span></div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="hasContext(CONTEXT)">
+<h3 id="hasContext(java.lang.Object)">hasContext</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasContext</span><wbr><span class="parameters">(<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.1</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/RWLockManager.LockEntry.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

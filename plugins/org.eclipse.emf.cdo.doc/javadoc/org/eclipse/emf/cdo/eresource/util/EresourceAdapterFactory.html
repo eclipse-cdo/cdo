@@ -1,670 +1,489 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>EresourceAdapterFactory (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.eresource.util, class: EresourceAdapterFactory">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="EresourceAdapterFactory (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":10,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/EresourceAdapterFactory.html">Use</a></li>
 <li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.eresource.util</a></div>
-<h2 title="Class EresourceAdapterFactory" class="title">Class EresourceAdapterFactory</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.eresource.util</a></div>
+<h1 title="Class EresourceAdapterFactory" class="title">Class EresourceAdapterFactory</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</a>
+<div class="inheritance">org.eclipse.emf.cdo.eresource.util.EresourceAdapterFactory</div>
+</div>
+</div>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>org.eclipse.emf.common.notify.AdapterFactory</code></dd>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">AdapterFactory</a></code></dd>
 </dl>
-<dl>
+<dl class="notes">
 <dt>Direct Known Subclasses:</dt>
 <dd><code><a href="../provider/EresourceItemProviderAdapterFactory.html" title="class in org.eclipse.emf.cdo.eresource.provider">EresourceItemProviderAdapterFactory</a></code></dd>
 </dl>
 <hr>
-<pre>public class <span class="typeNameLabel">EresourceAdapterFactory</span>
-extends org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</pre>
+<div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">EresourceAdapterFactory</span>
+<span class="extends-implements">extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">AdapterFactoryImpl</a></span></div>
 <div class="block"><!-- begin-user-doc --> The <b>Adapter Factory</b> for the model. It provides an adapter <code>createXXX</code>
  method for each class of the model. <!-- end-user-doc --></div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource"><code>EresourcePackage</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource"><code>EresourcePackage</code></a></li>
+</ul>
+</dd>
+<dt>Generated</dt>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- =========== FIELD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.summary">
-<!--   -->
-</a>
-<h3>Field Summary</h3>
-<table class="memberSummary">
-<caption><span>Fields</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Field</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>protected static <a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modelPackage">modelPackage</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected static <a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></code></div>
+<div class="col-second even-row-color"><code><a href="#modelPackage" class="member-name-link">modelPackage</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">The cached model package.</div>
-</td>
-</tr>
-<tr class="rowColor">
-<td class="colFirst"><code>protected <a href="EresourceSwitch.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceSwitch</a>&lt;org.eclipse.emf.common.notify.Adapter&gt;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#modelSwitch">modelSwitch</a></span></code></th>
-<td class="colLast">
-<div class="block">The switch that delegates to the <code>createXXX</code> methods.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E()">EresourceAdapterFactory</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates an instance of the adapter factory.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createAdapter(org.eclipse.emf.common.notify.Notifier)">createAdapter</a></span>&#8203;(org.eclipse.emf.common.notify.Notifier&nbsp;target)</code></th>
-<td class="colLast">
-<div class="block">Creates an adapter for the <code>target</code>.</div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOBinaryResourceAdapter()">createCDOBinaryResourceAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Binary Resource</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOFileResourceAdapter()">createCDOFileResourceAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO File Resource</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceAdapter()">createCDOResourceAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceFolderAdapter()">createCDOResourceFolderAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Folder</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceLeafAdapter()">createCDOResourceLeafAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Leaf</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOResourceNodeAdapter()">createCDOResourceNodeAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Node</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCDOTextResourceAdapter()">createCDOTextResourceAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for an object of class '<a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Text Resource</em></code></a>'.</div>
-</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.common.notify.Adapter</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createEObjectAdapter()">createEObjectAdapter</a></span>()</code></th>
-<td class="colLast">
-<div class="block">Creates a new adapter for the default case.</div>
-</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isFactoryForType(java.lang.Object)">isFactoryForType</a></span>&#8203;(java.lang.Object&nbsp;object)</code></th>
-<td class="colLast">
-<div class="block">Returns whether this factory is applicable for the type of the object.</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.common.notify.impl.AdapterFactoryImpl">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</h3>
-<code>adapt, adapt, adaptAllNew, adaptNew, associate, createAdapter, resolve</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-</li>
-</ul>
-</section>
-</li>
-</ul>
 </div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+<div class="col-first odd-row-color"><code>protected <a href="EresourceSwitch.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceSwitch</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="#modelSwitch" class="member-name-link">modelSwitch</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">The switch that delegates to the <code>createXXX</code> methods.</div>
+</div>
+</div>
+</section>
+</li>
+<!-- ======== CONSTRUCTOR SUMMARY ======== -->
+<li>
+<section class="constructor-summary" id="constructor-summary">
+<h2>Constructor Summary</h2>
+<div class="caption"><span>Constructors</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">EresourceAdapterFactory</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Creates an instance of the adapter factory.</div>
+</div>
+</div>
+</section>
+</li>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createAdapter(org.eclipse.emf.common.notify.Notifier)" class="member-name-link">createAdapter</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Notifier</a>&nbsp;target)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates an adapter for the <code>target</code>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOBinaryResourceAdapter()" class="member-name-link">createCDOBinaryResourceAdapter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Binary Resource</em></code></a>'.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOFileResourceAdapter()" class="member-name-link">createCDOFileResourceAdapter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO File Resource</em></code></a>'.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOResourceAdapter()" class="member-name-link">createCDOResourceAdapter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource</em></code></a>'.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOResourceFolderAdapter()" class="member-name-link">createCDOResourceFolderAdapter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Folder</em></code></a>'.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOResourceLeafAdapter()" class="member-name-link">createCDOResourceLeafAdapter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Leaf</em></code></a>'.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOResourceNodeAdapter()" class="member-name-link">createCDOResourceNodeAdapter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Node</em></code></a>'.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createCDOTextResourceAdapter()" class="member-name-link">createCDOTextResourceAdapter</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for an object of class '<a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Text Resource</em></code></a>'.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createEObjectAdapter()" class="member-name-link">createEObjectAdapter</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Creates a new adapter for the default case.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFactoryForType(java.lang.Object)" class="member-name-link">isFactoryForType</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether this factory is applicable for the type of the object.</div>
+</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.emf.common.notify.impl.AdapterFactoryImpl">Methods inherited from class&nbsp;org.eclipse.emf.common.notify.impl.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">AdapterFactoryImpl</a></h3>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#adapt(java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">adapt</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#adapt(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">adapt</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#adaptAllNew(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">adaptAllNew</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#adaptNew(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">adaptNew</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#associate(org.eclipse.emf.common.notify.Adapter,org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">associate</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#createAdapter(org.eclipse.emf.common.notify.Notifier,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">createAdapter</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#resolve(java.lang.Object,java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">resolve</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+</section>
+</li>
+</ul>
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ FIELD DETAIL =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="field.detail">
-<!--   -->
-</a>
-<h3>Field Detail</h3>
-<a id="modelPackage">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>modelPackage</h4>
-<pre>protected static&nbsp;<a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a> modelPackage</pre>
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="modelPackage">
+<h3>modelPackage</h3>
+<div class="member-signature"><span class="modifiers">protected static</span>&nbsp;<span class="return-type"><a href="../EresourcePackage.html" title="interface in org.eclipse.emf.cdo.eresource">EresourcePackage</a></span>&nbsp;<span class="element-name">modelPackage</span></div>
 <div class="block">The cached model package.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
-<dl>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dl class="notes">
+<dt>Generated</dt>
 </dl>
+</section>
 </li>
-</ul>
-<a id="modelSwitch">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>modelSwitch</h4>
-<pre>protected&nbsp;<a href="EresourceSwitch.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceSwitch</a>&lt;org.eclipse.emf.common.notify.Adapter&gt; modelSwitch</pre>
+<li>
+<section class="detail" id="modelSwitch">
+<h3>modelSwitch</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="EresourceSwitch.html" title="class in org.eclipse.emf.cdo.eresource.util">EresourceSwitch</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a>&gt;</span>&nbsp;<span class="element-name">modelSwitch</span></div>
 <div class="block">The switch that delegates to the <code>createXXX</code> methods.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
-<dl>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dl class="notes">
+<dt>Generated</dt>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>EresourceAdapterFactory</h4>
-<pre>public&nbsp;EresourceAdapterFactory()</pre>
+<li>
+<section class="constructor-details" id="constructor-detail">
+<h2>Constructor Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>EresourceAdapterFactory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">EresourceAdapterFactory</span>()</div>
 <div class="block">Creates an instance of the adapter factory.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
-<dl>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dl class="notes">
+<dt>Generated</dt>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="isFactoryForType(java.lang.Object)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isFactoryForType</h4>
-<pre class="methodSignature">public&nbsp;boolean&nbsp;isFactoryForType&#8203;(java.lang.Object&nbsp;object)</pre>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="isFactoryForType(java.lang.Object)">
+<h3>isFactoryForType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFactoryForType</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
 <div class="block">Returns whether this factory is applicable for the type of the object.
  <!-- begin-user-doc --> This implementation
  returns <code>true</code> if the object is either the model's package or is an instance object of the model. <!--
  end-user-doc --></div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
-<dd><code>isFactoryForType</code>&nbsp;in interface&nbsp;<code>org.eclipse.emf.common.notify.AdapterFactory</code></dd>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>isFactoryForType</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</code></dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html#isFactoryForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify" class="external-link">isFactoryForType</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/AdapterFactory.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">AdapterFactory</a></code></dd>
+<dt>Overrides:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#isFactoryForType(java.lang.Object)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">isFactoryForType</a></code>&nbsp;in class&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">AdapterFactoryImpl</a></code></dd>
+<dt>Returns:</dt>
 <dd>whether this factory is applicable for the type of the object.</dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dt>Generated</dt>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createAdapter(org.eclipse.emf.common.notify.Notifier)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createAdapter&#8203;(org.eclipse.emf.common.notify.Notifier&nbsp;target)</pre>
+<li>
+<section class="detail" id="createAdapter(org.eclipse.emf.common.notify.Notifier)">
+<h3>createAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createAdapter</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Notifier</a>&nbsp;target)</span></div>
 <div class="block">Creates an adapter for the <code>target</code>.
  <!-- begin-user-doc --> <!-- end-user-doc --></div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Overrides:</span></dt>
-<dd><code>createAdapter</code>&nbsp;in class&nbsp;<code>org.eclipse.emf.common.notify.impl.AdapterFactoryImpl</code></dd>
-<dt><span class="paramLabel">Parameters:</span></dt>
+<dl class="notes">
+<dt>Overrides:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html#createAdapter(org.eclipse.emf.common.notify.Notifier)" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">createAdapter</a></code>&nbsp;in class&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/impl/AdapterFactoryImpl.html" title="class or interface in org.eclipse.emf.common.notify.impl" class="external-link">AdapterFactoryImpl</a></code></dd>
+<dt>Parameters:</dt>
 <dd><code>target</code> - the object to adapt.</dd>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dt>Returns:</dt>
 <dd>the adapter for the <code>target</code>.</dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dt>Generated</dt>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createCDOResourceNodeAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOResourceNodeAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOResourceNodeAdapter()</pre>
+<li>
+<section class="detail" id="createCDOResourceNodeAdapter()">
+<h3>createCDOResourceNodeAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOResourceNodeAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Node</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>2.0<!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceNode</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceNode</code></a></li>
 </ul>
-<a id="createCDOResourceFolderAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOResourceFolderAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOResourceFolderAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOResourceFolderAdapter()">
+<h3>createCDOResourceFolderAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOResourceFolderAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Folder</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>2.0<!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOResourceFolder.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceFolder</code></a></li>
 </ul>
-<a id="createCDOResourceAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOResourceAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOResourceAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOResourceAdapter()">
+<h3>createCDOResourceAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOResourceAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can easily
  ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway. <!-- end-user-doc --></div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResource</code></a></li>
 </ul>
-<a id="createCDOResourceLeafAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOResourceLeafAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOResourceLeafAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOResourceLeafAdapter()">
+<h3>createCDOResourceLeafAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOResourceLeafAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Resource Leaf</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.1 <!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceLeaf</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOResourceLeaf</code></a></li>
 </ul>
-<a id="createCDOFileResourceAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOFileResourceAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOFileResourceAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOFileResourceAdapter()">
+<h3>createCDOFileResourceAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOFileResourceAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO File Resource</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.1 <!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOFileResource</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOFileResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOFileResource</code></a></li>
 </ul>
-<a id="createCDOBinaryResourceAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOBinaryResourceAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOBinaryResourceAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOBinaryResourceAdapter()">
+<h3>createCDOBinaryResourceAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOBinaryResourceAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Binary Resource</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.1 <!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOBinaryResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOBinaryResource</code></a></li>
 </ul>
-<a id="createCDOTextResourceAdapter()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCDOTextResourceAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createCDOTextResourceAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createCDOTextResourceAdapter()">
+<h3>createCDOTextResourceAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createCDOTextResourceAdapter</span>()</div>
 <div class="block">Creates a new adapter for an object of class '<a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code><em>CDO Text Resource</em></code></a>'.
  <!-- begin-user-doc --> This default implementation returns null so that we can
  easily ignore cases; it's useful to ignore a case when inheritance will catch all the cases anyway.</div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Since:</dt>
 <dd>4.1 <!-- end-user-doc --></dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a></dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../CDOTextResource.html" title="interface in org.eclipse.emf.cdo.eresource"><code>CDOTextResource</code></a></li>
 </ul>
-<a id="createEObjectAdapter()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>createEObjectAdapter</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.common.notify.Adapter&nbsp;createEObjectAdapter()</pre>
+</dd>
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEObjectAdapter()">
+<h3>createEObjectAdapter</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Adapter</a></span>&nbsp;<span class="element-name">createEObjectAdapter</span>()</div>
 <div class="block">Creates a new adapter for the default case.
  <!-- begin-user-doc --> This default implementation returns null. <!--
  end-user-doc --></div>
-<dl>
-<dt><span class="returnLabel">Returns:</span></dt>
+<dl class="notes">
+<dt>Returns:</dt>
 <dd>the new adapter.</dd>
-<dt><span class="simpleTagLabel">Generated</span></dt>
+<dt>Generated</dt>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/EresourceAdapterFactory.html">Use</a></li>
-<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field.summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li><a href="#field.detail">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

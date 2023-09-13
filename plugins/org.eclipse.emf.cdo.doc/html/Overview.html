@@ -23,7 +23,7 @@ function windowTitle()
 <table border="0">
 	<tr>
 		<td width="100%"><h1>Overview</h1></td>
-		<td align="right" valign="middle" nowrap>&nbsp;<a href="client/index.html" title="Forward to Developing Client Applications"><img src="../images/forward.png" border="0"></a></td>
+		<td align="right" valign="middle" nowrap>&nbsp;<a href="users/index.html" title="Forward to User's Guide"><img src="../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p class="author">Author: Eike Stepper</p>
@@ -140,14 +140,14 @@ function windowTitle()
  <p>
  The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
  Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs
- because CDO model graph objects are EObject EObjects. While CDO's basic functionality integrates nicely and
+ because CDO model graph objects are <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>. While CDO's basic functionality integrates nicely and
  transparently with EMF's extension mechanisms some of the more advanced functions may require to add direct
  dependencies on CDO to your application code.
  <p>
  The following diagram illustrates the major building blocks of a CDO application: <p align="center"><img src="programmers/client/application-architecture.png">
 <p><b>See Also:</b></p>
 <ul>
-	<li><a href="client/Doc01_Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Client Application</a></li>
+	<li><a href="programmers/client/Doc01_Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Client Application</a></li>
 </ul>
 
 
@@ -161,20 +161,20 @@ function windowTitle()
  <p>
  While technically a CDO repository depends on EMF this dependency is not of equal importance as it is in a CDO
  application. In particular the generated application models are not required to be deployed to the server because a
- CDO repository accesses models reflectively and the model objects are not implemented as EObject EObjects on
+ CDO repository accesses models reflectively and the model objects are not implemented as <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a> on
  the server.
  <p>
  The following diagram illustrates the major building blocks of a CDO repository: <p align="center"><img src="programmers/server/repository-architecture.png">
 <p><b>See Also:</b></p>
 <ul>
-	<li><a href="server/Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Repository</a></li>
+	<li><a href="programmers/server/Architecture.html" title="Article in CDO Model Repository Documentation">Understanding the Architecture of a Repository</a></li>
 </ul>
 
 
 <p align="right">
-&nbsp;<a href="client/index.html" title="Forward to Developing Client Applications"><img src="../images/forward.png" border="0"></a></p>
+&nbsp;<a href="users/index.html" title="Forward to User's Guide"><img src="../images/forward.png" border="0"></a></p>
 <!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a></div> -->
 
-<div class="copyright">Copyright (c) 2014 Eike Stepper (Berlin, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
 </body>
 </html>

@@ -1,504 +1,307 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>InternalCDOCommitInfoManager (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.spi.common.commit, interface: InternalCDOCommitInfoManager">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="InternalCDOCommitInfoManager (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/InternalCDOCommitInfoManager.html">Use</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></div>
-<h2 title="Interface InternalCDOCommitInfoManager" class="title">Interface InternalCDOCommitInfoManager</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common.commit</a></div>
+<h1 title="Interface InternalCDOCommitInfoManager" class="title">Interface InternalCDOCommitInfoManager</h1>
 </div>
-<div class="contentContainer">
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../../../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,&#8203;<a href="../../../common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a>&gt;</code>, <code><a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></code>, <code><a href="../../../common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
+<dd><code><a href="../../../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a>&lt;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>,<wbr><a href="../../../common/commit/CDOCommitHistory.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory</a>&gt;</code>, <code><a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></code>, <code><a href="../../../common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">InternalCDOCommitInfoManager</span>
-extends <a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</pre>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">InternalCDOCommitInfoManager</span><span class="extends-implements">
+extends <a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
-<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dt>No Implement</dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Interface</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
-<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
-</ul>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOCommitData)">createCommitInfo</a></span>&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                long&nbsp;timeStamp,
-                long&nbsp;previousTimeStamp,
-                java.lang.String&nbsp;userID,
-                java.lang.String&nbsp;comment,
-                <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
-                <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData)">createCommitInfo</a></span>&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                long&nbsp;timeStamp,
-                long&nbsp;previousTimeStamp,
-                java.lang.String&nbsp;userID,
-                java.lang.String&nbsp;comment,
-                <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code><a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranchManager()">getBranchManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCommitInfoLoader()">getCommitInfoLoader</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#notifyCommitInfoHandlers(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">notifyCommitInfoHandlers</a></span>&#8203;(<a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</a></span>&#8203;(<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCommitInfoLoader(org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader)">setCommitInfoLoader</a></span>&#8203;(<a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a>&nbsp;commitInfoLoader)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,long)">setLastCommitOfBranch</a></span>&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                     long&nbsp;lastCommit)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)">setRepository</a></span>&#8203;(<a href="../../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.commit.CDOCommitHistory.Provider">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a></h3>
-<code><a href="../../../common/commit/CDOCommitHistory.Provider.html#getHistory()">getHistory</a>, <a href="../../../common/commit/CDOCommitHistory.Provider.html#getHistory(KEY)">getHistory</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></h3>
-<code><a href="../../../common/commit/CDOCommitInfoManager.html#getBaseOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getBaseOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(long)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(long,boolean)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.lang.String,java.lang.String,int,org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getFirstOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getFirstOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastCommit()">getLastCommit</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,boolean)">getLastCommitOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getLastOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getRepository()">getRepository</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.commit.CDOCommitInfoProvider">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></h3>
-<code><a href="../../../common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</a>, <a href="../../../common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()">getCommitInfoHandlers</a>, <a href="../../../common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.lifecycle.ILifecycle">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
-<code>activate, deactivate, getLifecycleState, isActive</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>addListener, getListeners, hasListeners, removeListener</code></li>
-</ul>
-</li>
-</ul>
-</section>
-</li>
-</ul>
 </div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
+<code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
+</section>
+</li>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOCommitData)" class="member-name-link">createCommitInfo</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ long&nbsp;previousTimeStamp,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
+ <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData)" class="member-name-link">createCommitInfo</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ long&nbsp;previousTimeStamp,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
+ <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBranchManager()" class="member-name-link">getBranchManager</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommitInfoLoader()" class="member-name-link">getCommitInfoLoader</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#notifyCommitInfoHandlers(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)" class="member-name-link">notifyCommitInfoHandlers</a><wbr>(<a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)" class="member-name-link">setBranchManager</a><wbr>(<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCommitInfoLoader(org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader)" class="member-name-link">setCommitInfoLoader</a><wbr>(<a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a>&nbsp;commitInfoLoader)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,long)" class="member-name-link">setLastCommitOfBranch</a><wbr>(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;lastCommit)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)" class="member-name-link">setRepository</a><wbr>(<a href="../../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.commit.CDOCommitHistory.Provider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitHistory.Provider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitHistory.Provider</a></h3>
+<code><a href="../../../common/commit/CDOCommitHistory.Provider.html#getHistory()">getHistory</a>, <a href="../../../common/commit/CDOCommitHistory.Provider.html#getHistory(KEY)">getHistory</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></h3>
+<code><a href="../../../common/commit/CDOCommitInfoManager.html#getBaseOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getBaseOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(long)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(long,boolean)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean)">getCommitInfo</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getCommitInfos(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.lang.String,java.lang.String,int,org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">getCommitInfos</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getFirstOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getFirstOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastCommit()">getLastCommit</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,boolean)">getLastCommitOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getLastOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch)">getLastOfBranch</a>, <a href="../../../common/commit/CDOCommitInfoManager.html#getRepository()">getRepository</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.commit.CDOCommitInfoProvider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.commit.<a href="../../../common/commit/CDOCommitInfoProvider.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoProvider</a></h3>
+<code><a href="../../../common/commit/CDOCommitInfoProvider.html#addCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">addCommitInfoHandler</a>, <a href="../../../common/commit/CDOCommitInfoProvider.html#getCommitInfoHandlers()">getCommitInfoHandlers</a>, <a href="../../../common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)">removeCommitInfoHandler</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Methods inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h3>
+<code>activate, deactivate, getLifecycleState, isActive</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></div>
+</section>
+</li>
+</ul>
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setRepository</h4>
-<pre class="methodSignature">void&nbsp;setRepository&#8203;(<a href="../../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="setRepository(org.eclipse.emf.cdo.common.CDOCommonRepository)">
+<h3>setRepository</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setRepository</span><wbr><span class="parameters">(<a href="../../../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getBranchManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBranchManager</h4>
-<pre class="methodSignature"><a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;getBranchManager()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getBranchManager()">
+<h3>getBranchManager</h3>
+<div class="member-signature"><span class="return-type"><a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></span>&nbsp;<span class="element-name">getBranchManager</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBranchManager</h4>
-<pre class="methodSignature">void&nbsp;setBranchManager&#8203;(<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">
+<h3>setBranchManager</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setBranchManager</span><wbr><span class="parameters">(<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.15</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getCommitInfoLoader()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCommitInfoLoader</h4>
-<pre class="methodSignature"><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a>&nbsp;getCommitInfoLoader()</pre>
+<li>
+<section class="detail" id="getCommitInfoLoader()">
+<h3>getCommitInfoLoader</h3>
+<div class="member-signature"><span class="return-type"><a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a></span>&nbsp;<span class="element-name">getCommitInfoLoader</span>()</div>
+</section>
 </li>
-</ul>
-<a id="setCommitInfoLoader(org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setCommitInfoLoader</h4>
-<pre class="methodSignature">void&nbsp;setCommitInfoLoader&#8203;(<a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a>&nbsp;commitInfoLoader)</pre>
+<li>
+<section class="detail" id="setCommitInfoLoader(org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager.CommitInfoLoader)">
+<h3>setCommitInfoLoader</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setCommitInfoLoader</span><wbr><span class="parameters">(<a href="InternalCDOCommitInfoManager.CommitInfoLoader.html" title="interface in org.eclipse.emf.cdo.spi.common.commit">InternalCDOCommitInfoManager.CommitInfoLoader</a>&nbsp;commitInfoLoader)</span></div>
+</section>
 </li>
-</ul>
-<a id="notifyCommitInfoHandlers(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>notifyCommitInfoHandlers</h4>
-<pre class="methodSignature">void&nbsp;notifyCommitInfoHandlers&#8203;(<a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="notifyCommitInfoHandlers(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">
+<h3>notifyCommitInfoHandlers</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">notifyCommitInfoHandlers</span><wbr><span class="parameters">(<a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;commitInfo)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCommitInfo</h4>
-<pre class="methodSignature"><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;createCommitInfo&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                               long&nbsp;timeStamp,
-                               long&nbsp;previousTimeStamp,
-                               java.lang.String&nbsp;userID,
-                               java.lang.String&nbsp;comment,
-                               <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData)">
+<h3>createCommitInfo</h3>
+<div class="member-signature"><span class="return-type"><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">createCommitInfo</span><wbr><span class="parameters">(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ long&nbsp;previousTimeStamp,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
+ <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOCommitData)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createCommitInfo</h4>
-<pre class="methodSignature"><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;createCommitInfo&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                               long&nbsp;timeStamp,
-                               long&nbsp;previousTimeStamp,
-                               java.lang.String&nbsp;userID,
-                               java.lang.String&nbsp;comment,
-                               <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
-                               <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.commit.CDOCommitData)">
+<h3>createCommitInfo</h3>
+<div class="member-signature"><span class="return-type"><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">createCommitInfo</span><wbr><span class="parameters">(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ long&nbsp;previousTimeStamp,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
+ <a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
+ <a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;commitData)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,long)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>setLastCommitOfBranch</h4>
-<pre class="methodSignature">void&nbsp;setLastCommitOfBranch&#8203;(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
-                           long&nbsp;lastCommit)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setLastCommitOfBranch(org.eclipse.emf.cdo.common.branch.CDOBranch,long)">
+<h3>setLastCommitOfBranch</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setLastCommitOfBranch</span><wbr><span class="parameters">(<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;lastCommit)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/InternalCDOCommitInfoManager.html">Use</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

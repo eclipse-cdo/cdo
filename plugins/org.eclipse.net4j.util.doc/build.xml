@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2011-2021 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -17,11 +17,9 @@
 
   <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
 
-  <property name="legal.date" value="2004-2021" />
-
-  <property name="jdk.link" value="http://download.oracle.com/javase/1.5.0/docs/api" />
-  <property name="emf.link" value="http://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
-  <property name="platform.link" value="http://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
+  <property name="jdk.link" value="https://download.oracle.com/javase/1.5.0/docs/api" />
+  <property name="emf.link" value="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
+  <property name="platform.link" value="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
 
   <property name="project.path" value="${plugins.dir}/org.eclipse.net4j.util.doc" />
@@ -82,8 +80,9 @@
              encoding="UTF-8"
              classpathref="javadoc.classpath"
              additionalparam="-Xdoclint:missing"
-             maxmemory="1024m"
-             source="1.8"
+             maxmemory="4g" 
+             source="17"
+    	       verbose="false"
              useexternalfile="true"
              failonerror="true"
              docfilessubdirs="true"
@@ -296,19 +295,19 @@
     <javadoc locale="en"
              encoding="UTF-8"
              classpathref="javadoc.classpath"
-             maxmemory="1024m"
-             source="1.8"
+             maxmemory="4g"
+             source="17"
+             verbose="false"
              useexternalfile="true"
              failonerror="true"
              private="true">
 
-      <doclet name="org.eclipse.oomph.releng.doc.article.impl.ArticleDoclet"
+      <doclet name="org.eclipse.oomph.releng.doc.article.doclet.ArticleDoclet"
                 path="${releng.project}/bin;${releng.project}/org.eclipse.oomph.releng.doc.jar;${tp.classpath};${releng.project}/lib/dom4j-1.6.1.jar;${releng.project}/lib/poi-3.8-beta4-20110826.jar;${releng.project}/lib/poi-ooxml-3.8-beta4-20110826.jar;${releng.project}/lib/poi-ooxml-schemas-3.8-beta4-20110826.jar;${releng.project}/lib/xmlbeans-2.3.0.jar">
-        <param name="-starttime" value="${start.time}" />
-        <param name="-basefolder" value="${plugins.dir}/.." />
-        <param name="-project" value="org.eclipse.net4j.util.doc" />
-        <param name="-externals" value="${jdk.link};${platform.link};${emf.link}" />
-
+        <param name="--starttime" value="${start.time}" />
+        <param name="--basefolder" value="${plugins.dir}/.." />
+        <param name="--project" value="org.eclipse.net4j.util.doc" />
+        <param name="--externals" value="${jdk.link};${platform.link};${emf.link}" />
       </doclet>
 
       <fileset dir="${plugins.dir}">

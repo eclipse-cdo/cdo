@@ -1,746 +1,539 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOSessionConfiguration (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.session, interface: CDOSessionConfiguration">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="CDOSessionConfiguration (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":38,"i1":6,"i2":6,"i3":6,"i4":6,"i5":6,"i6":6,"i7":6,"i8":6,"i9":6,"i10":6,"i11":6,"i12":6,"i13":6,"i14":6,"i15":6,"i16":6,"i17":6,"i18":6,"i19":6,"i20":6,"i21":6,"i22":6};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],32:["t6","Deprecated Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOSessionConfiguration.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.session</a></div>
-<h2 title="Interface CDOSessionConfiguration" class="title">Interface CDOSessionConfiguration</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.session</a></div>
+<h1 title="Interface CDOSessionConfiguration" class="title">Interface CDOSessionConfiguration</h1>
 </div>
-<div class="contentContainer">
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Superinterfaces:</dt>
 <dd><code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
-<dl>
+<dl class="notes">
 <dt>All Known Subinterfaces:</dt>
 <dd><code><a href="../net4j/CDONet4jSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSessionConfiguration</a></code>, <code><a href="../net4j/CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">CDOSessionConfiguration</a></code>, <code><a href="../net4j/FailoverCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">FailoverCDOSessionConfiguration</a></code>, <code><a href="../../spi/cdo/InternalCDOSessionConfiguration.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOSessionConfiguration</a></code>, <code><a href="../net4j/ReconnectingCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">ReconnectingCDOSessionConfiguration</a></code>, <code><a href="../net4j/RecoveringCDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.net4j">RecoveringCDOSessionConfiguration</a></code></dd>
 </dl>
 <hr>
-<pre>public interface <span class="typeNameLabel">CDOSessionConfiguration</span>
-extends org.eclipse.net4j.util.event.INotifier</pre>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOSessionConfiguration</span><span class="extends-implements">
+extends org.eclipse.net4j.util.event.INotifier</span></div>
 <div class="block">Configures and opens new <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>sessions</code></a>.
  <p>
  A session configuration can fire the following events:
  <ul>
  <li> <a href="CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session"><code>CDOSessionConfiguration.SessionOpenedEvent</code></a> after a session has been opened by this configuration.
  </ul></div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>2.0</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
-<dt><span class="simpleTagLabel">No Implement</span></dt>
+<dt>No Implement</dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
-<dt><span class="simpleTagLabel">No Extend</span></dt>
+<dt>No Extend</dt>
 <dd>This interface is not intended to be extended by clients.</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Interface</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static interface&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOSessionConfiguration.SessionOpenedEvent.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOSessionConfiguration.SessionOpenedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfiguration.SessionOpenedEvent</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">Fired from a <a href="CDOSessionConfiguration.html" title="interface in org.eclipse.emf.cdo.session"><code>session configuration</code></a> after a new <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has been
  opened.</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></li>
-</ul>
-</li>
-</ul>
-</section>
-<!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code><a href="../common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getAuthenticator()">getAuthenticator</a></span>()</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getCredentialsProvider()"><code>getCredentialsProvider()</code></a> and <a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><code>setCredentialsProvider(IPasswordCredentialsProvider)</code></a>, respectively</div>
 </div>
-</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code><a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranchManager()">getBranchManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>org.eclipse.net4j.util.security.IPasswordCredentialsProvider</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCredentialsProvider()">getCredentialsProvider</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code><a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getExceptionHandler()">getExceptionHandler</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code><a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getFetchRuleManager()">getFetchRuleManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code><a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getIDGenerator()">getIDGenerator</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLockNotificationMode()">getLockNotificationMode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPassiveUpdateMode()">getPassiveUpdateMode</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getUserID()">getUserID</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isActivateOnOpen()">isActivateOnOpen</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
+</section>
+</li>
+<!-- ========== METHOD SUMMARY =========== -->
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getAuthenticator()" class="member-name-link">getAuthenticator</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getCredentialsProvider()"><code>getCredentialsProvider()</code></a> and <a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><code>setCredentialsProvider(IPasswordCredentialsProvider)</code></a>, respectively</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBranchManager()" class="member-name-link">getBranchManager</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.security.IPasswordCredentialsProvider</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCredentialsProvider()" class="member-name-link">getCredentialsProvider</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getExceptionHandler()" class="member-name-link">getExceptionHandler</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFetchRuleManager()" class="member-name-link">getFetchRuleManager</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getIDGenerator()" class="member-name-link">getIDGenerator</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockNotificationMode()" class="member-name-link">getLockNotificationMode</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPassiveUpdateMode()" class="member-name-link">getPassiveUpdateMode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUserID()" class="member-name-link">getUserID</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isActivateOnOpen()" class="member-name-link">isActivateOnOpen</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns <code>true</code> if the session opened by <a href="#openSession()"><code>openSession()</code></a> will be automatically activated,
  <code>false</code> otherwise.</div>
-</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isPassiveUpdateEnabled()">isPassiveUpdateEnabled</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isSessionOpen()">isSessionOpen</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isPassiveUpdateEnabled()" class="member-name-link">isPassiveUpdateEnabled</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isSessionOpen()" class="member-name-link">isSessionOpen</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.</div>
-</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openSession()">openSession</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openSession()" class="member-name-link">openSession</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Opens the session for this configuration.</div>
-</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setActivateOnOpen(boolean)">setActivateOnOpen</a></span>&#8203;(boolean&nbsp;activateOnOpen)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setActivateOnOpen(boolean)" class="member-name-link">setActivateOnOpen</a><wbr>(boolean&nbsp;activateOnOpen)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Specifies whether the session opened by <a href="#openSession()"><code>openSession()</code></a> will be automatically activated or not.</div>
-</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">setBranchManager</a></span>&#8203;(<a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">setCredentialsProvider</a></span>&#8203;(org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;credentialsProvider)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">setExceptionHandler</a></span>&#8203;(<a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;exceptionHandler)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)" class="member-name-link">setBranchManager</a><wbr>(<a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)" class="member-name-link">setCredentialsProvider</a><wbr>(org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;credentialsProvider)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)" class="member-name-link">setExceptionHandler</a><wbr>(<a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;exceptionHandler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.</div>
-</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">setFetchRuleManager</a></span>&#8203;(<a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;fetchRuleManager)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)" class="member-name-link">setFetchRuleManager</a><wbr>(<a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;fetchRuleManager)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter.</div>
-</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">setIDGenerator</a></span>&#8203;(<a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;idGenerator)</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)" class="member-name-link">setIDGenerator</a><wbr>(<a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;idGenerator)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter.</div>
-</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">setLockNotificationMode</a></span>&#8203;(<a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPassiveUpdateEnabled(boolean)">setPassiveUpdateEnabled</a></span>&#8203;(boolean&nbsp;passiveUpdateEnabled)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">setPassiveUpdateMode</a></span>&#8203;(<a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;passiveUpdateMode)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#setUserID(java.lang.String)">setUserID</a></span>&#8203;(java.lang.String&nbsp;userID)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.event.INotifier">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
-<code>addListener, getListeners, hasListeners, removeListener</code></li>
-</ul>
-</li>
-</ul>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" class="member-name-link">setLockNotificationMode</a><wbr>(<a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPassiveUpdateEnabled(boolean)" class="member-name-link">setPassiveUpdateEnabled</a><wbr>(boolean&nbsp;passiveUpdateEnabled)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" class="member-name-link">setPassiveUpdateMode</a><wbr>(<a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;passiveUpdateMode)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setUserID(java.lang.String)" class="member-name-link">setUserID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="getUserID()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getUserID</h4>
-<pre class="methodSignature">java.lang.String&nbsp;getUserID()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="getUserID()">
+<h3>getUserID</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUserID</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setUserID(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setUserID</h4>
-<pre class="methodSignature">void&nbsp;setUserID&#8203;(java.lang.String&nbsp;userID)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setUserID(java.lang.String)">
+<h3>setUserID</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setUserID</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isPassiveUpdateEnabled()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isPassiveUpdateEnabled</h4>
-<pre class="methodSignature">boolean&nbsp;isPassiveUpdateEnabled()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="isPassiveUpdateEnabled()">
+<h3>isPassiveUpdateEnabled</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isPassiveUpdateEnabled</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()"><code>CDOCommonSession.Options.isPassiveUpdateEnabled()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()"><code>CDOCommonSession.Options.isPassiveUpdateEnabled()</code></a></li>
 </ul>
-<a id="setPassiveUpdateEnabled(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPassiveUpdateEnabled</h4>
-<pre class="methodSignature">void&nbsp;setPassiveUpdateEnabled&#8203;(boolean&nbsp;passiveUpdateEnabled)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPassiveUpdateEnabled(boolean)">
+<h3>setPassiveUpdateEnabled</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPassiveUpdateEnabled</span><wbr><span class="parameters">(boolean&nbsp;passiveUpdateEnabled)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><code>CDOCommonSession.Options.setPassiveUpdateEnabled(boolean)</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)"><code>CDOCommonSession.Options.setPassiveUpdateEnabled(boolean)</code></a></li>
 </ul>
-<a id="getPassiveUpdateMode()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPassiveUpdateMode</h4>
-<pre class="methodSignature"><a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;getPassiveUpdateMode()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPassiveUpdateMode()">
+<h3>getPassiveUpdateMode</h3>
+<div class="member-signature"><span class="return-type"><a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a></span>&nbsp;<span class="element-name">getPassiveUpdateMode</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><code>CDOCommonSession.Options.getPassiveUpdateMode()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../common/CDOCommonSession.Options.html#getPassiveUpdateMode()"><code>CDOCommonSession.Options.getPassiveUpdateMode()</code></a></li>
 </ul>
-<a id="setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setPassiveUpdateMode</h4>
-<pre class="methodSignature">void&nbsp;setPassiveUpdateMode&#8203;(<a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;passiveUpdateMode)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)">
+<h3>setPassiveUpdateMode</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPassiveUpdateMode</span><wbr><span class="parameters">(<a href="../common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;passiveUpdateMode)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)"><code>CDOCommonSession.Options.setPassiveUpdateMode(PassiveUpdateMode)</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="../common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)"><code>CDOCommonSession.Options.setPassiveUpdateMode(PassiveUpdateMode)</code></a></li>
 </ul>
-<a id="getLockNotificationMode()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getLockNotificationMode</h4>
-<pre class="methodSignature"><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;getLockNotificationMode()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLockNotificationMode()">
+<h3>getLockNotificationMode</h3>
+<div class="member-signature"><span class="return-type"><a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a></span>&nbsp;<span class="element-name">getLockNotificationMode</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setLockNotificationMode</h4>
-<pre class="methodSignature">void&nbsp;setLockNotificationMode&#8203;(<a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)">
+<h3>setLockNotificationMode</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setLockNotificationMode</span><wbr><span class="parameters">(<a href="../common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
 </dl>
+</section>
 </li>
+<li>
+<section class="detail" id="getExceptionHandler()">
+<h3>getExceptionHandler</h3>
+<div class="member-signature"><span class="return-type"><a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a></span>&nbsp;<span class="element-name">getExceptionHandler</span>()</div>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="CDOSession.html#getExceptionHandler()"><code>CDOSession.getExceptionHandler()</code></a></li>
 </ul>
-<a id="getExceptionHandler()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getExceptionHandler</h4>
-<pre class="methodSignature"><a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;getExceptionHandler()</pre>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getExceptionHandler()"><code>CDOSession.getExceptionHandler()</code></a></dd>
+</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setExceptionHandler</h4>
-<pre class="methodSignature">void&nbsp;setExceptionHandler&#8203;(<a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;exceptionHandler)</pre>
+<li>
+<section class="detail" id="setExceptionHandler(org.eclipse.emf.cdo.session.CDOSession.ExceptionHandler)">
+<h3>setExceptionHandler</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setExceptionHandler</span><wbr><span class="parameters">(<a href="CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session">CDOSession.ExceptionHandler</a>&nbsp;exceptionHandler)</span></div>
 <div class="block">A special exception handler can be set <b>before</b> the session is opened and can not be changed thereafter.</div>
-<dl>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getExceptionHandler()"><code>CDOSession.getExceptionHandler()</code></a></dd>
-</dl>
-</li>
+<dl class="notes">
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="CDOSession.html#getExceptionHandler()"><code>CDOSession.getExceptionHandler()</code></a></li>
 </ul>
-<a id="getIDGenerator()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getIDGenerator</h4>
-<pre class="methodSignature"><a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;getIDGenerator()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getIDGenerator()">
+<h3>getIDGenerator</h3>
+<div class="member-signature"><span class="return-type"><a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a></span>&nbsp;<span class="element-name">getIDGenerator</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getIDGenerator()"><code>CDOSession.getIDGenerator()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="CDOSession.html#getIDGenerator()"><code>CDOSession.getIDGenerator()</code></a></li>
 </ul>
-<a id="setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setIDGenerator</h4>
-<pre class="methodSignature">void&nbsp;setIDGenerator&#8203;(<a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;idGenerator)</pre>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setIDGenerator(org.eclipse.emf.cdo.common.id.CDOIDGenerator)">
+<h3>setIDGenerator</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setIDGenerator</span><wbr><span class="parameters">(<a href="../common/id/CDOIDGenerator.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDGenerator</a>&nbsp;idGenerator)</span></div>
 <div class="block">A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
  <code>null</code>, the passed generator <b>must be</b> thread-safe.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getIDGenerator()"><code>CDOSession.getIDGenerator()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="CDOSession.html#getIDGenerator()"><code>CDOSession.getIDGenerator()</code></a></li>
 </ul>
-<a id="getFetchRuleManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getFetchRuleManager</h4>
-<pre class="methodSignature"><a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;getFetchRuleManager()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFetchRuleManager()">
+<h3>getFetchRuleManager</h3>
+<div class="member-signature"><span class="return-type"><a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a></span>&nbsp;<span class="element-name">getFetchRuleManager</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getFetchRuleManager()"><code>CDOSession.getFetchRuleManager()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="CDOSession.html#getFetchRuleManager()"><code>CDOSession.getFetchRuleManager()</code></a></li>
 </ul>
-<a id="setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setFetchRuleManager</h4>
-<pre class="methodSignature">void&nbsp;setFetchRuleManager&#8203;(<a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;fetchRuleManager)</pre>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setFetchRuleManager(org.eclipse.emf.cdo.view.CDOFetchRuleManager)">
+<h3>setFetchRuleManager</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setFetchRuleManager</span><wbr><span class="parameters">(<a href="../view/CDOFetchRuleManager.html" title="interface in org.eclipse.emf.cdo.view">CDOFetchRuleManager</a>&nbsp;fetchRuleManager)</span></div>
 <div class="block">A special ID generator can be set <b>before</b> the session is opened and can not be changed thereafter. If not
  <code>null</code>, the passed generator <b>must be</b> thread-safe.</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.1</dd>
-<dt><span class="seeLabel">See Also:</span></dt>
-<dd><a href="CDOSession.html#getFetchRuleManager()"><code>CDOSession.getFetchRuleManager()</code></a></dd>
-</dl>
-</li>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list-long">
+<li><a href="CDOSession.html#getFetchRuleManager()"><code>CDOSession.getFetchRuleManager()</code></a></li>
 </ul>
-<a id="getBranchManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBranchManager</h4>
-<pre class="methodSignature"><a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;getBranchManager()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getBranchManager()">
+<h3>getBranchManager</h3>
+<div class="member-signature"><span class="return-type"><a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></span>&nbsp;<span class="element-name">getBranchManager</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setBranchManager</h4>
-<pre class="methodSignature">void&nbsp;setBranchManager&#8203;(<a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setBranchManager(org.eclipse.emf.cdo.common.branch.CDOBranchManager)">
+<h3>setBranchManager</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setBranchManager</span><wbr><span class="parameters">(<a href="../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getAuthenticator()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getAuthenticator</h4>
-<pre class="methodSignature">@Deprecated
-<a href="../common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a>&nbsp;getAuthenticator()</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 use <a href="#getCredentialsProvider()"><code>getCredentialsProvider()</code></a> and <a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><code>setCredentialsProvider(IPasswordCredentialsProvider)</code></a>, respectively</div>
+<li>
+<section class="detail" id="getAuthenticator()">
+<h3>getAuthenticator</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type"><a href="../common/protocol/CDOAuthenticator.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOAuthenticator</a></span>&nbsp;<span class="element-name">getAuthenticator</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 use <a href="#getCredentialsProvider()"><code>getCredentialsProvider()</code></a> and <a href="#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><code>setCredentialsProvider(IPasswordCredentialsProvider)</code></a>, respectively</div>
 </div>
 <div class="block">Returns the authenticator of this configuration, never <code>null</code>.</div>
+</section>
 </li>
-</ul>
-<a id="getCredentialsProvider()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCredentialsProvider</h4>
-<pre class="methodSignature">org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;getCredentialsProvider()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getCredentialsProvider()">
+<h3>getCredentialsProvider</h3>
+<div class="member-signature"><span class="return-type">org.eclipse.net4j.util.security.IPasswordCredentialsProvider</span>&nbsp;<span class="element-name">getCredentialsProvider</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setCredentialsProvider</h4>
-<pre class="methodSignature">void&nbsp;setCredentialsProvider&#8203;(org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;credentialsProvider)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)">
+<h3>setCredentialsProvider</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setCredentialsProvider</span><wbr><span class="parameters">(org.eclipse.net4j.util.security.IPasswordCredentialsProvider&nbsp;credentialsProvider)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isActivateOnOpen()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isActivateOnOpen</h4>
-<pre class="methodSignature">boolean&nbsp;isActivateOnOpen()</pre>
+<li>
+<section class="detail" id="isActivateOnOpen()">
+<h3>isActivateOnOpen</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isActivateOnOpen</span>()</div>
 <div class="block">Returns <code>true</code> if the session opened by <a href="#openSession()"><code>openSession()</code></a> will be automatically activated,
  <code>false</code> otherwise.</div>
+</section>
 </li>
-</ul>
-<a id="setActivateOnOpen(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>setActivateOnOpen</h4>
-<pre class="methodSignature">void&nbsp;setActivateOnOpen&#8203;(boolean&nbsp;activateOnOpen)</pre>
+<li>
+<section class="detail" id="setActivateOnOpen(boolean)">
+<h3>setActivateOnOpen</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setActivateOnOpen</span><wbr><span class="parameters">(boolean&nbsp;activateOnOpen)</span></div>
 <div class="block">Specifies whether the session opened by <a href="#openSession()"><code>openSession()</code></a> will be automatically activated or not.</div>
+</section>
 </li>
-</ul>
-<a id="isSessionOpen()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isSessionOpen</h4>
-<pre class="methodSignature">boolean&nbsp;isSessionOpen()</pre>
+<li>
+<section class="detail" id="isSessionOpen()">
+<h3>isSessionOpen</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isSessionOpen</span>()</div>
 <div class="block">Returns <code>true</code> if the session for this configuration is currently open, <code>false</code> otherwise.</div>
+</section>
 </li>
-</ul>
-<a id="openSession()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>openSession</h4>
-<pre class="methodSignature"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;openSession()</pre>
+<li>
+<section class="detail" id="openSession()">
+<h3>openSession</h3>
+<div class="member-signature"><span class="return-type"><a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a></span>&nbsp;<span class="element-name">openSession</span>()</div>
 <div class="block">Opens the session for this configuration. Once the session is openend this method always returns the same session
  instance. Therefore it is impossible to change this configuration while the session is open.</div>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/CDOSessionConfiguration.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

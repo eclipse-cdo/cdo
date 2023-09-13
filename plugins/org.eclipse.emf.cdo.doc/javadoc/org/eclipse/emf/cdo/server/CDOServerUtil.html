@@ -1,860 +1,592 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDOServerUtil (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.server, class: CDOServerUtil">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="CDOServerUtil (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":9,"i1":9,"i2":9,"i3":9,"i4":9,"i5":9,"i6":9,"i7":9,"i8":9,"i9":9,"i10":9,"i11":9,"i12":9,"i13":9,"i14":9,"i15":9,"i16":9,"i17":9,"i18":9,"i19":9,"i20":41,"i21":41,"i22":9,"i23":9,"i24":41,"i25":9,"i26":41};
-var tabs = {65535:["t0","All Methods"],1:["t1","Static Methods"],8:["t4","Concrete Methods"],32:["t6","Deprecated Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDOServerUtil.html">Use</a></li>
 <li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
 <li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server</a></div>
-<h2 title="Class CDOServerUtil" class="title">Class CDOServerUtil</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server</a></div>
+<h1 title="Class CDOServerUtil" class="title">Class CDOServerUtil</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.emf.cdo.server.CDOServerUtil</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.emf.cdo.server.CDOServerUtil</div>
+</div>
+<section class="class-description" id="class-description">
 <hr>
-<pre>public final class <span class="typeNameLabel">CDOServerUtil</span>
-extends java.lang.Object</pre>
+<div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDOServerUtil</span>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Various static methods that may help with CDO <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>repositories</code></a> and server-side <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>views</code></a>.</div>
-<dl>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dl class="notes">
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDOServerUtil.RepositoryReadAccessValidator.html" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDOServerUtil.RepositoryReadAccessValidator.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server">CDOServerUtil.RepositoryReadAccessValidator</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">An abstract <a href="IRepository.ReadAccessHandler.html" title="interface in org.eclipse.emf.cdo.server"><code>read-access handler</code></a> that grants or denies access to single
  <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a>.</div>
-</td>
-</tr>
-</table>
-</li>
-</ul>
+</div>
+</div>
 </section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t1" class="tableTab"><span><a href="javascript:show(1);">Static Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t6" class="tableTab"><span><a href="javascript:show(32);">Deprecated Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)">addRepository</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
-             <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">createFailoverParticipant</a></span>&#8203;(java.lang.String&nbsp;name,
-                         <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                         java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createFailoverParticipant</a></span>&#8203;(java.lang.String&nbsp;name,
-                         <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                         java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                         <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean)">createFailoverParticipant</a></span>&#8203;(java.lang.String&nbsp;name,
-                         <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                         java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                         <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
-                         boolean&nbsp;master)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean,boolean)">createFailoverParticipant</a></span>&#8203;(java.lang.String&nbsp;name,
-                         <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                         java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                         <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
-                         boolean&nbsp;master,
-                         boolean&nbsp;allowBackupCommits)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">createOfflineClone</a></span>&#8203;(java.lang.String&nbsp;name,
-                  <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                  java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                  <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">createRepository</a></span>&#8203;(java.lang.String&nbsp;name,
-                <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code>static <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">createRepositorySynchronizer</a></span>&#8203;(<a href="../session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code>static <a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#createSessionManager()">createSessionManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute(org.eclipse.emf.cdo.server.ISession,java.lang.Runnable)">execute</a></span>&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;context,
-       java.lang.Runnable&nbsp;runnable)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code>static void</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#execute(org.eclipse.emf.cdo.session.CDOSession,java.util.function.Consumer)">execute</a></span>&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;context,
-       java.util.function.Consumer&lt;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;&nbsp;consumer)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(java.lang.String)">getRepository</a></span>&#8203;(java.lang.String&nbsp;uuid)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(org.eclipse.emf.cdo.session.CDOSession)">getRepository</a></span>&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">getRepository</a></span>&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
-             java.lang.String&nbsp;name)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code>static org.w3c.dom.Element</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRepositoryConfig(java.lang.String)">getRepositoryConfig</a></span>&#8203;(java.lang.String&nbsp;repositoryName)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code>static <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getServerSession(org.eclipse.emf.cdo.session.CDOSession)">getServerSession</a></span>&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>static <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getServerSession(org.eclipse.emf.cdo.view.CDOView)">getServerSession</a></span>&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code>static <a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getServerTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">getServerTransaction</a></span>&#8203;(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code>static <a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getServerView(org.eclipse.emf.cdo.view.CDOView)">getServerView</a></span>&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">openView</a></span>&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-        <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">openView</a></span>&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-        <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-        boolean&nbsp;legacyModeEnabled)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</div>
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">addRepository</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)" class="member-name-link">createFailoverParticipant</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" class="member-name-link">createFailoverParticipant</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean)" class="member-name-link">createFailoverParticipant</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+ boolean&nbsp;master)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean,boolean)" class="member-name-link">createFailoverParticipant</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+ boolean&nbsp;master,
+ boolean&nbsp;allowBackupCommits)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)" class="member-name-link">createOfflineClone</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)" class="member-name-link">createRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)" class="member-name-link">createRepositorySynchronizer</a><wbr>(<a href="../session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createSessionManager()" class="member-name-link">createSessionManager</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#execute(org.eclipse.emf.cdo.server.ISession,java.lang.Runnable)" class="member-name-link">execute</a><wbr>(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#execute(org.eclipse.emf.cdo.session.CDOSession,java.util.function.Consumer)" class="member-name-link">execute</a><wbr>(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uuid)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRepository(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">getRepository</a><wbr>(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getRepository</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getRepositoryConfig(java.lang.String)" class="member-name-link">getRepositoryConfig</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getServerSession(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">getServerSession</a><wbr>(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getServerSession(org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">getServerSession</a><wbr>(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getServerTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)" class="member-name-link">getServerTransaction</a><wbr>(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getServerView(org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">getServerView</a><wbr>(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">openView</a><wbr>(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;legacyModeEnabled)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</a></span>&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-        <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-        boolean&nbsp;legacyModeEnabled,
-        <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">openView</a></span>&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-        <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-        <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">openView</a></span>&#8203;(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,boolean)">openView</a></span>&#8203;(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-        boolean&nbsp;legacyModeEnabled)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;legacyModeEnabled,
+ <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</div>
 </div>
-</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.IView)">openView</a></span>&#8203;(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#openView(org.eclipse.emf.cdo.server.IView,boolean)">openView</a></span>&#8203;(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
-        boolean&nbsp;legacyModeEnabled)</code></th>
-<td class="colLast">
-<div class="block"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</div>
 </div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-</li>
-</ul>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)" class="member-name-link">openView</a><wbr>(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,boolean)" class="member-name-link">openView</a><wbr>(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+ boolean&nbsp;legacyModeEnabled)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#openView(org.eclipse.emf.cdo.server.IView)" class="member-name-link">openView</a><wbr>(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.IView,boolean)" class="member-name-link">openView</a><wbr>(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ boolean&nbsp;legacyModeEnabled)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-                               <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                               <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
+<h3>openView</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-                               <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
+<h3>openView</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.IView)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.IView)">
+<h3>openView</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)">
+<h3>openView</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-                               <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                               boolean&nbsp;legacyModeEnabled,
-                               <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</div>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
+<h3>openView</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;legacyModeEnabled,
+ <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
-                               <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
-                               boolean&nbsp;legacyModeEnabled)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</div>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">
+<h3>openView</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;legacyModeEnabled)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>openView(ISession, CDOBranchPoint)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.IView,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
-                               boolean&nbsp;legacyModeEnabled)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</div>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.IView,boolean)">
+<h3>openView</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ boolean&nbsp;legacyModeEnabled)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IView)"><code>openView(IView)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>openView</h4>
-<pre class="methodSignature">@Deprecated
-public static&nbsp;<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;openView&#8203;(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
-                               boolean&nbsp;legacyModeEnabled)</pre>
-<div class="deprecationBlock"><span class="deprecatedLabel">Deprecated.</span>
-<div class="deprecationComment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</div>
+<li>
+<section class="detail" id="openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,boolean)">
+<h3>openView</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+ boolean&nbsp;legacyModeEnabled)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="#openView(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext)"><code>openView(IStoreAccessor.CommitContext)</code></a>.</div>
 </div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getServerTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getServerTransaction</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;getServerTransaction&#8203;(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getServerTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction)">
+<h3>getServerTransaction</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></span>&nbsp;<span class="element-name">getServerTransaction</span><wbr><span class="parameters">(<a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getServerView(org.eclipse.emf.cdo.view.CDOView)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getServerView</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a>&nbsp;getServerView&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getServerView(org.eclipse.emf.cdo.view.CDOView)">
+<h3>getServerView</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></span>&nbsp;<span class="element-name">getServerView</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getServerSession(org.eclipse.emf.cdo.view.CDOView)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getServerSession</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;getServerSession&#8203;(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getServerSession(org.eclipse.emf.cdo.view.CDOView)">
+<h3>getServerSession</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></span>&nbsp;<span class="element-name">getServerSession</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.11</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getServerSession(org.eclipse.emf.cdo.session.CDOSession)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getServerSession</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;getServerSession&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getServerSession(org.eclipse.emf.cdo.session.CDOSession)">
+<h3>getServerSession</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a></span>&nbsp;<span class="element-name">getServerSession</span><wbr><span class="parameters">(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createSessionManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createSessionManager</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a>&nbsp;createSessionManager()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createSessionManager()">
+<h3>createSessionManager</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></span>&nbsp;<span class="element-name">createSessionManager</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createRepository</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;createRepository&#8203;(java.lang.String&nbsp;name,
-                                           <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                           java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props)</pre>
+<li>
+<section class="detail" id="createRepository(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">
+<h3>createRepository</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span>&nbsp;<span class="element-name">createRepository</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props)</span></div>
+</section>
 </li>
-</ul>
-<a id="createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createRepositorySynchronizer</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;createRepositorySynchronizer&#8203;(<a href="../session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createRepositorySynchronizer(org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">
+<h3>createRepositorySynchronizer</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a></span>&nbsp;<span class="element-name">createRepositorySynchronizer</span><wbr><span class="parameters">(<a href="../session/CDOSessionConfigurationFactory.html" title="interface in org.eclipse.emf.cdo.session">CDOSessionConfigurationFactory</a>&nbsp;remoteSessionConfigurationFactory)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createOfflineClone</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createOfflineClone&#8203;(java.lang.String&nbsp;name,
-                                                           <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                                           java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                                                           <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createOfflineClone(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
+<h3>createOfflineClone</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></span>&nbsp;<span class="element-name">createOfflineClone</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createFailoverParticipant</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant&#8203;(java.lang.String&nbsp;name,
-                                                                  <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                                                  java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                                                                  <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
-                                                                  boolean&nbsp;master,
-                                                                  boolean&nbsp;allowBackupCommits)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean,boolean)">
+<h3>createFailoverParticipant</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></span>&nbsp;<span class="element-name">createFailoverParticipant</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+ boolean&nbsp;master,
+ boolean&nbsp;allowBackupCommits)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createFailoverParticipant</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant&#8203;(java.lang.String&nbsp;name,
-                                                                  <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                                                  java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                                                                  <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
-                                                                  boolean&nbsp;master)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer,boolean)">
+<h3>createFailoverParticipant</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></span>&nbsp;<span class="element-name">createFailoverParticipant</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer,
+ boolean&nbsp;master)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>3.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createFailoverParticipant</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant&#8203;(java.lang.String&nbsp;name,
-                                                                  <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                                                  java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props,
-                                                                  <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map,org.eclipse.emf.cdo.server.IRepositorySynchronizer)">
+<h3>createFailoverParticipant</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></span>&nbsp;<span class="element-name">createFailoverParticipant</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props,
+ <a href="IRepositorySynchronizer.html" title="interface in org.eclipse.emf.cdo.server">IRepositorySynchronizer</a>&nbsp;synchronizer)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>createFailoverParticipant</h4>
-<pre class="methodSignature">public static&nbsp;<a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a>&nbsp;createFailoverParticipant&#8203;(java.lang.String&nbsp;name,
-                                                                  <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
-                                                                  java.util.Map&lt;java.lang.String,&#8203;java.lang.String&gt;&nbsp;props)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="createFailoverParticipant(java.lang.String,org.eclipse.emf.cdo.server.IStore,java.util.Map)">
+<h3>createFailoverParticipant</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="ISynchronizableRepository.html" title="interface in org.eclipse.emf.cdo.server">ISynchronizableRepository</a></span>&nbsp;<span class="element-name">createFailoverParticipant</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a>&nbsp;store,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;props)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.0</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>addRepository</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;addRepository&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
-                                 <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</pre>
+<li>
+<section class="detail" id="addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)">
+<h3>addRepository</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addRepository</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</span></div>
+</section>
 </li>
-</ul>
-<a id="getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepository</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository&#8203;(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
-                                        java.lang.String&nbsp;name)</pre>
+<li>
+<section class="detail" id="getRepository(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)">
+<h3>getRepository</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span>&nbsp;<span class="element-name">getRepository</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+</section>
 </li>
-</ul>
-<a id="getRepository(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepository</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository&#8203;(java.lang.String&nbsp;uuid)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getRepository(java.lang.String)">
+<h3>getRepository</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span>&nbsp;<span class="element-name">getRepository</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uuid)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getRepository(org.eclipse.emf.cdo.session.CDOSession)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepository</h4>
-<pre class="methodSignature">public static&nbsp;<a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;getRepository&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getRepository(org.eclipse.emf.cdo.session.CDOSession)">
+<h3>getRepository</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span>&nbsp;<span class="element-name">getRepository</span><wbr><span class="parameters">(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getRepositoryConfig(java.lang.String)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRepositoryConfig</h4>
-<pre class="methodSignature">public static&nbsp;org.w3c.dom.Element&nbsp;getRepositoryConfig&#8203;(java.lang.String&nbsp;repositoryName)
-                                               throws javax.xml.parsers.ParserConfigurationException,
-                                                      org.xml.sax.SAXException,
-                                                      java.io.IOException</pre>
-<dl>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>javax.xml.parsers.ParserConfigurationException</code></dd>
-<dd><code>org.xml.sax.SAXException</code></dd>
-<dd><code>java.io.IOException</code></dd>
+<li>
+<section class="detail" id="getRepositoryConfig(java.lang.String)">
+<h3>getRepositoryConfig</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/w3c/dom/Element.html" title="class or interface in org.w3c.dom" class="external-link">Element</a></span>&nbsp;<span class="element-name">getRepositoryConfig</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;repositoryName)</span>
+                                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/xml/sax/SAXException.html" title="class or interface in org.xml.sax" class="external-link">SAXException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/javax/xml/parsers/ParserConfigurationException.html" title="class or interface in javax.xml.parsers" class="external-link">ParserConfigurationException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.xml/org/xml/sax/SAXException.html" title="class or interface in org.xml.sax" class="external-link">SAXException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="execute(org.eclipse.emf.cdo.server.ISession,java.lang.Runnable)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>execute</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;execute&#8203;(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;context,
-                           java.lang.Runnable&nbsp;runnable)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="execute(org.eclipse.emf.cdo.server.ISession,java.lang.Runnable)">
+<h3>execute</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="class or interface in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="execute(org.eclipse.emf.cdo.session.CDOSession,java.util.function.Consumer)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>execute</h4>
-<pre class="methodSignature">public static&nbsp;void&nbsp;execute&#8203;(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;context,
-                           java.util.function.Consumer&lt;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;&nbsp;consumer)</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="execute(org.eclipse.emf.cdo.session.CDOSession,java.util.function.Consumer)">
+<h3>execute</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&gt;&nbsp;consumer)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.13</dd>
 </dl>
-</li>
-</ul>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/CDOServerUtil.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

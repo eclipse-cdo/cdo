@@ -1,1224 +1,874 @@
 <!DOCTYPE HTML>
-<!-- NewPage -->
 <html lang="en">
 <head>
 
 <title>CDODataInputImpl (CDO Model Repository Documentation)</title>
-<meta http-equiv="Content-Type" content="">
+<meta name="viewport" content="">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
+<meta name="description" content="declaration: package: org.eclipse.emf.cdo.spi.common.protocol, class: CDODataInputImpl">
+<meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../../jquery/jquery-ui.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../script-dir/jquery-ui.min.css" title="Style">
+<link rel="stylesheet" type="text/css" href="../../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip/dist/jszip.min.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils.min.js"></script>
-<!--[if IE]>
-<script type="text/javascript" src="../../../../../../../jquery/jszip-utils/dist/jszip-utils-ie.min.js"></script>
-<![endif]-->
-<script type="text/javascript" src="../../../../../../../jquery/jquery-3.3.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-migrate-3.0.1.js"></script>
-<script type="text/javascript" src="../../../../../../../jquery/jquery-ui.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
-<body>
-<script type="text/javascript"><!--
-    try {
-        if (location.href.indexOf('is-external=true') == -1) {
-            parent.document.title="CDODataInputImpl (CDO Model Repository Documentation)";
-        }
-    }
-    catch(err) {
-    }
-//-->
-var data = {"i0":6,"i1":6,"i2":6,"i3":6,"i4":10,"i5":6,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10,"i12":10,"i13":10,"i14":10,"i15":10,"i16":10,"i17":10,"i18":10,"i19":10,"i20":10,"i21":10,"i22":10,"i23":10,"i24":10,"i25":10,"i26":10,"i27":10,"i28":10,"i29":10,"i30":10,"i31":10,"i32":10,"i33":10,"i34":10,"i35":10,"i36":10,"i37":10,"i38":10,"i39":10,"i40":10,"i41":10};
-var tabs = {65535:["t0","All Methods"],2:["t2","Instance Methods"],4:["t3","Abstract Methods"],8:["t4","Concrete Methods"]};
-var altColor = "altColor";
-var rowColor = "rowColor";
-var tableTab = "tableTab";
-var activeTableTab = "activeTableTab";
+<body class="class-declaration-page">
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
 var pathtoroot = "../../../../../../../";
-var useModuleDirectories = true;
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
 </noscript>
-<header role="banner">
+<div class="flex-box">
+<header role="banner" class="flex-header">
 <nav role="navigation">
-<div class="fixedNav">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="topNav"><a id="navbar.top">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.top" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.top.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
+<div class="top-nav" id="navbar-top">
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
 <li><a href="../../../../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
+<li class="nav-bar-cell1-rev">Class</li>
 <li><a href="class-use/CDODataInputImpl.html">Use</a></li>
 <li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
+<li><a href="../../../../../../../help-doc.html#class">Help</a></li>
 </ul>
 </div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_top">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<ul class="navListSearch">
-<li><label for="search">SEARCH:</label>
-<input type="text" id="search" value="search" disabled="disabled">
-<input type="reset" id="reset" value="reset" disabled="disabled">
-</li>
-</ul>
+<div class="sub-nav">
 <div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_top");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
+<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
+<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
-<ul class="subNavList">
+<ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
 <li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
+<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
-<a id="skip.navbar.top">
-<!--   -->
-</a></div>
+<div class="nav-list-search"><label for="search-input">SEARCH:</label>
+<input type="text" id="search-input" value="search" disabled="disabled">
+<input type="reset" id="reset-button" value="reset" disabled="disabled">
+</div>
+</div>
 <!-- ========= END OF TOP NAVBAR ========= -->
-</div>
-<div class="navPadding">&nbsp;</div>
-<script type="text/javascript"><!--
-$('.navPadding').css('padding-top', $('.fixedNav').css("height"));
-//-->
-</script>
-</nav>
+<span class="skip-nav" id="skip-navbar-top"></span></nav>
 </header>
-<!-- ======== START OF CLASS DATA ======== -->
+<div class="flex-content">
 <main role="main">
+<!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle"><span class="packageLabelInType">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a></div>
-<h2 title="Class CDODataInputImpl" class="title">Class CDODataInputImpl</h2>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.spi.common.protocol</a></div>
+<h1 title="Class CDODataInputImpl" class="title">Class CDODataInputImpl</h1>
 </div>
-<div class="contentContainer">
-<ul class="inheritance">
-<li>java.lang.Object</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.net4j.util.io.ExtendedDataInput.Delegating</li>
-<li>
-<ul class="inheritance">
-<li>org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl</li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<div class="description">
-<ul class="blockList">
-<li class="blockList">
-<dl>
+<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance">org.eclipse.net4j.util.io.ExtendedDataInput.Delegating
+<div class="inheritance">org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl</div>
+</div>
+</div>
+<section class="class-description" id="class-description">
+<dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>java.io.Closeable</code>, <code>java.io.DataInput</code>, <code>java.lang.AutoCloseable</code>, <code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code>, <code>org.eclipse.net4j.util.io.ExtendedDataInput</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Closeable.html" title="class or interface in java.io" class="external-link">Closeable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html" title="class or interface in java.io" class="external-link">DataInput</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/AutoCloseable.html" title="class or interface in java.lang" class="external-link">AutoCloseable</a></code>, <code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code>, <code>org.eclipse.net4j.util.io.ExtendedDataInput</code></dd>
 </dl>
-<dl>
+<dl class="notes">
 <dt>Direct Known Subclasses:</dt>
 <dd><code><a href="CDODataInputImpl.Default.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</a></code></dd>
 </dl>
 <hr>
-<pre>public abstract class <span class="typeNameLabel">CDODataInputImpl</span>
-extends org.eclipse.net4j.util.io.ExtendedDataInput.Delegating
-implements <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></pre>
+<div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">CDODataInputImpl</span>
+<span class="extends-implements">extends org.eclipse.net4j.util.io.ExtendedDataInput.Delegating
+implements <a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.2</dd>
-<dt><span class="simpleTagLabel">Author:</span></dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
 </dl>
-</li>
-</ul>
-</div>
-<div class="summary">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="summary">
+<ul class="summary-list">
 <!-- ======== NESTED CLASS SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="nested.class.summary">
-<!--   -->
-</a>
-<h3>Nested Class Summary</h3>
-<table class="memberSummary">
-<caption><span>Nested Classes</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Class</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<td class="colFirst"><code>static class&nbsp;</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="CDODataInputImpl.Default.html" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</a></span></code></th>
-<td class="colLast">
+<li>
+<section class="nested-class-summary" id="nested-class-summary">
+<h2>Nested Class Summary</h2>
+<div class="caption"><span>Nested Classes</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="CDODataInputImpl.Default.html" class="type-name-link" title="class in org.eclipse.emf.cdo.spi.common.protocol">CDODataInputImpl.Default</a></code></div>
+<div class="col-last even-row-color">
 <div class="block">A concrete subclass of <a href="CDODataInputImpl.html" title="class in org.eclipse.emf.cdo.spi.common.protocol"><code>CDODataInputImpl</code></a>.</div>
-</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="nested.classes.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataInput">
-<!--   -->
-</a>
-<h3>Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput</h3>
-<code>org.eclipse.net4j.util.io.ExtendedDataInput.Delegating, org.eclipse.net4j.util.io.ExtendedDataInput.Stream</code></li>
-</ul>
-</li>
-</ul>
+</div>
+</div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.io.ExtendedDataInput">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput</h2>
+<code>org.eclipse.net4j.util.io.ExtendedDataInput.Delegating, org.eclipse.net4j.util.io.ExtendedDataInput.Stream</code></div>
 </section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.summary">
-<!--   -->
-</a>
-<h3>Constructor Summary</h3>
-<table class="memberSummary">
-<caption><span>Constructors</span><span class="tabEnd">&nbsp;</span></caption>
-<tr>
-<th class="colFirst" scope="col">Constructor</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr class="altColor">
-<th class="colConstructorName" scope="row"><code><span class="memberNameLink"><a href="#%3Cinit%3E(org.eclipse.net4j.util.io.ExtendedDataInput)">CDODataInputImpl</a></span>&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;delegate)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-</li>
-</ul>
+<li>
+<section class="constructor-summary" id="constructor-summary">
+<h2>Constructor Summary</h2>
+<div class="caption"><span>Constructors</span></div>
+<div class="summary-table two-column-summary">
+<div class="table-header col-first">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.io.ExtendedDataInput)" class="member-name-link">CDODataInputImpl</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;delegate)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 </section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.summary">
-<!--   -->
-</a>
-<h3>Method Summary</h3>
-<table class="memberSummary">
-<caption><span id="t0" class="activeTableTab"><span>All Methods</span><span class="tabEnd">&nbsp;</span></span><span id="t2" class="tableTab"><span><a href="javascript:show(2);">Instance Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t3" class="tableTab"><span><a href="javascript:show(4);">Abstract Methods</a></span><span class="tabEnd">&nbsp;</span></span><span id="t4" class="tableTab"><span><a href="javascript:show(8);">Concrete Methods</a></span><span class="tabEnd">&nbsp;</span></span></caption>
-<tr>
-<th class="colFirst" scope="col">Modifier and Type</th>
-<th class="colSecond" scope="col">Method</th>
-<th class="colLast" scope="col">Description</th>
-</tr>
-<tr id="i0" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getBranchManager()">getBranchManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i1" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getCommitInfoManager()">getCommitInfoManager</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i2" class="altColor">
-<td class="colFirst"><code>protected abstract <a href="../../../common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getListFactory()">getListFactory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i3" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="../../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getLobStore()">getLobStore</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i4" class="altColor">
-<td class="colFirst"><code>protected org.eclipse.net4j.util.io.StringIO</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getPackageURICompressor()">getPackageURICompressor</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i5" class="rowColor">
-<td class="colFirst"><code>protected abstract <a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#getRevisionFactory()">getRevisionFactory</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i6" class="altColor">
-<td class="colFirst"><code>protected boolean</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#isXCompression()">isXCompression</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i7" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOBranch()">readCDOBranch</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i8" class="altColor">
-<td class="colFirst"><code><a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOBranchPoint()">readCDOBranchPoint</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i9" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOBranchVersion()">readCDOBranchVersion</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i10" class="altColor">
-<td class="colFirst"><code><a href="../../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOChangeSetData()">readCDOChangeSetData</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i11" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOClassifierRef()">readCDOClassifierRef</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i12" class="altColor">
-<td class="colFirst"><code>org.eclipse.emf.ecore.EClassifier</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOClassifierRefAndResolve()">readCDOClassifierRefAndResolve</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i13" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOCommitData()">readCDOCommitData</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i14" class="altColor">
-<td class="colFirst"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOCommitInfo()">readCDOCommitInfo</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i15" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOFeatureDelta(org.eclipse.emf.ecore.EClass)">readCDOFeatureDelta</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i16" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature)">readCDOFeatureValue</a></span>&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i17" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOID()">readCDOID</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i18" class="altColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOIDAndBranch()">readCDOIDAndBranch</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i19" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOIDAndVersion()">readCDOIDAndVersion</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i20" class="altColor">
-<td class="colFirst"><code><a href="../../../common/id/CDOIDReference.html" title="class in org.eclipse.emf.cdo.common.id">CDOIDReference</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOIDReference()">readCDOIDReference</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i21" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">readCDOList</a></span>&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
-           org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i22" class="altColor">
-<td class="colFirst"><code><a href="../../../common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOLockArea()">readCDOLockArea</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i23" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOLockChangeInfo()">readCDOLockChangeInfo</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i24" class="altColor">
-<td class="colFirst"><code><a href="../../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOLockOwner()">readCDOLockOwner</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i25" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOLockState()">readCDOLockState</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i26" class="altColor">
-<td class="colFirst"><code>org.eclipse.net4j.util.concurrent.IRWLockManager.LockType</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOLockType()">readCDOLockType</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i27" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOPackageInfo()">readCDOPackageInfo</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i28" class="altColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOPackageUnit(org.eclipse.emf.ecore.resource.ResourceSet)">readCDOPackageUnit</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i29" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOPackageUnits(org.eclipse.emf.ecore.resource.ResourceSet)">readCDOPackageUnits</a></span>&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i30" class="altColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOPackageUnitType()">readCDOPackageUnitType</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i31" class="rowColor">
-<td class="colFirst"><code>java.lang.String</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOPackageURI()">readCDOPackageURI</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i32" class="altColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevisable()">readCDORevisable</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i33" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevision()">readCDORevision</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i34" class="altColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevision(boolean)">readCDORevision</a></span>&#8203;(boolean&nbsp;freeze)</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i35" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevisionDelta()">readCDORevisionDelta</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i36" class="altColor">
-<td class="colFirst"><code><a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevisionKey()">readCDORevisionKey</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i37" class="rowColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevisionOrPrimitive()">readCDORevisionOrPrimitive</a></span>()</code></th>
-<td class="colLast">
+<li>
+<section class="method-summary" id="method-summary">
+<h2>Method Summary</h2>
+<div id="method-summary-table">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button></div>
+<div id="method-summary-table.tabpanel" role="tabpanel">
+<div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBranchManager()" class="member-name-link">getBranchManager</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommitInfoManager()" class="member-name-link">getCommitInfoManager</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="../../../common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getListFactory()" class="member-name-link">getListFactory</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="../../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLobStore()" class="member-name-link">getLobStore</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.io.StringIO</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPackageURICompressor()" class="member-name-link">getPackageURICompressor</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionFactory()" class="member-name-link">getRevisionFactory</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isXCompression()" class="member-name-link">isXCompression</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOBranch()" class="member-name-link">readCDOBranch</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOBranchPoint()" class="member-name-link">readCDOBranchPoint</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOBranchVersion()" class="member-name-link">readCDOBranchVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOChangeSetData()" class="member-name-link">readCDOChangeSetData</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOClassifierRef()" class="member-name-link">readCDOClassifierRef</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOClassifierRefAndResolve()" class="member-name-link">readCDOClassifierRefAndResolve</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOCommitData()" class="member-name-link">readCDOCommitData</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOCommitInfo()" class="member-name-link">readCDOCommitInfo</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOFeatureDelta(org.eclipse.emf.ecore.EClass)" class="member-name-link">readCDOFeatureDelta</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">readCDOFeatureValue</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOID()" class="member-name-link">readCDOID</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOIDAndBranch()" class="member-name-link">readCDOIDAndBranch</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOIDAndVersion()" class="member-name-link">readCDOIDAndVersion</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/id/CDOIDReference.html" title="class in org.eclipse.emf.cdo.common.id">CDOIDReference</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOIDReference()" class="member-name-link">readCDOIDReference</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">readCDOList</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockArea()" class="member-name-link">readCDOLockArea</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockChangeInfo()" class="member-name-link">readCDOLockChangeInfo</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/lock/CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockDelta()" class="member-name-link">readCDOLockDelta</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockOwner()" class="member-name-link">readCDOLockOwner</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockState()" class="member-name-link">readCDOLockState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.concurrent.IRWLockManager.LockType</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOLockType()" class="member-name-link">readCDOLockType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOPackageInfo()" class="member-name-link">readCDOPackageInfo</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOPackageUnit(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">readCDOPackageUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOPackageUnits(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">readCDOPackageUnits</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOPackageUnit.Type.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOPackageUnitType()" class="member-name-link">readCDOPackageUnitType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOPackageURI()" class="member-name-link">readCDOPackageURI</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevisable()" class="member-name-link">readCDORevisable</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevision()" class="member-name-link">readCDORevision</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevision(boolean)" class="member-name-link">readCDORevision</a><wbr>(boolean&nbsp;freeze)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevisionDelta()" class="member-name-link">readCDORevisionDelta</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevisionKey()" class="member-name-link">readCDORevisionKey</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevisionOrPrimitive()" class="member-name-link">readCDORevisionOrPrimitive</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Read either a CDORevision or a primitive value.</div>
-</td>
-</tr>
-<tr id="i38" class="altColor">
-<td class="colFirst"><code>java.lang.Object</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDORevisionOrPrimitiveOrClassifier()">readCDORevisionOrPrimitiveOrClassifier</a></span>()</code></th>
-<td class="colLast">
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDORevisionOrPrimitiveOrClassifier()" class="member-name-link">readCDORevisionOrPrimitiveOrClassifier</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Read either a CDORevision, a primitive value or a EClass.</div>
-</td>
-</tr>
-<tr id="i39" class="rowColor">
-<td class="colFirst"><code><a href="../../../common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readCDOType()">readCDOType</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i40" class="altColor">
-<td class="colFirst"><code>int</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readXInt()">readXInt</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-<tr id="i41" class="rowColor">
-<td class="colFirst"><code>long</code></td>
-<th class="colSecond" scope="row"><code><span class="memberNameLink"><a href="#readXLong()">readXLong</a></span>()</code></th>
-<td class="colLast">&nbsp;</td>
-</tr>
-</table>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataInput.Delegating">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput.Delegating</h3>
-<code>close, getDelegate, readBoolean, readByte, readByteArray, readChar, readDouble, readEnum, readException, readFloat, readFully, readFully, readInt, readLine, readLong, readObject, readObject, readObject, readShort, readString, readUnsignedByte, readUnsignedShort, readUTF, readVarInt, readVarLong, skipBytes</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.lang.Object">
-<!--   -->
-</a>
-<h3>Methods inherited from class&nbsp;java.lang.Object</h3>
-<code>clone, equals, finalize, getClass, hashCode, notify, notifyAll, toString, wait, wait, wait</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.emf.cdo.common.protocol.CDODataInput">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.protocol.<a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></h3>
-<code><a href="../../../common/protocol/CDODataInput.html#getPackageRegistry()">getPackageRegistry</a></code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.java.io.DataInput">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;java.io.DataInput</h3>
-<code>readBoolean, readByte, readChar, readDouble, readFloat, readFully, readFully, readInt, readLine, readLong, readShort, readUnsignedByte, readUnsignedShort, readUTF, skipBytes</code></li>
-</ul>
-<ul class="blockList">
-<li class="blockList"><a id="methods.inherited.from.class.org.eclipse.net4j.util.io.ExtendedDataInput">
-<!--   -->
-</a>
-<h3>Methods inherited from interface&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput</h3>
-<code>readByteArray, readEnum, readException, readObject, readObject, readObject, readString, readVarInt, readVarLong</code></li>
-</ul>
-</li>
-</ul>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../../common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readCDOType()" class="member-name-link">readCDOType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readXInt()" class="member-name-link">readXInt</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readXLong()" class="member-name-link">readXLong</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+</div>
+</div>
+</div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.io.ExtendedDataInput.Delegating">Methods inherited from class&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput.Delegating</h3>
+<code>close, getDelegate, readBoolean, readByte, readByteArray, readChar, readDouble, readEnum, readException, readFloat, readFully, readFully, readInt, readLine, readLong, readObject, readObject, readObject, readShort, readString, readUnsignedByte, readUnsignedShort, readUTF, readVarInt, readVarLong, skipBytes</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.protocol.CDODataInput">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.protocol.<a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></h3>
+<code><a href="../../../common/protocol/CDODataInput.html#getPackageRegistry()">getPackageRegistry</a>, <a href="../../../common/protocol/CDODataInput.html#readCDOLockDeltas()">readCDOLockDeltas</a>, <a href="../../../common/protocol/CDODataInput.html#readCDOLockStates()">readCDOLockStates</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.io.DataInput">Methods inherited from interface&nbsp;java.io.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html" title="class or interface in java.io" class="external-link">DataInput</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readBoolean()" title="class or interface in java.io" class="external-link">readBoolean</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readByte()" title="class or interface in java.io" class="external-link">readByte</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readChar()" title="class or interface in java.io" class="external-link">readChar</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readDouble()" title="class or interface in java.io" class="external-link">readDouble</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readFloat()" title="class or interface in java.io" class="external-link">readFloat</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readFully(byte%5B%5D)" title="class or interface in java.io" class="external-link">readFully</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readFully(byte%5B%5D,int,int)" title="class or interface in java.io" class="external-link">readFully</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readInt()" title="class or interface in java.io" class="external-link">readInt</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readLine()" title="class or interface in java.io" class="external-link">readLine</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readLong()" title="class or interface in java.io" class="external-link">readLong</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readShort()" title="class or interface in java.io" class="external-link">readShort</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readUnsignedByte()" title="class or interface in java.io" class="external-link">readUnsignedByte</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readUnsignedShort()" title="class or interface in java.io" class="external-link">readUnsignedShort</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#readUTF()" title="class or interface in java.io" class="external-link">readUTF</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/DataInput.html#skipBytes(int)" title="class or interface in java.io" class="external-link">skipBytes</a></code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.io.ExtendedDataInput">Methods inherited from interface&nbsp;org.eclipse.net4j.util.io.ExtendedDataInput</h3>
+<code>readByteArray, readEnum, readException, readObject, readObject, readObject, readString, readVarInt, readVarLong</code></div>
 </section>
 </li>
 </ul>
-</div>
-<div class="details">
-<ul class="blockList">
-<li class="blockList">
+</section>
+<section class="details">
+<ul class="details-list">
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="constructor.detail">
-<!--   -->
-</a>
-<h3>Constructor Detail</h3>
-<a id="&lt;init&gt;(org.eclipse.net4j.util.io.ExtendedDataInput)">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>CDODataInputImpl</h4>
-<pre>public&nbsp;CDODataInputImpl&#8203;(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;delegate)</pre>
-</li>
-</ul>
+<li>
+<section class="constructor-details" id="constructor-detail">
+<h2>Constructor Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="&lt;init&gt;(org.eclipse.net4j.util.io.ExtendedDataInput)">
+<h3>CDODataInputImpl</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDODataInputImpl</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataInput&nbsp;delegate)</span></div>
+</section>
 </li>
 </ul>
 </section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
-<section role="region">
-<ul class="blockList">
-<li class="blockList"><a id="method.detail">
-<!--   -->
-</a>
-<h3>Method Detail</h3>
-<a id="readXInt()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readXInt</h4>
-<pre class="methodSignature">public&nbsp;int&nbsp;readXInt()
-             throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="method-details" id="method-detail">
+<h2>Method Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="readXInt()">
+<h3>readXInt</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">readXInt</span>()
+             throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readXInt()">readXInt</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readXLong()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readXLong</h4>
-<pre class="methodSignature">public&nbsp;long&nbsp;readXLong()
-               throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readXLong()">
+<h3>readXLong</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">readXLong</span>()
+               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readXLong()">readXLong</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOPackageUnit(org.eclipse.emf.ecore.resource.ResourceSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOPackageUnit</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>&nbsp;readCDOPackageUnit&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOPackageUnit(org.eclipse.emf.ecore.resource.ResourceSet)">
+<h3>readCDOPackageUnit</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></span>&nbsp;<span class="element-name">readCDOPackageUnit</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span>
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOPackageUnit(org.eclipse.emf.ecore.resource.ResourceSet)">readCDOPackageUnit</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOPackageUnits(org.eclipse.emf.ecore.resource.ResourceSet)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOPackageUnits</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]&nbsp;readCDOPackageUnits&#8203;(org.eclipse.emf.ecore.resource.ResourceSet&nbsp;resourceSet)
-                                     throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOPackageUnits(org.eclipse.emf.ecore.resource.ResourceSet)">
+<h3>readCDOPackageUnits</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a>[]</span>&nbsp;<span class="element-name">readCDOPackageUnits</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span>
+                                     throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOPackageUnits(org.eclipse.emf.ecore.resource.ResourceSet)">readCDOPackageUnits</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOPackageUnitType()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOPackageUnitType</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOPackageUnit.Type.html" title="enum in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;readCDOPackageUnitType()
-                                           throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOPackageUnitType()">
+<h3>readCDOPackageUnitType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOPackageUnit.Type.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></span>&nbsp;<span class="element-name">readCDOPackageUnitType</span>()
+                                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOPackageUnitType()">readCDOPackageUnitType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOPackageInfo()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOPackageInfo</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a>&nbsp;readCDOPackageInfo()
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOPackageInfo()">
+<h3>readCDOPackageInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></span>&nbsp;<span class="element-name">readCDOPackageInfo</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOPackageInfo()">readCDOPackageInfo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOPackageURI()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOPackageURI</h4>
-<pre class="methodSignature">public&nbsp;java.lang.String&nbsp;readCDOPackageURI()
-                                   throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOPackageURI()">
+<h3>readCDOPackageURI</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">readCDOPackageURI</span>()
+                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOPackageURI()">readCDOPackageURI</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOClassifierRef()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOClassifierRef</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a>&nbsp;readCDOClassifierRef()
-                                      throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOClassifierRef()">
+<h3>readCDOClassifierRef</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></span>&nbsp;<span class="element-name">readCDOClassifierRef</span>()
+                                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOClassifierRef()">readCDOClassifierRef</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOClassifierRefAndResolve()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOClassifierRefAndResolve</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.emf.ecore.EClassifier&nbsp;readCDOClassifierRefAndResolve()
-                                                                 throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOClassifierRefAndResolve()">
+<h3>readCDOClassifierRefAndResolve</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClassifier</a></span>&nbsp;<span class="element-name">readCDOClassifierRefAndResolve</span>()
+                                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOClassifierRefAndResolve()">readCDOClassifierRefAndResolve</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOType()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOType</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a>&nbsp;readCDOType()
-                    throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOType()">
+<h3>readCDOType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/model/CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></span>&nbsp;<span class="element-name">readCDOType</span>()
+                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOType()">readCDOType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOBranch()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOBranch</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;readCDOBranch()
-                        throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOBranch()">
+<h3>readCDOBranch</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a></span>&nbsp;<span class="element-name">readCDOBranch</span>()
+                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOBranch()">readCDOBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOBranchPoint()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOBranchPoint</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;readCDOBranchPoint()
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOBranchPoint()">
+<h3>readCDOBranchPoint</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></span>&nbsp;<span class="element-name">readCDOBranchPoint</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOBranchPoint()">readCDOBranchPoint</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOBranchVersion()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOBranchVersion</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;readCDOBranchVersion()
-                                      throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOBranchVersion()">
+<h3>readCDOBranchVersion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></span>&nbsp;<span class="element-name">readCDOBranchVersion</span>()
+                                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOBranchVersion()">readCDOBranchVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOChangeSetData()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOChangeSetData</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a>&nbsp;readCDOChangeSetData()
-                                      throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOChangeSetData()">
+<h3>readCDOChangeSetData</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">readCDOChangeSetData</span>()
+                                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOChangeSetData()">readCDOChangeSetData</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOCommitData()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOCommitData</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a>&nbsp;readCDOCommitData()
-                                throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOCommitData()">
+<h3>readCDOCommitData</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/commit/CDOCommitData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitData</a></span>&nbsp;<span class="element-name">readCDOCommitData</span>()
+                                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOCommitData()">readCDOCommitData</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOCommitInfo()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOCommitInfo</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a>&nbsp;readCDOCommitInfo()
-                                throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOCommitInfo()">
+<h3>readCDOCommitInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">readCDOCommitInfo</span>()
+                                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOCommitInfo()">readCDOCommitInfo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOLockChangeInfo()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOLockChangeInfo</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a>&nbsp;readCDOLockChangeInfo()
-                                        throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOLockChangeInfo()">
+<h3>readCDOLockChangeInfo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/lock/CDOLockChangeInfo.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></span>&nbsp;<span class="element-name">readCDOLockChangeInfo</span>()
+                                        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockChangeInfo()">readCDOLockChangeInfo</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOLockArea()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOLockArea</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a>&nbsp;readCDOLockArea()
-                                                throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOLockArea()">
+<h3>readCDOLockArea</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></span>&nbsp;<span class="element-name">readCDOLockArea</span>()
+                                                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockArea()">readCDOLockArea</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOLockOwner()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOLockOwner</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;readCDOLockOwner()
-                              throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOLockOwner()">
+<h3>readCDOLockOwner</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/lock/CDOLockOwner.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a></span>&nbsp;<span class="element-name">readCDOLockOwner</span>()
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockOwner()">readCDOLockOwner</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOLockState()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOLockState</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&nbsp;readCDOLockState()
-                              throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOLockState()">
+<h3>readCDOLockState</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockState</a></span>&nbsp;<span class="element-name">readCDOLockState</span>()
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockState()">readCDOLockState</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOLockType()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOLockType</h4>
-<pre class="methodSignature">public&nbsp;org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;readCDOLockType()
-                                                                          throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOLockDelta()">
+<h3>readCDOLockDelta</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/lock/CDOLockDelta.html" title="interface in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a></span>&nbsp;<span class="element-name">readCDOLockDelta</span>()
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockDelta()">readCDOLockDelta</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="readCDOLockType()">
+<h3>readCDOLockType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.concurrent.IRWLockManager.LockType</span>&nbsp;<span class="element-name">readCDOLockType</span>()
+                                                                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOLockType()">readCDOLockType</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOID()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOID</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;readCDOID()
-                throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOID()">
+<h3>readCDOID</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">readCDOID</span>()
+                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOID()">readCDOID</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOIDReference()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOIDReference</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/id/CDOIDReference.html" title="class in org.eclipse.emf.cdo.common.id">CDOIDReference</a>&nbsp;readCDOIDReference()
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOIDReference()">
+<h3>readCDOIDReference</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/id/CDOIDReference.html" title="class in org.eclipse.emf.cdo.common.id">CDOIDReference</a></span>&nbsp;<span class="element-name">readCDOIDReference</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOIDReference()">readCDOIDReference</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOIDAndVersion()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOIDAndVersion</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&nbsp;readCDOIDAndVersion()
-                                    throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOIDAndVersion()">
+<h3>readCDOIDAndVersion</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a></span>&nbsp;<span class="element-name">readCDOIDAndVersion</span>()
+                                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOIDAndVersion()">readCDOIDAndVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOIDAndBranch()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOIDAndBranch</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a>&nbsp;readCDOIDAndBranch()
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOIDAndBranch()">
+<h3>readCDOIDAndBranch</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDOIDAndBranch.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndBranch</a></span>&nbsp;<span class="element-name">readCDOIDAndBranch</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOIDAndBranch()">readCDOIDAndBranch</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevisionKey()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevisionKey</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;readCDORevisionKey()
-                                  throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDORevisionKey()">
+<h3>readCDORevisionKey</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a></span>&nbsp;<span class="element-name">readCDORevisionKey</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionKey()">readCDORevisionKey</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevision()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevision</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;readCDORevision()
-                            throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDORevision()">
+<h3>readCDORevision</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></span>&nbsp;<span class="element-name">readCDORevision</span>()
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevision()">readCDORevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevision(boolean)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevision</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;readCDORevision&#8203;(boolean&nbsp;freeze)
-                            throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDORevision(boolean)">
+<h3>readCDORevision</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></span>&nbsp;<span class="element-name">readCDORevision</span><wbr><span class="parameters">(boolean&nbsp;freeze)</span>
+                            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevision(boolean)">readCDORevision</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevisable()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevisable</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a>&nbsp;readCDORevisable()
-                              throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDORevisable()">
+<h3>readCDORevisable</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDORevisable.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisable</a></span>&nbsp;<span class="element-name">readCDORevisable</span>()
+                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevisable()">readCDORevisable</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOList</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a>&nbsp;readCDOList&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner,
-                           org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)
-                    throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>readCDOList</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDOList.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOList</a></span>&nbsp;<span class="element-name">readCDOList</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span>
+                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOList(org.eclipse.emf.ecore.EClass,org.eclipse.emf.ecore.EStructuralFeature)">readCDOList</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOFeatureValue</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readCDOFeatureValue&#8203;(org.eclipse.emf.ecore.EStructuralFeature&nbsp;feature)
-                                     throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature)">
+<h3>readCDOFeatureValue</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">readCDOFeatureValue</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span>
+                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOFeatureValue(org.eclipse.emf.ecore.EStructuralFeature)">readCDOFeatureValue</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevisionDelta()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevisionDelta</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a>&nbsp;readCDORevisionDelta()
-                                      throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDORevisionDelta()">
+<h3>readCDORevisionDelta</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/delta/CDORevisionDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDORevisionDelta</a></span>&nbsp;<span class="element-name">readCDORevisionDelta</span>()
+                                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionDelta()">readCDORevisionDelta</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDOFeatureDelta(org.eclipse.emf.ecore.EClass)">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDOFeatureDelta</h4>
-<pre class="methodSignature">public&nbsp;<a href="../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a>&nbsp;readCDOFeatureDelta&#8203;(org.eclipse.emf.ecore.EClass&nbsp;owner)
-                                    throws java.io.IOException</pre>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<li>
+<section class="detail" id="readCDOFeatureDelta(org.eclipse.emf.ecore.EClass)">
+<h3>readCDOFeatureDelta</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/revision/delta/CDOFeatureDelta.html" title="interface in org.eclipse.emf.cdo.common.revision.delta">CDOFeatureDelta</a></span>&nbsp;<span class="element-name">readCDOFeatureDelta</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;owner)</span>
+                                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDOFeatureDelta(org.eclipse.emf.ecore.EClass)">readCDOFeatureDelta</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevisionOrPrimitive()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevisionOrPrimitive</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readCDORevisionOrPrimitive()
-                                            throws java.io.IOException</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitive()">CDODataInput</a></code></span></div>
+<li>
+<section class="detail" id="readCDORevisionOrPrimitive()">
+<h3>readCDORevisionOrPrimitive</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">readCDORevisionOrPrimitive</span>()
+                                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitive()">CDODataInput</a></code></span></div>
 <div class="block">Read either a CDORevision or a primitive value.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitive()">readCDORevisionOrPrimitive</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="readCDORevisionOrPrimitiveOrClassifier()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>readCDORevisionOrPrimitiveOrClassifier</h4>
-<pre class="methodSignature">public&nbsp;java.lang.Object&nbsp;readCDORevisionOrPrimitiveOrClassifier()
-                                                        throws java.io.IOException</pre>
-<div class="block"><span class="descfrmTypeLabel">Description copied from interface:&nbsp;<code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitiveOrClassifier()">CDODataInput</a></code></span></div>
+<li>
+<section class="detail" id="readCDORevisionOrPrimitiveOrClassifier()">
+<h3>readCDORevisionOrPrimitiveOrClassifier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">readCDORevisionOrPrimitiveOrClassifier</span>()
+                                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from interface:&nbsp;<code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitiveOrClassifier()">CDODataInput</a></code></span></div>
 <div class="block">Read either a CDORevision, a primitive value or a EClass.</div>
-<dl>
-<dt><span class="overrideSpecifyLabel">Specified by:</span></dt>
+<dl class="notes">
+<dt>Specified by:</dt>
 <dd><code><a href="../../../common/protocol/CDODataInput.html#readCDORevisionOrPrimitiveOrClassifier()">readCDORevisionOrPrimitiveOrClassifier</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
-<dt><span class="throwsLabel">Throws:</span></dt>
-<dd><code>java.io.IOException</code></dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="isXCompression()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>isXCompression</h4>
-<pre class="methodSignature">protected&nbsp;boolean&nbsp;isXCompression()</pre>
-<dl>
-<dt><span class="simpleTagLabel">Since:</span></dt>
+<li>
+<section class="detail" id="getSession()">
+<h3>getSession</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../../../common/CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession</a></span>&nbsp;<span class="element-name">getSession</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../../common/protocol/CDODataInput.html#getSession()">getSession</a></code>&nbsp;in interface&nbsp;<code><a href="../../../common/protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isXCompression()">
+<h3>isXCompression</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isXCompression</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
 <dd>4.6</dd>
 </dl>
+</section>
 </li>
-</ul>
-<a id="getPackageURICompressor()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getPackageURICompressor</h4>
-<pre class="methodSignature">protected&nbsp;org.eclipse.net4j.util.io.StringIO&nbsp;getPackageURICompressor()</pre>
+<li>
+<section class="detail" id="getPackageURICompressor()">
+<h3>getPackageURICompressor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.io.StringIO</span>&nbsp;<span class="element-name">getPackageURICompressor</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getBranchManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getBranchManager</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;getBranchManager()</pre>
+<li>
+<section class="detail" id="getBranchManager()">
+<h3>getBranchManager</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="../../../common/branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a></span>&nbsp;<span class="element-name">getBranchManager</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getCommitInfoManager()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getCommitInfoManager</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;getCommitInfoManager()</pre>
+<li>
+<section class="detail" id="getCommitInfoManager()">
+<h3>getCommitInfoManager</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="../../../common/commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a></span>&nbsp;<span class="element-name">getCommitInfoManager</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getRevisionFactory()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getRevisionFactory</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;getRevisionFactory()</pre>
+<li>
+<section class="detail" id="getRevisionFactory()">
+<h3>getRevisionFactory</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a></span>&nbsp;<span class="element-name">getRevisionFactory</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getListFactory()">
-<!--   -->
-</a>
-<ul class="blockList">
-<li class="blockList">
-<h4>getListFactory</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="../../../common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a>&nbsp;getListFactory()</pre>
+<li>
+<section class="detail" id="getListFactory()">
+<h3>getListFactory</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="../../../common/revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a></span>&nbsp;<span class="element-name">getListFactory</span>()</div>
+</section>
 </li>
-</ul>
-<a id="getLobStore()">
-<!--   -->
-</a>
-<ul class="blockListLast">
-<li class="blockList">
-<h4>getLobStore</h4>
-<pre class="methodSignature">protected abstract&nbsp;<a href="../../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;getLobStore()</pre>
-</li>
-</ul>
+<li>
+<section class="detail" id="getLobStore()">
+<h3>getLobStore</h3>
+<div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="../../../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a></span>&nbsp;<span class="element-name">getLobStore</span>()</div>
+</section>
 </li>
 </ul>
 </section>
 </li>
 </ul>
-</div>
-</div>
-</main>
+</section>
 <!-- ========= END OF CLASS DATA ========= -->
+</main>
 <footer role="contentinfo">
-<nav role="navigation">
-<!-- ======= START OF BOTTOM NAVBAR ====== -->
-<div class="bottomNav"><a id="navbar.bottom">
-<!--   -->
-</a>
-<div class="skipNav"><a href="#skip.navbar.bottom" title="Skip navigation links">Skip navigation links</a></div>
-<a id="navbar.bottom.firstrow">
-<!--   -->
-</a>
-<ul class="navList" title="Navigation">
-<li><a href="../../../../../../../index.html">Overview</a></li>
-<li><a href="package-summary.html">Package</a></li>
-<li class="navBarCell1Rev">Class</li>
-<li><a href="class-use/CDODataInputImpl.html">Use</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
-<li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html">Help</a></li>
-</ul>
-</div>
-<div class="subNav">
-<ul class="navList" id="allclasses_navbar_bottom">
-<li><a href="../../../../../../../allclasses.html">All&nbsp;Classes</a></li>
-</ul>
-<div>
-<script type="text/javascript"><!--
-  allClassesLink = document.getElementById("allclasses_navbar_bottom");
-  if(window==top) {
-    allClassesLink.style.display = "block";
-  }
-  else {
-    allClassesLink.style.display = "none";
-  }
-  //-->
-</script>
-<noscript>
-<div>JavaScript is disabled on your browser.</div>
-</noscript>
-</div>
-<div>
-<ul class="subNavList">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested.class.summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.summary">Method</a></li>
-</ul>
-<ul class="subNavList">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor.detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method.detail">Method</a></li>
-</ul>
-</div>
-<a id="skip.navbar.bottom">
-<!--   -->
-</a></div>
-<!-- ======== END OF BOTTOM NAVBAR ======= -->
-</nav>
-<p class="legalCopy"><small><i class="copyright">Copyright (c) 2004-2021 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
+<hr>
+<p class="legal-copy"><small><i class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</i></small></p>
 </footer>
+</div>
+</div>
 </body>
 </html>

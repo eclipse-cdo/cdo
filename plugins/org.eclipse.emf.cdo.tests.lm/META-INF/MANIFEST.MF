@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.tests.lm;singleton:=true
-Bundle-Version: 1.1.0.qualifier
+Bundle-Version: 1.1.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -18,5 +18,5 @@ Require-Bundle: org.eclipse.net4j.tests;bundle-version="[4.0.0,5.0.0)";visibilit
  org.eclipse.net4j.db.h2;bundle-version="[4.0.0,5.0.0)",
  org.h2;bundle-version="[1.0.0,2.0.0)"
 Automatic-Module-Name: org.eclipse.emf.cdo.tests.lm
-Export-Package: org.eclipse.emf.cdo.tests.lm;version="1.1.0",
- org.eclipse.emf.cdo.tests.lm.bundle;version="1.1.0";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.tests.lm;version="1.1.1",
+ org.eclipse.emf.cdo.tests.lm.bundle;version="1.1.1";x-internal:=true

@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.net4j.sdk</artifactId>
-  <version>4.1.604-SNAPSHOT</version>
+  <version>4.1.605-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

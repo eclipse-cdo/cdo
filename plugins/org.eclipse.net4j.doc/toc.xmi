@@ -14,10 +14,10 @@
     <packages name="org.eclipse.net4j.signal.wrapping"/>
     <packages name="org.eclipse.spi.net4j"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform (JVM Transport)">
+  <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform JVM Transport">
     <packages name="org.eclipse.net4j.jvm"/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signalling Platform (TCP Transport)">
+  <article:Plugin name="org.eclipse.net4j.tcp" label="Net4j Signalling Platform TCP Transport">
     <packages name="org.eclipse.net4j.tcp"/>
     <packages name="org.eclipse.net4j.tcp.ssl"/>
   </article:Plugin>

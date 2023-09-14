@@ -92,6 +92,7 @@
              version="true"
              use="true"
              notree="true"
+    	       nodeprecated="true" 
              windowtitle="${javadoc.name}"
              doctitle="&lt;h1>${javadoc.name}&lt;/h1>"
              overview="${project.path}/overview.html"
@@ -132,10 +133,10 @@
 				<package name="org.eclipse.net4j.signal.wrapping" />
 				<package name="org.eclipse.spi.net4j" />
 			</group>
-			<group title="Net4j Signalling Platform (JVM Transport)">
+			<group title="Net4j Signalling Platform JVM Transport">
 				<package name="org.eclipse.net4j.jvm" />
 			</group>
-			<group title="Net4j Signalling Platform (TCP Transport)">
+			<group title="Net4j Signalling Platform TCP Transport">
 				<package name="org.eclipse.net4j.tcp" />
 				<package name="org.eclipse.net4j.tcp.ssl" />
 			</group>

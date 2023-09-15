@@ -39,21 +39,6 @@ import java.util.Objects;
  */
 public class BaselineComposite extends Composite
 {
-  private ConcurrentArray<ModifyListener> listeners = new ConcurrentArray<>()
-  {
-    @Override
-    protected ModifyListener[] newArray(int length)
-    {
-      return new ModifyListener[length];
-    }
-  };
-
-  private final EList<Baseline> choiceOfValues;
-
-  private Baseline baseline;
-
-  private boolean settingValue;
-
   private static BaselineSelectorContributor[] selectors = { new BaselineSelectorContributor()
   {
     @Override
@@ -71,10 +56,25 @@ public class BaselineComposite extends Composite
           composite.setBaseline(choiceOfValues.isEmpty() ? null : choiceOfValues.get(0));
         }
       });
-
+  
       return true;
     }
   } };
+
+  private ConcurrentArray<ModifyListener> listeners = new ConcurrentArray<>()
+  {
+    @Override
+    protected ModifyListener[] newArray(int length)
+    {
+      return new ModifyListener[length];
+    }
+  };
+
+  private final EList<Baseline> choiceOfValues;
+
+  private Baseline baseline;
+
+  private boolean settingValue;
 
   private ComboViewer viewer;
 
@@ -134,11 +134,6 @@ public class BaselineComposite extends Composite
     UIUtil.forEachChild(this, c -> c.setEnabled(enabled));
   }
 
-  protected String getText(Baseline baseline)
-  {
-    return baseline.getTypeAndName();
-  }
-
   public void addModifyListener(ModifyListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$
@@ -178,6 +173,11 @@ public class BaselineComposite extends Composite
 
       notifyModifyListeners(oldBaseline);
     }
+  }
+
+  protected String getText(Baseline baseline)
+  {
+    return baseline.getTypeAndName();
   }
 
   private void notifyModifyListeners(Baseline oldValue)

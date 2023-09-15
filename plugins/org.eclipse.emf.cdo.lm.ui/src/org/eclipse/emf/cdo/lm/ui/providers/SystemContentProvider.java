@@ -34,9 +34,9 @@ import java.util.Comparator;
  */
 public class SystemContentProvider extends CDOContentProvider<ISystemDescriptor>
 {
-  private static final Object[] NO_CHILDREN = new Object[0];
-
   public static final Comparator<Object> SYSTEM_COMPARATOR = Comparator.comparing(SystemContentProvider::name);
+
+  private static final Object[] NO_CHILDREN = new Object[0];
 
   private final AdapterFactory adapterFactory;
 
@@ -105,14 +105,7 @@ public class SystemContentProvider extends CDOContentProvider<ISystemDescriptor>
     return children;
   }
 
-  /**
-   *
-   * @param children
-   *            the element to filter
-   * @return
-   *         the list of accepted children
-   */
-  protected Object[] filteredChildren(final Object[] children)
+  protected Object[] filteredChildren(Object[] children)
   {
     return children;
   }

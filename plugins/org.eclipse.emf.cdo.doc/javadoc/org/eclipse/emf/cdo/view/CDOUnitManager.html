@@ -156,15 +156,21 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDOUnit.html" ti
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isAutoResourceUnitsEnabled()" class="member-name-link">isAutoResourceUnitsEnabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isUnit(org.eclipse.emf.ecore.EObject)" class="member-name-link">isUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;root)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isPrefetchLockStates()" class="member-name-link">isPrefetchLockStates</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">openUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;root,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isUnit(org.eclipse.emf.ecore.EObject)" class="member-name-link">isUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;root)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openUnit(org.eclipse.emf.ecore.EObject,boolean,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">openUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;root,
  boolean&nbsp;createOnDemand,
  <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setAutoResourceUnitsEnabled(boolean)" class="member-name-link">setAutoResourceUnitsEnabled</a><wbr>(boolean&nbsp;enabled)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setAutoResourceUnitsEnabled(boolean)" class="member-name-link">setAutoResourceUnitsEnabled</a><wbr>(boolean&nbsp;enabled)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPrefetchLockStates(boolean)" class="member-name-link">setPrefetchLockStates</a><wbr>(boolean&nbsp;prefetchLockStates)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
@@ -234,6 +240,26 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDOUnit.html" ti
 <section class="detail" id="getOpenUnits()">
 <h3>getOpenUnits</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOUnit.html" title="interface in org.eclipse.emf.cdo.view">CDOUnit</a>[]</span>&nbsp;<span class="element-name">getOpenUnits</span>()</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isPrefetchLockStates()">
+<h3>isPrefetchLockStates</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isPrefetchLockStates</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPrefetchLockStates(boolean)">
+<h3>setPrefetchLockStates</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPrefetchLockStates</span><wbr><span class="parameters">(boolean&nbsp;prefetchLockStates)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.23</dd>
+</dl>
 </section>
 </li>
 <li>

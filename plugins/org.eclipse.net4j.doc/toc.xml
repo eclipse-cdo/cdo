@@ -18,10 +18,10 @@
       <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package" />
       <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" icon="package" />
     </topic>
-    <topic label="Net4j Signalling Platform (JVM Transport)" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
+    <topic label="Net4j Signalling Platform JVM Transport" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package" />
     </topic>
-    <topic label="Net4j Signalling Platform (TCP Transport)" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
+    <topic label="Net4j Signalling Platform TCP Transport" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package" />
     </topic>

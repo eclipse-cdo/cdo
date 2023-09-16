@@ -322,9 +322,7 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<wbr><a href="../../cdo/common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#loadPermissions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D)" class="member-name-link">loadPermissions</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 4.22 use <a href="#loadPermissions3(java.util.Map)"><code>loadPermissions3(Map)</code></a>.</div>
-</div>
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<wbr><a href="../../cdo/common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadPermissions3(java.util.Map)" class="member-name-link">loadPermissions3</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&gt;&gt;&nbsp;revisions)</code></div>
@@ -404,63 +402,73 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 <div class="block">Requests that the server initiate the reset-credentials protocol.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">requestUnit</a><wbr>(int&nbsp;viewID,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">requestUnit</a><wbr>(int&nbsp;viewID,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
+ <a href="../../cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum class in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a>&nbsp;opcode,
+ boolean&nbsp;prefetchLockStates,
+ <a href="../../cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;safe)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">requestUnit</a><wbr>(int&nbsp;viewID,
  <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
  <a href="../../cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum class in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a>&nbsp;opcode,
  <a href="../../cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resetTransaction(int,int)" class="member-name-link">resetTransaction</a><wbr>(int&nbsp;transactionID,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../cdo/common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resetTransaction(int,int)" class="member-name-link">resetTransaction</a><wbr>(int&nbsp;transactionID,
  int&nbsp;commitNumber)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.List)" class="member-name-link">sendRemoteMessage</a><wbr>(<a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.List)" class="member-name-link">sendRemoteMessage</a><wbr>(<a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.8 use <a href="#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteTopic,java.util.List)"><code>sendRemoteMessage(CDORemoteSessionMessage, CDORemoteTopic, List)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteTopic,java.util.List)" class="member-name-link">sendRemoteMessage</a><wbr>(<a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteTopic,java.util.List)" class="member-name-link">sendRemoteMessage</a><wbr>(<a href="../../cdo/session/remote/CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionMessage</a>&nbsp;message,
  <a href="../../cdo/session/remote/CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a>&nbsp;topic,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>&gt;&nbsp;recipients)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" class="member-name-link">setLockNotificationMode</a><wbr>(<a href="../../cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" class="member-name-link">setLockNotificationMode</a><wbr>(<a href="../../cdo/common/CDOCommonSession.Options.LockNotificationMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.LockNotificationMode</a>&nbsp;mode)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" class="member-name-link">setPassiveUpdateMode</a><wbr>(<a href="../../cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;mode)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" class="member-name-link">setPassiveUpdateMode</a><wbr>(<a href="../../cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="enum class in org.eclipse.emf.cdo.common">CDOCommonSession.Options.PassiveUpdateMode</a>&nbsp;mode)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#subscribeRemoteTopic(java.lang.String,boolean)" class="member-name-link">subscribeRemoteTopic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="class or interface in java.util" class="external-link">Set</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Integer.html" title="class or interface in java.lang" class="external-link">Integer</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#subscribeRemoteTopic(java.lang.String,boolean)" class="member-name-link">subscribeRemoteTopic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;id,
  boolean&nbsp;on)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#switchTarget(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.util.List,java.util.List,java.util.List,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">switchTarget</a><wbr>(int&nbsp;viewID,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#switchTarget(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.util.List,java.util.List,java.util.List,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">switchTarget</a><wbr>(int&nbsp;viewID,
  <a href="../../cdo/common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="InternalCDOObject.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOObject</a>&gt;&nbsp;invalidObjects,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/common/revision/CDORevisionKey.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&gt;&nbsp;allChangedObjects,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../../cdo/common/revision/CDOIDAndVersion.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOIDAndVersion</a>&gt;&nbsp;allDetachedObjects,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;objectIDs,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockObjects2(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects2</a><wbr>(<a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOSessionProtocol.UnlockObjectsResult.html" title="class in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlockObjects2(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects2</a><wbr>(<a href="../../cdo/view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;objectIDs,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unsubscribeRemoteSessions()" class="member-name-link">unsubscribeRemoteSessions</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unsubscribeRemoteSessions()" class="member-name-link">unsubscribeRemoteSessions</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -1020,16 +1028,17 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 </section>
 </li>
 <li>
-<section class="detail" id="requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<section class="detail" id="requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)">
 <h3>requestUnit</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">requestUnit</span><wbr><span class="parameters">(int&nbsp;viewID,
  <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
  <a href="../../cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum class in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a>&nbsp;opcode,
+ boolean&nbsp;prefetchLockStates,
  <a href="../../cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler,
- org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;safe)</span></div>
 <dl class="notes">
 <dt>Since:</dt>
-<dd>4.5</dd>
+<dd>4.23</dd>
 </dl>
 </section>
 </li>
@@ -1141,13 +1150,19 @@ extends <a href="../../cdo/common/protocol/CDOProtocol.html" title="interface in
 <h3>loadPermissions</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
 </span><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../cdo/common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>,<wbr><a href="../../cdo/common/security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&gt;</span>&nbsp;<span class="element-name">loadPermissions</span><wbr><span class="parameters">(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>[]&nbsp;revisions)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 4.22 use <a href="#loadPermissions3(java.util.Map)"><code>loadPermissions3(Map)</code></a>.</div>
-</div>
-<dl class="notes">
-<dt>Since:</dt>
-<dd>4.3</dd>
-</dl>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)">
+<h3>requestUnit</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+</span><span class="return-type">boolean</span>&nbsp;<span class="element-name">requestUnit</span><wbr><span class="parameters">(int&nbsp;viewID,
+ <a href="../../cdo/common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
+ <a href="../../cdo/common/protocol/CDOProtocolConstants.UnitOpcode.html" title="enum class in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a>&nbsp;opcode,
+ <a href="../../cdo/common/revision/CDORevisionHandler.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler,
+ org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
 </section>
 </li>
 </ul>

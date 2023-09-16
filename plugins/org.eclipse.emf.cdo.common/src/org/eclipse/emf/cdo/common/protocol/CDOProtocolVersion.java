@@ -19,8 +19,9 @@ class CDOProtocolVersion
 
   static
   {
-    VALUE = 49; // Add security support to CDO-LM #5
+    VALUE = 50; // Support optional lock state prefetching while opening a CDOUnit #20
 
+    // VALUE = 49; // Add security support to CDO-LM #5
     // VALUE = 48; // SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION
     // VALUE = 47; // Bug 580439 - Truncated CDOLobs in repository
     // VALUE = 46; // SIGNAL_REMOTE_TOPIC

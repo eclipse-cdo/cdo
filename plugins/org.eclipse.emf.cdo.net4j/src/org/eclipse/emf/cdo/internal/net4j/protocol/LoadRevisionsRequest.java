@@ -13,13 +13,9 @@ package org.eclipse.emf.cdo.internal.net4j.protocol;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -33,7 +29,6 @@ import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
 import org.eclipse.net4j.util.io.IORuntimeException;
 
-import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
@@ -210,40 +205,8 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       }
     }
 
-    if (in.readBoolean())
-    {
-      List<CDOLockState> lockStates = in.readCDOLockStates();
-
-      int noLockStateKeys = in.readXInt();
-      if (noLockStateKeys != 0)
-      {
-        if (getSession().getRevisionManager().isSupportingBranches())
-        {
-          for (int i = 0; i < noLockStateKeys; i++)
-          {
-            CDOID id = in.readCDOID();
-            CDOIDAndBranch lockTarget = CDOIDUtil.createIDAndBranch(id, requestedBranch);
-            CDOLockState lockState = CDOLockUtil.createLockState(lockTarget);
-            lockStates.add(lockState);
-          }
-        }
-        else
-        {
-          for (int i = 0; i < noLockStateKeys; i++)
-          {
-            CDOID id = in.readCDOID();
-            CDOLockState lockState = CDOLockUtil.createLockState(id);
-            lockStates.add(lockState);
-          }
-        }
-      }
-
-      if (!lockStates.isEmpty())
-      {
-        CDOLockStateCache lockStateCache = getSession().getLockStateCache();
-        lockStateCache.addLockStates(requestedBranch, lockStates, null);
-      }
-    }
+    InternalCDOSession session = getSession();
+    CDOClientProtocol.readAndCacheLockStates(in, session, requestedBranch);
 
     if (rememberedRevisions != null)
     {

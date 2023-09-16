@@ -2059,6 +2059,8 @@ public class CDOViewImpl extends AbstractCDOView
 
     private Set<CDOID> openingIDs;
 
+    private boolean prefetchLockStates;
+
     private Map<CDOResource, CDOUnit> resourceUnits;
 
     public CDOUnitManagerImpl()
@@ -2218,6 +2220,18 @@ public class CDOViewImpl extends AbstractCDOView
     }
 
     @Override
+    public boolean isPrefetchLockStates()
+    {
+      return prefetchLockStates;
+    }
+
+    @Override
+    public void setPrefetchLockStates(boolean prefetchLockStates)
+    {
+      this.prefetchLockStates = prefetchLockStates;
+    }
+
+    @Override
     public synchronized boolean isAutoResourceUnitsEnabled()
     {
       return resourceUnits != null;
@@ -2364,7 +2378,7 @@ public class CDOViewImpl extends AbstractCDOView
           }
 
           CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, revisionHandler, EclipseMonitor.safe(monitor));
+          boolean success = sessionProtocol.requestUnit(viewID, rootID, opcode, prefetchLockStates, revisionHandler, EclipseMonitor.safe(monitor));
 
           if (success)
           {

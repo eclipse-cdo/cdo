@@ -1166,14 +1166,14 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   }
 
   @Override
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     int attempt = 0;
     for (;;)
     {
       try
       {
-        return delegate.requestUnit(viewID, rootID, opcode, revisionHandler, monitor);
+        return delegate.requestUnit(viewID, rootID, opcode, prefetchLockStates, revisionHandler, monitor);
       }
       catch (Exception ex)
       {
@@ -1311,6 +1311,13 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
   @Override
   @Deprecated
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

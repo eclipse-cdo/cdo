@@ -25,11 +25,15 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLob;
 import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.protocol.CDODataInput;
+import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -71,6 +75,7 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.spi.cdo.AbstractQueryIterator;
+import org.eclipse.emf.spi.cdo.CDOLockStateCache;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
@@ -587,9 +592,9 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   }
 
   @Override
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
-    return send(new UnitRequest(this, viewID, rootID, opcode, revisionHandler), monitor);
+    return send(new UnitRequest(this, viewID, rootID, opcode, prefetchLockStates, revisionHandler), monitor);
   }
 
   @Override
@@ -697,6 +702,44 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
     }
   }
 
+  public static void readAndCacheLockStates(CDODataInput in, InternalCDOSession session, CDOBranch branch) throws IOException
+  {
+    if (in.readBoolean())
+    {
+      List<CDOLockState> lockStates = in.readCDOLockStates();
+  
+      int noLockStateKeys = in.readXInt();
+      if (noLockStateKeys != 0)
+      {
+        if (session.getRevisionManager().isSupportingBranches())
+        {
+          for (int i = 0; i < noLockStateKeys; i++)
+          {
+            CDOID id = in.readCDOID();
+            CDOIDAndBranch lockTarget = CDOIDUtil.createIDAndBranch(id, branch);
+            CDOLockState lockState = CDOLockUtil.createLockState(lockTarget);
+            lockStates.add(lockState);
+          }
+        }
+        else
+        {
+          for (int i = 0; i < noLockStateKeys; i++)
+          {
+            CDOID id = in.readCDOID();
+            CDOLockState lockState = CDOLockUtil.createLockState(id);
+            lockStates.add(lockState);
+          }
+        }
+      }
+  
+      if (!lockStates.isEmpty())
+      {
+        CDOLockStateCache lockStateCache = session.getLockStateCache();
+        lockStateCache.addLockStates(branch, lockStates, null);
+      }
+    }
+  }
+
   @Override
   @Deprecated
   public CDOBranchPoint openView(int viewID, boolean readOnly, String durableLockingID)
@@ -795,6 +838,13 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   @Override
   @Deprecated
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     throw new UnsupportedOperationException();
   }

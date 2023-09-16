@@ -14,13 +14,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.lock.CDOLockState;
-import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.model.CDOClassInfo;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
-import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
@@ -32,11 +29,9 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.Type;
-import org.eclipse.emf.cdo.spi.server.InternalLockManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -61,13 +56,9 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private CDOBranchPoint branchPoint;
 
-  private CDOBranch requestedBranch;
-
   private int referenceChunk;
 
   private int prefetchDepth;
-
-  private boolean prefetchLockStates;
 
   private Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
 
@@ -79,9 +70,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private InternalCDORevisionManager revisionManager;
 
-  private InternalLockManager lockingManager;
-
-  private Set<Object> lockStateKeys;
+  private CDOServerLockStatePrefetcher lockStatePrefetcher;
 
   public LoadRevisionsIndication(CDOServerProtocol protocol)
   {
@@ -95,19 +84,11 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     revisionManager = repository.getRevisionManager();
 
     branchPoint = in.readCDOBranchPoint();
-    requestedBranch = branchPoint.getBranch();
 
     referenceChunk = in.readXInt();
 
-    prefetchLockStates = in.readBoolean();
-    if (prefetchLockStates)
-    {
-      if (branchPoint.getTimeStamp() == CDOBranchPoint.UNSPECIFIED_DATE)
-      {
-        lockingManager = repository.getLockingManager();
-        lockStateKeys = new HashSet<>();
-      }
-    }
+    boolean prefetchLockStates = in.readBoolean();
+    lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, branchPoint, prefetchLockStates);
 
     int size = in.readXInt();
     if (size < 0)
@@ -225,6 +206,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     // Write keys of additional revisions that are already cached on the client.
     int additionalSize = additionalRevisions.size();
     List<RevisionInfo> infosToWrite = new ArrayList<>();
+    CDOBranch requestedBranch = branchPoint.getBranch();
 
     for (int i = 0; i < additionalSize; i++)
     {
@@ -261,67 +243,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       info.writeResult(out, referenceChunk, branchPoint);
     }
 
-    if (lockingManager != null)
-    {
-      out.writeBoolean(true);
-
-      Set<Object> noLockStateKeys = new HashSet<>();
-
-      try
-      {
-        lockingManager.getLockStates(lockStateKeys, (key, lockState) -> {
-          if (lockState != null)
-          {
-            CDOLockState cdoLockState = CDOLockUtil.convertLockState(lockState);
-
-            try
-            {
-              out.writeCDOLockState(cdoLockState);
-            }
-            catch (IOException ex)
-            {
-              throw WrappedException.wrap(ex);
-            }
-          }
-          else
-          {
-            noLockStateKeys.add(key);
-          }
-        });
-      }
-      catch (WrappedException ex)
-      {
-        Exception exception = ex.exception();
-        if (exception instanceof IOException)
-        {
-          throw (IOException)exception;
-        }
-
-        throw ex;
-      }
-
-      out.writeCDOLockState(null);
-      out.writeXInt(noLockStateKeys.size());
-
-      if (revisionManager.isSupportingBranches())
-      {
-        for (Object key : noLockStateKeys)
-        {
-          out.writeCDOID(((CDOIDAndBranch)key).getID());
-        }
-      }
-      else
-      {
-        for (Object key : noLockStateKeys)
-        {
-          out.writeCDOID((CDOID)key);
-        }
-      }
-    }
-    else
-    {
-      out.writeBoolean(false);
-    }
+    lockStatePrefetcher.writeLockStates(out);
   }
 
   private RevisionInfo createRevisionInfo(CDOID id)
@@ -335,8 +257,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
   {
     info.execute(revisionManager, referenceChunk);
 
-    if (lockingManager != null)
-    {
+    lockStatePrefetcher.addLockStateKey(() -> {
       CDORevision revision = info.getSynthetic();
       if (revision == null)
       {
@@ -345,10 +266,11 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
       if (revision != null && !(revision instanceof DetachedCDORevision))
       {
-        Object key = lockingManager.getLockKey(revision.getID(), requestedBranch);
-        lockStateKeys.add(key);
+        return revision.getID();
       }
-    }
+
+      return null;
+    });
   }
 
   private void collectRevisions(InternalCDORevision revision, Set<CDOID> revisions, List<RevisionInfo> additionalInfos, List<CDORevision> additionalRevisions,

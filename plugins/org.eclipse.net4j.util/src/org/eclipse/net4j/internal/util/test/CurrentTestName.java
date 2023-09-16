@@ -10,6 +10,11 @@
  */
 package org.eclipse.net4j.internal.util.test;
 
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.io.IOUtil;
+
+import java.io.File;
+
 /**
  * @author Eike Stepper
  */
@@ -25,6 +30,19 @@ public final class CurrentTestName
   public static void set(String name)
   {
     CurrentTestName.name = name;
+  }
+
+  public static void appendTo(File file)
+  {
+    if (!StringUtil.isEmpty(name))
+    {
+      IOUtil.appendText(file, name + StringUtil.NL);
+    }
+  }
+
+  public static void appendTo(String filename)
+  {
+    appendTo(new File(filename));
   }
 
   private CurrentTestName()

@@ -543,9 +543,9 @@ public interface CDOProtocolConstants
 
     CLOSE(false, false);
 
-    private boolean create;
+    private final boolean create;
 
-    private boolean open;
+    private final boolean open;
 
     private UnitOpcode(boolean create, boolean open)
     {
@@ -561,6 +561,14 @@ public interface CDOProtocolConstants
     public boolean isOpen()
     {
       return open;
+    }
+
+    /**
+     * @since 4.21
+     */
+    public boolean canPrefetchLockStates()
+    {
+      return create || open;
     }
   }
 }

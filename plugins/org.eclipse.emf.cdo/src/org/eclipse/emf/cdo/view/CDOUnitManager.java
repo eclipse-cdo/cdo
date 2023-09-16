@@ -40,6 +40,16 @@ public interface CDOUnitManager extends IContainer<CDOUnit>
 
   public CDOUnit[] getOpenUnits();
 
+  /**
+   * @since 4.23
+   */
+  public boolean isPrefetchLockStates();
+
+  /**
+   * @since 4.23
+   */
+  public void setPrefetchLockStates(boolean prefetchLockStates);
+
   public boolean isAutoResourceUnitsEnabled();
 
   public void setAutoResourceUnitsEnabled(boolean enabled);

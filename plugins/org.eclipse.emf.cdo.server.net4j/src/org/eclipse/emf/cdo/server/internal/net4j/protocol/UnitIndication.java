@@ -39,6 +39,8 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
 
   private UnitOpcode opcode;
 
+  private boolean prefetchLockStates;
+
   public UnitIndication(CDOServerProtocol protocol)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNIT);
@@ -56,14 +58,14 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
     viewID = in.readXInt();
     rootID = in.readCDOID();
     opcode = UnitOpcode.values()[in.readByte()];
+    prefetchLockStates = opcode.canPrefetchLockStates() && in.readBoolean();
   }
 
   @Override
-  protected void responding(final CDODataOutput out, OMMonitor monitor) throws Exception
+  protected void responding(CDODataOutput out, OMMonitor monitor) throws Exception
   {
-    final InternalView view = getView(viewID);
-    final InternalRepository repository = getRepository();
-
+    InternalRepository repository = getRepository();
+    InternalView view = getView(viewID);
     if (opcode == UnitOpcode.CHECK)
     {
       IUnitManager unitManager = repository.getUnitManager();
@@ -87,9 +89,10 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
       return;
     }
 
-    final InternalCDORevisionCache revisionCache = repository.getRevisionManager().getCache();
-    final IOException[] ioException = { null };
-    final RuntimeException[] runtimeException = { null };
+    CDOServerLockStatePrefetcher lockStatePrefetcher = CDOServerLockStatePrefetcher.create(repository, view, prefetchLockStates);
+    InternalCDORevisionCache revisionCache = repository.getRevisionManager().getCache();
+    IOException[] ioException = { null };
+    RuntimeException[] runtimeException = { null };
 
     monitor.begin();
     Async async = monitor.forkAsync();
@@ -103,10 +106,13 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
         {
           try
           {
-            view.unsubscribe(revision.getID());
+            CDOID id = revision.getID();
+
+            view.unsubscribe(id);
             revision = revisionCache.internRevision(revision);
 
             out.writeCDORevision(revision, CDORevision.UNCHUNKED); // Exposes revision to client side
+            lockStatePrefetcher.addLockStateKey(id);
             return true;
           }
           catch (IOException ex)
@@ -134,6 +140,11 @@ public class UnitIndication extends CDOServerReadIndicationWithMonitoring
 
       out.writeCDORevision(null, CDORevision.UNCHUNKED); // No more revisions
       out.writeBoolean(success);
+
+      if (success)
+      {
+        lockStatePrefetcher.writeLockStates(out);
+      }
     }
     finally
     {

@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.net4j.protocol;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -17,8 +18,11 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.io.IOException;
 
@@ -33,14 +37,17 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
 
   private UnitOpcode opcode;
 
+  private boolean prefetchLockStates;
+
   private CDORevisionHandler revisionHandler;
 
-  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler)
+  public UnitRequest(CDOClientProtocol protocol, int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_UNIT);
     this.viewID = viewID;
     this.rootID = rootID;
     this.opcode = opcode;
+    this.prefetchLockStates = prefetchLockStates;
     this.revisionHandler = revisionHandler;
   }
 
@@ -50,6 +57,11 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
     out.writeXInt(viewID);
     out.writeCDOID(rootID);
     out.writeByte(opcode.ordinal());
+
+    if (opcode.canPrefetchLockStates())
+    {
+      out.writeBoolean(prefetchLockStates);
+    }
   }
 
   @Override
@@ -69,6 +81,17 @@ public class UnitRequest extends CDOClientRequestWithMonitoring<Boolean>
       }
     }
 
-    return in.readBoolean();
+    boolean result = in.readBoolean();
+
+    if (opcode.canPrefetchLockStates() && result)
+    {
+      InternalCDOSession session = getSession();
+      CDOView view = session.getView(viewID);
+      CDOBranch branch = view.getBranch();
+
+      CDOClientProtocol.readAndCacheLockStates(in, session, branch);
+    }
+
+    return result;
   }
 }

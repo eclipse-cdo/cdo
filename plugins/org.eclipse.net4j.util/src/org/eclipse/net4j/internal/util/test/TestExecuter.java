@@ -22,7 +22,7 @@ public final class TestExecuter
   {
   }
 
-  public static Object getValue()
+  public static Object getCurrrentTest()
   {
     return currentTest;
   }

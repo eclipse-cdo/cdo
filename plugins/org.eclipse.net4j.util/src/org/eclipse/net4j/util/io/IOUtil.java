@@ -116,7 +116,7 @@ public final class IOUtil
     {
       return (IOException)ex;
     }
-  
+
     IOException ioException = new IOException(ex.getMessage());
     ioException.initCause(ex);
     return ioException;
@@ -859,6 +859,14 @@ public final class IOUtil
     {
       closeSilent(writer);
     }
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static void appendText(File file, String text) throws IORuntimeException
+  {
+    writeText(file, true, text);
   }
 
   public static List<File> listDepthFirst(File file)

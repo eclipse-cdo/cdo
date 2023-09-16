@@ -564,7 +564,7 @@ public abstract class AbstractOMTest extends TestCase
 
   public static AbstractOMTest getCurrrentTest()
   {
-    return (AbstractOMTest)TestExecuter.getValue();
+    return (AbstractOMTest)TestExecuter.getCurrrentTest();
   }
 
   public static void assertTrue(String message, boolean condition)

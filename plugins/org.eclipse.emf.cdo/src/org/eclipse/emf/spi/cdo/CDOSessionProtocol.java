@@ -326,9 +326,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   public void requestResetCredentials(String userID);
 
   /**
-   * @since 4.5
+   * @since 4.23
    */
-  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor);
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler, OMMonitor safe);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -1615,10 +1615,9 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
   @Deprecated
   public void requestChangeCredentials();
 
-  /**
-   * @since 4.3
-   * @deprecated As of 4.22 use {@link #loadPermissions3(Map)}.
-   */
   @Deprecated
   public Map<CDORevision, CDOPermission> loadPermissions(InternalCDORevision[] revisions);
+
+  @Deprecated
+  public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, CDORevisionHandler revisionHandler, OMMonitor monitor);
 }

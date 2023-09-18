@@ -82,6 +82,12 @@ public abstract class DerbyAdapter extends DBAdapter
   }
 
   @Override
+  protected String getNullableConstraint()
+  {
+    return "";
+  }
+
+  @Override
   public String[] getReservedWords()
   {
     return RESERVED_WORDS;

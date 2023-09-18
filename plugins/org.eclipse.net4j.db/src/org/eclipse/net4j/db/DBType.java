@@ -465,7 +465,7 @@ public enum DBType
     }
 
     @Override
-    public Object readValueWithResult(final ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
+    public Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
     {
       if (canBeNull && !in.readBoolean())
       {
@@ -790,6 +790,8 @@ public enum DBType
   }
 
   /**
+   * Writes a value that is taken out of the given {@link ResultSet result set} to the given {@link ExtendedDataOutput output}.
+   *
    * @since 3.0
    */
   public void writeValue(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException
@@ -798,11 +800,15 @@ public enum DBType
   }
 
   /**
+   * Writes a value that is taken out of the given {@link ResultSet result set} to the given {@link ExtendedDataOutput output}.
+   *
    * @since 4.1
    */
   public abstract Object writeValueWithResult(ExtendedDataOutput out, ResultSet resultSet, int column, boolean canBeNull) throws SQLException, IOException;
 
   /**
+   * Reads a value from the given {@link ExtendedDataInput input} and puts it into the given {@link PreparedStatement statement}.
+   *
    * @since 3.0
    */
   public void readValue(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException
@@ -811,6 +817,8 @@ public enum DBType
   }
 
   /**
+   * Reads a value from the given {@link ExtendedDataInput input} and puts it into the given {@link PreparedStatement statement}.
+   *
    * @since 4.1
    */
   public abstract Object readValueWithResult(ExtendedDataInput in, PreparedStatement statement, int column, boolean canBeNull) throws SQLException, IOException;
@@ -1063,6 +1071,11 @@ public enum DBType
     {
       try
       {
+        if (pos >= length)
+        {
+          return -1;
+        }
+
         return super.read();
       }
       finally
@@ -1076,6 +1089,11 @@ public enum DBType
     {
       try
       {
+        if (pos >= length)
+        {
+          return -1;
+        }
+
         return super.read(cbuf, offset, length);
       }
       finally
@@ -1089,6 +1107,11 @@ public enum DBType
     {
       try
       {
+        if (pos >= length)
+        {
+          return -1;
+        }
+
         return super.read(target);
       }
       finally
@@ -1102,6 +1125,11 @@ public enum DBType
     {
       try
       {
+        if (pos >= length)
+        {
+          return -1;
+        }
+
         return super.read(cbuf);
       }
       finally

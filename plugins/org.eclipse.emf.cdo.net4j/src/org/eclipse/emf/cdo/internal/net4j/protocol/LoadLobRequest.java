@@ -31,13 +31,13 @@ public class LoadLobRequest extends CDOClientRequest<Boolean>
 {
   private CDOLobInfo info;
 
-  private Object out;
+  private Object outputStreamOrWriter;
 
-  public LoadLobRequest(CDOClientProtocol protocol, CDOLobInfo info, Object out)
+  public LoadLobRequest(CDOClientProtocol protocol, CDOLobInfo info, Object outputStreamOrWriter)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_LOAD_LOB);
     this.info = info;
-    this.out = out;
+    this.outputStreamOrWriter = outputStreamOrWriter;
   }
 
   @Override
@@ -51,18 +51,18 @@ public class LoadLobRequest extends CDOClientRequest<Boolean>
   {
     try
     {
-      if (out instanceof OutputStream)
+      if (outputStreamOrWriter instanceof OutputStream)
       {
-        IOUtil.copyBinary(in, (OutputStream)out, info.getSize());
+        IOUtil.copyBinary(in, (OutputStream)outputStreamOrWriter, info.getSize());
       }
       else
       {
-        IOUtil.copyCharacter(new InputStreamReader(in), (Writer)out, info.getSize());
+        IOUtil.copyCharacter(new InputStreamReader(in), (Writer)outputStreamOrWriter, info.getSize());
       }
     }
     finally
     {
-      ((Closeable)out).close();
+      ((Closeable)outputStreamOrWriter).close();
     }
 
     return true;

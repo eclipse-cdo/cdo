@@ -177,14 +177,7 @@ public class Net4jDBTest extends AbstractCDOTest
   public void testClob() throws Exception
   {
     registerColumn(DBType.CLOB, "Test");
-
-    StringBuilder b = new StringBuilder();
-    for (int i = 0; i < 1000000; i++)
-    {
-      b.append("x");
-    }
-
-    registerColumn(DBType.CLOB, b.toString());
+    registerColumn(DBType.CLOB, "x".repeat(1000000).toString());
     doTest(getName());
   }
 
@@ -465,7 +458,9 @@ public class Net4jDBTest extends AbstractCDOTest
         value = adapter.convertString((PreparedStatement)null, 0, str);
       }
 
-      writeTypeValue(outs, column.getElement1(), value);
+      DBType type = column.getElement1();
+      writeTypeValue(outs, type, value);
+
       if (first)
       {
         builder.append("?");
@@ -493,7 +488,8 @@ public class Net4jDBTest extends AbstractCDOTest
 
     for (Pair<DBType, Object> column : columns)
     {
-      column.getElement1().readValueWithResult(ins, stmt, c++, false);
+      DBType type = column.getElement1();
+      type.readValueWithResult(ins, stmt, c++, false);
     }
 
     stmt.executeUpdate();

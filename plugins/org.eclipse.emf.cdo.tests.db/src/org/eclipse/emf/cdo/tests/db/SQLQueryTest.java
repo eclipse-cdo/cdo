@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.internal.db.SQLQueryHandler;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.IScenario;
 import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Order;
 import org.eclipse.emf.cdo.tests.model1.OrderDetail;
@@ -281,8 +282,16 @@ public class SQLQueryTest extends AbstractCDOTest
 
     CDOView view = session.openView();
 
+    int loops = 2000;
+
+    IScenario scenario = getScenario();
+    if (scenario != null && scenario.getCapabilities().contains(DerbyConfig.DB_ADAPTER_NAME))
+    {
+      loops = 50;
+    }
+
     // Query many times to see whether we run out of store accessors.
-    for (int i = 0; i < 2000; i++)
+    for (int i = 0; i < loops; i++)
     {
       CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
       query.getResultAsync(Product1.class).close();

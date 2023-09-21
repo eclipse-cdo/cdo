@@ -1055,10 +1055,6 @@ public enum DBType
     private void incrementPos(long n) throws IOException
     {
       pos += n;
-      if (pos >= length)
-      {
-        close();
-      }
     }
 
     public long getLength()
@@ -1071,11 +1067,6 @@ public enum DBType
     {
       try
       {
-        if (pos >= length)
-        {
-          return -1;
-        }
-
         return super.read();
       }
       finally
@@ -1089,11 +1080,6 @@ public enum DBType
     {
       try
       {
-        if (pos >= length)
-        {
-          return -1;
-        }
-
         return super.read(cbuf, offset, length);
       }
       finally
@@ -1107,11 +1093,6 @@ public enum DBType
     {
       try
       {
-        if (pos >= length)
-        {
-          return -1;
-        }
-
         return super.read(target);
       }
       finally

@@ -148,7 +148,7 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
 
     // needed because of MySQL:
-    builder.append(" /*! ORDER BY "); //$NON-NLS-1$ /
+    builder.append(" /*! ORDER BY "); //$NON-NLS-1$
     builder.append(LIST_IDX);
     sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
 

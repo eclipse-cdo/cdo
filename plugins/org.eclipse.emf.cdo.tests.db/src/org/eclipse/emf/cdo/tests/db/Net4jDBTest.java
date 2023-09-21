@@ -177,7 +177,7 @@ public class Net4jDBTest extends AbstractCDOTest
   public void testClob() throws Exception
   {
     registerColumn(DBType.CLOB, "Test");
-    registerColumn(DBType.CLOB, "x".repeat(1000000).toString());
+    registerColumn(DBType.CLOB, "x".repeat(1000000));
     doTest(getName());
   }
 

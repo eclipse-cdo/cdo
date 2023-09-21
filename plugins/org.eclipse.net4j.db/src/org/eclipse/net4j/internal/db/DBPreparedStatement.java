@@ -14,16 +14,21 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBResultSet;
 import org.eclipse.net4j.db.jdbc.DelegatingPreparedStatement;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
  * @author Eike Stepper
  */
 public class DBPreparedStatement extends DelegatingPreparedStatement implements IDBPreparedStatement
 {
+  private static final boolean DEFAULT_IMMEDIATE_BATCH_EXECUTION = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.net4j.internal.db.DBPreparedStatement.DEFAULT_IMMEDIATE_BATCH_EXECUTION");
+
   private final String sql;
 
   private final ReuseProbability reuseProbability;
@@ -33,6 +38,10 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   private DBPreparedStatement nextCached;
 
   private Object schemaAccessToken;
+
+  private boolean immediateBatchExecution = DEFAULT_IMMEDIATE_BATCH_EXECUTION;
+
+  private int addBatchCount;
 
   public DBPreparedStatement(DBConnection transaction, String sql, ReuseProbability reuseProbability, PreparedStatement delegate)
   {
@@ -142,6 +151,44 @@ public class DBPreparedStatement extends DelegatingPreparedStatement implements 
   {
     value = getConnection().convertString(this, parameterIndex, value);
     super.setString(parameterIndex, value);
+  }
+
+  public boolean isImmediateBatchExecution()
+  {
+    return immediateBatchExecution;
+  }
+
+  public void setImmediateBatchExecution(boolean immediateBatchExecution)
+  {
+    this.immediateBatchExecution = immediateBatchExecution;
+  }
+
+  @Override
+  public void addBatch() throws SQLException
+  {
+    if (immediateBatchExecution)
+    {
+      ++addBatchCount;
+      execute();
+    }
+    else
+    {
+      super.addBatch();
+    }
+  }
+
+  @Override
+  public int[] executeBatch() throws SQLException
+  {
+    if (immediateBatchExecution)
+    {
+      int[] results = new int[addBatchCount];
+      Arrays.fill(results, 1);
+      addBatchCount = 0;
+      return results;
+    }
+
+    return super.executeBatch();
   }
 
   public String convertString(DBResultSet resultSet, int columnIndex, String value) throws SQLException

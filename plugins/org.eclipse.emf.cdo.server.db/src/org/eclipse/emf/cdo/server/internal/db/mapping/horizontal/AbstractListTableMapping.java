@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
@@ -102,11 +101,14 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     IMappingStrategy mappingStrategy = getMappingStrategy();
     EStructuralFeature feature = getFeature();
 
-    String tableName = mappingStrategy.getTableName(getContainingClass(), feature);
-    typeMapping = mappingStrategy.createValueMapping(feature);
+    if (typeMapping == null)
+    {
+      typeMapping = mappingStrategy.createValueMapping(feature);
+    }
 
-    IDBDatabase database = mappingStrategy.getStore().getDatabase();
-    table = database.getSchema().getTable(tableName);
+    String tableName = mappingStrategy.getTableName(getContainingClass(), feature);
+
+    table = mappingStrategy.getStore().getDatabase().getSchema().getTable(tableName);
     if (table == null)
     {
       if (accessor != null)

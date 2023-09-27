@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.container;
 
 import org.eclipse.net4j.internal.util.container.PluginContainer;
+import org.eclipse.net4j.util.StringConverter;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -103,6 +104,7 @@ public final class ContainerUtil
     container.registerFactory(new ExecutorServiceFactory());
     container.registerFactory(new RandomizerFactory());
     container.registerFactory(new FileUserManagerFactory());
+    container.registerFactory(new StringConverter.MetaFactory());
   }
 
   public static IContainer<Object> emptyContainer()

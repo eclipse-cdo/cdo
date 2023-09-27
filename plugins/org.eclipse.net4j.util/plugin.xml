@@ -31,6 +31,7 @@
      <productGroup id="org.eclipse.net4j.util.security.credentialsProviders" name="%productGroup.name.7"/>
      <productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="%productGroup.name.8"/>
      <productGroup id="org.eclipse.net4j.util.confirmationProviders" name="%productGroup.name.9"/>
+     <productGroup id="org.eclipse.net4j.util.stringConverters" name="%productGroup.name.10"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

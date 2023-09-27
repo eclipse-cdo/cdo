@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.MetaFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.ProductDescriptionProvider;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -41,6 +42,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -61,7 +63,10 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
 
   private List<IElementProcessor> postProcessors;
 
-  private IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<>();
+  private final IRegistry<ElementKey, Object> elementRegistry = new HashMapRegistry<>();
+
+  @ExcludeFromDump
+  private final transient Map<MetaFactory, List<IFactory>> metaFactoryChildren = new HashMap<>();
 
   @ExcludeFromDump
   private transient long maxElementID;
@@ -136,6 +141,35 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
             ContainerAware f = (ContainerAware)factory;
             f.setManagedContainer(container);
           }
+
+          if (factory instanceof MetaFactory)
+          {
+            MetaFactory metaFactory = (MetaFactory)factory;
+
+            if (container != null)
+            {
+              IFactory[] children = metaFactory.create(null);
+              if (children != null)
+              {
+                for (IFactory child : children)
+                {
+                  registerFactory(child);
+                  metaFactoryChildren.computeIfAbsent(metaFactory, k -> new ArrayList<>()).add(child);
+                }
+              }
+            }
+            else
+            {
+              List<IFactory> children = metaFactoryChildren.remove(metaFactory);
+              if (children != null)
+              {
+                for (IFactory child : children)
+                {
+                  unregisterFactory(child);
+                }
+              }
+            }
+          }
         }
       });
     }
@@ -147,6 +181,13 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   public ManagedContainer registerFactory(IFactory factory)
   {
     getFactoryRegistry().put(factory.getKey(), factory);
+    return this;
+  }
+
+  @Override
+  public IManagedContainer unregisterFactory(IFactory factory)
+  {
+    getFactoryRegistry().remove(factory.getKey());
     return this;
   }
 

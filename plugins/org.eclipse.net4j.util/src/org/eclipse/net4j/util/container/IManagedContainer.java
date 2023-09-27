@@ -52,6 +52,11 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
 
   public IManagedContainer registerFactory(IFactory factory);
 
+  /**
+   * @since 3.23
+   */
+  public IManagedContainer unregisterFactory(IFactory factory);
+
   public List<IElementProcessor> getPostProcessors();
 
   public void addPostProcessor(IElementProcessor postProcessor, boolean processExistingElements);

@@ -19,6 +19,7 @@
   <extension-point id="elementProcessors" name="%extpoint.name.elementProcessors" schema="schema/elementProcessors.exsd"/>
 
   <extension point="org.eclipse.net4j.util.productGroups">
+     <productGroup id="org.eclipse.net4j.util.metaFactories" name="%productGroup.name.mf"/>
      <productGroup id="org.eclipse.net4j.util.timers" name="%productGroup.name"/>
      <productGroup id="org.eclipse.net4j.executorServices" name="%productGroup.name.0"/>
      <productGroup id="org.eclipse.net4j.randomizers" name="%productGroup.name.1"/>
@@ -57,6 +58,10 @@
             productGroup="org.eclipse.net4j.util.confirmationProviders"
             type="default"
             class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.metaFactories"
+            type="org.eclipse.net4j.util.stringConverters"
+            class="org.eclipse.net4j.util.StringConverter$MetaFactory"/>
   </extension>
 
 </plugin>

@@ -132,9 +132,7 @@ public class ContainerEvent<E> extends Event implements IContainerEvent<E>
     for (IContainerDelta<E> delta : getDeltas())
     {
       StringUtil.appendSeparator(builder, ", "); //$NON-NLS-1$
-      builder.append(delta.getKind());
-      builder.append("="); //$NON-NLS-1$
-      builder.append(delta.getElement());
+      builder.append(delta);
     }
 
     return builder.toString();

@@ -43,4 +43,10 @@ public class ContainerDelta<E> implements IContainerDelta<E>
   {
     return kind;
   }
+
+  @Override
+  public String toString()
+  {
+    return kind + "=" + element; //$NON-NLS-1$
+  }
 }

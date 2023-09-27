@@ -168,6 +168,7 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
   @Override
   public synchronized void commit(boolean notifications)
   {
+    Transaction transaction = this.transaction;
     if (transaction != null)
     {
       if (!transaction.isOwned())
@@ -175,8 +176,8 @@ public abstract class Registry<K, V> extends Container<Map.Entry<K, V>> implemen
         OM.LOG.warn("Committing thread is not owner of transaction: " + Thread.currentThread()); //$NON-NLS-1$
       }
 
+      this.transaction = null;
       transaction.commit(notifications);
-      transaction = null;
       notifyAll();
     }
   }

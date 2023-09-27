@@ -102,6 +102,24 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
   }
 
   @Override
+  public boolean isCaseSensitive()
+  {
+    return getDelegate().isCaseSensitive();
+  }
+
+  @Override
+  public int compareNames(String name1, String name2)
+  {
+    return getDelegate().compareNames(name1, name2);
+  }
+
+  @Override
+  public boolean equalNames(String name1, String name2)
+  {
+    return getDelegate().equalNames(name1, name2);
+  }
+
+  @Override
   @SuppressWarnings("unchecked")
   public <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype)
   {
@@ -208,6 +226,6 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
 
   private static Set<IDBTable> wrap(Set<IDBTable> tables)
   {
-    return wrap(tables, new HashSet<IDBTable>());
+    return wrap(tables, new HashSet<>());
   }
 }

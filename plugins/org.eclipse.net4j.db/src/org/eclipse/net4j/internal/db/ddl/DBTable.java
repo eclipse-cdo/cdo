@@ -162,7 +162,9 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   @Override
   public IDBField getField(String name)
   {
-    return findElement(getFields(), name);
+    InternalDBSchema schema = (InternalDBSchema)getSchema();
+    IDBField[] fields = getFields();
+    return findElement(schema, fields, name);
   }
 
   @Override
@@ -300,7 +302,9 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
   @Override
   public IDBIndex getIndex(String name)
   {
-    return findElement(getIndices(), name);
+    InternalDBSchema schema = (InternalDBSchema)getSchema();
+    IDBIndex[] indices = getIndices();
+    return findElement(schema, indices, name);
   }
 
   @Override

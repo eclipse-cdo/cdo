@@ -53,7 +53,7 @@ public final class DBSchemaDelta extends DBDelta implements IDBSchemaDelta
 
     IDBTable[] tables = schema.getTables();
     IDBTable[] oldTables = oldSchema == null ? InternalDBSchema.NO_TABLES : oldSchema.getTables();
-    compare(tables, oldTables, new SchemaElementComparator<IDBTable>()
+    compare((InternalDBSchema)schema, tables, oldTables, new SchemaElementComparator<IDBTable>()
     {
       @Override
       public void compare(IDBTable table, IDBTable oldTable)

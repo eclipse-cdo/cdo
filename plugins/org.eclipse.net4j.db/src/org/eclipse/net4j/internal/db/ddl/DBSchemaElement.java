@@ -13,6 +13,7 @@ package org.eclipse.net4j.internal.db.ddl;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor.StopRecursion;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchemaElement;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.PositionProvider;
@@ -86,15 +87,23 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
     {
       if (this instanceof PositionProvider && element2 instanceof PositionProvider)
       {
-        PositionProvider withPosition1 = (PositionProvider)this;
-        PositionProvider withPosition2 = (PositionProvider)element2;
-        return withPosition1.getPosition() - withPosition2.getPosition();
+        int position1 = ((PositionProvider)this).getPosition();
+        int position2 = ((PositionProvider)element2).getPosition();
+        result = Integer.compare(position1, position2);
       }
 
-      result = getName().compareTo(element2.getName());
+      if (result == 0)
+      {
+        String name1 = getName();
+        String name2 = element2.getName();
+
+        InternalDBSchema schema = (InternalDBSchema)getSchema();
+        result = schema.compareNames(name1, name2);
+      }
     }
 
     return result;
+
   }
 
   @Override
@@ -135,14 +144,18 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
   @Override
   public final <T extends IDBSchemaElement> T getElement(Class<T> type, String name)
   {
-    name = name(name);
+    InternalDBSchema schema = (InternalDBSchema)getSchema();
+
     for (IDBSchemaElement element : getElements())
     {
-      if (element.getName() == name && type.isAssignableFrom(element.getClass()))
+      if (type.isAssignableFrom(element.getClass()))
       {
-        @SuppressWarnings("unchecked")
-        T result = (T)element;
-        return result;
+        if (schema.equalNames(element.getName(), name))
+        {
+          @SuppressWarnings("unchecked")
+          T result = (T)element;
+          return result;
+        }
       }
     }
 

@@ -37,6 +37,11 @@ public interface IDBSchema extends IDBSchemaElement
   public boolean isLocked();
 
   /**
+   * @since 4.12
+   */
+  public boolean isCaseSensitive();
+
+  /**
    * @since 4.2
    */
   public <T extends IDBSchemaElement> T findElement(IDBSchemaElement prototype);

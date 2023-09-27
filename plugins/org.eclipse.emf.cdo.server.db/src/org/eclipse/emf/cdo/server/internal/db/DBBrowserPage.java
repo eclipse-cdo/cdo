@@ -52,24 +52,27 @@ public abstract class DBBrowserPage extends AbstractPage
   @Override
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
-    IDBConnectionProvider connectionProvider = (IDBConnectionProvider)repository.getStore();
     Connection connection = null;
     boolean closeConnection = false;
+    boolean caseSensitive = false;
 
     try
     {
       IStoreAccessor accessor = ServerDebugUtil.getAccessor(repository);
       if (accessor instanceof IDBStoreAccessor)
       {
-        connection = ((IDBStoreAccessor)accessor).getConnection();
+        IDBStoreAccessor dbStoreAccessor = (IDBStoreAccessor)accessor;
+        connection = dbStoreAccessor.getConnection();
+        caseSensitive = dbStoreAccessor.getStore().getDBAdapter().isCaseSensitive();
       }
       else
       {
+        IDBConnectionProvider connectionProvider = (IDBConnectionProvider)repository.getStore();
         connection = connectionProvider.getConnection();
         closeConnection = true;
       }
 
-      display(browser, repository, out, connection);
+      display(browser, repository, out, connection, caseSensitive);
     }
     catch (DBException ex)
     {
@@ -84,7 +87,7 @@ public abstract class DBBrowserPage extends AbstractPage
     }
   }
 
-  protected abstract void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection);
+  protected abstract void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive);
 
   protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String title, boolean ordering, String sql)
   {
@@ -170,7 +173,7 @@ public abstract class DBBrowserPage extends AbstractPage
     }
 
     @Override
-    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection)
+    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive)
     {
       String query = browser.getParam("query");
 
@@ -268,13 +271,13 @@ public abstract class DBBrowserPage extends AbstractPage
     }
 
     @Override
-    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection)
+    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive)
     {
       out.print("<table border=\"0\">\r\n");
       out.print("<tr>\r\n");
 
       out.print("<td valign=\"top\">\r\n");
-      String table = showTables(browser, out, connection, repository.getName());
+      String table = showTables(browser, out, connection, repository.getName(), caseSensitive);
       out.print("</td>\r\n");
 
       if (table != null)
@@ -291,7 +294,7 @@ public abstract class DBBrowserPage extends AbstractPage
     /**
      * @since 4.0
      */
-    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, String repo)
+    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, String repo, boolean caseSensitive)
     {
       String table = browser.getParam("table");
       boolean used = browser.isParam("used");
@@ -307,7 +310,7 @@ public abstract class DBBrowserPage extends AbstractPage
       int totalRows = 0;
       int usedTables = 0;
 
-      List<String> allTableNames = DBUtil.getAllTableNames(connection, repo);
+      List<String> allTableNames = DBUtil.getAllTableNames(connection, repo, caseSensitive);
       for (String tableName : allTableNames)
       {
         if (table == null)

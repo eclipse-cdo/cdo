@@ -45,8 +45,6 @@ public abstract class DBDeltaWithProperties extends DBDelta implements IDBDeltaW
   @Override
   public <T> DBPropertyDelta<T> getPropertyDelta(String name)
   {
-    name = name(name);
-
     @SuppressWarnings("unchecked")
     DBPropertyDelta<T> propertyDelta = (DBPropertyDelta<T>)propertyDeltas.get(name);
     return propertyDelta;

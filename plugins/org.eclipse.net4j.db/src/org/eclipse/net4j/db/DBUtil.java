@@ -24,6 +24,7 @@ import org.eclipse.net4j.internal.db.ddl.DBIndex;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
 import org.eclipse.net4j.spi.db.DBAdapter;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
+import org.eclipse.net4j.util.ConsumerWithException;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -51,6 +52,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -73,107 +75,14 @@ public final class DBUtil
    */
   public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
 
+  private static final String[] ALL_TABLE_NAME_TYPES = new String[] { "TABLE" }; //$NON-NLS-1$
+
   private static final boolean IS_NOISY_CLOSE_ENABLED = OMPlatform.INSTANCE.isProperty(PROP_ENABLE_NOISY_CLOSE);
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
   private DBUtil()
   {
-  }
-
-  /**
-   * @deprecated This method exists only to create a "resource leak" warning, so that DBUtil can safely SuppressWarnings("resource").
-   */
-  @Deprecated
-  @SuppressWarnings("unused")
-  private static void avoidResourceLeakWarning() throws SQLException
-  {
-    Connection connection = new DBConnection(null, null);
-    Statement statement = connection.createStatement();
-    close(statement);
-  }
-
-  /**
-   * For debugging purposes ONLY!
-   *
-   * @deprecated Should only be used when debugging.
-   * @since 3.0
-   */
-  @Deprecated
-  public static void sqlDump(Connection conn, String sql)
-  {
-    ResultSet rs = null;
-
-    try
-    {
-      TRACER.format("Dumping output of {0}", sql); //$NON-NLS-1$
-      rs = conn.createStatement().executeQuery(sql);
-      int numCol = rs.getMetaData().getColumnCount();
-
-      StringBuilder row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c))); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-
-      row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append("-----------+--"); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-
-      while (rs.next())
-      {
-        row = new StringBuilder();
-        for (int c = 1; c <= numCol; c++)
-        {
-          row.append(String.format("%10s | ", rs.getString(c))); //$NON-NLS-1$
-        }
-
-        TRACER.trace(row.toString());
-      }
-
-      row = new StringBuilder();
-      for (int c = 1; c <= numCol; c++)
-      {
-        row.append("-----------+-"); //$NON-NLS-1$
-      }
-
-      TRACER.trace(row.toString());
-    }
-    catch (SQLException ex)
-    {
-      // Do nothing
-    }
-    finally
-    {
-      close(rs);
-    }
-  }
-
-  /**
-   * For debugging purposes ONLY!
-   *
-   * @deprecated Should only be used when debugging.
-   * @since 3.0
-   */
-  @Deprecated
-  public static void sqlDump(IDBConnectionProvider connectionProvider, String sql)
-  {
-    Connection connection = connectionProvider.getConnection();
-
-    try
-    {
-      sqlDump(connection, sql);
-    }
-    finally
-    {
-      close(connection);
-    }
   }
 
   /**
@@ -216,9 +125,20 @@ public final class DBUtil
     return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
   }
 
+  /**
+   * Creates a case-insensitive schema with the given <code>name</code>.
+   */
   public static IDBSchema createSchema(String name)
   {
-    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+    return createSchema(name, false);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static IDBSchema createSchema(String name, boolean caseSensitive)
+  {
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive);
   }
 
   /**
@@ -242,7 +162,8 @@ public final class DBUtil
    */
   public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name, boolean fixNullableIndexColumns)
   {
-    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name);
+    boolean caseSensitive = adapter.isCaseSensitive();
+    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive);
 
     if (fixNullableIndexColumns)
     {
@@ -282,12 +203,12 @@ public final class DBUtil
     builder.append("The internal schema migration has fixed the following nullable index columns:");
     builder.append(StringUtil.NL);
 
-    boolean autoCommit = false;
+    boolean oldAutoCommit = false;
     Statement statement = null;
 
     try
     {
-      autoCommit = setAutoCommit(connection, false);
+      oldAutoCommit = setAutoCommit(connection, false);
       statement = connection.createStatement();
 
       for (IDBField field : nullableIndexFields)
@@ -314,7 +235,7 @@ public final class DBUtil
     finally
     {
       close(statement);
-      setAutoCommit(connection, autoCommit);
+      setAutoCommit(connection, oldAutoCommit);
     }
   }
 
@@ -542,23 +463,37 @@ public final class DBUtil
   }
 
   /**
-   * @since 3.0
-   * @deprecated As of 4.2 use {@link #getAllSchemaNames(Connection)}.
+   * @since 4.12
    */
-  @Deprecated
-  public static List<String> getAllSchemaTableNames(Connection connection)
+  public static boolean equalNames(String name1, String name2, boolean caseSensitive)
   {
-    return getAllSchemaNames(connection);
+    if (caseSensitive || name1 == null)
+    {
+      return Objects.equals(name1, name2);
+    }
+
+    return name1.equalsIgnoreCase(name2);
   }
 
   /**
-   * @since 3.0
-   * @deprecated As of 4.2 use {@link #getAllSchemaNames(DatabaseMetaData)}.
+   * @since 4.12
    */
-  @Deprecated
-  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  public static boolean containsName(Set<String> names, String name, boolean caseSensitive)
   {
-    return new ArrayList<>(getAllSchemaNames(metaData));
+    if (caseSensitive || name == null)
+    {
+      return names.contains(name);
+    }
+
+    for (String n : names)
+    {
+      if (name.equalsIgnoreCase(n))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -619,37 +554,51 @@ public final class DBUtil
 
   public static List<String> getAllTableNames(Connection connection, String dbName)
   {
+    return getAllTableNames(connection, dbName, false);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static List<String> getAllTableNames(Connection connection, String dbName, boolean caseSensitive)
+  {
+    List<String> names = new ArrayList<>();
+    forEachTable(connection, dbName, caseSensitive, names::add);
+    return names;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static void forEachTable(Connection connection, String dbName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
+  {
+    if (dbName == null && connection instanceof IUserAware)
+    {
+      dbName = ((IUserAware)connection).getUserID();
+    }
+
     ResultSet tables = null;
 
     try
     {
-      List<String> names = new ArrayList<>();
       DatabaseMetaData metaData = connection.getMetaData();
-      if (dbName != null)
-      {
-        dbName = dbName.toUpperCase();
-        Set<String> schemaNames = getAllSchemaNames(metaData);
-        if (!schemaNames.contains(dbName))
-        {
-          dbName = null;
-        }
-      }
-
-      if (dbName == null && connection instanceof IUserAware)
-      {
-        dbName = ((IUserAware)connection).getUserID();
-      }
-
       String catalog = connection.getCatalog();
-      tables = metaData.getTables(catalog, dbName, null, new String[] { "TABLE" }); //$NON-NLS-1$
+      tables = metaData.getTables(catalog, null, null, ALL_TABLE_NAME_TYPES);
 
       while (tables.next())
       {
-        String name = tables.getString(3);
-        names.add(name);
-      }
+        if (dbName != null)
+        {
+          String schemaName = tables.getString(2);
+          if (!equalNames(schemaName, dbName, caseSensitive))
+          {
+            continue;
+          }
+        }
 
-      return names;
+        String name = tables.getString(3);
+        tableNameConsumer.accept(name);
+      }
     }
     catch (SQLException ex)
     {
@@ -666,6 +615,14 @@ public final class DBUtil
    */
   public static List<Exception> dropAllTables(Connection connection, String dbName)
   {
+    return dropAllTables(connection, dbName, false);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static List<Exception> dropAllTables(Connection connection, String dbName, boolean caseSensitive)
+  {
     Statement statement = null;
 
     try
@@ -673,7 +630,7 @@ public final class DBUtil
       statement = connection.createStatement();
       List<Exception> exceptions = new ArrayList<>();
 
-      for (String tableName : getAllTableNames(connection, dbName))
+      for (String tableName : getAllTableNames(connection, dbName, caseSensitive))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         trace(sql);
@@ -1492,6 +1449,121 @@ public final class DBUtil
   public static boolean isTracerEnabled()
   {
     return TRACER.isEnabled();
+  }
+
+  /**
+   * @deprecated This method exists only to create a "resource leak" warning, so that DBUtil can safely SuppressWarnings("resource").
+   */
+  @Deprecated
+  @SuppressWarnings("unused")
+  private static void avoidResourceLeakWarning() throws SQLException
+  {
+    Connection connection = new DBConnection(null, null);
+    Statement statement = connection.createStatement();
+    close(statement);
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   *
+   * @deprecated Should only be used when debugging.
+   * @since 3.0
+   */
+  @Deprecated
+  public static void sqlDump(Connection conn, String sql)
+  {
+    ResultSet rs = null;
+
+    try
+    {
+      TRACER.format("Dumping output of {0}", sql); //$NON-NLS-1$
+      rs = conn.createStatement().executeQuery(sql);
+      int numCol = rs.getMetaData().getColumnCount();
+
+      StringBuilder row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append(String.format("%10s | ", rs.getMetaData().getColumnLabel(c))); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+--"); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+
+      while (rs.next())
+      {
+        row = new StringBuilder();
+        for (int c = 1; c <= numCol; c++)
+        {
+          row.append(String.format("%10s | ", rs.getString(c))); //$NON-NLS-1$
+        }
+
+        TRACER.trace(row.toString());
+      }
+
+      row = new StringBuilder();
+      for (int c = 1; c <= numCol; c++)
+      {
+        row.append("-----------+-"); //$NON-NLS-1$
+      }
+
+      TRACER.trace(row.toString());
+    }
+    catch (SQLException ex)
+    {
+      // Do nothing
+    }
+    finally
+    {
+      close(rs);
+    }
+  }
+
+  /**
+   * For debugging purposes ONLY!
+   *
+   * @deprecated Should only be used when debugging.
+   * @since 3.0
+   */
+  @Deprecated
+  public static void sqlDump(IDBConnectionProvider connectionProvider, String sql)
+  {
+    Connection connection = connectionProvider.getConnection();
+
+    try
+    {
+      sqlDump(connection, sql);
+    }
+    finally
+    {
+      close(connection);
+    }
+  }
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(Connection)}.
+   */
+  @Deprecated
+  public static List<String> getAllSchemaTableNames(Connection connection)
+  {
+    return getAllSchemaNames(connection);
+  }
+
+  /**
+   * @since 3.0
+   * @deprecated As of 4.2 use {@link #getAllSchemaNames(DatabaseMetaData)}.
+   */
+  @Deprecated
+  public static List<String> getAllSchemaTableNames(DatabaseMetaData metaData)
+  {
+    return new ArrayList<>(getAllSchemaNames(metaData));
   }
 
   /**

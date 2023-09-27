@@ -29,6 +29,16 @@ public interface InternalDBSchema extends IDBSchema, InternalDBSchemaElement
   @Override
   public IDBSchema getWrapper();
 
+  /**
+   * @since 4.12
+   */
+  public int compareNames(String name1, String name2);
+
+  /**
+   * @since 4.12
+   */
+  public boolean equalNames(String name1, String name2);
+
   @Override
   public IDBTable addTable(String name);
 

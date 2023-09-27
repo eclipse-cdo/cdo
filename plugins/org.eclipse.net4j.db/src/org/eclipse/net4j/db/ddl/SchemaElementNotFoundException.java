@@ -11,7 +11,6 @@
 package org.eclipse.net4j.db.ddl;
 
 import org.eclipse.net4j.db.DBException;
-import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
 
 /**
  * @since 4.2
@@ -29,10 +28,10 @@ public class SchemaElementNotFoundException extends DBException
 
   public SchemaElementNotFoundException(IDBSchemaElement parent, IDBSchemaElement.SchemaElementType type, String name)
   {
-    super(type.toString() + " " + DBSchemaElement.name(name) + " not found in " + parent.getSchemaElementType() + " " + parent);
+    super(type.toString() + " " + name + " not found in " + parent.getSchemaElementType() + " " + parent);
     this.parent = parent;
     this.type = type;
-    this.name = DBSchemaElement.name(name);
+    this.name = name;
   }
 
   public IDBSchemaElement getParent()

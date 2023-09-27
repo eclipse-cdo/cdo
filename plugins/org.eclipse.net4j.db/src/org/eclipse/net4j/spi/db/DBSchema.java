@@ -38,7 +38,7 @@ public class DBSchema extends org.eclipse.net4j.internal.db.ddl.DBSchema
 
   public DBSchema(String name)
   {
-    super(name);
+    super(name, false);
   }
 
   /**

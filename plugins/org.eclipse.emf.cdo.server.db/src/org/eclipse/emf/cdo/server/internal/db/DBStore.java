@@ -358,7 +358,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   @Override
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
   {
-    for (String name : DBUtil.getAllTableNames(connection, getRepository().getName()))
+    String repositoryName = getRepository().getName();
+    boolean caseSensitive = dbAdapter.isCaseSensitive();
+
+    for (String name : DBUtil.getAllTableNames(connection, repositoryName, caseSensitive))
     {
       try
       {
@@ -960,7 +963,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
         // Unfortunately the package registry is still inactive, so the class mappings can not be used at this point.
         // Use all tables with a "CDO_CREATED" field instead.
-        for (String tableName : DBUtil.getAllTableNames(connection, repository.getName()))
+        for (String tableName : DBUtil.getAllTableNames(connection, repository.getName(), dbAdapter.isCaseSensitive()))
         {
           try
           {

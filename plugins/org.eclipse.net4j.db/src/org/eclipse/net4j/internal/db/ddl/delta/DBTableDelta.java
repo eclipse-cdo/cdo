@@ -19,6 +19,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBTableDelta;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.spi.db.ddl.InternalDBTable;
 
 import java.text.MessageFormat;
@@ -47,10 +48,11 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
   public DBTableDelta(DBSchemaDelta parent, IDBTable table, IDBTable oldTable)
   {
     this(parent, getName(table, oldTable), getChangeKind(table, oldTable));
+    InternalDBSchema schema = (InternalDBSchema)getSchema(table, oldTable);
 
     IDBField[] fields = table == null ? InternalDBTable.NO_FIELDS : table.getFields();
     IDBField[] oldFields = oldTable == null ? InternalDBTable.NO_FIELDS : oldTable.getFields();
-    compare(fields, oldFields, new SchemaElementComparator<IDBField>()
+    compare(schema, fields, oldFields, new SchemaElementComparator<IDBField>()
     {
       @Override
       public void compare(IDBField field, IDBField oldField)
@@ -65,7 +67,7 @@ public final class DBTableDelta extends DBDelta implements IDBTableDelta
 
     IDBIndex[] indices = table == null ? InternalDBTable.NO_INDICES : table.getIndices();
     IDBIndex[] oldIndices = oldTable == null ? InternalDBTable.NO_INDICES : oldTable.getIndices();
-    compare(indices, oldIndices, new SchemaElementComparator<IDBIndex>()
+    compare(schema, indices, oldIndices, new SchemaElementComparator<IDBIndex>()
     {
       @Override
       public void compare(IDBIndex index, IDBIndex oldIndex)

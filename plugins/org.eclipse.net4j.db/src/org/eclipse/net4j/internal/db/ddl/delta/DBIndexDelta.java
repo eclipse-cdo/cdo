@@ -20,6 +20,7 @@ import org.eclipse.net4j.db.ddl.delta.IDBIndexDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBIndexFieldDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBPropertyDelta;
 import org.eclipse.net4j.spi.db.ddl.InternalDBIndex;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.ObjectUtil;
 
 import java.text.MessageFormat;
@@ -61,9 +62,11 @@ public final class DBIndexDelta extends DBDeltaWithProperties implements IDBInde
       addPropertyDelta(new DBPropertyDelta<>(this, OPTIONAL_PROPERTY, IDBPropertyDelta.Type.BOOLEAN, optional, oldOptional));
     }
 
+    InternalDBSchema schema = (InternalDBSchema)getSchema(index, oldIndex);
+
     IDBIndexField[] indexFields = index == null ? InternalDBIndex.NO_INDEX_FIELDS : index.getIndexFields();
     IDBIndexField[] oldIndexFields = oldIndex == null ? InternalDBIndex.NO_INDEX_FIELDS : oldIndex.getIndexFields();
-    compare(indexFields, oldIndexFields, new SchemaElementComparator<IDBIndexField>()
+    compare(schema, indexFields, oldIndexFields, new SchemaElementComparator<IDBIndexField>()
     {
       @Override
       public void compare(IDBIndexField indexField, IDBIndexField oldIndexField)

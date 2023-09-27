@@ -43,16 +43,9 @@ public interface IDBAdapter
   public String getVersion();
 
   /**
-   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   * @since 4.12
    */
-  @Deprecated
-  public Driver getJDBCDriver();
-
-  /**
-   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
-   */
-  @Deprecated
-  public DataSource createJDBCDataSource();
+  public boolean isCaseSensitive();
 
   /**
    * @since 4.3
@@ -154,4 +147,16 @@ public interface IDBAdapter
    * @since 4.2
    */
   public String sqlModifyField(IDBField field);
+
+  /**
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
+  public Driver getJDBCDriver();
+
+  /**
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Deprecated
+  public DataSource createJDBCDataSource();
 }

@@ -11,8 +11,8 @@
 package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.ddl.IDBNamedElement;
-import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.spi.db.ddl.InternalDBNamedElement;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import java.io.CharArrayWriter;
@@ -50,7 +50,7 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
   @Override
   public void setName(String name)
   {
-    this.name = name(name);
+    this.name = name;
   }
 
   @Override
@@ -112,18 +112,13 @@ public abstract class DBNamedElement extends DBElement implements InternalDBName
     }
   }
 
-  public static String name(String name)
+  public static <E extends IDBNamedElement> E findElement(InternalDBSchema schema, E[] elements, String name)
   {
-    return name.toUpperCase().intern();
-  }
-
-  public static <T extends IDBSchemaElement> T findElement(T[] elements, String name)
-  {
-    name = name(name);
     for (int i = 0; i < elements.length; i++)
     {
-      T element = elements[i];
-      if (element.getName() == name)
+      E element = elements[i];
+
+      if (schema.equalNames(element.getName(), name))
       {
         return element;
       }

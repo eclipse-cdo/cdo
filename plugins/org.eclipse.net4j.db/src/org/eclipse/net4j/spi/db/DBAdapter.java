@@ -125,26 +125,10 @@ public abstract class DBAdapter implements IDBAdapter
     return version;
   }
 
-  /**
-   * @since 4.2
-   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
-   */
   @Override
-  @Deprecated
-  public Driver getJDBCDriver()
+  public boolean isCaseSensitive()
   {
-    throw new UnsupportedOperationException();
-  }
-
-  /**
-   * @since 4.2
-   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
-   */
-  @Override
-  @Deprecated
-  public DataSource createJDBCDataSource()
-  {
-    throw new UnsupportedOperationException();
+    return false;
   }
 
   /**
@@ -193,24 +177,14 @@ public abstract class DBAdapter implements IDBAdapter
 
     try
     {
+      DatabaseMetaData metaData = connection.getMetaData();
       String schemaName = schema.getName();
 
-      DatabaseMetaData metaData = connection.getMetaData();
-      Set<String> schemaNames = DBUtil.getAllSchemaNames(metaData);
-      if (!schemaNames.contains(schemaName))
-      {
-        schemaName = null;
-      }
-
-      ResultSet tables = readTables(connection, metaData, schemaName);
-      while (tables.next())
-      {
-        String tableName = tables.getString(3);
-
+      DBUtil.forEachTable(connection, schemaName, schema.isCaseSensitive(), tableName -> {
         IDBTable table = schema.addTable(tableName);
         readFields(connection, table);
         readIndices(connection, metaData, table, schemaName);
-      }
+      });
     }
     catch (SQLException ex)
     {
@@ -1329,6 +1303,28 @@ public abstract class DBAdapter implements IDBAdapter
         System.out.println("\"" + word + "\"");
       }
     }
+  }
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Override
+  @Deprecated
+  public Driver getJDBCDriver()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  /**
+   * @since 4.2
+   * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
+   */
+  @Override
+  @Deprecated
+  public DataSource createJDBCDataSource()
+  {
+    throw new UnsupportedOperationException();
   }
 
   /**

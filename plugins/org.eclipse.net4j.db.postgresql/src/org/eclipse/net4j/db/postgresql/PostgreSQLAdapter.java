@@ -63,6 +63,12 @@ public class PostgreSQLAdapter extends DBAdapter
     super(name, version);
   }
 
+  @Override
+  public boolean isCaseSensitive()
+  {
+    return true;
+  }
+
   /**
    * @since 2.0
    */

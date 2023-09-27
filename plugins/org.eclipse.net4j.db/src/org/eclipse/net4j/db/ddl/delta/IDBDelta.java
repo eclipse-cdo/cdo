@@ -25,7 +25,13 @@ public interface IDBDelta extends IDBNamedElement, IContainer<IDBDelta>, Compara
 {
   public DeltaType getDeltaType();
 
+  @Override
   public IDBDelta getParent();
+
+  /**
+   * @since 4.12
+   */
+  public IDBSchemaDelta getSchemaDelta();
 
   public ChangeKind getChangeKind();
 

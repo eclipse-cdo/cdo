@@ -225,7 +225,9 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   @Override
   public IDBIndexField getIndexField(String name)
   {
-    return findElement(getIndexFields(), name);
+    InternalDBSchema schema = (InternalDBSchema)getSchema();
+    IDBIndexField[] indexFields = getIndexFields();
+    return findElement(schema, indexFields, name);
   }
 
   @Override
@@ -244,10 +246,11 @@ public class DBIndex extends DBSchemaElement implements InternalDBIndex
   @Override
   public IDBField getField(String name)
   {
-    name = name(name);
+    InternalDBSchema schema = (InternalDBSchema)getSchema();
+
     for (IDBIndexField indexField : indexFields)
     {
-      if (indexField.getName() == name)
+      if (schema.equalNames(indexField.getName(), name))
       {
         return indexField.getField();
       }

@@ -10,12 +10,15 @@
  */
 package org.eclipse.net4j.internal.db.ddl.delta;
 
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.delta.IDBDelta;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor;
 import org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.StopRecursion;
+import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.DBNamedElement;
 import org.eclipse.net4j.internal.db.ddl.DBSchemaElement;
+import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.PositionProvider;
 
@@ -58,6 +61,22 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   public DBDelta getParent()
   {
     return parent;
+  }
+
+  @Override
+  public IDBSchemaDelta getSchemaDelta()
+  {
+    if (this instanceof IDBSchemaDelta)
+    {
+      return (IDBSchemaDelta)this;
+    }
+
+    if (parent != null)
+    {
+      return parent.getSchemaDelta();
+    }
+
+    return null;
   }
 
   @Override
@@ -177,6 +196,11 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     return parent.getLevel() + 1;
   }
 
+  public static IDBSchema getSchema(IDBSchemaElement element, IDBSchemaElement oldElement)
+  {
+    return oldElement == null ? element.getSchema() : oldElement.getSchema();
+  }
+
   public static String getName(IDBSchemaElement element, IDBSchemaElement oldElement)
   {
     return oldElement == null ? element.getName() : oldElement.getName();
@@ -187,14 +211,14 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
     return object == null ? ChangeKind.REMOVE : oldObject == null ? ChangeKind.ADD : ChangeKind.CHANGE;
   }
 
-  protected static <T extends IDBSchemaElement> void compare(T[] elements, T[] oldElements, SchemaElementComparator<T> comparator)
+  protected static <T extends IDBSchemaElement> void compare(InternalDBSchema schema, T[] elements, T[] oldElements, SchemaElementComparator<T> comparator)
   {
     for (int i = 0; i < elements.length; i++)
     {
       T element = elements[i];
       String name = element.getName();
 
-      T oldElement = DBSchemaElement.findElement(oldElements, name);
+      T oldElement = DBSchemaElement.findElement(schema, oldElements, name);
       comparator.compare(element, oldElement);
     }
 
@@ -203,7 +227,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
       T oldElement = oldElements[i];
       String name = oldElement.getName();
 
-      if (DBSchemaElement.findElement(elements, name) == null)
+      if (DBSchemaElement.findElement(schema, elements, name) == null)
       {
         comparator.compare(null, oldElement);
       }
@@ -213,6 +237,7 @@ public abstract class DBDelta extends DBNamedElement implements IDBDelta
   /**
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface SchemaElementComparator<T extends IDBSchemaElement>
   {
     public void compare(T element, T oldElement);

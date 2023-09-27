@@ -49,13 +49,13 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class ExternalReferenceManager extends Lifecycle
 {
-  private static final String EXTERNAL_REFS = "cdo_external_refs";
+  private static final String EXTERNAL_REFS = CDODBSchema.name("cdo_external_refs");
 
-  private static final String EXTERNAL_REFS_ID = "ID";
+  private static final String EXTERNAL_REFS_ID = CDODBSchema.name("id");
 
-  private static final String EXTERNAL_REFS_URI = "URI";
+  private static final String EXTERNAL_REFS_URI = CDODBSchema.name("uri");
 
-  private static final String EXTERNAL_REFS_COMMITTIME = "COMMITTIME";
+  private static final String EXTERNAL_REFS_COMMITTIME = CDODBSchema.name("committime");
 
   private static final DBType DEFAULT_URI_COLUMN_TYPE = DBType.VARCHAR;
 

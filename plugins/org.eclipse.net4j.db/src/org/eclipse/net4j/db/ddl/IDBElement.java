@@ -22,5 +22,10 @@ import java.util.Properties;
  */
 public interface IDBElement extends INotifier
 {
+  /**
+   * @since 4.12
+   */
+  public IDBElement getParent();
+
   public Properties getProperties();
 }

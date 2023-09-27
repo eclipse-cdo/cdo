@@ -60,7 +60,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private int waitingSchemaWriters;
 
-  public DBDatabase(final DBAdapter adapter, IDBConnectionProvider connectionProvider, final String schemaName, final boolean fixNullableIndexColumns)
+  public DBDatabase(DBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
   {
     super(IDBConnection.class);
     this.adapter = adapter;

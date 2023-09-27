@@ -55,25 +55,25 @@ import java.util.Map;
  */
 public class DurableLockingManager extends Lifecycle implements IBranchDeletionSupport
 {
-  private static final String LOCK_AREAS = "CDO_LOCK_AREAS";
+  private static final String LOCK_AREAS = CDODBSchema.name("cdo_lock_areas");
 
-  private static final String LOCK_AREAS_ID = "ID";
+  private static final String LOCK_AREAS_ID = CDODBSchema.name("id");
 
-  private static final String LOCK_AREAS_USER_ID = "USER_ID";
+  private static final String LOCK_AREAS_USER_ID = CDODBSchema.name("user_id");
 
-  private static final String LOCK_AREAS_VIEW_BRANCH = "VIEW_BRANCH";
+  private static final String LOCK_AREAS_VIEW_BRANCH = CDODBSchema.name("view_branch");
 
-  private static final String LOCK_AREAS_VIEW_TIME = "VIEW_TIME";
+  private static final String LOCK_AREAS_VIEW_TIME = CDODBSchema.name("view_time");
 
-  private static final String LOCK_AREAS_READ_ONLY = "READ_ONLY";
+  private static final String LOCK_AREAS_READ_ONLY = CDODBSchema.name("read_only");
 
-  private static final String LOCKS = "CDO_LOCKS";
+  private static final String LOCKS = CDODBSchema.name("cdo_locks");
 
-  private static final String LOCKS_AREA_ID = "AREA_ID";
+  private static final String LOCKS_AREA_ID = CDODBSchema.name("area_id");
 
-  private static final String LOCKS_OBJECT_ID = "OBJECT_ID";
+  private static final String LOCKS_OBJECT_ID = CDODBSchema.name("object_id");
 
-  private static final String LOCKS_LOCK_GRADE = "LOCK_GRADE";
+  private static final String LOCKS_LOCK_GRADE = CDODBSchema.name("lock_grade");
 
   private DBStore store;
 

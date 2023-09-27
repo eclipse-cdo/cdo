@@ -26,6 +26,7 @@ import org.eclipse.net4j.db.ddl.SchemaElementNotFoundException;
 import org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta;
 import org.eclipse.net4j.internal.db.ddl.delta.DBSchemaDelta;
 import org.eclipse.net4j.spi.db.ddl.InternalDBSchema;
+import org.eclipse.net4j.util.StringUtil;
 
 import javax.sql.DataSource;
 
@@ -46,13 +47,16 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
   private static int indexCounter;
 
+  private boolean caseSensitive;
+
   private Map<String, IDBTable> tables = new HashMap<>();
 
   private transient boolean locked;
 
-  public DBSchema(String name)
+  public DBSchema(String name, boolean caseSensitive)
   {
     super(name);
+    this.caseSensitive = caseSensitive;
   }
 
   /**
@@ -60,7 +64,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
    */
   public DBSchema(IDBSchema source)
   {
-    super(source.getName());
+    this(source.getName(), source.isCaseSensitive());
 
     for (IDBTable sourceTable : source.getTables())
     {
@@ -130,6 +134,45 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     return getName();
   }
 
+  @Override
+  public boolean isCaseSensitive()
+  {
+    return caseSensitive;
+  }
+
+  public void setCaseSensitive(boolean caseSensitive)
+  {
+    this.caseSensitive = caseSensitive;
+  }
+
+  @Override
+  public int compareNames(String name1, String name2)
+  {
+    name1 = StringUtil.safe(name1);
+    name2 = StringUtil.safe(name2);
+
+    if (caseSensitive)
+    {
+      return name1.compareTo(name2);
+    }
+
+    return name1.compareToIgnoreCase(name2);
+  }
+
+  @Override
+  public boolean equalNames(String name1, String name2)
+  {
+    name1 = StringUtil.safe(name1);
+    name2 = StringUtil.safe(name2);
+
+    if (caseSensitive)
+    {
+      return name1.equals(name2);
+    }
+
+    return name1.equalsIgnoreCase(name2);
+  }
+
   /**
    * @since 4.2
    */
@@ -197,13 +240,16 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   public IDBTable addTable(String name) throws DBException
   {
     assertUnlocked();
-    if (tables.containsKey(name))
+    String key = makeKey(name);
+
+    IDBTable existingTable = tables.get(key);
+    if (existingTable != null)
     {
-      throw new DBException("IDBTable exists: " + name); //$NON-NLS-1$
+      throw new DBException("IDBTable exists: " + existingTable.getName()); //$NON-NLS-1$
     }
 
     IDBTable table = new DBTable(this, name);
-    tables.put(table.getName(), table);
+    tables.put(key, table);
     resetElements();
     return table;
   }
@@ -215,8 +261,9 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   public IDBTable removeTable(String name)
   {
     assertUnlocked();
-    name = name(name);
-    IDBTable table = tables.remove(name);
+    String key = makeKey(name);
+
+    IDBTable table = tables.remove(key);
     resetElements();
     return table;
   }
@@ -242,8 +289,8 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   @Override
   public IDBTable getTable(String name)
   {
-    name = name(name);
-    return tables.get(name);
+    String key = makeKey(name);
+    return tables.get(key);
   }
 
   /**
@@ -450,5 +497,15 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
   protected void doAccept(IDBSchemaVisitor visitor)
   {
     visitor.visit(this);
+  }
+
+  public String makeKey(String name)
+  {
+    if (caseSensitive || name == null)
+    {
+      return name;
+    }
+
+    return name.toUpperCase();
   }
 }

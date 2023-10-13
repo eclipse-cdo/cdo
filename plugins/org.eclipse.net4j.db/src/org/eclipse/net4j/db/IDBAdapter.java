@@ -48,6 +48,11 @@ public interface IDBAdapter
   public boolean isCaseSensitive();
 
   /**
+   * @since 4.12
+   */
+  public String getDefaultSchemaName(Connection connection);
+
+  /**
    * @since 4.3
    */
   public IDBConnectionProvider createConnectionProvider(DataSource dataSource);

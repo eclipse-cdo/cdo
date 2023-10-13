@@ -131,6 +131,12 @@ public abstract class DBAdapter implements IDBAdapter
     return false;
   }
 
+  @Override
+  public String getDefaultSchemaName(Connection connection)
+  {
+    return null;
+  }
+
   /**
    * @since 4.3
    */
@@ -179,8 +185,9 @@ public abstract class DBAdapter implements IDBAdapter
     {
       DatabaseMetaData metaData = connection.getMetaData();
       String schemaName = schema.getName();
+      boolean caseSensitive = schema.isCaseSensitive();
 
-      DBUtil.forEachTable(connection, schemaName, schema.isCaseSensitive(), tableName -> {
+      DBUtil.forEachTable(connection, schemaName, caseSensitive, tableName -> {
         IDBTable table = schema.addTable(tableName);
         readFields(connection, table);
         readIndices(connection, metaData, table, schemaName);

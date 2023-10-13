@@ -59,6 +59,10 @@
     -->
 
     <store type="db">
+      <!-- The name of the DB schema to use for the repository.
+           If omitted the default schema name of the repository's DB adapter is used as the schema name.
+           If that is null the name of the repository is used as the schema name. -->
+      <property name="schemaName" value="public"/>
 
       <!-- Example http://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)
 	      <property name="idColumnLength" value="34"/>

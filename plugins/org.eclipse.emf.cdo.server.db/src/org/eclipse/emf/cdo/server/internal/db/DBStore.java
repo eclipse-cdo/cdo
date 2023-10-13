@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -768,7 +769,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       DBUtil.close(connection);
     }
 
-    String schemaName = repository.getName();
+    String schemaName = getSchemaName(connection);
     boolean fixNullableIndexColumns = schemaVersion != FIRST_START && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
 
     database = openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
@@ -814,6 +815,27 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
+  }
+
+  private String getSchemaName(Connection connection)
+  {
+    if (properties != null)
+    {
+      String schemaName = properties.get(IDBStore.Props.SCHEMA_NAME);
+      if (schemaName != null)
+      {
+        return schemaName;
+      }
+    }
+
+    String schemaName = dbAdapter.getDefaultSchemaName(connection);
+    if (schemaName != null)
+    {
+      return schemaName;
+    }
+
+    IRepository repository = getRepository();
+    return repository.getName();
   }
 
   @Override

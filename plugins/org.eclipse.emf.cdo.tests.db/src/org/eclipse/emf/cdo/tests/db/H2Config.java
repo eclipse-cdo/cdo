@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
 import org.eclipse.net4j.db.IDBAdapter;
@@ -98,6 +99,14 @@ public class H2Config extends DBConfig
     }
 
     return dataSource;
+  }
+
+  @Override
+  protected Map<String, String> createStoreProperties(String repoName)
+  {
+    Map<String, String> props = super.createStoreProperties(repoName);
+    props.put(IDBStore.Props.SCHEMA_NAME, repoName);
+    return props;
   }
 
   /**

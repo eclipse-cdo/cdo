@@ -91,9 +91,9 @@ public class MysqlConfig extends AbstractSetupDBConfig
   }
 
   @Override
-  protected Map<String, String> createStoreProperties()
+  protected Map<String, String> createStoreProperties(String repoName)
   {
-    Map<String, String> props = super.createStoreProperties();
+    Map<String, String> props = super.createStoreProperties(repoName);
 
     // Mysql max key length is 3072 bytes.
     // Charset utf8mb4 uses 4 bytes per character.

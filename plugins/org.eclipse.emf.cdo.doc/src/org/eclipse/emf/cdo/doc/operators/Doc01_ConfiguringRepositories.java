@@ -30,6 +30,8 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import javax.sql.DataSource;
 
+import java.sql.Connection;
+
 /**
  * Configuring Repositories
  * <p>
@@ -256,6 +258,18 @@ public class Doc01_ConfiguringRepositories
    */
   public class Element_store
   {
+    /**
+     * Property schemaName
+     * <p>
+     * Specifies, if the store is a DBStore, the name of the DB schema to use for the repository.
+     * If omitted the {@link IDBAdapter#getDefaultSchemaName(Connection) default schema name} of the repository's
+     * {@link IDBAdapter DB adapter} is used as the schema name. If that is <code>null</code> the name of the
+     * repository is used as the schema name.
+     */
+    public class Property_schemaName
+    {
+    }
+
     /**
      * Property connectionKeepAlivePeriod
      * <p>

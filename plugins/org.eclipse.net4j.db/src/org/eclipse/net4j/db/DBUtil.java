@@ -552,29 +552,29 @@ public final class DBUtil
     }
   }
 
-  public static List<String> getAllTableNames(Connection connection, String dbName)
+  public static List<String> getAllTableNames(Connection connection, String schemaName)
   {
-    return getAllTableNames(connection, dbName, false);
+    return getAllTableNames(connection, schemaName, false);
   }
 
   /**
    * @since 4.12
    */
-  public static List<String> getAllTableNames(Connection connection, String dbName, boolean caseSensitive)
+  public static List<String> getAllTableNames(Connection connection, String schemaName, boolean caseSensitive)
   {
     List<String> names = new ArrayList<>();
-    forEachTable(connection, dbName, caseSensitive, names::add);
+    forEachTable(connection, schemaName, caseSensitive, names::add);
     return names;
   }
 
   /**
    * @since 4.12
    */
-  public static void forEachTable(Connection connection, String dbName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
+  public static void forEachTable(Connection connection, String schemaName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
   {
-    if (dbName == null && connection instanceof IUserAware)
+    if (schemaName == null && connection instanceof IUserAware)
     {
-      dbName = ((IUserAware)connection).getUserID();
+      schemaName = ((IUserAware)connection).getUserID();
     }
 
     ResultSet tables = null;
@@ -587,10 +587,10 @@ public final class DBUtil
 
       while (tables.next())
       {
-        if (dbName != null)
+        if (schemaName != null)
         {
-          String schemaName = tables.getString(2);
-          if (!equalNames(schemaName, dbName, caseSensitive))
+          String tableSchemaName = tables.getString(2);
+          if (!equalNames(tableSchemaName, schemaName, caseSensitive))
           {
             continue;
           }
@@ -613,15 +613,15 @@ public final class DBUtil
   /**
    * @since 4.0
    */
-  public static List<Exception> dropAllTables(Connection connection, String dbName)
+  public static List<Exception> dropAllTables(Connection connection, String schemaName)
   {
-    return dropAllTables(connection, dbName, false);
+    return dropAllTables(connection, schemaName, false);
   }
 
   /**
    * @since 4.12
    */
-  public static List<Exception> dropAllTables(Connection connection, String dbName, boolean caseSensitive)
+  public static List<Exception> dropAllTables(Connection connection, String schemaName, boolean caseSensitive)
   {
     Statement statement = null;
 
@@ -630,7 +630,7 @@ public final class DBUtil
       statement = connection.createStatement();
       List<Exception> exceptions = new ArrayList<>();
 
-      for (String tableName : getAllTableNames(connection, dbName, caseSensitive))
+      for (String tableName : getAllTableNames(connection, schemaName, caseSensitive))
       {
         String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
         trace(sql);

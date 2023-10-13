@@ -117,6 +117,16 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
   public interface Props
   {
     /**
+     * The name of the DB schema to use for the repository.
+     * If omitted the {@link IDBAdapter#getDefaultSchemaName(Connection) default schema name} of the repository's
+     * {@link IDBAdapter DB adapter} is used as the schema name. If that is <code>null</code> the name of the
+     * repository is used as the schema name.
+     *
+     * @since 4.12
+     */
+    public static final String SCHEMA_NAME = "schemaName"; //$NON-NLS-1$
+
+    /**
      * Period at which to execute an SQL statement to keep DB connection alive, in minutes.
      */
     public static final String CONNECTION_KEEPALIVE_PERIOD = "connectionKeepAlivePeriod"; //$NON-NLS-1$

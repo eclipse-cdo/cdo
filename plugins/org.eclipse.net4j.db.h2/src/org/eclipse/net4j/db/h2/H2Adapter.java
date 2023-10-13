@@ -36,6 +36,8 @@ public class H2Adapter extends DBAdapter
 
   public static final String VERSION = "1.1.114"; //$NON-NLS-1$
 
+  private static final String DEFAULT_SCHEMA_NAME = "public"; //$NON-NLS-1$
+
   public H2Adapter()
   {
     super(NAME, VERSION);
@@ -73,6 +75,12 @@ public class H2Adapter extends DBAdapter
     }
 
     return super.getTypeName(field);
+  }
+
+  @Override
+  public String getDefaultSchemaName(Connection connection)
+  {
+    return DEFAULT_SCHEMA_NAME;
   }
 
   @Override

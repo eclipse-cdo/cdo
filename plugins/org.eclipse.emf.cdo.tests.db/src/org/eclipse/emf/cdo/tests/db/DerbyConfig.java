@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.tests.db;
 
+import org.eclipse.emf.cdo.server.db.IDBStore;
+
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.derby.EmbeddedDerbyAdapter;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -85,6 +88,14 @@ public class DerbyConfig extends DBConfig
     }
 
     return dataSource;
+  }
+
+  @Override
+  protected Map<String, String> createStoreProperties(String repoName)
+  {
+    Map<String, String> props = super.createStoreProperties(repoName);
+    props.put(IDBStore.Props.SCHEMA_NAME, "APP");
+    return props;
   }
 
   @Override

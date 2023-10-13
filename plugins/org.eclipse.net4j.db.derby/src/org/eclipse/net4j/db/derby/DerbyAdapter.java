@@ -15,6 +15,7 @@ import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 
 /**
@@ -26,6 +27,8 @@ import java.sql.SQLException;
 public abstract class DerbyAdapter extends DBAdapter
 {
   public static final String VERSION = "10.3.2.1"; //$NON-NLS-1$
+
+  private static final String DEFAULT_SCHEMA_NAME = "app"; //$NON-NLS-1$
 
   private static final String[] RESERVED_WORDS = { "ADD", "ALL", "ALLOCATE", "ALTER", "AND", "ANY", "ARE", "AS", "ASC", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$
       "ASSERTION", "AT", "AUTHORIZATION", "AVG", "BEGIN", "BETWEEN", "BIGINT", "BIT", "BOOLEAN", "BOTH", "BY", "CALL", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$ //$NON-NLS-5$ //$NON-NLS-6$ //$NON-NLS-7$ //$NON-NLS-8$ //$NON-NLS-9$ //$NON-NLS-10$ //$NON-NLS-11$ //$NON-NLS-12$
@@ -91,6 +94,12 @@ public abstract class DerbyAdapter extends DBAdapter
   public String[] getReservedWords()
   {
     return RESERVED_WORDS;
+  }
+
+  @Override
+  public String getDefaultSchemaName(Connection connection)
+  {
+    return DEFAULT_SCHEMA_NAME;
   }
 
   @Override

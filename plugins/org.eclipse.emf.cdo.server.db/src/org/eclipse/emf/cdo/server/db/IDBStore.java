@@ -122,7 +122,7 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
      * {@link IDBAdapter DB adapter} is used as the schema name. If that is <code>null</code> the name of the
      * repository is used as the schema name.
      *
-     * @since 4.12
+     * @since 4.13
      */
     public static final String SCHEMA_NAME = "schemaName"; //$NON-NLS-1$
 

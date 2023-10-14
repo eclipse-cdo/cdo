@@ -2,12 +2,12 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.buddies.ui;singleton:=true
-Bundle-Version: 4.2.0.qualifier
+Bundle-Version: 4.2.1.qualifier
 Bundle-Activator: org.eclipse.net4j.buddies.internal.ui.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.ui;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
  org.eclipse.ui.ide;bundle-version="[3.5.0,4.0.0)";visibility:=reexport,
@@ -16,13 +16,13 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.buddies;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.net4j.buddies.chat;bundle-version="[4.0.0,5.0.0)";resolution:=optional,
  org.eclipse.net4j.ui.shared;bundle-version="[4.0.0,5.0.0)"
-Export-Package: org.eclipse.net4j.buddies.internal.ui;version="4.2.0",
- org.eclipse.net4j.buddies.internal.ui.actions;version="4.2.0",
- org.eclipse.net4j.buddies.internal.ui.bundle;version="4.2.0";x-internal:=true,
- org.eclipse.net4j.buddies.internal.ui.dnd;version="4.2.0",
- org.eclipse.net4j.buddies.internal.ui.messages;version="4.2.0";x-internal:=true,
- org.eclipse.net4j.buddies.internal.ui.preferences;version="4.2.0",
- org.eclipse.net4j.buddies.internal.ui.views;version="4.2.0",
- org.eclipse.net4j.buddies.ui;version="4.2.0"
+Export-Package: org.eclipse.net4j.buddies.internal.ui;version="4.2.1",
+ org.eclipse.net4j.buddies.internal.ui.actions;version="4.2.1",
+ org.eclipse.net4j.buddies.internal.ui.bundle;version="4.2.1";x-internal:=true,
+ org.eclipse.net4j.buddies.internal.ui.dnd;version="4.2.1",
+ org.eclipse.net4j.buddies.internal.ui.messages;version="4.2.1";x-internal:=true,
+ org.eclipse.net4j.buddies.internal.ui.preferences;version="4.2.1",
+ org.eclipse.net4j.buddies.internal.ui.views;version="4.2.1",
+ org.eclipse.net4j.buddies.ui;version="4.2.1"
 Bundle-ActivationPolicy: lazy
 Automatic-Module-Name: org.eclipse.net4j.buddies.ui

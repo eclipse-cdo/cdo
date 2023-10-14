@@ -7,7 +7,7 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.emf.cdo.tests.db.bundle.OM$Activator
-Bundle-RequiredExecutionEnvironment: JavaSE-17
+Bundle-RequiredExecutionEnvironment: JavaSE-11
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.emf.cdo.tests;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,
  org.eclipse.emf.cdo.server.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport,

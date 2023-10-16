@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDOElementProxy;
 import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
+import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDOClearFeatureDeltaImpl;
@@ -254,6 +255,10 @@ public final class CDOStoreImpl implements CDOStore
         Object defaultValue = feature.getDefaultValue();
 
         return !ObjectUtil.equals(value, defaultValue);
+      }
+      catch (NoPermissionException ex)
+      {
+        return false;
       }
       finally
       {

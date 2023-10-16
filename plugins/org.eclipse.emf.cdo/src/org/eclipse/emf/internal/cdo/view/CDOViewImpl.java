@@ -1645,21 +1645,20 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doBeforeDeactivate() throws Exception
   {
+    // Prevent new adapters from being attached while closing.
     closing = true;
 
-    CDOAdapterPolicy clearAdapterPolicy = options.getClearAdapterPolicy();
-    if (clearAdapterPolicy == null)
-    {
-      InternalCDOViewSet viewSet = getViewSet();
-      clearAdapterPolicy = viewSet.getDefaultClearAdapterPolicy();
-    }
-
-    if (clearAdapterPolicy != null && clearAdapterPolicy != CDOAdapterPolicy.NONE)
-    {
-      clearAdapters(clearAdapterPolicy);
-    }
-
+    CDOViewRegistryImpl.INSTANCE.deregister(this);
     super.doBeforeDeactivate();
+
+    clearAdapters();
+
+    // Detach the view set from the view. If this would happen in doDeactivate, i.e.,
+    // when this view is already INACTIVE, then EContentAdapters on the resource set
+    // would log "View not active" while removing themselves from the contained notifiers.
+    // See SessionTest.testEContentAdapter().
+    InternalCDOViewSet viewSet = getViewSet();
+    viewSet.remove(this);
   }
 
   /**
@@ -1668,12 +1667,6 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
-    CDOViewRegistryImpl.INSTANCE.deregister(this);
-
-    // Detach the view set from the view.
-    InternalCDOViewSet viewSet = getViewSet();
-    viewSet.remove(this);
-
     unitManager.deactivate();
     commitInfoDistributor.deactivate();
 
@@ -1738,6 +1731,21 @@ public class CDOViewImpl extends AbstractCDOView
     changeSubscriptionManager = null;
 
     super.doDeactivate();
+  }
+
+  private void clearAdapters()
+  {
+    CDOAdapterPolicy clearAdapterPolicy = options.getClearAdapterPolicy();
+    if (clearAdapterPolicy == null)
+    {
+      InternalCDOViewSet viewSet = getViewSet();
+      clearAdapterPolicy = viewSet.getDefaultClearAdapterPolicy();
+    }
+
+    if (clearAdapterPolicy != null && clearAdapterPolicy != CDOAdapterPolicy.NONE)
+    {
+      clearAdapters(clearAdapterPolicy);
+    }
   }
 
   private void clearAdapters(CDOAdapterPolicy adapterPolicy)

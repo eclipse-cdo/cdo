@@ -1646,15 +1646,11 @@ public class CDOViewImpl extends AbstractCDOView
   protected void doBeforeDeactivate() throws Exception
   {
     closing = true;
-    CDOViewRegistryImpl.INSTANCE.deregister(this);
-
-    // Detach the view set from the view.
-    InternalCDOViewSet viewSet = getViewSet();
-    viewSet.remove(this);
 
     CDOAdapterPolicy clearAdapterPolicy = options.getClearAdapterPolicy();
     if (clearAdapterPolicy == null)
     {
+      InternalCDOViewSet viewSet = getViewSet();
       clearAdapterPolicy = viewSet.getDefaultClearAdapterPolicy();
     }
 
@@ -1672,6 +1668,12 @@ public class CDOViewImpl extends AbstractCDOView
   @Override
   protected void doDeactivate() throws Exception
   {
+    CDOViewRegistryImpl.INSTANCE.deregister(this);
+
+    // Detach the view set from the view.
+    InternalCDOViewSet viewSet = getViewSet();
+    viewSet.remove(this);
+
     unitManager.deactivate();
     commitInfoDistributor.deactivate();
 
@@ -1742,7 +1744,7 @@ public class CDOViewImpl extends AbstractCDOView
   {
     try
     {
-      for (CDOObject object : getModifiableObjects().values())
+      for (CDOObject object : getObjectsList())
       {
         EList<Adapter> adapters = object.eAdapters();
         int size = adapters.size();

@@ -531,8 +531,17 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
     if (obj instanceof CDOObject)
     {
       return CDOLabelProvider.getColor((CDOObject)obj);
-
     }
+
+    if (obj instanceof CDOTransaction)
+    {
+      CDOTransaction transaction = (CDOTransaction)obj;
+      if (transaction.hasConflict())
+      {
+        return CDOLabelProvider.getConflictColor();
+      }
+    }
+
     return super.getForeground(obj);
   }
 

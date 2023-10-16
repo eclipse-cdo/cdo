@@ -274,12 +274,12 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     return null;
   }
 
-  private static Color getNoPermissionColor()
+  static Color getNoPermissionColor()
   {
     return UIUtil.grayColor();
   }
 
-  private static Color getReadPermissionColor()
+  static Color getReadPermissionColor()
   {
     if (readPermissionColor == null)
     {
@@ -289,12 +289,12 @@ public class CDOLabelProvider extends AdapterFactoryLabelProvider implements ICo
     return readPermissionColor;
   }
 
-  private static Color getConflictColor()
+  static Color getConflictColor()
   {
     return UIUtil.redColor();
   }
 
-  private static Image getErrorImage()
+  static Image getErrorImage()
   {
     return UIUtil.errorImage();
   }

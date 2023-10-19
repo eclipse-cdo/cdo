@@ -33,9 +33,13 @@ import org.osgi.framework.BundleContext;
 import org.osgi.framework.FrameworkUtil;
 import org.osgi.util.tracker.ServiceTracker;
 
+import java.net.HttpCookie;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
@@ -47,7 +51,6 @@ public class WSClientConnector extends WSConnector
 {
   // private static final long CLIENT_IDLE_TIMEOUT =
   // OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.internal.ws.WSClientConnector.clientIdleTimeout", 30000);
-
   private static final String CLIENT_BASIC_AUTH = "org.eclipse.net4j.internal.ws.WSClientConnector.clientBasicAuth";
 
   private WebSocketClient client;
@@ -62,8 +65,11 @@ public class WSClientConnector extends WSConnector
 
   private String acceptorName;
 
+  private final List<HttpCookie> cookies;
+
   public WSClientConnector()
   {
+    cookies = new ArrayList<>();
   }
 
   @Override
@@ -138,6 +144,26 @@ public class WSClientConnector extends WSConnector
 
     serviceURI = new URI(serviceURIString);
     acceptorName = path.segment(index).substring(ACCEPTOR_NAME_PREFIX.length());
+  }
+
+  /**
+   * Clear known cookies and use the new ones.
+   */
+  public void setCookies(List<HttpCookie> httpCookies)
+  {
+    cookies.clear();
+    if (httpCookies != null && !httpCookies.isEmpty())
+    {
+      cookies.addAll(httpCookies);
+    }
+  }
+
+  /**
+   * Return an unmodifiable list of cookies.
+   */
+  public List<HttpCookie> getCookies()
+  {
+    return Collections.unmodifiableList(cookies);
   }
 
   @Override
@@ -262,6 +288,14 @@ public class WSClientConnector extends WSConnector
 
     ClientUpgradeRequest request = new ClientUpgradeRequest();
     request.setHeader(ACCEPTOR_NAME_HEADER, acceptorName);
+
+    if (cookies != null)
+    {
+      for (HttpCookie cookie : cookies)
+      {
+        request.getCookies().add(cookie);
+      }
+    }
 
     try
     {

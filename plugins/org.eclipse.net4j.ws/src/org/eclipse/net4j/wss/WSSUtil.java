@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.wss.WSSConnectorFactory;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.ws.IWSAcceptor;
 import org.eclipse.net4j.ws.IWSConnector;
+import org.eclipse.net4j.ws.WSUtil;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -51,36 +52,19 @@ public final class WSSUtil
     return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, FACTORY_TYPE, description);
   }
 
-  public static IWSConnector getConnector(IManagedContainer container, URI serviceURI, String acceptorName)
+  public static IWSConnector getConnector(IManagedContainer container, URI serviceURI, String acceptorName, String... arguments)
   {
-    String description = getConnectorDescription(serviceURI, acceptorName);
+    String description = getConnectorDescription(serviceURI, acceptorName, arguments);
     return getConnector(container, description);
   }
 
-  public static String getConnectorDescription(String serviceURI, String acceptorName) throws URISyntaxException
+  public static String getConnectorDescription(String serviceURI, String acceptorName, String... arguments) throws URISyntaxException
   {
-    return getConnectorDescription(new URI(serviceURI), acceptorName);
+    return getConnectorDescription(new URI(serviceURI), acceptorName, arguments);
   }
 
-  public static String getConnectorDescription(URI serviceURI, String acceptorName)
+  public static String getConnectorDescription(URI serviceURI, String acceptorName, String... arguments)
   {
-    String string = serviceURI.toString();
-    if (!string.endsWith("/")) //$NON-NLS-1$
-    {
-      string += "/"; //$NON-NLS-1$
-
-      try
-      {
-        serviceURI = new URI(string);
-      }
-      catch (URISyntaxException ex)
-      {
-        // This can't realistically happen.
-        throw new RuntimeException(ex);
-      }
-    }
-
-    URI uri = serviceURI.resolve(IWSConnector.ACCEPTOR_NAME_PREFIX + acceptorName);
-    return uri.getAuthority() + uri.getPath();
+    return WSUtil.getConnectorDescription(serviceURI, acceptorName, arguments);
   }
 }

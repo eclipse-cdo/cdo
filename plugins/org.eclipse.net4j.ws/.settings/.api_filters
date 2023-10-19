@@ -78,4 +78,24 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/ws/WSUtil.java" type="org.eclipse.net4j.ws.WSUtil">
+        <filter comment="25" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.WSUtil"/>
+                <message_argument value="getConnector(IManagedContainer, URI, String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="25" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.WSUtil"/>
+                <message_argument value="getConnectorDescription(String, String)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="25" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.WSUtil"/>
+                <message_argument value="getConnectorDescription(URI, String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

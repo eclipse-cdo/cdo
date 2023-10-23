@@ -18,12 +18,9 @@ import org.eclipse.core.net.proxy.IProxyData;
 import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.client.dynamic.HttpClientTransportDynamic;
 import org.eclipse.jetty.io.ClientConnector;
-import org.eclipse.jetty.util.resource.PathResource;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.websocket.client.WebSocketClient;
 
-import java.io.File;
-import java.net.URI;
 import java.text.MessageFormat;
 
 /**
@@ -75,10 +72,12 @@ public class WSSClientConnector extends WSClientConnector
 
     boolean trustAll = Boolean.getBoolean("org.eclipse.net4j.internal.wss.ssl.trustall");
     String eia = System.getProperty("org.eclipse.net4j.internal.wss.ssl.endpointIdentificationAlgorithm");
-    String passphrase = System.getProperty("org.eclipse.net4j.internal.wss.ssl.passphrase");
-    String trusturi = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust");
-    String trustType = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.type");
-    String trustAlg = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.manager.factory.algorithm");
+
+    // To uncomment after the move to Jetty 12.
+    // String passphrase = System.getProperty("org.eclipse.net4j.internal.wss.ssl.passphrase");
+    // String trusturi = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust");
+    // String trustType = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.type");
+    // String trustAlg = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.manager.factory.algorithm");
 
     sslContextFactory.setTrustAll(trustAll);
 
@@ -91,24 +90,26 @@ public class WSSClientConnector extends WSClientConnector
       sslContextFactory.setEndpointIdentificationAlgorithm(eia);
     }
 
-    if (trusturi != null)
-    {
-      File file = new File(URI.create(trusturi));
-      if (file.exists())
-      {
-        sslContextFactory.setTrustStoreResource(new PathResource(file));
-        sslContextFactory.setTrustStorePassword(passphrase);
-        if (!StringUtil.isEmpty(trustType))
-        {
-          sslContextFactory.setTrustStoreType(trustType);
-        }
-
-        if (!StringUtil.isEmpty(trustAlg))
-        {
-          sslContextFactory.setTrustManagerFactoryAlgorithm(trustAlg);
-        }
-      }
-    }
+    // To uncomment after the move to Jetty 12. See line 100: new PathResource(file)
+    //
+    // if (trusturi != null)
+    // {
+    // File file = new File(URI.create(trusturi));
+    // if (file.exists())
+    // {
+    // sslContextFactory.setTrustStoreResource(new PathResource(file));
+    // sslContextFactory.setTrustStorePassword(passphrase);
+    // if (!StringUtil.isEmpty(trustType))
+    // {
+    // sslContextFactory.setTrustStoreType(trustType);
+    // }
+    //
+    // if (!StringUtil.isEmpty(trustAlg))
+    // {
+    // sslContextFactory.setTrustManagerFactoryAlgorithm(trustAlg);
+    // }
+    // }
+    // }
     return sslContextFactory;
   }
 

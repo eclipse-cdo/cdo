@@ -64,7 +64,7 @@ public final class CDONet4jUtil
   public static final String PROTOCOL_WS = "cdo.net4j.ws";
 
   /**
-   * @since 4.3
+   * @since 4.7
    */
   public static final String PROTOCOL_WSS = "cdo.net4j.wss";
 

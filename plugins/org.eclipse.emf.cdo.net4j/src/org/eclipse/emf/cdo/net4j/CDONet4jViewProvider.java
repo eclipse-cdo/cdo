@@ -351,6 +351,9 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   {
     public static final String ACCEPTOR_NAME_PREFIX = "@";
 
+    /**
+     * @since 4.7
+     */
     protected WS(String transport, int priority)
     {
       super(transport, priority);
@@ -434,7 +437,7 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
 
   /**
    * An WSS-based {@link CDONet4jViewProvider view provider}.
-   *
+   * @since 4.7
    * @author Maxime Porhel (Obeo)
    */
   public static class WSS extends WS

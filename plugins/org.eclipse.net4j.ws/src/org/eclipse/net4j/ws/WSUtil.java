@@ -47,17 +47,26 @@ public final class WSUtil
     return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, FACTORY_TYPE, description);
   }
 
+  /**
+   * @since 1.3
+   */
   public static IWSConnector getConnector(IManagedContainer container, URI serviceURI, String acceptorName, String... arguments)
   {
     String description = getConnectorDescription(serviceURI, acceptorName, arguments);
     return getConnector(container, description);
   }
 
+  /**
+   * @since 1.3
+   */
   public static String getConnectorDescription(String serviceURI, String acceptorName, String... arguments) throws URISyntaxException
   {
     return getConnectorDescription(new URI(serviceURI), acceptorName, arguments);
   }
 
+  /**
+   * @since 1.3
+   */
   public static String getConnectorDescription(URI serviceURI, String acceptorName, String... arguments)
   {
     String string = serviceURI.toString();

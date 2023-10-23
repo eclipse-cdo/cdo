@@ -24,7 +24,7 @@ import java.net.URISyntaxException;
 
 /**
  * A utility class with static convenience methods.
- *
+ * @since 1.3
  * @author mporhel
  */
 public final class WSSUtil

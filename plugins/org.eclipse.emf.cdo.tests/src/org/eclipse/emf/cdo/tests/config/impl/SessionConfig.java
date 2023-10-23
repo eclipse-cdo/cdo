@@ -66,6 +66,7 @@ import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -833,6 +834,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+
           handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
           server.setHandler(handler);
           server.start();
@@ -957,6 +961,9 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+
           ServletHolder sh = new ServletHolder("net4j", Net4jWebSocketServlet.class);
           sh.setInitOrder(0);
           handler.addServlet(sh, "/net4j");

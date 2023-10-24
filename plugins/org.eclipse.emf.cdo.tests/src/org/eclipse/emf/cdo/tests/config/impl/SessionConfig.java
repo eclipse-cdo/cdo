@@ -919,6 +919,11 @@ public abstract class SessionConfig extends Config implements ISessionConfig
       {
         try
         {
+          // System.setProperty("org.eclipse.net4j.wss.ssl.endpointIdentificationAlgorithm", "null");
+          // System.setProperty("org.eclipse.net4j.wss.ssl.passphrase", "secret");
+          // System.setProperty("org.eclipse.net4j.wss.ssl.trust", new File("ssl/trusted.ks").toURI().toString());
+          System.setProperty("org.eclipse.net4j.internal.wss.ssl.trustall", "true");
+
           return WSSUtil.getConnector(getClientContainer(), new URI(SERVICE_URI), ACCEPTOR_NAME);
         }
         catch (URISyntaxException ex)
@@ -951,7 +956,8 @@ public abstract class SessionConfig extends Config implements ISessionConfig
           sslContextFactory.setKeyStorePassword("ab987c");
 
           HttpConfiguration httpsConfig = new HttpConfiguration();
-          httpsConfig.addCustomizer(new SecureRequestCustomizer());
+          SecureRequestCustomizer customizer = new SecureRequestCustomizer();
+          httpsConfig.addCustomizer(new SecureRequestCustomizer(false));
 
           ServerConnector wssConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.toString()),
               new HttpConnectionFactory(httpsConfig));

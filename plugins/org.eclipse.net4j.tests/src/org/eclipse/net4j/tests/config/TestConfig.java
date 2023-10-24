@@ -33,6 +33,7 @@ import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPConnector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.tcp.ssl.SSLUtil;
+import org.eclipse.net4j.tests.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.ws.IWSAcceptor;
@@ -41,14 +42,23 @@ import org.eclipse.net4j.ws.WSUtil;
 import org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet;
 import org.eclipse.net4j.wss.WSSUtil;
 
+import org.eclipse.core.runtime.URIUtil;
+import org.eclipse.jetty.http.HttpVersion;
+import org.eclipse.jetty.server.HttpConfiguration;
+import org.eclipse.jetty.server.HttpConnectionFactory;
+import org.eclipse.jetty.server.SecureRequestCustomizer;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.ServerConnector;
+import org.eclipse.jetty.server.SslConnectionFactory;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.util.ssl.SslContextFactory;
 import org.eclipse.jetty.websocket.server.config.JettyWebSocketServletContainerInitializer;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.net.URL;
 
 /**
  * @author Eike Stepper
@@ -358,6 +368,7 @@ public abstract class TestConfig
 
     public static final String ACCEPTOR_NAME = "default";
 
+    @Override
     public TestConfig createConfig()
     {
       return new TestConfig()
@@ -389,10 +400,10 @@ public abstract class TestConfig
         {
           try
           {
-            // System.getProperties().put("org.eclipse.net4j.wss.ssl.endpointIdentificationAlgorithm", "null");
-            // System.getProperties().put("org.eclipse.net4j.wss.ssl.passphrase", "secret");
-            // System.getProperties().put("org.eclipse.net4j.wss.ssl.trust", new
-            // File("ssl/trusted.ks").toURI().toString());
+            // System.setProperty("org.eclipse.net4j.wss.ssl.endpointIdentificationAlgorithm", "null");
+            // System.setProperty("org.eclipse.net4j.wss.ssl.passphrase", "secret");
+            // System.setProperty("org.eclipse.net4j.wss.ssl.trust", new File("ssl/trusted.ks").toURI().toString());
+            System.setProperty("org.eclipse.net4j.internal.wss.ssl.trustall", "true");
 
             String description = WSSUtil.getConnectorDescription(SERVICE_URI, ACCEPTOR_NAME);
             return (IWSConnector)container.getElement(WSConnectorFactory.PRODUCT_GROUP, WSSUtil.FACTORY_TYPE, description, activate);
@@ -414,11 +425,23 @@ public abstract class TestConfig
         {
           IOUtil.OUT().println("Starting Jetty...");
           server = new Server();
+          SslContextFactory.Server sslContextFactory = new SslContextFactory.Server();
 
-          ServerConnector connector = new ServerConnector(server);
-          connector.setPort(HTTPS_PORT);
-          server.addConnector(connector);
+          URL baseurl = OM.BUNDLE.getBaseURL();
+          File file = URIUtil.toFile(URIUtil.toURI(baseurl));
+          File keyStoreFile = new File(file.getPath() + File.separator + "sslKey" + File.separator + "testKeys");
+          sslContextFactory.setKeyStorePath(keyStoreFile.getPath());
+          sslContextFactory.setKeyStorePassword("ab987c");
 
+          HttpConfiguration httpsConfig = new HttpConfiguration();
+          SecureRequestCustomizer customizer = new SecureRequestCustomizer();
+          httpsConfig.addCustomizer(new SecureRequestCustomizer(false));
+
+          ServerConnector wssConnector = new ServerConnector(server, new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.toString()),
+              new HttpConnectionFactory(httpsConfig));
+          wssConnector.setHost("localhost");
+          wssConnector.setPort(HTTPS_PORT);
+          server.addConnector(wssConnector);
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
 

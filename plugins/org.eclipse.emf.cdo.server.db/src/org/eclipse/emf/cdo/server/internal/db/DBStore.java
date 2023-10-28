@@ -1107,20 +1107,15 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
         }
       }
 
-      String message = "The CDO system tables are not found";
-
-      if (StringUtil.isEmpty(schemaName))
-      {
-        message += "! ";
-      }
-      else
-      {
-        message += " in schema " + DBUtil.quoted(schemaName) + "! ";
-      }
-
       if (!schemaNames.isEmpty())
       {
-        message += "Other schemas may contain a CDO repository: ";
+        String message = "The CDO system tables are not found";
+        if (!StringUtil.isEmpty(schemaName))
+        {
+          message += " in schema " + DBUtil.quoted(schemaName);
+        }
+
+        message += "! Other schemas may contain a CDO repository: ";
         boolean first = true;
 
         for (String name : schemaNames)
@@ -1136,12 +1131,12 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
           message += name;
         }
-      }
 
-      OM.LOG.info(message.trim());
-      OM.LOG.info("This can indicate an attempt to open an existing database with a newer CDO server.\n" //
-          + "It may help to specify 'schemaName=...' and 'prependSchemaName=true' in cdo-server.xml,\n"//
-          + "and/or the system property '-Dorg.eclipse.net4j.db.DISABLE_QUOTED_NAMES=true'");
+        OM.LOG.info(message.trim());
+        OM.LOG.info("This can indicate an attempt to open an existing database with a newer CDO server.\n" //
+            + "It may help to specify 'schemaName=...' and 'prependSchemaName=true' in cdo-server.xml,\n"//
+            + "and/or the system property '-Dorg.eclipse.net4j.db.DISABLE_QUOTED_NAMES=true'\n");
+      }
     }
     catch (SQLException ex)
     {

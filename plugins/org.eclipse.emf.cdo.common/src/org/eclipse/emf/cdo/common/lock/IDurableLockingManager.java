@@ -86,7 +86,7 @@ public interface IDurableLockingManager
   }
 
   /**
-   * Thrown if a {@link LockArea lock area} is spcified that does not exist in a CDO {@link CDOCommonRepository
+   * Thrown if a {@link LockArea lock area} is specified that does not exist in a CDO {@link CDOCommonRepository
    * repository}.
    *
    * @author Eike Stepper

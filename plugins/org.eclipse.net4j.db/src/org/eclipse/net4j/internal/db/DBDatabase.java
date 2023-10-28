@@ -60,7 +60,8 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
 
   private int waitingSchemaWriters;
 
-  public DBDatabase(DBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
+  public DBDatabase(DBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
+      boolean qualifiedTableNames)
   {
     super(IDBConnection.class);
     this.adapter = adapter;
@@ -71,7 +72,7 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
       @Override
       public IDBSchema run(Connection connection) throws SQLException
       {
-        return DBUtil.readSchema(adapter, connection, schemaName, fixNullableIndexColumns);
+        return DBUtil.readSchema(adapter, connection, schemaName, fixNullableIndexColumns, qualifiedTableNames);
       }
     });
 

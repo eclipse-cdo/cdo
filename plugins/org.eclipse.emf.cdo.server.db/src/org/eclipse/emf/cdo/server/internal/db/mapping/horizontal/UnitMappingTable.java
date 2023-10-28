@@ -25,21 +25,18 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingUnitSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTable;
 
 import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
-import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -57,41 +54,39 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 4.0
  */
-public class UnitMappingTable extends Lifecycle implements IMappingConstants
+public class UnitMappingTable extends DBStoreTable
 {
-  public static final String UNITS = "CDO_UNITS"; //$NON-NLS-1$
-
-  public static final String UNITS_ELEM = "CDO_ELEM"; //$NON-NLS-1$
-
-  public static final String UNITS_UNIT = "CDO_UNIT"; //$NON-NLS-1$
-
-  // public static final String UNITS_CREATED = "CDO_CREATED"; //$NON-NLS-1$
-
-  private static final String SQL_SELECT_ROOTS = "SELECT DISTINCT " + UNITS_UNIT + " FROM " + UNITS;
-
-  private static final String SQL_INSERT_MAPPINGS = "INSERT INTO " + UNITS + " (" + UNITS_ELEM + ", " + UNITS_UNIT + ") VALUES (?, ?)";
-
-  // private static final String SQL_SELECT_SIZE = "SELECT COUNT(" + UNITS_ELEM + ") FROM " + UNITS + " WHERE "
-  // + UNITS_UNIT + "=?";
-
-  private static final String SQL_SELECT_CLASSES = "SELECT " + ATTRIBUTES_CLASS + ", COUNT(" + UNITS_ELEM + ") FROM " + UNITS + ", " + CDODBSchema.CDO_OBJECTS
-      + " WHERE " + UNITS_ELEM + "=" + ATTRIBUTES_ID + " AND " + UNITS_UNIT + "=? GROUP BY " + ATTRIBUTES_CLASS;
-
   private static final int WRITE_UNIT_MAPPING_BATCH_SIZE = 100000;
 
-  private final IMappingStrategy mappingStrategy;
+  private String sqlSelectRoots;
 
-  private IDBTable table;
+  private String sqlInsertMappings;
 
-  public UnitMappingTable(IMappingStrategy mappingStrategy)
+  private String sqlSelectClasses;
+
+  private IDBField elem;
+
+  private IDBField unit;
+
+  public UnitMappingTable(IDBStore store)
   {
-    this.mappingStrategy = mappingStrategy;
+    super(store, NAMES.UNITS);
+  }
+
+  public final IDBField elem()
+  {
+    return elem;
+  }
+
+  public final IDBField unit()
+  {
+    return unit;
   }
 
   public List<CDOID> readUnitRoots(IDBStoreAccessor accessor)
   {
     List<CDOID> rootIDs = new ArrayList<>();
-    IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     Statement stmt = null;
 
     try
@@ -103,7 +98,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
         DBUtil.trace(stmt.toString());
       }
 
-      ResultSet resultSet = stmt.executeQuery(SQL_SELECT_ROOTS);
+      ResultSet resultSet = stmt.executeQuery(sqlSelectRoots);
       while (resultSet.next())
       {
         CDOID rootID = idHandler.getCDOID(resultSet, 1);
@@ -124,17 +119,17 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
   public void readUnitRevisions(IDBStoreAccessor accessor, IView view, CDOID rootID, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
-    IDBStore store = mappingStrategy.getStore();
-    IIDHandler idHandler = store.getIDHandler();
-    IMetaDataManager metaDataManager = store.getMetaDataManager();
+    IIDHandler idHandler = store().getIDHandler();
+    IMappingStrategy mappingStrategy = store().getMappingStrategy();
+    IMetaDataManager metaDataManager = store().getMetaDataManager();
 
-    long timeStamp = view.isHistorical() ? view.getTimeStamp() : store.getRepository().getTimeStamp();
+    long timeStamp = view.isHistorical() ? view.getTimeStamp() : store().getRepository().getTimeStamp();
     CDOBranchPoint branchPoint = view.getBranch().getPoint(timeStamp);
 
     IDBConnection connection = accessor.getDBConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(SQL_SELECT_CLASSES, ReuseProbability.HIGH);
+    IDBPreparedStatement stmt = connection.prepareStatement(sqlSelectClasses, ReuseProbability.HIGH);
 
-    int jdbcFetchSize = store.getJDBCFetchSize();
+    int jdbcFetchSize = store().getJDBCFetchSize();
     int oldFetchSize = -1;
 
     try
@@ -179,9 +174,9 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
   public BatchedStatement initUnit(IDBStoreAccessor accessor, long timeStamp, IView view, CDOID rootID, CDORevisionHandler revisionHandler,
       Set<CDOID> initializedIDs, OMMonitor monitor)
   {
-    IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
-    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(SQL_INSERT_MAPPINGS, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
+    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(sqlInsertMappings, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
 
     try
     {
@@ -219,8 +214,7 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
   public void finishUnit(BatchedStatement stmt, CDOID rootID, List<CDOID> ids, long timeStamp)
   {
-    IDBStore store = mappingStrategy.getStore();
-    IIDHandler idHandler = store.getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     Connection connection = null;
 
     try
@@ -254,9 +248,9 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
 
   public void writeUnitMappings(IDBStoreAccessor accessor, Map<CDOID, CDOID> unitMappings, long timeStamp)
   {
-    IIDHandler idHandler = mappingStrategy.getStore().getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
-    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(SQL_INSERT_MAPPINGS, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
+    BatchedStatement stmt = DBUtil.batched(connection.prepareStatement(sqlInsertMappings, ReuseProbability.HIGH), WRITE_UNIT_MAPPING_BATCH_SIZE);
 
     try
     {
@@ -281,43 +275,54 @@ public class UnitMappingTable extends Lifecycle implements IMappingConstants
   {
     idHandler.setCDOID(stmt, 1, id);
     idHandler.setCDOID(stmt, 2, rootID);
-    // stmt.setLong(3, timeStamp);
     stmt.executeUpdate();
   }
 
   @Override
-  protected void doActivate() throws Exception
+  protected void firstActivate(IDBTable table)
   {
-    super.doActivate();
+    DBType idType = store().getIDHandler().getDBType();
+    int idLength = store().getIDColumnLength();
 
-    IDBStore store = mappingStrategy.getStore();
-    final DBType idType = store.getIDHandler().getDBType();
-    final int idLength = store.getIDColumnLength();
+    elem = table.addField(NAMES.ELEM, idType, idLength, true);
+    unit = table.addField(NAMES.UNIT, idType, idLength);
 
-    IDBDatabase database = store.getDatabase();
-    table = database.getSchema().getTable(UNITS);
-    if (table == null)
-    {
-      database.updateSchema(new RunnableWithSchema()
-      {
-        @Override
-        public void run(IDBSchema schema)
-        {
-          table = schema.addTable(UNITS);
-          table.addField(UNITS_ELEM, idType, idLength, true);
-          table.addField(UNITS_UNIT, idType, idLength);
-          // table.addField(UNITS_CREATED, DBType.BIGINT);
-          table.addIndex(IDBIndex.Type.PRIMARY_KEY, UNITS_ELEM);
-          table.addIndex(IDBIndex.Type.NON_UNIQUE, UNITS_UNIT);
-        }
-      });
-    }
+    table.addIndex(IDBIndex.Type.PRIMARY_KEY, elem);
+    table.addIndex(IDBIndex.Type.NON_UNIQUE, unit);
   }
 
   @Override
-  protected void doDeactivate() throws Exception
+  protected void reActivate(IDBTable table)
   {
-    table = null;
-    super.doDeactivate();
+  }
+
+  @Override
+  protected void initSQL(IDBTable table)
+  {
+    ObjectTypeTable objects = ((AbstractHorizontalMappingStrategy)store().getMappingStrategy()).objects();
+
+    sqlSelectRoots = "SELECT DISTINCT " + unit + " FROM " + table;
+
+    sqlInsertMappings = "INSERT INTO " + table + " (" + elem + ", " + unit + ") VALUES (?, ?)";
+
+    sqlSelectClasses = "SELECT " + objects.clazz() + ", COUNT(" + elem + ") FROM " + table + ", " + objects + " WHERE " + elem + "=" + objects.id() + " AND "
+        + unit + "=? GROUP BY " + objects.clazz();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class NAMES
+  {
+    private static final String UNITS = name("cdo_units"); //$NON-NLS-1$
+
+    private static final String ELEM = name("cdo_elem"); //$NON-NLS-1$
+
+    private static final String UNIT = name("cdo_unit"); //$NON-NLS-1$
+
+    private static String name(String name)
+    {
+      return DBUtil.name(name, UnitMappingTable.class);
+    }
   }
 }

@@ -20,18 +20,17 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTable;
+import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -47,9 +46,13 @@ import java.sql.Statement;
  * @author Eike Stepper
  * @since 4.0
  */
-public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappingConstants
+public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 {
-  private IDBTable table;
+  private IDBField id;
+
+  private IDBField clazz;
+
+  private IDBField created;
 
   private String sqlDelete;
 
@@ -57,14 +60,25 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
 
   private String sqlSelect;
 
-  public ObjectTypeTable()
+  public ObjectTypeTable(IDBStore store)
   {
+    super(store, MappingNames.CDO_OBJECTS);
+  }
+
+  public final IDBField id()
+  {
+    return id;
+  }
+
+  public final IDBField clazz()
+  {
+    return clazz;
   }
 
   @Override
   public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelect, ReuseProbability.MAX);
 
     try
@@ -89,7 +103,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
       }
 
       CDOID classID = idHandler.getCDOID(resultSet, 1);
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(classID);
+      EClass eClass = (EClass)store().getMetaDataManager().getMetaInstance(classID);
       return new CDOClassifierRef(eClass);
     }
     catch (SQLException ex)
@@ -105,14 +119,13 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   @Override
   public final boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
-    IDBStore store = getMappingStrategy().getStore();
-    IIDHandler idHandler = store.getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
 
     try
     {
       idHandler.setCDOID(stmt, 1, id);
-      idHandler.setCDOID(stmt, 2, getMetaDataManager().getMetaID(type, timeStamp));
+      idHandler.setCDOID(stmt, 2, store().getMetaDataManager().getMetaID(type, timeStamp));
       stmt.setLong(3, timeStamp);
 
       if (DBUtil.isTracerEnabled())
@@ -130,7 +143,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     }
     catch (SQLException ex)
     {
-      if (store.getDBAdapter().isDuplicateKeyException(ex))
+      if (store().getDBAdapter().isDuplicateKeyException(ex))
       {
         // Unique key violation can occur in rare cases (merging new objects from other branches)
         return false;
@@ -147,7 +160,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   @Override
   public final boolean removeObjectType(IDBStoreAccessor accessor, CDOID id)
   {
-    IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
+    IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlDelete, ReuseProbability.MAX);
 
     try
@@ -181,7 +194,7 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
     try
     {
       stmt = connection.createStatement();
-      resultSet = stmt.executeQuery("SELECT MAX(" + ATTRIBUTES_ID + ") FROM " + table);
+      resultSet = stmt.executeQuery("SELECT MAX(" + id + ") FROM " + table());
 
       if (resultSet.next())
       {
@@ -204,61 +217,48 @@ public class ObjectTypeTable extends AbstractObjectTypeMapper implements IMappin
   @Override
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
-    String where = " WHERE " + ATTRIBUTES_CREATED + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, table, null, where);
+    String where = " WHERE " + created + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, table(), null, where);
   }
 
   @Override
   public void rawImport(Connection connection, CDODataInput in, OMMonitor monitor) throws IOException
   {
-    DBUtil.deserializeTable(in, connection, table, monitor);
+    DBUtil.deserializeTable(in, connection, table(), monitor);
   }
 
   @Override
-  protected void doActivate() throws Exception
+  protected void firstActivate(IDBTable table)
   {
-    super.doActivate();
+    DBType idType = store().getIDHandler().getDBType();
+    int idLength = store().getIDColumnLength();
 
-    final IDBStore store = getMappingStrategy().getStore();
-    final DBType idType = store.getIDHandler().getDBType();
-    final int idLength = store.getIDColumnLength();
+    id = table.addField(MappingNames.ATTRIBUTES_ID, idType, idLength, true);
+    clazz = table.addField(MappingNames.ATTRIBUTES_CLASS, idType, idLength);
+    created = table.addField(MappingNames.ATTRIBUTES_CREATED, DBType.BIGINT);
 
-    IDBDatabase database = store.getDatabase();
-    table = database.getSchema().getTable(CDODBSchema.CDO_OBJECTS);
-    if (table == null)
+    table.addIndex(IDBIndex.Type.PRIMARY_KEY, id);
+
+    InternalRepository repository = (InternalRepository)store().getRepository();
+    if (repository.isSupportingUnits())
     {
-      database.updateSchema(new RunnableWithSchema()
-      {
-        @Override
-        public void run(IDBSchema schema)
-        {
-          table = schema.addTable(CDODBSchema.CDO_OBJECTS);
-          table.addField(ATTRIBUTES_ID, idType, idLength, true);
-          table.addField(ATTRIBUTES_CLASS, idType, idLength);
-          table.addField(ATTRIBUTES_CREATED, DBType.BIGINT);
-          table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID);
-
-          InternalRepository repository = (InternalRepository)store.getRepository();
-          if (repository.isSupportingUnits())
-          {
-            table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_CLASS);
-          }
-        }
-      });
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, clazz);
     }
-
-    sqlSelect = "SELECT " + ATTRIBUTES_CLASS + " FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
-    sqlInsert = "INSERT INTO " + table + "(" + ATTRIBUTES_ID + "," + ATTRIBUTES_CLASS + "," + ATTRIBUTES_CREATED + ") VALUES (?, ?, ?)";
-    sqlDelete = "DELETE FROM " + table + " WHERE " + ATTRIBUTES_ID + "=?";
   }
 
   @Override
-  protected void doDeactivate() throws Exception
+  protected void reActivate(IDBTable table)
   {
-    sqlDelete = null;
-    sqlInsert = null;
-    sqlSelect = null;
-    table = null;
-    super.doDeactivate();
+    id = table.getField(MappingNames.ATTRIBUTES_ID);
+    clazz = table.getField(MappingNames.ATTRIBUTES_CLASS);
+    created = table.getField(MappingNames.ATTRIBUTES_CREATED);
+  }
+
+  @Override
+  protected void initSQL(IDBTable table)
+  {
+    sqlSelect = "SELECT " + clazz + " FROM " + table + " WHERE " + id + "=?";
+    sqlInsert = "INSERT INTO " + table + "(" + id + "," + clazz + "," + created + ") VALUES (?, ?, ?)";
+    sqlDelete = "DELETE FROM " + table + " WHERE " + id + "=?";
   }
 }

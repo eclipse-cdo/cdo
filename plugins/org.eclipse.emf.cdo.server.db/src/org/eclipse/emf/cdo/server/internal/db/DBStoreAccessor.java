@@ -45,17 +45,15 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingAuditSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy2;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.BranchesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractHorizontalClassMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
-import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager.BranchLoader5;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -70,27 +68,21 @@ import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager.InternalObjectAttacher;
 import org.eclipse.emf.cdo.spi.server.StoreAccessor;
 
-import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.BatchedStatement;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBPreparedStatement;
-import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.spi.db.DBAdapter;
-import org.eclipse.net4j.util.ConsumerWithException;
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.TrackableTimerTask;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -103,17 +95,13 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.Reader;
-import java.io.Writer;
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -348,131 +336,19 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   public void queryLobs(List<byte[]> ids)
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_QUERY_LOBS, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
-
-    try
-    {
-      for (Iterator<byte[]> it = ids.iterator(); it.hasNext();)
-      {
-        byte[] id = it.next();
-        stmt.setString(1, HexUtil.bytesToHex(id));
-
-        try
-        {
-          resultSet = stmt.executeQuery();
-          if (!resultSet.next())
-          {
-            it.remove();
-          }
-        }
-        finally
-        {
-          DBUtil.close(resultSet);
-        }
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    getStore().tables().lobs().queryLobs(connection, ids);
   }
 
   @Override
   public void loadLob(byte[] id, OutputStream out) throws IOException
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_LOB, ReuseProbability.MEDIUM);
-    ResultSet resultSet = null;
-
-    try
-    {
-      stmt.setString(1, HexUtil.bytesToHex(id));
-      resultSet = stmt.executeQuery();
-      resultSet.next();
-
-      long size = resultSet.getLong(1);
-      InputStream inputStream = resultSet.getBinaryStream(2);
-      if (resultSet.wasNull())
-      {
-        Reader reader = resultSet.getCharacterStream(3);
-        IOUtil.copyCharacter(reader, new OutputStreamWriter(out), size);
-      }
-      else
-      {
-        IOUtil.copyBinary(inputStream, out, size);
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
+    getStore().tables().lobs().loadLob(connection, id, out);
   }
 
   @Override
   public void handleLobs(long fromTime, long toTime, CDOLobHandler handler) throws IOException
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_HANDLE_LOBS, ReuseProbability.LOW);
-    ResultSet resultSet = null;
-
-    try
-    {
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
-      {
-        byte[] id = HexUtil.hexToBytes(resultSet.getString(1));
-        long size = resultSet.getLong(2);
-        InputStream inputStream = resultSet.getBinaryStream(3);
-        if (resultSet.wasNull())
-        {
-          Reader reader = resultSet.getCharacterStream(4);
-          Writer out = handler.handleClob(id, size);
-          if (out != null)
-          {
-            try
-            {
-              IOUtil.copyCharacter(reader, out, size);
-            }
-            finally
-            {
-              IOUtil.close(out);
-            }
-          }
-        }
-        else
-        {
-          OutputStream out = handler.handleBlob(id, size);
-          if (out != null)
-          {
-            try
-            {
-              IOUtil.copyBinary(inputStream, out, size);
-            }
-            finally
-            {
-              IOUtil.close(out);
-            }
-          }
-        }
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
+    getStore().tables().lobs().handleLobs(connection, fromTime, toTime, handler);
   }
 
   @Override
@@ -668,47 +544,13 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   protected void writeBlob(byte[] id, long size, InputStream inputStream) throws IOException
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_BLOB, ReuseProbability.MEDIUM);
-
-    try
-    {
-      stmt.setString(1, HexUtil.bytesToHex(id));
-      stmt.setLong(2, size);
-      stmt.setBinaryStream(3, inputStream, (int)size);
-
-      DBUtil.update(stmt, true);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    getStore().tables().lobs().writeBlob(connection, id, size, inputStream);
   }
 
   @Override
   protected void writeClob(byte[] id, long size, Reader reader) throws IOException
   {
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_WRITE_CLOB, ReuseProbability.MEDIUM);
-
-    try
-    {
-      stmt.setString(1, HexUtil.bytesToHex(id));
-      stmt.setLong(2, size);
-      stmt.setCharacterStream(3, reader, (int)size);
-
-      DBUtil.update(stmt, true);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    getStore().tables().lobs().writeClob(connection, id, size, reader);
   }
 
   @Override
@@ -912,127 +754,21 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public Pair<Integer, Long> createBranch(int branchID, BranchInfo branchInfo)
   {
     checkBranchingSupport();
-    if (branchID == NEW_BRANCH)
-    {
-      branchID = getStore().getNextBranchID();
-    }
-    else if (branchID == NEW_LOCAL_BRANCH)
-    {
-      branchID = getStore().getNextLocalBranchID();
-    }
-
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_CREATE_BRANCH, ReuseProbability.LOW);
-
-    try
-    {
-      stmt.setInt(1, branchID);
-      stmt.setString(2, branchInfo.getName());
-      stmt.setInt(3, branchInfo.getBaseBranchID());
-      stmt.setLong(4, branchInfo.getBaseTimeStamp());
-
-      DBUtil.update(stmt, true);
-      connection.commit();
-      return Pair.create(branchID, branchInfo.getBaseTimeStamp());
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    return getStore().tables().branches().createBranch(connection, branchID, branchInfo);
   }
 
   @Override
   public BranchInfo loadBranch(int branchID)
   {
     checkBranchingSupport();
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCH, ReuseProbability.HIGH);
-    ResultSet resultSet = null;
-
-    try
-    {
-      stmt.setInt(1, branchID);
-
-      resultSet = stmt.executeQuery();
-      if (!resultSet.next())
-      {
-        throw new DBException("Branch with ID " + branchID + " does not exist");
-      }
-
-      String name = resultSet.getString(1);
-      int baseBranchID = resultSet.getInt(2);
-      long baseTimeStamp = resultSet.getLong(3);
-      return new BranchInfo(name, baseBranchID, baseTimeStamp);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
+    return getStore().tables().branches().loadBranch(connection, branchID);
   }
 
   @Override
   public SubBranchInfo[] loadSubBranches(int baseID)
   {
     checkBranchingSupport();
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_SUB_BRANCHES, ReuseProbability.HIGH);
-    ResultSet resultSet = null;
-
-    try
-    {
-      stmt.setInt(1, baseID);
-
-      resultSet = stmt.executeQuery();
-      List<SubBranchInfo> result = new ArrayList<>();
-      while (resultSet.next())
-      {
-        int id = resultSet.getInt(1);
-        String name = resultSet.getString(2);
-        long baseTimeStamp = resultSet.getLong(3);
-        result.add(new SubBranchInfo(id, name, baseTimeStamp));
-      }
-
-      return result.toArray(new SubBranchInfo[result.size()]);
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
-  }
-
-  private void execSQL(String sql, ConsumerWithException<IDBPreparedStatement, SQLException> preparer)
-  {
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
-
-    try
-    {
-      if (preparer != null)
-      {
-        preparer.accept(stmt);
-      }
-
-      DBUtil.update(stmt, true);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    return getStore().tables().branches().loadSubBranches(connection, baseID);
   }
 
   private void checkAuditingSupport()
@@ -1054,234 +790,34 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   @Override
   public int loadBranches(int startID, int endID, CDOBranchHandler handler)
   {
-    int count = 0;
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_LOAD_BRANCHES, ReuseProbability.HIGH);
-    ResultSet resultSet = null;
-
-    InternalCDOBranchManager branchManager = getSession().getRepository().getBranchManager();
-
-    try
-    {
-      stmt.setInt(1, startID);
-      stmt.setInt(2, endID > 0 ? endID : Integer.MAX_VALUE);
-
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
-      {
-        int branchID = resultSet.getInt(1);
-        String name = resultSet.getString(2);
-        int baseBranchID = resultSet.getInt(3);
-        long baseTimeStamp = resultSet.getLong(4);
-
-        InternalCDOBranch branch = branchManager.getBranch(branchID, new BranchInfo(name, baseBranchID, baseTimeStamp));
-        handler.handleBranch(branch);
-        ++count;
-      }
-
-      return count;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
+    return getStore().tables().branches().loadBranches(connection, startID, endID, handler);
   }
 
   @Override
   public CDOBranch[] deleteBranches(int branchID, OMMonitor monitor)
   {
-    DBStore store = getStore();
-
-    Set<CDOBranch> branches = store.getRepository().getBranchManager().getBranches(branchID);
-    String idList = buildIDList(branches);
-
-    try (Batch batch = new Batch(connection))
-    {
-      // Delete the branches.
-      batch.add("DELETE FROM " + CDODBSchema.BRANCHES + " WHERE " + CDODBSchema.BRANCHES_ID + " IN (" + idList + ")");
-
-      // Delete the tags.
-      batch.add("DELETE FROM " + CDODBSchema.TAGS + " WHERE " + CDODBSchema.TAGS_BRANCH + " IN (" + idList + ")");
-
-      // Delete the revisions, type mappings, and list elements.
-      IMappingStrategy mappingStrategy = store.getMappingStrategy();
-      if (mappingStrategy instanceof IBranchDeletionSupport)
-      {
-        ((IBranchDeletionSupport)mappingStrategy).deleteBranches(this, batch, idList);
-      }
-
-      // Delete the commit infos.
-      CommitInfoTable commitInfoTable = store.getCommitInfoTable();
-      if (commitInfoTable != null)
-      {
-        commitInfoTable.deleteBranches(this, batch, idList);
-      }
-
-      // Delete the locks and lock areas.
-      store.getDurableLockingManager().deleteBranches(this, batch, idList);
-
-      monitor.begin();
-      Async async = monitor.forkAsync();
-
-      try
-      {
-        batch.execute();
-        connection.commit();
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        async.stop();
-        monitor.done();
-      }
-    }
-
-    return branches.toArray(new CDOBranch[branches.size()]);
-  }
-
-  private String buildIDList(Set<CDOBranch> branches)
-  {
-    StringBuilder builder = new StringBuilder();
-
-    for (CDOBranch branch : branches)
-    {
-      StringUtil.appendSeparator(builder, ", ");
-      builder.append(branch.getID());
-    }
-
-    return builder.toString();
+    return getStore().tables().branches().deleteBranches(this, branchID, monitor);
   }
 
   @Override
   public void renameBranch(int branchID, String oldName, String newName)
   {
     checkBranchingSupport();
-
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_RENAME_BRANCH, ReuseProbability.LOW);
-
-    try
-    {
-      stmt.setString(1, newName);
-      stmt.setInt(2, branchID);
-
-      DBUtil.update(stmt, true);
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-    }
+    getStore().tables().branches().renameBranch(connection, branchID, oldName, newName);
   }
 
   @Override
   public CDOBranchPoint changeTag(AtomicInteger modCount, String oldName, String newName, CDOBranchPoint branchPoint)
   {
     checkAuditingSupport();
-
-    switch (InternalCDOBranchManager.getTagChangeKind(oldName, newName, branchPoint))
-    {
-    case CREATED:
-    {
-      // CREATE
-      execSQL(CDODBSchema.SQL_CREATE_TAG, stmt -> {
-        stmt.setString(1, newName);
-        stmt.setInt(2, branchPoint.getBranch().getID());
-        stmt.setLong(3, branchPoint.getTimeStamp());
-      });
-
-      break;
-    }
-
-    case RENAMED:
-    {
-      // RENAME
-      execSQL(CDODBSchema.SQL_RENAME_TAG, stmt -> {
-        stmt.setString(1, newName);
-        stmt.setString(2, oldName);
-      });
-
-      break;
-    }
-
-    case MOVED:
-    {
-      // MOVE
-      execSQL(CDODBSchema.SQL_MOVE_TAG, stmt -> {
-        stmt.setInt(1, branchPoint.getBranch().getID());
-        stmt.setLong(2, branchPoint.getTimeStamp());
-        stmt.setString(3, oldName);
-      });
-
-      break;
-    }
-
-    case DELETED:
-    {
-      // DELETE
-      execSQL(CDODBSchema.SQL_DELETE_TAG, stmt -> {
-        stmt.setString(1, oldName);
-      });
-
-      break;
-    }
-    }
-
-    // Repository.changeTag() takes care of the proper result value;
-    return null;
+    return getStore().tables().tags().changeTag(connection, modCount, oldName, newName, branchPoint);
   }
 
   @Override
   public void loadTags(String name, Consumer<BranchInfo> handler)
   {
     checkAuditingSupport();
-
-    boolean single = name != null;
-    String sql = single ? CDODBSchema.SQL_LOAD_TAG : CDODBSchema.SQL_LOAD_TAGS;
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.LOW);
-    ResultSet resultSet = null;
-
-    try
-    {
-      if (single)
-      {
-        stmt.setString(1, name);
-      }
-
-      resultSet = stmt.executeQuery();
-      while (resultSet.next())
-      {
-        int c = 0;
-
-        if (!single)
-        {
-          name = resultSet.getString(++c);
-        }
-
-        int branchID = resultSet.getInt(++c);
-        long timeStamp = resultSet.getLong(++c);
-        handler.accept(new BranchInfo(name, branchID, timeStamp));
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-      DBUtil.close(stmt);
-    }
+    getStore().tables().tags().loadTags(connection, name, handler);
   }
 
   @Override
@@ -1319,8 +855,9 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
       out.writeCDOID(store.getIDHandler().getLastObjectID()); // See bug 325097
     }
 
-    String where = " WHERE " + CDODBSchema.BRANCHES_ID + " BETWEEN " + fromBranchID + " AND " + toBranchID;
-    DBUtil.serializeTable(out, connection, CDODBSchema.BRANCHES, null, where);
+    BranchesTable branches = store.tables().branches();
+    String where = " WHERE " + branches.id() + " BETWEEN " + fromBranchID + " AND " + toBranchID;
+    DBUtil.serializeTable(out, connection, branches.table(), null, where);
 
     CommitInfoTable commitInfoTable = store.getCommitInfoTable();
     if (commitInfoTable != null)
@@ -1365,7 +902,8 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     try
     {
-      DBUtil.deserializeTable(in, connection, CDODBSchema.BRANCHES, monitor.fork());
+      BranchesTable branches = store.tables().branches();
+      DBUtil.deserializeTable(in, connection, branches.table(), monitor.fork());
 
       CommitInfoTable commitInfoTable = store.getCommitInfoTable();
       if (in.readBoolean())
@@ -1694,9 +1232,12 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
     private DBStoreAccessor accessor;
 
+    private final String sql;
+
     public ConnectionKeepAliveTask(DBStoreAccessor accessor)
     {
       this.accessor = accessor;
+      sql = "SELECT 1 FROM " + accessor.getStore().tables().properties();
     }
 
     @Override
@@ -1718,7 +1259,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
 
         Connection connection = accessor.getConnection();
         stmt = connection.createStatement();
-        stmt.executeQuery("SELECT 1 FROM " + CDODBSchema.PROPERTIES); //$NON-NLS-1$
+        stmt.executeQuery(sql);
       }
       catch (java.sql.SQLException ex)
       {

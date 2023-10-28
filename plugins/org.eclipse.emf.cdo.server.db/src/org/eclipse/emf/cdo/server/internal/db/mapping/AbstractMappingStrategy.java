@@ -449,7 +449,7 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
       name = name.substring(0, length) + suffix;
     }
 
-    return name;
+    return DBUtil.name(name);
   }
 
   private String getUniqueID(ENamedElement element)

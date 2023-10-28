@@ -263,10 +263,28 @@ public class Doc01_ConfiguringRepositories
      * <p>
      * Specifies, if the store is a DBStore, the name of the DB schema to use for the repository.
      * If omitted the {@link IDBAdapter#getDefaultSchemaName(Connection) default schema name} of the repository's
-     * {@link IDBAdapter DB adapter} is used as the schema name. If that is <code>null</code> the name of the
-     * repository is used as the schema name.
+     * {@link IDBAdapter DB adapter} is used as the schema name.
      */
     public class Property_schemaName
+    {
+    }
+
+    /**
+     * Property prependSchemaName
+     * <p>
+     * Specifies, if the store is a DBStore, whether to qualify table names with the {@link Property_schemaName schema name}.
+     */
+    public class Property_prependSchemaName
+    {
+    }
+
+    /**
+     * Property createSchemaIfNeeded
+     * <p>
+     * Specifies, if the store is a DBStore, whether to create the schema with the specified {@link #Property_schemaName name}
+     * at startup time, if it does not exist.
+     */
+    public class Property_createSchemaIfNeeded
     {
     }
 

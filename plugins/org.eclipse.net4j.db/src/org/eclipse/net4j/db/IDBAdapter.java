@@ -63,6 +63,11 @@ public interface IDBAdapter
   public Connection modifyConnection(Connection connection);
 
   /**
+   * @since 4.12
+   */
+  public void createSchema(Connection connection, String schemaName);
+
+  /**
    * @since 4.2
    */
   public IDBSchema readSchema(Connection connection, String name);

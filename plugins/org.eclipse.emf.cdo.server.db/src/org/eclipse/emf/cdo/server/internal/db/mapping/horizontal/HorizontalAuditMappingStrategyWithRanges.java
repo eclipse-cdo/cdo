@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 
+import org.eclipse.net4j.db.DBUtil;
+
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -49,11 +51,11 @@ public class HorizontalAuditMappingStrategyWithRanges extends HorizontalAuditMap
   @Override
   protected String modifyListJoin(String attrTable, String listTable, String join)
   {
-    join += " AND " + listTable + "." + LIST_REVISION_VERSION_ADDED;
-    join += "<=" + attrTable + "." + ATTRIBUTES_VERSION;
-    join += " AND (" + listTable + "." + LIST_REVISION_VERSION_REMOVED;
-    join += " IS NULL OR " + listTable + "." + LIST_REVISION_VERSION_REMOVED;
-    join += ">" + attrTable + "." + ATTRIBUTES_VERSION + ")";
+    join += " AND " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
+    join += "<=" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
+    join += " AND (" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
+    join += " IS NULL OR " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
+    join += ">" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ")";
     return join;
   }
 }

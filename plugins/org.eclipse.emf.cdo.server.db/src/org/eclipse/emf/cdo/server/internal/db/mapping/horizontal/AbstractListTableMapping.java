@@ -64,10 +64,13 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListTableMapping.class);
 
-  /**
-   * The table of this mapping.
-   */
-  private IDBTable table;
+  protected IDBTable table;
+
+  protected IDBField sourceField;
+
+  protected IDBField indexField;
+
+  protected IDBField valueField;
 
   private FieldInfo[] keyFields;
 
@@ -127,20 +130,18 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
             primaryKey.addIndexField(field);
           }
 
-          // Add field for list index.
-          IDBField listIndexField = table.addField(LIST_IDX, DBType.INTEGER, true);
-          primaryKey.addIndexField(listIndexField);
+          indexField = table.addField(MappingNames.LIST_IDX, DBType.INTEGER, true);
+          primaryKey.addIndexField(indexField);
 
           // Add field for value.
-          typeMapping.createDBField(table, LIST_VALUE);
+          typeMapping.createDBField(table, MappingNames.LIST_VALUE);
+          valueField = table.getField(MappingNames.LIST_VALUE);
 
           if (needsIndexOnValueField(feature))
           {
-            IDBField field = table.getField(LIST_VALUE);
-
-            if (!table.hasIndexFor(field))
+            if (!table.hasIndexFor(valueField))
             {
-              IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, field);
+              IDBIndex index = table.addIndex(IDBIndex.Type.NON_UNIQUE, valueField);
               DBUtil.setOptional(index, true); // Creation might fail for unsupported column type!
             }
           }
@@ -158,27 +159,32 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     }
     else
     {
-      typeMapping.setDBField(table, LIST_VALUE);
+      sourceField = table.getField(MappingNames.LIST_REVISION_ID);
+      indexField = table.getField(MappingNames.LIST_IDX);
+
+      typeMapping.setDBField(table, MappingNames.LIST_VALUE);
+      valueField = table.getField(MappingNames.LIST_VALUE);
+
       initSQLStrings();
     }
   }
 
   protected void initSQLStrings()
   {
-    String tableName = table.getName();
     FieldInfo[] fields = getKeyFields();
 
     // ---------------- SELECT to read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
     {
-      builder.append(fields[i].getName());
+      builder.append(DBUtil.quoted(fields[i].getName()));
+
       if (i + 1 < fields.length)
       {
         // more to come
@@ -193,22 +199,22 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + indexField; //$NON-NLS-1$
 
     // ----------------- INSERT - reference entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append("("); //$NON-NLS-1$
 
     for (int i = 0; i < fields.length; i++)
     {
-      builder.append(fields[i].getName());
+      builder.append(DBUtil.quoted(fields[i].getName()));
       builder.append(", "); //$NON-NLS-1$
     }
 
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(") VALUES ("); //$NON-NLS-1$
     for (int i = 0; i < fields.length; i++)
     {
@@ -217,6 +223,12 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
 
     builder.append(" ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
+  }
+
+  @Override
+  protected final IDBField index()
+  {
+    return indexField;
   }
 
   protected final FieldInfo[] getKeyFields()
@@ -228,7 +240,7 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       IDBStore store = getMappingStrategy().getStore();
       DBType type = store.getIDHandler().getDBType();
       int precision = store.getIDColumnLength();
-      list.add(new FieldInfo(LIST_REVISION_ID, type, precision));
+      list.add(new FieldInfo(MappingNames.LIST_REVISION_ID, type, precision));
 
       addKeyFields(list);
 
@@ -485,25 +497,24 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
       return true;
     }
 
-    String tableName = table.getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append(" l_t, ");//$NON-NLS-1$
     builder.append(mainTableName);
     builder.append(" a_t WHERE ");//$NON-NLS-1$
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();

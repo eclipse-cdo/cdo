@@ -18,9 +18,10 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping2;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.MappingNames;
 import org.eclipse.emf.cdo.spi.server.StoreChunkReader;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -30,7 +31,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChunkReader, IMappingConstants
+public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChunkReader
 {
   private IListMapping referenceMapping;
 
@@ -62,7 +63,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     }
     else
     {
-      builder.append(LIST_IDX);
+      builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
       builder.append('=');
       builder.append(index);
     }
@@ -80,7 +81,7 @@ public class DBStoreChunkReader extends StoreChunkReader implements IDBStoreChun
     }
     else
     {
-      builder.append(LIST_IDX);
+      builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
       builder.append(" BETWEEN "); //$NON-NLS-1$
       builder.append(fromIndex);
       builder.append(" AND "); //$NON-NLS-1$

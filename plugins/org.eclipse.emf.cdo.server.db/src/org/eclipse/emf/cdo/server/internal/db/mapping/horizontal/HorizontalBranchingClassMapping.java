@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -101,7 +100,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   @Override
   protected IDBField addBranchField(IDBTable table)
   {
-    return table.addField(ATTRIBUTES_BRANCH, DBType.INTEGER, true);
+    return table.addField(MappingNames.ATTRIBUTES_BRANCH, DBType.INTEGER, true);
   }
 
   @Override
@@ -113,44 +112,44 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND ("); //$NON-NLS-1$
     String sqlSelectAttributesPrefix = builder.toString();
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0)"); //$NON-NLS-1$
     sqlSelectCurrentAttributes = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(">=?))"); //$NON-NLS-1$
     sqlSelectAttributesByTime = builder.toString();
 
     builder = new StringBuilder(sqlSelectAttributesPrefix);
     builder.append("ABS("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(")=?)"); //$NON-NLS-1$
     sqlSelectAttributesByVersion = builder.toString();
 
@@ -159,21 +158,21 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(table);
     builder.append("("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
@@ -188,23 +187,23 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
@@ -212,11 +211,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
   }
@@ -225,11 +224,11 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected void appendSelectForHandleFields(StringBuilder builder)
   {
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
   }
 
   @Override
@@ -337,15 +336,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -361,16 +360,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
@@ -632,7 +631,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
           // Put new objects into objectTypeMapper
           EClass eClass = getEClass();
 
-          AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
+          AbstractHorizontalMappingStrategy mappingStrategy = getMappingStrategy();
           if (!mappingStrategy.putObjectType(accessor, timeStamp, id, eClass))
           {
             firstRevision = false;
@@ -727,7 +726,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     {
       // TODO: Prepare this string literal
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_BRANCH);
+      builder.append(branchField);
       builder.append("=?"); //$NON-NLS-1$
 
       whereAppend = true;
@@ -741,7 +740,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
-          builder.append(ATTRIBUTES_CREATED);
+          builder.append(createdField);
           builder.append("=?"); //$NON-NLS-1$
           timeParameters = 1;
         }
@@ -751,28 +750,28 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(whereAppend ? " AND " : " WHERE "); //$NON-NLS-1$ //$NON-NLS-2$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(ATTRIBUTES_CREATED);
+          builder.append(createdField);
           builder.append("<=? AND ("); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append("=0 OR "); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append(">=?)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
         {
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append("=0"); //$NON-NLS-1$
         }
       }
     }
 
     builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
 
     IRepository repository = accessor.getStore().getRepository();
     CDORevisionManager revisionManager = repository.getRevisionManager();
@@ -848,13 +847,16 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     }
 
     // Delete the revisions.
-    batch.add("DELETE FROM " + table + " WHERE " + ATTRIBUTES_BRANCH + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
 
     // Delete the type mappings.
+    ObjectTypeTable objects = getMappingStrategy().objects();
     String metaID = getMetaIDStr();
-    String join = "SELECT o." + ATTRIBUTES_ID + " FROM " + CDODBSchema.CDO_OBJECTS + " o LEFT JOIN " + table + " c ON c." + ATTRIBUTES_ID + "=o."
-        + ATTRIBUTES_ID + " WHERE o." + ATTRIBUTES_CLASS + "=" + metaID + " AND c." + ATTRIBUTES_ID + " IS NULL";
-    batch.add("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID + " IN (" + join + ")");
+
+    String join = "SELECT o." + objects.id() + " FROM " + objects + " o LEFT JOIN " + table + " c ON c." + objects.id() + "=o." + objects.id() + " WHERE o."
+        + objects.clazz() + "=" + metaID + " AND c." + objects.id() + " IS NULL";
+
+    batch.add("DELETE FROM " + objects + " WHERE " + objects.id() + " IN (" + join + ")");
 
     // Delete the list elements.
     for (IListMapping listMapping : getListMappings())
@@ -889,15 +891,15 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
         builder.append(" OR "); //$NON-NLS-1$
       }
 
-      builder.append(ATTRIBUTES_BRANCH);
+      builder.append(branchField);
       builder.append("=? AND "); //$NON-NLS-1$
 
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append(">=?"); //$NON-NLS-1$
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
 
@@ -941,7 +943,7 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
   protected String getListXRefsWhere(QueryXRefsContext context)
   {
     StringBuilder builder = new StringBuilder();
-    builder.append(ATTRIBUTES_BRANCH);
+    builder.append(branchField);
     builder.append("=");
     builder.append(context.getBranch().getID());
     builder.append(" AND (");
@@ -949,18 +951,18 @@ public class HorizontalBranchingClassMapping extends AbstractHorizontalClassMapp
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append("))"); //$NON-NLS-1$

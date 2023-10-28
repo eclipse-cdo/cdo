@@ -27,7 +27,6 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
-import org.eclipse.emf.cdo.server.internal.db.CDODBSchema;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
@@ -64,9 +63,11 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements IMappingConstants
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
+
+  private ObjectTypeTable objects;
 
   /**
    * The associated object type mapper.
@@ -83,6 +84,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   public AbstractHorizontalMappingStrategy()
   {
+  }
+
+  public final ObjectTypeTable objects()
+  {
+    return objects;
   }
 
   public IObjectTypeMapper getObjectTypeMapper()
@@ -215,7 +221,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   {
     StringBuilder builder = new StringBuilder();
     builder.append(" WHERE a_t."); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED));
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromCommitTime);
     builder.append(" AND "); //$NON-NLS-1$
@@ -391,7 +397,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   @Override
   public String getListJoin(String attrTable, String listTable)
   {
-    return " AND " + attrTable + "." + ATTRIBUTES_ID + "=" + listTable + "." + LIST_REVISION_ID;
+    return " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_ID);
   }
 
   @Override
@@ -427,18 +433,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   private IObjectTypeMapper createObjectTypeMapper()
   {
-    ObjectTypeTable table = new ObjectTypeTable();
-    table.setMappingStrategy(this);
+    objects = new ObjectTypeTable(getStore());
 
     int cacheSize = getObjectTypeCacheSize();
     if (cacheSize == 0)
     {
-      return table;
+      return objects;
     }
 
     ObjectTypeCache cache = new ObjectTypeCache(cacheSize);
     cache.setMappingStrategy(this);
-    cache.setDelegate(table);
+    cache.setDelegate(objects);
     return cache;
   }
 
@@ -527,10 +532,12 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     final IIDHandler idHandler = getStore().getIDHandler();
     final CDOID[] min = { idHandler.getMaxCDOID() };
 
-    final String prefix = "SELECT MIN(t." + ATTRIBUTES_ID + ") FROM " + CDODBSchema.CDO_OBJECTS + " o, ";
+    String id = DBUtil.quoted(MappingNames.ATTRIBUTES_ID);
+    String branch = DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH);
+    String created = DBUtil.quoted(MappingNames.ATTRIBUTES_CREATED);
 
-    final String suffix = " t WHERE t." + ATTRIBUTES_BRANCH + "<0 AND t." + ATTRIBUTES_ID + "=o." + ATTRIBUTES_ID + " AND t." + ATTRIBUTES_CREATED + "=o."
-        + ATTRIBUTES_CREATED;
+    String prefix = "SELECT MIN(t." + id + ") FROM " + objects + " o, ";
+    String suffix = " t WHERE t." + branch + "<0 AND t." + id + "=o." + id + " AND t." + created + "=o." + created;
 
     getStore().visitAllTables(connection, new IDBStore.TableVisitor()
     {

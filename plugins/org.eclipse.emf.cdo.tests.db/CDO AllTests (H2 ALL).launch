@@ -23,5 +23,5 @@
     <booleanAttribute key="org.eclipse.jdt.launching.ATTR_USE_CLASSPATH_ONLY_JAR" value="false"/>
     <stringAttribute key="org.eclipse.jdt.launching.MAIN_TYPE" value="org.eclipse.emf.cdo.tests.db.AllTestsDBH2All"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROJECT_ATTR" value="org.eclipse.emf.cdo.tests.db"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2G&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-XX:+HeapDumpOnOutOfMemoryError"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx2G&#13;&#10;-Dorg.eclipse.net4j.util.om.trace.disable=true&#13;&#10;-XX:+HeapDumpOnOutOfMemoryError&#13;&#10;-Dorg.eclipse.net4j.db.DISABLE_QUOTED_NAMES=false&#13;&#10;-Dorg.eclipse.net4j.db.DEBUG=false"/>
 </launchConfiguration>

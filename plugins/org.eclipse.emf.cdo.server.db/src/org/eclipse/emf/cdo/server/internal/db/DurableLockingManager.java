@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockAreaNotFoundEx
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockGrade;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
@@ -32,12 +33,10 @@ import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnection;
-import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBDatabase.RunnableWithSchema;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
-import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -55,31 +54,11 @@ import java.util.Map;
  */
 public class DurableLockingManager extends Lifecycle implements IBranchDeletionSupport
 {
-  private static final String LOCK_AREAS = CDODBSchema.name("cdo_lock_areas");
-
-  private static final String LOCK_AREAS_ID = CDODBSchema.name("id");
-
-  private static final String LOCK_AREAS_USER_ID = CDODBSchema.name("user_id");
-
-  private static final String LOCK_AREAS_VIEW_BRANCH = CDODBSchema.name("view_branch");
-
-  private static final String LOCK_AREAS_VIEW_TIME = CDODBSchema.name("view_time");
-
-  private static final String LOCK_AREAS_READ_ONLY = CDODBSchema.name("read_only");
-
-  private static final String LOCKS = CDODBSchema.name("cdo_locks");
-
-  private static final String LOCKS_AREA_ID = CDODBSchema.name("area_id");
-
-  private static final String LOCKS_OBJECT_ID = CDODBSchema.name("object_id");
-
-  private static final String LOCKS_LOCK_GRADE = CDODBSchema.name("lock_grade");
-
   private DBStore store;
 
-  private InternalCDOBranchManager branchManager;
+  private final LockAreasTable lockAreas;
 
-  private IIDHandler idHandler;
+  private final LocksTable locks;
 
   private IDBTable lockAreasTable;
 
@@ -112,6 +91,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   public DurableLockingManager(DBStore store)
   {
     this.store = store;
+    lockAreas = new LockAreasTable(store);
+    locks = new LocksTable(store);
   }
 
   public synchronized LockArea createLockArea(DBStoreAccessor accessor, String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly,
@@ -169,6 +150,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   private void insertLocks(DBStoreAccessor accessor, String durableLockingID, Map<CDOID, LockGrade> locks)
   {
+    IIDHandler idHandler = store.getIDHandler();
     IDBConnection connection = accessor.getDBConnection();
     IDBPreparedStatement stmt = connection.prepareStatement(sqlInsertLock, ReuseProbability.MEDIUM);
 
@@ -350,68 +332,48 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   protected void doActivate() throws Exception
   {
     super.doActivate();
-
-    branchManager = store.getRepository().getBranchManager();
-    idHandler = store.getIDHandler();
-    IDBDatabase database = store.getDatabase();
+    lockAreas.activate();
+    locks.activate();
 
     // Lock areas
-    lockAreasTable = database.getSchema().getTable(LOCK_AREAS);
-    if (lockAreasTable == null)
-    {
-      database.updateSchema(new RunnableWithSchema()
-      {
-        @Override
-        public void run(IDBSchema schema)
-        {
-          lockAreasTable = schema.addTable(LOCK_AREAS);
-          lockAreasTable.addField(LOCK_AREAS_ID, DBType.VARCHAR, true);
-          lockAreasTable.addField(LOCK_AREAS_USER_ID, DBType.VARCHAR);
-          lockAreasTable.addField(LOCK_AREAS_VIEW_BRANCH, DBType.INTEGER);
-          lockAreasTable.addField(LOCK_AREAS_VIEW_TIME, DBType.BIGINT);
-          lockAreasTable.addField(LOCK_AREAS_READ_ONLY, DBType.BOOLEAN);
-          lockAreasTable.addIndex(IDBIndex.Type.PRIMARY_KEY, LOCK_AREAS_ID);
-          lockAreasTable.addIndex(IDBIndex.Type.NON_UNIQUE, LOCK_AREAS_USER_ID);
-        }
-      });
-    }
 
-    sqlInsertLockArea = "INSERT INTO " + LOCK_AREAS + "(" + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME
-        + "," + LOCK_AREAS_READ_ONLY + ") VALUES (?, ?, ?, ?, ?)";
-    sqlSelectLockArea = "SELECT " + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + "," + LOCK_AREAS_READ_ONLY + " FROM "
-        + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
-    sqlSelectAllLockAreas = "SELECT " + LOCK_AREAS_ID + "," + LOCK_AREAS_USER_ID + "," + LOCK_AREAS_VIEW_BRANCH + "," + LOCK_AREAS_VIEW_TIME + ","
-        + LOCK_AREAS_READ_ONLY + " FROM " + LOCK_AREAS;
-    sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + LOCK_AREAS_USER_ID + " LIKE ?";
-    sqlDeleteLockArea = "DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "=?";
-    sqlDeleteLockAreas = "DELETE FROM " + LOCK_AREAS + " WHERE EXISTS (SELECT * FROM " + LOCKS + " WHERE " + LOCKS + "." + LOCKS_AREA_ID + "=" + LOCK_AREAS
-        + "." + LOCK_AREAS_ID + ")";
+    sqlInsertLockArea = "INSERT INTO " + lockAreas + "(" + lockAreas.id + "," + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + ","
+        + lockAreas.readOnly + ") VALUES (?, ?, ?, ?, ?)";
+
+    sqlSelectLockArea = "SELECT " + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + "," + lockAreas.readOnly + " FROM " + lockAreas
+        + " WHERE " + lockAreas.id + "=?";
+
+    sqlSelectAllLockAreas = "SELECT " + lockAreas.id + "," + lockAreas.userID + "," + lockAreas.viewBranch + "," + lockAreas.viewTime + "," + lockAreas.readOnly
+        + " FROM " + lockAreas;
+
+    sqlSelectLockAreas = sqlSelectAllLockAreas + " WHERE " + lockAreas.userID + " LIKE ?";
+
+    sqlDeleteLockArea = "DELETE FROM " + lockAreas + " WHERE " + lockAreas.id + "=?";
+
+    sqlDeleteLockAreas = "DELETE FROM " + lockAreas + " WHERE EXISTS (SELECT * FROM " + locks + " WHERE " + locks + "." + locks.areaID + "=" + lockAreas + "."
+        + lockAreas.id + ")";
 
     // Locks
-    locksTable = database.getSchema().getTable(LOCKS);
-    if (locksTable == null)
-    {
-      database.updateSchema(new RunnableWithSchema()
-      {
-        @Override
-        public void run(IDBSchema schema)
-        {
-          locksTable = schema.addTable(LOCKS);
-          locksTable.addField(LOCKS_AREA_ID, DBType.VARCHAR, true);
-          locksTable.addField(LOCKS_OBJECT_ID, idHandler.getDBType(), store.getIDColumnLength(), true);
-          locksTable.addField(LOCKS_LOCK_GRADE, DBType.INTEGER);
-          locksTable.addIndex(IDBIndex.Type.PRIMARY_KEY, LOCKS_AREA_ID, LOCKS_OBJECT_ID);
-          locksTable.addIndex(IDBIndex.Type.NON_UNIQUE, LOCKS_AREA_ID);
-        }
-      });
-    }
 
-    sqlSelectLocks = "SELECT " + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=?";
-    sqlSelectLock = "SELECT " + LOCKS_LOCK_GRADE + " FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
-    sqlInsertLock = "INSERT INTO " + LOCKS + "(" + LOCKS_AREA_ID + "," + LOCKS_OBJECT_ID + "," + LOCKS_LOCK_GRADE + ") VALUES (?, ?, ?)";
-    sqlUpdateLock = "UPDATE " + LOCKS + " SET " + LOCKS_LOCK_GRADE + "=? " + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
-    sqlDeleteLock = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=? AND " + LOCKS_OBJECT_ID + "=?";
-    sqlDeleteLocks = "DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + "=?";
+    sqlSelectLocks = "SELECT " + locks.objectID + "," + locks.lockGrade + " FROM " + locks + " WHERE " + locks.areaID + "=?";
+
+    sqlSelectLock = "SELECT " + locks.lockGrade + " FROM " + locks + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+
+    sqlInsertLock = "INSERT INTO " + locks + "(" + locks.areaID + "," + locks.objectID + "," + locks.lockGrade + ") VALUES (?, ?, ?)";
+
+    sqlUpdateLock = "UPDATE " + locks + " SET " + locks.lockGrade + "=? " + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+
+    sqlDeleteLock = "DELETE FROM " + locks + " WHERE " + locks.areaID + "=? AND " + locks.objectID + "=?";
+
+    sqlDeleteLocks = "DELETE FROM " + locks + " WHERE " + locks.areaID + "=?";
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    locks.deactivate();
+    lockAreas.deactivate();
+    super.doDeactivate();
   }
 
   private String getNextDurableLockingID(DBStoreAccessor accessor)
@@ -434,6 +396,7 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
 
   private LockArea makeLockArea(DBStoreAccessor accessor, String durableLockingID, String userID, int branchID, long timeStamp, boolean readOnly)
   {
+    InternalCDOBranchManager branchManager = store.getRepository().getBranchManager();
     CDOBranchPoint branchPoint = branchManager.getBranch(branchID).getPoint(timeStamp);
     Map<CDOID, LockGrade> lockMap = getLockMap(accessor, durableLockingID);
     return CDOLockUtil.createLockArea(durableLockingID, userID, branchPoint, readOnly, lockMap);
@@ -450,7 +413,9 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
       stmt.setString(1, durableLockingID);
       resultSet = stmt.executeQuery();
 
+      IIDHandler idHandler = store.getIDHandler();
       Map<CDOID, LockGrade> lockMap = CDOIDUtil.createMap();
+
       while (resultSet.next())
       {
         CDOID id = idHandler.getCDOID(resultSet, 1);
@@ -487,7 +452,8 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     IDBPreparedStatement stmtUpdate = connection.prepareStatement(sqlUpdateLock, ReuseProbability.MEDIUM);
     ResultSet resultSet = null;
 
-    InternalLockManager lockManager = accessor.getStore().getRepository().getLockingManager();
+    InternalLockManager lockManager = store.getRepository().getLockingManager();
+    IIDHandler idHandler = store.getIDHandler();
 
     try
     {
@@ -546,11 +512,11 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
   public void deleteBranches(IDBStoreAccessor accessor, Batch batch, String idList)
   {
     // Delete the lock areas.
-    batch.add("DELETE FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_VIEW_BRANCH + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + lockAreas + " WHERE " + lockAreas.viewBranch + " IN (" + idList + ")");
 
     // Delete the locks.
-    batch.add("DELETE FROM " + LOCKS + " WHERE " + LOCKS_AREA_ID + " NOT IN (SELECT " + LOCK_AREAS_ID + " FROM " + LOCK_AREAS + " WHERE " + LOCK_AREAS_ID + "="
-        + LOCKS_AREA_ID + ")");
+    batch.add("DELETE FROM " + locks + " WHERE " + locks.areaID + " NOT IN (SELECT " + lockAreas.id + " FROM " + lockAreas + " WHERE " + lockAreas.id + "="
+        + locks.areaID + ")");
   }
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
@@ -592,6 +558,131 @@ public class DurableLockingManager extends Lifecycle implements IBranchDeletionS
     catch (SQLException ex)
     {
       throw new DBException(ex);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LockAreasTable extends DBStoreTable
+  {
+    public IDBField id;
+
+    public IDBField userID;
+
+    public IDBField viewBranch;
+
+    public IDBField viewTime;
+
+    public IDBField readOnly;
+
+    public LockAreasTable(IDBStore store)
+    {
+      super(store, NAMES.LOCK_AREAS);
+    }
+
+    @Override
+    protected void firstActivate(IDBTable table)
+    {
+      id = table.addField(NAMES.ID, DBType.VARCHAR, true);
+      userID = table.addField(NAMES.USER_ID, DBType.VARCHAR);
+      viewBranch = table.addField(NAMES.VIEW_BRANCH, DBType.INTEGER);
+      viewTime = table.addField(NAMES.VIEW_TIME, DBType.BIGINT);
+      readOnly = table.addField(NAMES.READ_ONLY, DBType.BOOLEAN);
+
+      table.addIndex(IDBIndex.Type.PRIMARY_KEY, id);
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, userID);
+    }
+
+    @Override
+    protected void reActivate(IDBTable table)
+    {
+      id = table.getField(NAMES.ID);
+      userID = table.getField(NAMES.USER_ID);
+      viewBranch = table.getField(NAMES.VIEW_BRANCH);
+      viewTime = table.getField(NAMES.VIEW_TIME);
+      readOnly = table.getField(NAMES.READ_ONLY);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class NAMES
+    {
+      private static final String LOCK_AREAS = name("cdo_lock_areas");
+
+      private static final String ID = name("id");
+
+      private static final String USER_ID = name("user_id");
+
+      private static final String VIEW_BRANCH = name("view_branch");
+
+      private static final String VIEW_TIME = name("view_time");
+
+      private static final String READ_ONLY = name("read_only");
+
+      private static String name(String name)
+      {
+        return DBUtil.name(name, LockAreasTable.class);
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class LocksTable extends DBStoreTable
+  {
+    public IDBField areaID;
+
+    public IDBField objectID;
+
+    public IDBField lockGrade;
+
+    public LocksTable(IDBStore store)
+    {
+      super(store, NAMES.LOCKS);
+    }
+
+    @Override
+    protected void firstActivate(IDBTable table)
+    {
+      int idLength = store().getIDColumnLength();
+      DBType idType = store().getIDHandler().getDBType();
+
+      areaID = table.addField(NAMES.AREA_ID, DBType.VARCHAR, true);
+      objectID = table.addField(NAMES.OBJECT_ID, idType, idLength, true);
+      lockGrade = table.addField(NAMES.LOCK_GRADE, DBType.INTEGER);
+
+      table.addIndex(IDBIndex.Type.PRIMARY_KEY, areaID, objectID);
+      table.addIndex(IDBIndex.Type.NON_UNIQUE, areaID);
+    }
+
+    @Override
+    protected void reActivate(IDBTable table)
+    {
+      areaID = table.getField(NAMES.AREA_ID);
+      objectID = table.getField(NAMES.OBJECT_ID);
+      lockGrade = table.getField(NAMES.LOCK_GRADE);
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private static final class NAMES
+    {
+      private static final String LOCKS = name("cdo_locks");
+
+      private static final String AREA_ID = name("area_id");
+
+      private static final String OBJECT_ID = name("object_id");
+
+      private static final String LOCK_GRADE = name("lock_grade");
+
+      private static String name(String name)
+      {
+        return DBUtil.name(name, LocksTable.class);
+      }
     }
   }
 }

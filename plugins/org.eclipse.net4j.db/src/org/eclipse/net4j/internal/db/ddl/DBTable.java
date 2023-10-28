@@ -12,6 +12,7 @@ package org.eclipse.net4j.internal.db.ddl;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
@@ -371,6 +372,20 @@ public class DBTable extends DBSchemaElement implements InternalDBTable
 
     builder.append(")"); //$NON-NLS-1$
     return builder.toString();
+  }
+
+  @Override
+  public String toString()
+  {
+    String name = super.toString();
+
+    IDBSchema schema = getSchema();
+    if (schema != null && schema.isQualifiedTableNames())
+    {
+      name = DBUtil.quoted(schema.getName()) + '.' + name;
+    }
+
+    return name;
   }
 
   @Override

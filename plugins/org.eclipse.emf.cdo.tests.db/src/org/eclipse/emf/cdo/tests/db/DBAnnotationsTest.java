@@ -139,18 +139,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        String tableName = model1.getName().toUpperCase() + "_PRODUCT1";
-        ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
-
-        try
-        {
-          rset.next();
-          assertEquals("8", rset.getString(7));
-        }
-        finally
-        {
-          DBUtil.close(rset);
-        }
+        Object[] metaData = getColumnMetaData(model1.getName() + "_product1", "name");
+        assertEquals(8, metaData[7]);
       }
     }.verify();
   }
@@ -187,18 +177,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
-        ResultSet rset = getMetaData().getColumns(null, null, tableName, "NAME");
-
-        try
-        {
-          rset.next();
-          assertEquals(getClobString(), rset.getString(6).toUpperCase());
-        }
-        finally
-        {
-          DBUtil.close(rset);
-        }
+        Object[] metaData = getColumnMetaData(model1.getName() + "_category", "name");
+        assertEqualsIgnoreCase(getClobString(), (String)metaData[6]);
       }
     }.verify();
   }
@@ -233,17 +213,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        ResultSet rset = getMetaData().getTables(null, null, "SUBJECT", null);
-
-        try
-        {
-          rset.next();
-          assertEquals("SUBJECT", rset.getString(3).toUpperCase());
-        }
-        finally
-        {
-          DBUtil.close(rset);
-        }
+        String tableName = getTableName("Subject");
+        assertEqualsIgnoreCase("Subject", tableName);
       }
     }.verify();
   }
@@ -278,18 +249,8 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
-        ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
-
-        try
-        {
-          rset.next();
-          assertEquals("TOPIC", rset.getString(4).toUpperCase());
-        }
-        finally
-        {
-          DBUtil.close(rset);
-        }
+        Object[] metaData = getColumnMetaData(model1.getName() + "_category", "topic");
+        assertEqualsIgnoreCase("topic", (String)metaData[4]);
       }
     }.verify();
   }
@@ -326,19 +287,9 @@ public class DBAnnotationsTest extends AbstractCDOTest
       @Override
       protected void doVerify() throws Exception
       {
-        String tableName = model1.getName().toUpperCase() + "_CATEGORY";
-        ResultSet rset = getMetaData().getColumns(null, null, tableName, "TOPIC");
-
-        try
-        {
-          rset.next();
-          assertEquals("TOPIC", rset.getString(4).toUpperCase());
-          assertEquals(getClobString(), rset.getString(6).toUpperCase());
-        }
-        finally
-        {
-          DBUtil.close(rset);
-        }
+        Object[] metaData = getColumnMetaData(model1.getName() + "_category", "topic");
+        assertEqualsIgnoreCase("topic", (String)metaData[4]);
+        assertEqualsIgnoreCase(getClobString(), (String)metaData[6]);
       }
     }.verify();
   }
@@ -420,10 +371,16 @@ public class DBAnnotationsTest extends AbstractCDOTest
     return ePackage;
   }
 
-  private void addLengthAnnotation(EPackage model1, String value)
+  private EAnnotation createDBStoreAnotation()
   {
     EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
     annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    return annotation;
+  }
+
+  private void addLengthAnnotation(EPackage model1, String value)
+  {
+    EAnnotation annotation = createDBStoreAnotation();
     annotation.getDetails().put("columnLength", value);
 
     EClass product1 = (EClass)model1.getEClassifier("Product1");
@@ -433,8 +390,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   private void addTypeAnnotation(EPackage model1, String value)
   {
-    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    EAnnotation annotation = createDBStoreAnotation();
     annotation.getDetails().put("columnType", value);
 
     EClass category = (EClass)model1.getEClassifier("Category");
@@ -444,8 +400,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   private void addTableNameAnnotation(EPackage model1, String value)
   {
-    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    EAnnotation annotation = createDBStoreAnotation();
     annotation.getDetails().put("tableName", value);
 
     EClass category = (EClass)model1.getEClassifier("Category");
@@ -454,8 +409,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   private void addColumnNameAnnotation(EPackage model1, String value)
   {
-    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    EAnnotation annotation = createDBStoreAnotation();
     annotation.getDetails().put("columnName", value);
 
     EClass category = (EClass)model1.getEClassifier("Category");
@@ -465,8 +419,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   private void addColumnNameAndTypeAnnoation(EPackage model1, String name, String type)
   {
-    EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-    annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+    EAnnotation annotation = createDBStoreAnotation();
     annotation.getDetails().put("columnName", name);
     annotation.getDetails().put("columnType", type);
 
@@ -479,8 +432,7 @@ public class DBAnnotationsTest extends AbstractCDOTest
   {
     for (String unmappedTable : unmappedTables)
     {
-      EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
-      annotation.setSource("http://www.eclipse.org/CDO/DBStore");
+      EAnnotation annotation = createDBStoreAnotation();
       annotation.getDetails().put("tableMapping", "NONE");
 
       // ID is defined in plugin.xml

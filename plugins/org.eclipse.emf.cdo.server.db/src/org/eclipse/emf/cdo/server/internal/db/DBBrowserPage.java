@@ -14,12 +14,14 @@ import org.eclipse.emf.cdo.internal.server.ServerDebugUtil;
 import org.eclipse.emf.cdo.server.CDOServerBrowser;
 import org.eclipse.emf.cdo.server.CDOServerBrowser.AbstractPage;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -52,27 +54,27 @@ public abstract class DBBrowserPage extends AbstractPage
   @Override
   public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
   {
+    IDBStore store = (IDBStore)repository.getStore();
+
     Connection connection = null;
-    boolean closeConnection = false;
-    boolean caseSensitive = false;
+    boolean closeConnection = true;
 
     try
     {
-      IStoreAccessor accessor = ServerDebugUtil.getAccessor(repository);
-      if (accessor instanceof IDBStoreAccessor)
+      IStoreAccessor debugAccessor = ServerDebugUtil.getAccessor(repository);
+      if (debugAccessor instanceof IDBStoreAccessor)
       {
-        IDBStoreAccessor dbStoreAccessor = (IDBStoreAccessor)accessor;
-        connection = dbStoreAccessor.getConnection();
-        caseSensitive = dbStoreAccessor.getStore().getDBAdapter().isCaseSensitive();
+        connection = ((IDBStoreAccessor)debugAccessor).getConnection();
+        closeConnection = false;
+
       }
       else
       {
-        IDBConnectionProvider connectionProvider = (IDBConnectionProvider)repository.getStore();
-        connection = connectionProvider.getConnection();
-        closeConnection = true;
+        connection = store.getConnection();
       }
 
-      display(browser, repository, out, connection, caseSensitive);
+      IDBSchema schema = store.getDBSchema();
+      display(browser, repository, out, connection, schema);
     }
     catch (DBException ex)
     {
@@ -87,7 +89,7 @@ public abstract class DBBrowserPage extends AbstractPage
     }
   }
 
-  protected abstract void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive);
+  protected abstract void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, IDBSchema schema);
 
   protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String title, boolean ordering, String sql)
   {
@@ -173,7 +175,7 @@ public abstract class DBBrowserPage extends AbstractPage
     }
 
     @Override
-    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive)
+    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, IDBSchema schema)
     {
       String query = browser.getParam("query");
 
@@ -193,6 +195,12 @@ public abstract class DBBrowserPage extends AbstractPage
       out.print("</textarea>\r\n");
       out.print("<br><br>\r\n");
       out.print("<input type=\"submit\" value=\"Submit\"/>\r\n");
+
+      if (!DBUtil.DISABLE_QUOTED_NAMES)
+      {
+        out.print("&nbsp;Table and column names may need to be quoted!\r\n");
+      }
+
       out.print("</form>\r\n");
       out.print("</td>\r\n");
       out.print("</tr>\r\n");
@@ -271,19 +279,19 @@ public abstract class DBBrowserPage extends AbstractPage
     }
 
     @Override
-    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, boolean caseSensitive)
+    protected void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, IDBSchema schema)
     {
       out.print("<table border=\"0\">\r\n");
       out.print("<tr>\r\n");
 
       out.print("<td valign=\"top\">\r\n");
-      String table = showTables(browser, out, connection, repository.getName(), caseSensitive);
+      String tableName = showTables(browser, out, connection, schema);
       out.print("</td>\r\n");
 
-      if (table != null)
+      if (tableName != null)
       {
         out.print("<td valign=\"top\">\r\n");
-        showTable(browser, out, connection, table);
+        showTable(browser, out, connection, schema, tableName);
         out.print("</td>\r\n");
       }
 
@@ -294,36 +302,35 @@ public abstract class DBBrowserPage extends AbstractPage
     /**
      * @since 4.0
      */
-    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, String repo, boolean caseSensitive)
+    protected String showTables(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema)
     {
-      String table = browser.getParam("table");
+      String currentTable = browser.getParam("table");
       boolean used = browser.isParam("used");
-      boolean schema = browser.isParam("schema");
+      boolean hideRowData = browser.isParam("schema");
 
       pout.print("<table border=\"0\">\r\n");
       pout.print("<tr><td><b>Empty tables:</b></td><td><b>" + browser.href(used ? "Hidden" : "Shown", getName(), "used", String.valueOf(!used))
           + "</b></td></tr>\r\n");
-      pout.print("<tr><td><b>Row data:</b></td><td><b>" + browser.href(schema ? "Hidden" : "Shown", getName(), "schema", String.valueOf(!schema))
+      pout.print("<tr><td><b>Row data:</b></td><td><b>" + browser.href(hideRowData ? "Hidden" : "Shown", getName(), "schema", String.valueOf(!hideRowData))
           + "</b></td></tr>\r\n");
       pout.print("</table><br>\r\n");
 
       int totalRows = 0;
       int usedTables = 0;
 
-      List<String> allTableNames = DBUtil.getAllTableNames(connection, repo, caseSensitive);
+      List<String> allTableNames = DBUtil.getAllTableNames(connection, schema.getName(), schema.isCaseSensitive());
       for (String tableName : allTableNames)
       {
-        if (table == null)
+        if (currentTable == null)
         {
-          table = tableName;
+          currentTable = tableName;
         }
 
-        String label = browser.escape(tableName)/* .toLowerCase() */;
+        String label = browser.escape(tableName);
 
-        int rowCount = DBUtil.getRowCount(connection, tableName);
+        int rowCount = DBUtil.getRowCount(connection, getTableName(tableName, schema));
         if (rowCount > 0)
         {
-          // label += " (" + rowCount + ")";
           totalRows += rowCount;
           ++usedTables;
         }
@@ -332,7 +339,7 @@ public abstract class DBBrowserPage extends AbstractPage
           continue;
         }
 
-        if (tableName.equals(table))
+        if (tableName.equals(currentTable))
         {
           pout.print("<b>" + label + "</b>");
         }
@@ -359,13 +366,14 @@ public abstract class DBBrowserPage extends AbstractPage
         pout.print("<br>" + emptyTables + " tables empty<br>\r\n");
       }
 
-      return table;
+      return currentTable;
     }
 
     /**
+     * @param schema
      * @since 4.0
      */
-    protected void showTable(CDOServerBrowser browser, PrintStream pout, Connection connection, String table)
+    protected void showTable(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema, String tableName)
     {
       String columns = "*";
       String firstColumn = null;
@@ -375,7 +383,7 @@ public abstract class DBBrowserPage extends AbstractPage
       {
         StringBuilder builder = new StringBuilder();
         DatabaseMetaData metaData = connection.getMetaData();
-        resultSet = metaData.getColumns(null, null, table, null);
+        resultSet = metaData.getColumns(null, null, tableName, null);
 
         while (resultSet.next())
         {
@@ -386,7 +394,7 @@ public abstract class DBBrowserPage extends AbstractPage
           }
 
           StringUtil.appendSeparator(builder, ", ");
-          builder.append(name);
+          builder.append(DBUtil.quoted(name));
         }
 
         columns = builder.toString();
@@ -400,26 +408,40 @@ public abstract class DBBrowserPage extends AbstractPage
         DBUtil.close(resultSet);
       }
 
-      String sql = "SELECT " + columns + " FROM " + table;
+      String sqlTableName = getTableName(tableName, schema);
+
+      String sql = "SELECT " + columns + " FROM " + sqlTableName;
       if (firstColumn != null)
       {
-        sql += " ORDER BY " + firstColumn + " ASC";
+        sql += " ORDER BY " + DBUtil.quoted(firstColumn) + " ASC";
       }
 
-      String title = browser.href(table, Queries.NAME, "query", sql);
+      String title = browser.href(tableName, Queries.NAME, "query", sql);
 
       try
       {
         String order = browser.getParam("order");
         executeQuery(browser, pout, connection, title, true,
-            "SELECT * FROM " + table + (order == null ? "" : " ORDER BY " + order + " " + browser.getParam("direction")));
+            "SELECT * FROM " + sqlTableName + (order == null ? "" : " ORDER BY " + DBUtil.quoted(order) + " " + browser.getParam("direction")));
       }
       catch (Exception ex)
       {
         browser.removeParam("order");
         browser.removeParam("direction");
-        executeQuery(browser, pout, connection, table, true, "SELECT * FROM " + table);
+        executeQuery(browser, pout, connection, tableName, true, "SELECT * FROM " + sqlTableName);
       }
+    }
+
+    private String getTableName(String tableName, IDBSchema schema)
+    {
+      tableName = DBUtil.quoted(tableName);
+
+      if (schema.isQualifiedTableNames())
+      {
+        tableName = DBUtil.quoted(schema.getName()) + '.' + tableName;
+      }
+
+      return tableName;
     }
 
     /**

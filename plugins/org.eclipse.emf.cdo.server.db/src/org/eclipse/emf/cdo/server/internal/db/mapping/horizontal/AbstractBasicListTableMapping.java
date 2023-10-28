@@ -36,6 +36,7 @@ import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -55,7 +56,7 @@ import java.util.Set;
 /**
  * @author Stefan Winkler
  */
-public abstract class AbstractBasicListTableMapping implements IListMapping3, IMappingConstants
+public abstract class AbstractBasicListTableMapping implements IListMapping3
 {
   private IMappingStrategy mappingStrategy;
 
@@ -89,7 +90,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
   @Override
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index)
   {
-    builder.append(LIST_IDX);
+    builder.append(index());
     builder.append('=');
     builder.append(index);
   }
@@ -97,7 +98,7 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
   @Override
   public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex, int toIndex)
   {
-    builder.append(LIST_IDX);
+    builder.append(index());
     builder.append(" BETWEEN "); //$NON-NLS-1$
     builder.append(fromIndex);
     builder.append(" AND "); //$NON-NLS-1$
@@ -138,6 +139,8 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3, IM
 
     return false;
   }
+
+  protected abstract IDBField index();
 
   /**
    * @author Eike Stepper

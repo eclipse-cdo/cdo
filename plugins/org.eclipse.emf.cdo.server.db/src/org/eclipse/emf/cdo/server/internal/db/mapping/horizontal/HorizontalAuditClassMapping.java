@@ -117,7 +117,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     StringBuilder builder = new StringBuilder(sqlSelectAttributesPrefix);
     builder.append("ABS(");
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(")=?"); //$NON-NLS-1$
     sqlSelectAttributesByVersion = builder.toString();
 
@@ -133,19 +133,19 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append("("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
@@ -160,21 +160,21 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0"); //$NON-NLS-1$
     sqlReviseAttributes = builder.toString();
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0"); //$NON-NLS-1$
     sqlSelectAllObjectIDs = builder.toString();
 
@@ -182,9 +182,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append("=?"); //$NON-NLS-1$
     sqlRawDeleteAttributes = builder.toString();
   }
@@ -193,9 +193,9 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
   protected void appendSelectForHandleFields(StringBuilder builder)
   {
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
   }
 
   private String[] buildSQLSelects(boolean forUnits)
@@ -206,21 +206,21 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     builder.append("SELECT "); //$NON-NLS-1$
     if (forUnits)
     {
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
       builder.append(", "); //$NON-NLS-1$
     }
 
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
@@ -229,58 +229,60 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     if (forUnits)
     {
+      UnitMappingTable units = ((DBStore)getMappingStrategy().getStore()).getUnitMappingTable();
+
       builder.append(", "); //$NON-NLS-1$
-      builder.append(UnitMappingTable.UNITS);
+      builder.append(units);
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
       builder.append("="); //$NON-NLS-1$
-      builder.append(UnitMappingTable.UNITS);
+      builder.append(units);
       builder.append("."); //$NON-NLS-1$
-      builder.append(UnitMappingTable.UNITS_ELEM);
+      builder.append(units.elem());
       builder.append(" AND "); //$NON-NLS-1$
-      builder.append(UnitMappingTable.UNITS);
+      builder.append(units);
       builder.append("."); //$NON-NLS-1$
-      builder.append(UnitMappingTable.UNITS_UNIT);
+      builder.append(units.unit());
       builder.append("=?"); //$NON-NLS-1$
       builder.append(" AND "); //$NON-NLS-1$
     }
     else
     {
       builder.append(" WHERE "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
       builder.append("=? AND "); //$NON-NLS-1$
     }
 
     strings[0] = builder.toString();
 
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0"); //$NON-NLS-1$
 
     if (forUnits)
     {
       builder.append(" ORDER BY "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
     }
 
     strings[1] = builder.toString();
 
     builder = new StringBuilder(strings[0]);
     builder.append("("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append("=0 OR "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(">=?))"); //$NON-NLS-1$
 
     if (forUnits)
     {
       builder.append(" AND "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_VERSION);
+      builder.append(versionField);
       builder.append(">0"); //$NON-NLS-1$
 
       builder.append(" ORDER BY "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
     }
 
     strings[2] = builder.toString();
@@ -383,13 +385,13 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -405,16 +407,16 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
 
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append("<=? AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append(">=?))"); //$NON-NLS-1$
     }
 
@@ -668,18 +670,18 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
     long timeStamp = context.getTimeStamp();
     if (timeStamp == CDORevision.UNSPECIFIED_DATE)
     {
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0"); //$NON-NLS-1$
     }
     else
     {
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append("<=");
       builder.append(timeStamp);
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0 OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append(">=");
       builder.append(timeStamp);
       builder.append(")"); //$NON-NLS-1$

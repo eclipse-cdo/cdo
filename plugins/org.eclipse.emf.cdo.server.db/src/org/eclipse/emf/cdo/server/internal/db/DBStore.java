@@ -23,7 +23,6 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
@@ -32,8 +31,10 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
-import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.IMappingConstants;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.MappingNames;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.UnitMappingTable;
 import org.eclipse.emf.cdo.server.internal.db.messages.Messages;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -44,18 +45,16 @@ import org.eclipse.emf.cdo.spi.server.Store;
 import org.eclipse.emf.cdo.spi.server.StoreAccessorPool;
 
 import org.eclipse.net4j.db.DBException;
+import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
-import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBPreparedStatement;
-import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
-import org.eclipse.net4j.db.IDBSchemaTransaction;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
-import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.internal.db.ddl.DBField;
+import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -81,7 +80,7 @@ import java.util.Timer;
 /**
  * @author Eike Stepper
  */
-public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAllRevisionsProvider, PostActivateable
+public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider, PostActivateable
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
@@ -118,6 +117,15 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private static final int DEFAULT_CONNECTION_RETRY_SECONDS = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_SECONDS",
       30);
 
+  private static final boolean DEFAULT_PREPEND_SCHEMA_NAME = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_PREPEND_SCHEMA_NAME");
+
+  private static final boolean DEFAULT_CREATE_SCHEMA_IF_NEEDED = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CREATE_SCHEMA_IF_NEEDED");
+
+  private static final boolean SHOW_SCHEMA_CREATION_EXCEPTION = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.SHOW_SCHEMA_CREATION_EXCEPTION");
+
+  private static final boolean DISABLE_LOG_OTHER_SCHEMA_INFO = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.DISABLE_LOG_OTHER_SCHEMA_INFO");
+
   private long creationTime;
 
   private boolean firstTime;
@@ -133,6 +141,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   private IMetaDataManager metaDataManager = createMetaDataManager();
 
   private DurableLockingManager durableLockingManager = createDurableLockingManager();
+
+  private DBStoreTables tables;
 
   private CommitInfoTable commitInfoTable;
 
@@ -356,14 +366,28 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     return database.getSchema();
   }
 
+  public DBStoreTables tables()
+  {
+    return tables;
+  }
+
   @Override
   public void visitAllTables(Connection connection, IDBStore.TableVisitor visitor)
   {
-    String repositoryName = getRepository().getName();
+    IDBSchema schema = getDBSchema();
+    String schemaName = schema.getName();
+    boolean qualifiedTableNames = schema.isQualifiedTableNames();
     boolean caseSensitive = dbAdapter.isCaseSensitive();
 
-    for (String name : DBUtil.getAllTableNames(connection, repositoryName, caseSensitive))
+    for (String name : DBUtil.getAllTableNames(connection, schemaName, caseSensitive))
     {
+      name = DBUtil.quoted(name);
+
+      if (schemaName != null && qualifiedTableNames)
+      {
+        name = DBUtil.quoted(schemaName) + '.' + name;
+      }
+
       try
       {
         visitor.visitTable(connection, name);
@@ -391,111 +415,13 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   @Override
   public Map<String, String> getPersistentProperties(Set<String> names)
   {
-    IDBConnection connection = database.getConnection();
-    IDBPreparedStatement stmt = null;
-    String sql = null;
-
-    try
-    {
-      Map<String, String> result = new HashMap<>();
-      boolean allProperties = ObjectUtil.isEmpty(names);
-      if (allProperties)
-      {
-        sql = CDODBSchema.SQL_SELECT_ALL_PROPERTIES;
-        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-        ResultSet resultSet = null;
-
-        try
-        {
-          resultSet = stmt.executeQuery();
-          while (resultSet.next())
-          {
-            String key = resultSet.getString(1);
-            String value = resultSet.getString(2);
-            result.put(key, value);
-          }
-        }
-        finally
-        {
-          DBUtil.close(resultSet);
-        }
-      }
-      else
-      {
-        sql = CDODBSchema.SQL_SELECT_PROPERTIES;
-        stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-        for (String name : names)
-        {
-          stmt.setString(1, name);
-          ResultSet resultSet = null;
-
-          try
-          {
-            resultSet = stmt.executeQuery();
-            if (resultSet.next())
-            {
-              String value = resultSet.getString(1);
-              result.put(name, value);
-            }
-          }
-          finally
-          {
-            DBUtil.close(resultSet);
-          }
-        }
-      }
-
-      return result;
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex, sql);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      DBUtil.close(connection);
-    }
+    return tables.properties().getPersistentProperties(names);
   }
 
   @Override
   public void setPersistentProperties(Map<String, String> properties)
   {
-    IDBConnection connection = database.getConnection();
-    IDBPreparedStatement deleteStmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES, ReuseProbability.MEDIUM);
-    IDBPreparedStatement insertStmt = connection.prepareStatement(CDODBSchema.SQL_INSERT_PROPERTIES, ReuseProbability.MEDIUM);
-    String sql = null;
-
-    try
-    {
-      for (Map.Entry<String, String> entry : properties.entrySet())
-      {
-        String name = entry.getKey();
-        String value = entry.getValue();
-
-        sql = CDODBSchema.SQL_DELETE_PROPERTIES;
-        deleteStmt.setString(1, name);
-        deleteStmt.executeUpdate();
-
-        sql = CDODBSchema.SQL_INSERT_PROPERTIES;
-        insertStmt.setString(1, name);
-        insertStmt.setString(2, value);
-        insertStmt.executeUpdate();
-      }
-
-      sql = "COMMIT";
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex, sql);
-    }
-    finally
-    {
-      DBUtil.close(insertStmt);
-      DBUtil.close(deleteStmt);
-      DBUtil.close(connection);
-    }
+    tables.properties().setPersistentProperties(properties);
   }
 
   public void putPersistentProperty(String key, String value)
@@ -509,28 +435,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   @Override
   public void removePersistentProperties(Set<String> names)
   {
-    IDBConnection connection = database.getConnection();
-    IDBPreparedStatement stmt = connection.prepareStatement(CDODBSchema.SQL_DELETE_PROPERTIES, ReuseProbability.MEDIUM);
-
-    try
-    {
-      for (String name : names)
-      {
-        stmt.setString(1, name);
-        stmt.executeUpdate();
-      }
-
-      connection.commit();
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex, CDODBSchema.SQL_DELETE_PROPERTIES);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      DBUtil.close(connection);
-    }
+    tables.properties().removePersistentProperties(names);
   }
 
   @Override
@@ -721,23 +626,23 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     {
       if (idGenerationLocation == IDGenerationLocation.CLIENT)
       {
-        String prop = properties.get(IDBStore.Props.ID_COLUMN_LENGTH);
+        String prop = properties.get(Props.ID_COLUMN_LENGTH);
         if (prop != null)
         {
           idColumnLength = Integer.parseInt(prop);
         }
       }
 
-      configureAccessorPool(readerPool, IDBStore.Props.READER_POOL_CAPACITY);
-      configureAccessorPool(writerPool, IDBStore.Props.WRITER_POOL_CAPACITY);
+      configureAccessorPool(readerPool, Props.READER_POOL_CAPACITY);
+      configureAccessorPool(writerPool, Props.WRITER_POOL_CAPACITY);
 
-      String prop = properties.get(IDBStore.Props.DROP_ALL_DATA_ON_ACTIVATE);
+      String prop = properties.get(Props.DROP_ALL_DATA_ON_ACTIVATE);
       if (prop != null)
       {
         setDropAllDataOnActivate(Boolean.parseBoolean(prop));
       }
 
-      prop = properties.get(IDBStore.Props.JDBC_FETCH_SIZE);
+      prop = properties.get(Props.JDBC_FETCH_SIZE);
       if (prop != null)
       {
         jdbcFetchSize = Integer.parseInt(prop);
@@ -745,6 +650,8 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     Connection connection = getConnectionOrRetry();
+    String schemaName = getSchemaName(connection);
+    boolean prependSchemaName = isPrependSchemaName();
     int schemaVersion;
 
     try
@@ -752,11 +659,26 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       if (isDropAllDataOnActivate())
       {
         OM.LOG.info("Dropping all tables from repository " + repository.getName() + "...");
-        DBUtil.dropAllTables(connection, null);
+        DBUtil.dropAllTables(connection, schemaName);
         connection.commit();
       }
 
-      schemaVersion = selectSchemaVersion(connection);
+      if (isCreateSchemaIfNeeded())
+      {
+        try
+        {
+          dbAdapter.createSchema(connection, schemaName);
+        }
+        catch (DBException ex)
+        {
+          if (SHOW_SCHEMA_CREATION_EXCEPTION)
+          {
+            OM.LOG.error(ex);
+          }
+        }
+      }
+
+      schemaVersion = selectSchemaVersion(connection, prependSchemaName ? schemaName : null);
       if (0 <= schemaVersion && schemaVersion < SCHEMA_VERSION)
       {
         migrateSchema(schemaVersion);
@@ -769,21 +691,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       DBUtil.close(connection);
     }
 
-    String schemaName = getSchemaName(connection);
     boolean fixNullableIndexColumns = schemaVersion != FIRST_START && schemaVersion < FIRST_VERSION_WITH_NULLABLE_CHECKS;
+    database = openDatabase(dbAdapter, dbConnectionProvider, schemaName, prependSchemaName, fixNullableIndexColumns);
 
-    database = openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
-    IDBSchemaTransaction schemaTransaction = database.openSchemaTransaction();
-
-    try
-    {
-      ensureSchema(schemaTransaction);
-      schemaTransaction.commit();
-    }
-    finally
-    {
-      schemaTransaction.close();
-    }
+    tables = new DBStoreTables(this);
+    tables.activate();
 
     LifecycleUtil.activate(idHandler);
     LifecycleUtil.activate(metaDataManager);
@@ -798,7 +710,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
     if (repository.isSupportingUnits())
     {
-      unitMappingTable = new UnitMappingTable(mappingStrategy);
+      unitMappingTable = new UnitMappingTable(this);
       unitMappingTable.activate();
     }
 
@@ -815,27 +727,6 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
 
     putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
-  }
-
-  private String getSchemaName(Connection connection)
-  {
-    if (properties != null)
-    {
-      String schemaName = properties.get(IDBStore.Props.SCHEMA_NAME);
-      if (schemaName != null)
-      {
-        return schemaName;
-      }
-    }
-
-    String schemaName = dbAdapter.getDefaultSchemaName(connection);
-    if (schemaName != null)
-    {
-      return schemaName;
-    }
-
-    IRepository repository = getRepository();
-    return repository.getName();
   }
 
   @Override
@@ -882,7 +773,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
   protected boolean isFirstStart(Set<IDBTable> createdTables)
   {
-    if (createdTables.contains(CDODBSchema.PROPERTIES))
+    if (createdTables.contains(tables.properties()))
     {
       return true;
     }
@@ -950,8 +841,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   protected void repairAfterCrash()
   {
     InternalRepository repository = getRepository();
-    String name = repository.getName();
-    OM.LOG.warn(MessageFormat.format(Messages.getString("DBStore.9"), name)); //$NON-NLS-1$
+    OM.LOG.warn(MessageFormat.format(Messages.getString("DBStore.9"), repository.getName())); //$NON-NLS-1$
 
     Connection connection = getConnection();
 
@@ -966,10 +856,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       CDOID lastObjectID = storeIDs ? idHandler.getLastObjectID() : CDOID.NULL;
       CDOID nextLocalObjectID = storeIDs ? idHandler.getNextLocalObjectID() : CDOID.NULL;
 
-      int branchID = DBUtil.selectMaximumInt(connection, CDODBSchema.BRANCHES_ID);
+      int branchID = DBUtil.selectMaximumInt(connection, tables.branches().id());
       setLastBranchID(branchID > 0 ? branchID : 0);
 
-      int localBranchID = DBUtil.selectMinimumInt(connection, CDODBSchema.BRANCHES_ID);
+      int localBranchID = DBUtil.selectMinimumInt(connection, tables.branches().id());
       setLastLocalBranchID(localBranchID < 0 ? localBranchID : 0);
 
       if (commitInfoTable != null)
@@ -979,23 +869,25 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       else
       {
         boolean branching = repository.isSupportingBranches();
+        boolean caseSensitive = dbAdapter.isCaseSensitive();
+        String schemaName = database.getSchema().getName();
 
         long lastCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
         long lastNonLocalCommitTime = CDOBranchPoint.UNSPECIFIED_DATE;
 
         // Unfortunately the package registry is still inactive, so the class mappings can not be used at this point.
         // Use all tables with a "CDO_CREATED" field instead.
-        for (String tableName : DBUtil.getAllTableNames(connection, repository.getName(), dbAdapter.isCaseSensitive()))
+        for (String tableName : DBUtil.getAllTableNames(connection, schemaName, caseSensitive))
         {
           try
           {
-            if (CDODBSchema.CDO_OBJECTS.equals(tableName))
+            if (DBUtil.equalNames(MappingNames.CDO_OBJECTS, tableName, caseSensitive))
             {
               continue;
             }
 
             IDBTable table = database.getSchema().getTable(tableName);
-            IDBField createdField = table.getField(IMappingConstants.ATTRIBUTES_CREATED);
+            IDBField createdField = table.getField(MappingNames.ATTRIBUTES_CREATED);
             if (createdField == null)
             {
               continue;
@@ -1003,14 +895,14 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
             if (branching)
             {
-              IDBField branchField = table.getField(IMappingConstants.ATTRIBUTES_BRANCH);
+              IDBField branchField = table.getField(MappingNames.ATTRIBUTES_BRANCH);
               if (branchField == null)
               {
                 continue;
               }
 
               lastNonLocalCommitTime = Math.max(lastNonLocalCommitTime,
-                  DBUtil.selectMaximumLong(connection, branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + IMappingConstants.ATTRIBUTES_BRANCH));
+                  DBUtil.selectMaximumLong(connection, branchField, CDOBranch.MAIN_BRANCH_ID + "<=" + MappingNames.ATTRIBUTES_BRANCH));
             }
 
             lastCommitTime = Math.max(lastCommitTime, DBUtil.selectMaximumLong(connection, createdField));
@@ -1032,18 +924,18 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
 
       if (storeIDs)
       {
-        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), name, lastObjectID, nextLocalObjectID, //$NON-NLS-1$
+        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10"), repository.getName(), lastObjectID, nextLocalObjectID, //$NON-NLS-1$
             getLastBranchID(), getLastCommitTime(), getLastNonLocalCommitTime()));
       }
       else
       {
-        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10b"), name, getLastBranchID(), //$NON-NLS-1$
+        OM.LOG.info(MessageFormat.format(Messages.getString("DBStore.10b"), repository.getName(), getLastBranchID(), //$NON-NLS-1$
             getLastCommitTime(), getLastNonLocalCommitTime()));
       }
     }
     catch (SQLException e)
     {
-      OM.LOG.error(MessageFormat.format(Messages.getString("DBStore.11"), name), e); //$NON-NLS-1$
+      OM.LOG.error(MessageFormat.format(Messages.getString("DBStore.11"), repository.getName()), e); //$NON-NLS-1$
       throw new DBException(e);
     }
     finally
@@ -1052,14 +944,58 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   }
 
-  protected IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
+  private String getSchemaName(Connection connection)
   {
-    return DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns);
+    if (properties != null)
+    {
+      String schemaName = properties.get(Props.SCHEMA_NAME);
+      if (schemaName != null)
+      {
+        return schemaName.length() == 0 ? null : schemaName;
+      }
+    }
+
+    String schemaName = dbAdapter.getDefaultSchemaName(connection);
+    if (schemaName != null)
+    {
+      return schemaName;
+    }
+
+    return null;
   }
 
-  protected void ensureSchema(IDBSchemaTransaction schemaTransaction)
+  private boolean isPrependSchemaName()
   {
-    schemaTransaction.ensureSchema(CDODBSchema.INSTANCE);
+    if (properties != null)
+    {
+      String prependSchemaName = properties.get(Props.PREPEND_SCHEMA_NAME);
+      if (prependSchemaName != null)
+      {
+        return Boolean.parseBoolean(prependSchemaName);
+      }
+    }
+
+    return DEFAULT_PREPEND_SCHEMA_NAME;
+  }
+
+  private boolean isCreateSchemaIfNeeded()
+  {
+    if (properties != null)
+    {
+      String createSchemaIfNeeded = properties.get(Props.CREATE_SCHEMA_IF_NEEDED);
+      if (createSchemaIfNeeded != null)
+      {
+        return Boolean.parseBoolean(createSchemaIfNeeded);
+      }
+    }
+
+    return DEFAULT_CREATE_SCHEMA_IF_NEEDED;
+  }
+
+  protected IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean prependSchemaName,
+      boolean fixNullableIndexColumns)
+  {
+    return DBUtil.openDatabase(dbAdapter, dbConnectionProvider, schemaName, fixNullableIndexColumns, prependSchemaName);
   }
 
   protected IMetaDataManager createMetaDataManager()
@@ -1113,7 +1049,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   }
 
-  protected int selectSchemaVersion(Connection connection) throws SQLException
+  protected int selectSchemaVersion(Connection connection, String schemaName) throws SQLException
   {
     Statement statement = null;
     ResultSet resultSet = null;
@@ -1121,8 +1057,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     try
     {
       statement = connection.createStatement();
-      resultSet = statement.executeQuery("SELECT " + CDODBSchema.PROPERTIES_VALUE + " FROM " + CDODBSchema.PROPERTIES + " WHERE " + CDODBSchema.PROPERTIES_NAME
-          + "='" + PROP_SCHEMA_VERSION + "'");
+      resultSet = statement.executeQuery(PropertiesTable.sqlSelectProperty(PROP_SCHEMA_VERSION, schemaName));
 
       if (resultSet.next())
       {
@@ -1137,6 +1072,11 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       connection.rollback();
       if (dbAdapter.isTableNotFoundException(ex))
       {
+        if (!DISABLE_LOG_OTHER_SCHEMA_INFO)
+        {
+          logOtherSchemaInfo(connection, schemaName);
+        }
+
         return FIRST_START;
       }
 
@@ -1146,6 +1086,70 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     {
       DBUtil.close(resultSet);
       DBUtil.close(statement);
+    }
+  }
+
+  private void logOtherSchemaInfo(Connection connection, String schemaName)
+  {
+    ResultSet tables = null;
+
+    try
+    {
+      Set<String> schemaNames = new HashSet<>();
+      tables = connection.getMetaData().getTables(connection.getCatalog(), null, null, DBUtil.ALL_TABLE_NAME_TYPES);
+
+      while (tables.next())
+      {
+        String tableName = tables.getString(3);
+        if (DBUtil.equalNames(tableName, PropertiesTable.tableName(), false))
+        {
+          schemaNames.add(tables.getString(2));
+        }
+      }
+
+      String message = "The CDO system tables are not found";
+
+      if (StringUtil.isEmpty(schemaName))
+      {
+        message += "! ";
+      }
+      else
+      {
+        message += " in schema " + DBUtil.quoted(schemaName) + "! ";
+      }
+
+      if (!schemaNames.isEmpty())
+      {
+        message += "Other schemas may contain a CDO repository: ";
+        boolean first = true;
+
+        for (String name : schemaNames)
+        {
+          if (first)
+          {
+            first = false;
+          }
+          else
+          {
+            message += ", ";
+          }
+
+          message += name;
+        }
+      }
+
+      OM.LOG.info(message.trim());
+      OM.LOG.info("This can indicate an attempt to open an existing database with a newer CDO server.\n" //
+          + "It may help to specify 'schemaName=...' and 'prependSchemaName=true' in cdo-server.xml,\n"//
+          + "and/or the system property '-Dorg.eclipse.net4j.db.DISABLE_QUOTED_NAMES=true'");
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(tables);
     }
   }
 
@@ -1162,7 +1166,7 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
         if (SCHEMA_MIGRATORS[version] != null)
         {
           OM.LOG.info("Migrating schema from version " + version + " to version " + (version + 1) + "...");
-          SCHEMA_MIGRATORS[version].migrateSchema(this, connection);
+          SCHEMA_MIGRATORS[version].migrateSchema(connection);
         }
       }
 
@@ -1177,24 +1181,24 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
   /**
    * @author Eike Stepper
    */
-  private static abstract class SchemaMigrator
+  private abstract class SchemaMigrator
   {
-    public abstract void migrateSchema(DBStore store, Connection connection) throws Exception;
+    public abstract void migrateSchema(Connection connection) throws Exception;
   }
 
   private static final int FIRST_VERSION_WITH_NULLABLE_CHECKS = 4;
 
-  private static final SchemaMigrator NO_MIGRATION_NEEDED = null;
+  private final SchemaMigrator NO_MIGRATION_NEEDED = null;
 
-  private static final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
+  private final SchemaMigrator NON_AUDIT_MIGRATION = new SchemaMigrator()
   {
     @Override
-    public void migrateSchema(DBStore store, Connection connection) throws Exception
+    public void migrateSchema(Connection connection) throws Exception
     {
-      InternalRepository repository = store.getRepository();
+      InternalRepository repository = getRepository();
       if (!repository.isSupportingAudits())
       {
-        store.visitAllTables(connection, new IDBStore.TableVisitor()
+        visitAllTables(connection, new IDBStore.TableVisitor()
         {
           @Override
           public void visitTable(Connection connection, String name) throws SQLException
@@ -1205,8 +1209,9 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
             {
               statement = connection.createStatement();
 
-              String from = " FROM " + name + " WHERE " + ATTRIBUTES_VERSION + "<" + CDOBranchVersion.FIRST_VERSION;
-              statement.executeUpdate("DELETE FROM " + CDODBSchema.CDO_OBJECTS + " WHERE " + ATTRIBUTES_ID + " IN (SELECT " + ATTRIBUTES_ID + from + ")");
+              String from = " FROM " + name + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "<" + CDOBranchVersion.FIRST_VERSION;
+              statement.executeUpdate("DELETE FROM " + DBUtil.quoted(MappingNames.CDO_OBJECTS) + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID)
+                  + " IN (SELECT " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + from + ")");
               statement.executeUpdate("DELETE" + from);
             }
             finally
@@ -1219,10 +1224,10 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   };
 
-  private static final SchemaMigrator LOB_SIZE_MIGRATION = new SchemaMigrator()
+  private final SchemaMigrator LOB_SIZE_MIGRATION = new SchemaMigrator()
   {
     @Override
-    public void migrateSchema(DBStore store, final Connection connection) throws Exception
+    public void migrateSchema(Connection connection) throws Exception
     {
       Statement statement = null;
 
@@ -1230,8 +1235,19 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
       {
         statement = connection.createStatement();
 
-        IDBAdapter dbAdapter = store.getDBAdapter();
-        String sql = dbAdapter.sqlRenameField(CDODBSchema.LOBS_SIZE, "size");
+        // Create a fake DBField because the DBSchema is not yet initialized at this point.
+        IDBSchema schema = null;
+
+        String schemaName = getSchemaName(connection);
+        if (schemaName != null)
+        {
+          schema = DBUtil.createSchema(schemaName, dbAdapter.isCaseSensitive(), isPrependSchemaName());
+        }
+
+        DBTable table = new DBTable(schema, LobsTable.tableName());
+        IDBField field = new DBField(table, LobsTable.sizeName(), DBType.INTEGER, 0, 0, false, 0);
+
+        String sql = dbAdapter.sqlRenameField(field, DBUtil.quoted("size"));
         statement.execute(sql);
       }
       finally
@@ -1241,15 +1257,14 @@ public class DBStore extends Store implements IDBStore, IMappingConstants, CDOAl
     }
   };
 
-  private static final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
+  private final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
 
-  private static final SchemaMigrator[] SCHEMA_MIGRATORS = { //
+  private final SchemaMigrator[] SCHEMA_MIGRATORS = { //
       NO_MIGRATION_NEEDED, //
       NON_AUDIT_MIGRATION, //
       LOB_SIZE_MIGRATION, //
       NULLABLE_COLUMNS_MIGRATION };
 
-  static
   {
     if (SCHEMA_MIGRATORS.length != SCHEMA_VERSION)
     {

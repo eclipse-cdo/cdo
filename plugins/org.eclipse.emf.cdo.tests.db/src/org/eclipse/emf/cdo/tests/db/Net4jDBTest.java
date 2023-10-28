@@ -444,7 +444,7 @@ public class Net4jDBTest extends AbstractCDOTest
     ExtendedDataOutputStream outs = new ExtendedDataOutputStream(output);
 
     boolean first = true;
-    StringBuilder builder = new StringBuilder("INSERT INTO " + tableName + " VALUES (");
+    StringBuilder builder = new StringBuilder("INSERT INTO " + DBUtil.quoted(tableName) + " VALUES (");
     for (Pair<DBType, Object> column : columns)
     {
       Object value = column.getElement2();
@@ -502,7 +502,7 @@ public class Net4jDBTest extends AbstractCDOTest
   private void checkValues(Connection connection, String tableName) throws Exception
   {
     Statement stmt = connection.createStatement();
-    ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + tableName);
+    ResultSet resultSet = stmt.executeQuery("SELECT * FROM " + DBUtil.quoted(tableName));
     assertEquals(true, resultSet.next());
 
     ByteArrayOutputStream output = new ByteArrayOutputStream();

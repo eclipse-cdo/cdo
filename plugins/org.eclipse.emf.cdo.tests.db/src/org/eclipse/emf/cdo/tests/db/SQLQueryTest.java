@@ -32,6 +32,7 @@ import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -58,6 +59,22 @@ public class SQLQueryTest extends AbstractCDOTest
 
   private static final int NUM_OF_SALES_ORDERS = 5;
 
+  private static final String model1_Product1 = DBUtil.quoted("model1_Product1");
+
+  private static final String model1_Customer = DBUtil.quoted("model1_Customer");
+
+  private static final String model1_PurchaseOrder = DBUtil.quoted("model1_PurchaseOrder");
+
+  private static final String cdo_id = DBUtil.quoted("cdo_id");
+
+  private static final String name = DBUtil.quoted("name");
+
+  private static final String street = DBUtil.quoted("street");
+
+  private static final String city = DBUtil.quoted("city");
+
+  private static final String vat = DBUtil.quoted("vat");
+
   @CleanRepositoriesBefore(reason = "Query result counting")
   public void testSimpleQueries() throws Exception
   {
@@ -78,7 +95,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for products with a specific name");
-      CDOQuery query = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1 WHERE name=:name");
+      CDOQuery query = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1 + " WHERE " + name + "=:name");
       query.setParameter("name", "" + 1);
       final List<Product1> products = query.getResult(Product1.class);
       assertEquals(1, products.size());
@@ -86,14 +103,14 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for Customers");
-      CDOQuery query = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_CUSTOMER");
+      CDOQuery query = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Customer);
       final List<Customer> customers = query.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
     }
 
     {
       msg("Query for products with VAT15");
-      CDOQuery query = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1 WHERE VAT =:vat");
+      CDOQuery query = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1 + " WHERE " + vat + "=:vat");
       query.setParameter("vat", VAT.VAT15.getValue());
       final List<Product1> products = query.getResult(Product1.class);
       assertEquals(10, products.size());
@@ -119,7 +136,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Count products");
-      CDOQuery query = transaction.createQuery("sql", "SELECT COUNT(*) from MODEL1_PRODUCT1");
+      CDOQuery query = transaction.createQuery("sql", "SELECT COUNT(*) from " + model1_Product1);
       query.setParameter(SQLQueryHandler.CDO_OBJECT_QUERY, false);
 
       // we need to handle objects, because different DBs produce either
@@ -158,12 +175,12 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customers");
-      CDOQuery customerQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_CUSTOMER ORDER BY NAME");
+      CDOQuery customerQuery = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Customer + " ORDER BY " + name);
       final List<Customer> customers = customerQuery.getResult(Customer.class);
       assertEquals(NUM_OF_CUSTOMERS, customers.size());
 
       msg("Query for products");
-      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
+      CDOQuery productQuery = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1);
       final List<Product1> products = productQuery.getResult(Product1.class);
       assertEquals(NUM_OF_PRODUCTS, products.size());
     }
@@ -191,14 +208,8 @@ public class SQLQueryTest extends AbstractCDOTest
       transaction.commit();
     }
 
-    String column = "date";
-    if (((IDBStore)getRepository().getStore()).getDBAdapter().isReservedWord(column))
-    {
-      column += "0";
-    }
-
     CDOView view = session.openView();
-    CDOQuery query = view.createQuery("sql", "SELECT CDO_ID FROM  model1_purchaseorder WHERE " + column + " = :aDate");
+    CDOQuery query = view.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_PurchaseOrder + " WHERE " + DBUtil.quoted(date()) + " = :aDate");
     query.setParameter("aDate", aDate);
     List<PurchaseOrder> orders = query.getResult(PurchaseOrder.class);
     assertEquals(1, orders.size());
@@ -222,7 +233,7 @@ public class SQLQueryTest extends AbstractCDOTest
       final List<Product1> allProducts = new ArrayList<>();
       for (int page = 0; page < numOfPages; page++)
       {
-        CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
+        CDOQuery productQuery = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1);
         productQuery.setMaxResults(pageSize);
         productQuery.setParameter(SQLQueryHandler.FIRST_RESULT, page * pageSize);
         final List<Product1> queriedProducts = productQuery.getResult(Product1.class);
@@ -255,7 +266,7 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for products");
-      CDOQuery productQuery = transaction.createQuery("sql", "SELECT CDO_ID FROM MODEL1_PRODUCT1");
+      CDOQuery productQuery = transaction.createQuery("sql", "SELECT " + cdo_id + " FROM " + model1_Product1);
       CloseableIterator<Product1> iterator = productQuery.getResultAsync(Product1.class);
       int counter = 0;
       while (iterator.hasNext())
@@ -357,13 +368,14 @@ public class SQLQueryTest extends AbstractCDOTest
 
     {
       msg("Query for customer fields");
-      CDOQuery query = transaction.createQuery("sql", "SELECT street, city, name FROM model1_customer ORDER BY street");
+      CDOQuery query = transaction.createQuery("sql", "SELECT " + street + ", " + city + ", " + name + " FROM " + model1_Customer + " ORDER BY " + street);
       query.setParameter("cdoObjectQuery", false);
 
       List<Object[]> results = query.getResult(Object[].class);
       for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
       {
         assertEquals("Street " + i, results.get(i)[0]);
+
         Object actual = results.get(i)[1];
         if (i == 0)
         {
@@ -391,15 +403,16 @@ public class SQLQueryTest extends AbstractCDOTest
     CDOTransaction transaction = session.openTransaction();
 
     msg("Query for customer fields");
-    CDOQuery query = transaction.createQuery("sql", "SELECT street, city, name FROM model1_customer ORDER BY street");
+    CDOQuery query = transaction.createQuery("sql", "SELECT " + street + ", " + city + ", " + name + " FROM " + model1_Customer + " ORDER BY " + street);
     query.setParameter("cdoObjectQuery", false);
     query.setParameter("mapQuery", true);
 
     List<Map<String, Object>> results = query.getResult();
     for (int i = 0; i < NUM_OF_CUSTOMERS; i++)
     {
-      assertEquals("Street " + i, results.get(i).get("STREET"));
-      Object actual = results.get(i).get("CITY");
+      assertEquals("Street " + i, mapGet(results.get(i), "street"));
+
+      Object actual = mapGet(results.get(i), "city");
       if (i == 0)
       {
         assertEquals(null, actual);
@@ -409,7 +422,7 @@ public class SQLQueryTest extends AbstractCDOTest
         assertEquals("City " + i, actual);
       }
 
-      assertEquals("" + i, results.get(i).get("NAME"));
+      assertEquals("" + i, mapGet(results.get(i), "name"));
     }
   }
 
@@ -513,5 +526,27 @@ public class SQLQueryTest extends AbstractCDOTest
     }
 
     return product;
+  }
+
+  private String date()
+  {
+    String column = "date";
+    if (((IDBStore)getRepository().getStore()).getDBAdapter().isReservedWord(column))
+    {
+      column += "0";
+    }
+
+    return column;
+  }
+
+  private static Object mapGet(Map<String, Object> map, String key)
+  {
+    Object value = map.get(key);
+    if (value == null)
+    {
+      value = map.get(key.toUpperCase());
+    }
+
+    return value;
   }
 }

@@ -57,7 +57,7 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
   public LongIDHandler(DBStore store)
   {
     this.store = store;
-    externalReferenceManager = new ExternalReferenceManager(this);
+    externalReferenceManager = new ExternalReferenceManager(store);
   }
 
   @Override

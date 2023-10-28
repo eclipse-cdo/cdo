@@ -500,6 +500,58 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     assertServerLockState(remoteResource);
   }
 
+  public void _testClearLocksOnServer2() throws Exception
+  {
+    transaction.commit();
+
+    ISession serverSession = CDOServerUtil.getServerSession(session);
+    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+
+    CDOView localView = session.openView();
+    localView.options().setLockNotificationEnabled(true);
+    CDOResource localResource = localView.getResource(resource.getPath());
+
+    CDOSession remoteSession = openSession();
+    CDOView remoteView = remoteSession.openView();
+    remoteView.options().setLockNotificationEnabled(true);
+    CDOResource remoteResource = remoteView.getResource(resource.getPath());
+    String durableLockingID = remoteView.enableDurableLocking();
+
+    lockWrite(remoteResource);
+    assertWriteLock(true, remoteResource);
+    assertServerLockState(resource);
+    assertServerLockState(localResource);
+    assertServerLockState(remoteResource);
+
+    sleep(100);
+    assertEquals(true, localResource.cdoWriteLock().isLockedByOthers());
+
+    CDOServerUtil.execute(serverSession, () -> {
+      LockArea lockArea = lm.getLockArea(durableLockingID);
+      lockArea.getLocks().clear();
+      lm.updateLockArea(lockArea);
+      // lm.deleteLockArea(durableLockingID); //we can also delete the lock area
+    });
+
+    // The following locking/unlocking is currently necessary to generate lock state updates
+    // Maybe, it could be removed in the future.
+    lockWrite(resource);
+    unlockWrite(resource);
+
+    // Now everything should be unlocked
+    assertWriteLock(false, resource);
+    assertWriteLock(false, remoteResource);
+    assertWriteLock(false, localResource);
+
+    // Assert that locking still works
+    lockWrite(remoteResource);
+    assertWriteLock(true, remoteResource);
+    assertServerLockState(resource);
+    assertServerLockState(localResource);
+    assertServerLockState(remoteResource);
+    unlockWrite(remoteResource);
+  }
+
   private static void assertServerLockState(CDOObject object)
   {
     CDOView view = object.cdoView();

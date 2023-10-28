@@ -26,6 +26,8 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageInfosTable;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -68,7 +70,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private static final boolean ZIP_PACKAGE_BYTES = true;
 
-  private IDBStore store;
+  private DBStore store;
 
   private Map<EModelElement, CDOID> modelElementToMetaID = new HashMap<>();
 
@@ -76,7 +78,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   public MetaDataManager(IDBStore store)
   {
-    this.store = store;
+    this.store = (DBStore)store;
   }
 
   @Override
@@ -124,9 +126,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   @Override
   public final EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit)
   {
-    String where = CDODBSchema.PACKAGE_UNITS_ID.getName() + "='" + packageUnit.getID() + "'"; //$NON-NLS-1$ //$NON-NLS-2$
-    Object[] values = DBUtil.select(connection, where, CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA);
-    byte[] bytes = (byte[])values[0];
+    byte[] bytes = store.tables().packageUnits().loadPackageUnitBytes(connection, packageUnit);
     EPackage ePackage = createEPackage(packageUnit, bytes);
     return EMFUtil.getAllPackages(ePackage);
   }
@@ -155,15 +155,17 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException
   {
     // Export package units
-    String where = " WHERE p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
-        "' AND p_u." + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
-    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_UNITS, "p_u", where);
+    PackageUnitsTable packageUnits = store.tables().packageUnits();
+    String where = " WHERE p_u." + packageUnits.id() + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + //
+        "' AND p_u." + packageUnits.id() + "<>'" + CDOModelConstants.RESOURCE_PACKAGE_URI + //
+        "' AND p_u." + packageUnits.id() + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + //
+        "' AND p_u." + packageUnits.timeStamp() + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+    DBUtil.serializeTable(out, connection, packageUnits.table(), "p_u", where);
 
     // Export package infos
-    String join = ", " + CDODBSchema.PACKAGE_UNITS + " p_u" + where + " AND p_i." + CDODBSchema.PACKAGE_INFOS_UNIT + "=p_u." + CDODBSchema.PACKAGE_UNITS_ID;
-    DBUtil.serializeTable(out, connection, CDODBSchema.PACKAGE_INFOS, "p_i", join);
+    PackageInfosTable packageInfos = store.tables().packageInfos();
+    String join = ", " + packageUnits.table() + " p_u" + where + " AND p_i." + packageInfos.unit() + "=p_u." + packageUnits.id();
+    DBUtil.serializeTable(out, connection, packageInfos.table(), "p_i", join);
   }
 
   @Override
@@ -174,8 +176,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     try
     {
-      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_UNITS, monitor.fork());
-      DBUtil.deserializeTable(in, connection, CDODBSchema.PACKAGE_INFOS, monitor.fork());
+      PackageUnitsTable packageUnits = store.tables().packageUnits();
+      DBUtil.deserializeTable(in, connection, packageUnits.table(), monitor.fork());
+
+      PackageInfosTable packageInfos = store.tables().packageInfos();
+      DBUtil.deserializeTable(in, connection, packageInfos.table(), monitor.fork());
+
       return readPackageUnits(connection, fromCommitTime, toCommitTime, monitor.fork());
     }
     finally
@@ -214,7 +220,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private InternalCDOPackageRegistry getPackageRegistry()
   {
-    return (InternalCDOPackageRegistry)store.getRepository().getPackageRegistry();
+    return store.getRepository().getPackageRegistry();
   }
 
   private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
@@ -242,9 +248,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     try
     {
-      String sql = "INSERT INTO " + CDODBSchema.PACKAGE_UNITS + " (" + CDODBSchema.PACKAGE_UNITS_ID + ", " //$NON-NLS-1$ //$NON-NLS-2$
-          + CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE + ", " + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + ", " + CDODBSchema.PACKAGE_UNITS_PACKAGE_DATA
-          + ") VALUES (?, ?, ?, ?)";
+      PackageUnitsTable packageUnits = store.tables().packageUnits();
+      String sql = "INSERT INTO " + packageUnits + " (" + packageUnits.id() + ", " //$NON-NLS-1$ //$NON-NLS-2$
+          + packageUnits.originalType() + ", " + packageUnits.timeStamp() + ", " + packageUnits.packageData() + ") VALUES (?, ?, ?, ?)";
       DBUtil.trace(sql);
 
       IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -264,7 +270,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
         if (stmt.getUpdateCount() == 0)
         {
-          throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_UNITS); //$NON-NLS-1$
+          throw new DBException("No row inserted into table " + packageUnits.table().getName()); //$NON-NLS-1$
         }
       }
       catch (SQLException ex)
@@ -318,8 +324,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String parentURI = packageInfo.getParentURI();
     String unitID = packageInfo.getPackageUnit().getID();
 
-    String sql = "INSERT INTO " + CDODBSchema.PACKAGE_INFOS + " (" + CDODBSchema.PACKAGE_INFOS_URI + ", " //$NON-NLS-1$ //$NON-NLS-2$
-        + CDODBSchema.PACKAGE_INFOS_PARENT + ", " + CDODBSchema.PACKAGE_INFOS_UNIT + ") VALUES (?, ?, ?)";
+    PackageInfosTable packageInfos = store.tables().packageInfos();
+    String sql = "INSERT INTO " + packageInfos + " (" + packageInfos.uri() + ", " //$NON-NLS-1$ //$NON-NLS-2$
+        + packageInfos.parent() + ", " + packageInfos.unit() + ") VALUES (?, ?, ?)";
     DBUtil.trace(sql);
 
     IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
@@ -338,7 +345,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
       if (stmt.getUpdateCount() == 0)
       {
-        throw new DBException("No row inserted into table " + CDODBSchema.PACKAGE_INFOS); //$NON-NLS-1$
+        throw new DBException("No row inserted into table " + packageInfos.table().getName()); //$NON-NLS-1$
       }
     }
     catch (SQLException ex)
@@ -375,16 +382,17 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       }
     };
 
+    PackageUnitsTable packageUnitsTable = store.tables().packageUnits();
+
     String where = null;
     if (fromCommitTime != CDOBranchPoint.UNSPECIFIED_DATE)
     {
-      where = CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND " + CDODBSchema.PACKAGE_UNITS_ID + "<>'"
-          + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND " + CDODBSchema.PACKAGE_UNITS_ID + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
-          + CDODBSchema.PACKAGE_UNITS_TIME_STAMP + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
+      where = packageUnitsTable.id() + "<>'" + CDOModelConstants.CORE_PACKAGE_URI + "' AND " + packageUnitsTable.id() + "<>'"
+          + CDOModelConstants.RESOURCE_PACKAGE_URI + "' AND " + packageUnitsTable.id() + "<>'" + CDOModelConstants.TYPES_PACKAGE_URI + "' AND "
+          + packageUnitsTable.timeStamp() + " BETWEEN " + fromCommitTime + " AND " + toCommitTime;
     }
 
-    DBUtil.select(connection, unitRowHandler, where, CDODBSchema.PACKAGE_UNITS_ID, CDODBSchema.PACKAGE_UNITS_ORIGINAL_TYPE,
-        CDODBSchema.PACKAGE_UNITS_TIME_STAMP);
+    DBUtil.select(connection, unitRowHandler, where, packageUnitsTable.id(), packageUnitsTable.originalType(), packageUnitsTable.timeStamp());
 
     final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<>();
     IDBRowHandler infoRowHandler = new IDBRowHandler()
@@ -414,7 +422,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     try
     {
-      DBUtil.select(connection, infoRowHandler, CDODBSchema.PACKAGE_INFOS_UNIT, CDODBSchema.PACKAGE_INFOS_URI, CDODBSchema.PACKAGE_INFOS_PARENT);
+      PackageInfosTable packageInfosTable = store.tables().packageInfos();
+      DBUtil.select(connection, infoRowHandler, packageInfosTable.unit(), packageInfosTable.uri(), packageInfosTable.parent());
     }
     finally
     {

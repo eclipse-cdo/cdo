@@ -108,6 +108,12 @@ public final class DelegatingDBSchema extends DelegatingDBSchemaElement implemen
   }
 
   @Override
+  public boolean isQualifiedTableNames()
+  {
+    return getDelegate().isQualifiedTableNames();
+  }
+
+  @Override
   public int compareNames(String name1, String name2)
   {
     return getDelegate().compareNames(name1, name2);

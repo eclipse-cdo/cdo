@@ -26,6 +26,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
@@ -44,6 +45,10 @@ import java.util.List;
  */
 public class BranchingListTableMapping extends AbstractListTableMapping implements IBranchDeletionSupport
 {
+  private IDBField branchField;
+
+  private IDBField versionField;
+
   private String sqlClear;
 
   public BranchingListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
@@ -57,17 +62,19 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
     super.initSQLStrings();
 
     IDBTable table = getTable();
+    branchField = table.getField(MappingNames.LIST_REVISION_BRANCH);
+    versionField = table.getField(MappingNames.LIST_REVISION_VERSION);
 
     // ----------- clear list -------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=?  AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION);
+    builder.append(versionField);
     builder.append("=?"); //$NON-NLS-1$
     sqlClear = builder.toString();
   }
@@ -75,8 +82,8 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
   @Override
   protected void addKeyFields(List<FieldInfo> list)
   {
-    list.add(new FieldInfo(LIST_REVISION_BRANCH, DBType.INTEGER));
-    list.add(new FieldInfo(LIST_REVISION_VERSION, DBType.INTEGER));
+    list.add(new FieldInfo(MappingNames.LIST_REVISION_BRANCH, DBType.INTEGER));
+    list.add(new FieldInfo(MappingNames.LIST_REVISION_VERSION, DBType.INTEGER));
   }
 
   @Override
@@ -131,6 +138,6 @@ public class BranchingListTableMapping extends AbstractListTableMapping implemen
       return;
     }
 
-    batch.add("DELETE FROM " + table + " WHERE " + LIST_REVISION_BRANCH + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
   }
 }

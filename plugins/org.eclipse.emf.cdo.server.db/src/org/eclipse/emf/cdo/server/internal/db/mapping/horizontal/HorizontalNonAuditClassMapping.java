@@ -97,35 +97,35 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     // ----------- Select Revision ---------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=?"); //$NON-NLS-1$
     sqlSelectCurrentAttributes = builder.toString();
 
     // ----------- Select Version ---------------------------
     builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=?"); //$NON-NLS-1$
     sqlSelectCurrentVersion = builder.toString();
 
@@ -134,19 +134,19 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append("("); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
+    builder.append(createdField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_REVISED);
+    builder.append(revisedField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
+    builder.append(resourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(featureField);
     appendTypeMappingNames(builder, getValueMappings());
     appendFieldNames(builder, getUnsettableFields());
     appendFieldNames(builder, getListSizeFields());
@@ -159,7 +159,7 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     // ----------- Select all unrevised Object IDs ------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     sqlSelectAllObjectIDs = builder.toString();
@@ -168,30 +168,30 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
-    builder.append("=? ,"); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CREATED);
-    builder.append("=? "); //$NON-NLS-1$
+    builder.append(versionField);
+    builder.append("=?, "); //$NON-NLS-1$
+    builder.append(createdField);
+    builder.append("=?"); //$NON-NLS-1$
     sqlUpdatePrefix = builder.toString();
 
     builder = new StringBuilder(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_RESOURCE);
-    builder.append("=? ,"); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
-    builder.append("=? ,"); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_FEATURE);
+    builder.append(resourceField);
+    builder.append("=?, "); //$NON-NLS-1$
+    builder.append(containerField);
+    builder.append("=?, "); //$NON-NLS-1$
+    builder.append(featureField);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateContainerPart = builder.toString();
 
     builder = new StringBuilder(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? "); //$NON-NLS-1$
     sqlUpdateAffix = builder.toString();
 
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append("=? "); //$NON-NLS-1$
     sqlDelete = builder.toString();
   }
@@ -297,13 +297,13 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     builder.append(">0 AND "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_CONTAINER);
+    builder.append(containerField);
     builder.append("=? AND "); //$NON-NLS-1$
     builder.append(nameValueMapping.getField());
     if (name == null)
@@ -462,16 +462,14 @@ public class HorizontalNonAuditClassMapping extends AbstractHorizontalClassMappi
       throw new IllegalArgumentException("Non-audit mode does not support branch specification");
     }
 
-    return ATTRIBUTES_REVISED + "=0";
+    return revisedField + "=0";
   }
 
   @Override
   protected void detachAttributes(IDBStoreAccessor accessor, CDOID id, int version, CDOBranch branch, long timeStamp, OMMonitor monitor)
   {
     rawDelete(accessor, id, version, branch, monitor);
-
-    AbstractHorizontalMappingStrategy mappingStrategy = (AbstractHorizontalMappingStrategy)getMappingStrategy();
-    mappingStrategy.removeObjectType(accessor, id);
+    getMappingStrategy().removeObjectType(accessor, id);
   }
 
   @Override

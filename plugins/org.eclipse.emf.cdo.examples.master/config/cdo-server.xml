@@ -59,10 +59,17 @@
     -->
 
     <store type="db">
-      <!-- The name of the DB schema to use for the repository.
-           If omitted the default schema name of the repository's DB adapter is used as the schema name.
-           If that is null the name of the repository is used as the schema name. -->
-      <property name="schemaName" value="public"/>
+      <!-- The name of the DB schema to use for the repository. If omitted the default schema name of the repository's DB adapter is used as the schema name.
+      <property name="schemaName" value="PUBLIC"/>
+       -->
+      
+      <!-- Whether to qualify table names with the schema name.
+      <property name="prependSchemaName" value="true"/>
+      -->
+
+      <!-- Whether to create the schema with the specified name at startup time, if it does not exist.
+      <property name="createSchemaIfNeeded" value="true"/>
+      -->
 
       <!-- Example http://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)
 	      <property name="idColumnLength" value="34"/>

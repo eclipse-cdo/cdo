@@ -119,12 +119,25 @@ public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClient
     /**
      * The name of the DB schema to use for the repository.
      * If omitted the {@link IDBAdapter#getDefaultSchemaName(Connection) default schema name} of the repository's
-     * {@link IDBAdapter DB adapter} is used as the schema name. If that is <code>null</code> the name of the
-     * repository is used as the schema name.
+     * {@link IDBAdapter DB adapter} is used as the schema name.
      *
      * @since 4.13
      */
     public static final String SCHEMA_NAME = "schemaName"; //$NON-NLS-1$
+
+    /**
+     * Whether to qualify table names with the {@link #SCHEMA_NAME schema name}.
+     *
+     * @since 4.13
+     */
+    public static final String PREPEND_SCHEMA_NAME = "prependSchemaName"; //$NON-NLS-1$
+
+    /**
+     * Whether to create the schema with the specified {@link #SCHEMA_NAME name} at startup time, if it does not exist.
+     *
+     * @since 4.13
+     */
+    public static final String CREATE_SCHEMA_IF_NEEDED = "createSchemaIfNeeded"; //$NON-NLS-1$
 
     /**
      * Period at which to execute an SQL statement to keep DB connection alive, in minutes.

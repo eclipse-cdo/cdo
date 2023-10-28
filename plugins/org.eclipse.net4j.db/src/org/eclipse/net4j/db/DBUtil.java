@@ -64,9 +64,19 @@ import java.util.Set;
 public final class DBUtil
 {
   /**
+   * @since 4.12
+   */
+  public static final String QUOTE = "\"";
+
+  /**
    * @since 4.2
    */
   public static final int MAX_BATCH_SIZE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.MAX_BATCH_SIZE", 2000);
+
+  /**
+   * @since 4.12
+   */
+  public static final boolean DISABLE_QUOTED_NAMES = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.DISABLE_QUOTED_NAMES");
 
   /**
    * A system property to enable noisy close, i.e. exception catch in close methods are thrown as {@link DBException} exception.
@@ -75,9 +85,16 @@ public final class DBUtil
    */
   public static final String PROP_ENABLE_NOISY_CLOSE = "org.eclipse.net4j.db.close.noisy";
 
-  private static final String[] ALL_TABLE_NAME_TYPES = new String[] { "TABLE" }; //$NON-NLS-1$
+  /**
+   * @since 4.12
+   */
+  public static final String[] ALL_TABLE_NAME_TYPES = new String[] { "TABLE" }; //$NON-NLS-1$
 
   private static final boolean IS_NOISY_CLOSE_ENABLED = OMPlatform.INSTANCE.isProperty(PROP_ENABLE_NOISY_CLOSE);
+
+  private static final String DEFAULT_SCOPE = OMPlatform.INSTANCE.getProperty("org.eclipse.net4j.db.DEFAULT_SCOPE", "org.eclipse.net4j.db.NAME");
+
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.DEBUG");
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SQL, DBUtil.class);
 
@@ -122,7 +139,16 @@ public final class DBUtil
    */
   public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns)
   {
-    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns);
+    return openDatabase(adapter, connectionProvider, schemaName, fixNullableIndexColumns, false);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static IDBDatabase openDatabase(IDBAdapter adapter, IDBConnectionProvider connectionProvider, String schemaName, boolean fixNullableIndexColumns,
+      boolean qualifiedTableNames)
+  {
+    return new DBDatabase((DBAdapter)adapter, connectionProvider, schemaName, fixNullableIndexColumns, qualifiedTableNames);
   }
 
   /**
@@ -130,15 +156,15 @@ public final class DBUtil
    */
   public static IDBSchema createSchema(String name)
   {
-    return createSchema(name, false);
+    return createSchema(name, false, false);
   }
 
   /**
    * @since 4.12
    */
-  public static IDBSchema createSchema(String name, boolean caseSensitive)
+  public static IDBSchema createSchema(String name, boolean caseSensitive, boolean qualifiedTableNames)
   {
-    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive);
+    return new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive, qualifiedTableNames);
   }
 
   /**
@@ -162,8 +188,16 @@ public final class DBUtil
    */
   public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name, boolean fixNullableIndexColumns)
   {
+    return readSchema(adapter, connection, name, fixNullableIndexColumns, false);
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static IDBSchema readSchema(IDBAdapter adapter, Connection connection, String name, boolean fixNullableIndexColumns, boolean qualifiedTableNames)
+  {
     boolean caseSensitive = adapter.isCaseSensitive();
-    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive);
+    IDBSchema schema = new org.eclipse.net4j.internal.db.ddl.DBSchema(name, caseSensitive, qualifiedTableNames);
 
     if (fixNullableIndexColumns)
     {
@@ -465,6 +499,59 @@ public final class DBUtil
   /**
    * @since 4.12
    */
+  public static String quoted(String name)
+  {
+    if (name != null && !DISABLE_QUOTED_NAMES)
+    {
+      name = QUOTE + name + QUOTE;
+    }
+
+    return name;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static String name(String name, String scope)
+  {
+    if (name != null)
+    {
+      if (scope == null)
+      {
+        scope = DEFAULT_SCOPE;
+      }
+
+      String property = scope.length() == 0 ? name : scope + '.' + name;
+
+      String overrideName = OMPlatform.INSTANCE.getProperty(property);
+      if (overrideName != null)
+      {
+        name = overrideName;
+      }
+    }
+
+    return name;
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static String name(String name, Class<?> scope)
+  {
+    return name(name, scope.getName().replace('$', '.'));
+  }
+
+  /**
+   * @since 4.12
+   */
+  public static String name(String name)
+  {
+    return name(name, (String)null);
+  }
+
+  /**
+   * @since 4.12
+   */
   public static boolean equalNames(String name1, String name2, boolean caseSensitive)
   {
     if (caseSensitive || name1 == null)
@@ -570,7 +657,8 @@ public final class DBUtil
   /**
    * @since 4.12
    */
-  public static void forEachTable(Connection connection, String schemaName, boolean caseSensitive, ConsumerWithException<String, SQLException> tableNameConsumer)
+  public static void forEachTable(Connection connection, String schemaName, boolean caseSensitive,
+      ConsumerWithException<String, SQLException> tableNameConsumer)
   {
     if (schemaName == null && connection instanceof IUserAware)
     {
@@ -632,8 +720,7 @@ public final class DBUtil
 
       for (String tableName : getAllTableNames(connection, schemaName, caseSensitive))
       {
-        String sql = "DROP TABLE " + tableName; //$NON-NLS-1$
-        trace(sql);
+        String sql = trace("DROP TABLE " + quoted(tableName)); //$NON-NLS-1$
 
         try
         {
@@ -812,12 +899,7 @@ public final class DBUtil
    */
   public static void execute(Connection connection, CharSequence sql)
   {
-    String string = sql.toString();
-    if (TRACER.isEnabled())
-    {
-      TRACER.trace(string);
-    }
-
+    String string = trace(sql.toString());
     Statement statement = null;
 
     try
@@ -962,7 +1044,7 @@ public final class DBUtil
    */
   public static int clearTable(Connection connection, String tableName)
   {
-    String sql = "DELETE FROM " + tableName;
+    String sql = "DELETE FROM " + quoted(tableName);
     return update(connection, sql);
   }
 
@@ -1448,7 +1530,7 @@ public final class DBUtil
    */
   public static boolean isTracerEnabled()
   {
-    return TRACER.isEnabled();
+    return DEBUG || TRACER.isEnabled();
   }
 
   /**

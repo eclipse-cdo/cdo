@@ -155,6 +155,12 @@ public abstract class DBAdapter implements IDBAdapter
     return connection;
   }
 
+  @Override
+  public void createSchema(Connection connection, String schemaName)
+  {
+    DBUtil.execute(connection, "CREATE SCHEMA " + DBUtil.quoted(schemaName));
+  }
+
   /**
    * @since 4.9
    */
@@ -491,7 +497,7 @@ public abstract class DBAdapter implements IDBAdapter
 
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE "); //$NON-NLS-1$
-    builder.append(delta.getName());
+    builder.append(table);
     builder.append(" ("); //$NON-NLS-1$
     appendFieldDefs(builder, table, createFieldDefinitions(table));
     builder.append(")"); //$NON-NLS-1$
@@ -1143,8 +1149,7 @@ public abstract class DBAdapter implements IDBAdapter
           appendable.append(", "); //$NON-NLS-1$
         }
 
-        String fieldName = field.getName();
-        appendable.append(fieldName);
+        appendable.append(field.toString());
         appendable.append(" "); //$NON-NLS-1$
         appendable.append(defs[i]);
       }

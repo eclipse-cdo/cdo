@@ -635,6 +635,19 @@ public abstract class AbstractOMTest extends TestCase
     failNotEquals(message, expected, actual);
   }
 
+  public static void assertEqualsIgnoreCase(String actual, String expected)
+  {
+    if (actual == null)
+    {
+      assertNull(expected);
+    }
+
+    if (!actual.equalsIgnoreCase(expected))
+    {
+      fail("Expected (ignoring case): '" + expected + "', but was: '" + actual + "'");
+    }
+  }
+
   public static void assertInstanceOf(Class<?> expected, Object object)
   {
     assertEquals("Not an instance of " + expected + ": " + object.getClass().getName(), true, expected.isInstance(object));

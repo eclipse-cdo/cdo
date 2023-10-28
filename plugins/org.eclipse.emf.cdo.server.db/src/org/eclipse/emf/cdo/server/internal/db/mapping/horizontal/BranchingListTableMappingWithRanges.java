@@ -39,8 +39,8 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
-import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IBranchDeletionSupport;
+import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
 import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
@@ -57,6 +57,7 @@ import org.eclipse.net4j.db.IDBDatabase;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBSchemaTransaction;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -88,7 +89,8 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport
+public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping
+    implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -97,10 +99,19 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
    */
   private static final int FINAL_VERSION = Integer.MAX_VALUE;
 
-  /**
-   * The table of this mapping.
-   */
   private IDBTable table;
+
+  private IDBField sourceField;
+
+  private IDBField branchField;
+
+  private IDBField indexField;
+
+  private IDBField versionAddedField;
+
+  private IDBField versionRemovedField;
+
+  private IDBField valueField;
 
   /**
    * The type mapping for the value field.
@@ -158,16 +169,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
         {
           IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
           IDBTable table = workingCopy.addTable(tableName);
-          table.addField(LIST_REVISION_ID, idType, idLength, true);
-          table.addField(LIST_REVISION_BRANCH, DBType.INTEGER, true);
-          table.addField(LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
-          table.addField(LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
-          table.addField(LIST_IDX, DBType.INTEGER, true);
 
-          // TODO think about indexes
-          table.addIndex(Type.NON_UNIQUE, LIST_REVISION_ID, LIST_REVISION_BRANCH, LIST_REVISION_VERSION_ADDED, LIST_REVISION_VERSION_REMOVED, LIST_IDX);
+          sourceField = table.addField(MappingNames.LIST_REVISION_ID, idType, idLength, true);
+          branchField = table.addField(MappingNames.LIST_REVISION_BRANCH, DBType.INTEGER, true);
+          versionAddedField = table.addField(MappingNames.LIST_REVISION_VERSION_ADDED, DBType.INTEGER);
+          versionRemovedField = table.addField(MappingNames.LIST_REVISION_VERSION_REMOVED, DBType.INTEGER);
+          indexField = table.addField(MappingNames.LIST_IDX, DBType.INTEGER, true);
 
-          typeMapping.createDBField(table, LIST_VALUE);
+          table.addIndex(Type.NON_UNIQUE, sourceField, branchField, versionAddedField, versionRemovedField, indexField);
+
+          typeMapping.createDBField(table, MappingNames.LIST_VALUE);
 
           schemaTransaction.commit();
         }
@@ -182,53 +193,59 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     }
     else
     {
-      typeMapping.setDBField(table, LIST_VALUE);
+      sourceField = table.getField(MappingNames.LIST_REVISION_ID);
+      branchField = table.getField(MappingNames.LIST_REVISION_BRANCH);
+      versionAddedField = table.getField(MappingNames.LIST_REVISION_VERSION_ADDED);
+      versionRemovedField = table.getField(MappingNames.LIST_REVISION_VERSION_REMOVED);
+      indexField = table.getField(MappingNames.LIST_IDX);
+
+      typeMapping.setDBField(table, MappingNames.LIST_VALUE);
+      valueField = table.getField(MappingNames.LIST_VALUE);
+
       initSQLStrings();
     }
   }
 
   private void initSQLStrings()
   {
-    String tableName = getTable().getName();
-
     // ---------------- read chunks ----------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(versionAddedField);
     builder.append("<=? AND ("); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(" IS NULL OR "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(">?)"); //$NON-NLS-1$
     sqlSelectChunksPrefix = builder.toString();
 
-    sqlOrderByIndex = " ORDER BY " + LIST_IDX; //$NON-NLS-1$
+    sqlOrderByIndex = " ORDER BY " + indexField; //$NON-NLS-1$
 
     // ----------------- insert entry -----------------
     builder = new StringBuilder("INSERT INTO "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append("("); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append(","); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append(","); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(versionAddedField);
     builder.append(","); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(","); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(","); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(") VALUES (?, ?, ?, ?, ?, ?)"); //$NON-NLS-1$
     sqlInsertEntry = builder.toString();
 
@@ -236,16 +253,16 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlRemoveEntry = builder.toString();
 
@@ -253,13 +270,13 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     builder = new StringBuilder("DELETE FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(versionAddedField);
     builder.append("=?"); //$NON-NLS-1$
     sqlDeleteEntry = builder.toString();
 
@@ -267,31 +284,31 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(versionAddedField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
     // ----------------- get current value -----------------
     builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlGetValue = builder.toString();
 
@@ -299,14 +316,14 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     builder = new StringBuilder("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(branchField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(versionRemovedField);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlClearList = builder.toString();
   }
@@ -315,6 +332,12 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
   public Collection<IDBTable> getDBTables()
   {
     return Collections.singleton(table);
+  }
+
+  @Override
+  protected final IDBField index()
+  {
+    return indexField;
   }
 
   protected final IDBTable getTable()
@@ -724,7 +747,7 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       return;
     }
 
-    batch.add("DELETE FROM " + table + " WHERE " + LIST_REVISION_BRANCH + " IN (" + idList + ")");
+    batch.add("DELETE FROM " + table + " WHERE " + branchField + " IN (" + idList + ")");
   }
 
   /**
@@ -1496,25 +1519,24 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
       return true;
     }
 
-    String tableName = getTable().getName();
     String listJoin = getMappingStrategy().getListJoin("a_t", "l_t");
 
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t."); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(", l_t."); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(" FROM "); //$NON-NLS-1$
-    builder.append(tableName);
+    builder.append(table);
     builder.append(" l_t, ");//$NON-NLS-1$
     builder.append(mainTableName);
     builder.append(" a_t WHERE ");//$NON-NLS-1$
     builder.append("a_t." + mainTableWhere);//$NON-NLS-1$
     builder.append(listJoin);
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(" IN "); //$NON-NLS-1$
     builder.append(idString);
     String sql = builder.toString();

@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.db.ddl;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.ddl.IDBSchemaElement;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor;
 import org.eclipse.net4j.db.ddl.IDBSchemaVisitor.StopRecursion;
@@ -206,5 +207,12 @@ public abstract class DBSchemaElement extends DBNamedElement implements Internal
 
   protected void dumpAdditionalProperties(Writer writer) throws IOException
   {
+  }
+
+  @Override
+  public String toString()
+  {
+    String name = getName();
+    return DBUtil.quoted(name);
   }
 }

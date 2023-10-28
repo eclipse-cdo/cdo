@@ -92,15 +92,15 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
   {
     StringBuilder builder = new StringBuilder();
     builder.append("SELECT l_t.");
-    builder.append(LIST_REVISION_ID);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_ID));
     builder.append(", l_t.");
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH));
     builder.append(", l_t.");
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED));
     builder.append(", l_t.");
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
     builder.append(", l_t.");
-    builder.append(LIST_IDX);
+    builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
     builder.append(" FROM ");
     builder.append(table);
     builder.append(" l_t, ");
@@ -109,7 +109,7 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     builder.append(attrSuffix);
     builder.append(getListJoinForPostProcess("a_t", "l_t"));
     builder.append(" AND l_t.");
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
     builder.append(" IS NOT NULL");
     String sql = DBUtil.trace(builder.toString());
 
@@ -194,15 +194,15 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_REMOVED);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED));
     builder.append("=? WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_ID));
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_BRANCH);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH));
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION_ADDED);
+    builder.append(DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED));
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(DBUtil.quoted(MappingNames.LIST_IDX));
     builder.append("=?"); //$NON-NLS-1$
     String sql = DBUtil.trace(builder.toString());
 
@@ -275,33 +275,33 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
     {
       if (forPostProcess)
       {
-        join += LIST_REVISION_VERSION_REMOVED;
+        join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
       }
       else
       {
-        join += LIST_REVISION_VERSION_ADDED;
+        join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
       }
 
-      join += "=" + attrTable + "." + ATTRIBUTES_VERSION;
+      join += "=" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
     }
     else
     {
-      join += LIST_REVISION_VERSION_ADDED;
-      join += "<=" + attrTable + "." + ATTRIBUTES_VERSION;
-      join += " AND (" + listTable + "." + LIST_REVISION_VERSION_REMOVED;
-      join += " IS NULL OR " + listTable + "." + LIST_REVISION_VERSION_REMOVED;
-      join += ">" + attrTable + "." + ATTRIBUTES_VERSION + ")";
+      join += DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
+      join += "<=" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION);
+      join += " AND (" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
+      join += " IS NULL OR " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED);
+      join += ">" + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + ")";
     }
 
-    join += " AND " + attrTable + "." + ATTRIBUTES_BRANCH;
-    join += "=" + listTable + "." + LIST_REVISION_BRANCH;
+    join += " AND " + attrTable + "." + DBUtil.quoted(MappingNames.ATTRIBUTES_BRANCH);
+    join += "=" + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH);
 
     if (forRawExport && !forPostProcess)
     {
-      join += " ORDER BY " + listTable + "." + LIST_REVISION_ID;
-      join += ", " + listTable + "." + LIST_REVISION_BRANCH;
-      join += ", " + listTable + "." + LIST_REVISION_VERSION_ADDED;
-      join += ", " + listTable + "." + LIST_IDX;
+      join += " ORDER BY " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_ID);
+      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH);
+      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED);
+      join += ", " + listTable + "." + DBUtil.quoted(MappingNames.LIST_IDX);
     }
 
     return join;
@@ -343,12 +343,12 @@ public class HorizontalBranchingMappingStrategyWithRanges extends HorizontalBran
       if (stmt == null)
       {
         String sql = "UPDATE " + fields[0].getTable() //
-            + " SET " + LIST_REVISION_VERSION_REMOVED + "=?" //
-            + " WHERE " + LIST_REVISION_ID + "=?" //
-            + " AND " + LIST_REVISION_BRANCH + "=?" //
-            + " AND " + LIST_IDX + "=?" //
-            + " AND " + LIST_REVISION_VERSION_ADDED + "<?" //
-            + " AND " + LIST_REVISION_VERSION_REMOVED + " IS NULL";
+            + " SET " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED) + "=?" //
+            + " WHERE " + DBUtil.quoted(MappingNames.LIST_REVISION_ID) + "=?" //
+            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_BRANCH) + "=?" //
+            + " AND " + DBUtil.quoted(MappingNames.LIST_IDX) + "=?" //
+            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_ADDED) + "<?" //
+            + " AND " + DBUtil.quoted(MappingNames.LIST_REVISION_VERSION_REMOVED) + " IS NULL";
         stmt = ((IDBConnection)connection).prepareStatement(sql, ReuseProbability.MEDIUM);
       }
 

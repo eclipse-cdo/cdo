@@ -23,6 +23,7 @@ import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EClass;
@@ -40,6 +41,8 @@ import java.util.List;
  */
 public class AuditListTableMapping extends AbstractListTableMapping
 {
+  private IDBField versionField;
+
   private String sqlClear;
 
   public AuditListTableMapping(IMappingStrategy mappingStrategy, EClass eClass, EStructuralFeature feature)
@@ -53,15 +56,16 @@ public class AuditListTableMapping extends AbstractListTableMapping
     super.initSQLStrings();
 
     IDBTable table = getTable();
+    versionField = table.getField(MappingNames.LIST_REVISION_VERSION);
 
     // ----------- clear list -------------------------
     StringBuilder builder = new StringBuilder();
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_VERSION);
+    builder.append(versionField);
     builder.append("=?"); //$NON-NLS-1$
     sqlClear = builder.toString();
   }
@@ -69,7 +73,7 @@ public class AuditListTableMapping extends AbstractListTableMapping
   @Override
   protected void addKeyFields(List<FieldInfo> list)
   {
-    list.add(new FieldInfo(LIST_REVISION_VERSION, DBType.INTEGER));
+    list.add(new FieldInfo(MappingNames.LIST_REVISION_VERSION, DBType.INTEGER));
   }
 
   @Override

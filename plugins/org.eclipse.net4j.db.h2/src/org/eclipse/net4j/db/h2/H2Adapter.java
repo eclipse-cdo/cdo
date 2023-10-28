@@ -116,19 +116,20 @@ public class H2Adapter extends DBAdapter
   /**
    * @since 4.2
    */
-  public static void createSchema(DataSource dataSource, final String name, final boolean dropIfExists)
+  public static void createSchema(DataSource dataSource, String name, boolean dropIfExists)
   {
     DBUtil.execute(DBUtil.createConnectionProvider(dataSource), new RunnableWithConnection<Object>()
     {
       @Override
       public Object run(Connection connection) throws SQLException
       {
+
         if (dropIfExists)
         {
-          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + name);
+          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + DBUtil.quoted(name));
         }
 
-        DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + name);
+        DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + DBUtil.quoted(name));
         return null;
       }
     });

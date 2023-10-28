@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.tests.db.bundle.OM;
 
+import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.h2.H2Adapter;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -88,10 +89,11 @@ public class H2Config extends DBConfig
       defaultDataSource.setURL(url);
     }
 
-    H2Adapter.createSchema(defaultDataSource, repoName, !isRestarting());
+    String schemaName = DBUtil.name(repoName);
+    H2Adapter.createSchema(defaultDataSource, schemaName, !isRestarting());
 
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL(url + ";SCHEMA=" + repoName);
+    dataSource.setURL(url + ";SCHEMA=" + DBUtil.quoted(schemaName));
 
     if (!disableRepositoryRecreationOptimization)
     {
@@ -106,6 +108,7 @@ public class H2Config extends DBConfig
   {
     Map<String, String> props = super.createStoreProperties(repoName);
     props.put(IDBStore.Props.SCHEMA_NAME, repoName);
+    props.put(IDBStore.Props.PREPEND_SCHEMA_NAME, Boolean.TRUE.toString());
     return props;
   }
 

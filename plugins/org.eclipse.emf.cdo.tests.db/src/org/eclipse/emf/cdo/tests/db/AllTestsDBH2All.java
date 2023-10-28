@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -21,7 +23,7 @@ import junit.framework.TestSuite;
  */
 public class AllTestsDBH2All extends DBConfigs
 {
-  private static final boolean ALL_SCENARIOS = false;
+  private static final boolean ALL_SCENARIOS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.tests.db.AllTestsDBH2All.ALL_SCENARIOS");
 
   public static Test suite()
   {

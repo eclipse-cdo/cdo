@@ -155,6 +155,6 @@ public class HsqldbConfig extends DBConfig
   protected void initRepositoryProperties(Map<String, String> props)
   {
     super.initRepositoryProperties(props);
-    props.put(Props.SUPPORTING_AUDITS, "true");
+    props.put(Props.SUPPORTING_AUDITS, Boolean.TRUE.toString());
   }
 }

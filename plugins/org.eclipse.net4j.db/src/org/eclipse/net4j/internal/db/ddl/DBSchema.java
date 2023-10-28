@@ -49,14 +49,17 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
 
   private boolean caseSensitive;
 
+  private boolean qualifiedTableNames;
+
   private Map<String, IDBTable> tables = new HashMap<>();
 
   private transient boolean locked;
 
-  public DBSchema(String name, boolean caseSensitive)
+  public DBSchema(String name, boolean caseSensitive, boolean qualifiedTableNames)
   {
     super(name);
     this.caseSensitive = caseSensitive;
+    this.qualifiedTableNames = qualifiedTableNames;
   }
 
   /**
@@ -64,7 +67,7 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
    */
   public DBSchema(IDBSchema source)
   {
-    this(source.getName(), source.isCaseSensitive());
+    this(source.getName(), source.isCaseSensitive(), source.isQualifiedTableNames());
 
     for (IDBTable sourceTable : source.getTables())
     {
@@ -140,9 +143,10 @@ public class DBSchema extends DBSchemaElement implements InternalDBSchema
     return caseSensitive;
   }
 
-  public void setCaseSensitive(boolean caseSensitive)
+  @Override
+  public boolean isQualifiedTableNames()
   {
-    this.caseSensitive = caseSensitive;
+    return qualifiedTableNames;
   }
 
   @Override

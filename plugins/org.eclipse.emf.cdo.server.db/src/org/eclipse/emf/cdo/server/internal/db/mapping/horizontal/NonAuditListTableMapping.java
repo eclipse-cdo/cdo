@@ -83,12 +83,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("DELETE FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=?"); //$NON-NLS-1$
     sqlClear = builder.toString();
 
     builder.append(" AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=?"); //$NON-NLS-1$
     sqlDeleteItem = builder.toString();
 
@@ -97,12 +97,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateValue = builder.toString();
 
@@ -111,11 +111,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("INSERT INTO "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" ("); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(LIST_VALUE);
+    builder.append(valueField);
     builder.append(") VALUES(?, ?, ?)"); //$NON-NLS-1$
     sqlInsertValue = builder.toString();
 
@@ -124,12 +124,12 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=? "); //$NON-NLS-1$
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("=?"); //$NON-NLS-1$
     sqlUpdateIndex = builder.toString();
 
@@ -138,18 +138,18 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     builder.append("UPDATE "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" SET "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("="); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append("+? WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=? AND "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(" BETWEEN ? AND ?"); //$NON-NLS-1$
 
     // needed because of MySQL:
     builder.append(" /*! ORDER BY "); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     sqlShiftDownIndex = builder.toString() + " */"; //$NON-NLS-1$
 
     builder.append(" DESC"); //$NON-NLS-1$
@@ -158,11 +158,11 @@ public class NonAuditListTableMapping extends AbstractListTableMapping implement
     // ----------- read current index offset --------------
     builder = new StringBuilder();
     builder.append("SELECT MIN("); //$NON-NLS-1$
-    builder.append(LIST_IDX);
+    builder.append(indexField);
     builder.append(") FROM "); //$NON-NLS-1$
     builder.append(getTable());
     builder.append(" WHERE "); //$NON-NLS-1$
-    builder.append(LIST_REVISION_ID);
+    builder.append(sourceField);
     builder.append("=?"); //$NON-NLS-1$
     sqlReadCurrentIndexOffset = builder.toString();
   }

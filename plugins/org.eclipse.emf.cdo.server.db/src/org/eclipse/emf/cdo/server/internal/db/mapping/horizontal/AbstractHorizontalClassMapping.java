@@ -41,7 +41,6 @@ import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping4;
-import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -92,15 +91,31 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalClassMapping implements IClassMapping, IMappingConstants, IDeactivateable
+public abstract class AbstractHorizontalClassMapping implements IClassMapping, IDeactivateable
 {
   protected static final int UNSET_LIST = -1;
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalClassMapping.class);
 
-  private EClass eClass;
+  protected IDBTable table;
 
-  private IDBTable table;
+  protected IDBField idField;
+
+  protected IDBField versionField;
+
+  protected IDBField branchField;
+
+  protected IDBField createdField;
+
+  protected IDBField revisedField;
+
+  protected IDBField resourceField;
+
+  protected IDBField containerField;
+
+  protected IDBField featureField;
+
+  private EClass eClass;
 
   private AbstractHorizontalMappingStrategy mappingStrategy;
 
@@ -150,24 +165,23 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
           IDBSchema workingCopy = schemaTransaction.getWorkingCopy();
           IDBTable table = workingCopy.addTable(tableName);
-          table.addField(ATTRIBUTES_ID, idType, idLength, true);
-          table.addField(ATTRIBUTES_VERSION, DBType.INTEGER, true);
 
-          IDBField branchField = addBranchField(table);
+          idField = table.addField(MappingNames.ATTRIBUTES_ID, idType, idLength, true);
+          versionField = table.addField(MappingNames.ATTRIBUTES_VERSION, DBType.INTEGER, true);
+          branchField = addBranchField(table);
+          createdField = table.addField(MappingNames.ATTRIBUTES_CREATED, DBType.BIGINT, true);
+          revisedField = table.addField(MappingNames.ATTRIBUTES_REVISED, DBType.BIGINT, true);
+          resourceField = table.addField(MappingNames.ATTRIBUTES_RESOURCE, idType, idLength, true);
+          containerField = addContainerField(table, idType, idLength);
+          featureField = table.addField(MappingNames.ATTRIBUTES_FEATURE, DBType.INTEGER, true);
 
-          table.addField(ATTRIBUTES_CREATED, DBType.BIGINT, true);
-          table.addField(ATTRIBUTES_REVISED, DBType.BIGINT, true);
-          table.addField(ATTRIBUTES_RESOURCE, idType, idLength, true);
-          addContainerField(table, idType, idLength);
-          table.addField(ATTRIBUTES_FEATURE, DBType.INTEGER, true);
-
-          IDBIndex primaryKey = table.addIndex(IDBIndex.Type.PRIMARY_KEY, ATTRIBUTES_ID, ATTRIBUTES_VERSION);
+          IDBIndex primaryKey = table.addIndex(IDBIndex.Type.PRIMARY_KEY, idField, versionField);
           if (branchField != null)
           {
             primaryKey.addIndexField(branchField);
           }
 
-          table.addIndex(IDBIndex.Type.NON_UNIQUE, ATTRIBUTES_REVISED);
+          table.addIndex(IDBIndex.Type.NON_UNIQUE, revisedField);
 
           EStructuralFeature[] allPersistentFeatures = CDOModelUtil.getClassInfo(eClass).getAllPersistentFeatures();
           Map<EStructuralFeature, ITypeMapping> valueMappings = new HashMap<>();
@@ -251,6 +265,15 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
     else
     {
+      idField = table.getField(MappingNames.ATTRIBUTES_ID);
+      versionField = table.getField(MappingNames.ATTRIBUTES_VERSION);
+      branchField = table.getField(MappingNames.ATTRIBUTES_BRANCH);
+      createdField = table.getField(MappingNames.ATTRIBUTES_CREATED);
+      revisedField = table.getField(MappingNames.ATTRIBUTES_REVISED);
+      resourceField = table.getField(MappingNames.ATTRIBUTES_RESOURCE);
+      containerField = table.getField(MappingNames.ATTRIBUTES_CONTAINER);
+      featureField = table.getField(MappingNames.ATTRIBUTES_FEATURE);
+
       valueMappings = null;
       listMappings = null;
       listSizeFields = null;
@@ -343,9 +366,9 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   {
     // ----------- Select all revisions (for handleRevisions) ---
     StringBuilder builder = new StringBuilder("SELECT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
     appendSelectForHandleFields(builder);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
@@ -353,7 +376,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
     // ----------- Select all revisions (for readChangeSet) ---
     builder = new StringBuilder("SELECT DISTINCT "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
     builder.append(" WHERE "); //$NON-NLS-1$
@@ -377,7 +400,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected IDBField addContainerField(IDBTable table, DBType idType, int idLength)
   {
-    return table.addField(ATTRIBUTES_CONTAINER, idType, idLength, true);
+    return table.addField(MappingNames.ATTRIBUTES_CONTAINER, idType, idLength, true);
   }
 
   protected IDBField addBranchField(IDBTable table)
@@ -440,20 +463,20 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     {
       if (resultSet.next())
       {
-        long timeStamp = resultSet.getLong(ATTRIBUTES_CREATED);
+        long timeStamp = resultSet.getLong(MappingNames.ATTRIBUTES_CREATED);
         CDOBranchPoint branchPoint = revision.getBranch().getPoint(timeStamp);
 
         if (forUnit)
         {
-          revision.setID(idHandler.getCDOID(resultSet, ATTRIBUTES_ID));
+          revision.setID(idHandler.getCDOID(resultSet, MappingNames.ATTRIBUTES_ID));
         }
 
         revision.setBranchPoint(branchPoint);
-        revision.setVersion(resultSet.getInt(ATTRIBUTES_VERSION));
-        revision.setRevised(resultSet.getLong(ATTRIBUTES_REVISED));
-        revision.setResourceID(idHandler.getCDOID(resultSet, ATTRIBUTES_RESOURCE));
-        revision.setContainerID(idHandler.getCDOID(resultSet, ATTRIBUTES_CONTAINER));
-        revision.setContainingFeatureID(resultSet.getInt(ATTRIBUTES_FEATURE));
+        revision.setVersion(resultSet.getInt(MappingNames.ATTRIBUTES_VERSION));
+        revision.setRevised(resultSet.getLong(MappingNames.ATTRIBUTES_REVISED));
+        revision.setResourceID(idHandler.getCDOID(resultSet, MappingNames.ATTRIBUTES_RESOURCE));
+        revision.setContainerID(idHandler.getCDOID(resultSet, MappingNames.ATTRIBUTES_CONTAINER));
+        revision.setContainingFeatureID(resultSet.getInt(MappingNames.ATTRIBUTES_FEATURE));
 
         for (ITypeMapping mapping : valueMappings)
         {
@@ -514,7 +537,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     }
   }
 
-  protected final IMappingStrategy getMappingStrategy()
+  protected final AbstractHorizontalMappingStrategy getMappingStrategy()
   {
     return mappingStrategy;
   }
@@ -792,7 +815,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
           builder.append(" WHERE "); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_CREATED);
+          builder.append(createdField);
           builder.append("=?"); //$NON-NLS-1$
           timeParameters = 1;
         }
@@ -802,27 +825,27 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         builder.append(" WHERE "); //$NON-NLS-1$
         if (timeStamp != CDOBranchPoint.UNSPECIFIED_DATE)
         {
-          builder.append(ATTRIBUTES_CREATED);
+          builder.append(createdField);
           builder.append("<=?"); //$NON-NLS-1$
           builder.append(" AND ("); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append(">=? OR "); //$NON-NLS-1$
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append("=0)"); //$NON-NLS-1$
           timeParameters = 2;
         }
         else
         {
-          builder.append(ATTRIBUTES_REVISED);
+          builder.append(revisedField);
           builder.append("=0"); //$NON-NLS-1$
         }
       }
     }
 
     builder.append(" ORDER BY "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_ID);
+    builder.append(idField);
     builder.append(", "); //$NON-NLS-1$
-    builder.append(ATTRIBUTES_VERSION);
+    builder.append(versionField);
 
     IIDHandler idHandler = getMappingStrategy().getStore().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(builder.toString(), ReuseProbability.LOW);
@@ -900,12 +923,12 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         builder.append(" OR "); //$NON-NLS-1$
       }
 
-      builder.append(ATTRIBUTES_CREATED);
+      builder.append(createdField);
       builder.append(">=?"); //$NON-NLS-1$
       builder.append(" AND ("); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("<=? OR "); //$NON-NLS-1$
-      builder.append(ATTRIBUTES_REVISED);
+      builder.append(revisedField);
       builder.append("=0)"); //$NON-NLS-1$
     }
 
@@ -1041,7 +1064,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
       return true;
     }
 
-    String tableName = table.getName();
     List<EReference> refs = context.getSourceCandidates().get(eClass);
     List<EReference> scalarRefs = new ArrayList<>();
 
@@ -1052,7 +1074,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         IListMapping listMapping = getListMapping(ref);
         String where = getListXRefsWhere(context);
 
-        boolean more = listMapping.queryXRefs(accessor, tableName, where, context, idString);
+        boolean more = listMapping.queryXRefs(accessor, table.toString(), where, context, idString);
         if (!more)
         {
           return false;
@@ -1078,23 +1100,22 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
 
   protected final boolean queryScalarXRefs(IDBStoreAccessor accessor, List<EReference> scalarRefs, QueryXRefsContext context, String idString)
   {
-    String tableName = table.getName();
     String where = getListXRefsWhere(context);
 
     for (EReference ref : scalarRefs)
     {
       ITypeMapping valueMapping = getValueMapping(ref);
-      String valueField = valueMapping.getField().getName();
+      IDBField valueField = valueMapping.getField();
 
       StringBuilder builder = new StringBuilder();
       builder.append("SELECT ");
-      builder.append(ATTRIBUTES_ID);
+      builder.append(idField);
       builder.append(", ");
       builder.append(valueField);
       builder.append(" FROM ");
-      builder.append(tableName);
+      builder.append(table);
       builder.append(" WHERE ");
-      builder.append(ATTRIBUTES_VERSION);
+      builder.append(versionField);
       builder.append(">0 AND ");
       builder.append(where);
       builder.append(" AND ");

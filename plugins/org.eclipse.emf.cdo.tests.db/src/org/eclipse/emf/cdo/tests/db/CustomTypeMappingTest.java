@@ -57,15 +57,15 @@ public class CustomTypeMappingTest extends AbstractCDOTest
     {
       final EPackage pkg = createUniquePackage();
 
-      EClass cls = EMFUtil.createEClass(pkg, "foo", false, false);
-      EAttribute att = EMFUtil.createEAttribute(cls, "bar", EcorePackage.eINSTANCE.getEInt());
+      EClass foo = EMFUtil.createEClass(pkg, "foo", false, false);
+      EAttribute bar = EMFUtil.createEAttribute(foo, "bar", EcorePackage.eINSTANCE.getEInt());
 
       // Annotate type mapping and column type
       EAnnotation annotation = EcoreFactory.eINSTANCE.createEAnnotation();
       annotation.setSource("http://www.eclipse.org/CDO/DBStore");
       annotation.getDetails().put("typeMapping", "org.eclipse.emf.cdo.tests.db.EIntToVarchar");
       annotation.getDetails().put("columnType", DBType.VARCHAR.getKeyword());
-      att.getEAnnotations().add(annotation);
+      bar.getEAnnotations().add(annotation);
 
       if (!isConfig(LEGACY))
       {
@@ -76,8 +76,8 @@ public class CustomTypeMappingTest extends AbstractCDOTest
       CDOTransaction transaction = session.openTransaction();
       CDOResource resource = transaction.createResource(getResourcePath("/test"));
 
-      EObject obj = EcoreUtil.create(cls);
-      obj.eSet(att, 42);
+      EObject obj = EcoreUtil.create(foo);
+      obj.eSet(bar, 42);
 
       resource.getContents().add(obj);
       transaction.commit();
@@ -96,7 +96,7 @@ public class CustomTypeMappingTest extends AbstractCDOTest
           try
           {
             stmt = getStatement();
-            rset = stmt.executeQuery("SELECT bar FROM " + pkg.getName() + "_foo");
+            rset = stmt.executeQuery("SELECT " + DBUtil.quoted("bar") + " FROM " + DBUtil.quoted(pkg.getName() + "_foo"));
             assertEquals("java.lang.String", rset.getMetaData().getColumnClassName(1));
 
             rset.next();

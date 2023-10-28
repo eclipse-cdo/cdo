@@ -54,8 +54,8 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
 
-    assertEquals(1, countRows("MODEL1_COMPANY"));
-    assertEquals(5, countRows("CDO_OBJECTS"));
+    assertEquals(1, countRows("model1_Company"));
+    assertEquals(5, countRows("cdo_objects"));
 
     final URI uriC1 = EcoreUtil.getURI(company);
     final CDOID id = CDOUtil.getCDOObject(company).cdoID();
@@ -80,8 +80,8 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     }
 
     assertNull(transaction.getResourceSet().getEObject(uriC1, false));
-    assertEquals(0, countRows("MODEL1_COMPANY"));
-    assertEquals(4, countRows("CDO_OBJECTS"));
+    assertEquals(0, countRows("model1_Company"));
+    assertEquals(4, countRows("cdo_objects"));
   }
 
   @CleanRepositoriesBefore(reason = "Row counting")
@@ -98,10 +98,10 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
 
-    assertEquals(1, countRows("MODEL1_COMPANY"));
-    assertEquals(3, countRows("MODEL1_COMPANY_CATEGORIES_LIST"));
-    assertEquals(3, countRows("MODEL1_CATEGORY"));
-    assertEquals(8, countRows("CDO_OBJECTS"));
+    assertEquals(1, countRows("model1_Company"));
+    assertEquals(3, countRows("model1_Company_categories_list"));
+    assertEquals(3, countRows("model1_Category"));
+    assertEquals(8, countRows("cdo_objects"));
 
     final URI uriC1 = EcoreUtil.getURI(company);
     final CDOID id = CDOUtil.getCDOObject(company).cdoID();
@@ -126,10 +126,10 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     }
 
     assertNull(transaction.getResourceSet().getEObject(uriC1, false));
-    assertEquals(0, countRows("MODEL1_COMPANY"));
-    assertEquals(0, countRows("MODEL1_COMPANY_CATEGORIES_LIST"));
-    assertEquals(0, countRows("MODEL1_CATEGORY"));
-    assertEquals(4, countRows("CDO_OBJECTS"));
+    assertEquals(0, countRows("model1_Company"));
+    assertEquals(0, countRows("model1_Company_categories_list"));
+    assertEquals(0, countRows("model1_Category"));
+    assertEquals(4, countRows("cdo_objects"));
   }
 
   @CleanRepositoriesBefore(reason = "Row counting")
@@ -156,11 +156,11 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     resource.getContents().add(company);
     transaction.commit();
 
-    assertEquals(1, countRows("MODEL1_COMPANY"));
-    assertEquals(1, countRows("MODEL1_CUSTOMER"));
-    assertEquals(3, countRows("MODEL1_CUSTOMER_SALESORDERS_LIST"));
-    assertEquals(3, countRows("MODEL1_SALESORDER"));
-    assertEquals(9, countRows("CDO_OBJECTS"));
+    assertEquals(1, countRows("model1_Company"));
+    assertEquals(1, countRows("model1_Customer"));
+    assertEquals(3, countRows("model1_Customer_salesOrders_list"));
+    assertEquals(3, countRows("model1_SalesOrder"));
+    assertEquals(9, countRows("cdo_objects"));
 
     final URI uriC1 = EcoreUtil.getURI(company);
     final CDOID id = CDOUtil.getCDOObject(company).cdoID();
@@ -185,11 +185,11 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
     }
 
     assertNull(transaction.getResourceSet().getEObject(uriC1, false));
-    assertEquals(0, countRows("MODEL1_COMPANY"));
-    assertEquals(0, countRows("MODEL1_CUSTOMER"));
-    assertEquals(0, countRows("MODEL1_CUSTOMER_SALESORDERS_LIST"));
-    assertEquals(0, countRows("MODEL1_SALESORDER"));
-    assertEquals(4, countRows("CDO_OBJECTS"));
+    assertEquals(0, countRows("model1_Company"));
+    assertEquals(0, countRows("model1_Customer"));
+    assertEquals(0, countRows("model1_Customer_salesOrders_list"));
+    assertEquals(0, countRows("model1_SalesOrder"));
+    assertEquals(4, countRows("cdo_objects"));
   }
 
   private int countRows(String table) throws SQLException
@@ -205,7 +205,7 @@ public class Bugzilla_351068_Test extends AbstractCDOTest
 
       connection = store.getConnection();
       statement = connection.createStatement();
-      resultSet = statement.executeQuery("SELECT COUNT(1) FROM " + table);
+      resultSet = statement.executeQuery("SELECT COUNT(1) FROM " + DBUtil.quoted(table));
 
       if (resultSet.next())
       {

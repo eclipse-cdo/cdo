@@ -27,6 +27,20 @@
             class="org.eclipse.net4j.internal.ws.WSConnectorFactory"
             productGroup="org.eclipse.net4j.connectors"
             type="ws"/>
+      <factory
+            class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory$DescriptionParserFactory"
+            productGroup="org.eclipse.net4j.acceptorDescriptionParsers"
+            type="wss"/>
+      <factory
+            class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory"
+            productGroup="org.eclipse.net4j.acceptors"
+            type="wss">
+      </factory>
+      <factory
+            class="org.eclipse.net4j.internal.wss.WSSConnectorFactory"
+            productGroup="org.eclipse.net4j.connectors"
+            type="wss">
+      </factory>
    </extension>
 
 </plugin>

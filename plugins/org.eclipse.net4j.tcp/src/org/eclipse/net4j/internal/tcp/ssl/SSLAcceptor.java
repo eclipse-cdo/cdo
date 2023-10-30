@@ -14,6 +14,7 @@ package org.eclipse.net4j.internal.tcp.ssl;
 import org.eclipse.net4j.TransportConfigurator.AcceptorDescriptionParser;
 import org.eclipse.net4j.internal.tcp.TCPAcceptor;
 import org.eclipse.net4j.internal.tcp.TCPConnector;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.w3c.dom.Element;
@@ -66,7 +67,7 @@ public class SSLAcceptor extends TCPAcceptor
     {
       String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
       String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
-      return (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      return (listenAddr == null ? "" : listenAddr) + (StringUtil.isEmpty(port) ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }
 }

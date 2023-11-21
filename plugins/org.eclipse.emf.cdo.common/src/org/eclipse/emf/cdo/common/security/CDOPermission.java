@@ -64,4 +64,12 @@ public enum CDOPermission
       throw new IllegalArgumentException("Invalid bits: " + bits);
     }
   }
+
+  /**
+   * @since 4.22
+   */
+  public static CDOPermission parse(String str)
+  {
+    return str == null ? null : valueOf(str.toUpperCase());
+  }
 }

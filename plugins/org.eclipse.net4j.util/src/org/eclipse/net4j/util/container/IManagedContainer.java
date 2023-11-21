@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -88,9 +89,29 @@ public interface IManagedContainer extends IContainer<Object>, ILifecycle
       throws FactoryNotFoundException, ProductCreationException;
 
   /**
+   * @since 3.23
+   */
+  public <T> T getElementOrNull(String productGroup, String factoryType) throws ProductCreationException;
+
+  /**
    * @since 3.14
    */
-  public <T> T getElementOrNull(String productGroup, String factoryType, String description);
+  public <T> T getElementOrNull(String productGroup, String factoryType, String description) throws ProductCreationException;
+
+  /**
+   * @since 3.23
+   */
+  public <T> T getElementOrNull(String productGroup, String factoryType, Tree config) throws ProductCreationException;
+
+  /**
+   * @since 3.23
+   */
+  public <T> T createElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException;
+
+  /**
+   * @since 3.23
+   */
+  public <T> T createElement(String productGroup, String factoryType, Tree config) throws FactoryNotFoundException, ProductCreationException;
 
   /**
    * @since 3.22

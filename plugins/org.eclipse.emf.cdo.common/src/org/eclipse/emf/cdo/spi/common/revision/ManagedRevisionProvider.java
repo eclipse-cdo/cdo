@@ -54,6 +54,14 @@ public class ManagedRevisionProvider implements CDORevisionProvider
   @Override
   public CDORevision getRevision(CDOID id)
   {
+    return provideRevision(revisionManager, id, branchPoint);
+  }
+
+  /**
+   * @since 4.22
+   */
+  public static CDORevision provideRevision(CDORevisionManager revisionManager, CDOID id, CDOBranchPoint branchPoint)
+  {
     return revisionManager.getRevision(id, branchPoint, CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
   }
 

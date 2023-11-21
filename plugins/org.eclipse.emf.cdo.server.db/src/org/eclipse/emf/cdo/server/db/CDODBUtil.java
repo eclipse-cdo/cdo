@@ -13,7 +13,6 @@
 package org.eclipse.emf.cdo.server.db;
 
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
-import org.eclipse.emf.cdo.server.internal.db.DBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.HorizontalAuditMappingStrategy;
@@ -78,8 +77,7 @@ public final class CDODBUtil
    */
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new DBBrowserPage.Tables.Factory());
-    container.registerFactory(new DBBrowserPage.Queries.Factory());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   /**

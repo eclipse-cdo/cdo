@@ -45,7 +45,6 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 import org.eclipse.emf.cdo.security.impl.PermissionImpl;
-import org.eclipse.emf.cdo.security.impl.PermissionImpl.CommitImpactContext;
 import org.eclipse.emf.cdo.security.util.AuthorizationContext;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
@@ -94,8 +93,6 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
-import org.eclipse.net4j.util.security.IAuthenticator;
-import org.eclipse.net4j.util.security.IAuthenticator2;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
@@ -154,7 +151,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     protected void onDeactivated(ILifecycle lifecycle)
     {
       unregister(repository);
-      SecurityManager.this.deactivate();
+      deactivate();
     }
   };
 
@@ -199,7 +196,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   };
 
-  private final IAuthenticator authenticator = new Authenticator();
+  // private final IAuthenticator authenticator = new Authenticator();
 
   private final IPermissionManager permissionManager = new PermissionManager();
 
@@ -316,6 +313,14 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     this.passwordValidator = passwordValidator;
   }
 
+  public void validatePassword(String password)
+  {
+    if (passwordValidator != null)
+    {
+      passwordValidator.accept(password);
+    }
+  }
+
   @Override
   public Realm getRealm()
   {
@@ -409,10 +414,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   @Override
   public User setPassword(String id, String password)
   {
-    if (passwordValidator != null)
-    {
-      passwordValidator.accept(password);
-    }
+    validatePassword(password);
 
     User[] result = { null };
     modify(realm -> result[0] = realm.setPassword(id, password));
@@ -680,7 +682,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     realmID = realm.cdoID();
 
     InternalSessionManager sessionManager = repository.getSessionManager();
-    sessionManager.setAuthenticator(authenticator);
+    sessionManager.setAuthenticator(this);
     sessionManager.setPermissionManager(permissionManager);
     sessionManager.addListener(sessionManagerListener);
     repository.addHandler(writeAccessHandler);
@@ -757,6 +759,35 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
 
     return CDOPermission.NONE;
+  }
+
+  protected CDOPermission authorize(CDORevision revision, CDOBranchPoint securityContext, ISession session)
+  {
+    IRepository repository = session.getRepository();
+    CDORevisionManager revisionManager = repository.getRevisionManager();
+    CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
+
+    PermissionUtil.initViewCreation(new ViewCreator()
+    {
+      @Override
+      public CDOView createView(CDORevisionProvider revisionProvider)
+      {
+        CDOView view = CDOServerUtil.openView(session, securityContext, revisionProvider);
+        view.getSession().options().setGeneratedPackageEmulationEnabled(true);
+        return view;
+      }
+    });
+
+    try
+    {
+      CDOPermission permission = authorize(revision, revisionProvider, securityContext, session, null, null);
+      // System.out.println("Loading from " + session + ": " + permission + " --> " + revision);
+      return permission;
+    }
+    finally
+    {
+      PermissionUtil.doneViewCreation();
+    }
   }
 
   protected CDOPermission authorize(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext, ISession session,
@@ -882,7 +913,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         PermissionImpl[] assignedPermissions = permissionArray; // Thread-safe
         if (assignedPermissions.length != 0)
         {
-          CommitImpactContext commitImpactContext = new PermissionImpl.CommitImpactContext()
+          PermissionImpl.CommitImpactContext commitImpactContext = new PermissionImpl.CommitImpactContext()
           {
             @Override
             public CDORevision[] getNewObjects()
@@ -1029,6 +1060,66 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         permissionArray = permissionBag.toArray(new PermissionImpl[permissionBag.size()]);
       }
     }
+  }
+
+  protected void denyAccess() throws SecurityException
+  {
+    throw new SecurityException("Access denied"); //$NON-NLS-1$
+  }
+
+  @Override
+  public void authenticate(String userID, char[] password) throws SecurityException
+  {
+    User user = getUser(userID);
+    if (user != null && !user.isLocked())
+    {
+      UserPassword userPassword = user.getPassword();
+
+      String encrypted = userPassword == null ? null : userPassword.getEncrypted();
+      if (Arrays.equals(password, SecurityUtil.toCharArray(encrypted)))
+      {
+        // Access granted.
+        return;
+      }
+    }
+
+    denyAccess();
+  }
+
+  @Override
+  public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
+  {
+    authenticate(userID, oldPassword);
+    setPassword(userID, SecurityUtil.toString(newPassword));
+  }
+
+  @Override
+  public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
+  {
+    authenticate(adminID, adminPassword);
+
+    User admin = getUser(adminID);
+    if (!isAdministrator(admin))
+    {
+      throw new SecurityException("Password reset requires administrator privilege"); //$NON-NLS-1$
+    }
+
+    setPassword(userID, SecurityUtil.toString(newPassword));
+  }
+
+  @Override
+  public boolean isAdministrator(String userID)
+  {
+    Realm realm = getRealm();
+    if (realm != null)
+    {
+      // Can't be an administrator if there isn't a realm
+      // (but then where did we get the user ID?)
+      User user = realm.getUser(userID);
+      return user != null && isAdministrator(user);
+    }
+
+    return false;
   }
 
   protected final boolean isAdministrator(User user)
@@ -1201,70 +1292,39 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     }
   }
 
-  /**
-   * @author Eike Stepper
-   */
-  private final class Authenticator implements IAuthenticator2
-  {
-    public Authenticator()
-    {
-    }
-
-    @Override
-    public void authenticate(String userID, char[] password) throws SecurityException
-    {
-      User user = getUser(userID);
-      if (!user.isLocked())
-      {
-        UserPassword userPassword = user.getPassword();
-
-        String encrypted = userPassword == null ? null : userPassword.getEncrypted();
-        if (Arrays.equals(password, SecurityUtil.toCharArray(encrypted)))
-        {
-          // Access granted.
-          return;
-        }
-      }
-
-      throw new SecurityException("Access denied"); //$NON-NLS-1$
-    }
-
-    @Override
-    public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
-    {
-      authenticate(userID, oldPassword);
-      setPassword(userID, SecurityUtil.toString(newPassword));
-    }
-
-    @Override
-    public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
-    {
-      authenticate(adminID, adminPassword);
-
-      User admin = getUser(adminID);
-      if (!SecurityManager.this.isAdministrator(admin))
-      {
-        throw new SecurityException("Password reset requires administrator privilege"); //$NON-NLS-1$
-      }
-
-      setPassword(userID, SecurityUtil.toString(newPassword));
-    }
-
-    @Override
-    public boolean isAdministrator(String userID)
-    {
-      Realm realm = getRealm();
-      if (realm != null)
-      {
-        // Can't be an administrator if there isn't a realm
-        // (but then where did we get the user ID?)
-        User user = realm.getUser(userID);
-        return user != null && SecurityManager.this.isAdministrator(user);
-      }
-
-      return false;
-    }
-  }
+  // /**
+  // * @author Eike Stepper
+  // */
+  // private final class Authenticator implements IAuthenticator2
+  // {
+  // public Authenticator()
+  // {
+  // }
+  //
+  // @Override
+  // public void authenticate(String userID, char[] password) throws SecurityException
+  // {
+  // SecurityManager.this.authenticate(userID, password);
+  // }
+  //
+  // @Override
+  // public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
+  // {
+  // SecurityManager.this.updatePassword(userID, oldPassword, newPassword);
+  // }
+  //
+  // @Override
+  // public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
+  // {
+  // SecurityManager.this.resetPassword(adminID, adminPassword, userID, newPassword);
+  // }
+  //
+  // @Override
+  // public boolean isAdministrator(String userID)
+  // {
+  // return SecurityManager.this.isAdministrator(userID);
+  // }
+  // }
 
   /**
    * @author Eike Stepper
@@ -1296,31 +1356,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
         return CDOPermission.NONE;
       }
 
-      IRepository repository = session.getRepository();
-      CDORevisionManager revisionManager = repository.getRevisionManager();
-      CDORevisionProvider revisionProvider = new ManagedRevisionProvider(revisionManager, securityContext);
-
-      PermissionUtil.initViewCreation(new ViewCreator()
-      {
-        @Override
-        public CDOView createView(CDORevisionProvider revisionProvider)
-        {
-          CDOView view = CDOServerUtil.openView(session, securityContext, revisionProvider);
-          view.getSession().options().setGeneratedPackageEmulationEnabled(true);
-          return view;
-        }
-      });
-
-      try
-      {
-        CDOPermission permission = authorize(revision, revisionProvider, securityContext, session, null, null);
-        // System.out.println("Loading from " + session + ": " + permission + " --> " + revision);
-        return permission;
-      }
-      finally
-      {
-        PermissionUtil.doneViewCreation();
-      }
+      return authorize(revision, securityContext, session);
     }
 
     @Override
@@ -1328,6 +1364,11 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     {
       String userID = session.getUserID();
       if (SYSTEM_USER_ID.equals(userID))
+      {
+        return false;
+      }
+
+      if (ObjectUtil.isEmpty(rules))
       {
         return false;
       }
@@ -1498,7 +1539,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       this.authorizationContext = authorizationContext == null ? null : new HashMap<>(authorizationContext);
 
       InternalSessionManager sessionManager = delegate.getSessionManager();
-      sessionManager.setAuthenticator(authenticator);
+      sessionManager.setAuthenticator(SecurityManager.this);
       sessionManager.setPermissionManager(this);
       sessionManager.addListener(sessionManagerListener);
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
+import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
@@ -24,9 +25,13 @@ import org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.XMLUtil.ElementHandler;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -158,22 +163,31 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   protected IRepository[] configure(Document document) throws ParserConfigurationException, SAXException, IOException, CoreException
   {
     List<IRepository> repositories = new ArrayList<>();
-    NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
-    for (int i = 0; i < elements.getLength(); i++)
-    {
-      Element repositoryConfig = (Element)elements.item(i);
-      IRepository repository = getRepository(repositoryConfig);
-      repositories.add(repository);
 
-      if (container != null)
-      {
-        CDOServerUtil.addRepository(container, repository);
-        OM.LOG.info("CDO repository " + repository.getName() + " started");
-      }
-      else
-      {
-        OM.LOG.info("CDO repository " + repository.getName() + " added");
-      }
+    try
+    {
+      forEachChildElement(document.getDocumentElement(), "repository", repositoryConfig -> {
+        IRepository repository = getRepository(repositoryConfig);
+        repositories.add(repository);
+
+        if (container != null)
+        {
+          CDOServerUtil.addRepository(container, repository);
+          OM.LOG.info("CDO repository " + repository.getName() + " started");
+        }
+        else
+        {
+          OM.LOG.info("CDO repository " + repository.getName() + " added");
+        }
+      });
+    }
+    catch (ParserConfigurationException | SAXException | IOException | CoreException | RuntimeException | Error ex)
+    {
+      throw ex;
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
     }
 
     return repositories.toArray(new IRepository[repositories.size()]);
@@ -232,7 +246,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       TRACER.format("Configuring repository {0} (type={1})", repositoryName, repositoryType); //$NON-NLS-1$
     }
 
-    Map<String, String> properties = getProperties(repositoryConfig, 1, parameters);
+    Map<String, String> properties = getProperties(repositoryConfig, 1, parameters, container);
 
     Element storeConfig = getStoreConfig(repositoryConfig);
     IStore store = createStore(repositoryName, properties, storeConfig);
@@ -244,6 +258,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
     setUserManager(repository, repositoryConfig);
     setAuthenticator(repository, repositoryConfig);
+    setProtector(repository, repositoryConfig);
     addOperationAuthorizers(repository, repositoryConfig);
     setActivityLog(repository, repositoryConfig);
 
@@ -361,6 +376,27 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
         sessionManager.setAuthenticator(authenticator);
       }
+    }
+  }
+
+  /**
+   * @since 4.20
+   */
+  protected void setProtector(InternalRepository repository, Element repositoryConfig) throws CoreException
+  {
+    Element protectorConfig = getChildElement(repositoryConfig, "protector"); //$NON-NLS-1$
+    if (protectorConfig != null)
+    {
+      String type = getAttribute(protectorConfig, "type"); //$NON-NLS-1$
+      if (StringUtil.isEmpty(type))
+      {
+        type = IRepositoryProtector.DEFAULT_TYPE;
+      }
+
+      Tree config = Tree.XMLConverter.convertElementToTree(protectorConfig);
+
+      IRepositoryProtector protector = container.createElement(IRepositoryProtector.PRODUCT_GROUP, type, config);
+      repository.setProtector(protector);
     }
   }
 
@@ -488,6 +524,11 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     String type = getAttribute(storeConfig, "type"); //$NON-NLS-1$
     IStoreFactory storeFactory = getStoreFactory(type);
 
+    if (storeFactory instanceof ContainerAware)
+    {
+      ((ContainerAware)storeFactory).setManagedContainer(container);
+    }
+
     if (storeFactory instanceof ParameterAware)
     {
       ((ParameterAware)storeFactory).setParameters(parameters);
@@ -510,7 +551,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     String description = getAttribute(element, "description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
-      Map<String, String> properties = getProperties(element, 1, parameters);
+      Map<String, String> properties = getProperties(element, 1, parameters, container);
       description = PropertiesFactory.createDescription(properties);
     }
 
@@ -548,23 +589,37 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   protected String getAttribute(Element element, String name)
   {
     String value = element.getAttribute(name);
-    value = substituteParameters(value, parameters);
+    value = expandValue(value, parameters, container);
     return value;
   }
 
   /**
-   * @since 4.10
+   * @since 4.20
    */
-  public static String substituteParameters(String value, Map<String, String> parameters)
+  public static void forEachChildElement(Element element, String name, ElementHandler handler) throws Exception
   {
-    if (value != null && parameters != null)
+    NodeList children = element.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
     {
-      for (Map.Entry<String, String> entry : parameters.entrySet())
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
       {
-        value = value.replace(entry.getKey(), entry.getValue());
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase(name))
+        {
+          handler.handleElement(childElement);
+        }
       }
     }
+  }
 
+  /**
+   * @since 4.20
+   */
+  public static String expandValue(String value, Map<String, String> parameters, IManagedContainer container)
+  {
+    value = StringUtil.replace(value, parameters);
+    value = StringUtil.convert(value, container);
     return value;
   }
 
@@ -579,18 +634,29 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters)
   {
     Map<String, String> properties = new HashMap<>();
-    collectProperties(element, "", properties, levels, parameters); //$NON-NLS-1$
+    collectProperties(element, "", properties, levels, parameters, IPluginContainer.INSTANCE); //$NON-NLS-1$
     return properties;
   }
 
-  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels, Map<String, String> parameters)
+  /**
+   * @since 4.20
+   */
+  public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters, IManagedContainer container)
+  {
+    Map<String, String> properties = new HashMap<>();
+    collectProperties(element, "", properties, levels, parameters, container); //$NON-NLS-1$
+    return properties;
+  }
+
+  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels, Map<String, String> parameters,
+      IManagedContainer container)
   {
     if ("property".equals(element.getNodeName())) //$NON-NLS-1$
     {
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
 
-      value = substituteParameters(value, parameters);
+      value = expandValue(value, parameters, container);
 
       properties.put(prefix + name, value);
       prefix += name + "."; //$NON-NLS-1$
@@ -604,7 +670,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
         Node childNode = childNodes.item(i);
         if (childNode instanceof Element)
         {
-          collectProperties((Element)childNode, prefix, properties, levels - 1, parameters);
+          collectProperties((Element)childNode, prefix, properties, levels - 1, parameters, container);
         }
       }
     }
@@ -681,5 +747,15 @@ public class RepositoryConfigurator implements IManagedContainerProvider
         return new RepositoryConfigurator(container);
       }
     }
+  }
+
+  /**
+   * @since 4.10
+   * @deprecated As of 4.20 use {@link StringUtil#replace(String, Map)}.
+   */
+  @Deprecated
+  public static String substituteParameters(String str, Map<String, String> parameters)
+  {
+    return StringUtil.replace(str, parameters);
   }
 }

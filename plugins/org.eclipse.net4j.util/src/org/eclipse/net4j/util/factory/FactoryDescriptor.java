@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.factory;
 
+import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry.IFactoryDescriptor;
+
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionRegistry;
 
@@ -32,28 +34,33 @@ import org.eclipse.core.runtime.IExtensionRegistry;
  * @deprecated As of 3.19 no longer public API.
  */
 @Deprecated
-public class FactoryDescriptor extends org.eclipse.net4j.internal.util.factory.FactoryDescriptor
+public class FactoryDescriptor implements IFactoryDescriptor
 {
   public FactoryDescriptor(IConfigurationElement configurationElement)
   {
-    super(configurationElement);
+    throw new UnsupportedOperationException();
+  }
+
+  public IConfigurationElement getConfigurationElement()
+  {
+    throw new UnsupportedOperationException();
   }
 
   @Override
-  public IConfigurationElement getConfigurationElement()
+  public IFactoryKey getKey()
   {
-    return super.getConfigurationElement();
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public IFactory createFactory()
   {
-    return super.createFactory();
+    throw new UnsupportedOperationException();
   }
 
   @Override
   public Object create(String description)
   {
-    return super.create(description);
+    throw new UnsupportedOperationException();
   }
 }

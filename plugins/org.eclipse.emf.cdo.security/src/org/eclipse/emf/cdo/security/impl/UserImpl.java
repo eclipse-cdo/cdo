@@ -19,6 +19,8 @@ import org.eclipse.emf.cdo.security.SecurityPackage;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.security.UserPassword;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
@@ -251,12 +253,20 @@ public class UserImpl extends AssigneeImpl implements User
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getLabel()
   {
-    return (String)eGet(SecurityPackage.Literals.USER__LABEL, true);
+    String label = getLastName();
+
+    String firstName = getFirstName();
+    if (!StringUtil.isEmpty(firstName))
+    {
+      label = firstName + " " + getLastName();
+    }
+
+    return label;
   }
 
   /**

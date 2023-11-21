@@ -71,6 +71,14 @@ public final class CDOServerUtil
   }
 
   /**
+   * @since 4.20
+   */
+  public static void prepareContainer(IManagedContainer container)
+  {
+    OM.BUNDLE.prepareContainer(container);
+  }
+
+  /**
    * @since 4.2
    */
   public static CDOView openView(ISession session, CDOBranchPoint branchPoint, CDORevisionProvider revisionProvider)
@@ -348,17 +356,21 @@ public final class CDOServerUtil
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document document = builder.parse(configFile);
-    NodeList elements = document.getElementsByTagName("repository"); //$NON-NLS-1$
-    for (int i = 0; i < elements.getLength(); i++)
+
+    NodeList children = document.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
     {
-      Node node = elements.item(i);
-      if (node instanceof Element)
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
       {
-        Element element = (Element)node;
-        String name = element.getAttribute("name"); //$NON-NLS-1$
-        if (ObjectUtil.equals(name, repositoryName))
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase("repository")) //$NON-NLS-1$
         {
-          return element;
+          String name = childElement.getAttribute("name"); //$NON-NLS-1$
+          if (ObjectUtil.equals(name, repositoryName))
+          {
+            return childElement;
+          }
         }
       }
     }

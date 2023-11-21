@@ -236,6 +236,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   @ExcludeFromDump
   private Set<CDOSessionImpl> singletonCollection = Collections.singleton(this);
 
+  private boolean loginPeek;
+
   private boolean mainBranchLocal;
 
   private IPasswordCredentialsProvider credentialsProvider;
@@ -483,6 +485,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     this.credentialsProvider = credentialsProvider;
+  }
+
+  public boolean isLoginPeek()
+  {
+    return loginPeek;
+  }
+
+  @Override
+  public void setLoginPeek(boolean loginPeek)
+  {
+    this.loginPeek = loginPeek;
   }
 
   public boolean isMainBranchLocal()

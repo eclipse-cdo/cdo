@@ -14,7 +14,7 @@ import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
-import org.eclipse.emf.cdo.lm.server.bundle.OM;
+import org.eclipse.emf.cdo.lm.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.AppExtension;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
@@ -209,7 +209,7 @@ public class LMAppExtension extends AppExtension
     String description = element.getAttribute("description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
-      Map<String, String> properties = RepositoryConfigurator.getProperties(element, 1);
+      Map<String, String> properties = RepositoryConfigurator.getProperties(element, 1, null, container);
       description = PropertiesFactory.createDescription(properties);
     }
 

@@ -32,6 +32,8 @@
      <productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="%productGroup.name.8"/>
      <productGroup id="org.eclipse.net4j.util.confirmationProviders" name="%productGroup.name.9"/>
      <productGroup id="org.eclipse.net4j.util.stringConverters" name="%productGroup.name.10"/>
+     <productGroup id="org.eclipse.net4j.util.stringParsers" name="%productGroup.name.11"/>
+     <productGroup id="org.eclipse.net4j.util.stringTesters" name="%productGroup.name.12"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
@@ -56,6 +58,10 @@
             type="file"
             class="org.eclipse.net4j.util.security.FileAuthenticatorFactory"/>
       <factory
+            productGroup="org.eclipse.net4j.Negotiators"
+            type="challenge"
+            class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
+      <factory
             productGroup="org.eclipse.net4j.util.confirmationProviders"
             type="default"
             class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
@@ -63,6 +69,18 @@
             productGroup="org.eclipse.net4j.util.metaFactories"
             type="org.eclipse.net4j.util.stringConverters"
             class="org.eclipse.net4j.util.StringConverter$MetaFactory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.metaFactories"
+            type="org.eclipse.net4j.util.stringParsers"
+            class="org.eclipse.net4j.util.StringParser$MetaFactory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.metaFactories"
+            type="org.eclipse.net4j.util.stringTesters"
+            class="org.eclipse.net4j.util.StringTester$MetaFactory"/>
+  </extension>
+
+  <extension point="org.eclipse.net4j.util.elementProcessors">
+      <elementProcessor class="org.eclipse.net4j.util.security.ChallengeNegotiatorConfigurer"/>
   </extension>
 
 </plugin>

@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -83,11 +84,18 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
 
   protected void start(Document document) throws Exception
   {
-    NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
-    for (int i = 0; i < repositoryConfigs.getLength(); i++)
+    NodeList children = document.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
     {
-      Element repositoryConfig = (Element)repositoryConfigs.item(i);
-      configureRepository(repositoryConfig);
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
+      {
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase("repository")) //$NON-NLS-1$
+        {
+          configureRepository(childElement);
+        }
+      }
     }
   }
 

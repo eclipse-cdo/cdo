@@ -18,22 +18,22 @@ import java.util.Map;
  */
 public final class AuthorizationContext
 {
-  private static final ThreadLocal<Map<String, Object>> THREAD_LOCAL = new ThreadLocal<>();
+  private static final ThreadLocal<Map<String, Object>> AUTHORIZATION_CONTEXT = new ThreadLocal<>();
 
   public static Map<String, Object> get()
   {
-    return THREAD_LOCAL.get();
+    return AUTHORIZATION_CONTEXT.get();
   }
 
   public static void set(Map<String, Object> map)
   {
     if (map == null)
     {
-      THREAD_LOCAL.remove();
+      AUTHORIZATION_CONTEXT.remove();
     }
     else
     {
-      THREAD_LOCAL.set(map);
+      AUTHORIZATION_CONTEXT.set(map);
     }
   }
 }

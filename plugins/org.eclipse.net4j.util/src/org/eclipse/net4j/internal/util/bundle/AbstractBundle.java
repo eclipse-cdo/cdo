@@ -10,8 +10,21 @@
  */
 package org.eclipse.net4j.internal.util.bundle;
 
+import org.eclipse.net4j.internal.util.container.PluginElementProcessorList;
+import org.eclipse.net4j.internal.util.factory.FactoryDescriptor;
+import org.eclipse.net4j.internal.util.factory.MarkupNames;
+import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
+import org.eclipse.net4j.internal.util.factory.SimpleFactory;
 import org.eclipse.net4j.internal.util.om.pref.Preferences;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Tree;
+import org.eclipse.net4j.util.container.IElementProcessor;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.factory.AnnotationFactory;
+import org.eclipse.net4j.util.factory.Factory;
+import org.eclipse.net4j.util.factory.IFactory;
+import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -25,9 +38,15 @@ import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.OperationCanceledException;
 import org.eclipse.core.runtime.Status;
 
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -46,6 +65,10 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport, OMBundle.TranslationSupport
 {
   private static final String CLASS_EXTENSION = ".class";
+
+  private static final String EXT_POINT_FACTORIES = OM.BUNDLE_ID + '.' + PluginFactoryRegistry.EXT_POINT;
+
+  private static final String EXT_POINT_ELEMENT_PROCESSORS = OM.BUNDLE_ID + '.' + PluginElementProcessorList.EXT_POINT;
 
   private AbstractPlatform platform;
 
@@ -119,6 +142,125 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   public void setBundleContext(Object bundleContext)
   {
     this.bundleContext = bundleContext;
+  }
+
+  @Override
+  public void prepareContainer(IManagedContainer container)
+  {
+    try (InputStream in = getInputStream("plugin.xml"))
+    {
+      DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+      documentBuilderFactory.setNamespaceAware(false);
+      documentBuilderFactory.setValidating(false);
+
+      DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+      Document document = documentBuilder.parse(in);
+
+      Tree plugin = Tree.XMLConverter.convertDocumentToTree(document);
+      for (Tree extension : plugin.children("extension"))
+      {
+        if (EXT_POINT_FACTORIES.equals(extension.attribute("point")))
+        {
+          for (Tree child : extension.children())
+          {
+            if (MarkupNames.FACTORY.equals(child.name()))
+            {
+              String className = child.attribute(MarkupNames.CLASS);
+
+              @SuppressWarnings("unchecked")
+              Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
+              IFactory factory = factoryClass.getConstructor().newInstance();
+
+              String type = child.attribute(MarkupNames.TYPE);
+              FactoryDescriptor.adjustFactoryType(factory, type);
+              container.registerFactory(factory);
+            }
+            else if (MarkupNames.FACTORIES.equals(child.name()))
+            {
+              String className = child.attribute(MarkupNames.CLASS);
+
+              @SuppressWarnings("unchecked")
+              Class<IFactory> factoryClass = (Class<IFactory>)loadClass(getBundleID(), className);
+              Constructor<IFactory> factoryConstructor = factoryClass.getConstructor();
+
+              for (Tree grandChild : child.children(MarkupNames.TYPE))
+              {
+                IFactory factory = factoryConstructor.newInstance();
+
+                String type = grandChild.attribute(MarkupNames.VALUE);
+                FactoryDescriptor.adjustFactoryType(factory, type);
+                container.registerFactory(factory);
+              }
+            }
+            else if (MarkupNames.ANNOTATION_FACTORY.equals(child.name()))
+            {
+              String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
+              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+              String type = child.attribute(MarkupNames.TYPE);
+
+              @SuppressWarnings("unchecked")
+              Class<IFactory> productClass = (Class<IFactory>)loadClass(getBundleID(), productClassName);
+              IFactory factory = new AnnotationFactory<>(productClass, productGroup, type);
+
+              FactoryDescriptor.adjustFactoryType(factory, type);
+              container.registerFactory(factory);
+            }
+            else if (MarkupNames.SIMPLE_FACTORY.equals(child.name()))
+            {
+              String productClassName = child.attribute(MarkupNames.PRODUCT_CLASS);
+              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+              String type = child.attribute(MarkupNames.TYPE);
+
+              @SuppressWarnings("unchecked")
+              Class<Object> productClass = (Class<Object>)loadClass(getBundleID(), productClassName);
+              Constructor<Object> productConstructor = productClass.getConstructor();
+
+              IFactory factory = new Factory(productGroup, type)
+              {
+                @Override
+                public Object create(String description) throws ProductCreationException
+                {
+                  try
+                  {
+                    Object product = productConstructor.newInstance();
+                    if (product != null)
+                    {
+                      String setterName = child.attribute(MarkupNames.SETTER_NAME);
+                      SimpleFactory.configure(product, description, setterName);
+                    }
+
+                    return product;
+                  }
+                  catch (Exception ex)
+                  {
+                    throw productCreationException(description, ex);
+                  }
+                }
+              };
+
+              container.registerFactory(factory);
+            }
+          }
+        }
+        else if (EXT_POINT_ELEMENT_PROCESSORS.equals(extension.attribute("point")))
+        {
+          for (Tree child : extension.children())
+          {
+            String className = child.attribute(PluginElementProcessorList.ATTR_CLASS);
+
+            @SuppressWarnings("unchecked")
+            Class<IElementProcessor> factoryClass = (Class<IElementProcessor>)loadClass(getBundleID(), className);
+            IElementProcessor elementProcessor = factoryClass.getConstructor().newInstance();
+
+            container.addPostProcessor(elementProcessor);
+          }
+        }
+      }
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   @Override

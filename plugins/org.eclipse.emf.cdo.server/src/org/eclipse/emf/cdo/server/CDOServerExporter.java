@@ -398,7 +398,6 @@ public abstract class CDOServerExporter<OUT>
      * @deprecated As of 4.9 use {@link #dumpStrings(Consumer)}.
      */
     @Deprecated
-    @SuppressWarnings("deprecation")
     public void dump(org.eclipse.net4j.util.Handler<String> handler)
     {
       dumpStrings((Consumer<String>)string -> handler.handle(string));

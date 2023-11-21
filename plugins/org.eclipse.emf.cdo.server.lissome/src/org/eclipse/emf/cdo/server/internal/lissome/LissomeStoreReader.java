@@ -314,7 +314,7 @@ public class LissomeStoreReader extends StoreAccessorBase implements ILissomeSto
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String queryLanguage = info.getQueryLanguage();
-    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, LissomeQueryHandler.QUERY_LANGUAGE))
+    if (StringUtil.equalsIgnoreCase(queryLanguage, LissomeQueryHandler.QUERY_LANGUAGE))
     {
       return new LissomeQueryHandler(this);
     }

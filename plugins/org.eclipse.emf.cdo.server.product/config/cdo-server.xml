@@ -16,6 +16,7 @@
   <repository name="repo1">
 
     <property name="overrideUUID" value=""/>
+    <property name="supportingLoginPeeks" value="true"/>
     <property name="supportingAudits" value="true"/>
     <property name="supportingBranches" value="true"/>
     <property name="supportingUnits" value="false"/>
@@ -26,6 +27,95 @@
     <property name="commitInfoStorage" value="WITH_MERGE_SOURCE"/> <!-- Possible values: NO | YES | WITH_MERGE_SOURCE -->
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
+
+    <!-- 
+    <protector>
+      <userAuthenticator type="ldap">
+        <environment id="base">
+          <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
+          <property name="java.naming.provider.url" value="ldap://localhost:10389"/>
+          <property name="java.naming.security.authentication" value="simple"/>
+        </environment>
+        
+        <environment id="bind" inherits="base">
+          <property name="java.naming.security.principal" value="$$$system_property(CDO_BIND_DN)$$$"/>
+          <property name="java.naming.security.credentials" value="$$$system_property(CDO_BIND_PW)$$$"/>
+        </environment>
+        
+        <environment id="user" inherits="base">
+          <property name="java.naming.security.principal" value="$USER_DN$"/>
+          <property name="java.naming.security.credentials" value="$USER_PW$"/>
+        </environment>
+        
+        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind"/>
+        
+        <loginUser environment="user">
+          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
+        </loginUser>
+      </userAuthenticator> 
+      
+      <authorizationStrategy type="additive"/>
+       
+      <revisionAuthorizer permission="none" operation="VETO">
+        <class value="http://www.eclipse.org/emf/CDO/security/4.1.0#//UserPassword"/>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="write">
+        <and>
+          <userId value="stepper"/>
+          <feature instanceOf="http://www.eclipse.org/emf/CDO/security/4.1.0#//Assignee" key="id" value="administrator" test="contains_ci"/>
+        </and>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="read">
+        <ldapGroupAttribute key="cn" value="AMS Users"/>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer description="Matcher Demo" permission="none" disabled="true">
+        <or>
+          <sessionProperty key="xyz.special" value="true"/>
+          
+          <repositoryUuid value="453-524-123"/>
+          <repositoryName value="LM_.*" test="regex"/>
+          <repositoryPrimary value="true"/>
+          <repositoryProperty key="cdo.lm.server.module_name" value=".*_tests" test="regex"/>
+          
+          <userId value="stepper"/>
+          <userId value="LM.*" test="regex"/>
+          <ldapUserDn value="uid=stepper,ou=Users,dc=example,dc=com"/>
+          <ldapUserDn value="uid=.*,ou=Users,dc=example,dc=com" test="regex"/>
+          <ldapUserAttribute key="uidNumber" value="10015"/>
+          <ldapGroupDn value="cn=CDO Users,ou=Groups,dc=example,dc=com"/>
+          <ldapGroupAttribute key="cn" value="CDO Users"/>
+          
+          <contextBranchId value="123" subBranches="true"/>
+          <contextBranchName value="MAIN/team15"/>
+          <contextHistorical value="true"/>
+          
+          <id value="4711" test="gte_int"/>
+          <instanceOf value="http://omg.org/uml#//StateMachine"/>
+          <class value="http://omg.org/uml#//StateMachine" subClasses="true"/>
+          <className value=".*Data" test="regex"/>
+          <package value="http://www.eclipse.org" subPackages="true"/>
+          <packageName value=".*tests" test="regex"/>
+          <branchId value="123" subBranches="true"/>
+          <branchName value="MAIN/team15"/>
+          <feature key="name" value="FlipFlop.*" test="regex"/>
+          
+          <and id="flipflop">
+            <feature key="name" value="FlipFlop"/>
+            <not>
+              <class value="http://omg.org/uml#//StateChart"/>
+              <class value="http://omg.org/uml#//ClassDiagram"/>
+              <class value="http://omg.org/uml#//Actor"/>
+            </not>
+          </and>
+          
+          <matcher ref="flipflop"/>
+        </or>
+      </revisionAuthorizer>
+    </protector>
+    -->
 
     <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>

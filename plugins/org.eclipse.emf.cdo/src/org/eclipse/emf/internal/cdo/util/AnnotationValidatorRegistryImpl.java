@@ -34,6 +34,6 @@ public class AnnotationValidatorRegistryImpl implements AnnotationValidator.Regi
   @Override
   public AnnotationValidator getAnnotationValidator(String annotationSource)
   {
-    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSource, null);
+    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSource);
   }
 }

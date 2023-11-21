@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
@@ -65,17 +66,24 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension5
   public void start(File configFile) throws Exception
   {
     IManagedContainer container = IPluginContainer.INSTANCE;
-
     Document document = getDocument(configFile);
-    NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
-    for (int i = 0; i < repositoryConfigs.getLength(); i++)
+
+    NodeList children = document.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
     {
-      Element repositoryConfig = (Element)repositoryConfigs.item(i);
-      CDORepositoryConfigurationManager repositoryConfigurationManager = configureAdminRepository(container, repositoryConfig);
-      if (repositoryConfigurationManager != null)
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
       {
-        this.repositoryConfigurationManager = repositoryConfigurationManager;
-        break;
+        Element childElement = (Element)child;
+        if (childElement.getNodeName().equalsIgnoreCase("repository")) //$NON-NLS-1$
+        {
+          CDORepositoryConfigurationManager repositoryConfigurationManager = configureAdminRepository(container, childElement);
+          if (repositoryConfigurationManager != null)
+          {
+            this.repositoryConfigurationManager = repositoryConfigurationManager;
+            break;
+          }
+        }
       }
     }
   }

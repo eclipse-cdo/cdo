@@ -28,7 +28,7 @@ import java.util.ListIterator;
  */
 public class PluginElementProcessorList extends Lifecycle implements List<IElementProcessor>
 {
-  private static final String ATTR_CLASS = "class"; //$NON-NLS-1$
+  public static final String ATTR_CLASS = "class"; //$NON-NLS-1$
 
   public static final String NAMESPACE = OM.BUNDLE_ID;
 

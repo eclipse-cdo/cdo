@@ -330,6 +330,11 @@ public interface InternalCDOSession
   public void clearCommittedSinceLastRefresh();
 
   /**
+   * @since 4.23
+   */
+  public void setLoginPeek(boolean loginPeek);
+
+  /**
    * @since 4.0
    */
   public void setMainBranchLocal(boolean mainBranchLocal);

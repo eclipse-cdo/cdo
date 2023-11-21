@@ -19,11 +19,34 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 3.8
  */
-public abstract class PropertiesFactory extends Factory
+public abstract class PropertiesFactory extends Factory implements IPropertiesFactory
 {
   public static final String PROPERTY_SEPARATOR = "|";
 
   public static final String DEFAULT_KEY = "_";
+
+  /**
+   * @since 3.23
+   */
+  public PropertiesFactory()
+  {
+  }
+
+  /**
+   * @since 3.23
+   */
+  public PropertiesFactory(IFactoryKey key)
+  {
+    super(key);
+  }
+
+  /**
+   * @since 3.23
+   */
+  public PropertiesFactory(String productGroup)
+  {
+    super(productGroup);
+  }
 
   public PropertiesFactory(FactoryKey key)
   {
@@ -48,6 +71,12 @@ public abstract class PropertiesFactory extends Factory
   public Object create(String description) throws ProductCreationException
   {
     Map<String, String> properties = parseProperties(description);
+    return createWithProperties(properties);
+  }
+
+  @Override
+  public Object createWithProperties(Map<String, String> properties) throws ProductCreationException
+  {
     return create(properties);
   }
 

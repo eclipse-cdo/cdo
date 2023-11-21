@@ -635,6 +635,34 @@ public final class CDOUtil
   }
 
   /**
+   * @since 4.23
+   */
+  public static boolean isReadable(EObject object)
+  {
+    CDOObject cdoObject = getCDOObject(object);
+    if (cdoObject != null)
+    {
+      return cdoObject.cdoPermission().isReadable();
+    }
+
+    return false;
+  }
+
+  /**
+   * @since 4.23
+   */
+  public static boolean isWritable(EObject object)
+  {
+    CDOObject cdoObject = getCDOObject(object);
+    if (cdoObject != null)
+    {
+      return cdoObject.cdoPermission().isWritable();
+    }
+
+    return false;
+  }
+
+  /**
    * @since 2.0
    */
   public static EObject getEObject(EObject object)

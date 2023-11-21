@@ -58,7 +58,7 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.AdapterUtil;
-import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.container.Container;
@@ -346,7 +346,7 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public void setOpeningTime(long openingTime)
   {
-    CheckUtil.checkState(this.openingTime == 0, "Opening time is already set");
+    checkState(this.openingTime == 0, "Opening time is already set");
     this.openingTime = openingTime;
   }
 
@@ -587,7 +587,20 @@ public class Session extends Container<IView> implements InternalSession
     for (int i = 0; i < operations.length; i++)
     {
       AuthorizableOperation operation = operations[i];
-      result[i] = authorizer.authorizeOperation(this, operation);
+
+      try
+      {
+        result[i] = authorizer.authorizeOperation(this, operation);
+      }
+      catch (Error ex)
+      {
+        throw ex;
+      }
+      catch (Throwable t)
+      {
+        OM.LOG.error(t);
+        result[i] = "Error: " + t.getLocalizedMessage();
+      }
     }
 
     return result;
@@ -695,7 +708,7 @@ public class Session extends Container<IView> implements InternalSession
       IPermissionManager permissionManager = manager.getPermissionManager();
       Set<? extends Object> impactedRules = notificationInfo.getImpactedRules();
 
-      if (!permissionManager.hasAnyRule(this, impactedRules))
+      if (ObjectUtil.isEmpty(impactedRules) || !permissionManager.hasAnyRule(this, impactedRules))
       {
         securityImpact = CommitNotificationInfo.IMPACT_NONE;
       }

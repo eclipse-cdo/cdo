@@ -211,7 +211,14 @@ public abstract class Signal implements Runnable
       }
       else
       {
-        OM.LOG.error(ex);
+        try
+        {
+          handleRunException(ex);
+        }
+        catch (Throwable ignore)
+        {
+          //$FALL-THROUGH$
+        }
       }
     }
     finally
@@ -316,6 +323,14 @@ public abstract class Signal implements Runnable
   {
     currentStream = null;
     protocol.finishOutputStream(out);
+  }
+
+  /**
+   * @since 4.19
+   */
+  protected void handleRunException(Throwable ex) throws Throwable
+  {
+    OM.LOG.error(ex);
   }
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;

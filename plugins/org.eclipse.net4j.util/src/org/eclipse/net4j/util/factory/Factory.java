@@ -10,8 +10,6 @@
  */
 package org.eclipse.net4j.util.factory;
 
-import org.eclipse.net4j.util.CheckUtil;
-
 import java.text.MessageFormat;
 
 /**
@@ -19,13 +17,33 @@ import java.text.MessageFormat;
  *
  * @author Eike Stepper
  */
-public abstract class Factory implements IFactory
+public abstract class Factory implements IFactory, IFactoryKeyAware
 {
-  private FactoryKey key;
+  /**
+   * @since 3.23
+   */
+  public static final String NO_DESCRIPTION = null;
+
+  private IFactoryKey key;
+
+  /**
+   * @since 3.23
+   */
+  public Factory()
+  {
+    this((IFactoryKey)null);
+  }
 
   public Factory(FactoryKey key)
   {
-    CheckUtil.checkArg(key, "key is null");
+    this((IFactoryKey)key);
+  }
+
+  /**
+   * @since 3.23
+   */
+  public Factory(IFactoryKey key)
+  {
     this.key = key;
   }
 
@@ -42,10 +60,29 @@ public abstract class Factory implements IFactory
     this(productGroup, null);
   }
 
+  /**
+   * @since 3.23
+   */
+  public IFactoryKey getFactoryKey()
+  {
+    return key;
+  }
+
+  @Override
+  public void setFactoryKey(IFactoryKey factoryKey)
+  {
+    key = factoryKey;
+  }
+
   @Override
   public FactoryKey getKey()
   {
-    return key;
+    if (key instanceof FactoryKey)
+    {
+      return (FactoryKey)key;
+    }
+
+    return new FactoryKey(key.getProductGroup(), key.getType());
   }
 
   public String getProductGroup()
@@ -67,6 +104,27 @@ public abstract class Factory implements IFactory
     }
 
     return null;
+  }
+
+  /**
+   * @since 3.23
+   */
+  protected final ProductCreationException productCreationException(String description, Throwable cause)
+  {
+    return new ProductCreationException(productCreationExceptionMessage(description), cause);
+  }
+
+  /**
+   * @since 3.23
+   */
+  protected final ProductCreationException productCreationException(String description)
+  {
+    return new ProductCreationException(productCreationExceptionMessage(description));
+  }
+
+  private String productCreationExceptionMessage(String description)
+  {
+    return "Could not create product " + getKey() + " with " + description;
   }
 
   @Override

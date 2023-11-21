@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.ITransaction;
@@ -148,6 +149,11 @@ public interface InternalRepository extends IRepository, //
    */
   @Override
   public InternalLockManager getLockingManager();
+
+  /**
+   * @since 4.20
+   */
+  public void setProtector(IRepositoryProtector protector);
 
   /**
    * @since 4.5
@@ -332,9 +338,9 @@ public interface InternalRepository extends IRepository, //
   {
     @Override
     public InternalRepository getSource();
-  
+
     public boolean isFirstStart();
-  
+
     /**
      * @since 4.7
      */

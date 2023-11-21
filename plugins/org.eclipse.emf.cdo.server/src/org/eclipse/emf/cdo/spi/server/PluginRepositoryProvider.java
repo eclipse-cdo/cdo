@@ -13,11 +13,11 @@ package org.eclipse.emf.cdo.spi.server;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 /**
- * If the meaning of this type isn't clear, there really should be more of a description here...
- *
  * @author Eike Stepper
  * @since 2.0
+ * @deprecated As of 4.20 use {@link ContainerRepositoryProvider}.
  */
+@Deprecated
 public final class PluginRepositoryProvider extends ContainerRepositoryProvider
 {
   public static final PluginRepositoryProvider INSTANCE = new PluginRepositoryProvider();

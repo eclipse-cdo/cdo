@@ -10,15 +10,21 @@
  */
 package org.eclipse.net4j.util;
 
+import org.eclipse.net4j.util.StringParser.EnumStringParser;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Various static helper methods for dealing with strings.
@@ -95,6 +101,27 @@ public final class StringUtil
     }
 
     return text;
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static String replace(String str, Map<String, String> replacements)
+  {
+    if (str != null && replacements != null)
+    {
+      for (Map.Entry<String, String> entry : replacements.entrySet())
+      {
+        String key = entry.getKey();
+        if (!isEmpty(key))
+        {
+          String value = StringUtil.safe(entry.getValue());
+          str = str.replace(key, value);
+        }
+      }
+    }
+
+    return str;
   }
 
   /**
@@ -450,16 +477,34 @@ public final class StringUtil
   }
 
   /**
-   * @since 3.1
+   * @since 3.23
    */
-  public static boolean equalsUpperOrLowerCase(String s, String upperOrLowerCase)
+  public static int compareIgnoreCase(String s1, String s2)
   {
-    if (s == null)
+    if (s1 == null)
     {
-      return upperOrLowerCase == null;
+      return s2 == null ? 0 : -1;
     }
 
-    return s.equals(upperOrLowerCase.toLowerCase()) || s.equals(upperOrLowerCase.toUpperCase());
+    if (s2 == null)
+    {
+      return 1;
+    }
+
+    return s1.toLowerCase().compareTo(s2.toLowerCase());
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static boolean equalsIgnoreCase(String s1, String s2)
+  {
+    if (s1 == null)
+    {
+      return s2 == null;
+    }
+
+    return s1.equalsIgnoreCase(s2);
   }
 
   /**
@@ -649,6 +694,97 @@ public final class StringUtil
     }
 
     return builder.toString();
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static String convert(String str, IManagedContainer container)
+  {
+    return convert(str, container, STRING_CONVERTER_PATTERN);
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static String convert(String str, IManagedContainer container, Pattern pattern)
+  {
+    if (str != null && container != null)
+    {
+      StringBuilder builder = new StringBuilder();
+      int start = 0;
+
+      for (Matcher matcher = pattern.matcher(str); matcher.find(start);)
+      {
+        builder.append(str.substring(start, matcher.start()));
+
+        String stringConverterType = matcher.group(1);
+        StringConverter stringConverter = container.getElementOrNull(StringConverter.PRODUCT_GROUP, stringConverterType);
+        if (stringConverter != null)
+        {
+          String string = matcher.group(2);
+          String result = stringConverter.apply(string);
+          builder.append(safe(result));
+        }
+        else
+        {
+          builder.append(matcher.group());
+        }
+
+        start = matcher.end();
+      }
+
+      builder.append(str.substring(start));
+      str = builder.toString();
+    }
+
+    return str;
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static <T> T parse(String str, IManagedContainer container, Class<T> type)
+  {
+    return parse(str, container, type, EnumStringParser.DEFAULT_CASE_SENSITIVE);
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static <T> T parse(String str, IManagedContainer container, Class<T> type, boolean enumCaseSensitive)
+  {
+    if (str != null && container != null && type != null)
+    {
+      String typeName = type.getName();
+
+      StringParser<T> parser = container.getElementOrNull(StringParser.PRODUCT_GROUP, typeName);
+      if (parser == null)
+      {
+        if (type.isEnum())
+        {
+          @SuppressWarnings({ "unchecked", "rawtypes" })
+          StringParser<T> enumParser = new EnumStringParser(type, enumCaseSensitive);
+          return enumParser.apply(str);
+        }
+
+        try
+        {
+          Constructor<T> constructor = type.getConstructor(String.class);
+          return constructor.newInstance(str);
+        }
+        catch (Exception ex)
+        {
+          //$FALL-THROUGH$
+        }
+
+        throw new IllegalStateException("A " + typeName + " could not be created for the string '" + str + "'");
+      }
+
+      return parser.apply(str);
+    }
+
+    return null;
   }
 
   public static boolean isEmpty(String str)
@@ -845,5 +981,17 @@ public final class StringUtil
     {
       subStrings[subStringsIndex] = string.substring(start, end);
     }
+  }
+
+  private static final Pattern STRING_CONVERTER_PATTERN = Pattern.compile("\\$\\$\\$([^(]+)\\((.*)\\)\\$\\$\\$");
+
+  /**
+   * @since 3.1
+   * @deprecated As of 3.23 use {@link #equalsIgnoreCase(String, String)}.
+   */
+  @Deprecated
+  public static boolean equalsUpperOrLowerCase(String s, String upperOrLowerCase)
+  {
+    return equalsIgnoreCase(s, upperOrLowerCase);
   }
 }

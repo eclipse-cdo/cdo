@@ -43,6 +43,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
   private String userID;
 
+  private boolean loginPeek;
+
   private boolean passiveUpdateEnabled;
 
   private PassiveUpdateMode passiveUpdateMode;
@@ -92,6 +94,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     repositoryName = in.readString();
     sessionID = in.readXInt();
     userID = in.readString();
+    loginPeek = in.readBoolean();
     passiveUpdateEnabled = in.readBoolean();
     passiveUpdateMode = in.readEnum(PassiveUpdateMode.class);
     lockNotificationMode = in.readEnum(LockNotificationMode.class);
@@ -114,14 +117,31 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
     try
     {
-      final CDOServerProtocol protocol = getProtocol();
-
+      CDOServerProtocol protocol = getProtocol();
       IRepositoryProvider repositoryProvider = protocol.getRepositoryProvider();
-      repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
+
+      try
+      {
+        repository = (InternalRepository)repositoryProvider.getRepository(repositoryName);
+      }
+      catch (Exception ex)
+      {
+        //$FALL-THROUGH$
+      }
+
       if (repository == null)
       {
         throw new RepositoryNotFoundException(repositoryName);
       }
+
+      boolean supportingLoginPeeks = repository.isSupportingLoginPeeks();
+      if (loginPeek && !supportingLoginPeeks)
+      {
+        out.writeBoolean(true); // Login peek failure.
+        return;
+      }
+
+      out.writeBoolean(false); // No login peek failure.
 
       try
       {
@@ -183,6 +203,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeXInt(repository.getBranchManager().getTagModCount());
       out.writeCDOID(repository.getRootResourceID());
       out.writeBoolean(repository.isAuthenticating());
+      out.writeBoolean(supportingLoginPeeks);
       out.writeBoolean(repository.isSupportingAudits());
       out.writeBoolean(repository.isSupportingBranches());
       out.writeBoolean(repository.isSupportingUnits());
@@ -208,5 +229,19 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       async.stop();
       monitor.done();
     }
+  }
+
+  @Override
+  protected void handleRunException(Throwable ex) throws Throwable
+  {
+    if (loginPeek)
+    {
+      if (ex instanceof RepositoryNotFoundException || ex instanceof SecurityException)
+      {
+        return;
+      }
+    }
+
+    super.handleRunException(ex);
   }
 }

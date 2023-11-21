@@ -22,7 +22,10 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
 /**
@@ -82,6 +85,35 @@ public class CDOAdminClientManagerImpl extends SetContainer<CDOAdminClient> impl
     }
 
     return null;
+  }
+
+  @Override
+  public int setConnections(Collection<String> urls)
+  {
+    Set<String> added = new HashSet<>();
+    for (String url : urls)
+    {
+      if (added.add(url))
+      {
+        addConnection(url);
+      }
+    }
+
+    for (CDOAdminClient connection : getConnections())
+    {
+      if (!added.contains(connection.getURL()))
+      {
+        removeConnection(connection);
+      }
+    }
+
+    return added.size();
+  }
+
+  @Override
+  public boolean setConnection(String url)
+  {
+    return setConnections(Collections.singleton(url)) == 1;
   }
 
   @Override

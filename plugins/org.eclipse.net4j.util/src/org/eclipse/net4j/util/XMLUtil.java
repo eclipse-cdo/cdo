@@ -96,6 +96,7 @@ public final class XMLUtil
   /**
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface ElementHandler
   {
     public void handleElement(Element element) throws Exception;

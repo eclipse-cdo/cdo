@@ -16,7 +16,7 @@ package org.eclipse.net4j.util.factory;
  */
 public abstract class MetaFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.factories";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.metaFactories";
 
   public MetaFactory(String type)
   {

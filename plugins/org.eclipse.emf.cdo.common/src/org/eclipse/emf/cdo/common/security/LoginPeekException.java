@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009, 2011, 2012, 2015 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,17 +8,19 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.server.internal.net4j.protocol;
-
-import org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider;
+package org.eclipse.emf.cdo.common.security;
 
 /**
+ * A {@link SecurityException security exception} indicating a failed attempt to peek a login.
+ *
  * @author Eike Stepper
+ * @since 4.22
  */
-public final class CDOPluginProtocolFactory extends CDOServerProtocolFactory
+public class LoginPeekException extends SecurityException
 {
-  public CDOPluginProtocolFactory()
+  private static final long serialVersionUID = 1L;
+
+  public LoginPeekException()
   {
-    super(PluginRepositoryProvider.INSTANCE);
   }
 }

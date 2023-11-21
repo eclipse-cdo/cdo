@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -221,6 +222,11 @@ public class ModelElementItemProvider extends CDOItemProviderAdapter
     super.collectNewChildDescriptors(newChildDescriptors, object);
 
     ModelElement modelElement = (ModelElement)object;
+
+    if (!CDOUtil.isWritable(modelElement))
+    {
+      return;
+    }
 
     // Collect the sources we will use for creating annotations.
     // It will always include null which will always be first.

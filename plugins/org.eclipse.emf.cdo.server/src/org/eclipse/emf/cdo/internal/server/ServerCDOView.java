@@ -814,6 +814,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public void setLoginPeek(boolean loginPeek)
+    {
+      // Do nothing
+    }
+
+    @Override
     public void setMainBranchLocal(boolean mainBranchLocal)
     {
       // Do nothing
@@ -949,6 +955,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public boolean isAuthenticating()
     {
       return repository.isAuthenticating();
+    }
+
+    @Override
+    public boolean isSupportingLoginPeeks()
+    {
+      return repository.isSupportingLoginPeeks();
     }
 
     @Override

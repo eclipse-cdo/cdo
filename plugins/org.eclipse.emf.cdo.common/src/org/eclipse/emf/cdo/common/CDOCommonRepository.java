@@ -96,6 +96,12 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public boolean isAuthenticating();
 
   /**
+   * Returns <code>true</code> if this repository supports login peeking, <code>false</code> otherwise.
+   * @since 4.22
+   */
+  public boolean isSupportingLoginPeeks();
+
+  /**
    * Returns <code>true</code> if this repository supports auditing, <code>false</code> otherwise.
    */
   public boolean isSupportingAudits();

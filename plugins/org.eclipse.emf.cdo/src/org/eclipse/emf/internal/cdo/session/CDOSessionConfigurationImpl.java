@@ -65,6 +65,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
   private InternalCDOCommitInfoManager commitInfoManager;
 
+  private boolean loginPeek;
+
   private boolean mainBranchLocal;
 
   private boolean activateOnOpen = true;
@@ -337,6 +339,18 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   }
 
   @Override
+  public boolean isLoginPeek()
+  {
+    return loginPeek;
+  }
+
+  @Override
+  public void setLoginPeek(boolean loginPeek)
+  {
+    this.loginPeek = loginPeek;
+  }
+
+  @Override
   public boolean isMainBranchLocal()
   {
     return mainBranchLocal;
@@ -405,6 +419,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     session.options().setPassiveUpdateMode(passiveUpdateMode);
     session.options().setLockNotificationMode(lockNotificationMode);
 
+    session.setLoginPeek(loginPeek);
     session.setMainBranchLocal(mainBranchLocal);
     session.setExceptionHandler(exceptionHandler);
     session.setFetchRuleManager(fetchRuleManager);

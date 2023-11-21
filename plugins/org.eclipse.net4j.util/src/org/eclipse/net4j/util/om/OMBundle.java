@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.util.om;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
@@ -85,6 +86,11 @@ public interface OMBundle
    * @since 3.22
    */
   public Class<?> loadClass(String pluginID, String className) throws ClassNotFoundException;
+
+  /**
+   * @since 3.23
+   */
+  public void prepareContainer(IManagedContainer container);
 
   /**
    * @deprecated For internal use only.

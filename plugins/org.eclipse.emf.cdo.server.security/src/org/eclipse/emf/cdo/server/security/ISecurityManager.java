@@ -15,15 +15,17 @@ import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.SecurityItemContainer;
 import org.eclipse.emf.cdo.server.IRepository;
 
+import org.eclipse.net4j.util.security.IAuthenticator2;
+
 /**
  * Protects a given {@link IRepository repository}.
  *
- * @noimplement This interface is not intended to be implemented by clients.
- * @noextend This interface is not intended to be extended by clients.
  * @see SecurityManagerUtil#createSecurityManager(String)
  * @author Eike Stepper
+ * @noimplement This interface is not intended to be implemented by clients.
+ * @noextend This interface is not intended to be extended by clients.
  */
-public interface ISecurityManager extends SecurityItemContainer
+public interface ISecurityManager extends SecurityItemContainer, IAuthenticator2
 {
   /**
    * @since 4.2

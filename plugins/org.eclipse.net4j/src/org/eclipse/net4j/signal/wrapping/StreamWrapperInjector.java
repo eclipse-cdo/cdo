@@ -17,6 +17,8 @@ import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 
+import java.util.Objects;
+
 /**
  * An {@link IElementProcessor element post processor} that injects a {@link #getStreamWrapper() stream wrapper}
  * into {@link SignalProtocol signal protocol} instances.
@@ -25,9 +27,9 @@ import org.eclipse.net4j.util.io.IStreamWrapper;
  */
 public class StreamWrapperInjector implements IElementProcessor
 {
-  private final IStreamWrapper streamWrapper;
-
   private final String protocolID;
+
+  private final IStreamWrapper streamWrapper;
 
   public StreamWrapperInjector(String protocolID, IStreamWrapper streamWrapper)
   {
@@ -74,5 +76,28 @@ public class StreamWrapperInjector implements IElementProcessor
   {
     signalProtocol.addStreamWrapper(streamWrapper);
     return signalProtocol;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(protocolID, streamWrapper);
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (!(obj instanceof StreamWrapperInjector))
+    {
+      return false;
+    }
+
+    StreamWrapperInjector other = (StreamWrapperInjector)obj;
+    return Objects.equals(protocolID, other.protocolID) && Objects.equals(streamWrapper, other.streamWrapper);
   }
 }

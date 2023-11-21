@@ -18,22 +18,10 @@
    </extension>
 
 	<extension point="org.eclipse.net4j.util.factories">
-		<factory
-        	productGroup="org.eclipse.net4j.serverProtocols"
-          type="cdo"
-          class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOPluginProtocolFactory"/>
-		<factory
-        	productGroup="org.eclipse.net4j.serverProtocols"
-          type="failover"
-          class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol$Factory"/>
-		<factory
-        	productGroup="org.eclipse.net4j.serverProtocols"
-          type="failover-client"
-          class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol$Factory"/>
-		<factory
-        	productGroup="org.eclipse.emf.cdo.server.net4j.failoverMonitors"
-          type="net4j"
-          class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$Factory"/>
+		<factory productGroup="org.eclipse.net4j.serverProtocols" type="cdo" class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory"/>
+		<factory productGroup="org.eclipse.net4j.serverProtocols" type="failover" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol$Factory"/>
+		<factory productGroup="org.eclipse.net4j.serverProtocols" type="failover-client" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol$Factory"/>
+		<factory productGroup="org.eclipse.emf.cdo.server.net4j.failoverMonitors" type="net4j" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$Factory"/>
    </extension>
 
 	 <extension point="org.eclipse.emf.cdo.server.appExtensions">

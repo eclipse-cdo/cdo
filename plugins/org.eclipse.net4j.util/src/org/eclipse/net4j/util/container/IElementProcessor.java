@@ -15,6 +15,7 @@ package org.eclipse.net4j.util.container;
  *
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IElementProcessor
 {
   public Object process(IManagedContainer container, String productGroup, String factoryType, String description, Object element);

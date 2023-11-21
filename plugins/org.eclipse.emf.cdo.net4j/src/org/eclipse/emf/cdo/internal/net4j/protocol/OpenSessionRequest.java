@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
+import org.eclipse.emf.cdo.common.security.LoginPeekException;
 
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
@@ -35,6 +36,8 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private final String userID;
 
+  private final boolean loginPeek;
+
   private final boolean passiveUpdateEnabled;
 
   private final PassiveUpdateMode passiveUpdateMode;
@@ -45,13 +48,14 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private final AuthorizableOperation[] operations;
 
-  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled,
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, boolean loginPeek, boolean passiveUpdateEnabled,
       PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
     this.sessionID = sessionID;
     this.userID = userID;
+    this.loginPeek = loginPeek;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
     this.passiveUpdateMode = passiveUpdateMode;
     this.lockNotificationMode = lockNotificationMode;
@@ -65,6 +69,7 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     out.writeString(repositoryName);
     out.writeXInt(sessionID);
     out.writeString(userID);
+    out.writeBoolean(loginPeek);
     out.writeBoolean(passiveUpdateEnabled);
     out.writeEnum(passiveUpdateMode);
     out.writeEnum(lockNotificationMode);
@@ -83,6 +88,12 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
   @Override
   protected OpenSessionResult confirming(CDODataInput in, OMMonitor monitor) throws IOException
   {
+    boolean loginPeekFailure = in.readBoolean();
+    if (loginPeekFailure)
+    {
+      throw new LoginPeekException();
+    }
+
     int sessionID = in.readXInt();
     if (sessionID == 0)
     {

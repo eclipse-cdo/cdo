@@ -12,6 +12,7 @@ package org.eclipse.net4j.ws;
 
 import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
 import org.eclipse.net4j.internal.ws.WSConnectorFactory;
+import org.eclipse.net4j.internal.ws.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 import java.net.URI;
@@ -32,8 +33,7 @@ public final class WSUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new WSAcceptorFactory());
-    container.registerFactory(new WSConnectorFactory());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static IWSAcceptor getAcceptor(IManagedContainer container, String acceptorName)

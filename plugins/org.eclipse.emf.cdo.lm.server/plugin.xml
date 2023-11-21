@@ -18,9 +18,12 @@
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
-      <factory productGroup="org.eclipse.emf.cdo.lm.server.lifecycleManagers"
-               type="default"
-               class="org.eclipse.emf.cdo.lm.server.XMLLifecycleManager$Factory"/>
+      <factory productGroup="org.eclipse.emf.cdo.lm.server.lifecycleManagers" type="default" class="org.eclipse.emf.cdo.lm.server.XMLLifecycleManager$Factory"/>
+      <factory productGroup="org.eclipse.net4j.util.stringConverters" type="cdo.lm.server.lifecycle_manager" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory"/>
+      <factory productGroup="org.eclipse.net4j.util.stringConverters" type="cdo.lm.server.repository_type" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory"/>
+      <factory productGroup="org.eclipse.net4j.util.stringConverters" type="cdo.lm.server.system_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory"/>
+      <factory productGroup="org.eclipse.net4j.util.stringConverters" type="cdo.lm.server.module_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory"/>
+      <factory productGroup="org.eclipse.net4j.util.stringConverters" type="cdo.lm.server.module_type_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory"/>
    </extension>
    
    <extension point="org.eclipse.emf.cdo.server.appExtensions">

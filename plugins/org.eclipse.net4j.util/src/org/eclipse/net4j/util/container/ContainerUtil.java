@@ -11,15 +11,11 @@
  */
 package org.eclipse.net4j.util.container;
 
+import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.internal.util.container.PluginContainer;
-import org.eclipse.net4j.util.StringConverter;
-import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
-import org.eclipse.net4j.util.concurrent.TimerLifecycle;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.properties.PropertiesContainerUtil;
-import org.eclipse.net4j.util.security.FileUserManagerFactory;
-import org.eclipse.net4j.util.security.RandomizerFactory;
 
 /**
  * Various static helper methods for dealing with {@link IContainer containers}.
@@ -83,6 +79,14 @@ public final class ContainerUtil
   }
 
   /**
+   * @since 2.0
+   */
+  public static void prepareContainer(IManagedContainer container)
+  {
+    OM.BUNDLE.prepareContainer(container);
+  }
+
+  /**
    * @since 3.15
    */
   public static IManagedContainer getContainer(Object object)
@@ -93,18 +97,6 @@ public final class ContainerUtil
     }
 
     return PropertiesContainerUtil.getProperty(object, PROP_CONTAINER, IManagedContainer.class);
-  }
-
-  /**
-   * @since 2.0
-   */
-  public static void prepareContainer(IManagedContainer container)
-  {
-    container.registerFactory(new TimerLifecycle.DaemonFactory());
-    container.registerFactory(new ExecutorServiceFactory());
-    container.registerFactory(new RandomizerFactory());
-    container.registerFactory(new FileUserManagerFactory());
-    container.registerFactory(new StringConverter.MetaFactory());
   }
 
   public static IContainer<Object> emptyContainer()

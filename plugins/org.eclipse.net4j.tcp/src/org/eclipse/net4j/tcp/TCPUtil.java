@@ -12,8 +12,7 @@ package org.eclipse.net4j.tcp;
 
 import org.eclipse.net4j.internal.tcp.TCPAcceptorFactory;
 import org.eclipse.net4j.internal.tcp.TCPConnectorFactory;
-import org.eclipse.net4j.internal.tcp.TCPSelectorFactory;
-import org.eclipse.net4j.internal.tcp.TCPSelectorInjector;
+import org.eclipse.net4j.internal.tcp.bundle.OM;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -49,10 +48,7 @@ public final class TCPUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new TCPSelectorFactory());
-    container.registerFactory(new TCPAcceptorFactory());
-    container.registerFactory(new TCPConnectorFactory());
-    container.addPostProcessor(new TCPSelectorInjector());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static ITCPAcceptor getAcceptor(IManagedContainer container, String description)

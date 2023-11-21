@@ -23,6 +23,7 @@ import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -40,6 +41,8 @@ public final class SecurityUtil
    * @since 2.0
    */
   public static final int DEFAULT_ITERATION_COUNT = 20;
+
+  private static final ThreadLocal<Map<String, Object>> AUTHORIZATION_CONTEXT = new ThreadLocal<>();
 
   private SecurityUtil()
   {
@@ -85,17 +88,6 @@ public final class SecurityUtil
   }
 
   /**
-   * @since 2.0
-   * @deprecated As of 3.3. use {@link #pbeEncrypt(byte[], char[], String, byte[], int)}.
-   */
-  @Deprecated
-  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
-      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
-  {
-    return pbeEncrypt(data, password, algorithmName, salt, count);
-  }
-
-  /**
    * @since 3.14
    */
   public static String toString(char[] chars)
@@ -119,5 +111,63 @@ public final class SecurityUtil
     }
 
     return str.toCharArray();
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static Map<String, Object> getAuthorizationContext()
+  {
+    return AUTHORIZATION_CONTEXT.get();
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static void setAuthorizationContext(Map<String, Object> authorizationContext)
+  {
+    if (authorizationContext == null)
+    {
+      AUTHORIZATION_CONTEXT.remove();
+    }
+    else
+    {
+      AUTHORIZATION_CONTEXT.set(authorizationContext);
+    }
+  }
+
+  /**
+   * @since 3.23
+   */
+  public static void withAuthorizationContext(Map<String, Object> authorizationContext, Runnable runnable)
+  {
+    Map<String, Object> oldAuthorizationContext = getAuthorizationContext();
+    if (authorizationContext != oldAuthorizationContext)
+    {
+      setAuthorizationContext(authorizationContext);
+    }
+
+    try
+    {
+      runnable.run();
+    }
+    finally
+    {
+      if (authorizationContext != oldAuthorizationContext)
+      {
+        setAuthorizationContext(oldAuthorizationContext);
+      }
+    }
+  }
+
+  /**
+   * @since 2.0
+   * @deprecated As of 3.3. use {@link #pbeEncrypt(byte[], char[], String, byte[], int)}.
+   */
+  @Deprecated
+  public static byte[] encrypt(byte[] data, char[] password, String algorithmName, byte[] salt, int count) throws NoSuchAlgorithmException,
+      InvalidKeySpecException, NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException, IllegalBlockSizeException, BadPaddingException
+  {
+    return pbeEncrypt(data, password, algorithmName, salt, count);
   }
 }

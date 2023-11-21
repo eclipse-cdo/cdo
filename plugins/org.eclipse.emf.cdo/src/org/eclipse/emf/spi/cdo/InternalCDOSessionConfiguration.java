@@ -27,6 +27,16 @@ public interface InternalCDOSessionConfiguration extends CDOSessionConfiguration
   public InternalCDOSession createSession();
 
   /**
+   * @since 4.23
+   */
+  public boolean isLoginPeek();
+
+  /**
+   * @since 4.23
+   */
+  public void setLoginPeek(boolean loginPeek);
+
+  /**
    * @since 4.0
    */
   public boolean isMainBranchLocal();

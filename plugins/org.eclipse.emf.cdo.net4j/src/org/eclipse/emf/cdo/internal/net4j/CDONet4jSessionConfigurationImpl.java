@@ -176,6 +176,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private boolean authenticating;
 
+    private boolean supportingLoginPeeks;
+
     private boolean supportingAudits;
 
     private boolean supportingBranches;
@@ -207,6 +209,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       timeResult = result.getRepositoryTimeResult();
       rootResourceID = result.getRootResourceID();
       authenticating = result.isAuthenticating();
+      supportingLoginPeeks = result.isSupportingLoginPeeks();
       supportingAudits = result.isSupportingAudits();
       supportingBranches = result.isSupportingBranches();
       supportingUnits = result.isSupportingUnits();
@@ -322,6 +325,12 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public boolean isAuthenticating()
     {
       return authenticating;
+    }
+
+    @Override
+    public boolean isSupportingLoginPeeks()
+    {
+      return supportingLoginPeeks;
     }
 
     @Override

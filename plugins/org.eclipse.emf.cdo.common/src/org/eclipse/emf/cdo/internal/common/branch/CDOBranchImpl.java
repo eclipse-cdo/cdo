@@ -12,10 +12,10 @@
 package org.eclipse.emf.cdo.internal.common.branch;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
-import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchChangedEvent.ChangeKind;
 import org.eclipse.emf.cdo.common.branch.CDOBranchCreationContext;
+import org.eclipse.emf.cdo.common.branch.CDOBranchDoesNotExistException;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
@@ -38,6 +38,7 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -212,20 +213,20 @@ public class CDOBranchImpl extends Container<CDOBranch> implements InternalCDOBr
   public CDOBranchPoint[] getBasePath()
   {
     List<CDOBranchPoint> path = new ArrayList<>();
-    computeBasePath(this, path);
+    computeBasePath(this, path::add);
     return path.toArray(new CDOBranchPoint[path.size()]);
   }
 
-  private void computeBasePath(CDOBranch branch, List<CDOBranchPoint> path)
+  private void computeBasePath(CDOBranch branch, Consumer<CDOBranchPoint> consumer)
   {
     CDOBranchPoint base = branch.getBase();
     CDOBranch parent = base.getBranch();
     if (parent != null)
     {
-      computeBasePath(parent, path);
+      computeBasePath(parent, consumer);
     }
 
-    path.add(base);
+    consumer.accept(base);
   }
 
   @Override

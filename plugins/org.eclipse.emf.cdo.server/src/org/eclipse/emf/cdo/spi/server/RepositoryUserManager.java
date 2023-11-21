@@ -33,6 +33,8 @@ import java.util.Arrays;
  */
 public abstract class RepositoryUserManager extends Lifecycle implements IUserManager, IAuthenticator
 {
+  private static final IElementProcessor REPOSITORY_INJECTOR = new RepositoryInjector();
+
   private IManagedContainer container;
 
   private String repositoryName;
@@ -123,7 +125,7 @@ public abstract class RepositoryUserManager extends Lifecycle implements IUserMa
   public static void prepareContainer(IManagedContainer container, RepositoryUserManagerFactory factory)
   {
     container.registerFactory(factory);
-    container.addPostProcessor(new RepositoryInjector());
+    container.addPostProcessor(REPOSITORY_INJECTOR);
   }
 
   /**

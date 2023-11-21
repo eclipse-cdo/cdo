@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.admin.CDOAdminClient;
 import org.eclipse.emf.cdo.admin.CDOAdminClientManager;
 import org.eclipse.emf.cdo.admin.CDOAdminClientRepository;
 import org.eclipse.emf.cdo.admin.CDOAdminClientUtil;
+import org.eclipse.emf.cdo.common.security.LoginPeekException;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.IDGeneration;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository.VersioningMode;
 import org.eclipse.emf.cdo.explorer.ui.bundle.OM;
@@ -26,6 +27,8 @@ import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.DelayingExecutor;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IContainer;
@@ -33,12 +36,15 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.views.ContainerItemProvider;
+
+import org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration;
 
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
@@ -64,6 +70,7 @@ import org.eclipse.ui.PlatformUI;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.util.concurrent.ExecutorService;
 
 /**
  * @author Eike Stepper
@@ -79,6 +86,21 @@ public class MasterRepositoryController
   private static final Image ERROR_IMAGE = PlatformUI.getWorkbench().getSharedImages().getImage(ISharedImages.IMG_OBJS_ERROR_TSK);
 
   private static final int VALIDATING_WIDTH = 120;
+
+  private static final int ADDRESS_VALIDATION_DELAY = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.ui.repositories.wizards.MasterRepositoryController.ADDRESS_VALIDATION_DELAY", 400);
+
+  private static final int REPOSITORY_VALIDATION_DELAY = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.ui.repositories.wizards.MasterRepositoryController.REPOSITORY_VALIDATION_DELAY", 1000);
+
+  private static final String CONNECTOR_TYPE = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.ui.repositories.wizards.MasterRepositoryController.CONNECTOR_TYPE", "tcp");
+
+  private static final String DEFAULT_HOST = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.ui.repositories.wizards.MasterRepositoryController.DEFAULT_HOST", "localhost");
+
+  private static final String DEFAULT_PORT = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.explorer.ui.repositories.wizards.MasterRepositoryController.DEFAULT_PORT", "2036");
 
   private final DisposeListener disposeListener = new DisposeListener()
   {
@@ -162,12 +184,12 @@ public class MasterRepositoryController
 
     AbstractRepositoryPage.createLabel(parent, "Host:");
     hostText = new Text(parent, SWT.BORDER);
-    hostText.setText("localhost");
+    hostText.setText(DEFAULT_HOST);
     hostText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
     AbstractRepositoryPage.createLabel(parent, "Port:");
-    portText = new HostValidatingText(parent);
-    portText.setText("2036");
+    portText = new AddressValidatingText(parent);
+    portText.setText(DEFAULT_PORT);
     hostText.addModifyListener(portText);
 
     AbstractRepositoryPage.createLabel(parent, "Repositories:");
@@ -224,6 +246,11 @@ public class MasterRepositoryController
     repositoryNameText.modifyText(false);
 
     parent.addDisposeListener(disposeListener);
+  }
+
+  public final String getConnectorURL()
+  {
+    return connectorDescription == null ? null : CONNECTOR_TYPE + "://" + connectorDescription;
   }
 
   public final String getConnectorDescription()
@@ -321,19 +348,40 @@ public class MasterRepositoryController
    */
   private abstract class ValidatingText extends Composite implements ModifyListener
   {
-    private Text text;
+    private final Text text;
 
-    private Label imageLabel;
+    private final Label imageLabel;
 
-    private Label statusLabel;
+    private final Label statusLabel;
+
+    private final DelayingExecutor validator;
 
     private boolean valid;
 
-    private ValidationThread validationThread;
-
-    public ValidatingText(Composite parent)
+    public ValidatingText(Composite parent, int validationDelay)
     {
       super(parent, SWT.NONE);
+
+      if (validationDelay >= 0)
+      {
+        ExecutorService threadPool = ConcurrencyUtil.getExecutorService(container);
+
+        validator = new DelayingExecutor(validationDelay)
+        {
+          @Override
+          protected void doExecute(Runnable runnable)
+          {
+            threadPool.execute(runnable);
+          }
+        };
+
+        threadPool.execute(validator);
+      }
+      else
+      {
+        validator = null;
+      }
+
       setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
 
       GridLayout layout = new GridLayout(3, false);
@@ -370,10 +418,9 @@ public class MasterRepositoryController
     {
       valid = false;
 
-      if (validationThread != null)
+      if (validator != null)
       {
-        validationThread.cancel();
-        validationThread = null;
+        validator.stop();
       }
     }
 
@@ -387,31 +434,37 @@ public class MasterRepositoryController
     {
       validateController();
 
-      imageLabel.setImage(EMPTY_IMAGE);
-      statusLabel.setText("");
-
-      cancelValidation();
-
-      parent.getDisplay().timerExec(delay ? 400 : 0, new Runnable()
+      if (validator != null)
       {
-        @Override
-        public void run()
+        imageLabel.setImage(EMPTY_IMAGE);
+        statusLabel.setText("");
+
+        String validationInfo = getValidationInfo();
+        if (validationInfo != null)
         {
-          if (!parent.isDisposed())
-          {
-            String validationInfo = getValidationInfo();
-            if (validationInfo != null)
+          validator.execute(() -> {
+            updateLabels(null, false);
+            String message = null;
+            valid = false;
+
+            try
             {
-              validationThread = new ValidationThread(validationInfo);
-              validationThread.start();
+              message = validate(validationInfo);
+              valid = true;
             }
-            else
+            catch (Exception ex)
             {
-              finished(false);
+              message = ex.getMessage();
             }
-          }
+
+            updateLabels(message, valid);
+          });
         }
-      });
+        else
+        {
+          finished(false);
+        }
+      }
     }
 
     protected abstract String getValidationInfo();
@@ -422,86 +475,33 @@ public class MasterRepositoryController
     {
     }
 
-    /**
-     * @author Eike Stepper
-     */
-    private final class ValidationThread extends Thread
+    private void updateLabels(final String message, final boolean valid)
     {
-      private final String validationInfo;
-
-      private boolean canceled;
-
-      public ValidationThread(String validationInfo)
+      Display display = parent.getDisplay();
+      if (!parent.isDisposed())
       {
-        super("Host Validator");
-        setDaemon(true);
-
-        this.validationInfo = validationInfo;
-      }
-
-      public void cancel()
-      {
-        canceled = true;
-        interrupt();
-      }
-
-      @Override
-      public void run()
-      {
-        updateLabels(null, false);
-        String message = null;
-        valid = false;
-
-        try
+        display.syncExec(new Runnable()
         {
-          message = validate(validationInfo);
-
-          if (!canceled)
+          @Override
+          public void run()
           {
-            valid = true;
-          }
-        }
-        catch (Exception ex)
-        {
-          message = ex.getMessage();
-        }
-
-        if (canceled)
-        {
-          return;
-        }
-
-        updateLabels(message, valid);
-      }
-
-      private void updateLabels(final String message, final boolean valid)
-      {
-        Display display = parent.getDisplay();
-        if (!parent.isDisposed())
-        {
-          display.syncExec(new Runnable()
-          {
-            @Override
-            public void run()
+            try
             {
-              try
+              if (message != null)
               {
-                if (message != null)
-                {
-                  imageLabel.setImage(valid ? OK_IMAGE : ERROR_IMAGE);
-                  statusLabel.setText(message);
-                  finished(valid);
-                }
+                imageLabel.setImage(valid ? OK_IMAGE : ERROR_IMAGE);
+                statusLabel.setText(message);
+                finished(valid);
               }
-              catch (Exception ex)
-              {
-                //$FALL-THROUGH$
-              }
-
-              validateController();
             }
-          });
-        }
+            catch (Exception ex)
+            {
+              //$FALL-THROUGH$
+            }
+
+            validateController();
+          }
+        });
       }
     }
   }
@@ -509,11 +509,11 @@ public class MasterRepositoryController
   /**
    * @author Eike Stepper
    */
-  private final class HostValidatingText extends ValidatingText
+  private final class AddressValidatingText extends ValidatingText
   {
-    public HostValidatingText(Composite parent)
+    public AddressValidatingText(Composite parent)
     {
-      super(parent);
+      super(parent, ADDRESS_VALIDATION_DELAY);
     }
 
     @Override
@@ -530,7 +530,7 @@ public class MasterRepositoryController
       String port = getText();
       if (port.length() == 0)
       {
-        port = "2036";
+        port = DEFAULT_PORT;
       }
 
       return host + ":" + port;
@@ -574,7 +574,8 @@ public class MasterRepositoryController
 
       if (valid && connectorDescription != null)
       {
-        adminManager.addConnection("tcp://" + connectorDescription);
+        String url = getConnectorURL();
+        adminManager.setConnection(url);
       }
 
       ViewerUtil.refresh(repositoryTableViewer, null);
@@ -588,7 +589,7 @@ public class MasterRepositoryController
   {
     public RepositoryValidatingText(Composite parent)
     {
-      super(parent);
+      super(parent, REPOSITORY_VALIDATION_DELAY);
     }
 
     @Override
@@ -613,7 +614,6 @@ public class MasterRepositoryController
     {
       CDONet4jSession session = null;
       authenticating = false;
-
       versioningMode = null;
       idGeneration = null;
 
@@ -636,12 +636,17 @@ public class MasterRepositoryController
           config.setConnector(connector);
           config.setRepositoryName(repositoryName);
           config.setCredentialsProvider(credentialsProvider);
+          ((InternalCDOSessionConfiguration)config).setLoginPeek(true);
 
           session = config.openNet4jSession();
           if (session != null && session.isClosed())
           {
             session = null;
           }
+        }
+        catch (LoginPeekException ex)
+        {
+          return "Repository reachable";
         }
         catch (NotAuthenticatedException ex)
         {
@@ -689,7 +694,7 @@ public class MasterRepositoryController
 
       try
       {
-        connector = Net4jUtil.getConnector(container, "tcp", connectorDescription);
+        connector = Net4jUtil.getConnector(container, CONNECTOR_TYPE, connectorDescription);
       }
       catch (Exception ex)
       {
@@ -725,13 +730,12 @@ public class MasterRepositoryController
     {
       if (connectorDescription != null)
       {
-        for (CDOAdminClient admin : adminManager.getConnections())
+        String url = getConnectorURL();
+
+        CDOAdminClient admin = adminManager.getConnection(url);
+        if (admin != null)
         {
-          String url = admin.getURL();
-          if (url.equals("tcp://" + connectorDescription))
-          {
-            return admin.getRepositories();
-          }
+          return admin.getRepositories();
         }
       }
 

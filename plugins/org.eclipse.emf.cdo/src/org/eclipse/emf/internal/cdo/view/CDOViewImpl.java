@@ -3612,7 +3612,6 @@ public class CDOViewImpl extends AbstractCDOView
      * @deprecated As of 4.12 use {@link CDOLockStatePrefetcher#setObjectFilter(java.util.function.Predicate)}, see bug 568778.
      */
     @Deprecated
-    @SuppressWarnings("deprecation")
     public void setLockStateLoadingPolicy(CDOLockStateLoadingPolicy lockStateLoadingPolicy)
     {
       checkActive();

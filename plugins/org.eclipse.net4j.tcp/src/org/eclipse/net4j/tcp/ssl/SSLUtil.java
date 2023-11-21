@@ -166,10 +166,6 @@ public class SSLUtil
   public static void prepareContainer(IManagedContainer container)
   {
     TCPUtil.prepareContainer(container);
-
-    // Prepare SSL
-    container.registerFactory(new SSLAcceptorFactory());
-    container.registerFactory(new SSLConnectorFactory());
   }
 
   public static ITCPAcceptor getAcceptor(IManagedContainer container, String description)

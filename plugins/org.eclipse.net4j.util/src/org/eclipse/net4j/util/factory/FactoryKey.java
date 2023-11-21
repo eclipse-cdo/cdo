@@ -67,10 +67,10 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
       return true;
     }
 
-    if (obj instanceof FactoryKey)
+    if (obj instanceof IFactoryKey)
     {
-      FactoryKey key = (FactoryKey)obj;
-      return ObjectUtil.equals(productGroup, key.productGroup) && ObjectUtil.equals(type, key.type);
+      IFactoryKey key = (IFactoryKey)obj;
+      return ObjectUtil.equals(productGroup, key.getProductGroup()) && ObjectUtil.equals(type, key.getType());
     }
 
     return false;
@@ -83,12 +83,6 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
   }
 
   @Override
-  public String toString()
-  {
-    return MessageFormat.format("{0}[{1}]", productGroup, type); //$NON-NLS-1$
-  }
-
-  @Override
   public int compareTo(FactoryKey key)
   {
     int result = StringUtil.compare(productGroup, key.productGroup);
@@ -96,7 +90,13 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     {
       result = StringUtil.compare(type, key.type);
     }
-
+  
     return result;
+  }
+
+  @Override
+  public String toString()
+  {
+    return MessageFormat.format("{0}[{1}]", productGroup, type); //$NON-NLS-1$
   }
 }

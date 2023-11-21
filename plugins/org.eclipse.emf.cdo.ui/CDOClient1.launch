@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <launchConfiguration type="org.eclipse.pde.ui.RuntimeWorkbench">
     <setAttribute key="additional_plugins">
-        <setEntry value="org.eclipse.emf.cdo.edit:4.6.0.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.edit:4.6.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples.company.edit:4.1.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions.edit:4.4.2.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm.security.edit:1.0.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm.security:1.1.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm.server:1.2.0.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.security.edit:1.0.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.security:1.1.1.qualifier:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.server:1.3.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.6.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202212280858:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.8.0.v20230211-1150:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.14.0.v20230211-1150:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.18.0.v20230224-1122:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.edit:2.18.0.v20230211-1150:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.edit:2.19.0.v20230828-0616:default:true:default:default"/>
         <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202211151334:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
@@ -80,7 +80,6 @@
         <setEntry value="org.eclipse.emf.ecp.view.stack.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.table.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.template.feature:default"/>
-        <setEntry value="org.eclipse.emf.ecp.view.treemasterdetail.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.unset.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.validation.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.vertical.feature:default"/>

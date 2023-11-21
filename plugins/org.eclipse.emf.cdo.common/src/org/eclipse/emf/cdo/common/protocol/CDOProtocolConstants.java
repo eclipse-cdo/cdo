@@ -564,7 +564,7 @@ public interface CDOProtocolConstants
     }
 
     /**
-     * @since 4.21
+     * @since 4.22
      */
     public boolean canPrefetchLockStates()
     {

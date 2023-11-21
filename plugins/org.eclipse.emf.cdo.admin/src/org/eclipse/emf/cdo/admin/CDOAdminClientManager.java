@@ -31,6 +31,16 @@ public interface CDOAdminClientManager extends IContainer<CDOAdminClient>, IMana
 
   public CDOAdminClient getConnection(String url);
 
+  /**
+   * @since 4.4
+   */
+  public int setConnections(Collection<String> urls);
+
+  /**
+   * @since 4.4
+   */
+  public boolean setConnection(String url);
+
   public int addConnections(Collection<String> urls);
 
   public boolean addConnection(String url);

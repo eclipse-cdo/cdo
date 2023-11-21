@@ -63,6 +63,7 @@ import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
+import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStore.CanHandleClientAssignedIDs;
@@ -131,6 +132,8 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
 import org.eclipse.net4j.util.transaction.TransactionException;
@@ -185,6 +188,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final Map<String, Repository> REPOSITORIES = new HashMap<>();
 
+  private static final boolean DISABLE_LOGIN_PEEKS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_LOGIN_PEEKS");
+
   private static final String PROP_DISABLE_FEATURE_MAP_CHECKS = "org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS";
 
   private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_FEATURE_MAP_CHECKS);
@@ -206,7 +211,11 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private Object[] elements = {};
 
+  private final IRegistry<String, Object> propertiesContainer = new HashMapRegistry.AutoCommit<>();
+
   private Map<String, String> properties;
+
+  private boolean supportingLoginPeeks = !DISABLE_LOGIN_PEEKS;
 
   private boolean supportingAudits;
 
@@ -252,6 +261,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private InternalUnitManager unitManager;
 
   private IQueryHandlerProvider queryHandlerProvider;
+
+  private IRepositoryProtector protector;
 
   private List<OperationAuthorizer<ISession>> operationAuthorizers = new ArrayList<>();
 
@@ -379,6 +390,12 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  public IRegistry<String, Object> properties()
+  {
+    return propertiesContainer;
+  }
+
+  @Override
   public synchronized Map<String, String> getProperties()
   {
     if (properties == null)
@@ -404,6 +421,12 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return false;
+  }
+
+  @Override
+  public boolean isSupportingLoginPeeks()
+  {
+    return supportingLoginPeeks;
   }
 
   @Override
@@ -1395,6 +1418,19 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     checkInactive();
     this.lockingManager = lockingManager;
+  }
+
+  @Override
+  public IRepositoryProtector getProtector()
+  {
+    return protector;
+  }
+
+  @Override
+  public void setProtector(IRepositoryProtector protector)
+  {
+    checkInactive();
+    this.protector = protector;
   }
 
   @Override
@@ -2400,6 +2436,13 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     // SUPPORTING_AUDITS
+    String valueLoginPeeks = properties.get(Props.SUPPORTING_LOGIN_PEEKS);
+    if (valueLoginPeeks != null)
+    {
+      supportingLoginPeeks = Boolean.valueOf(valueLoginPeeks);
+    }
+
+    // SUPPORTING_AUDITS
     String valueAudits = properties.get(Props.SUPPORTING_AUDITS);
     if (valueAudits != null)
     {
@@ -2772,6 +2815,11 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       store.setRepository(this);
     }
+
+    if (protector != null && protector.getRepository() == null)
+    {
+      protector.setRepository(this);
+    }
   }
 
   @Override
@@ -2867,6 +2915,8 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     LifecycleUtil.activate(lockingManager); // Needs an initialized main branch / branch manager
+    LifecycleUtil.activate(protector);
+
     setPostActivateState();
 
     synchronized (REPOSITORIES)

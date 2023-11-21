@@ -12,10 +12,12 @@ package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.ProductDescriptionAware;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
+import org.eclipse.net4j.util.factory.TreeFactory;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 
@@ -25,19 +27,13 @@ import java.util.Map;
 /**
  * @author Eike Stepper
  */
-public final class SimpleFactory extends Factory
+public final class SimpleFactory extends Factory implements MarkupNames
 {
-  public static final String ELEM = "simpleFactory"; //$NON-NLS-1$
-
-  private static final String ATTR_PRODUCT_CLASS = "productClass";
-
-  private static final String ATTR_SETTER_NAME = "setterName";
-
   private final IConfigurationElement configurationElement;
 
   public SimpleFactory(IConfigurationElement configurationElement)
   {
-    super(getProductGroup(configurationElement), getType(configurationElement));
+    super(productGroup(configurationElement), type(configurationElement));
     this.configurationElement = configurationElement;
   }
 
@@ -46,27 +42,34 @@ public final class SimpleFactory extends Factory
   {
     try
     {
-      Object product = configurationElement.createExecutableExtension(ATTR_PRODUCT_CLASS);
+      Object product = configurationElement.createExecutableExtension(PRODUCT_CLASS);
       if (product != null)
       {
-        configure(product, description);
+        String setterName = configurationElement.getAttribute(SETTER_NAME);
+        configure(product, description, setterName);
       }
 
       return product;
     }
     catch (Exception ex)
     {
-      throw new ProductCreationException(
-          "Could not create product of type '" + getType(configurationElement) + "' in group '" + getProductGroup(configurationElement) + "'", ex);
+      throw productCreationException(description, ex);
     }
   }
 
-  private void configure(Object product, String description) throws NoSuchMethodException
+  public static void configure(Object product, String description, String setterName) throws NoSuchMethodException
   {
-    String setterName = configurationElement.getAttribute(ATTR_SETTER_NAME);
     if (!StringUtil.isEmpty(setterName))
     {
-      Method propertiesSetter = getSetter(product, setterName, Map.class);
+      Method treeSetter = setter(product, setterName, Tree.class);
+      if (treeSetter != null)
+      {
+        Tree tree = TreeFactory.parseTree(description);
+        ReflectUtil.invokeMethod(treeSetter, product, tree);
+        return;
+      }
+
+      Method propertiesSetter = setter(product, setterName, Map.class);
       if (propertiesSetter != null)
       {
         Map<String, String> properties = PropertiesFactory.parseProperties(description);
@@ -74,7 +77,7 @@ public final class SimpleFactory extends Factory
         return;
       }
 
-      Method descriptionSetter = getSetter(product, setterName, String.class);
+      Method descriptionSetter = setter(product, setterName, String.class);
       if (descriptionSetter != null)
       {
         ReflectUtil.invokeMethod(descriptionSetter, product, description);
@@ -92,17 +95,17 @@ public final class SimpleFactory extends Factory
     }
   }
 
-  private static String getProductGroup(IConfigurationElement configurationElement)
+  private static String productGroup(IConfigurationElement configurationElement)
   {
-    return configurationElement.getAttribute(FactoryDescriptor.ATTR_PRODUCT_GROUP);
+    return configurationElement.getAttribute(MarkupNames.PRODUCT_GROUP);
   }
 
-  private static String getType(IConfigurationElement configurationElement)
+  private static String type(IConfigurationElement configurationElement)
   {
-    return configurationElement.getAttribute(FactoryDescriptor.ATTR_TYPE);
+    return configurationElement.getAttribute(MarkupNames.TYPE);
   }
 
-  private static Method getSetter(Object product, String name, Class<?> paramType)
+  private static Method setter(Object product, String name, Class<?> paramType)
   {
     return ReflectUtil.getMethodOrNull(product.getClass(), name, paramType);
   }

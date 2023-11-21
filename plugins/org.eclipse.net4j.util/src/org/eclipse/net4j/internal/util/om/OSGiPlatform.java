@@ -57,6 +57,11 @@ public class OSGiPlatform extends AbstractPlatform
   @Override
   public String getProperty(String key)
   {
+    if (key == null)
+    {
+      return null;
+    }
+
     return systemContext != null ? systemContext.getProperty(key) : null;
   }
 

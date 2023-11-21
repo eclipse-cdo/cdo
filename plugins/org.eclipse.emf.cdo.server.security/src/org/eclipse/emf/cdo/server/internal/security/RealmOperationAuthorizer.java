@@ -72,7 +72,7 @@ public abstract class RealmOperationAuthorizer<T extends SecurityItem> extends A
     User user = realm.getUser(userID);
     if (user == null)
     {
-      return "User " + userID + " not authenticated";
+      return "User " + userID + " is not authenticated";
     }
 
     Collection<T> items = getItemsOfUser(user);

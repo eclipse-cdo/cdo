@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
@@ -40,7 +41,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IContainer<Object>, ILifecycle
+public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IPropertiesContainer, IContainer<Object>, ILifecycle
 {
   /**
    * @since 3.0
@@ -96,6 +97,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
    * @since 4.1
    */
   public ILockingManager getLockingManager();
+
+  /**
+   * @since 4.20
+   */
+  public IRepositoryProtector getProtector();
 
   /**
    * @since 2.0
@@ -305,6 +311,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
      * @since 2.0
      */
     public static final String OVERRIDE_UUID = "overrideUUID"; //$NON-NLS-1$
+
+    /**
+     * @since 4.20
+     */
+    public static final String SUPPORTING_LOGIN_PEEKS = "supportingLoginPeeks"; //$NON-NLS-1$
 
     /**
      * @since 2.0

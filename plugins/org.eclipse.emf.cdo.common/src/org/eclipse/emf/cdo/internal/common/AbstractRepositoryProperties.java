@@ -107,6 +107,15 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
       }
     });
 
+    add(new Property<RECEIVER>("supportingLoginPeeks")
+    {
+      @Override
+      protected Object eval(RECEIVER receiver)
+      {
+        return getRepository(receiver).isSupportingLoginPeeks();
+      }
+    });
+
     add(new Property<RECEIVER>("supportingAudits", Messages.getString("RepositoryPropertyTester_20"), //
         Messages.getString("RepositoryPropertyTester_21"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -307,6 +316,12 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
 
   @Override
   public boolean isSupportingAudits()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public boolean isSupportingLoginPeeks()
   {
     throw new UnsupportedOperationException();
   }

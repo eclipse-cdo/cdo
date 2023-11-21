@@ -325,7 +325,7 @@ public class DBStoreAccessor extends StoreAccessor implements IDBStoreAccessor, 
   public IQueryHandler getQueryHandler(CDOQueryInfo info)
   {
     String queryLanguage = info.getQueryLanguage();
-    if (StringUtil.equalsUpperOrLowerCase(queryLanguage, SQLQueryHandler.QUERY_LANGUAGE))
+    if (StringUtil.equalsIgnoreCase(queryLanguage, SQLQueryHandler.QUERY_LANGUAGE))
     {
       return new SQLQueryHandler(this);
     }

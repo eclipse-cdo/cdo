@@ -14,15 +14,19 @@ package org.eclipse.net4j.util.container;
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.FactoryKey;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.ITreeFactory;
 import org.eclipse.net4j.util.factory.MetaFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.ProductDescriptionProvider;
+import org.eclipse.net4j.util.factory.TreeFactory;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -138,13 +142,16 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
           IFactory factory = entry.getValue();
           if (factory instanceof ContainerAware)
           {
-            ContainerAware f = (ContainerAware)factory;
-            f.setManagedContainer(container);
+            ContainerAware containerAware = (ContainerAware)factory;
+            containerAware.setManagedContainer(container);
           }
 
-          if (factory instanceof MetaFactory)
+          IFactoryKey key = factory.getKey();
+          String productGroup = key.getProductGroup();
+          if (MetaFactory.PRODUCT_GROUP.equals(productGroup))
           {
-            MetaFactory metaFactory = (MetaFactory)factory;
+            // Resolve potential FactoryDescriptor.
+            MetaFactory metaFactory = (MetaFactory)getFactory(MetaFactory.PRODUCT_GROUP, key.getType());
 
             if (container != null)
             {
@@ -153,6 +160,12 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
               {
                 for (IFactory child : children)
                 {
+                  if (child instanceof ContainerAware)
+                  {
+                    ContainerAware containerAware = (ContainerAware)child;
+                    containerAware.setManagedContainer(container);
+                  }
+
                   registerFactory(child);
                   metaFactoryChildren.computeIfAbsent(metaFactory, k -> new ArrayList<>()).add(child);
                 }
@@ -205,34 +218,38 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   @Override
   public synchronized void addPostProcessor(IElementProcessor postProcessor, boolean processExistingElements)
   {
-    if (processExistingElements)
+    List<IElementProcessor> postProcessors = getPostProcessors();
+    if (!postProcessors.contains(postProcessor))
     {
-      ContainerEvent<Object> event = new ContainerEvent<>(this);
-      for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
+      if (processExistingElements)
       {
-        ElementKey key = entry.getKey();
-        Object element = entry.getValue();
-
-        String productGroup = key.getProductGroup();
-        String factoryType = key.getFactoryType();
-        String description = key.getDescription();
-        Object newElement = postProcessor.process(this, productGroup, factoryType, description, element);
-        if (newElement != element)
+        ContainerEvent<Object> event = new ContainerEvent<>(this);
+        for (Map.Entry<ElementKey, Object> entry : getElementRegistryEntries())
         {
-          synchronized (elementRegistry)
-          {
-            elementRegistry.put(key, newElement);
-          }
+          ElementKey key = entry.getKey();
+          Object element = entry.getValue();
 
-          event.addDelta(element, IContainerDelta.Kind.REMOVED);
-          event.addDelta(newElement, IContainerDelta.Kind.ADDED);
+          String productGroup = key.getProductGroup();
+          String factoryType = key.getFactoryType();
+          String description = key.getDescription();
+          Object newElement = postProcessor.process(this, productGroup, factoryType, description, element);
+          if (newElement != element)
+          {
+            synchronized (elementRegistry)
+            {
+              elementRegistry.put(key, newElement);
+            }
+
+            event.addDelta(element, IContainerDelta.Kind.REMOVED);
+            event.addDelta(newElement, IContainerDelta.Kind.ADDED);
+          }
         }
+
+        fireEvent(event);
       }
 
-      fireEvent(event);
+      postProcessors.add(postProcessor);
     }
-
-    getPostProcessors().add(postProcessor);
   }
 
   @Override
@@ -399,17 +416,70 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
   }
 
   @Override
-  @SuppressWarnings("unchecked")
-  public <T> T getElementOrNull(String productGroup, String factoryType, String description)
+  public <T> T getElementOrNull(String productGroup, String factoryType) throws ProductCreationException
+  {
+    return getElementOrNull(productGroup, factoryType, Factory.NO_DESCRIPTION);
+  }
+
+  @Override
+  public <T> T getElementOrNull(String productGroup, String factoryType, String description) throws ProductCreationException
   {
     try
     {
-      return (T)getElement(productGroup, factoryType, description);
+      @SuppressWarnings("unchecked")
+      T element = (T)getElement(productGroup, factoryType, description);
+      return element;
     }
-    catch (FactoryNotFoundException | ProductCreationException ex)
+    catch (FactoryNotFoundException ex)
     {
       return null;
     }
+  }
+
+  /**
+   * @since 3.23
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T getElementOrNull(String productGroup, String factoryType, Tree config) throws ProductCreationException
+  {
+    checkActive();
+
+    String description = TreeFactory.createDescription(config);
+    return (T)getElementOrNull(productGroup, factoryType, description);
+  }
+
+  /**
+   * @since 3.23
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public <T> T createElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException
+  {
+    checkActive();
+
+    IFactory factory = getFactory(productGroup, factoryType);
+    return (T)factory.create(description);
+  }
+
+  /**
+   * @since 3.23
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public <T> T createElement(String productGroup, String factoryType, Tree config) throws FactoryNotFoundException, ProductCreationException
+  {
+    checkActive();
+
+    IFactory factory = getFactory(productGroup, factoryType);
+    if (factory instanceof ITreeFactory)
+    {
+      ITreeFactory treeFactory = (ITreeFactory)factory;
+      return (T)treeFactory.createWithTree(config);
+    }
+
+    String description = TreeFactory.createDescription(config);
+    return (T)factory.create(description);
   }
 
   @Override
@@ -742,12 +812,6 @@ public class ManagedContainer extends Lifecycle implements IManagedContainer
     {
       return elementRegistry.entrySet().toArray(new Map.Entry[elementRegistry.size()]);
     }
-  }
-
-  protected Object createElement(String productGroup, String factoryType, String description) throws FactoryNotFoundException, ProductCreationException
-  {
-    IFactory factory = getFactory(productGroup, factoryType);
-    return factory.create(description);
   }
 
   protected Object postProcessElement(String productGroup, String factoryType, String description, Object element)

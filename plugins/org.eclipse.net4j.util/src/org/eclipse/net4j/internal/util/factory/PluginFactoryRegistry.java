@@ -13,22 +13,27 @@ package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.IFactoryKey;
+import org.eclipse.net4j.util.factory.IFactoryKeyAware;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 
 import org.eclipse.core.runtime.IConfigurationElement;
+import org.eclipse.core.runtime.IExtensionDelta;
+import org.eclipse.core.runtime.IExtensionRegistry;
+import org.eclipse.core.runtime.IRegistryChangeEvent;
+import org.eclipse.core.runtime.IRegistryChangeListener;
+import org.eclipse.core.runtime.Platform;
 
 /**
  * @author Eike Stepper
  */
-public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory>
+public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory> implements MarkupNames
 {
   public static final String NAMESPACE = OM.BUNDLE_ID;
 
   public static final String EXT_POINT = "factories"; //$NON-NLS-1$
-
-  private static final String ELEM_FACTORIES = "factories"; //$NON-NLS-1$
 
   private final IManagedContainer container;
 
@@ -44,13 +49,25 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
   {
     IFactory factory = super.get(key);
 
-    if (factory instanceof FactoryDescriptor)
+    if (factory instanceof IFactoryDescriptor)
     {
-      FactoryDescriptor descriptor = (FactoryDescriptor)factory;
+      IFactoryDescriptor descriptor = (IFactoryDescriptor)factory;
 
       factory = descriptor.createFactory();
       if (factory != null && factory != descriptor)
       {
+        if (factory instanceof IFactoryKeyAware)
+        {
+          IFactoryKeyAware keyAware = (IFactoryKeyAware)factory;
+          keyAware.setFactoryKey(descriptor.getKey());
+        }
+
+        if (factory instanceof ContainerAware)
+        {
+          ContainerAware containerAware = (ContainerAware)factory;
+          containerAware.setManagedContainer(container);
+        }
+
         put(factory.getKey(), factory);
       }
     }
@@ -101,28 +118,31 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   private void doActivateOSGi()
   {
-    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform.getExtensionRegistry();
+    IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
     if (extensionRegistry == null)
     {
       return;
     }
 
-    org.eclipse.core.runtime.IConfigurationElement[] elements = extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT);
-    for (org.eclipse.core.runtime.IConfigurationElement element : elements)
+    for (IConfigurationElement element : extensionRegistry.getConfigurationElementsFor(NAMESPACE, EXT_POINT))
     {
       String name = element.getName();
 
       try
       {
-        if (SimpleFactory.ELEM.equals(name))
+        if (SIMPLE_FACTORY.equals(name))
         {
           registerFactory(new SimpleFactory(element));
         }
-        else if (FactoryDescriptor.ELEM.equals(name))
+        else if (ANNOTATION_FACTORY.equals(name))
+        {
+          registerFactory(new AnnotationFactoryDescriptor(element));
+        }
+        else if (FACTORY.equals(name))
         {
           registerFactory(new FactoryDescriptor(element));
         }
-        else if (ELEM_FACTORIES.equals(name))
+        else if (FACTORIES.equals(name))
         {
           for (IConfigurationElement child : element.getChildren())
           {
@@ -136,13 +156,13 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
       }
     }
 
-    org.eclipse.core.runtime.IRegistryChangeListener listener = new org.eclipse.core.runtime.IRegistryChangeListener()
+    IRegistryChangeListener listener = new IRegistryChangeListener()
     {
       @Override
-      public void registryChanged(org.eclipse.core.runtime.IRegistryChangeEvent event)
+      public void registryChanged(IRegistryChangeEvent event)
       {
-        org.eclipse.core.runtime.IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);
-        for (org.eclipse.core.runtime.IExtensionDelta delta : deltas)
+        IExtensionDelta[] deltas = event.getExtensionDeltas(NAMESPACE, EXT_POINT);
+        for (IExtensionDelta delta : deltas)
         {
           // TODO Handle ExtensionDelta
           OM.LOG.warn("ExtensionDelta not handled: " + delta); //$NON-NLS-1$
@@ -156,12 +176,32 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
 
   private void doDeactivateOSGi()
   {
-    org.eclipse.core.runtime.IExtensionRegistry extensionRegistry = org.eclipse.core.runtime.Platform.getExtensionRegistry();
+    IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
     if (extensionRegistry == null)
     {
       return;
     }
 
-    extensionRegistry.removeRegistryChangeListener((org.eclipse.core.runtime.IRegistryChangeListener)extensionRegistryListener);
+    extensionRegistry.removeRegistryChangeListener((IRegistryChangeListener)extensionRegistryListener);
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface IFactoryDescriptor extends IFactory
+  {
+    public IFactory createFactory();
+
+    @Override
+    public default Object create(String description)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public default String getDescriptionFor(Object product)
+    {
+      throw new UnsupportedOperationException();
+    }
   }
 }

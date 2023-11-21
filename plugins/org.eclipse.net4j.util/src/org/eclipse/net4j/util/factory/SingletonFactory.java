@@ -18,6 +18,17 @@ public class SingletonFactory extends Factory
 {
   private final Object product;
 
+  public SingletonFactory(Object product)
+  {
+    this.product = product;
+  }
+
+  public SingletonFactory(IFactoryKey key, Object product)
+  {
+    super(key);
+    this.product = product;
+  }
+
   public SingletonFactory(FactoryKey key, Object product)
   {
     super(key);

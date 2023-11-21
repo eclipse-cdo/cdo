@@ -80,8 +80,7 @@ public class RepositoryRemotePage extends AbstractRepositoryPage
     String connectorDescription = controller.getConnectorDescription();
     if (StringUtil.isEmpty(connectorDescription))
     {
-      // TODO Port could be empty/invalid!
-      throw new Exception("Host is empty.");
+      throw new ValidationProblem("Host or port are invalid.");
     }
 
     String repositoryName = controller.getRepositoryName();

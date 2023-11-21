@@ -16,11 +16,8 @@ import org.eclipse.emf.cdo.security.Realm;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.SecurityFactory;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer;
 import org.eclipse.emf.cdo.server.internal.security.SecurityManager;
-import org.eclipse.emf.cdo.server.spi.security.AnnotationHandler;
-import org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler;
-import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
+import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -51,7 +48,7 @@ public final class SecurityManagerUtil
 
   public static ISecurityManager createSecurityManager(String realmPath, IManagedContainer container)
   {
-    return new org.eclipse.emf.cdo.server.internal.security.SecurityManager(realmPath, container);
+    return new SecurityManager(realmPath, container);
   }
 
   /**
@@ -79,15 +76,8 @@ public final class SecurityManagerUtil
     }
   }
 
-  @SuppressWarnings("deprecation")
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new SecurityManagerFactory.Default());
-    container.registerFactory(new SecurityManagerFactory.Annotation());
-    container.registerFactory(new AnnotationHandler.Factory());
-    container.registerFactory(new HomeFolderHandler.Factory());
-    container.registerFactory(new RealmOperationAuthorizer.RequireUser.Factory());
-    container.registerFactory(new RealmOperationAuthorizer.RequireGroup.Factory());
-    container.registerFactory(new RealmOperationAuthorizer.RequireRole.Factory());
+    OM.BUNDLE.prepareContainer(container);
   }
 }

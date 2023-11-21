@@ -19,6 +19,11 @@ package org.eclipse.net4j.util.factory;
  */
 public interface IFactoryKey
 {
+  /**
+   * @since 3.23
+   */
+  public static final String DEFAULT_FACTORY_TYPE = "default";
+
   public String getProductGroup();
 
   public String getType();

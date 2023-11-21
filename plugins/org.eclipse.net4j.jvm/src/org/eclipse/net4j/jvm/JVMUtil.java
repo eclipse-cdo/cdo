@@ -12,6 +12,7 @@ package org.eclipse.net4j.jvm;
 
 import org.eclipse.net4j.internal.jvm.JVMAcceptorFactory;
 import org.eclipse.net4j.internal.jvm.JVMConnectorFactory;
+import org.eclipse.net4j.internal.jvm.bundle.OM;
 import org.eclipse.net4j.util.container.IManagedContainer;
 
 /**
@@ -27,8 +28,7 @@ public final class JVMUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new JVMAcceptorFactory());
-    container.registerFactory(new JVMConnectorFactory());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static IJVMAcceptor getAcceptor(IManagedContainer container, String description)

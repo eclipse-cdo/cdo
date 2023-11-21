@@ -28,9 +28,9 @@ import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.System;
+import org.eclipse.emf.cdo.lm.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
-import org.eclipse.emf.cdo.lm.server.bundle.OM;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -68,6 +68,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
+import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentials;
 import org.eclipse.net4j.util.security.PasswordCredentialsProvider;
@@ -253,6 +254,11 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   protected void doActivate() throws Exception
   {
     super.doActivate();
+
+    IRegistry<String, Object> properties = systemRepository.properties();
+    properties.put(LMRepositoryProperties.LIFECYCLE_MANAGER, this);
+    properties.put(LMRepositoryProperties.REPOSITORY_TYPE, LMRepositoryProperties.REPOSITORY_TYPE_SYSTEM);
+    properties.put(LMRepositoryProperties.SYSTEM_NAME, systemName);
 
     acceptor = JVMUtil.getAcceptor(container, ACCEPTOR_NAME);
     connector = JVMUtil.getConnector(container, ACCEPTOR_NAME);
@@ -681,6 +687,14 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       OM.LOG.info("Adding module " + moduleName + " to system " + systemName);
 
       InternalRepository moduleRepository = createModuleRepository(moduleName);
+
+      IRegistry<String, Object> properties = moduleRepository.properties();
+      properties.put(LMRepositoryProperties.LIFECYCLE_MANAGER, this);
+      properties.put(LMRepositoryProperties.REPOSITORY_TYPE, LMRepositoryProperties.REPOSITORY_TYPE_MODULE);
+      properties.put(LMRepositoryProperties.SYSTEM_NAME, systemName);
+      properties.put(LMRepositoryProperties.MODULE_NAME, moduleName);
+      properties.put(LMRepositoryProperties.MODULE_TYPE_NAME, moduleTypeName);
+
       CDOServerUtil.addRepository(container, moduleRepository);
       securitySupport.addModuleRepository(moduleRepository, moduleName, moduleTypeName);
       moduleRepositories.put(moduleName, moduleRepository);

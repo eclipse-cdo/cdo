@@ -128,12 +128,11 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
     return packageURICompressor;
   }
 
-  public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode,
-      LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
+  public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, boolean loginPeek, boolean passiveUpdateEnabled,
+      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
   {
-    return send(
-        new OpenSessionRequest(this, repositoryName, sessionID, userID, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode, subscribed, operations),
-        new Monitor());
+    return send(new OpenSessionRequest(this, repositoryName, sessionID, userID, loginPeek, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode,
+        subscribed, operations), new Monitor());
   }
 
   @Override
@@ -707,7 +706,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
     if (in.readBoolean())
     {
       List<CDOLockState> lockStates = in.readCDOLockStates();
-  
+
       int noLockStateKeys = in.readXInt();
       if (noLockStateKeys != 0)
       {
@@ -731,7 +730,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
           }
         }
       }
-  
+
       if (!lockStates.isEmpty())
       {
         CDOLockStateCache lockStateCache = session.getLockStateCache();

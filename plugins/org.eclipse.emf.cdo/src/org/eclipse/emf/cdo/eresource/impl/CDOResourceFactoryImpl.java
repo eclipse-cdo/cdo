@@ -145,7 +145,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
       {
         for (String type : IPluginContainer.INSTANCE.getFactoryTypes(PRODUCT_GROUP))
         {
-          ResourceSetClassNameProvider provider = IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, type, null);
+          ResourceSetClassNameProvider provider = IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, type);
           if (provider != null)
           {
             try

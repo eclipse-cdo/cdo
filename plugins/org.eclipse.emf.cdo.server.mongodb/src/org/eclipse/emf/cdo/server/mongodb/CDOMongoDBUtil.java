@@ -12,8 +12,8 @@
  */
 package org.eclipse.emf.cdo.server.mongodb;
 
-import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBBrowserPage;
 import org.eclipse.emf.cdo.server.internal.mongodb.MongoDBStore;
+import org.eclipse.emf.cdo.server.internal.mongodb.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -33,7 +33,7 @@ public final class CDOMongoDBUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new MongoDBBrowserPage.Factory());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static IMongoDBStore createStore(String uri, String dbName)

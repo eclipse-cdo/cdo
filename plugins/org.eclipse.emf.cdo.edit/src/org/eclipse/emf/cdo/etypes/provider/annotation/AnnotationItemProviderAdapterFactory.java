@@ -503,7 +503,7 @@ public abstract class AnnotationItemProviderAdapterFactory extends AdapterFactor
    */
   public static AnnotationItemProviderAdapterFactory create(String annotationSoure)
   {
-    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSoure, null);
+    return IPluginContainer.INSTANCE.getElementOrNull(PRODUCT_GROUP, annotationSoure);
   }
 
   /**

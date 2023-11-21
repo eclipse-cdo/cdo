@@ -41,12 +41,4 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/spi/security/SecurityManagerFactory.java" type="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory">
-        <filter id="336658481">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory"/>
-                <message_argument value="DESCRIPTION_SEPARATOR"/>
-            </message_arguments>
-        </filter>
-    </resource>
 </component>

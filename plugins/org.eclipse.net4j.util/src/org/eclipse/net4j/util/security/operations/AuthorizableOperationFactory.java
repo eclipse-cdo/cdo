@@ -45,7 +45,7 @@ public final class AuthorizableOperationFactory extends Factory
 
   public static AuthorizableOperation getAuthorizableOperation(IManagedContainer container, String operationID)
   {
-    AuthorizableOperation operation = container.getElementOrNull(PRODUCT_GROUP, operationID, null);
+    AuthorizableOperation operation = container.getElementOrNull(PRODUCT_GROUP, operationID, NO_DESCRIPTION);
     if (operation == null)
     {
       operation = AuthorizableOperation.build(operationID);
@@ -61,7 +61,7 @@ public final class AuthorizableOperationFactory extends Factory
 
     for (String operationID : operationIDs)
     {
-      AuthorizableOperation operation = container.getElementOrNull(PRODUCT_GROUP, operationID, null);
+      AuthorizableOperation operation = container.getElementOrNull(PRODUCT_GROUP, operationID, NO_DESCRIPTION);
       CollectionUtil.addNotNull(operations, operation);
     }
 

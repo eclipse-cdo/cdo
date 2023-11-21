@@ -105,7 +105,23 @@ public abstract class SecurityManagerFactory extends Factory
 
     public Default()
     {
-      super(TYPE);
+      this(TYPE);
+    }
+
+    /**
+     * @since 4.11
+     */
+    protected Default(String type)
+    {
+      super(type);
+    }
+
+    /**
+     * @since 4.11
+     */
+    public IManagedContainer getManagedContainer()
+    {
+      return container;
     }
 
     /**
@@ -120,10 +136,8 @@ public abstract class SecurityManagerFactory extends Factory
     @Override
     protected ISecurityManager create(String repositoryName, List<String> description) throws ProductCreationException
     {
-      IRepository repository = RepositoryFactory.get(container, repositoryName);
-
       String realmPath = description.remove(0);
-      ISecurityManager securityManager = SecurityManagerUtil.createSecurityManager(realmPath);
+      ISecurityManager securityManager = createSecurityManager(realmPath);
 
       for (String token : description)
       {
@@ -133,10 +147,19 @@ public abstract class SecurityManagerFactory extends Factory
 
       if (securityManager instanceof InternalSecurityManager)
       {
+        IRepository repository = RepositoryFactory.get(container, repositoryName);
         ((InternalSecurityManager)securityManager).setRepository((InternalRepository)repository);
       }
 
       return securityManager;
+    }
+
+    /**
+     * @since 4.11
+     */
+    protected ISecurityManager createSecurityManager(String realmPath)
+    {
+      return SecurityManagerUtil.createSecurityManager(realmPath, container);
     }
 
     /**

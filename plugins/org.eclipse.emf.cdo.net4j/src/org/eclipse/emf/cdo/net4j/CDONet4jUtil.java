@@ -15,10 +15,9 @@ package org.eclipse.emf.cdo.net4j;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl;
 import org.eclipse.emf.cdo.internal.net4j.FailoverCDOSessionConfigurationImpl;
-import org.eclipse.emf.cdo.internal.net4j.Net4jConnectorInjector;
 import org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory;
 import org.eclipse.emf.cdo.internal.net4j.ReconnectingCDOSessionConfigurationImpl;
-import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory;
+import org.eclipse.emf.cdo.internal.net4j.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
@@ -41,7 +40,6 @@ import java.util.Map;
  */
 public final class CDONet4jUtil
 {
-
   /**
    * @since 4.0
    */
@@ -114,6 +112,11 @@ public final class CDONet4jUtil
   {
   }
 
+  public static void prepareContainer(IManagedContainer container)
+  {
+    OM.BUNDLE.prepareContainer(container);
+  }
+
   /**
    * @since 4.1
    */
@@ -154,13 +157,6 @@ public final class CDONet4jUtil
       IManagedContainer container)
   {
     return new FailoverCDOSessionConfigurationImpl(monitorConnectorDescription, repositoryGroup, container);
-  }
-
-  public static void prepareContainer(IManagedContainer container)
-  {
-    container.registerFactory(new CDOClientProtocolFactory());
-    container.registerFactory(new Net4jSessionFactory());
-    container.addPostProcessor(new Net4jConnectorInjector());
   }
 
   /**

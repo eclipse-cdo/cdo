@@ -257,13 +257,13 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
   {
     IManagedContainer container = getContainer();
 
-    ICredentialsProvider provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "cdo-explorer", null);
+    ICredentialsProvider provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "cdo-explorer");
     if (provider == null)
     {
-      provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "interactive", null);
+      provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "interactive");
       if (provider == null)
       {
-        provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "default", null);
+        provider = container.getElementOrNull(CredentialsProviderFactory.PRODUCT_GROUP, "default");
       }
     }
 

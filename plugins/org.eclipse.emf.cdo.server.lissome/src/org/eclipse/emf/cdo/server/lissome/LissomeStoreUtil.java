@@ -12,8 +12,8 @@
  */
 package org.eclipse.emf.cdo.server.lissome;
 
-import org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage;
 import org.eclipse.emf.cdo.server.internal.lissome.LissomeStore;
+import org.eclipse.emf.cdo.server.internal.lissome.bundle.OM;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 
@@ -32,7 +32,7 @@ public final class LissomeStoreUtil
 
   public static void prepareContainer(IManagedContainer container)
   {
-    container.registerFactory(new LissomeBrowserPage.Factory());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static ILissomeStore createStore(File folder)

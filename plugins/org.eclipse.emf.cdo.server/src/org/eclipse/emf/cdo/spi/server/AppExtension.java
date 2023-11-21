@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.server.IRepository;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -61,11 +60,8 @@ public abstract class AppExtension implements IAppExtension3, IAppExtension5
   public void start(IRepository[] repositories, File configFile) throws Exception
   {
     Document document = getDocument(configFile);
-    NodeList repositoryConfigs = document.getElementsByTagName("repository"); //$NON-NLS-1$
 
-    for (int i = 0; i < repositoryConfigs.getLength(); i++)
-    {
-      Element repositoryConfig = (Element)repositoryConfigs.item(i);
+    RepositoryConfigurator.forEachChildElement(document.getDocumentElement(), "repository", repositoryConfig -> {
       String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
 
       InternalRepository repository = getRepository(repositories, repositoryName);
@@ -80,7 +76,7 @@ public abstract class AppExtension implements IAppExtension3, IAppExtension5
           OM.LOG.error(ex);
         }
       }
-    }
+    });
   }
 
   @Override

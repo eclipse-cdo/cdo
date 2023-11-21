@@ -376,12 +376,22 @@ public abstract class AbstractPlatform implements OMPlatform
   @Override
   public String getProperty(String key)
   {
+    if (key == null)
+    {
+      return null;
+    }
+
     return System.getProperty(key);
   }
 
   @Override
   public String getProperty(String key, String defaultValue)
   {
+    if (key == null)
+    {
+      return null;
+    }
+
     return System.getProperty(key, defaultValue);
   }
 

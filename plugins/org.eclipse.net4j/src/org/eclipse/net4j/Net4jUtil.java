@@ -17,18 +17,17 @@ import org.eclipse.net4j.connector.ConnectorException;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocol;
 import org.eclipse.net4j.protocol.IProtocol2;
-import org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ExecutorServiceFactory;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.io.GZIPStreamWrapper;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
 import org.eclipse.internal.net4j.TransportConfig;
 import org.eclipse.internal.net4j.buffer.BufferFactory;
 import org.eclipse.internal.net4j.buffer.BufferPool;
 import org.eclipse.internal.net4j.buffer.BufferPoolFactory;
+import org.eclipse.internal.net4j.bundle.OM;
 
 import org.eclipse.spi.net4j.AcceptorFactory;
 import org.eclipse.spi.net4j.ConnectorFactory;
@@ -63,11 +62,7 @@ public final class Net4jUtil
   public static void prepareContainer(IManagedContainer container)
   {
     ContainerUtil.prepareContainer(container);
-    container.registerFactory(new BufferPoolFactory());
-    container.registerFactory(new GZIPStreamWrapper.Factory());
-    container.registerFactory(new HeartBeatProtocol.Server.Factory());
-    container.addPostProcessor(new TransportInjector());
-    container.addPostProcessor(new HeartBeatProtocol.Server.TimerInjector());
+    OM.BUNDLE.prepareContainer(container);
   }
 
   public static ExecutorService getExecutorService(IManagedContainer container)

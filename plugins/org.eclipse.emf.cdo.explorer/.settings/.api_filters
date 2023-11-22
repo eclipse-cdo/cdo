@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.explorer" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="4.14.0"/>
+                <message_argument value="4.13.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/explorer/checkouts/CDOCheckoutImpl.java" type="org.eclipse.emf.cdo.internal.explorer.checkouts.CDOCheckoutImpl">
         <filter id="572522506">
             <message_arguments>

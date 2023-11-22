@@ -7,6 +7,12 @@
                 <message_argument value="1.0.0"/>
             </message_arguments>
         </filter>
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/modules/provider/ModulesItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.lm.modules.provider.ModulesItemProviderAdapterFactory">
         <filter id="336658481">

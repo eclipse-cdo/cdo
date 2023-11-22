@@ -14,8 +14,8 @@ Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=r
 Export-Package: org.eclipse.emf.cdo.compare;version="4.7.3",
  org.eclipse.emf.cdo.internal.compare.bundle;version="4.7.3";x-friends:="org.eclipse.emf.cdo.tests"
 Bundle-ActivationPolicy: lazy
-Import-Package: com.google.common.base;version="[27.0.0,30.2.0)",
- com.google.common.collect;version="[27.0.0,30.2.0)",
- com.google.common.cache;version="[27.0.0,30.2.0)",
- com.google.common.util.concurrent;version="[27.0.0,30.2.0)"
+Import-Package: com.google.common.base;version="[27.0.0,33.0.0)",
+ com.google.common.collect;version="[27.0.0,33.0.0)",
+ com.google.common.cache;version="[27.0.0,33.0.0)",
+ com.google.common.util.concurrent;version="[27.0.0,33.0.0)"
 Automatic-Module-Name: org.eclipse.emf.cdo.compare

@@ -799,99 +799,106 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../../lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IStoreAccessor.DurableLocking2.</span><code><a href="../../../server/IStoreAccessor.DurableLocking2.html#createLockArea(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.Map)" class="member-name-link">createLockArea</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID,
+<div class="col-first even-row-color"><code>abstract <a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.RevisionAuthorizer.</span><code><a href="../../../server/IRepositoryProtector.RevisionAuthorizer.html#authorizeRevision(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">authorizeRevision</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../../../server/IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&nbsp;userInfo,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
+ <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider,
+ <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../lock/IDurableLockingManager.LockArea.html" title="interface in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IStoreAccessor.DurableLocking2.</span><code><a href="../../../server/IStoreAccessor.DurableLocking2.html#createLockArea(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.Map)" class="member-name-link">createLockArea</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  boolean&nbsp;readOnly,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../lock/IDurableLockingManager.LockGrade.html" title="enum class in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a>&gt;&nbsp;locks)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 call <a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)"><code>IPermissionManager.getPermission(CDORevision, CDOBranchPoint, ISession)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="col-first odd-row-color"><code><a href="../../security/CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
  <a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../../server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../../../server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
+<div class="col-second even-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../../server/ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openTransaction(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openTransaction</a><wbr>(int&nbsp;viewID,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+<div class="col-second even-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  boolean&nbsp;legacyModeEnabled)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>CDOServerUtil.openView(ISession, CDOBranchPoint)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+<div class="col-first even-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  boolean&nbsp;legacyModeEnabled,
  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 the legacy mode is always enabled, use <a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)"><code>CDOServerUtil.openView(ISession, CDOBranchPoint, CDORevisionProvider)</code></a>.</div>
 </div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+<div class="col-first odd-row-color"><code>static <a href="../../../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../../../server/CDOServerUtil.html#openView(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">openView</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
+<div class="col-second even-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../../server/IView.html" title="interface in org.eclipse.emf.cdo.server">IView</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISession.</span><code><a href="../../../server/ISession.html#openView(int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">openView</a><wbr>(int&nbsp;viewID,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IStoreAccessor.Raw2.</span><code><a href="../../../server/IStoreAccessor.Raw2.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">rawStore</a><wbr>(<a href="../CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IStoreAccessor.Raw2.</span><code><a href="../../../server/IStoreAccessor.Raw2.html#rawStore(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">rawStore</a><wbr>(<a href="../CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;timeStamp,
  long&nbsp;previousTimeStamp,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;mergeSource,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Stores the given <a href="../../commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit"><code>commit</code></a> in the backend represented by this <a href="../../../server/IStoreAccessor.Raw.html" title="interface in org.eclipse.emf.cdo.server"><code>raw
  store accessor</code></a> without going through a regular <a href="../../../server/IStoreAccessor.html#commit(org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>commit</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../../../server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">readResourceID</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
+<div class="col-first odd-row-color"><code><a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../../../server/IStoreAccessor.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">readResourceID</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Returns the <code>CDOID</code> of the resource node with the given folderID and name if a resource with this
  folderID and name exists in the store, <code>null</code> otherwise.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../../../server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)" class="member-name-link">readRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-first even-row-color"><code><a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IStoreAccessor.</span><code><a href="../../../server/IStoreAccessor.html#readRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,int,org.eclipse.emf.cdo.common.revision.CDORevisionCacheAdder)" class="member-name-link">readRevision</a><wbr>(<a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  int&nbsp;listChunk,
  <a href="../../revision/CDORevisionCacheAdder.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionCacheAdder</a>&nbsp;cache)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Reads a revision from the back-end that was valid at the given timeStamp in the given branch.</div>
 </div>
 </div>
@@ -1459,74 +1466,79 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;prefetchLockStates,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">read</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+<div class="col-first odd-row-color"><code>static <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ManagedRevisionProvider.</span><code><a href="../../../spi/common/revision/ManagedRevisionProvider.html#provideRevision(org.eclipse.emf.cdo.common.revision.CDORevisionManager,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">provideRevision</a><wbr>(<a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
+ <a href="../../id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../../../spi/common/revision/RevisionInfo.html" title="class in org.eclipse.emf.cdo.spi.common.revision">RevisionInfo</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#read(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">read</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;requestedBranchPoint)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- int&nbsp;referenceChunk,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#write(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">write</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
- boolean&nbsp;writePointerTarget,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ boolean&nbsp;writePointerTarget,
+ int&nbsp;referenceChunk,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeResult</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.15 call <a href="../../../spi/common/revision/RevisionInfo.html#writeResult(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>RevisionInfo.writeResult(CDODataOutput, InternalCDORevision, boolean, int, CDOBranchPoint)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.Available.</span><code><a href="../../../spi/common/revision/RevisionInfo.Available.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
- int&nbsp;referenceChunk,
- <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.Available.</span><code><a href="../../../spi/common/revision/RevisionInfo.Available.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;referenceChunk,
  <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#writeRevision(org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">writeRevision</a><wbr>(<a href="../../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
+ int&nbsp;referenceChunk,
+ <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> with parameters of type <a href="../CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></span></div>
 <div class="summary-table three-column-summary">

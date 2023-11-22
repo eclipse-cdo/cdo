@@ -1755,59 +1755,64 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;prefetchLockStates,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#readResult(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">readResult</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
+<div class="col-first even-row-color"><code>static <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ManagedRevisionProvider.</span><code><a href="../../../spi/common/revision/ManagedRevisionProvider.html#provideRevision(org.eclipse.emf.cdo.common.revision.CDORevisionManager,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">provideRevision</a><wbr>(<a href="../../revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a>&nbsp;revisionManager,
+ <a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">RevisionInfo.</span><code><a href="../../../spi/common/revision/RevisionInfo.html#readResult(org.eclipse.emf.cdo.common.protocol.CDODataInput,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">readResult</a><wbr>(<a href="../../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
  <a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionCache.</span><code><a href="../../../spi/common/revision/InternalCDORevisionCache.html#removeRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">removeRevision</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
- <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
- <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-first even-row-color"><code><a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionCache.</span><code><a href="../../../spi/common/revision/InternalCDORevisionCache.html#removeRevision(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion)" class="member-name-link">removeRevision</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#reviseLatest(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">reviseLatest</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Called on client via postCommit when there is no version of detached objects available.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseVersion</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
- <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
- long&nbsp;timeStamp)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseVersion</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevisionManager.</span><code><a href="../../../spi/common/revision/DelegatingCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseVersion</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
  long&nbsp;timeStamp)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevisionManager.</span><code><a href="../../../spi/common/revision/InternalCDORevisionManager.html#reviseVersion(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranchVersion,long)" class="member-name-link">reviseVersion</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+ <a href="../../branch/CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a>&nbsp;branchVersion,
+ long&nbsp;timeStamp)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">BaseCDORevision.</span><code><a href="../../../spi/common/revision/BaseCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingCDORevision.</span><code><a href="../../../spi/common/revision/DelegatingCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCDORevision.</span><code><a href="../../../spi/common/revision/InternalCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StubCDORevision.</span><code><a href="../../../spi/common/revision/StubCDORevision.html#setResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setResourceID</a><wbr>(<a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;resourceID)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Method parameters in <a href="../../../spi/common/revision/package-summary.html">org.eclipse.emf.cdo.spi.common.revision</a> with type arguments of type <a href="../CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a></span></div>
 <div class="summary-table three-column-summary">

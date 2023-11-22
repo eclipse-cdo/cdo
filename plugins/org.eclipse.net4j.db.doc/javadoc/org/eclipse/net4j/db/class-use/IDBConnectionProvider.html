@@ -120,10 +120,17 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName,
  boolean&nbsp;fixNullableIndexColumns)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" class="member-name-link">sqlDump</a><wbr>(<a href="../IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+<div class="col-first odd-row-color"><code>static <a href="../IDBDatabase.html" title="interface in org.eclipse.net4j.db">IDBDatabase</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#openDatabase(org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String,boolean,boolean)" class="member-name-link">openDatabase</a><wbr>(<a href="../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="../IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;schemaName,
+ boolean&nbsp;fixNullableIndexColumns,
+ boolean&nbsp;qualifiedTableNames)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../DBUtil.html#sqlDump(org.eclipse.net4j.db.IDBConnectionProvider,java.lang.String)" class="member-name-link">sqlDump</a><wbr>(<a href="../IDBConnectionProvider.html" title="interface in org.eclipse.net4j.db">IDBConnectionProvider</a>&nbsp;connectionProvider,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;sql)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">Should only be used when debugging.</div>
 </div>

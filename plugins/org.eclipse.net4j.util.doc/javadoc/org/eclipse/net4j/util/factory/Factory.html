@@ -46,13 +46,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Summary:&nbsp;</li>
 <li>Nested&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Method</a></li>
 </ul>
@@ -78,16 +78,16 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></dd>
+<dd><code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code>, <code><a href="IFactoryKeyAware.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKeyAware</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
-<dd><code><a href="../security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></code>, <code><a href="../security/operations/AuthorizableOperationFactory.html" title="class in org.eclipse.net4j.util.security.operations">AuthorizableOperationFactory</a></code>, <code><a href="../security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></code>, <code><a href="../concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></code>, <code><a href="../ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</a></code>, <code><a href="../concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</a></code>, <code>org.eclipse.net4j.internal.util.factory.FactoryDescriptor</code>, <code><a href="../confirmation/IConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory</a></code>, <code><a href="../ui/views/IntrospectionProvider.Factory.html" title="class in org.eclipse.net4j.util.ui.views">IntrospectionProvider.Factory</a></code>, <code><a href="../io/IStreamWrapper.Factory.html" title="class in org.eclipse.net4j.util.io">IStreamWrapper.Factory</a></code>, <code><a href="../ui/MenuFiller.Factory.html" title="class in org.eclipse.net4j.util.ui">MenuFiller.Factory</a></code>, <code><a href="../security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></code>, <code><a href="../security/operations/OperationAuthorizerFactory.html" title="class in org.eclipse.net4j.util.security.operations">OperationAuthorizerFactory</a></code>, <code><a href="PropertiesFactory.html" title="class in org.eclipse.net4j.util.factory">PropertiesFactory</a></code>, <code><a href="../security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></code>, <code><a href="../concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</a></code>, <code><a href="../security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></code>, <code><a href="../ui/views/ValueFormatter.Factory.html" title="class in org.eclipse.net4j.util.ui.views">ValueFormatter.Factory</a></code></dd>
+<dd><code><a href="../security/AuthenticatorFactory.html" title="class in org.eclipse.net4j.util.security">AuthenticatorFactory</a></code>, <code><a href="../security/operations/AuthorizableOperationFactory.html" title="class in org.eclipse.net4j.util.security.operations">AuthorizableOperationFactory</a></code>, <code><a href="../security/CredentialsProviderFactory.html" title="class in org.eclipse.net4j.util.security">CredentialsProviderFactory</a></code>, <code><a href="../concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" title="class in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></code>, <code><a href="../ui/container/ElementWizardFactory.html" title="class in org.eclipse.net4j.util.ui.container">ElementWizardFactory</a></code>, <code><a href="../concurrent/ExecutorServiceFactory.html" title="class in org.eclipse.net4j.util.concurrent">ExecutorServiceFactory</a></code>, <code><a href="../confirmation/IConfirmationProvider.Factory.html" title="class in org.eclipse.net4j.util.confirmation">IConfirmationProvider.Factory</a></code>, <code><a href="../ui/views/IntrospectionProvider.Factory.html" title="class in org.eclipse.net4j.util.ui.views">IntrospectionProvider.Factory</a></code>, <code><a href="../io/IStreamWrapper.Factory.html" title="class in org.eclipse.net4j.util.io">IStreamWrapper.Factory</a></code>, <code><a href="../ui/MenuFiller.Factory.html" title="class in org.eclipse.net4j.util.ui">MenuFiller.Factory</a></code>, <code><a href="MetaFactory.html" title="class in org.eclipse.net4j.util.factory">MetaFactory</a></code>, <code><a href="../security/NegotiatorFactory.html" title="class in org.eclipse.net4j.util.security">NegotiatorFactory</a></code>, <code><a href="../security/operations/OperationAuthorizerFactory.html" title="class in org.eclipse.net4j.util.security.operations">OperationAuthorizerFactory</a></code>, <code><a href="PropertiesFactory.html" title="class in org.eclipse.net4j.util.factory">PropertiesFactory</a></code>, <code><a href="../security/RandomizerFactory.html" title="class in org.eclipse.net4j.util.security">RandomizerFactory</a></code>, <code><a href="SingletonFactory.html" title="class in org.eclipse.net4j.util.factory">SingletonFactory</a></code>, <code><a href="../concurrent/TimerLifecycle.DaemonFactory.html" title="class in org.eclipse.net4j.util.concurrent">TimerLifecycle.DaemonFactory</a></code>, <code><a href="TreeFactory.html" title="class in org.eclipse.net4j.util.factory">TreeFactory</a></code>, <code><a href="../security/UserManagerFactory.html" title="class in org.eclipse.net4j.util.security">UserManagerFactory</a></code>, <code><a href="../ui/views/ValueFormatter.Factory.html" title="class in org.eclipse.net4j.util.ui.views">ValueFormatter.Factory</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Factory</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
+implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>, <a href="IFactoryKeyAware.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKeyAware</a></span></div>
 <div class="block">A default implementation of a <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a>.</div>
 <dl class="notes">
 <dt>Author:</dt>
@@ -96,6 +96,21 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#NO_DESCRIPTION" class="member-name-link">NO_DESCRIPTION</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -104,12 +119,16 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Constructor</div>
 <div class="table-header col-last">Description</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">Factory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">Factory</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">Factory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">Factory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.factory.FactoryKey)" class="member-name-link">Factory</a><wbr>(<a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a>&nbsp;key)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">Factory</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.factory.FactoryKey)" class="member-name-link">Factory</a><wbr>(<a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.factory.IFactoryKey)" class="member-name-link">Factory</a><wbr>(<a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -128,14 +147,27 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDescriptionFor(java.lang.Object)" class="member-name-link">getDescriptionFor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;product)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getKey()" class="member-name-link">getKey</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getFactoryKey()" class="member-name-link">getFactoryKey</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProductGroup()" class="member-name-link">getProductGroup</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getKey()" class="member-name-link">getKey</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getProductGroup()" class="member-name-link">getProductGroup</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#productCreationException(java.lang.String)" class="member-name-link">productCreationException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#productCreationException(java.lang.String,java.lang.Throwable)" class="member-name-link">productCreationException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFactoryKey(org.eclipse.net4j.util.factory.IFactoryKey)" class="member-name-link">setFactoryKey</a><wbr>(<a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;factoryKey)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
@@ -155,15 +187,53 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Field Details</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="NO_DESCRIPTION">
+<h3>NO_DESCRIPTION</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">NO_DESCRIPTION</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
 <h2>Constructor Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="&lt;init&gt;()">
+<h3>Factory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Factory</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(org.eclipse.net4j.util.factory.FactoryKey)">
 <h3>Factory</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Factory</span><wbr><span class="parameters">(<a href="FactoryKey.html" title="class in org.eclipse.net4j.util.factory">FactoryKey</a>&nbsp;key)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(org.eclipse.net4j.util.factory.IFactoryKey)">
+<h3>Factory</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">Factory</span><wbr><span class="parameters">(<a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;key)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -191,6 +261,26 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <section class="method-details" id="method-detail">
 <h2>Method Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getFactoryKey()">
+<h3>getFactoryKey</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a></span>&nbsp;<span class="element-name">getFactoryKey</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setFactoryKey(org.eclipse.net4j.util.factory.IFactoryKey)">
+<h3>setFactoryKey</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setFactoryKey</span><wbr><span class="parameters">(<a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKey</a>&nbsp;factoryKey)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="IFactoryKeyAware.html#setFactoryKey(org.eclipse.net4j.util.factory.IFactoryKey)">setFactoryKey</a></code>&nbsp;in interface&nbsp;<code><a href="IFactoryKeyAware.html" title="interface in org.eclipse.net4j.util.factory">IFactoryKeyAware</a></code></dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getKey()">
 <h3>getKey</h3>
@@ -220,6 +310,27 @@ implements <a href="IFactory.html" title="interface in org.eclipse.net4j.util.fa
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="IFactory.html#getDescriptionFor(java.lang.Object)">getDescriptionFor</a></code>&nbsp;in interface&nbsp;<code><a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="productCreationException(java.lang.String,java.lang.Throwable)">
+<h3>productCreationException</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span>&nbsp;<span class="element-name">productCreationException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="productCreationException(java.lang.String)">
+<h3>productCreationException</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span>&nbsp;<span class="element-name">productCreationException</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
 </dl>
 </section>
 </li>

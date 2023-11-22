@@ -136,6 +136,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>abstract void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.CommitHandler.</span><code><a href="../IRepositoryProtector.CommitHandler.html#afterCommit(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo)" class="member-name-link">afterCommit</a><wbr>(<a href="../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+ <a href="../IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&nbsp;userInfo)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Called <b>after</b> the commit has succeeded.</div>
+</div>
+<div class="col-first odd-row-color"><code>abstract void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.CommitHandler.</span><code><a href="../IRepositoryProtector.CommitHandler.html#beforeCommit(org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo)" class="member-name-link">beforeCommit</a><wbr>(<a href="../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,
+ <a href="../IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&nbsp;userInfo)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Called <b>before</b> the commit is security checked and passed to the repository.</div>
+</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IRepository.WriteAccessHandler.</span><code><a href="../IRepository.WriteAccessHandler.html#handleTransactionAfterCommitted(org.eclipse.emf.cdo.server.ITransaction,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">handleTransactionAfterCommitted</a><wbr>(<a href="../ITransaction.html" title="interface in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction,
  <a href="../IStoreAccessor.CommitContext.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;commitContext,

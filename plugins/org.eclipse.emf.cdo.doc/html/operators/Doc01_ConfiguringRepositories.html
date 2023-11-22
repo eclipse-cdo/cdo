@@ -160,12 +160,15 @@ function maximize(id)
 <tr><td>3&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_authenticator" title="Chapter in CDO Model Repository Documentation">Element authenticator</a></td></tr>
 <tr><td>4&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_initialPackage" title="Chapter in CDO Model Repository Documentation">Element initialPackage</a></td></tr>
 <tr><td>5&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_store" title="Chapter in CDO Model Repository Documentation">Element store</a></td></tr>
-<tr><td></td><td>5.1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" title="Chapter in CDO Model Repository Documentation">Property connectionKeepAlivePeriod</a></td></tr>
-<tr><td></td><td>5.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetryCount" title="Chapter in CDO Model Repository Documentation">Property connectionRetryCount</a></td></tr>
-<tr><td></td><td>5.3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetrySeconds" title="Chapter in CDO Model Repository Documentation">Property connectionRetrySeconds</a></td></tr>
-<tr><td></td><td>5.4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
-<tr><td></td><td>5.5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
-<tr><td></td><td>5.6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" title="Chapter in CDO Model Repository Documentation">Property dropAllDataOnActivate</a></td></tr>
+<tr><td></td><td>5.1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_schemaName" title="Chapter in CDO Model Repository Documentation">Property schemaName</a></td></tr>
+<tr><td></td><td>5.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_prependSchemaName" title="Chapter in CDO Model Repository Documentation">Property prependSchemaName</a></td></tr>
+<tr><td></td><td>5.3&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_createSchemaIfNeeded" title="Chapter in CDO Model Repository Documentation">Property createSchemaIfNeeded</a></td></tr>
+<tr><td></td><td>5.4&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionKeepAlivePeriod" title="Chapter in CDO Model Repository Documentation">Property connectionKeepAlivePeriod</a></td></tr>
+<tr><td></td><td>5.5&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetryCount" title="Chapter in CDO Model Repository Documentation">Property connectionRetryCount</a></td></tr>
+<tr><td></td><td>5.6&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_connectionRetrySeconds" title="Chapter in CDO Model Repository Documentation">Property connectionRetrySeconds</a></td></tr>
+<tr><td></td><td>5.7&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_readerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property readerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.8&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_writerPoolCapacity" title="Chapter in CDO Model Repository Documentation">Property writerPoolCapacity</a></td></tr>
+<tr><td></td><td>5.9&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_dropAllDataOnActivate" title="Chapter in CDO Model Repository Documentation">Property dropAllDataOnActivate</a></td></tr>
 <tr><td>6&nbsp;</td><td class="te" colspan="4"><a href="Doc01_ConfiguringRepositories.html#Element_mappingStrategy" title="Chapter in CDO Model Repository Documentation">Element mappingStrategy</a></td></tr>
 <tr><td></td><td>6.1&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_toManyReferences" title="Chapter in CDO Model Repository Documentation">Property toManyReferences</a></td></tr>
 <tr><td></td><td>6.2&nbsp;</td><td class="te" colspan="3"><a href="Doc01_ConfiguringRepositories.html#Property_maxTableNameLength" title="Chapter in CDO Model Repository Documentation">Property maxTableNameLength</a></td></tr>
@@ -323,31 +326,46 @@ function maximize(id)
  <li> <b>db4o:</b> Store that uses DB4O, see [[CDO/DB4O Store]].
  </ul>
 
-<h3><a name="Property_connectionKeepAlivePeriod"></a>5.1&nbsp;&nbsp;Property connectionKeepAlivePeriod</h3>
+<h3><a name="Property_schemaName"></a>5.1&nbsp;&nbsp;Property schemaName</h3>
+<p>
+ Specifies, if the store is a DBStore, the name of the DB schema to use for the repository.
+ If omitted the <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html#getDefaultSchemaName(java.sql.Connection)" title="Method in org.eclipse.net4j.db.IDBAdapter"><code>default schema name</code></a> of the repository's
+ <a href="../../../org.eclipse.net4j.db.doc/javadoc/org/eclipse/net4j/db/IDBAdapter.html" title="Interface in org.eclipse.net4j.db"><code>DB adapter</code></a> is used as the schema name.
+
+<h3><a name="Property_prependSchemaName"></a>5.2&nbsp;&nbsp;Property prependSchemaName</h3>
+<p>
+ Specifies, if the store is a DBStore, whether to qualify table names with the <a href="Doc01_ConfiguringRepositories.html#Property_schemaName" title="Chapter in CDO Model Repository Documentation">schema name</a>.
+
+<h3><a name="Property_createSchemaIfNeeded"></a>5.3&nbsp;&nbsp;Property createSchemaIfNeeded</h3>
+<p>
+ Specifies, if the store is a DBStore, whether to create the schema with the specified #Property_schemaName name
+ at startup time, if it does not exist.
+
+<h3><a name="Property_connectionKeepAlivePeriod"></a>5.4&nbsp;&nbsp;Property connectionKeepAlivePeriod</h3>
 <p>
  Specifies, if the store is a DBStore, at what interval in minutes the store will issue an SQL statement to keep the connection to the database alive.
 
-<h3><a name="Property_connectionRetryCount"></a>5.2&nbsp;&nbsp;Property connectionRetryCount</h3>
+<h3><a name="Property_connectionRetryCount"></a>5.5&nbsp;&nbsp;Property connectionRetryCount</h3>
 <p>
  Specifies, if the store is a DBStore, the number of additional attempts to connect to the DB after initial connection failure.
 
-<h3><a name="Property_connectionRetrySeconds"></a>5.3&nbsp;&nbsp;Property connectionRetrySeconds</h3>
+<h3><a name="Property_connectionRetrySeconds"></a>5.6&nbsp;&nbsp;Property connectionRetrySeconds</h3>
 <p>
  Specifies, if the store is a DBStore, the number of seconds to wait before additional attempts to connect to the DB after initial connection failure.
 
-<h3><a name="Property_readerPoolCapacity"></a>5.4&nbsp;&nbsp;Property readerPoolCapacity</h3>
+<h3><a name="Property_readerPoolCapacity"></a>5.7&nbsp;&nbsp;Property readerPoolCapacity</h3>
 <p>
  Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the reader pool.
  <p>
  The default value is 15.
 
-<h3><a name="Property_writerPoolCapacity"></a>5.5&nbsp;&nbsp;Property writerPoolCapacity</h3>
+<h3><a name="Property_writerPoolCapacity"></a>5.8&nbsp;&nbsp;Property writerPoolCapacity</h3>
 <p>
  Specifies, if the store is a DBStore, the maximum number of store accessors (JDBC connections) to keep in the writer pool.
  <p>
  The default value is 15.
 
-<h3><a name="Property_dropAllDataOnActivate"></a>5.6&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
+<h3><a name="Property_dropAllDataOnActivate"></a>5.9&nbsp;&nbsp;Property dropAllDataOnActivate</h3>
 <p>
  If set to <code>true</code> and the store is a DBStore, drops all database tables of the configured
  <a href="Doc01_ConfiguringRepositories.html#Element_dataSource" title="Chapter in CDO Model Repository Documentation">schema</a> at the beginning of the store activation.

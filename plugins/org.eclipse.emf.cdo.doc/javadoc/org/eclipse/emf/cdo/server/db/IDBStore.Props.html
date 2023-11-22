@@ -114,23 +114,38 @@ loadScripts(document, 'script');</script>
 <div class="block">Number of seconds to wait before additional attempts to connect to the DB after initial connection failure.</div>
 </div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#DROP_ALL_DATA_ON_ACTIVATE" class="member-name-link">DROP_ALL_DATA_ON_ACTIVATE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-second odd-row-color"><code><a href="#CREATE_SCHEMA_IF_NEEDED" class="member-name-link">CREATE_SCHEMA_IF_NEEDED</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">Whether to create the schema with the specified <a href="#SCHEMA_NAME"><code>name</code></a> at startup time, if it does not exist.</div>
+</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#FIELD_CONSTRUCTION_TRACKING" class="member-name-link">FIELD_CONSTRUCTION_TRACKING</a></code></div>
+<div class="col-second even-row-color"><code><a href="#DROP_ALL_DATA_ON_ACTIVATE" class="member-name-link">DROP_ALL_DATA_ON_ACTIVATE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#ID_COLUMN_LENGTH" class="member-name-link">ID_COLUMN_LENGTH</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#FIELD_CONSTRUCTION_TRACKING" class="member-name-link">FIELD_CONSTRUCTION_TRACKING</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#JDBC_FETCH_SIZE" class="member-name-link">JDBC_FETCH_SIZE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ID_COLUMN_LENGTH" class="member-name-link">ID_COLUMN_LENGTH</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#JDBC_FETCH_SIZE" class="member-name-link">JDBC_FETCH_SIZE</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#PREPEND_SCHEMA_NAME" class="member-name-link">PREPEND_SCHEMA_NAME</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Whether to qualify table names with the <a href="#SCHEMA_NAME"><code>schema name</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#READER_POOL_CAPACITY" class="member-name-link">READER_POOL_CAPACITY</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#WRITER_POOL_CAPACITY" class="member-name-link">WRITER_POOL_CAPACITY</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-second even-row-color"><code><a href="#SCHEMA_NAME" class="member-name-link">SCHEMA_NAME</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">The name of the DB schema to use for the repository.</div>
+</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#WRITER_POOL_CAPACITY" class="member-name-link">WRITER_POOL_CAPACITY</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -143,6 +158,59 @@ loadScripts(document, 'script');</script>
 <section class="field-details" id="field-detail">
 <h2>Field Details</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="SCHEMA_NAME">
+<h3>SCHEMA_NAME</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SCHEMA_NAME</span></div>
+<div class="block">The name of the DB schema to use for the repository.
+ If omitted the <code>default schema name</code> of the repository's
+ <code>DB adapter</code> is used as the schema name.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.13</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.SCHEMA_NAME">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="PREPEND_SCHEMA_NAME">
+<h3>PREPEND_SCHEMA_NAME</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREPEND_SCHEMA_NAME</span></div>
+<div class="block">Whether to qualify table names with the <a href="#SCHEMA_NAME"><code>schema name</code></a>.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.13</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.PREPEND_SCHEMA_NAME">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="CREATE_SCHEMA_IF_NEEDED">
+<h3>CREATE_SCHEMA_IF_NEEDED</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">CREATE_SCHEMA_IF_NEEDED</span></div>
+<div class="block">Whether to create the schema with the specified <a href="#SCHEMA_NAME"><code>name</code></a> at startup time, if it does not exist.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.13</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.CREATE_SCHEMA_IF_NEEDED">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="CONNECTION_KEEPALIVE_PERIOD">
 <h3>CONNECTION_KEEPALIVE_PERIOD</h3>

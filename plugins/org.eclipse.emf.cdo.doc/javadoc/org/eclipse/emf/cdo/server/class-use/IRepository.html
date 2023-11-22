@@ -124,22 +124,28 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProvider.</span><code><a href="../IRepositoryProvider.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.</span><code><a href="../IRepositoryProtector.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISession.</span><code><a href="../ISession.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProvider.</span><code><a href="../IRepositoryProvider.html#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ISessionManager.</span><code><a href="../ISessionManager.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISession.</span><code><a href="../ISession.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IStore.</span><code><a href="../IStore.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISessionManager.</span><code><a href="../ISessionManager.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IUnitManager.</span><code><a href="../IUnitManager.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IStore.</span><code><a href="../IStore.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IView.</span><code><a href="../IView.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IUnitManager.</span><code><a href="../IUnitManager.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IView.</span><code><a href="../IView.html#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.</span><code><a href="../IRepositoryProtector.html#getSecondaryRepositories()" class="member-name-link">getSecondaryRepositories</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span></div>
@@ -151,6 +157,15 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDOServerUtil.</span><code><a href="../CDOServerUtil.html#addRepository(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">addRepository</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
  <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.</span><code><a href="../IRepositoryProtector.html#addSecondaryRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">addSecondaryRepository</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.</span><code><a href="../IRepositoryProtector.html#removeSecondaryRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">removeSecondaryRepository</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.</span><code><a href="../IRepositoryProtector.html#setRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">setRepository</a><wbr>(<a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Constructors in <a href="../package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a></span></div>
 <div class="summary-table three-column-summary">

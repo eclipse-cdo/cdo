@@ -56,8 +56,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.eclipse.net4j.internal.util.factory">org.eclipse.net4j.internal.util.factory</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.util">org.eclipse.net4j.util</a></div>
+<div class="col-last even-row-color">
+<div class="block">Utility classes.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Utility interfaces and classes commonly useful in concurrent programming.</div>
@@ -104,15 +106,36 @@ loadScripts(document, 'script');</script>
 <section class="class-uses">
 <ul class="block-list">
 <li>
-<section class="detail" id="org.eclipse.net4j.internal.util.factory">
-<h2>Uses of <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in org.eclipse.net4j.internal.util.factory</h2>
-<div class="caption"><span>Classes in org.eclipse.net4j.internal.util.factory that implement <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
+<section class="detail" id="org.eclipse.net4j.util">
+<h2>Uses of <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in <a href="../../package-summary.html">org.eclipse.net4j.util</a></h2>
+<div class="caption"><span>Classes in <a href="../../package-summary.html">org.eclipse.net4j.util</a> that implement <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code>org.eclipse.net4j.internal.util.factory.FactoryDescriptor</code></div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../StringConverter.MetaFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util">StringConverter.MetaFactory</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../StringParser.MetaFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util">StringParser.MetaFactory</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../StringTester.MetaFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util">StringTester.MetaFactory</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../package-summary.html">org.eclipse.net4j.util</a> that return <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StringConverter.MetaFactory.</span><code><a href="../../StringConverter.MetaFactory.html#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StringParser.MetaFactory.</span><code><a href="../../StringParser.MetaFactory.html#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StringTester.MetaFactory.</span><code><a href="../../StringTester.MetaFactory.html#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
@@ -210,41 +233,77 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../../container/ManagedContainer.html" title="class in org.eclipse.net4j.util.container">ManagedContainer</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">ManagedContainer.</span><code><a href="../../container/ManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">registerFactory</a><wbr>(<a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IManagedContainer.</span><code><a href="../../container/IManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../container/IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ManagedContainer.</span><code><a href="../../container/ManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="org.eclipse.net4j.util.factory">
 <h2>Uses of <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in <a href="../package-summary.html">org.eclipse.net4j.util.factory</a></h2>
+<div class="caption"><span>Subinterfaces of <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a> in <a href="../package-summary.html">org.eclipse.net4j.util.factory</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../IPropertiesFactory.html" class="type-name-link" title="interface in org.eclipse.net4j.util.factory">IPropertiesFactory</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../ITreeFactory.html" class="type-name-link" title="interface in org.eclipse.net4j.util.factory">ITreeFactory</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Classes in <a href="../package-summary.html">org.eclipse.net4j.util.factory</a> that implement <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../Factory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">Factory</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="../AnnotationFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">AnnotationFactory</a>&lt;PRODUCT&gt;</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../Factory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">Factory</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">A default implementation of a <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../FactoryDescriptor.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</a></code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../FactoryDescriptor.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">FactoryDescriptor</a></code></div>
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 3.19 no longer public API.</div>
 </div>
 </div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../MetaFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">MetaFactory</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../PropertiesFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">PropertiesFactory</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../SingletonFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">SingletonFactory</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../TreeFactory.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">TreeFactory</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../TreeFactory.ContainerAware.html" class="type-name-link" title="class in org.eclipse.net4j.util.factory">TreeFactory.ContainerAware</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.factory</a> that return <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">FactoryDescriptor.</span><code><a href="../FactoryDescriptor.html#createFactory()" class="member-name-link">createFactory</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><code>abstract <a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">MetaFactory.</span><code><a href="../MetaFactory.html#create(java.lang.String)" class="member-name-link">create</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FactoryDescriptor.</span><code><a href="../FactoryDescriptor.html#createFactory()" class="member-name-link">createFactory</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span></div>
 &nbsp;</div>
 </div>

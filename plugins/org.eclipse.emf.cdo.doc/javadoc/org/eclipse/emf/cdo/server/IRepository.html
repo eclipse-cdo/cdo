@@ -75,7 +75,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code>, <code><a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code><a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></code></dd>
+<dd><code><a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></code>, <code><a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></code>, <code><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></code>, <code>org.eclipse.net4j.util.container.IContainer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.properties.IPropertiesContainer</code>, <code><a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>All Known Subinterfaces:</dt>
@@ -83,7 +83,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IRepository</span><span class="extends-implements">
-extends <a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>, org.eclipse.net4j.util.container.IContainer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
+extends <a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>, <a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a>, org.eclipse.net4j.util.properties.IPropertiesContainer, org.eclipse.net4j.util.container.IContainer&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
 <div class="block">A CDO repository.</div>
 <dl class="notes">
 <dt>Author:</dt>
@@ -219,42 +219,45 @@ extends <a href="../common/CDOCommonRepository.html" title="interface in org.ecl
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProperties()" class="member-name-link">getProperties</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getQueryHandlerProvider()" class="member-name-link">getQueryHandlerProvider</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getProtector()" class="member-name-link">getProtector</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionManager()" class="member-name-link">getRevisionManager</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getQueryHandlerProvider()" class="member-name-link">getQueryHandlerProvider</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSessionManager()" class="member-name-link">getSessionManager</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/revision/CDORevisionManager.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRevisionManager()" class="member-name-link">getRevisionManager</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="ISessionManager.html" title="interface in org.eclipse.emf.cdo.server">ISessionManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSessionManager()" class="member-name-link">getSessionManager</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUnitManager()" class="member-name-link">getUnitManager</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)" class="member-name-link">removeCommitInfoHandler</a><wbr>(<a href="../common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>&nbsp;handler)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IUnitManager.html" title="interface in org.eclipse.emf.cdo.server">IUnitManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getUnitManager()" class="member-name-link">getUnitManager</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)" class="member-name-link">removeCommitInfoHandler</a><wbr>(<a href="../common/commit/CDOCommitInfoHandler.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoHandler</a>&nbsp;handler)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 call <a href="../common/commit/CDOCommitInfoProvider.html#removeCommitInfoHandler(org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler)"><code>CDOCommitInfoProvider.removeCommitInfoHandler(CDOCommitInfoHandler)</code></a></div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)" class="member-name-link">removeHandler</a><wbr>(<a href="IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</a>&nbsp;handler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInitialPackages(org.eclipse.emf.ecore.EPackage...)" class="member-name-link">setInitialPackages</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EPackage</a>...&nbsp;initialPackages)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)" class="member-name-link">removeHandler</a><wbr>(<a href="IRepository.Handler.html" title="interface in org.eclipse.emf.cdo.server">IRepository.Handler</a>&nbsp;handler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#validateTimeStamp(long)" class="member-name-link">validateTimeStamp</a><wbr>(long&nbsp;timeStamp)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setInitialPackages(org.eclipse.emf.ecore.EPackage...)" class="member-name-link">setInitialPackages</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EPackage</a>...&nbsp;initialPackages)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#validateTimeStamp(long)" class="member-name-link">validateTimeStamp</a><wbr>(long&nbsp;timeStamp)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Validates the given timeStamp against the repository time.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#waitForCommit(long)" class="member-name-link">waitForCommit</a><wbr>(long&nbsp;timeout)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#waitForCommit(long)" class="member-name-link">waitForCommit</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Blocks the calling thread until the next commit operation has succeeded and returns the last (highest) commit time
  stamp.</div>
 </div>
@@ -263,7 +266,7 @@ extends <a href="../common/CDOCommonRepository.html" title="interface in org.ecl
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonRepository">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a></h3>
-<code><a href="../common/CDOCommonRepository.html#getCommitInfoStorage()">getCommitInfoStorage</a>, <a href="../common/CDOCommonRepository.html#getCreationTime()">getCreationTime</a>, <a href="../common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</a>, <a href="../common/CDOCommonRepository.html#getName()">getName</a>, <a href="../common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</a>, <a href="../common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</a>, <a href="../common/CDOCommonRepository.html#getState()">getState</a>, <a href="../common/CDOCommonRepository.html#getStoreType()">getStoreType</a>, <a href="../common/CDOCommonRepository.html#getType()">getType</a>, <a href="../common/CDOCommonRepository.html#getUUID()">getUUID</a>, <a href="../common/CDOCommonRepository.html#isAuthenticating()">isAuthenticating</a>, <a href="../common/CDOCommonRepository.html#isAuthorizingOperations()">isAuthorizingOperations</a>, <a href="../common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a>, <a href="../common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</a>, <a href="../common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</a>, <a href="../common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</a>, <a href="../common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</a>, <a href="../common/CDOCommonRepository.html#isSupportingUnits()">isSupportingUnits</a>, <a href="../common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></code></div>
+<code><a href="../common/CDOCommonRepository.html#getCommitInfoStorage()">getCommitInfoStorage</a>, <a href="../common/CDOCommonRepository.html#getCreationTime()">getCreationTime</a>, <a href="../common/CDOCommonRepository.html#getIDGenerationLocation()">getIDGenerationLocation</a>, <a href="../common/CDOCommonRepository.html#getName()">getName</a>, <a href="../common/CDOCommonRepository.html#getObjectIDTypes()">getObjectIDTypes</a>, <a href="../common/CDOCommonRepository.html#getRootResourceID()">getRootResourceID</a>, <a href="../common/CDOCommonRepository.html#getState()">getState</a>, <a href="../common/CDOCommonRepository.html#getStoreType()">getStoreType</a>, <a href="../common/CDOCommonRepository.html#getType()">getType</a>, <a href="../common/CDOCommonRepository.html#getUUID()">getUUID</a>, <a href="../common/CDOCommonRepository.html#isAuthenticating()">isAuthenticating</a>, <a href="../common/CDOCommonRepository.html#isAuthorizingOperations()">isAuthorizingOperations</a>, <a href="../common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()">isEnsuringReferentialIntegrity</a>, <a href="../common/CDOCommonRepository.html#isSerializingCommits()">isSerializingCommits</a>, <a href="../common/CDOCommonRepository.html#isSupportingAudits()">isSupportingAudits</a>, <a href="../common/CDOCommonRepository.html#isSupportingBranches()">isSupportingBranches</a>, <a href="../common/CDOCommonRepository.html#isSupportingEcore()">isSupportingEcore</a>, <a href="../common/CDOCommonRepository.html#isSupportingLoginPeeks()">isSupportingLoginPeeks</a>, <a href="../common/CDOCommonRepository.html#isSupportingUnits()">isSupportingUnits</a>, <a href="../common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)">waitWhileInitial</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.util.CDOTimeProvider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.util.<a href="../common/util/CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a></h3>
 <code><a href="../common/util/CDOTimeProvider.html#getTimeStamp()">getTimeStamp</a></code></div>
@@ -279,6 +282,9 @@ extends <a href="../common/CDOCommonRepository.html" title="interface in org.ecl
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>addListener, getListeners, hasListeners, removeListener</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.properties.IPropertiesContainer">Methods inherited from interface&nbsp;org.eclipse.net4j.util.properties.IPropertiesContainer</h3>
+<code>properties</code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.server.IQueryHandlerProvider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.server.<a href="IQueryHandlerProvider.html" title="interface in org.eclipse.emf.cdo.server">IQueryHandlerProvider</a></h3>
 <code><a href="IQueryHandlerProvider.html#getQueryHandler(org.eclipse.emf.cdo.common.util.CDOQueryInfo)">getQueryHandler</a></code></div>
@@ -417,6 +423,16 @@ extends <a href="../common/CDOCommonRepository.html" title="interface in org.ecl
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.1</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getProtector()">
+<h3>getProtector</h3>
+<div class="member-signature"><span class="return-type"><a href="IRepositoryProtector.html" title="interface in org.eclipse.emf.cdo.server">IRepositoryProtector</a></span>&nbsp;<span class="element-name">getProtector</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.20</dd>
 </dl>
 </section>
 </li>

@@ -176,13 +176,16 @@ loadScripts(document, 'script');</script>
  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOPermission.</span><code><a href="../CDOPermission.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-second odd-row-color"><span class="type-name-label">CDOPermission.</span><code><a href="../CDOPermission.html#parse(java.lang.String)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOPermission.</span><code><a href="../CDOPermission.html#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns the enum constant of this class with the specified name.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOPermission.</span><code><a href="../CDOPermission.html#values()" class="member-name-link">values</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>static <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOPermission.</span><code><a href="../CDOPermission.html#values()" class="member-name-link">values</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Returns an array containing the constants of this enum class, in
 the order they are declared.</div>
 </div>
@@ -192,24 +195,87 @@ the order they are declared.</div>
 <li>
 <section class="detail" id="org.eclipse.emf.cdo.server">
 <h2>Uses of <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a> in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a></h2>
+<div class="caption"><span>Fields in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> declared as <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Additive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Additive.html#DEFAULT_INITIAL_PERMISSION" class="member-name-link">DEFAULT_INITIAL_PERMISSION</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Subtractive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Subtractive.html#DEFAULT_INITIAL_PERMISSION" class="member-name-link">DEFAULT_INITIAL_PERMISSION</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Additive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Additive.html#DEFAULT_TERMINAL_PERMISSION" class="member-name-link">DEFAULT_TERMINAL_PERMISSION</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Subtractive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Subtractive.html#DEFAULT_TERMINAL_PERMISSION" class="member-name-link">DEFAULT_TERMINAL_PERMISSION</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> that return <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="col-first even-row-color"><code>abstract <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.RevisionAuthorizer.</span><code><a href="../../../server/IRepositoryProtector.RevisionAuthorizer.html#authorizeRevision(org.eclipse.emf.cdo.server.ISession,org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">authorizeRevision</a><wbr>(<a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ <a href="../../../server/IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&nbsp;userInfo,
+ <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
+ <a href="../../revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider,
+ <a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#getCombinedPermission(org.eclipse.emf.cdo.common.security.CDOPermission,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">getCombinedPermission</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;currentPermission,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;newPermission)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#getInitialPermission()" class="member-name-link">getInitialPermission</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,java.lang.String)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 4.2 call <a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)"><code>IPermissionManager.getPermission(CDORevision, CDOBranchPoint, ISession)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+<div class="col-first even-row-color"><code><a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IPermissionManager.</span><code><a href="../../../server/IPermissionManager.html#getPermission(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getPermission</a><wbr>(<a href="../../revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="../../branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;securityContext,
  <a href="../../../server/ISession.html" title="interface in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#getTerminalPermission()" class="member-name-link">getTerminalPermission</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Methods in <a href="../../../server/package-summary.html">org.eclipse.emf.cdo.server</a> with parameters of type <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>final <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#getCombinedPermission(org.eclipse.emf.cdo.common.security.CDOPermission,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">getCombinedPermission</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;currentPermission,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;newPermission)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#setInitialPermission(org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">setInitialPermission</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;initialPermission)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>final void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#setTerminalPermission(org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">setTerminalPermission</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;terminalPermission)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Additive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Additive.html#test(org.eclipse.emf.cdo.common.security.CDOPermission,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">test</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;currentPermission,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;newPermission)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.Subtractive.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.Subtractive.html#test(org.eclipse.emf.cdo.common.security.CDOPermission,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">test</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;currentPermission,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;newPermission)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>abstract boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IRepositoryProtector.AuthorizationStrategy.</span><code><a href="../../../server/IRepositoryProtector.AuthorizationStrategy.html#test(org.eclipse.emf.cdo.common.security.CDOPermission,org.eclipse.emf.cdo.common.security.CDOPermission)" class="member-name-link">test</a><wbr>(<a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;currentPermission,
+ <a href="../CDOPermission.html" title="enum class in org.eclipse.emf.cdo.common.security">CDOPermission</a>&nbsp;newPermission)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>

@@ -94,23 +94,37 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#createSchema(java.lang.String)" class="member-name-link">createSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../../IDBDatabase.html#getSchema()" class="member-name-link">getSchema</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Creates a case-insensitive schema with the given <code>name</code>.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#createSchema(java.lang.String,boolean,boolean)" class="member-name-link">createSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;caseSensitive,
+ boolean&nbsp;qualifiedTableNames)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IDBSchemaTransaction.</span><code><a href="../../IDBSchemaTransaction.html#getWorkingCopy()" class="member-name-link">getWorkingCopy</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBDatabase.</span><code><a href="../../IDBDatabase.html#getSchema()" class="member-name-link">getSchema</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="../../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-first even-row-color"><code><a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IDBSchemaTransaction.</span><code><a href="../../IDBSchemaTransaction.html#getWorkingCopy()" class="member-name-link">getWorkingCopy</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)" class="member-name-link">readSchema</a><wbr>(<a href="../../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="../../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean)" class="member-name-link">readSchema</a><wbr>(<a href="../../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
  boolean&nbsp;fixNullableIndexColumns)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBUtil.</span><code><a href="../../DBUtil.html#readSchema(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection,java.lang.String,boolean,boolean)" class="member-name-link">readSchema</a><wbr>(<a href="../../IDBAdapter.html" title="interface in org.eclipse.net4j.db">IDBAdapter</a>&nbsp;adapter,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
+ boolean&nbsp;fixNullableIndexColumns,
+ boolean&nbsp;qualifiedTableNames)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IDBSchema.html" title="interface in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../../IDBAdapter.html#readSchema(java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="class or interface in java.sql" class="external-link">Connection</a>&nbsp;connection,

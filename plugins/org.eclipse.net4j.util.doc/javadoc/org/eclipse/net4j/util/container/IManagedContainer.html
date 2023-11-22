@@ -153,6 +153,16 @@ extends <a href="IContainer.html" title="interface in org.eclipse.net4j.util.con
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#countElements(java.lang.String,java.lang.String)" class="member-name-link">countElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createElement(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">createElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createElement(java.lang.String,java.lang.String,org.eclipse.net4j.util.collection.Tree)" class="member-name-link">createElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="../collection/Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#forEachElement(java.lang.String,java.lang.Class,java.lang.String,java.util.function.Consumer)" class="member-name-link">forEachElement</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;productType,
@@ -185,9 +195,18 @@ extends <a href="IContainer.html" title="interface in org.eclipse.net4j.util.con
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElementKey(java.lang.Object)" class="member-name-link">getElementKey</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElementOrNull(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">getElementOrNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElementOrNull(java.lang.String,java.lang.String)" class="member-name-link">getElementOrNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElementOrNull(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">getElementOrNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>&lt;T&gt;&nbsp;T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElementOrNull(java.lang.String,java.lang.String,org.eclipse.net4j.util.collection.Tree)" class="member-name-link">getElementOrNull</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="../collection/Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getElements(java.lang.String)" class="member-name-link">getElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup)</code></div>
@@ -245,6 +264,9 @@ extends <a href="IContainer.html" title="interface in org.eclipse.net4j.util.con
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets the name of this container before it is activated.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -300,6 +322,16 @@ extends <a href="IContainer.html" title="interface in org.eclipse.net4j.util.con
 <section class="detail" id="registerFactory(org.eclipse.net4j.util.factory.IFactory)">
 <h3>registerFactory</h3>
 <div class="member-signature"><span class="return-type"><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span>&nbsp;<span class="element-name">registerFactory</span><wbr><span class="parameters">(<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="unregisterFactory(org.eclipse.net4j.util.factory.IFactory)">
+<h3>unregisterFactory</h3>
+<div class="member-signature"><span class="return-type"><a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span>&nbsp;<span class="element-name">unregisterFactory</span><wbr><span class="parameters">(<a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -413,14 +445,80 @@ extends <a href="IContainer.html" title="interface in org.eclipse.net4j.util.con
 </section>
 </li>
 <li>
+<section class="detail" id="getElementOrNull(java.lang.String,java.lang.String)">
+<h3>getElementOrNull</h3>
+<div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getElementOrNull</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType)</span>
+                throws <span class="exceptions"><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getElementOrNull(java.lang.String,java.lang.String,java.lang.String)">
 <h3>getElementOrNull</h3>
 <div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getElementOrNull</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span>
+                throws <span class="exceptions"><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span></div>
 <dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
 <dt>Since:</dt>
 <dd>3.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getElementOrNull(java.lang.String,java.lang.String,org.eclipse.net4j.util.collection.Tree)">
+<h3>getElementOrNull</h3>
+<div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">getElementOrNull</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="../collection/Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</span>
+                throws <span class="exceptions"><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createElement(java.lang.String,java.lang.String,java.lang.String)">
+<h3>createElement</h3>
+<div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">createElement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description)</span>
+             throws <span class="exceptions"><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+<a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.23</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createElement(java.lang.String,java.lang.String,org.eclipse.net4j.util.collection.Tree)">
+<h3>createElement</h3>
+<div class="member-signature"><span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="element-name">createElement</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
+ <a href="../collection/Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</span>
+             throws <span class="exceptions"><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a>,
+<a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="FactoryNotFoundException.html" title="class in org.eclipse.net4j.util.container">FactoryNotFoundException</a></code></dd>
+<dd><code><a href="../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.23</dd>
 </dl>
 </section>
 </li>

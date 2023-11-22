@@ -56,8 +56,10 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="#org.eclipse.net4j.internal.util.factory">org.eclipse.net4j.internal.util.factory</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.net4j.util">org.eclipse.net4j.util</a></div>
+<div class="col-last even-row-color">
+<div class="block">Utility classes.</div>
+</div>
 <div class="col-first odd-row-color"><a href="#org.eclipse.net4j.util.concurrent">org.eclipse.net4j.util.concurrent</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Utility interfaces and classes commonly useful in concurrent programming.</div>
@@ -104,18 +106,27 @@ loadScripts(document, 'script');</script>
 <section class="package-uses">
 <ul class="block-list">
 <li>
-<section class="detail" id="org.eclipse.net4j.internal.util.factory">
-<div class="caption"><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.factory</a> used by org.eclipse.net4j.internal.util.factory</span></div>
+<section class="detail" id="org.eclipse.net4j.util">
+<div class="caption"><span>Classes in <a href="package-summary.html">org.eclipse.net4j.util.factory</a> used by <a href="../package-summary.html">org.eclipse.net4j.util</a></span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/Factory.html#org.eclipse.net4j.internal.util.factory">Factory</a></div>
+<div class="col-first even-row-color"><a href="class-use/Factory.html#org.eclipse.net4j.util">Factory</a></div>
 <div class="col-last even-row-color">
 <div class="block">A default implementation of a <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IFactory.html#org.eclipse.net4j.internal.util.factory">IFactory</a></div>
+<div class="col-first odd-row-color"><a href="class-use/IFactory.html#org.eclipse.net4j.util">IFactory</a></div>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/MetaFactory.html#org.eclipse.net4j.util">MetaFactory</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util">ProductCreationException</a></div>
+<div class="col-last even-row-color">
+<div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
+ product.</div>
 </div>
 </div>
 </section>
@@ -134,8 +145,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.concurrent">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.concurrent">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.concurrent">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -156,8 +169,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.confirmation">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.confirmation">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.confirmation">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -192,27 +207,39 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><a href="class-use/Factory.html#org.eclipse.net4j.util.factory">Factory</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/AnnotationFactory.InjectElement.Cardinality.html#org.eclipse.net4j.util.factory">AnnotationFactory.InjectElement.Cardinality</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/Factory.html#org.eclipse.net4j.util.factory">Factory</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A default implementation of a <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/FactoryKey.html#org.eclipse.net4j.util.factory">FactoryKey</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/FactoryKey.html#org.eclipse.net4j.util.factory">FactoryKey</a></div>
+<div class="col-last even-row-color">
 <div class="block">A default implementation of a <a href="IFactoryKey.html" title="interface in org.eclipse.net4j.util.factory"><code>factory key</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IFactory.html#org.eclipse.net4j.util.factory">IFactory</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IFactory.html#org.eclipse.net4j.util.factory">IFactory</a></div>
+<div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IFactoryKey.html#org.eclipse.net4j.util.factory">IFactoryKey</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKey.html#org.eclipse.net4j.util.factory">IFactoryKey</a></div>
+<div class="col-last even-row-color">
 <div class="block">Identifies a <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> by <a href="IFactoryKey.html#getProductGroup()"><code>product group</code></a> and <a href="IFactoryKey.html#getType()"><code>type</code></a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.factory">IFactoryKeyAware</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/IPropertiesFactory.html#org.eclipse.net4j.util.factory">IPropertiesFactory</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ITreeFactory.html#org.eclipse.net4j.util.factory">ITreeFactory</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.factory">ProductCreationException</a></div>
 <div class="col-last even-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/TreeFactory.html#org.eclipse.net4j.util.factory">TreeFactory</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/TreeFactory.ContainerAware.html#org.eclipse.net4j.util.factory">TreeFactory.ContainerAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -230,8 +257,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.io">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.io">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.io">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -252,8 +281,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.security">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.security">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.security">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -274,8 +305,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.security.operations">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.security.operations">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.security.operations">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -296,8 +329,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.ui">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -318,8 +353,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.confirmation">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.ui.confirmation">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.confirmation">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -340,8 +377,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.container">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.ui.container">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.container">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>
@@ -362,8 +401,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block"><a href="IFactory.html#create(java.lang.String)"><code>Creates</code></a> objects from a string <a href="IFactory.html#getDescriptionFor(java.lang.Object)"><code>description</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.views">ProductCreationException</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IFactoryKeyAware.html#org.eclipse.net4j.util.ui.views">IFactoryKeyAware</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ProductCreationException.html#org.eclipse.net4j.util.ui.views">ProductCreationException</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An unchecked exception that may be thrown from <a href="IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factories</code></a> to indicate the inability to create a
  product.</div>
 </div>

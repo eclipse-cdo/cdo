@@ -263,24 +263,28 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/common/lock/CDOLockUtil.html#createLockArea(java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean,java.util.Map)"><code>CDOLockUtil.createLockArea(String, String, CDOBranchPoint, boolean, Map)</code></a> instead</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/Support.html" title="class in org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui.Support</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/server/PluginRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider</a></div>
 <div class="col-last odd-row-color">
+<div class="deprecation-comment">As of 4.20 use <a href="org/eclipse/emf/cdo/spi/server/ContainerRepositoryProvider.html" title="class in org.eclipse.emf.cdo.spi.server"><code>ContainerRepositoryProvider</code></a>.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/Support.html" title="class in org.eclipse.emf.cdo.ui">org.eclipse.emf.cdo.ui.Support</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/cdo/common/util/Support.html" title="class in org.eclipse.emf.cdo.common.util"><code>Support</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/AuditScale.html" title="class in org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets.AuditScale</a></div>
-<div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/SelectBranchComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets.SelectBranchComposite</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/AuditScale.html" title="class in org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets.AuditScale</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/SelectBranchComposite.html" title="class in org.eclipse.emf.cdo.ui.widgets">org.eclipse.emf.cdo.ui.widgets.SelectBranchComposite</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.4 no longer supported.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.MergeLocalChangesPerFeature.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.MergeLocalChangesPerFeature</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.0 use CDOMergingConflictResolver</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.CDOSessionInvalidationAggregator</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.TakeRemoteChangesThenApplyLocalChanges</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationAggregator.html" title="class in org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo.CDOSessionInvalidationAggregator</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html" title="class in org.eclipse.emf.spi.cdo"><code>CDOSessionInvalidationEventQueue</code></a>.</div>
 </div>
 </div>
@@ -1174,363 +1178,367 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 the legacy mode is always enabled.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.cdo.spi.server.StoreAccessor.writeCommitInfo<wbr>(CDOBranch, long, long, String, String, OMMonitor)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/server/RepositoryConfigurator.html#substituteParameters(java.lang.String,java.util.Map)">org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.substituteParameters<wbr>(String, Map&lt;String, String&gt;)</a></div>
 <div class="col-last even-row-color">
+<div class="deprecation-comment">As of 4.20 use <code>StringUtil.replace(String, Map)</code>.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.cdo.spi.server.StoreAccessor.writeCommitInfo<wbr>(CDOBranch, long, long, String, String, OMMonitor)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.6 override <a href="org/eclipse/emf/cdo/spi/server/StoreAccessor.html#writeCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,long,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.net4j.util.om.monitor.OMMonitor)"><code>StoreAccessor.writeCommitInfo(CDOBranch, long, long, String, String, CDOBranchPoint, OMMonitor)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#updateAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase.updateAfterCommit<wbr>(CDOTransaction)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html#isAutoReleaseLocks()">org.eclipse.emf.cdo.transaction.CDOCommitContext.isAutoReleaseLocks()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/spi/workspace/InternalCDOWorkspaceBase.html#updateAfterCommit(org.eclipse.emf.cdo.transaction.CDOTransaction)">org.eclipse.emf.cdo.spi.workspace.InternalCDOWorkspaceBase.updateAfterCommit<wbr>(CDOTransaction)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html#isAutoReleaseLocks()">org.eclipse.emf.cdo.transaction.CDOCommitContext.isAutoReleaseLocks()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 no longer supported. See <a href="org/eclipse/emf/cdo/transaction/CDOCommitContext.html#getIDsToUnlock()"><code>CDOCommitContext.getIDsToUnlock()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)">org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3.committedTransaction<wbr>(CDOTransaction, CDOCommitContext)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOMerger2.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">org.eclipse.emf.cdo.transaction.CDOMerger2.merge<wbr>(CDOChangeSet, CDOChangeSet)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDODefaultTransactionHandler3.html#committedTransaction(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.transaction.CDOCommitContext)">org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler3.committedTransaction<wbr>(CDOTransaction, CDOCommitContext)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.commit<wbr>(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOMerger2.html#merge(org.eclipse.emf.cdo.common.commit.CDOChangeSet,org.eclipse.emf.cdo.common.commit.CDOChangeSet)">org.eclipse.emf.cdo.transaction.CDOMerger2.merge<wbr>(CDOChangeSet, CDOChangeSet)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(java.util.concurrent.Callable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.commit<wbr>(Callable&lt;T&gt;, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.commit<wbr>(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#enableDurableLocking(boolean)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.enableDurableLocking<wbr>(boolean)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#commit(java.util.concurrent.Callable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.commit<wbr>(Callable&lt;T&gt;, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#enableDurableLocking(boolean)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.enableDurableLocking<wbr>(boolean)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#enableDurableLocking()"><code>CDOPushTransaction.enableDurableLocking()</code></a> instead or <a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#disableDurableLocking(boolean)"><code>CDOPushTransaction.disableDurableLocking(boolean)</code></a>, respectively.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.transaction.CDOPushTransaction.isInvalidationRunnerActive()</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.transaction.CDOPushTransaction.isLegacyModeEnabled()</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#refreshLockStates(java.util.function.Consumer)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.refreshLockStates<wbr>(Consumer&lt;CDOLockState&gt;)</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#reload(org.eclipse.emf.cdo.CDOObject...)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.reload<wbr>(CDOObject...)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas()">org.eclipse.emf.cdo.transaction.CDOSavepoint.getRevisionDeltas()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.transaction.CDOPushTransaction.isInvalidationRunnerActive()</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.transaction.CDOPushTransaction.isLegacyModeEnabled()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#refreshLockStates(java.util.function.Consumer)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.refreshLockStates<wbr>(Consumer&lt;CDOLockState&gt;)</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOPushTransaction.html#reload(org.eclipse.emf.cdo.CDOObject...)">org.eclipse.emf.cdo.transaction.CDOPushTransaction.reload<wbr>(CDOObject...)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas()">org.eclipse.emf.cdo.transaction.CDOSavepoint.getRevisionDeltas()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/cdo/transaction/CDOSavepoint.html#getRevisionDeltas2()"><code>CDOSavepoint.getRevisionDeltas2()</code></a> instead.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOTransaction.commit<wbr>(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOTransaction.commit<wbr>(Runnable, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.9 use <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.lang.Runnable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOTransaction.commit(Runnable, java.util.function.Predicate, IProgressMonitor)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.util.concurrent.Callable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOTransaction.commit<wbr>(Callable&lt;T&gt;, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.util.concurrent.Callable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)">org.eclipse.emf.cdo.transaction.CDOTransaction.commit<wbr>(Callable&lt;T&gt;, Predicate&lt;Long&gt;, IProgressMonitor)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.9 use <a href="org/eclipse/emf/cdo/transaction/CDOTransaction.html#commit(java.util.concurrent.Callable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOTransaction.commit(Callable, java.util.function.Predicate, IProgressMonitor)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html#getType()">org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent.getType()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html#getType()">org.eclipse.emf.cdo.transaction.CDOTransactionFinishedEvent.getType()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.3 use <a href="org/eclipse/emf/cdo/transaction/CDOTransactionFinishedEvent.html#getCause()"><code>CDOTransactionFinishedEvent.getCause()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectBranchComposite(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranch)">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.createSelectBranchComposite<wbr>(CDOSession, CDOBranch)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectBranchComposite(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranch)">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.createSelectBranchComposite<wbr>(CDOSession, CDOBranch)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.4 use <a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createBranchViewer()"><code>ComposeBranchPointComposite.createBranchViewer()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectTimeStampComposite(org.eclipse.emf.cdo.common.branch.CDOBranch,long)">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.createSelectTimeStampComposite<wbr>(CDOBranch, long)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectTimeStampComposite(org.eclipse.emf.cdo.common.branch.CDOBranch,long)">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.createSelectTimeStampComposite<wbr>(CDOBranch, long)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.4 use <a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#createSelectTimeStampComposite()"><code>ComposeBranchPointComposite.createSelectTimeStampComposite()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getSelectBranchComposite()">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.getSelectBranchComposite()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getSelectBranchComposite()">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.getSelectBranchComposite()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.4 use <a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getBranchViewer()"><code>ComposeBranchPointComposite.getBranchViewer()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getSession()">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.getSession()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/ui/widgets/ComposeBranchPointComposite.html#getSession()">org.eclipse.emf.cdo.ui.widgets.ComposeBranchPointComposite.getSession()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.4 no longer supported.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(java.lang.String,java.lang.String)">org.eclipse.emf.cdo.util.CDOURIUtil.createResourceURI<wbr>(String, String)</a></div>
-<div class="col-last even-row-color">
-<div class="deprecation-comment">This method is subject to removal in a future release.</div>
-</div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(org.eclipse.emf.cdo.session.CDOSession,java.lang.String)">org.eclipse.emf.cdo.util.CDOURIUtil.createResourceURI<wbr>(CDOSession, String)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(java.lang.String,java.lang.String)">org.eclipse.emf.cdo.util.CDOURIUtil.createResourceURI<wbr>(String, String)</a></div>
 <div class="col-last odd-row-color">
 <div class="deprecation-comment">This method is subject to removal in a future release.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#extractRepositoryUUID(org.eclipse.emf.common.util.URI)">org.eclipse.emf.cdo.util.CDOURIUtil.extractRepositoryUUID<wbr>(URI)</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI(org.eclipse.emf.common.util.URI)">org.eclipse.emf.cdo.util.CDOURIUtil.validateURI<wbr>(URI)</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.util.CDOUtil.isInvalidationRunnerActive()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#createResourceURI(org.eclipse.emf.cdo.session.CDOSession,java.lang.String)">org.eclipse.emf.cdo.util.CDOURIUtil.createResourceURI<wbr>(CDOSession, String)</a></div>
 <div class="col-last even-row-color">
+<div class="deprecation-comment">This method is subject to removal in a future release.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#extractRepositoryUUID(org.eclipse.emf.common.util.URI)">org.eclipse.emf.cdo.util.CDOURIUtil.extractRepositoryUUID<wbr>(URI)</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOURIUtil.html#validateURI(org.eclipse.emf.common.util.URI)">org.eclipse.emf.cdo.util.CDOURIUtil.validateURI<wbr>(URI)</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.util.CDOUtil.isInvalidationRunnerActive()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.0 use CDOView.isInvalidationRunnerActive()</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#isLegacyModeDefault()">org.eclipse.emf.cdo.util.CDOUtil.isLegacyModeDefault()</a></div>
-<div class="col-last odd-row-color">
-<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled.</div>
-</div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#setLegacyModeDefault(boolean)">org.eclipse.emf.cdo.util.CDOUtil.setLegacyModeDefault<wbr>(boolean)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#isLegacyModeDefault()">org.eclipse.emf.cdo.util.CDOUtil.isLegacyModeDefault()</a></div>
 <div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 the legacy mode is always enabled.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">org.eclipse.emf.cdo.view.CDOView.enableDurableLocking<wbr>(boolean)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/util/CDOUtil.html#setLegacyModeDefault(boolean)">org.eclipse.emf.cdo.util.CDOUtil.setLegacyModeDefault<wbr>(boolean)</a></div>
 <div class="col-last odd-row-color">
+<div class="deprecation-comment">As of 4.2 the legacy mode is always enabled.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking(boolean)">org.eclipse.emf.cdo.view.CDOView.enableDurableLocking<wbr>(boolean)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/view/CDOView.html#enableDurableLocking()"><code>CDOView.enableDurableLocking()</code></a> instead or <a href="org/eclipse/emf/cdo/view/CDOView.html#disableDurableLocking(boolean)"><code>CDOView.disableDurableLocking(boolean)</code></a>, respectively.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.view.CDOView.isInvalidationRunnerActive()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#isInvalidationRunnerActive()">org.eclipse.emf.cdo.view.CDOView.isInvalidationRunnerActive()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.7 use <a href="org/eclipse/emf/cdo/view/CDOView.html#isInvalidating()"><code>CDOView.isInvalidating()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.view.CDOView.isLegacyModeEnabled()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#isLegacyModeEnabled()">org.eclipse.emf.cdo.view.CDOView.isLegacyModeEnabled()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 the legacy mode is always enabled.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferenceBehaviour()">org.eclipse.emf.cdo.view.CDOView.Options.getStaleReferenceBehaviour()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferenceBehaviour()">org.eclipse.emf.cdo.view.CDOView.Options.getStaleReferenceBehaviour()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/view/CDOView.Options.html#getStaleReferencePolicy()"><code>CDOView.Options.getStaleReferencePolicy()</code></a></div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">org.eclipse.emf.cdo.view.CDOView.Options.setStaleReferenceBehaviour<wbr>(CDOStaleReferencePolicy)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferenceBehaviour(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)">org.eclipse.emf.cdo.view.CDOView.Options.setStaleReferenceBehaviour<wbr>(CDOStaleReferencePolicy)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/view/CDOView.Options.html#setStaleReferencePolicy(org.eclipse.emf.cdo.view.CDOStaleReferencePolicy)"><code>CDOView.Options.setStaleReferencePolicy(CDOStaleReferencePolicy)</code></a></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">org.eclipse.emf.cdo.view.CDOView.reload<wbr>(CDOObject...)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOView.html#reload(org.eclipse.emf.cdo.CDOObject...)">org.eclipse.emf.cdo.view.CDOView.reload<wbr>(CDOObject...)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.3 no longer supported because it is unsafe to reload single objects.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)">org.eclipse.emf.cdo.view.CDOViewProviderRegistry.provideViewWithInfo<wbr>(URI, ResourceSet)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideViewWithInfo(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)">org.eclipse.emf.cdo.view.CDOViewProviderRegistry.provideViewWithInfo<wbr>(URI, ResourceSet)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.4. use <a href="org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html#provideView(org.eclipse.emf.common.util.URI,org.eclipse.emf.ecore.resource.ResourceSet)"><code>CDOViewProviderRegistry.provideView(URI, ResourceSet)</code></a>.getProvider().</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/view/CDOViewSet.html#resolveView(java.lang.String)">org.eclipse.emf.cdo.view.CDOViewSet.resolveView<wbr>(String)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/view/CDOViewSet.html#resolveView(java.lang.String)">org.eclipse.emf.cdo.view.CDOViewSet.resolveView<wbr>(String)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.4 use <a href="org/eclipse/emf/cdo/view/CDOViewSet.html#resolveView(org.eclipse.emf.common.util.URI)"><code>CDOViewSet.resolveView(URI)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</a></div>
-<div class="col-last odd-row-color">
-<div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>CDOWorkspaceConfiguration.checkout()</code></a></div>
-</div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,long)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, long)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</a></div>
 <div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>CDOWorkspaceConfiguration.checkout()</code></a></div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,java.lang.String)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, String)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,long)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, long)</a></div>
 <div class="col-last odd-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>CDOWorkspaceConfiguration.checkout()</code></a></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,java.lang.String,long)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, String, long)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,java.lang.String)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, String)</a></div>
 <div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>CDOWorkspaceConfiguration.checkout()</code></a></div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#open(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.open<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#checkout(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory,java.lang.String,long)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.checkout<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory, String, long)</a></div>
 <div class="col-last odd-row-color">
+<div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#checkout()"><code>CDOWorkspaceConfiguration.checkout()</code></a></div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#open(org.eclipse.emf.cdo.server.IStore,org.eclipse.emf.cdo.workspace.CDOWorkspaceBase,org.eclipse.emf.cdo.session.CDOSessionConfigurationFactory)">org.eclipse.emf.cdo.workspace.CDOWorkspaceUtil.open<wbr>(IStore, CDOWorkspaceBase, CDOSessionConfigurationFactory)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">Use <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceUtil.html#createWorkspaceConfiguration()"><code>CDOWorkspaceUtil.createWorkspaceConfiguration()</code></a> and <a href="org/eclipse/emf/cdo/workspace/CDOWorkspaceConfiguration.html#open()"><code>CDOWorkspaceConfiguration.open()</code></a></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalDynamicFeature<wbr>(int)</a></div>
-<div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostDetach(boolean)">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalPostDetach<wbr>(boolean)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalDynamicFeature<wbr>(int)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoReload()">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoReload()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoInternalPostDetach(boolean)">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoInternalPostDetach<wbr>(boolean)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createFeatureMap(org.eclipse.emf.ecore.EStructuralFeature)">org.eclipse.emf.internal.cdo.CDOObjectImpl.createFeatureMap<wbr>(EStructuralFeature)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#cdoReload()">org.eclipse.emf.internal.cdo.CDOObjectImpl.cdoReload()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/internal/cdo/CDOObjectImpl.html#createFeatureMap(org.eclipse.emf.ecore.EStructuralFeature)">org.eclipse.emf.internal.cdo.CDOObjectImpl.createFeatureMap<wbr>(EStructuralFeature)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/util/FeatureMap.html" title="class or interface in org.eclipse.emf.ecore.util" class="external-link"><code>feature maps</code></a> are no longer supported.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.rollbackObject<wbr>(CDOObject)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/AbstractObjectConflictResolver.html#rollbackObject(org.eclipse.emf.cdo.CDOObject)">org.eclipse.emf.spi.cdo.AbstractObjectConflictResolver.rollbackObject<wbr>(CDOObject)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">Don't call this method. Rolling back single objects is exremely risky.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOPermissionUpdater3.html#updatePermissions(org.eclipse.emf.spi.cdo.InternalCDOSession,java.util.Set)">org.eclipse.emf.spi.cdo.CDOPermissionUpdater3.updatePermissions<wbr>(InternalCDOSession, Set&lt;InternalCDORevision&gt;)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOPermissionUpdater3.html#updatePermissions(org.eclipse.emf.spi.cdo.InternalCDOSession,java.util.Set)">org.eclipse.emf.spi.cdo.CDOPermissionUpdater3.updatePermissions<wbr>(InternalCDOSession, Set&lt;InternalCDORevision&gt;)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.22 use <a href="org/eclipse/emf/spi/cdo/CDOPermissionUpdater3.html#updatePermissions(org.eclipse.emf.spi.cdo.InternalCDOSession,java.util.Map,org.eclipse.emf.cdo.common.commit.CDOCommitInfo)"><code>CDOPermissionUpdater3.updatePermissions(InternalCDOSession, Map, CDOCommitInfo)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#getChangeSetData()">org.eclipse.emf.spi.cdo.CDOSessionInvalidationEventQueue.getChangeSetData()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#getChangeSetData()">org.eclipse.emf.spi.cdo.CDOSessionInvalidationEventQueue.getChangeSetData()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.3 use <a href="org/eclipse/emf/spi/cdo/CDOSessionInvalidationEventQueue.html#poll()"><code>CDOSessionInvalidationEventQueue.poll()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData,java.util.Map,java.util.Collection,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitDelegation<wbr>(CDOBranch, String, String, CDOCommitData, Map&lt;CDOID, EClass&gt;, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(int,java.lang.String,boolean,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.commit.CDOCommitData,java.util.Collection,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitTransaction<wbr>(int, String, boolean, CDOIDProvider, CDOCommitData, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitDelegation(org.eclipse.emf.cdo.common.branch.CDOBranch,java.lang.String,java.lang.String,org.eclipse.emf.cdo.common.commit.CDOCommitData,java.util.Map,java.util.Collection,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitDelegation<wbr>(CDOBranch, String, String, CDOCommitData, Map&lt;CDOID, EClass&gt;, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult.getNewLockStates()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#commitTransaction(int,java.lang.String,boolean,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.common.commit.CDOCommitData,java.util.Collection,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.commitTransaction<wbr>(int, String, boolean, CDOIDProvider, CDOCommitData, Collection&lt;CDOLob&lt;?&gt;&gt;, OMMonitor)</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult.getNewLockStates()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#getLockDeltas()"><code>CDOSessionProtocol.CommitTransactionResult.getLockDeltas()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setNewLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult.setNewLockStates<wbr>(CDOLockState[])</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setNewLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.CommitTransactionResult.setNewLockStates<wbr>(CDOLockState[])</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.CommitTransactionResult.html#setLockStates(java.util.List)"><code>CDOSessionProtocol.CommitTransactionResult.setLockStates(List)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.getLockStates<wbr>(int, Collection&lt;CDOID&gt;)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection,int)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.getLockStates<wbr>(int, Collection&lt;CDOID&gt;, int)</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.getLockStates<wbr>(int, Collection&lt;CDOID&gt;)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadMergeData(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.loadMergeData<wbr>(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#getLockStates(int,java.util.Collection,int)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.getLockStates<wbr>(int, Collection&lt;CDOID&gt;, int)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadPermissions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.loadPermissions<wbr>(InternalCDORevision[])</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadMergeData(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo,org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.loadMergeData<wbr>(CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo, CDORevisionAvailabilityInfo)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List,int,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.lockObjects<wbr>(List&lt;InternalCDORevision&gt;, int, CDOBranch, IRWLockManager.LockType, long)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#loadPermissions(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision%5B%5D)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.loadPermissions<wbr>(InternalCDORevision[])</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult.getNewLockStates()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#lockObjects(java.util.List,int,org.eclipse.emf.cdo.common.branch.CDOBranch,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,long)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.lockObjects<wbr>(List&lt;InternalCDORevision&gt;, int, CDOBranch, IRWLockManager.LockType, long)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.LockObjectsResult.getNewLockStates()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.LockObjectsResult.html#getLockStates()"><code>CDOSessionProtocol.LockObjectsResult.getLockStates()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryCreationTime()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryCreationTime()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryCreationTime()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryCreationTime()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getCreationTime()"><code>CDOSessionProtocol.OpenSessionResult.getCreationTime()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryIDGenerationLocation()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryIDGenerationLocation()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryIDGenerationLocation()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryIDGenerationLocation()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getIDGenerationLocation()"><code>CDOSessionProtocol.OpenSessionResult.getIDGenerationLocation()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryState()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryState()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryState()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryState()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getState()"><code>CDOSessionProtocol.OpenSessionResult.getState()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryType()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryType()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryType()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryType()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getType()"><code>CDOSessionProtocol.OpenSessionResult.getType()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryUUID()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryUUID()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getRepositoryUUID()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.getRepositoryUUID()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#getUUID()"><code>CDOSessionProtocol.OpenSessionResult.getUUID()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryAuthenticating()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositoryAuthenticating()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryAuthenticating()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositoryAuthenticating()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isAuthenticating()"><code>CDOSessionProtocol.OpenSessionResult.isAuthenticating()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositoryEnsuringReferentialIntegrity()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositoryEnsuringReferentialIntegrity()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositoryEnsuringReferentialIntegrity()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isEnsuringReferentialIntegrity()"><code>CDOSessionProtocol.OpenSessionResult.isEnsuringReferentialIntegrity()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySerializingCommits()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySerializingCommits()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySerializingCommits()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySerializingCommits()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSerializingCommits()"><code>CDOSessionProtocol.OpenSessionResult.isSerializingCommits()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingAudits()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingAudits()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingAudits()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingAudits()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingAudits()"><code>CDOSessionProtocol.OpenSessionResult.isSupportingAudits()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingBranches()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingBranches()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingBranches()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingBranches()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.5 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingBranches()"><code>CDOSessionProtocol.OpenSessionResult.isSupportingBranches()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingEcore()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingEcore()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isRepositorySupportingEcore()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isRepositorySupportingEcore()</a></div>
+<div class="col-last even-row-color">
+<div class="deprecation-comment">As of 4.2 instances of Ecore are always supported (on demand).</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingEcore()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isSupportingEcore()</a></div>
 <div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 instances of Ecore are always supported (on demand).</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.OpenSessionResult.html#isSupportingEcore()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult.isSupportingEcore()</a></div>
-<div class="col-last even-row-color">
-<div class="deprecation-comment">As of 4.2 instances of Ecore are always supported (on demand).</div>
-</div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#openView(int,boolean,java.lang.String)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.openView<wbr>(int, boolean, String)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#requestChangeCredentials()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.requestChangeCredentials()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#openView(int,boolean,java.lang.String)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.openView<wbr>(int, boolean, String)</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.requestUnit<wbr>(int, CDOID, CDOProtocolConstants.UnitOpcode, CDORevisionHandler, OMMonitor)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#requestChangeCredentials()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.requestChangeCredentials()</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.List)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.sendRemoteMessage<wbr>(CDORemoteSessionMessage, List&lt;CDORemoteSession&gt;)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#requestUnit(int,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.requestUnit<wbr>(int, CDOID, CDOProtocolConstants.UnitOpcode, CDORevisionHandler, OMMonitor)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,java.util.List)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.sendRemoteMessage<wbr>(CDORemoteSessionMessage, List&lt;CDORemoteSession&gt;)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.8 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#sendRemoteMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteTopic,java.util.List)"><code>CDOSessionProtocol.sendRemoteMessage(CDORemoteSessionMessage, CDORemoteTopic, List)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.unlockObjects<wbr>(CDOView, Collection&lt;CDOID&gt;, IRWLockManager.LockType)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult.getNewLockStates()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.html#unlockObjects(org.eclipse.emf.cdo.view.CDOView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">org.eclipse.emf.spi.cdo.CDOSessionProtocol.unlockObjects<wbr>(CDOView, Collection&lt;CDOID&gt;, IRWLockManager.LockType)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html#getNewLockStates()">org.eclipse.emf.spi.cdo.CDOSessionProtocol.UnlockObjectsResult.getNewLockStates()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html#getLockStates()"><code>CDOSessionProtocol.UnlockObjectsResult.getLockStates()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.spi.cdo.InternalCDOObject.cdoInternalDynamicFeature<wbr>(int)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalDynamicFeature(int)">org.eclipse.emf.spi.cdo.InternalCDOObject.cdoInternalDynamicFeature<wbr>(int)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 no longer supported.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalPostDetach(boolean)">org.eclipse.emf.spi.cdo.InternalCDOObject.cdoInternalPostDetach<wbr>(boolean)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalPostDetach(boolean)">org.eclipse.emf.spi.cdo.InternalCDOObject.cdoInternalPostDetach<wbr>(boolean)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.16 <a href="org/eclipse/emf/spi/cdo/InternalCDOObject.html#cdoInternalPostDetach(boolean,boolean)"><code>InternalCDOObject.cdoInternalPostDetach(boolean, boolean)</code></a> is called by the <code>CDOStateMachine</code>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage(int,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.handleRemoteSessionMessage<wbr>(int, CDORemoteSessionMessage)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage(int,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)">org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.handleRemoteSessionMessage<wbr>(int, CDORemoteSessionMessage)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.8 use <a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionMessage(int,java.lang.String,org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)"><code>InternalCDORemoteSessionManager.handleRemoteSessionMessage(int, String, CDORemoteSessionMessage)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionSubscribed(int,boolean)">org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.handleRemoteSessionSubscribed<wbr>(int, boolean)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionSubscribed(int,boolean)">org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.handleRemoteSessionSubscribed<wbr>(int, boolean)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.8 use <a href="org/eclipse/emf/spi/cdo/InternalCDORemoteSessionManager.html#handleRemoteSessionSubscribed(int,java.lang.String,boolean)"><code>InternalCDORemoteSessionManager.handleRemoteSessionSubscribed(int, String, boolean)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.getSharedDetachedObjects()</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.recalculateSharedDetachedObjects()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#getSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.getSharedDetachedObjects()</a></div>
 <div class="col-last even-row-color"></div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.cacheRevisions<wbr>(CDORevisionAvailabilityInfo)</a></div>
-<div class="col-last odd-row-color">
-<div class="deprecation-comment">As of 4.2 not used anymore.</div>
-</div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOSession.createRevisionAvailabilityInfo<wbr>(CDOBranchPoint)</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSavepoint.html#recalculateSharedDetachedObjects()">org.eclipse.emf.spi.cdo.InternalCDOSavepoint.recalculateSharedDetachedObjects()</a></div>
+<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#cacheRevisions(org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.cacheRevisions<wbr>(CDORevisionAvailabilityInfo)</a></div>
 <div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 not used anymore.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#getAuthenticator()">org.eclipse.emf.spi.cdo.InternalCDOSession.getAuthenticator()</a></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#createRevisionAvailabilityInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOSession.createRevisionAvailabilityInfo<wbr>(CDOBranchPoint)</a></div>
 <div class="col-last odd-row-color">
+<div class="deprecation-comment">As of 4.2 not used anymore.</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#getAuthenticator()">org.eclipse.emf.spi.cdo.InternalCDOSession.getAuthenticator()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 use <code>IPasswordCredentialsProvider.Provider.getCredentialsProvider()</code></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleBranchNotification<wbr>(InternalCDOBranch)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleBranchNotification(org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleBranchNotification<wbr>(InternalCDOBranch)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.3 no longer supported.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleCommitNotification<wbr>(CDOCommitInfo)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleCommitNotification<wbr>(CDOCommitInfo)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)"><code>InternalCDOSession.handleCommitNotification(CDOCommitInfo, boolean)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleCommitNotification<wbr>(CDOCommitInfo, boolean)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,boolean)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleCommitNotification<wbr>(CDOCommitInfo, boolean)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.3 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleCommitNotification(org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo)"><code>InternalCDOSession.handleCommitNotification(CommitNotificationInfo)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleLockNotification<wbr>(CDOLockChangeInfo, InternalCDOView)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView)">org.eclipse.emf.spi.cdo.InternalCDOSession.handleLockNotification<wbr>(CDOLockChangeInfo, InternalCDOView)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.12 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#handleLockNotification(org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo,org.eclipse.emf.spi.cdo.InternalCDOView,boolean)"><code>InternalCDOSession.handleLockNotification(CDOLockChangeInfo, InternalCDOView, boolean)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean)"><code>InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction, boolean)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction, boolean)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.3 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean,byte,java.util.Map)"><code>InternalCDOSession.invalidate(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map)</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean,byte,java.util.Map)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map&lt;CDOID, CDOPermission&gt;)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.cdo.common.commit.CDOCommitInfo,org.eclipse.emf.spi.cdo.InternalCDOTransaction,boolean,byte,java.util.Map)">org.eclipse.emf.spi.cdo.InternalCDOSession.invalidate<wbr>(CDOCommitInfo, InternalCDOTransaction, boolean, byte, Map&lt;CDOID, CDOPermission&gt;)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.6 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#invalidate(org.eclipse.emf.spi.cdo.InternalCDOSession.InvalidationData)"><code>InternalCDOSession.invalidate(InvalidationData)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestor()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getAncestor()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestor()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getAncestor()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.6 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetBase()"><code>InternalCDOSession.MergeData.getTargetBase()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestorInfo()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getAncestorInfo()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getAncestorInfo()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getAncestorInfo()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.6 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getTargetBaseInfo()"><code>InternalCDOSession.MergeData.getTargetBaseInfo()</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getBaseInfo()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getBaseInfo()</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getBaseInfo()">org.eclipse.emf.spi.cdo.InternalCDOSession.MergeData.getBaseInfo()</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.6 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.MergeData.html#getSourceBaseInfo()"><code>InternalCDOSession.MergeData.getSourceBaseInfo()</code></a>.</div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)">org.eclipse.emf.spi.cdo.InternalCDOSession.setAuthenticator<wbr>(CDOAuthenticator)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#setAuthenticator(org.eclipse.emf.cdo.common.protocol.CDOAuthenticator)">org.eclipse.emf.spi.cdo.InternalCDOSession.setAuthenticator<wbr>(CDOAuthenticator)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2 use <a href="org/eclipse/emf/spi/cdo/InternalCDOSession.html#setCredentialsProvider(org.eclipse.net4j.util.security.IPasswordCredentialsProvider)"><code>InternalCDOSession.setCredentialsProvider(IPasswordCredentialsProvider)</code></a></div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOTransaction.applyChangeSetData<wbr>(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSetData(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">org.eclipse.emf.spi.cdo.InternalCDOTransaction.applyChangeSetData<wbr>(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">Use
              <a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#applyChangeSet(org.eclipse.emf.cdo.common.commit.CDOChangeSetData,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.revision.CDORevisionProvider,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)"><code>InternalCDOTransaction.applyChangeSet(CDOChangeSetData, CDORevisionProvider, CDORevisionProvider, CDOBranchPoint, boolean)</code></a></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#getNextTemporaryID()">org.eclipse.emf.spi.cdo.InternalCDOTransaction.getNextTemporaryID()</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#getNextTemporaryID()">org.eclipse.emf.spi.cdo.InternalCDOTransaction.getNextTemporaryID()</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment"><a href="org/eclipse/emf/spi/cdo/InternalCDOTransaction.html#createIDForNewObject(org.eclipse.emf.ecore.EObject)"><code>InternalCDOTransaction.createIDForNewObject(EObject)</code></a> is called since 4.1.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">org.eclipse.emf.spi.cdo.InternalCDOView.getFeatureAnalyzer()</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.List,java.util.List,java.util.Map,boolean)">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate<wbr>(CDOBranch, long, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;, Map&lt;CDOID, InternalCDORevision&gt;, boolean)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#getFeatureAnalyzer()">org.eclipse.emf.spi.cdo.InternalCDOView.getFeatureAnalyzer()</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.List,java.util.List,java.util.Map,boolean)">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate<wbr>(CDOBranch, long, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;, Map&lt;CDOID, InternalCDORevision&gt;, boolean)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.2. use <a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.List,java.util.List,java.util.Map,boolean,boolean)"><code>InternalCDOView.invalidate(CDOBranch, long, List, List, Map, boolean, boolean)</code></a></div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.List,java.util.List,java.util.Map,boolean,boolean)">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate<wbr>(CDOBranch, long, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;, Map&lt;CDOID, InternalCDORevision&gt;, boolean, boolean)</a></div>
-<div class="col-last odd-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.cdo.common.branch.CDOBranch,long,java.util.List,java.util.List,java.util.Map,boolean,boolean)">org.eclipse.emf.spi.cdo.InternalCDOView.invalidate<wbr>(CDOBranch, long, List&lt;CDORevisionKey&gt;, List&lt;CDOIDAndVersion&gt;, Map&lt;CDOID, InternalCDORevision&gt;, boolean, boolean)</a></div>
+<div class="col-last even-row-color">
 <div class="deprecation-comment">As of 4.6. use <a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#invalidate(org.eclipse.emf.spi.cdo.InternalCDOView.ViewInvalidationData)"><code>InternalCDOView.invalidate(ViewInvalidationData)</code></a></div>
 </div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">org.eclipse.emf.spi.cdo.InternalCDOView.registerProxyResource<wbr>(CDOResourceImpl)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#registerProxyResource(org.eclipse.emf.cdo.eresource.impl.CDOResourceImpl)">org.eclipse.emf.spi.cdo.InternalCDOView.registerProxyResource<wbr>(CDOResourceImpl)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">No longer supported.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">org.eclipse.emf.spi.cdo.InternalCDOView.setFeatureAnalyzer<wbr>(CDOFeatureAnalyzer)</a></div>
-<div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#updateLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,boolean,java.util.function.Consumer)">org.eclipse.emf.spi.cdo.InternalCDOView.updateLockStates<wbr>(CDOLockState[], boolean, Consumer&lt;CDOLockState&gt;)</a></div>
-<div class="col-last even-row-color">
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#setFeatureAnalyzer(org.eclipse.emf.cdo.view.CDOFeatureAnalyzer)">org.eclipse.emf.spi.cdo.InternalCDOView.setFeatureAnalyzer<wbr>(CDOFeatureAnalyzer)</a></div>
+<div class="col-last even-row-color"></div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOView.html#updateLockStates(org.eclipse.emf.cdo.common.lock.CDOLockState%5B%5D,boolean,java.util.function.Consumer)">org.eclipse.emf.spi.cdo.InternalCDOView.updateLockStates<wbr>(CDOLockState[], boolean, Consumer&lt;CDOLockState&gt;)</a></div>
+<div class="col-last odd-row-color">
 <div class="deprecation-comment">As of 4.15 use <a href="org/eclipse/emf/spi/cdo/CDOLockStateCache.html#updateLockStates(org.eclipse.emf.cdo.common.branch.CDOBranch,java.util.Collection,java.util.Collection,java.util.function.Consumer)"><code>CDOLockStateCache.updateLockStates(CDOBranch, Collection, Collection, Consumer)</code></a>.</div>
 </div>
-<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOViewSet.html#resolveView(java.lang.String)">org.eclipse.emf.spi.cdo.InternalCDOViewSet.resolveView<wbr>(String)</a></div>
-<div class="col-last odd-row-color"></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/emf/spi/cdo/InternalCDOViewSet.html#resolveView(java.lang.String)">org.eclipse.emf.spi.cdo.InternalCDOViewSet.resolveView<wbr>(String)</a></div>
+<div class="col-last even-row-color"></div>
 </div>
 </div>
 </li>

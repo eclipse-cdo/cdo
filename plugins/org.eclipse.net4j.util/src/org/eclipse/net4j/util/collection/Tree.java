@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.collection;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
@@ -26,6 +27,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -720,7 +722,15 @@ public final class Tree implements Comparable<Tree>
     {
       ByteArrayOutputStream baos = new ByteArrayOutputStream();
       tree.visit(new Dumper(new PrintStream(baos)), "");
-      return baos.toString(StandardCharsets.UTF_8);
+
+      try
+      {
+        return baos.toString(StandardCharsets.UTF_8.name());
+      }
+      catch (UnsupportedEncodingException ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
     }
   }
 

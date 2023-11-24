@@ -507,6 +507,8 @@ public class LockingNotificationsTest extends AbstractLockingTest
     CDOObject cdoCompany = CDOUtil.getCDOObject(company);
     company.setName(company.getName() + "x"); // Make object DIRTY.
 
+    controlViewListener.clearEvents();
+
     switch (lockType)
     {
     case READ:
@@ -522,7 +524,6 @@ public class LockingNotificationsTest extends AbstractLockingTest
       break;
     }
 
-    controlViewListener.clearEvents();
     waitForActiveLockNotifications();
 
     if (sameBranch)

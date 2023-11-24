@@ -843,15 +843,11 @@ public final class Tree implements Comparable<Tree>
         if (attrNode.getNodeType() == Node.ATTRIBUTE_NODE)
         {
           Attr attr = (Attr)attrNode;
-          String name = attr.getName();
+
           String value = attr.getValue();
+          value = StringUtil.replace(value, parameters);
 
-          if (parameters != null)
-          {
-            value = StringUtil.replace(value, parameters);
-          }
-
-          builder.setAttribute(name, value);
+          builder.setAttribute(attr.getName(), value);
         }
       }
 

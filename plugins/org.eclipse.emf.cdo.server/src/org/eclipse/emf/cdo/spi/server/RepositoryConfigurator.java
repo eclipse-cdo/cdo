@@ -17,7 +17,6 @@ import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryFactory;
-import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
@@ -27,7 +26,6 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.XMLUtil.ElementHandler;
-import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
@@ -65,9 +63,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -78,6 +79,25 @@ import java.util.Map;
 public class RepositoryConfigurator implements IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_REPOSITORY, RepositoryConfigurator.class);
+
+  private static final String ELEM_PROPERTY = "property";
+
+  private static final String ELEM_STORE = "store";
+
+  private static final String ELEM_USER_MANAGER = "userManager";
+
+  private static final String ELEM_AUTHENTICATOR = "authenticator";
+
+  private static final String ELEM_OPERATION_AUTHORIZER = "operationAuthorizer";
+
+  private static final String ELEM_ACTIVITY_LOG = "activityLog";
+
+  private static final String ELEM_INITIAL_PACKAGE = "initialPackage";
+
+  private static final String[] BUILTIN_ELEMENTS = //
+      { ELEM_PROPERTY, ELEM_STORE, ELEM_USER_MANAGER, ELEM_AUTHENTICATOR, ELEM_OPERATION_AUTHORIZER, ELEM_ACTIVITY_LOG, ELEM_INITIAL_PACKAGE };
+
+  private static final Set<String> BUILTIN_ELEMENTS_SET = new HashSet<>(Arrays.asList(BUILTIN_ELEMENTS));
 
   private final IManagedContainer container;
 
@@ -235,6 +255,8 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       throw new IllegalArgumentException("Repository name is missing or empty"); //$NON-NLS-1$
     }
 
+    OM.LOG.info("CDO repository " + repositoryName + " starting");
+
     String repositoryType = getAttribute(repositoryConfig, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(repositoryType))
     {
@@ -258,7 +280,6 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
     setUserManager(repository, repositoryConfig);
     setAuthenticator(repository, repositoryConfig);
-    setProtector(repository, repositoryConfig);
     addOperationAuthorizers(repository, repositoryConfig);
     setActivityLog(repository, repositoryConfig);
 
@@ -266,6 +287,31 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     if (initialPackages.length != 0)
     {
       repository.setInitialPackages(initialPackages);
+    }
+
+    NodeList children = repositoryConfig.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++)
+    {
+      Node child = children.item(i);
+      if (child.getNodeType() == Node.ELEMENT_NODE)
+      {
+        Element childElement = (Element)child;
+        String childName = childElement.getNodeName();
+        if (BUILTIN_ELEMENTS_SET.contains(childName))
+        {
+          continue;
+        }
+
+        Extension extension = container.getElementOrNull(Extension.PRODUCT_GROUP, childName);
+        if (extension != null)
+        {
+          String message = extension.configureRepository(repository, childElement, parameters, container);
+          if (!StringUtil.isEmpty(message))
+          {
+            OM.LOG.info("CDO repository " + repository.getName() + " " + message);
+          }
+        }
+      }
     }
 
     return repository;
@@ -279,7 +325,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
   protected Element getUserManagerConfig(Element repositoryConfig)
   {
-    return getChildElement(repositoryConfig, "userManager"); //$NON-NLS-1$
+    return getChildElement(repositoryConfig, ELEM_USER_MANAGER);
   }
 
   protected IUserManager getUserManager(Element userManagerConfig) throws CoreException
@@ -329,7 +375,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
    */
   protected Element getAuthenticatorConfig(Element repositoryConfig)
   {
-    return getChildElement(repositoryConfig, "authenticator"); //$NON-NLS-1$
+    return getChildElement(repositoryConfig, ELEM_AUTHENTICATOR);
   }
 
   /**
@@ -380,27 +426,6 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   }
 
   /**
-   * @since 4.20
-   */
-  protected void setProtector(InternalRepository repository, Element repositoryConfig) throws CoreException
-  {
-    Element protectorConfig = getChildElement(repositoryConfig, "protector"); //$NON-NLS-1$
-    if (protectorConfig != null)
-    {
-      String type = getAttribute(protectorConfig, "type"); //$NON-NLS-1$
-      if (StringUtil.isEmpty(type))
-      {
-        type = IRepositoryProtector.DEFAULT_TYPE;
-      }
-
-      Tree config = Tree.XMLConverter.convertElementToTree(protectorConfig);
-
-      IRepositoryProtector protector = container.createElement(IRepositoryProtector.PRODUCT_GROUP, type, config);
-      repository.setProtector(protector);
-    }
-  }
-
-  /**
    * @since 4.15
    */
   protected void addOperationAuthorizers(InternalRepository repository, Element repositoryConfig) throws CoreException
@@ -412,7 +437,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       if (child.getNodeType() == Node.ELEMENT_NODE)
       {
         Element childElement = (Element)child;
-        if (childElement.getNodeName().equalsIgnoreCase("operationAuthorizer"))//$NON-NLS-1$
+        if (childElement.getNodeName().equalsIgnoreCase(ELEM_OPERATION_AUTHORIZER))
         {
           String type = getAttribute(childElement, "type"); //$NON-NLS-1$
           if (type == null)
@@ -449,7 +474,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
    */
   protected void setActivityLog(InternalRepository repository, Element repositoryConfig)
   {
-    Element activityLogElement = getChildElement(repositoryConfig, "activityLog"); //$NON-NLS-1$
+    Element activityLogElement = getChildElement(repositoryConfig, ELEM_ACTIVITY_LOG);
     if (activityLogElement != null)
     {
       RepositoryActivityLog activityLog = getContainerElement(activityLogElement, RepositoryActivityLog.Rolling.Factory.TYPE);
@@ -468,7 +493,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
       if (child.getNodeType() == Node.ELEMENT_NODE)
       {
         Element childElement = (Element)child;
-        if (childElement.getNodeName().equalsIgnoreCase("initialPackage"))//$NON-NLS-1$
+        if (childElement.getNodeName().equalsIgnoreCase(ELEM_INITIAL_PACKAGE))
         {
           String nsURI = getAttribute(childElement, "nsURI"); //$NON-NLS-1$
           if (nsURI == null)
@@ -493,7 +518,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
 
   protected Element getStoreConfig(Element repositoryConfig)
   {
-    Element storeElement = getChildElement(repositoryConfig, "store"); //$NON-NLS-1$
+    Element storeElement = getChildElement(repositoryConfig, ELEM_STORE);
     if (storeElement == null)
     {
       String repositoryName = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$
@@ -651,7 +676,7 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels, Map<String, String> parameters,
       IManagedContainer container)
   {
-    if ("property".equals(element.getNodeName())) //$NON-NLS-1$
+    if (ELEM_PROPERTY.equals(element.getNodeName()))
     {
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
@@ -698,6 +723,17 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.20
+   */
+  public interface Extension
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions"; //$NON-NLS-1$
+
+    public String configureRepository(InternalRepository repository, Element extensionConfig, Map<String, String> parameters, IManagedContainer container);
   }
 
   /**

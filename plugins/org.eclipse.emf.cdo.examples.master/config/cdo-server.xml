@@ -29,6 +29,7 @@
     <property name="optimisticLockingTimeout" value="10000"/>
 
     <!-- 
+    -->
     <protector>
       <userAuthenticator type="ldap">
         <environment id="base">
@@ -115,7 +116,6 @@
         </or>
       </revisionAuthorizer>
     </protector>
-    -->
 
     <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>

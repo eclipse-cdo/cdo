@@ -19,6 +19,7 @@
     
     <extension point="org.eclipse.net4j.util.productGroups">
        <productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="%productGroup.name"/>
+       <productGroup id="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" name="%productGroup.name.ext"/>
        <productGroup id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="%productGroup.name.0"/>
        <productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="%productGroup.name.1"/>
        <productGroup id="org.eclipse.emf.cdo.server.commands" name="%productGroup.name.2"/>
@@ -34,6 +35,7 @@
 
 		<extension point="org.eclipse.net4j.util.factories">
       	<factory productGroup="org.eclipse.emf.cdo.server.repositoryConfigurators" type="default" class="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator$Factory$Default"/>
+      	<simpleFactory productGroup="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" type="protector" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector$RepositoryConfiguratorExtension"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectors" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" type="ldap" productClass="org.eclipse.emf.cdo.internal.server.LDAPUserAuthenticator"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer"/>

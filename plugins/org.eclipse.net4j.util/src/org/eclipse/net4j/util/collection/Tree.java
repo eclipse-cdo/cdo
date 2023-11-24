@@ -818,11 +818,21 @@ public final class Tree implements Comparable<Tree>
 
     public static Tree convertDocumentToTree(Document document)
     {
+      return convertDocumentToTree(document, null);
+    }
+
+    public static Tree convertDocumentToTree(Document document, Map<String, String> parameters)
+    {
       Element element = document.getDocumentElement();
-      return convertElementToTree(element);
+      return convertElementToTree(element, parameters);
     }
 
     public static Tree convertElementToTree(Element element)
+    {
+      return convertElementToTree(element, null);
+    }
+
+    public static Tree convertElementToTree(Element element, Map<String, String> parameters)
     {
       Builder builder = builder().setName(element.getTagName());
 
@@ -833,7 +843,15 @@ public final class Tree implements Comparable<Tree>
         if (attrNode.getNodeType() == Node.ATTRIBUTE_NODE)
         {
           Attr attr = (Attr)attrNode;
-          builder.setAttribute(attr.getName(), attr.getValue());
+          String name = attr.getName();
+          String value = attr.getValue();
+
+          if (parameters != null)
+          {
+            value = StringUtil.replace(value, parameters);
+          }
+
+          builder.setAttribute(name, value);
         }
       }
 
@@ -844,7 +862,7 @@ public final class Tree implements Comparable<Tree>
         if (childNode.getNodeType() == Node.ELEMENT_NODE)
         {
           Element childElement = (Element)childNode;
-          builder.addChild(convertElementToTree(childElement));
+          builder.addChild(convertElementToTree(childElement, parameters));
         }
       }
 

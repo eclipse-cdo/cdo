@@ -37,11 +37,14 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -663,68 +666,33 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
     }
   }
 
-  // /**
-  // * @author Eike Stepper
-  // */
-  // public static class Factory extends IRepositoryProtector.Factory
-  // {
-  // public static final String TYPE = "default";
-  //
-  // public Factory()
-  // {
-  // super(TYPE);
-  // }
-  //
-  // public Factory(String type)
-  // {
-  // super(type);
-  // }
-  //
-  // @Override
-  // protected DefaultRepositoryProtector create(Tree config) throws ProductCreationException
-  // {
-  // DefaultRepositoryProtector protector = createRepositoryProtector(config);
-  // configureUserAuthenticator(protector, config);
-  // configureAuthorizationStrategy(protector, config);
-  // configureRevisionAuthorizers(protector, config);
-  // configureCommitHandlers(protector, config);
-  // return protector;
-  // }
-  //
-  // protected DefaultRepositoryProtector createRepositoryProtector(Tree config) throws ProductCreationException
-  // {
-  // return new DefaultRepositoryProtector();
-  // }
-  //
-  // protected void configureUserAuthenticator(DefaultRepositoryProtector protector, Tree config)
-  // {
-  // UserAuthenticator userAuthenticator = Objects
-  // .requireNonNull(configureElement(UserAuthenticator.class, config, "userAuthenticator",
-  // UserAuthenticator.Factory.PRODUCT_GROUP));
-  // protector.setUserAuthenticator(userAuthenticator);
-  // }
-  //
-  // protected void configureAuthorizationStrategy(DefaultRepositoryProtector protector, Tree config)
-  // {
-  // AuthorizationStrategy authorizationStrategy = Objects.requireNonNullElse(
-  // configureElement(AuthorizationStrategy.class, config, "authorizationStrategy",
-  // AuthorizationStrategy.Factory.PRODUCT_GROUP),
-  // AuthorizationStrategy.DEFAULT);
-  // protector.setAuthorizationStrategy(authorizationStrategy);
-  // }
-  //
-  // protected void configureRevisionAuthorizers(DefaultRepositoryProtector protector, Tree config)
-  // {
-  // configureElements(RevisionAuthorizer.class, config, "revisionAuthorizer", RevisionAuthorizer.Factory.PRODUCT_GROUP,
-  // protector::addRevisionAuthorizer);
-  // }
-  //
-  // protected void configureCommitHandlers(DefaultRepositoryProtector protector, Tree config)
-  // {
-  // configureElements(CommitHandler.class, config, "commitHandler", CommitHandler.Factory.PRODUCT_GROUP,
-  // protector::addCommitHandler);
-  // }
-  // }
+  /**
+   * @author Eike Stepper
+   */
+  public static final class RepositoryConfiguratorExtension implements RepositoryConfigurator.Extension
+  {
+    public RepositoryConfiguratorExtension()
+    {
+    }
+
+    @Override
+    public String configureRepository(InternalRepository repository, org.w3c.dom.Element protectorConfig, Map<String, String> parameters,
+        IManagedContainer container)
+    {
+      String type = protectorConfig.getAttribute("type"); //$NON-NLS-1$
+      if (StringUtil.isEmpty(type))
+      {
+        type = DEFAULT_TYPE;
+      }
+
+      Tree config = Tree.XMLConverter.convertElementToTree(protectorConfig, parameters);
+
+      IRepositoryProtector protector = container.createElement(IRepositoryProtector.PRODUCT_GROUP, type, config);
+      repository.setProtector(protector);
+
+      return "protected: " + type;
+    }
+  }
 
   /**
    * @author Eike Stepper

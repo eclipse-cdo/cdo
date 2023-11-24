@@ -54,10 +54,8 @@ public class Api2Html extends DefaultHandler
 
   private static final String NO_DOCS = "";
 
-  private static final String NO_TYPENAME = "NONE";
-
   private static final Pattern VERSION_CHANGED = Pattern
-      .compile("The ([^ ]+) version has been changed for the api component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
+      .compile("The ([^ ]+) version has been changed for the API component ([^ ]+) \\(from version ([^ ]+) to ([^ ]+)\\)");
 
   private int lastNodeID;
 
@@ -116,6 +114,12 @@ public class Api2Html extends DefaultHandler
         String kind = attributes.getValue("kind");
         String message = attributes.getValue("message");
 
+        boolean hasTypeName = !(typeName == null || typeName.length() == 0);
+        if (!hasTypeName)
+        {
+          typeName = "";
+        }
+
         if (componentID == null || componentID.length() == 0)
         {
           if (message.startsWith("The API component "))
@@ -134,13 +138,13 @@ public class Api2Html extends DefaultHandler
             }
             else
             {
-              System.out.println("No componentID: " + message);
+              System.out.println("No componentId: " + message);
               return;
             }
           }
         }
 
-        if (componentChange == null && (typeName == null || typeName.length() == 0))
+        if (componentChange == null && !hasTypeName)
         {
           Matcher matcher = VERSION_CHANGED.matcher(message);
           if (matcher.matches())
@@ -156,16 +160,25 @@ public class Api2Html extends DefaultHandler
           componentID = componentID.substring(0, pos);
         }
 
-        message = remove(message, typeName + ".");
+        if (hasTypeName)
+        {
+          message = remove(message, typeName + ".");
+        }
+
         message = remove(message, " in an interface that is tagged with '@noimplement'");
-        message = remove(message, " for interface " + typeName);
-        message = remove(message, " for class " + typeName);
+
+        if (hasTypeName)
+        {
+          message = remove(message, " for interface " + typeName);
+          message = remove(message, " for class " + typeName);
+        }
+
         if (message != null && message.startsWith("The deprecation modifiers has"))
         {
           message = "The deprecation modifier has" + message.substring("The deprecation modifiers has".length());
         }
 
-        if (!message.contains("modifier has been"))
+        if (hasTypeName && !message.contains("modifier has been"))
         {
           message = remove(message, " to " + typeName);
         }
@@ -201,21 +214,23 @@ public class Api2Html extends DefaultHandler
         }
         else
         {
-          if (typeName == null || typeName.length() == 0)
+          Change change = new Change(message, kind);
+          if (hasTypeName)
           {
-            System.out.println("No typeName: " + message);
-            typeName = NO_TYPENAME;
-          }
+            Type type = component.getTypes().get(typeName);
+            if (type == null)
+            {
+              type = new Type(component, typeName);
+              component.getTypes().put(typeName, type);
+            }
 
-          Type type = component.getTypes().get(typeName);
-          if (type == null)
+            type.setElementType(elementType);
+            type.getChanges().add(change);
+          }
+          else
           {
-            type = new Type(component, typeName);
-            component.getTypes().put(typeName, type);
+            component.getChanges().add(change);
           }
-
-          type.setElementType(elementType);
-          type.getChanges().add(new Change(message, kind));
         }
       }
       catch (Exception ex)
@@ -391,12 +406,6 @@ public class Api2Html extends DefaultHandler
 
   public static void main(String[] args) throws Exception
   {
-    if (args.length == 0)
-    {
-      // Just for local testing!
-      args = new String[] { "/develop", "R20120918-0947", "/develop/git/cdo/plugins", "/develop/ws/cdo/.buckminster/tp/plugins" };
-    }
-
     new Api2Html(new File(args[0]), args[1], args.length > 2 ? new File(args[2]) : null, args.length > 3 ? new File(args[3]) : null);
   }
 

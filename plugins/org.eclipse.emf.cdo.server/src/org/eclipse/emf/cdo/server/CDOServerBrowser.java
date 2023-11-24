@@ -489,7 +489,7 @@ public class CDOServerBrowser extends Worker
 
     public ContainerBased(IContainer<?> container)
     {
-      super(new HashMap<String, InternalRepository>());
+      super(new HashMap<>());
       this.container = container;
     }
 
@@ -559,7 +559,7 @@ public class CDOServerBrowser extends Worker
      */
     public static class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.browsers";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.browsers"; //$NON-NLS-1$
 
       public static final String TYPE = "default";
 
@@ -630,7 +630,7 @@ public class CDOServerBrowser extends Worker
    */
   public static interface Page
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.browserPages";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.browserPages"; //$NON-NLS-1$
 
     public String getName();
 

@@ -35,7 +35,7 @@ public final class AuthorizableOperationImpl
 
   public AuthorizableOperationImpl(String id)
   {
-    CheckUtil.checkArg(id, "id");
+    CheckUtil.checkArg(id, "id"); //$NON-NLS-1$
     this.id = id;
   }
 
@@ -60,8 +60,8 @@ public final class AuthorizableOperationImpl
 
   public AuthorizableOperationImpl parameter(String key, Object value)
   {
-    CheckUtil.checkArg(key, "key");
-    CheckUtil.checkArg(value, "value");
+    CheckUtil.checkArg(key, "key"); //$NON-NLS-1$
+    CheckUtil.checkArg(value, "value"); //$NON-NLS-1$
 
     parameters.put(key, value);
     return this;

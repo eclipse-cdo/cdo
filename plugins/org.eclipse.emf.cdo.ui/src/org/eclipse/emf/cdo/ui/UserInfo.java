@@ -348,12 +348,14 @@ public final class UserInfo
        */
       public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
       {
-        public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.userInfoStorages";
+        public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.userInfoStorages"; //$NON-NLS-1$
 
-        private static final String DEFAULT_TYPE = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.UserInfoStorageFactory.DEFAULT_TYPE",
+        private static final String DEFAULT_TYPE = OMPlatform.INSTANCE.getProperty( //
+            "org.eclipse.emf.cdo.ui.UserInfoStorageFactory.DEFAULT_TYPE", //$NON-NLS-1$
             PreferencesUserInfoStorage.Factory.TYPE);
 
-        private static final String DEFAULT_DESCRIPTION = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.ui.UserInfoStorageFactory.DEFAULT_DESCRIPTION");
+        private static final String DEFAULT_DESCRIPTION = OMPlatform.INSTANCE.getProperty( //
+            "org.eclipse.emf.cdo.ui.UserInfoStorageFactory.DEFAULT_DESCRIPTION"); //$NON-NLS-1$
 
         public Factory(String type)
         {

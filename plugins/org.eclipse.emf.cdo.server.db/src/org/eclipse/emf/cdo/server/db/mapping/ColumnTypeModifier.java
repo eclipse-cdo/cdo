@@ -53,7 +53,7 @@ public abstract class ColumnTypeModifier
     /**
      * The Net4j factory product group for column type modifiers.
      */
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.columnTypeModifiers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.columnTypeModifiers"; //$NON-NLS-1$
 
     public Factory(String type)
     {

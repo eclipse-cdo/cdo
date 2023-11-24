@@ -92,7 +92,7 @@ public interface InternalSecurityManager extends ISecurityManager, IManagedConta
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.commitHandlers";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.commitHandlers"; //$NON-NLS-1$
 
       public Factory(String type)
       {

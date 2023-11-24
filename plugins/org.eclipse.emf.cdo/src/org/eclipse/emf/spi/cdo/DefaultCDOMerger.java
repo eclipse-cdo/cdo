@@ -101,10 +101,10 @@ public class DefaultCDOMerger implements CDOMerger
    */
   public DefaultCDOMerger(ResolutionPreference resolutionPreference, ListOrdering listOrdering)
   {
-    CheckUtil.checkArg(resolutionPreference, "resolutionPreference");
+    CheckUtil.checkArg(resolutionPreference, "resolutionPreference"); //$NON-NLS-1$
     this.resolutionPreference = resolutionPreference;
 
-    CheckUtil.checkArg(listOrdering, "listOrdering");
+    CheckUtil.checkArg(listOrdering, "listOrdering"); //$NON-NLS-1$
     this.listOrdering = listOrdering;
   }
 
@@ -1622,11 +1622,11 @@ public class DefaultCDOMerger implements CDOMerger
         {
           if (side == Side.SOURCE)
           {
-            this.source = value;
+            source = value;
           }
           else
           {
-            this.target = value;
+            target = value;
           }
         }
 

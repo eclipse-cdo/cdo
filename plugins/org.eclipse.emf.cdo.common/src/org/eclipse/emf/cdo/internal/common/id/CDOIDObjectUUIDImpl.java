@@ -39,7 +39,7 @@ public final class CDOIDObjectUUIDImpl extends AbstractCDOID implements Internal
 
   private CDOIDObjectUUIDImpl(byte[] value)
   {
-    CheckUtil.checkArg(value, "Null not allowed");
+    CheckUtil.checkArg(value, "Null not allowed"); //$NON-NLS-1$
     this.value = value;
   }
 

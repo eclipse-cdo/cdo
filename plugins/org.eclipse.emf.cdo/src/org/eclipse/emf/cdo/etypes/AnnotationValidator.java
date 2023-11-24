@@ -64,15 +64,15 @@ public interface AnnotationValidator
    */
   public interface Registry
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.annotationValidators";
-  
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.annotationValidators"; //$NON-NLS-1$
+
     /**
      * The global instance of an annotation validator registry.
      */
     public static final Registry INSTANCE = new AnnotationValidatorRegistryImpl();
-  
+
     public Set<String> getAnnotationSources();
-  
+
     /**
      * Looks up the annotation source in the registry.
      */

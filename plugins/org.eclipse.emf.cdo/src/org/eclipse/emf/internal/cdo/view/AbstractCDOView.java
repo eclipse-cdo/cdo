@@ -609,7 +609,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
         if (rootResource == null)
         {
           getObject(rootResourceID);
-          CheckUtil.checkState(rootResource, "rootResource");
+          CheckUtil.checkState(rootResource, "rootResource"); //$NON-NLS-1$
         }
 
         return rootResource;

@@ -141,7 +141,7 @@ public final class AuthorizableOperation
 
     public Builder(String id)
     {
-      CheckUtil.checkArg(id, "id");
+      CheckUtil.checkArg(id, "id"); //$NON-NLS-1$
       this.id = id.intern();
     }
 
@@ -162,8 +162,8 @@ public final class AuthorizableOperation
 
     public Builder parameter(String key, Object value)
     {
-      CheckUtil.checkArg(key, "key");
-      CheckUtil.checkArg(value, "value");
+      CheckUtil.checkArg(key, "key"); //$NON-NLS-1$
+      CheckUtil.checkArg(value, "value"); //$NON-NLS-1$
 
       parameters.put(key.intern(), value);
       return this;

@@ -27,7 +27,7 @@ import java.util.Timer;
  */
 public class TimerLifecycle extends Timer implements ILifecycle
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.timers";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.timers"; //$NON-NLS-1$
 
   private Lifecycle delegate = new Lifecycle()
   {

@@ -42,7 +42,7 @@ import java.util.List;
  */
 public class FailoverMonitor extends Container<AgentProtocol>
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.net4j.failoverMonitors";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.net4j.failoverMonitors"; //$NON-NLS-1$
 
   public static final String PROTOCOL_NAME = "failover"; //$NON-NLS-1$
 
@@ -167,7 +167,7 @@ public class FailoverMonitor extends Container<AgentProtocol>
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(group, "group");
+    checkState(group, "group"); //$NON-NLS-1$
   }
 
   protected AgentProtocol electNewMaster(List<AgentProtocol> agents)

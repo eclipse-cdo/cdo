@@ -70,8 +70,8 @@ public class CDOTreeExpansionAgent
 
   public CDOTreeExpansionAgent(final CDOView view, final TreeViewer viewer)
   {
-    CheckUtil.checkArg(view, "view");
-    CheckUtil.checkArg(viewer, "viewer");
+    CheckUtil.checkArg(view, "view"); //$NON-NLS-1$
+    CheckUtil.checkArg(viewer, "viewer"); //$NON-NLS-1$
 
     this.view = view;
     this.viewer = viewer;

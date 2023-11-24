@@ -68,7 +68,7 @@ public class CommitIntegrityCheck
   {
     transaction = commitContext.getTransaction();
 
-    CheckUtil.checkArg(style, "style");
+    CheckUtil.checkArg(style, "style"); //$NON-NLS-1$
     this.style = style;
 
     newIDs = commitContext.getNewObjects().keySet();
@@ -435,7 +435,7 @@ public class CommitIntegrityCheck
     // the object may have already been dirty prior to detachment, so we check the
     // clean revisions first.
     InternalCDORevision cleanRev = transaction.getCleanRevisions().get(referencer);
-    CheckUtil.checkState(cleanRev, "cleanRev");
+    CheckUtil.checkState(cleanRev, "cleanRev"); //$NON-NLS-1$
 
     InternalCDOClassInfo referencerClassInfo = ((InternalCDOObject)referencer).cdoClassInfo();
     for (EReference reference : referencerClassInfo.getAllPersistentReferences())
@@ -467,7 +467,7 @@ public class CommitIntegrityCheck
 
   private void checkBidiRefTargetIncluded(Object refTarget, CDOObject referencer, String refName, String msgFrag) throws CommitIntegrityException
   {
-    CheckUtil.checkArg(refTarget, "refTarget");
+    CheckUtil.checkArg(refTarget, "refTarget"); //$NON-NLS-1$
     CDOID refTargetID = null;
     if (refTarget instanceof EObject)
     {

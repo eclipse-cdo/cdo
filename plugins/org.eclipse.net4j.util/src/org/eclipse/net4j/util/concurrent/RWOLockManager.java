@@ -101,10 +101,10 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
       LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler) //
       throws InterruptedException, TimeoutRuntimeException
   {
-    CheckUtil.checkArg(context, "context");
-    CheckUtil.checkArg(objects, "objects");
-    CheckUtil.checkArg(lockType, "lockType");
-    CheckUtil.checkArg(count >= 0, "count >= 0");
+    CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
+    CheckUtil.checkArg(objects, "objects"); //$NON-NLS-1$
+    CheckUtil.checkArg(lockType, "lockType"); //$NON-NLS-1$
+    CheckUtil.checkArg(count >= 0, "count >= 0"); //$NON-NLS-1$
 
     long deadline = timeout == NO_TIMEOUT ? Long.MAX_VALUE : currentTimeMillis() + timeout;
 
@@ -213,8 +213,8 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
   public long unlock(CONTEXT context, Collection<? extends OBJECT> objects, LockType lockType, int count, //
       LockDeltaHandler<OBJECT, CONTEXT> deltaHandler, Consumer<LockState<OBJECT, CONTEXT>> stateHandler)
   {
-    CheckUtil.checkArg(context, "context");
-    CheckUtil.checkArg(count >= -1, "count >= -1");
+    CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
+    CheckUtil.checkArg(count >= -1, "count >= -1"); //$NON-NLS-1$
 
     LockType[] lockTypes = lockType == null ? ALL_LOCK_TYPES_ARRAY : LOCK_TYPE_ARRAYS[lockType.ordinal()];
     List<LockState<OBJECT, CONTEXT>> modifiedLockStates = new ArrayList<>();
@@ -585,7 +585,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
      */
     public int getLockCount(LockType type, CONTEXT context)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
 
       switch (type)
       {
@@ -605,7 +605,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     public boolean hasLock(LockType type, CONTEXT context, boolean byOthers)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
 
       switch (type)
       {
@@ -773,7 +773,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     boolean canLock(LockType type, CONTEXT context)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
       switch (type)
       {
       case READ:
@@ -792,7 +792,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     boolean canUnlock(LockType type, CONTEXT context)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
       switch (type)
       {
       case READ:
@@ -811,7 +811,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     int lock(LockType type, CONTEXT context, int count)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
       switch (type)
       {
       case READ:
@@ -830,7 +830,7 @@ public class RWOLockManager<OBJECT, CONTEXT> extends Lifecycle implements IRWOLo
 
     int unlock(LockType type, CONTEXT context, int count)
     {
-      CheckUtil.checkArg(context, "context");
+      CheckUtil.checkArg(context, "context"); //$NON-NLS-1$
       switch (type)
       {
       case READ:

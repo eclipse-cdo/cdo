@@ -203,7 +203,7 @@ public class CDOHandlingConflictResolver extends CDOMergingConflictResolver impl
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.conflictHandlers";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.conflictHandlers"; //$NON-NLS-1$
 
       public Factory(String type)
       {

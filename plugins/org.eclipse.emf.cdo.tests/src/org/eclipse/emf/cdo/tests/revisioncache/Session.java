@@ -108,7 +108,7 @@ public class Session extends Lifecycle
    */
   public CDOSession getSession()
   {
-    CheckUtil.checkState(session != null, "Session not activated!");
+    CheckUtil.checkState(session != null, "Session not activated!"); //$NON-NLS-1$
     return session;
   }
 

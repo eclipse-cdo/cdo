@@ -29,7 +29,7 @@ import java.util.Dictionary;
  */
 public abstract class CDOCommand extends org.eclipse.net4j.util.factory.Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.commands";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.commands"; //$NON-NLS-1$
 
   public static final String INDENT = "   "; //$NON-NLS-1$
 

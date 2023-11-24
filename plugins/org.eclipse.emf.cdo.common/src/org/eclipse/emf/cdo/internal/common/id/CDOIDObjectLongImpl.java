@@ -37,7 +37,7 @@ public final class CDOIDObjectLongImpl extends AbstractCDOID implements Internal
 
   private CDOIDObjectLongImpl(long value)
   {
-    CheckUtil.checkArg(value != 0L, "Zero not allowed");
+    CheckUtil.checkArg(value != 0L, "Zero not allowed"); //$NON-NLS-1$
     this.value = value;
   }
 

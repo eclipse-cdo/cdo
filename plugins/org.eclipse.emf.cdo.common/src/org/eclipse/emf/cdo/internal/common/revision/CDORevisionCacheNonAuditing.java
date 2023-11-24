@@ -201,7 +201,7 @@ public class CDORevisionCacheNonAuditing extends AbstractCDORevisionCache
   @Override
   public CDORevision internRevision(CDORevision revision)
   {
-    CheckUtil.checkArg(revision, "revision");
+    CheckUtil.checkArg(revision, "revision"); //$NON-NLS-1$
     checkBranch(revision.getBranch());
 
     if (!revision.isHistorical())

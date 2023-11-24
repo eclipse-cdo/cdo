@@ -411,9 +411,9 @@ public class CDOAdminServer extends AbstractCDOAdmin implements IManagedContaine
    */
   public static class Factory extends org.eclipse.net4j.util.factory.Factory implements IManagedContainerProvider
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.admin.adminServers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.admin.adminServers"; //$NON-NLS-1$
 
-    public static final String TYPE = "default";
+    public static final String TYPE = "default"; //$NON-NLS-1$
 
     private final IManagedContainer container;
 

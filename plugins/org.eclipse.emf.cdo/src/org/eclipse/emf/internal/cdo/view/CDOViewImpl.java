@@ -390,7 +390,7 @@ public class CDOViewImpl extends AbstractCDOView
   public void lockObjects(Collection<? extends CDOObject> objects, LockType lockType, long timeout, boolean recursive) throws InterruptedException
   {
     checkActive();
-    checkState(!isHistorical(), "Locking not supported for historial views");
+    checkState(!isHistorical(), "Locking not supported for historial views"); //$NON-NLS-1$
 
     List<CDOLockDelta> newObjectLockDeltas = new ArrayList<>();
     List<CDOLockState> newObjectLockStates = new ArrayList<>();
@@ -938,7 +938,7 @@ public class CDOViewImpl extends AbstractCDOView
   public void refreshLockStates(Consumer<CDOLockState> consumer)
   {
     checkActive();
-    checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views");
+    checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views"); //$NON-NLS-1$
 
     synchronized (getViewMonitor())
     {

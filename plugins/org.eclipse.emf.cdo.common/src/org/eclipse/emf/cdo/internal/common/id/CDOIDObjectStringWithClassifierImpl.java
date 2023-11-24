@@ -41,7 +41,7 @@ public final class CDOIDObjectStringWithClassifierImpl extends AbstractCDOID imp
 
   private CDOIDObjectStringWithClassifierImpl(String value, CDOClassifierRef classifierRef)
   {
-    CheckUtil.checkArg(value, "Null not allowed");
+    CheckUtil.checkArg(value, "Null not allowed"); //$NON-NLS-1$
     this.value = value;
     this.classifierRef = classifierRef;
   }

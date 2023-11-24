@@ -493,7 +493,7 @@ public abstract class DBAdapter implements IDBAdapter
    */
   protected void createTable(Connection connection, IDBTable table, IDBTableDelta delta)
   {
-    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADD, "Not added: " + delta.getName());
+    CheckUtil.checkArg(delta.getChangeKind() == ChangeKind.ADD, "Not added: " + delta.getName()); //$NON-NLS-1$
 
     StringBuilder builder = new StringBuilder();
     builder.append("CREATE TABLE "); //$NON-NLS-1$

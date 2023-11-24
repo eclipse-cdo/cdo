@@ -257,7 +257,7 @@ public class CDORevisionManagerImpl extends Lifecycle implements InternalCDORevi
   @Override
   public InternalCDORevision getRevisionByVersion(CDOID id, CDOBranchVersion branchVersion, int referenceChunk, boolean loadOnDemand)
   {
-    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: " + branchVersion.getVersion());
+    checkArg(branchVersion.getVersion() >= CDOBranchVersion.FIRST_VERSION, "Invalid version: " + branchVersion.getVersion()); //$NON-NLS-1$
     acquireAtomicRequestLock(loadAndAddLock);
 
     try

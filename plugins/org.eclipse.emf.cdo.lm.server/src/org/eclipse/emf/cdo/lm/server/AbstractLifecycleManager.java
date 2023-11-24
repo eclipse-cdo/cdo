@@ -240,8 +240,8 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(systemRepository, "systemRepository");
-    checkState(systemName, "systemName");
+    checkState(systemRepository, "systemRepository"); //$NON-NLS-1$
+    checkState(systemName, "systemName"); //$NON-NLS-1$
 
     if (SECURITY_AVAILABLE)
     {
@@ -1099,7 +1099,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.lm.server.lifecycleManagers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.lm.server.lifecycleManagers"; //$NON-NLS-1$
 
     protected Factory(String type)
     {

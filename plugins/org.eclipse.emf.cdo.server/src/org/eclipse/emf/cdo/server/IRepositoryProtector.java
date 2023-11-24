@@ -37,9 +37,9 @@ import java.util.function.BiPredicate;
  */
 public interface IRepositoryProtector extends IManagedContainerProvider
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectors";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectors"; //$NON-NLS-1$
 
-  public static final String DEFAULT_TYPE = "default";
+  public static final String DEFAULT_TYPE = "default"; //$NON-NLS-1$
 
   public boolean isFirstTime();
 
@@ -159,7 +159,7 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      checkState(repositoryProtector, "repositoryProtector");
+      checkState(repositoryProtector, "repositoryProtector"); //$NON-NLS-1$
     }
   }
 
@@ -168,7 +168,7 @@ public interface IRepositoryProtector extends IManagedContainerProvider
    */
   public static abstract class UserAuthenticator extends Element
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators"; //$NON-NLS-1$
 
     public UserAuthenticator()
     {
@@ -197,9 +197,9 @@ public interface IRepositoryProtector extends IManagedContainerProvider
    */
   public static abstract class AuthorizationStrategy extends Element implements BiPredicate<CDOPermission, CDOPermission>
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies"; //$NON-NLS-1$
 
-    public static final String DEFAULT_TYPE = "additive";
+    public static final String DEFAULT_TYPE = "additive"; //$NON-NLS-1$
 
     /**
      * The {@link Additive additive} default authorization strategy.
@@ -291,8 +291,8 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      checkState(initialPermission, "initialPermission");
-      checkState(terminalPermission, "terminalPermission");
+      checkState(initialPermission, "initialPermission"); //$NON-NLS-1$
+      checkState(terminalPermission, "terminalPermission"); //$NON-NLS-1$
     }
 
     /**
@@ -345,7 +345,7 @@ public interface IRepositoryProtector extends IManagedContainerProvider
    */
   public static abstract class RevisionAuthorizer extends Element
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers"; //$NON-NLS-1$
 
     private Operation operation = Operation.COMBINE;
 
@@ -392,7 +392,7 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     protected void doBeforeActivate() throws Exception
     {
       super.doBeforeActivate();
-      checkState(operation, "operation");
+      checkState(operation, "operation"); //$NON-NLS-1$
     }
 
     /**
@@ -409,7 +409,7 @@ public interface IRepositoryProtector extends IManagedContainerProvider
    */
   public static abstract class CommitHandler extends Element
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers"; //$NON-NLS-1$
 
     public CommitHandler()
     {

@@ -401,9 +401,9 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
   @Override
   protected void doBeforeActivate() throws Exception
   {
-    checkState(repository, "repository");
-    checkState(userAuthenticator, "userAuthenticator");
-    checkState(authorizationStrategy, "authorizationStrategy");
+    checkState(repository, "repository"); //$NON-NLS-1$
+    checkState(userAuthenticator, "userAuthenticator"); //$NON-NLS-1$
+    checkState(authorizationStrategy, "authorizationStrategy"); //$NON-NLS-1$
   }
 
   @Override

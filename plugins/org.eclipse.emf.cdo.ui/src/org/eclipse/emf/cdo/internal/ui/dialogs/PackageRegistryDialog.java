@@ -61,7 +61,7 @@ import java.util.Set;
  */
 public class PackageRegistryDialog extends TitleAreaDialog
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.packageRegistryDialogCustomizers";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.packageRegistryDialogCustomizers"; //$NON-NLS-1$
 
   private static final String TITLE = Messages.getString("PackageRegistryDialog.0"); //$NON-NLS-1$
 

@@ -202,10 +202,10 @@ public abstract class FailoverAgent extends Lifecycle implements CDOSessionConfi
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(monitorConnector, "monitorConnector");
-    checkState(group, "group");
-    checkState(connectorDescription, "connectorDescription");
-    checkState(repository, "repository");
+    checkState(monitorConnector, "monitorConnector"); //$NON-NLS-1$
+    checkState(group, "group"); //$NON-NLS-1$
+    checkState(connectorDescription, "connectorDescription"); //$NON-NLS-1$
+    checkState(repository, "repository"); //$NON-NLS-1$
   }
 
   @Override

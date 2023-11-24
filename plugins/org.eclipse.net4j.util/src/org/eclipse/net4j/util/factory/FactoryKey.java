@@ -32,7 +32,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
 
   public FactoryKey(String productGroup, String type)
   {
-    CheckUtil.checkArg(!StringUtil.isEmpty(productGroup), "productGroup is empty");
+    CheckUtil.checkArg(!StringUtil.isEmpty(productGroup), "productGroup is empty"); //$NON-NLS-1$
     this.productGroup = productGroup;
     this.type = type;
   }
@@ -90,7 +90,7 @@ public final class FactoryKey implements IFactoryKey, Serializable, Comparable<F
     {
       result = StringUtil.compare(type, key.type);
     }
-  
+
     return result;
   }
 

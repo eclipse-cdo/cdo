@@ -40,7 +40,7 @@ public class StaleRevisionLockException extends CDOException
 
   public StaleRevisionLockException(CDORevisionKey[] staleRevisions)
   {
-    CheckUtil.checkArg(staleRevisions, "staleRevisions");
+    CheckUtil.checkArg(staleRevisions, "staleRevisions"); //$NON-NLS-1$
     this.staleRevisions = staleRevisions;
   }
 

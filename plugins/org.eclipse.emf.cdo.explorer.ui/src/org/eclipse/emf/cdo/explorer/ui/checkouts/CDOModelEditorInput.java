@@ -61,7 +61,7 @@ public class CDOModelEditorInput extends PlatformObject implements CDOEditorInpu
 
   public CDOModelEditorInput(URI uri)
   {
-    CheckUtil.checkArg(uri, "uri is null");
+    CheckUtil.checkArg(uri, "uri is null"); //$NON-NLS-1$
     this.uri = uri;
   }
 

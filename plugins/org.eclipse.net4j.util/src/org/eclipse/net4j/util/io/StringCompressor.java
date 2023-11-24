@@ -451,7 +451,7 @@ public class StringCompressor implements StringIO
 
     public ID(int value)
     {
-      CheckUtil.checkArg(value != INFO_FOLLOWS, "value");
+      CheckUtil.checkArg(value != INFO_FOLLOWS, "value"); //$NON-NLS-1$
       this.value = value;
     }
 

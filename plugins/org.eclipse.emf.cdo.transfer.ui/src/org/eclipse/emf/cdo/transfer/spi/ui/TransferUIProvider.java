@@ -58,7 +58,7 @@ public interface TransferUIProvider
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.transfer.ui.providers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.transfer.ui.providers"; //$NON-NLS-1$
 
     protected Factory(String type)
     {

@@ -196,13 +196,13 @@ public class CDOBranchTagImpl extends Notifier implements CDOBranchTag
 
   private static void checkName(String name)
   {
-    CheckUtil.checkArg(name != null && !name.isEmpty(), "Invalid name");
+    CheckUtil.checkArg(name != null && !name.isEmpty(), "Invalid name"); //$NON-NLS-1$
   }
 
   private static void checkBranchPoint(CDOBranch branch, long timeStamp)
   {
-    CheckUtil.checkArg(branch, "branch");
-    CheckUtil.checkArg(timeStamp > CDOBranchPoint.UNSPECIFIED_DATE, "Invalid timeStamp");
+    CheckUtil.checkArg(branch, "branch"); //$NON-NLS-1$
+    CheckUtil.checkArg(timeStamp > CDOBranchPoint.UNSPECIFIED_DATE, "Invalid timeStamp"); //$NON-NLS-1$
   }
 
   /**

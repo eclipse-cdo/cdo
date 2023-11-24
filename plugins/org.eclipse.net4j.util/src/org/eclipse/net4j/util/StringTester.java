@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @FunctionalInterface
 public interface StringTester extends BiPredicate<String, String>
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringTesters";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringTesters"; //$NON-NLS-1$
 
   public static final StringTester EQ = (s1, s2) -> s1.equals(s2);
 

@@ -60,7 +60,7 @@ public abstract class RevisionInfo
 
   protected RevisionInfo(CDODataInput in, CDOBranchPoint requestedBranchPoint) throws IOException
   {
-    CheckUtil.checkArg(requestedBranchPoint, "requestedBranchPoint");
+    CheckUtil.checkArg(requestedBranchPoint, "requestedBranchPoint"); //$NON-NLS-1$
     id = in.readCDOID();
     this.requestedBranchPoint = requestedBranchPoint;
   }

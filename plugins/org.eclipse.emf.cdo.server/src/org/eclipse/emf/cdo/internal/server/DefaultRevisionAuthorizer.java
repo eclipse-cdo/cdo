@@ -102,8 +102,8 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(permission, "permission");
-    checkState(matcher, "matcher");
+    checkState(permission, "permission"); //$NON-NLS-1$
+    checkState(matcher, "matcher"); //$NON-NLS-1$
   }
 
   @Override
@@ -125,7 +125,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
    */
   public static abstract class Matcher extends Lifecycle
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.revisionAuthorizerMatchers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.revisionAuthorizerMatchers"; //$NON-NLS-1$
 
     private DefaultRevisionAuthorizer revisionAuthorizer;
 
@@ -219,7 +219,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      checkState(ref, "ref");
+      checkState(ref, "ref"); //$NON-NLS-1$
     }
 
     @Override
@@ -312,7 +312,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      checkState(arguments.get().length > 0, "arguments");
+      checkState(arguments.get().length > 0, "arguments"); //$NON-NLS-1$
     }
 
     @Override
@@ -586,7 +586,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
         test = StringTester.EQ;
       }
 
-      checkState(value, "value");
+      checkState(value, "value"); //$NON-NLS-1$
     }
 
     /**
@@ -1089,7 +1089,7 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
     protected void doBeforeActivate() throws Exception
     {
       super.doBeforeActivate();
-      checkState(key, "key");
+      checkState(key, "key"); //$NON-NLS-1$
     }
 
     /**

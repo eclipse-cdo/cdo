@@ -41,7 +41,7 @@ public class XMLLifecycleManager extends AbstractLifecycleManager
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(moduleTemplateElement, "moduleTemplateElement");
+    checkState(moduleTemplateElement, "moduleTemplateElement"); //$NON-NLS-1$
   }
 
   @Override
@@ -86,7 +86,7 @@ public class XMLLifecycleManager extends AbstractLifecycleManager
     @Deprecated
     public static final String PRODUCT_GROUP = AbstractLifecycleManager.Factory.PRODUCT_GROUP;
 
-    public static final String DEFAULT_TYPE = "default";
+    public static final String DEFAULT_TYPE = "default"; //$NON-NLS-1$
 
     public Factory()
     {

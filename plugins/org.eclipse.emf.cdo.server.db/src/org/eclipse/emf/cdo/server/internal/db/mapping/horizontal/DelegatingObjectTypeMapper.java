@@ -108,7 +108,7 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(delegate, "delegate");
+    checkState(delegate, "delegate"); //$NON-NLS-1$
   }
 
   @Override

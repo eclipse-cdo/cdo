@@ -286,7 +286,7 @@ public class Session extends Container<IView> implements InternalSession
   public void setPassiveUpdateMode(PassiveUpdateMode passiveUpdateMode)
   {
     checkActive();
-    checkArg(passiveUpdateMode, "passiveUpdateMode");
+    checkArg(passiveUpdateMode, "passiveUpdateMode"); //$NON-NLS-1$
     this.passiveUpdateMode = passiveUpdateMode;
   }
 
@@ -333,7 +333,7 @@ public class Session extends Container<IView> implements InternalSession
   public void setLockNotificationMode(LockNotificationMode lockNotificationMode)
   {
     checkActive();
-    checkArg(lockNotificationMode, "lockNotificationMode");
+    checkArg(lockNotificationMode, "lockNotificationMode"); //$NON-NLS-1$
     this.lockNotificationMode = lockNotificationMode;
   }
 
@@ -346,7 +346,7 @@ public class Session extends Container<IView> implements InternalSession
   @Override
   public void setOpeningTime(long openingTime)
   {
-    checkState(this.openingTime == 0, "Opening time is already set");
+    checkState(this.openingTime == 0, "Opening time is already set"); //$NON-NLS-1$
     this.openingTime = openingTime;
   }
 

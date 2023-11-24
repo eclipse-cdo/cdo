@@ -804,7 +804,7 @@ public class Repository extends Container<Object> implements InternalRepository
       case AVAILABLE_NORMAL: // direct == false
       {
         RevisionInfo.Available.Normal availableInfo = (RevisionInfo.Available.Normal)info;
-        checkArg(availableInfo.isDirect() == false, "Load is not needed");
+        checkArg(availableInfo.isDirect() == false, "Load is not needed"); //$NON-NLS-1$
         break;
       }
 
@@ -812,7 +812,7 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         RevisionInfo.Available.Pointer pointerInfo = (RevisionInfo.Available.Pointer)info;
         boolean needsTarget = !pointerInfo.hasTarget();
-        checkArg(pointerInfo.isDirect() == false || needsTarget, "Load is not needed");
+        checkArg(pointerInfo.isDirect() == false || needsTarget, "Load is not needed"); //$NON-NLS-1$
 
         if (needsTarget)
         {
@@ -832,7 +832,7 @@ public class Repository extends Container<Object> implements InternalRepository
       case AVAILABLE_DETACHED: // direct == false
       {
         RevisionInfo.Available.Detached detachedInfo = (RevisionInfo.Available.Detached)info;
-        checkArg(detachedInfo.isDirect() == false, "Load is not needed");
+        checkArg(detachedInfo.isDirect() == false, "Load is not needed"); //$NON-NLS-1$
         break;
       }
 

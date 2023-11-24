@@ -21,7 +21,7 @@ import org.eclipse.emf.ecore.resource.URIHandler;
  */
 public abstract class URIHandlerFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.util.uriHandlers";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.util.uriHandlers"; //$NON-NLS-1$
 
   public URIHandlerFactory(String type)
   {

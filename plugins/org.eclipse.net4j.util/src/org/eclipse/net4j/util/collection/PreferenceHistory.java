@@ -22,7 +22,7 @@ public class PreferenceHistory extends History<String>
 
   public PreferenceHistory(OMPreference<String[]> preference)
   {
-    CheckUtil.checkArg(preference, "preference");
+    CheckUtil.checkArg(preference, "preference"); //$NON-NLS-1$
     this.preference = preference;
   }
 

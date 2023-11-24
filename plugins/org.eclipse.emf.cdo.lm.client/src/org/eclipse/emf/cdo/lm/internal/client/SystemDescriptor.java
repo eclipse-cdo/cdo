@@ -244,8 +244,8 @@ public final class SystemDescriptor implements ISystemDescriptor
 
   public SystemDescriptor(CDORepository systemRepository, String systemName)
   {
-    CheckUtil.checkArg(systemRepository, "systemRepository");
-    CheckUtil.checkArg(systemName, "systemName");
+    CheckUtil.checkArg(systemRepository, "systemRepository"); //$NON-NLS-1$
+    CheckUtil.checkArg(systemName, "systemName"); //$NON-NLS-1$
     this.systemRepository = systemRepository;
     this.systemName = systemName;
   }

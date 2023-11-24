@@ -598,7 +598,7 @@ public class CommitHistoryComposite extends Composite
     private boolean determineOffline()
     {
       IRegistry<String, Object> properties = session.properties();
-      return properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace");
+      return properties.containsKey("org.eclipse.emf.cdo.workspace.CDOWorkspace"); //$NON-NLS-1$
     }
 
     /**
@@ -614,7 +614,7 @@ public class CommitHistoryComposite extends Composite
        */
       public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
       {
-        public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.historyInputObjectModifiers";
+        public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.ui.historyInputObjectModifiers"; //$NON-NLS-1$
 
         public Factory(String type)
         {

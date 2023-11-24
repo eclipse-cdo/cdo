@@ -131,11 +131,11 @@ public final class CDOIDExternalImpl extends AbstractCDOID implements CDOIDExter
 
   static void checkURI(String uri)
   {
-    CheckUtil.checkArg(uri, "Null not allowed");
+    CheckUtil.checkArg(uri, "Null not allowed"); //$NON-NLS-1$
 
     if (checkFragment)
     {
-      CheckUtil.checkArg(!uri.endsWith("#NNULL"), "Fragment 'NNULL' not allowed");
+      CheckUtil.checkArg(!uri.endsWith("#NNULL"), "Fragment 'NNULL' not allowed"); //$NON-NLS-1$ //$NON-NLS-2$
     }
   }
 

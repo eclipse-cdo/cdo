@@ -28,7 +28,7 @@ public class CDOIDAndVersionImpl implements CDOIDAndVersion
 
   public CDOIDAndVersionImpl(CDOID id, int version)
   {
-    CheckUtil.checkArg(id, "id");
+    CheckUtil.checkArg(id, "id"); //$NON-NLS-1$
 
     this.id = id;
     this.version = version;

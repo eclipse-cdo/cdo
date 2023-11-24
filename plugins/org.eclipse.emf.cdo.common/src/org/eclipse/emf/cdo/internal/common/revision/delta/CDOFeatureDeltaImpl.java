@@ -36,7 +36,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
 
   protected CDOFeatureDeltaImpl(EStructuralFeature feature)
   {
-    CheckUtil.checkArg(feature, "feature");
+    CheckUtil.checkArg(feature, "feature"); //$NON-NLS-1$
     this.feature = feature;
   }
 
@@ -44,7 +44,7 @@ public abstract class CDOFeatureDeltaImpl implements InternalCDOFeatureDelta
   {
     int featureID = in.readXInt();
     feature = eClass.getEStructuralFeature(featureID);
-    CheckUtil.checkState(feature, "feature");
+    CheckUtil.checkState(feature, "feature"); //$NON-NLS-1$
   }
 
   public void write(CDODataOutput out, EClass eClass) throws IOException

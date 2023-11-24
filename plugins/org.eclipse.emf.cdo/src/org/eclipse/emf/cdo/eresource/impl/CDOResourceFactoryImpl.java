@@ -131,7 +131,7 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.resourceSetClassNameProviders";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.resourceSetClassNameProviders"; //$NON-NLS-1$
 
       public Factory(String type)
       {

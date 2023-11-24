@@ -253,7 +253,7 @@ public final class DBConnection extends DelegatingConnection implements IDBConne
     {
       if (VALIDATE_CHECKOUTS)
       {
-        CheckUtil.checkState(checkOuts.isEmpty(), "Statements are checked out: " + checkOuts);
+        CheckUtil.checkState(checkOuts.isEmpty(), "Statements are checked out: " + checkOuts); //$NON-NLS-1$
       }
 
       // Close all statements in the cache, then clear the cache.

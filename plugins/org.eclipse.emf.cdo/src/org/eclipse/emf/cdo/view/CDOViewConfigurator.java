@@ -33,7 +33,7 @@ public interface CDOViewConfigurator
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.viewConfigurators";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.viewConfigurators"; //$NON-NLS-1$
 
     public Factory(String type)
     {

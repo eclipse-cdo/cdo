@@ -372,7 +372,7 @@ public class LDAPUserAuthenticator extends UserAuthenticator
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(config, "config");
+    checkState(config, "config"); //$NON-NLS-1$
   }
 
   @Override

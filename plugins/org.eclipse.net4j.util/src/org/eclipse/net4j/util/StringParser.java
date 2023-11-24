@@ -26,7 +26,7 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface StringParser<T> extends Function<String, T>
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringParsers";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringParsers"; //$NON-NLS-1$
 
   public static final StringParser<String> IDENTITY = str -> str;
 

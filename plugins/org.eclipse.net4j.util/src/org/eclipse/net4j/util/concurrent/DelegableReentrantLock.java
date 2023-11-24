@@ -199,7 +199,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.concurrent.delegateDetectors";
+      public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.concurrent.delegateDetectors"; //$NON-NLS-1$
 
       public Factory(String type)
       {

@@ -41,8 +41,8 @@ public class Properties<RECEIVER> implements IProperties<RECEIVER>
   @Override
   public final void add(Property<RECEIVER> property)
   {
-    CheckUtil.checkArg(property, "property");
-    CheckUtil.checkArg(property.getName(), "property.getName()");
+    CheckUtil.checkArg(property, "property"); //$NON-NLS-1$
+    CheckUtil.checkArg(property.getName(), "property.getName()"); //$NON-NLS-1$
     properties.add(property);
   }
 

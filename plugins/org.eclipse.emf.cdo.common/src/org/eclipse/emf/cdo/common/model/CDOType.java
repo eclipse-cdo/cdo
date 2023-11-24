@@ -294,7 +294,7 @@ public interface CDOType
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
     {
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.model.typeHandlers";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.model.typeHandlers"; //$NON-NLS-1$
 
       public Factory(String type)
       {

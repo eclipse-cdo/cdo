@@ -1648,7 +1648,7 @@ public final class CDOLockStateCacheImpl extends Lifecycle implements CDOLockSta
 
       public ReadLock(CDOLockOwner... readLockOwners)
       {
-        CheckUtil.checkArg(readLockOwners.length != 0, "No read lock owners");
+        CheckUtil.checkArg(readLockOwners.length != 0, "No read lock owners"); //$NON-NLS-1$
         this.readLockOwners = readLockOwners;
       }
 

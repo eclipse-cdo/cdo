@@ -455,8 +455,8 @@ public class MongoDBStore extends Store implements IMongoDBStore, NoQueryXRefs, 
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(mongoURI, "mongoURI");
-    checkState(dbName, "dbName");
+    checkState(mongoURI, "mongoURI"); //$NON-NLS-1$
+    checkState(dbName, "dbName"); //$NON-NLS-1$
   }
 
   @Override

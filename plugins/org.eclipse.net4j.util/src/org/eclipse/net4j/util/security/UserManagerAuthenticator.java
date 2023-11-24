@@ -144,7 +144,7 @@ public class UserManagerAuthenticator extends Lifecycle implements IAuthenticato
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(userManager, "userManager");
+    checkState(userManager, "userManager"); //$NON-NLS-1$
   }
 
   @Override

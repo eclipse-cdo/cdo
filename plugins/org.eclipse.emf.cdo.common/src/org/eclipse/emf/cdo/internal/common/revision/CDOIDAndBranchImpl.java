@@ -31,8 +31,8 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch, CDOBranchAdjustable
 
   public CDOIDAndBranchImpl(CDOID id, CDOBranch branch)
   {
-    CheckUtil.checkArg(id, "id");
-    CheckUtil.checkArg(branch, "branch");
+    CheckUtil.checkArg(id, "id"); //$NON-NLS-1$
+    CheckUtil.checkArg(branch, "branch"); //$NON-NLS-1$
 
     this.id = id;
     this.branch = branch;
@@ -54,7 +54,7 @@ public class CDOIDAndBranchImpl implements CDOIDAndBranch, CDOBranchAdjustable
   public void adjustBranches(CDOBranchManager newBranchManager)
   {
     branch = newBranchManager.getBranch(branch.getID());
-    CheckUtil.checkArg(branch, "branch");
+    CheckUtil.checkArg(branch, "branch"); //$NON-NLS-1$
   }
 
   @Override

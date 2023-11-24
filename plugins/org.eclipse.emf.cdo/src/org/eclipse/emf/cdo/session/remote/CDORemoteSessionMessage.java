@@ -39,8 +39,8 @@ public final class CDORemoteSessionMessage
 
   public CDORemoteSessionMessage(String type, Priority priority, byte[] data)
   {
-    CheckUtil.checkArg(type, "type");
-    CheckUtil.checkArg(priority, "priority");
+    CheckUtil.checkArg(type, "type"); //$NON-NLS-1$
+    CheckUtil.checkArg(priority, "priority"); //$NON-NLS-1$
 
     this.type = type;
     this.priority = priority;

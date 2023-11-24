@@ -33,8 +33,8 @@ public abstract class CDOLockDeltaImpl implements CDOLockDelta
 
   private CDOLockDeltaImpl(Object target, CDOLockOwner oldOwner, CDOLockOwner newOwner)
   {
-    CheckUtil.checkArg(target, "target");
-    CheckUtil.checkArg(oldOwner != null || newOwner != null, "oldOwner != null || newOwner != null");
+    CheckUtil.checkArg(target, "target"); //$NON-NLS-1$
+    CheckUtil.checkArg(oldOwner != null || newOwner != null, "oldOwner != null || newOwner != null"); //$NON-NLS-1$
 
     this.target = target;
     this.oldOwner = oldOwner;
@@ -145,7 +145,7 @@ public abstract class CDOLockDeltaImpl implements CDOLockDelta
 
     public Null(Object target)
     {
-      CheckUtil.checkArg(target, "target");
+      CheckUtil.checkArg(target, "target"); //$NON-NLS-1$
       this.target = target;
     }
 

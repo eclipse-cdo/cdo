@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.workspace.CDOWorkspaceBase2;
  */
 public interface InternalCDOWorkspaceBase extends CDOWorkspaceBase2
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.workspace.bases";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.workspace.bases"; //$NON-NLS-1$
 
   @Override
   public InternalCDOWorkspace getWorkspace();

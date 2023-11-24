@@ -40,7 +40,7 @@ public class FailoverParticipant extends SynchronizableRepository implements Int
   @Override
   public void setType(Type type)
   {
-    checkArg(type == MASTER || type == BACKUP, "Type must be MASTER or BACKUP");
+    checkArg(type == MASTER || type == BACKUP, "Type must be MASTER or BACKUP"); //$NON-NLS-1$
     super.setType(type);
   }
 

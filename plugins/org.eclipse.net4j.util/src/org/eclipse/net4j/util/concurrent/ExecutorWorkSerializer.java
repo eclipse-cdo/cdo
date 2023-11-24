@@ -144,7 +144,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
-    checkState(executor, "executor");
+    checkState(executor, "executor"); //$NON-NLS-1$
   }
 
   @Override

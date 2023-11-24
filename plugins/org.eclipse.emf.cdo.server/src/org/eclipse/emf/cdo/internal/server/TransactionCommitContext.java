@@ -951,7 +951,7 @@ public class TransactionCommitContext implements InternalCommitContext
     long[] times = createTimeStamp(monitor); // Could throw an exception
     timeStamp = times[0];
     previousTimeStamp = times[1];
-    CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0");
+    CheckUtil.checkState(timeStamp != CDOBranchPoint.UNSPECIFIED_DATE, "Commit timestamp must not be 0"); //$NON-NLS-1$
 
     transaction.setLastCommitAttempt(new CommitAttempt(commitNumber, timeStamp, previousTimeStamp));
   }

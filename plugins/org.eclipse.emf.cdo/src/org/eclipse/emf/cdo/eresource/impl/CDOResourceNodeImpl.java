@@ -186,10 +186,10 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
   {
     if (!disableNameChecks)
     {
-      CheckUtil.checkArg(newName, "Name is null");
-      CheckUtil.checkArg(newName.length() != 0, "Name is empty");
-      CheckUtil.checkArg(!".".equals(newName), "Name is a dot");
-      CheckUtil.checkArg(newName.indexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR) == -1, "Name contains a path separator");
+      CheckUtil.checkArg(newName, "Name is null"); //$NON-NLS-1$
+      CheckUtil.checkArg(newName.length() != 0, "Name is empty"); //$NON-NLS-1$
+      CheckUtil.checkArg(!".".equals(newName), "Name is a dot"); //$NON-NLS-1$
+      CheckUtil.checkArg(newName.indexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR) == -1, "Name contains a path separator"); //$NON-NLS-1$
     }
 
     String oldName = getName();
@@ -326,7 +326,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
     {
       if (singleExtensions)
       {
-        CheckUtil.checkArg(extension.indexOf(ExtensionFinder.DOT) == -1, "Extension contains a dot");
+        CheckUtil.checkArg(extension.indexOf(ExtensionFinder.DOT) == -1, "Extension contains a dot"); //$NON-NLS-1$
       }
 
       setName(getBasename() + ExtensionFinder.DOT + extension);
@@ -399,7 +399,7 @@ public abstract class CDOResourceNodeImpl extends CDOObjectImpl implements CDORe
 
     if (!singleExtensions)
     {
-      CheckUtil.checkArg(basename.indexOf(ExtensionFinder.DOT) == -1, "Basename contains a dot");
+      CheckUtil.checkArg(basename.indexOf(ExtensionFinder.DOT) == -1, "Basename contains a dot"); //$NON-NLS-1$
     }
 
     String extension = getExtension();

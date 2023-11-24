@@ -267,7 +267,7 @@ public interface ITypeMapping
       /**
        * The Net4j factory product group for type mapping providers
        */
-      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappingProviders";
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappingProviders"; //$NON-NLS-1$
 
       public Factory(String type)
       {
@@ -292,7 +292,7 @@ public interface ITypeMapping
     /**
      * The Net4j factory product group for type mappings
      */
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappings";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.typeMappings"; //$NON-NLS-1$
 
     /**
      * Return the descriptor of the kind of type mapping created by this factory.

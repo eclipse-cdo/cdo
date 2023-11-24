@@ -34,14 +34,14 @@ import java.util.List;
  */
 public abstract class SecurityManagerFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.managers";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.security.managers"; //$NON-NLS-1$
 
   /**
    * @since 4.9
    */
-  public static final String DESCRIPTION_SEPARATOR = ":";
+  public static final String DESCRIPTION_SEPARATOR = ":"; //$NON-NLS-1$
 
-  private static final String QUALIFIED_DESCRIPTION_FORMAT = "%s" + DESCRIPTION_SEPARATOR + "%s";
+  private static final String QUALIFIED_DESCRIPTION_FORMAT = "%s" + DESCRIPTION_SEPARATOR + "%s"; //$NON-NLS-1$ //$NON-NLS-2$
 
   public SecurityManagerFactory(String type)
   {

@@ -37,7 +37,7 @@ public final class CDOIDObjectStringImpl extends AbstractCDOID implements Intern
 
   private CDOIDObjectStringImpl(String value)
   {
-    CheckUtil.checkArg(value, "Null not allowed");
+    CheckUtil.checkArg(value, "Null not allowed"); //$NON-NLS-1$
     this.value = value;
   }
 

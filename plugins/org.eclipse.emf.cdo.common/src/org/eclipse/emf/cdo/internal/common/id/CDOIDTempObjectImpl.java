@@ -36,7 +36,7 @@ public final class CDOIDTempObjectImpl extends AbstractCDOID implements CDOIDTem
 
   private CDOIDTempObjectImpl(int value)
   {
-    CheckUtil.checkArg(value != 0, "Zero not allowed");
+    CheckUtil.checkArg(value != 0, "Zero not allowed"); //$NON-NLS-1$
     this.value = value;
   }
 

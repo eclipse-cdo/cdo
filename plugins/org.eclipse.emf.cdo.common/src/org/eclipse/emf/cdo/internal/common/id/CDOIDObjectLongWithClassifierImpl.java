@@ -41,7 +41,7 @@ public final class CDOIDObjectLongWithClassifierImpl extends AbstractCDOID imple
 
   private CDOIDObjectLongWithClassifierImpl(long value, CDOClassifierRef classifierRef)
   {
-    CheckUtil.checkArg(value != 0L, "Zero not allowed");
+    CheckUtil.checkArg(value != 0L, "Zero not allowed"); //$NON-NLS-1$
     this.value = value;
     this.classifierRef = classifierRef;
   }

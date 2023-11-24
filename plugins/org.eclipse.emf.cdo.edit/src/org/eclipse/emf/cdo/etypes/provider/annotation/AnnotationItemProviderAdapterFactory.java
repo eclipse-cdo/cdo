@@ -102,7 +102,7 @@ import java.util.Map;
  */
 public abstract class AnnotationItemProviderAdapterFactory extends AdapterFactoryImpl implements ComposeableAdapterFactory, IChangeNotifier, IDisposable
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories";
+  public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories"; //$NON-NLS-1$
 
   /**
    * This is used to implement {@link org.eclipse.emf.edit.provider.IChangeNotifier}.

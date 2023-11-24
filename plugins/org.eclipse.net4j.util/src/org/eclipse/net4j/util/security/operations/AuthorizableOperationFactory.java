@@ -25,7 +25,7 @@ import java.util.Set;
  */
 public final class AuthorizableOperationFactory extends Factory
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.security.authorizableOperations";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.security.authorizableOperations"; //$NON-NLS-1$
 
   public AuthorizableOperationFactory()
   {

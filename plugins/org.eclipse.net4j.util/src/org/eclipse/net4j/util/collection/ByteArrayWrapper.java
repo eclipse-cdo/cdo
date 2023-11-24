@@ -26,7 +26,7 @@ public final class ByteArrayWrapper
 
   public ByteArrayWrapper(byte[] data)
   {
-    CheckUtil.checkArg(data, "data");
+    CheckUtil.checkArg(data, "data"); //$NON-NLS-1$
     this.data = data;
   }
 

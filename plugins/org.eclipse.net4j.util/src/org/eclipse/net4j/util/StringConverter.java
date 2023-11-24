@@ -30,7 +30,7 @@ import java.util.function.Function;
 @FunctionalInterface
 public interface StringConverter extends Function<Object, String>
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringConverters";
+  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.stringConverters"; //$NON-NLS-1$
 
   public static final StringConverter IDENTITY = new StringConverter()
   {

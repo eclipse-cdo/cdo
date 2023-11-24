@@ -55,7 +55,7 @@ public final class SyncingUtil
 
     CheckUtil.checkNull(lockAreaID, "lockAreaID");
     CheckUtil.checkNull(lockArea, "lockArea");
-    CheckUtil.checkState(lockAreaID.equals(lockArea.getDurableLockingID()), "lockAreaID has incorrect value");
+    CheckUtil.checkState(lockAreaID.equals(lockArea.getDurableLockingID()), "lockAreaID has incorrect value"); //$NON-NLS-1$
 
     return (InternalView)viewHolder.get();
   }

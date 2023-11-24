@@ -40,7 +40,7 @@ public interface ResourceSetConfigurer
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.ResourceSetConfigurers";
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.common.ResourceSetConfigurers"; //$NON-NLS-1$
 
     public Factory(String type)
     {

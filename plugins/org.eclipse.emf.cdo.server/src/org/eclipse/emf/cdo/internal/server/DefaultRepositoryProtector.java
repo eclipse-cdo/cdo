@@ -247,11 +247,18 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
   {
     checkActive();
 
-    UserInfo userInfo = userAuthenticator.authenticateUser(userID, password);
-    if (userInfo != null)
+    try
     {
-      sessionUserInfos.computeIfAbsent(userID, k -> new SessionUserInfo()).userInfo = userInfo;
-      return;
+      UserInfo userInfo = userAuthenticator.authenticateUser(userID, password);
+      if (userInfo != null)
+      {
+        sessionUserInfos.computeIfAbsent(userID, k -> new SessionUserInfo()).userInfo = userInfo;
+        return;
+      }
+    }
+    catch (SecurityException ex)
+    {
+      OM.LOG.info(ex);
     }
 
     denyAccess();

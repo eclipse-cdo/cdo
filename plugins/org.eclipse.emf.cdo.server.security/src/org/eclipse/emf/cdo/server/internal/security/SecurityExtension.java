@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.security;
 
 import org.eclipse.emf.cdo.server.internal.security.bundle.OM;
 import org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory;
+import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension2;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
@@ -22,7 +23,6 @@ import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -42,7 +42,7 @@ import java.io.Reader;
 /**
  * @author Eike Stepper
  */
-public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppExtension5
+public class SecurityExtension extends AbstractAppExtension implements IAppExtension2, IAppExtension4, IAppExtension5
 {
   public static final String DEFAULT_REALM_PATH = "security";
 
@@ -84,7 +84,7 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
 
   protected void start(Document document) throws Exception
   {
-    NodeList children = document.getChildNodes();
+    NodeList children = document.getDocumentElement().getChildNodes();
     for (int i = 0; i < children.getLength(); i++)
     {
       Node child = children.item(i);
@@ -102,13 +102,6 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
   @Override
   public void stop() throws Exception
   {
-  }
-
-  protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
-  {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    return builder.parse(configFile);
   }
 
   protected Document getDocument(Reader configReader) throws ParserConfigurationException, SAXException, IOException
@@ -137,16 +130,16 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
     if (securityManagers.getLength() == 1)
     {
       Element securityManagerElement = (Element)securityManagers.item(0);
-      String type = securityManagerElement.getAttribute("type");
+      String type = getAttribute(securityManagerElement, "type");
       if (StringUtil.isEmpty(type))
       {
         type = DEFAULT_FACTORY_TYPE;
       }
 
-      String description = securityManagerElement.getAttribute("description");
+      String description = getAttribute(securityManagerElement, "description");
       if (StringUtil.isEmpty(description))
       {
-        description = securityManagerElement.getAttribute("realmPath");
+        description = getAttribute(securityManagerElement, "realmPath");
       }
 
       if (StringUtil.isEmpty(description))
@@ -159,10 +152,5 @@ public class SecurityExtension implements IAppExtension2, IAppExtension4, IAppEx
         OM.LOG.info("Security manager for repository " + repositoryName + ": " + description);
       }
     }
-  }
-
-  public static IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
   }
 }

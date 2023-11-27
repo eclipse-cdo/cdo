@@ -327,4 +327,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/security/IAuthenticator2.java" type="org.eclipse.net4j.util.security.IAuthenticator2">
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.security.IAuthenticator2"/>
+                <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+                <message_argument value="isAdministrator(String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="403984517">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.security.IAuthenticator2"/>
+                <message_argument value="org.eclipse.net4j.util.security.IAuthenticator$AdministrationPredicate"/>
+                <message_argument value="isAdministrator(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

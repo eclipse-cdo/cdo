@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.server.internal.admin;
 
 import org.eclipse.emf.cdo.server.admin.CDORepositoryConfigurationManager;
 import org.eclipse.emf.cdo.server.internal.admin.bundle.OM;
+import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryFactory;
@@ -25,14 +26,8 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
-import java.io.IOException;
 
 /**
  * An app extension that starts the {@link CDORepositoryConfigurationManager}
@@ -40,7 +35,7 @@ import java.io.IOException;
  *
  * @author Christian W. Damus (CEA LIST)
  */
-public class RepositoryConfigurationManagerExtension implements IAppExtension5
+public class RepositoryConfigurationManagerExtension extends AbstractAppExtension implements IAppExtension5
 {
   private static final String DEFAULT_CATALOG_PATH = "/catalog";
 
@@ -68,7 +63,7 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension5
     IManagedContainer container = IPluginContainer.INSTANCE;
     Document document = getDocument(configFile);
 
-    NodeList children = document.getChildNodes();
+    NodeList children = document.getDocumentElement().getChildNodes();
     for (int i = 0; i < children.getLength(); i++)
     {
       Node child = children.item(i);
@@ -94,13 +89,6 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension5
     LifecycleUtil.deactivate(repositoryConfigurationManager);
   }
 
-  protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
-  {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    return builder.parse(configFile);
-  }
-
   protected CDORepositoryConfigurationManager configureAdminRepository(IManagedContainer container, Element repositoryConfig)
   {
     String name = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
@@ -121,17 +109,17 @@ public class RepositoryConfigurationManagerExtension implements IAppExtension5
     if (adminRepositories.getLength() == 1)
     {
       Element adminRepositoryElement = (Element)adminRepositories.item(0);
-      String type = adminRepositoryElement.getAttribute("configurationManager");
+      String type = getAttribute(adminRepositoryElement, "configurationManager");
       if (type == null || type.length() == 0)
       {
         OM.LOG.warn("Repository configuration manager type not specified for repository " + repository); //$NON-NLS-1$
         return null;
       }
 
-      String description = adminRepositoryElement.getAttribute("description"); //$NON-NLS-1$
+      String description = getAttribute(adminRepositoryElement, "description"); //$NON-NLS-1$
       if (StringUtil.isEmpty(description))
       {
-        description = adminRepositoryElement.getAttribute("catalogPath"); //$NON-NLS-1$
+        description = getAttribute(adminRepositoryElement, "catalogPath"); //$NON-NLS-1$
       }
 
       if (StringUtil.isEmpty(description))

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.internal.server.LDAPUserAuthenticator.LDAPUserInfo;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.RevisionAuthorizer;
+import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
@@ -654,6 +655,25 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
           CDORevision revision)
       {
         return userInfo.userID();
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class UserAdministrator extends ValueMatcher
+    {
+      public UserAdministrator()
+      {
+      }
+
+      @Override
+      protected Object extractValue(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider,
+          CDORevision revision)
+      {
+        String userID = userInfo.userID();
+        UserAuthenticator authenticator = getRevisionAuthorizer().getRepositoryProtector().getUserAuthenticator();
+        return authenticator.isAdministrator(userID);
       }
     }
 

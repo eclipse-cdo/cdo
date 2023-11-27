@@ -29,6 +29,7 @@
     <property name="optimisticLockingTimeout" value="10000"/>
 
     <!-- Example https://github.com/eclipse-cdo/cdo/issues/32
+    -->
     <protector>
       <userAuthenticator type="ldap">
         <environment id="base">
@@ -47,12 +48,16 @@
           <property name="java.naming.security.credentials" value="$USER_PW$"/>
         </environment>
         
-        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind"/>
+        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameters USER_ID and USER_PW can be used"/>
         
-        <loginUser environment="user">
+        <loginUser environment="user" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used">
           <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
         </loginUser>
       </userAuthenticator> 
+      
+      <userAuthenticator type="file" path="@config/passwd.txt" portable="true" doc="Only the first authenticator is used!">
+        <passwordCrypter type="SHA-512" params="2874365"/>
+      </userAuthenticator>
       
       <authorizationStrategy type="additive"/>
        
@@ -71,7 +76,7 @@
         <ldapGroupAttribute key="cn" value="AMS Users"/>
       </revisionAuthorizer>
       
-      <revisionAuthorizer description="Matcher Demo" permission="none" disabled="true">
+      <revisionAuthorizer permission="none" disabled="true" doc="Matcher Demo">
         <or>
           <sessionProperty key="xyz.special" value="true"/>
           
@@ -82,6 +87,7 @@
           
           <userId value="stepper"/>
           <userId value="LM.*" test="regex"/>
+          <userAdministrator value="true"/>
           <ldapUserDn value="uid=stepper,ou=Users,dc=example,dc=com"/>
           <ldapUserDn value="uid=.*,ou=Users,dc=example,dc=com" test="regex"/>
           <ldapUserAttribute key="uidNumber" value="10015"/>
@@ -115,7 +121,6 @@
         </or>
       </revisionAuthorizer>
     </protector>
-    -->
 
     <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>

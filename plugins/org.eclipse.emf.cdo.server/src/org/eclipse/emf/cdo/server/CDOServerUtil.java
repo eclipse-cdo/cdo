@@ -357,7 +357,7 @@ public final class CDOServerUtil
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document document = builder.parse(configFile);
 
-    NodeList children = document.getChildNodes();
+    NodeList children = document.getDocumentElement().getChildNodes();
     for (int i = 0; i < children.getLength(); i++)
     {
       Node child = children.item(i);

@@ -74,7 +74,13 @@ public class LDAPUserAuthenticator extends UserAuthenticator
   }
 
   @Override
-  public LDAPUserInfo authenticateUser(String userID, char[] password) throws SecurityException
+  public Class<? extends UserInfo> getUserInfoClass()
+  {
+    return LDAPUserInfo.class;
+  }
+
+  @Override
+  public LDAPUserInfo authenticateUser(String userID, char[] password)
   {
     String userPW = SecurityUtil.toString(password);
     if (!StringUtil.isEmpty(userPW))

@@ -34,6 +34,7 @@
      <productGroup id="org.eclipse.net4j.util.stringConverters" name="%productGroup.name.10"/>
      <productGroup id="org.eclipse.net4j.util.stringParsers" name="%productGroup.name.11"/>
      <productGroup id="org.eclipse.net4j.util.stringTesters" name="%productGroup.name.12"/>
+     <productGroup id="org.eclipse.net4j.util.security.crypters" name="%productGroup.name.13"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
@@ -77,6 +78,10 @@
             productGroup="org.eclipse.net4j.util.metaFactories"
             type="org.eclipse.net4j.util.stringTesters"
             class="org.eclipse.net4j.util.StringTester$MetaFactory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.metaFactories"
+            type="org.eclipse.net4j.util.security.crypters"
+            class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.elementProcessors">

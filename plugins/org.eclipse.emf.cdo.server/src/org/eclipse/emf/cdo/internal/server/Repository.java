@@ -1429,7 +1429,24 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void setProtector(IRepositoryProtector protector)
   {
-    checkInactive();
+    boolean checkLifecycleState = true;
+    String className = "org.eclipse.emf.cdo.server.internal.security.SecurityManager$DelegatingProtector";
+
+    if (protector != null && protector.getClass().getName().equals(className))
+    {
+      checkLifecycleState = false;
+    }
+
+    if (this.protector != null && this.protector.getClass().getName().equals(className))
+    {
+      checkLifecycleState = false;
+    }
+
+    if (checkLifecycleState)
+    {
+      checkInactive();
+    }
+
     this.protector = protector;
   }
 

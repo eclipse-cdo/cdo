@@ -207,8 +207,9 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
         if (!StringUtil.isEmpty(productGroup))
         {
           boolean singleton = annotation.productSingleton();
+          String descriptionAttribute = annotation.descriptionAttribute();
 
-          Object element = createElement(productGroup, value, config, singleton);
+          Object element = createElement(productGroup, value, descriptionAttribute, config, singleton);
           if (element != null)
           {
             method.invoke(product, element);
@@ -239,6 +240,7 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
       String name = annotation.name();
       String productGroup = annotation.productGroup();
       boolean singleton = annotation.productSingleton();
+      String descriptionAttribute = annotation.descriptionAttribute();
 
       Cardinality cardinality = annotation.cardinality();
       if (cardinality == Cardinality.DETECT)
@@ -267,7 +269,7 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
       {
         String type = typeFunction.apply(elementConfig);
 
-        Object element = createElement(productGroup, type, elementConfig, singleton);
+        Object element = createElement(productGroup, type, descriptionAttribute, elementConfig, singleton);
         if (element != null)
         {
           method.invoke(product, element);
@@ -297,9 +299,22 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
     return type;
   }
 
-  protected Object createElement(String productGroup, String type, Tree elementConfig, boolean singleton) throws ProductCreationException
+  protected Object createElement(String productGroup, String type, String descriptionAttribute, Tree elementConfig, boolean singleton)
+      throws ProductCreationException
   {
     IManagedContainer container = getContainer();
+
+    if (!StringUtil.isEmpty(descriptionAttribute))
+    {
+      String description = elementConfig.attribute(descriptionAttribute);
+
+      if (singleton)
+      {
+        return container.getElementOrNull(productGroup, type, description);
+      }
+
+      return container.createElement(productGroup, type, description);
+    }
 
     if (singleton)
     {
@@ -362,6 +377,8 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
     public String productGroup() default "";
 
     public boolean productSingleton() default false;
+
+    public String descriptionAttribute() default "";
   }
 
   @Inherited
@@ -380,6 +397,8 @@ public class AnnotationFactory<PRODUCT> extends TreeFactory.ContainerAware
     public String factoryTypeAttribute() default FACTORY_TYPE_ATTRIBUTE;
 
     public String defaultFactoryType() default "";
+
+    public String descriptionAttribute() default "";
 
     public Cardinality cardinality() default Cardinality.DETECT;
 

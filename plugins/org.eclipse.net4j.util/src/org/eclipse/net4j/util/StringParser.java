@@ -14,8 +14,10 @@ import org.eclipse.net4j.util.factory.IFactory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.factory.SingletonFactory;
 
+import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -54,6 +56,10 @@ public interface StringParser<T> extends Function<String, T>
       : str.startsWith("0b") ? new BigInteger(str.substring(2), 2) : new BigInteger(str);
 
   public static final StringParser<BigDecimal> BIG_DECIMAL = BigDecimal::new;
+
+  public static final StringParser<Path> PATH = Path::of;
+
+  public static final StringParser<File> FILE = File::new;
 
   @Override
   public T apply(String str);
@@ -158,6 +164,9 @@ public interface StringParser<T> extends Function<String, T>
 
         new SingletonFactory(PG, BigInteger.class.getName(), BIG_INTEGER), //
         new SingletonFactory(PG, BigDecimal.class.getName(), BIG_DECIMAL), //
+
+        new SingletonFactory(PG, Path.class.getName(), PATH), //
+        new SingletonFactory(PG, File.class.getName(), FILE), //
     };
 
     public MetaFactory()

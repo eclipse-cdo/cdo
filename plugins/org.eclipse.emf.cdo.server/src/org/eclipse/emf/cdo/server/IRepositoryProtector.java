@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.security.AdministrationPredicate;
 
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -159,14 +160,22 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     @Override
     protected void doBeforeActivate() throws Exception
     {
-      checkState(repositoryProtector, "repositoryProtector"); //$NON-NLS-1$
+      if (checkRepositoryProtector())
+      {
+        checkState(repositoryProtector, "repositoryProtector"); //$NON-NLS-1$
+      }
+    }
+
+    protected boolean checkRepositoryProtector()
+    {
+      return true;
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public static abstract class UserAuthenticator extends Element
+  public static abstract class UserAuthenticator extends Element implements AdministrationPredicate
   {
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators"; //$NON-NLS-1$
 
@@ -174,8 +183,14 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     {
     }
 
+    public Class<? extends UserInfo> getUserInfoClass()
+    {
+      return UserInfo.class;
+    }
+
     public abstract UserInfo authenticateUser(String userID, char[] password);
 
+    @Override
     public boolean isAdministrator(String userID)
     {
       return false;
@@ -186,9 +201,11 @@ public interface IRepositoryProtector extends IManagedContainerProvider
      */
     public interface PasswordChangeSupport
     {
-      public void updatePassword(String userID, char[] oldPassword, char[] newPassword);
+      public void updatePassword(String userID, char[] oldPassword, char[] newPassword) throws SecurityException;
 
-      public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword);
+      public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword) throws SecurityException;
+
+      public void resetPassword(String userID, char[] newPassword) throws SecurityException;
     }
   }
 

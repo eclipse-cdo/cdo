@@ -223,7 +223,7 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand branches = new CDOCommand.WithRepository("branches", "dump the branches of a repository")
+  private static final CDOCommand branches = new CDOCommand.WithRepository("branches", "list the branches of a repository")
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
@@ -242,7 +242,7 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand packages = new CDOCommand.WithRepository("packages", "dump the packages of a repository")
+  private static final CDOCommand packages = new CDOCommand.WithRepository("packages", "list the packages of a repository")
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
@@ -259,7 +259,7 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand sessions = new CDOCommand.WithRepository("sessions", "dump the sessions of a repository")
+  private static final CDOCommand sessions = new CDOCommand.WithRepository("sessions", "list the sessions of a repository")
   {
     @Override
     public void execute(InternalRepository repository, String[] args) throws Exception
@@ -276,7 +276,7 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand locks = new CDOCommand.WithAccessor("locks", "dump the locks of a repository", CDOCommand.optional("username-prefix"))
+  private static final CDOCommand locks = new CDOCommand.WithAccessor("locks", "list the locks of a repository", CDOCommand.optional("username-prefix"))
   {
     @Override
     public void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception

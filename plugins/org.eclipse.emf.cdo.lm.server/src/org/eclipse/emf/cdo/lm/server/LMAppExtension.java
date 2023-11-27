@@ -88,13 +88,13 @@ public class LMAppExtension extends AppExtension
 
   private void configureLifecycleManager(InternalRepository repository, Element lmElement)
   {
-    String systemName = lmElement.getAttribute("systemName");
+    String systemName = getAttribute(lmElement, "systemName");
     if (systemName == null || systemName.isEmpty())
     {
       throw new IllegalStateException("A systemName must be specified for the lifecycle manager of repository " + repository.getName()); //$NON-NLS-1$
     }
 
-    String moduleDefinitionPath = lmElement.getAttribute("moduleDefinitionPath");
+    String moduleDefinitionPath = getAttribute(lmElement, "moduleDefinitionPath");
     if (moduleDefinitionPath == null || moduleDefinitionPath.isEmpty())
     {
       moduleDefinitionPath = "module.md";
@@ -173,12 +173,12 @@ public class LMAppExtension extends AppExtension
   protected Collection<DropType> getDropTypes(Element lmElement)
   {
     return getNamedChildren(lmElement, "dropType", (child, name) -> {
-      boolean release = StringUtil.isTrue(child.getAttribute("release"));
+      boolean release = StringUtil.isTrue(getAttribute(child, "release"));
       return LMFactory.eINSTANCE.createDropType(name, release);
     });
   }
 
-  private static <T> Collection<T> getNamedChildren(Element lmElement, String childTagName, BiFunction<Element, String, T> childCreator)
+  private <T> Collection<T> getNamedChildren(Element lmElement, String childTagName, BiFunction<Element, String, T> childCreator)
   {
     List<T> result = new ArrayList<>();
 
@@ -187,7 +187,7 @@ public class LMAppExtension extends AppExtension
     {
       Element element = (Element)elements.item(i);
 
-      String name = element.getAttribute("name");
+      String name = getAttribute(element, "name");
       if (!StringUtil.isEmpty(name))
       {
         T child = childCreator.apply(element, name);
@@ -198,15 +198,15 @@ public class LMAppExtension extends AppExtension
     return result;
   }
 
-  private static <T> T getContainerElement(Element element, String defaultType, IManagedContainer container)
+  private <T> T getContainerElement(Element element, String defaultType, IManagedContainer container)
   {
-    String type = element.getAttribute("type"); //$NON-NLS-1$
+    String type = getAttribute(element, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
     {
       type = defaultType;
     }
 
-    String description = element.getAttribute("description"); //$NON-NLS-1$
+    String description = getAttribute(element, "description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
       Map<String, String> properties = RepositoryConfigurator.getProperties(element, 1, null, container);

@@ -17,7 +17,7 @@ package org.eclipse.net4j.util.security;
  * @since 3.4
  * @author Christian W. Damus (CEA LIST)
  */
-public interface IAuthenticator2 extends IAuthenticator
+public interface IAuthenticator2 extends IAuthenticator, AdministrationPredicate
 {
   /**
    * Updates the password <em>stored</em> for the user identified by {@code userID}.  The {@code oldPassword} is authenticated
@@ -53,5 +53,6 @@ public interface IAuthenticator2 extends IAuthenticator
    *
    * @return whether the userID exists and has administrative privileges
    */
+  @Override
   public boolean isAdministrator(String userID);
 }

@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.security.util.AuthorizationContext;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
+import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -94,6 +95,7 @@ import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.IUserManager;
 import org.eclipse.net4j.util.security.SecurityUtil;
 
 import org.eclipse.emf.common.util.BasicDiagnostic;
@@ -139,6 +141,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
   private static final SecurityFactory SF = SecurityFactory.eINSTANCE;
 
+  private final IRepositoryProtector protector = new DelegatingProtector();
+
   private final IListener repositoryListener = new LifecycleEventAdapter()
   {
     @Override
@@ -150,6 +154,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     protected void onDeactivated(ILifecycle lifecycle)
     {
+      repository.setProtector(null);
       unregister(repository);
       deactivate();
     }
@@ -239,6 +244,8 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   private volatile Long lastRealmModification;
 
   private Object lastRealmModificationLock = new Object();
+
+  private boolean firstTime;
 
   public SecurityManager(String realmPath, IManagedContainer container)
   {
@@ -621,6 +628,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return;
     }
 
+    repository.setProtector(protector);
     repository.addListener(repositoryListener);
     if (!LifecycleUtil.isActive(repository))
     {
@@ -645,7 +653,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
 
     CDOTransaction initialTransaction = realmSession.openTransaction();
 
-    boolean firstTime = !initialTransaction.hasResource(realmPath);
+    firstTime = !initialTransaction.hasResource(realmPath);
     if (firstTime)
     {
       realm = createRealm();
@@ -1070,17 +1078,24 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
   @Override
   public void authenticate(String userID, char[] password) throws SecurityException
   {
-    User user = getUser(userID);
-    if (user != null && !user.isLocked())
+    try
     {
-      UserPassword userPassword = user.getPassword();
-
-      String encrypted = userPassword == null ? null : userPassword.getEncrypted();
-      if (Arrays.equals(password, SecurityUtil.toCharArray(encrypted)))
+      User user = getUser(userID);
+      if (user != null && !user.isLocked())
       {
-        // Access granted.
-        return;
+        UserPassword userPassword = user.getPassword();
+
+        String encrypted = userPassword == null ? null : userPassword.getEncrypted();
+        if (Arrays.equals(password, SecurityUtil.toCharArray(encrypted)))
+        {
+          // Access granted.
+          return;
+        }
       }
+    }
+    catch (SecurityException ex)
+    {
+      OM.LOG.info(ex);
     }
 
     denyAccess();
@@ -1663,6 +1678,214 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       finally
       {
         StoreThreadLocal.release();
+      }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class DelegatingProtector implements IRepositoryProtector
+  {
+    private final UserAuthenticator authenticator = new DelegatingAuthenticator();
+
+    public DelegatingProtector()
+    {
+    }
+
+    @Override
+    public IManagedContainer getContainer()
+    {
+      return container;
+    }
+
+    @Override
+    public boolean isFirstTime()
+    {
+      return firstTime;
+    }
+
+    @Override
+    public IRepository getRepository()
+    {
+      return repository;
+    }
+
+    @Override
+    public void setRepository(IRepository repository)
+    {
+      // Do nothing.
+    }
+
+    @Override
+    public IRepository[] getSecondaryRepositories()
+    {
+      return SecurityManager.this.getSecondaryRepositories();
+    }
+
+    @Override
+    public void addSecondaryRepository(IRepository repository)
+    {
+      SecurityManager.this.addSecondaryRepository((InternalRepository)repository);
+    }
+
+    @Override
+    public void removeSecondaryRepository(IRepository repository)
+    {
+      SecurityManager.this.removeSecondaryRepository((InternalRepository)repository);
+    }
+
+    @Override
+    public UserAuthenticator getUserAuthenticator()
+    {
+      return authenticator;
+    }
+
+    @Override
+    public void setUserAuthenticator(UserAuthenticator userAuthenticator)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public AuthorizationStrategy getAuthorizationStrategy()
+    {
+      return null;
+    }
+
+    @Override
+    public void setAuthorizationStrategy(AuthorizationStrategy authorizationStrategy)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public RevisionAuthorizer[] getRevisionAuthorizers()
+    {
+      return new RevisionAuthorizer[0];
+    }
+
+    @Override
+    public void addRevisionAuthorizer(RevisionAuthorizer authorizer)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeRevisionAuthorizer(RevisionAuthorizer authorizer)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public CommitHandler[] getCommitHandlers()
+    {
+      return new CommitHandler[0];
+    }
+
+    @Override
+    public void addCommitHandler(CommitHandler handler)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeCommitHandler(CommitHandler handler)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public UserInfo getUserInfo(String userID)
+    {
+      return null;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class DelegatingAuthenticator extends UserAuthenticator implements UserAuthenticator.PasswordChangeSupport, IUserManager
+    {
+      public DelegatingAuthenticator()
+      {
+      }
+
+      @Override
+      public boolean isAdministrator(String userID)
+      {
+        return SecurityManager.this.isAdministrator(userID);
+      }
+
+      @Override
+      public UserInfo authenticateUser(String userID, char[] password)
+      {
+        throw new UnsupportedOperationException();
+      }
+
+      @Override
+      public void updatePassword(String userID, char[] oldPassword, char[] newPassword)
+      {
+        SecurityManager.this.updatePassword(userID, oldPassword, newPassword);
+      }
+
+      @Override
+      public void resetPassword(String adminID, char[] adminPassword, String userID, char[] newPassword)
+      {
+        SecurityManager.this.resetPassword(adminID, adminPassword, userID, newPassword);
+      }
+
+      @Override
+      public void resetPassword(String userID, char[] newPassword)
+      {
+        setPassword(userID, SecurityUtil.toString(newPassword));
+      }
+
+      @Override
+      public void addUser(String userID, char[] password)
+      {
+        SecurityManager.this.addUser(userID, SecurityUtil.toString(password));
+      }
+
+      @Override
+      public void removeUser(String userID)
+      {
+        SecurityManager.this.removeUser(userID);
+      }
+
+      @Override
+      public byte[] encrypt(String userID, byte[] data, String algorithmName, byte[] salt, int count) throws SecurityException
+      {
+        char[] password = getPassword(userID);
+        if (password == null)
+        {
+          return data;
+        }
+
+        try
+        {
+          return SecurityUtil.pbeEncrypt(data, password, algorithmName, salt, count);
+        }
+        catch (RuntimeException ex)
+        {
+          throw ex;
+        }
+        catch (Exception ex)
+        {
+          throw new SecurityException(ex);
+        }
+      }
+
+      private char[] getPassword(String userID)
+      {
+        User user = getUser(userID);
+        if (user == null || user.isLocked())
+        {
+          throw new SecurityException();
+        }
+
+        UserPassword userPassword = user.getPassword();
+        String encrypted = userPassword == null ? null : userPassword.getEncrypted();
+        return SecurityUtil.toCharArray(encrypted);
       }
     }
   }

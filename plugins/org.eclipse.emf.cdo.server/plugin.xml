@@ -37,6 +37,7 @@
       	<factory productGroup="org.eclipse.emf.cdo.server.repositoryConfigurators" type="default" class="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator$Factory$Default"/>
       	<simpleFactory productGroup="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" type="protector" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector$RepositoryConfiguratorExtension"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectors" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector"/>
+      	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" type="file" productClass="org.eclipse.emf.cdo.internal.server.FileUserAuthenticator"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" type="ldap" productClass="org.eclipse.emf.cdo.internal.server.LDAPUserAuthenticator"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer"/>
         <annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" type="additive" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Additive"/>
@@ -50,6 +51,7 @@
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="repositoryName" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RepositoryName"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="repositoryPrimary" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RepositoryPrimary"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="userId" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$UserID"/>
+      	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="userAdministrator" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$UserAdministrator"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="contextBranchId" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchID"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="contextBranchName" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchName"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="contextBranchPath" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchPath"/>
@@ -77,6 +79,10 @@
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="ldapGroupAttribute" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$LDAPGroupAttribute"/>
         <factory productGroup="org.eclipse.net4j.util.security.operationAuthorizers" type="ldapRequireUser" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireUser$Factory"/>
         <factory productGroup="org.eclipse.net4j.util.security.operationAuthorizers" type="ldapRequireGroup" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireGroup$Factory"/>
+        <factory productGroup="org.eclipse.emf.cdo.server.commands" type="useradd" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdd"/>
+        <factory productGroup="org.eclipse.emf.cdo.server.commands" type="userdel" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserDelete"/>
+        <factory productGroup="org.eclipse.emf.cdo.server.commands" type="userpw" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserPassword"/>
+        <factory productGroup="org.eclipse.emf.cdo.server.commands" type="useradmin" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdmin"/>
       	<factory productGroup="org.eclipse.emf.cdo.server.repositoryActivityLogs" type="rolling" class="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog$Rolling$Factory"/>
       	<factory productGroup="org.eclipse.emf.cdo.server.browsers" type="default" class="org.eclipse.emf.cdo.server.CDOServerBrowser$ContainerBased$Factory"/>
    	</extension>

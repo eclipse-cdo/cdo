@@ -10,20 +10,19 @@
  */
 package org.eclipse.emf.cdo.server.internal.net4j.bundle;
 
+import org.eclipse.emf.cdo.spi.server.AbstractAppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.IAppExtension5;
 
 import org.eclipse.net4j.TransportConfigurator;
 import org.eclipse.net4j.acceptor.IAcceptor;
-import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 
 import java.io.File;
 
 /**
  * @author Eike Stepper
  */
-public class Net4jAppExtension implements IAppExtension4, IAppExtension5
+public class Net4jAppExtension extends AbstractAppExtension implements IAppExtension4, IAppExtension5
 {
   private IAcceptor[] acceptors;
 
@@ -53,6 +52,8 @@ public class Net4jAppExtension implements IAppExtension4, IAppExtension5
   public void start(File configFile) throws Exception
   {
     TransportConfigurator net4jConfigurator = new TransportConfigurator(getContainer());
+    net4jConfigurator.setParameters(getParameters());
+
     acceptors = net4jConfigurator.configure(configFile);
     if (acceptors == null || acceptors.length == 0)
     {
@@ -70,10 +71,5 @@ public class Net4jAppExtension implements IAppExtension4, IAppExtension5
         acceptor.close();
       }
     }
-  }
-
-  public static IManagedContainer getContainer()
-  {
-    return IPluginContainer.INSTANCE;
   }
 }

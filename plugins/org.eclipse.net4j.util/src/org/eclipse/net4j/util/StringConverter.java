@@ -16,6 +16,7 @@ import org.eclipse.net4j.util.factory.SingletonFactory;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -38,6 +39,15 @@ public interface StringConverter extends Function<Object, String>
     public String apply(Object value)
     {
       return StringUtil.safe(value, null);
+    }
+  };
+
+  public static final StringConverter CHARS = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      return value == null ? null : value instanceof char[] ? String.valueOf((char[])value) : value.toString();
     }
   };
 
@@ -122,6 +132,57 @@ public interface StringConverter extends Function<Object, String>
     }
   };
 
+  public static final StringConverter NET4J_USER_PATH = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      File path = OMPlatform.INSTANCE.getUserFolder();
+
+      String suffix = StringUtil.safe(value);
+      if (suffix.length() != 0)
+      {
+        path = new File(path, suffix);
+      }
+
+      return path.getAbsolutePath();
+    }
+  };
+
+  public static final StringConverter NET4J_STATE_PATH = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      File path = OMPlatform.INSTANCE.getStateFolder();
+
+      String suffix = StringUtil.safe(value);
+      if (suffix.length() != 0)
+      {
+        path = new File(path, suffix);
+      }
+
+      return path.getAbsolutePath();
+    }
+  };
+
+  public static final StringConverter NET4J_CONFIG_PATH = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      File path = OMPlatform.INSTANCE.getConfigFolder();
+
+      String suffix = StringUtil.safe(value);
+      if (suffix.length() != 0)
+      {
+        path = new File(path, suffix);
+      }
+
+      return path.getAbsolutePath();
+    }
+  };
+
   public static final StringConverter SYSTEM_PROPERTY = new StringConverter()
   {
     @Override
@@ -198,6 +259,7 @@ public interface StringConverter extends Function<Object, String>
 
     private static final IFactory[] CHILDREN = { //
         new SingletonFactory(PG, "identity", IDENTITY), //
+        new SingletonFactory(PG, "chars", CHARS), //
         new SingletonFactory(PG, "safe", SAFE), //
         new SingletonFactory(PG, "upper", UPPER), //
         new SingletonFactory(PG, "lower", LOWER), //
@@ -207,6 +269,9 @@ public interface StringConverter extends Function<Object, String>
         new SingletonFactory(PG, "uncap_all", UNCAP_ALL), //
         new SingletonFactory(PG, "escape", ESCAPE), //
         new SingletonFactory(PG, "unescape", UNESCAPE), //
+        new SingletonFactory(PG, "net4j_user_path", NET4J_USER_PATH), //
+        new SingletonFactory(PG, "net4j_state_path", NET4J_STATE_PATH), //
+        new SingletonFactory(PG, "net4j_config_path", NET4J_CONFIG_PATH), //
         new SingletonFactory(PG, "system_property", SYSTEM_PROPERTY), //
         new SingletonFactory(PG, "property_uri", PROPERTY_URI), //
     };

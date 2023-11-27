@@ -15,11 +15,13 @@ import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IServerConnector;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.wrapping.StreamWrapperInjector;
+import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.FactoryNotFoundException;
 import org.eclipse.net4j.util.container.IElementProcessor;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IStreamWrapper;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -56,11 +58,15 @@ import java.util.Map;
  * @author Eike Stepper
  * @since 2.0
  */
-public class TransportConfigurator implements IManagedContainerProvider
+public class TransportConfigurator implements IManagedContainerProvider, ParameterAware
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, TransportConfigurator.class);
 
+  private static final String ELEM_PROPERTY = "property";
+
   private IManagedContainer container;
+
+  private Map<String, String> parameters;
 
   public TransportConfigurator(IManagedContainer container)
   {
@@ -71,6 +77,23 @@ public class TransportConfigurator implements IManagedContainerProvider
   public IManagedContainer getContainer()
   {
     return container;
+  }
+
+  /**
+   * @since 4.19
+   */
+  public final Map<String, String> getParameters()
+  {
+    return parameters;
+  }
+
+  /**
+   * @since 4.19
+   */
+  @Override
+  public final void setParameters(Map<String, String> parameters)
+  {
+    this.parameters = parameters;
   }
 
   public IAcceptor[] configure(File configFile) throws ParserConfigurationException, SAXException, IOException, CoreException
@@ -106,8 +129,8 @@ public class TransportConfigurator implements IManagedContainerProvider
 
   protected IAcceptor configureAcceptor(Element acceptorConfig)
   {
-    String type = acceptorConfig.getAttribute("type"); //$NON-NLS-1$
-    String description = acceptorConfig.getAttribute("description"); //$NON-NLS-1$
+    String type = getAttribute(acceptorConfig, "type"); //$NON-NLS-1$
+    String description = getAttribute(acceptorConfig, "description"); //$NON-NLS-1$
     if (StringUtil.isEmpty(description))
     {
       try
@@ -156,8 +179,8 @@ public class TransportConfigurator implements IManagedContainerProvider
 
   protected INegotiator configureNegotiator(Element negotiatorConfig)
   {
-    String type = negotiatorConfig.getAttribute("type"); //$NON-NLS-1$
-    String description = negotiatorConfig.getAttribute("description"); //$NON-NLS-1$
+    String type = getAttribute(negotiatorConfig, "type"); //$NON-NLS-1$
+    String description = getAttribute(negotiatorConfig, "description"); //$NON-NLS-1$
     return (INegotiator)container.getElement(NegotiatorFactory.PRODUCT_GROUP, type, description);
   }
 
@@ -166,9 +189,9 @@ public class TransportConfigurator implements IManagedContainerProvider
    */
   protected void configureStreamWrapper(Element streamWrapperConfig, Acceptor acceptor)
   {
-    String type = streamWrapperConfig.getAttribute("type");//$NON-NLS-1$
-    String description = streamWrapperConfig.getAttribute("description"); //$NON-NLS-1$
-    String protocolName = streamWrapperConfig.getAttribute("protocol");//$NON-NLS-1$
+    String type = getAttribute(streamWrapperConfig, "type");//$NON-NLS-1$
+    String description = getAttribute(streamWrapperConfig, "description"); //$NON-NLS-1$
+    String protocolName = getAttribute(streamWrapperConfig, "protocol");//$NON-NLS-1$
 
     IStreamWrapper streamWrapper = (IStreamWrapper)container.getElement(IStreamWrapper.Factory.PRODUCT_GROUP, type, description);
     if (streamWrapper != null)
@@ -185,31 +208,70 @@ public class TransportConfigurator implements IManagedContainerProvider
     return builder.parse(configFile);
   }
 
+  /**
+   * @since 4.19
+   */
+  protected String getAttribute(Element element, String name)
+  {
+    String value = element.getAttribute(name);
+    value = expandValue(value, parameters, container);
+    return value;
+  }
+
+  /**
+   * @deprecated As of 4.19 no longer supported.
+   */
+  @Deprecated
   protected Element getStoreConfig(Element repositoryConfig)
   {
-    NodeList storeConfigs = repositoryConfig.getElementsByTagName("store"); //$NON-NLS-1$
-    if (storeConfigs.getLength() != 1)
-    {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
-      throw new IllegalStateException("Exactly one store must be configured for repository " + repositoryName); //$NON-NLS-1$
-    }
+    throw new UnsupportedOperationException();
+  }
 
-    return (Element)storeConfigs.item(0);
+  /**
+   * @since 4.19
+   */
+  public static String expandValue(String value, Map<String, String> parameters, IManagedContainer container)
+  {
+    value = StringUtil.replace(value, parameters);
+    value = StringUtil.convert(value, container);
+    return value;
   }
 
   public static Map<String, String> getProperties(Element element, int levels)
   {
+    return getProperties(element, levels, null);
+  }
+
+  /**
+   * @since 4.19
+   */
+  public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters)
+  {
     Map<String, String> properties = new HashMap<>();
-    collectProperties(element, "", properties, levels); //$NON-NLS-1$
+    collectProperties(element, "", properties, levels, parameters, IPluginContainer.INSTANCE); //$NON-NLS-1$
     return properties;
   }
 
-  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels)
+  /**
+   * @since 4.19
+   */
+  public static Map<String, String> getProperties(Element element, int levels, Map<String, String> parameters, IManagedContainer container)
   {
-    if ("property".equals(element.getNodeName())) //$NON-NLS-1$
+    Map<String, String> properties = new HashMap<>();
+    collectProperties(element, "", properties, levels, parameters, container); //$NON-NLS-1$
+    return properties;
+  }
+
+  private static void collectProperties(Element element, String prefix, Map<String, String> properties, int levels, Map<String, String> parameters,
+      IManagedContainer container)
+  {
+    if (ELEM_PROPERTY.equals(element.getNodeName()))
     {
       String name = element.getAttribute("name"); //$NON-NLS-1$
       String value = element.getAttribute("value"); //$NON-NLS-1$
+
+      value = expandValue(value, parameters, container);
+
       properties.put(prefix + name, value);
       prefix += name + "."; //$NON-NLS-1$
     }
@@ -222,7 +284,7 @@ public class TransportConfigurator implements IManagedContainerProvider
         Node childNode = childNodes.item(i);
         if (childNode instanceof Element)
         {
-          collectProperties((Element)childNode, prefix, properties, levels - 1);
+          collectProperties((Element)childNode, prefix, properties, levels - 1, parameters, container);
         }
       }
     }

@@ -20,9 +20,9 @@ import org.eclipse.emf.cdo.server.IRepositoryFactory;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
-import org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.XMLUtil.ElementHandler;
@@ -115,6 +115,10 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   public RepositoryConfigurator(IManagedContainer container)
   {
     this.container = container;
+
+    parameters.put("@user", OMPlatform.INSTANCE.getUserFolder().getAbsolutePath());
+    parameters.put("@state", OMPlatform.INSTANCE.getStateFolder().getAbsolutePath());
+    parameters.put("@config", OMPlatform.INSTANCE.getConfigFolder().getAbsolutePath());
   }
 
   @Override

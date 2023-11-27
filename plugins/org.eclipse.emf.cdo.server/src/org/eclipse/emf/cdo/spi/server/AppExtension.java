@@ -15,21 +15,14 @@ import org.eclipse.emf.cdo.server.IRepository;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Objects;
 
 /**
  * @author Eike Stepper
  * @since 4.10
  */
-public abstract class AppExtension implements IAppExtension3, IAppExtension5
+public abstract class AppExtension extends AbstractAppExtension implements IAppExtension3, IAppExtension5
 {
   public AppExtension()
   {
@@ -62,7 +55,7 @@ public abstract class AppExtension implements IAppExtension3, IAppExtension5
     Document document = getDocument(configFile);
 
     RepositoryConfigurator.forEachChildElement(document.getDocumentElement(), "repository", repositoryConfig -> {
-      String repositoryName = repositoryConfig.getAttribute("name"); //$NON-NLS-1$
+      String repositoryName = getAttribute(repositoryConfig, "name"); //$NON-NLS-1$
 
       InternalRepository repository = getRepository(repositories, repositoryName);
       if (repository != null)
@@ -98,24 +91,4 @@ public abstract class AppExtension implements IAppExtension3, IAppExtension5
   protected abstract void start(InternalRepository repository, Element repositoryConfig) throws Exception;
 
   protected abstract void stop(InternalRepository repository) throws Exception;
-
-  protected Document getDocument(File configFile) throws ParserConfigurationException, SAXException, IOException
-  {
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    DocumentBuilder builder = factory.newDocumentBuilder();
-    return builder.parse(configFile);
-  }
-
-  private InternalRepository getRepository(IRepository[] repositories, String name)
-  {
-    for (IRepository repository : repositories)
-    {
-      if (Objects.equals(repository.getName(), name))
-      {
-        return (InternalRepository)repository;
-      }
-    }
-
-    return null;
-  }
 }

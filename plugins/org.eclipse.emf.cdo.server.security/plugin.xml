@@ -28,8 +28,6 @@
       <factory productGroup="org.eclipse.emf.cdo.server.security.managers" type="annotation" class="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory$Annotation"/>
       <factory productGroup="org.eclipse.emf.cdo.server.security.commitHandlers" type="annotation" class="org.eclipse.emf.cdo.server.spi.security.AnnotationHandler$Factory"/>
       <factory productGroup="org.eclipse.emf.cdo.server.security.commitHandlers" type="home" class="org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler$Factory"/>
-      <factory productGroup="org.eclipse.emf.cdo.server.commands" type="adduser" class="org.eclipse.emf.cdo.server.internal.security.SecurityManagerCommand$AddUser"/>
-      <factory productGroup="org.eclipse.emf.cdo.server.commands" type="setpassword" class="org.eclipse.emf.cdo.server.internal.security.SecurityManagerCommand$SetPassword"/>
       <factory productGroup="org.eclipse.net4j.util.security.operationAuthorizers" type="requireUser" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireUser$Factory"/>
       <factory productGroup="org.eclipse.net4j.util.security.operationAuthorizers" type="requireGroup" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireGroup$Factory"/>
       <factory productGroup="org.eclipse.net4j.util.security.operationAuthorizers" type="requireRole" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireRole$Factory"/>

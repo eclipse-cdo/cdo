@@ -17,6 +17,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager$DelegatingProtector">
+        <filter id="574619656">
+            <message_arguments>
+                <message_argument value="IRepositoryProtector"/>
+                <message_argument value="DelegatingProtector"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/security/SecurityManager.java" type="org.eclipse.emf.cdo.server.internal.security.SecurityManager$PermissionManager">
         <filter id="574619656">
             <message_arguments>

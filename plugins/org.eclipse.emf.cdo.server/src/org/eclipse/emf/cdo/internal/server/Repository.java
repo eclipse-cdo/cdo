@@ -1429,20 +1429,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void setProtector(IRepositoryProtector protector)
   {
-    boolean checkLifecycleState = true;
-    String className = "org.eclipse.emf.cdo.server.internal.security.SecurityManager$DelegatingProtector";
-
-    if (protector != null && protector.getClass().getName().equals(className))
-    {
-      checkLifecycleState = false;
-    }
-
-    if (this.protector != null && this.protector.getClass().getName().equals(className))
-    {
-      checkLifecycleState = false;
-    }
-
-    if (checkLifecycleState)
+    if (!isSecurityManagerWrapper(protector))
     {
       checkInactive();
     }
@@ -3009,6 +2996,11 @@ public class Repository extends Container<Object> implements InternalRepository
     LifecycleUtil.deactivate(branchManager);
     LifecycleUtil.deactivate(packageRegistry);
     super.doDeactivate();
+  }
+
+  private static boolean isSecurityManagerWrapper(IRepositoryProtector protector)
+  {
+    return protector != null && protector.getAuthorizationStrategy() == null;
   }
 
   public static List<Object> revisionKeysToObjects(List<CDORevisionKey> revisionKeys, CDOBranch viewedBranch, boolean isSupportingBranches)

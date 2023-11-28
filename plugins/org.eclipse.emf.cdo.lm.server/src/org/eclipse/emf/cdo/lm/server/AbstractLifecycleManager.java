@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
+import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.security.SecurityManagerUtil;
@@ -140,6 +141,8 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   private Consumer<Process> processInitializer;
 
+  private IPasswordCredentials credentials;
+
   private SecuritySupport securitySupport = SecuritySupport.UNAVAILABLE;
 
   public AbstractLifecycleManager()
@@ -187,6 +190,22 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   public void setProcessInitializer(Consumer<Process> processInitializer)
   {
     this.processInitializer = processInitializer;
+  }
+
+  /**
+   * @since 1.3
+   */
+  public IPasswordCredentials getCredentials()
+  {
+    return credentials;
+  }
+
+  /**
+   * @since 1.3
+   */
+  public void setCredentials(IPasswordCredentials credentials)
+  {
+    this.credentials = credentials;
   }
 
   public String getModuleDefinitionPath()
@@ -243,10 +262,17 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     checkState(systemRepository, "systemRepository"); //$NON-NLS-1$
     checkState(systemName, "systemName"); //$NON-NLS-1$
 
-    if (SECURITY_AVAILABLE)
+    String moduleDefinitionPath = getModuleDefinitionPath();
+    IPasswordCredentials credentials = getCredentials();
+
+    IRepositoryProtector protector = systemRepository.getProtector();
+    if (protector != null && protector.getAuthorizationStrategy() != null)
     {
-      String moduleDefinitionPath = getModuleDefinitionPath();
-      securitySupport = new SecuritySupport.Available(systemRepository, moduleDefinitionPath);
+      securitySupport = new SecuritySupport.ProtectorBased(systemRepository, moduleDefinitionPath, credentials);
+    }
+    else if (SECURITY_AVAILABLE)
+    {
+      securitySupport = new SecuritySupport.RealmBased(systemRepository, moduleDefinitionPath, credentials);
     }
   }
 
@@ -981,7 +1007,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     /**
      * @author Eike Stepper
      */
-    public static final class Available implements SecuritySupport
+    public static final class RealmBased implements SecuritySupport
     {
       private static final String USER_NAME = "Lifecycle Manager";
 
@@ -991,32 +1017,15 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
       private final InternalSecurityManager securityManager;
 
-      private final IPasswordCredentials credentials;
+      private final IPasswordCredentials passwordCredentials;
 
-      public Available(InternalRepository systemRepository, String moduleDefinitionPath)
+      public RealmBased(InternalRepository systemRepository, String moduleDefinitionPath, IPasswordCredentials credentials)
       {
         securityManager = (InternalSecurityManager)SecurityManagerUtil.getSecurityManager(systemRepository);
+        passwordCredentials = getOrCreateCredentials(systemRepository, credentials);
 
         if (securityManager != null)
         {
-          String uuid = systemRepository.getUUID();
-
-          byte[] bytes;
-
-          try
-          {
-            bytes = SecurityUtil.pbeEncrypt(uuid.getBytes(), KEY, SecurityUtil.PBE_WITH_MD5_AND_DES, SecurityUtil.DEFAULT_SALT,
-                SecurityUtil.DEFAULT_ITERATION_COUNT);
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-            bytes = new String(KEY).getBytes();
-          }
-
-          String hex = HexUtil.bytesToHex(bytes);
-          credentials = new PasswordCredentials(USER_NAME, SecurityUtil.toCharArray(hex));
-
           securityManager.modify(realm -> {
             Role lmRole = realm.getRole(ROLE_NAME);
             if (lmRole == null)
@@ -1025,10 +1034,10 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
               SecurityManagerUtil.addResourcePermissions(lmRole, moduleDefinitionPath, false);
             }
 
-            User lmUser = realm.getUser(credentials.getUserID());
+            User lmUser = realm.getUser(passwordCredentials.getUserID());
             if (lmUser == null)
             {
-              lmUser = realm.addUser(credentials);
+              lmUser = realm.addUser(passwordCredentials);
               lmUser.getRoles().add(lmRole);
 
               Role allObjectsReader = realm.getRole(Role.ALL_OBJECTS_READER);
@@ -1062,16 +1071,12 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
             }
           });
         }
-        else
-        {
-          credentials = null;
-        }
       }
 
       @Override
       public IPasswordCredentials getCredentials()
       {
-        return credentials;
+        return passwordCredentials;
       }
 
       @Override
@@ -1088,6 +1093,63 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
           }
 
           securityManager.addSecondaryRepository(moduleRepository, authorizationContext);
+        }
+      }
+
+      private IPasswordCredentials getOrCreateCredentials(InternalRepository systemRepository, IPasswordCredentials credentials)
+      {
+        if (credentials != null)
+        {
+          return credentials;
+        }
+
+        String uuid = systemRepository.getUUID();
+
+        byte[] bytes;
+
+        try
+        {
+          bytes = SecurityUtil.pbeEncrypt(uuid.getBytes(), KEY, SecurityUtil.PBE_WITH_MD5_AND_DES, SecurityUtil.DEFAULT_SALT,
+              SecurityUtil.DEFAULT_ITERATION_COUNT);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+          bytes = new String(KEY).getBytes();
+        }
+
+        String hex = HexUtil.bytesToHex(bytes);
+        return new PasswordCredentials(USER_NAME, SecurityUtil.toCharArray(hex));
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class ProtectorBased implements SecuritySupport
+    {
+      private final IRepositoryProtector repositoryProtector;
+
+      private final IPasswordCredentials passwordCredentials;
+
+      public ProtectorBased(InternalRepository systemRepository, String moduleDefinitionPath, IPasswordCredentials credentials)
+      {
+        repositoryProtector = systemRepository.getProtector();
+        passwordCredentials = credentials;
+      }
+
+      @Override
+      public IPasswordCredentials getCredentials()
+      {
+        return passwordCredentials;
+      }
+
+      @Override
+      public void addModuleRepository(InternalRepository moduleRepository, String moduleName, String moduleTypeName)
+      {
+        if (repositoryProtector != null)
+        {
+          repositoryProtector.addSecondaryRepository(moduleRepository);
         }
       }
     }

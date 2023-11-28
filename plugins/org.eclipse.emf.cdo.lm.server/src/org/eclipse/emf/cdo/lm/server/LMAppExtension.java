@@ -21,9 +21,13 @@ import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.XMLUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.PropertiesFactory;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.security.IPasswordCredentials;
+import org.eclipse.net4j.util.security.PasswordCredentials;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -116,6 +120,9 @@ public class LMAppExtension extends AppExtension
     lifecycleManager.setModuleDefinitionPath(moduleDefinitionPath);
     lifecycleManager.setModuleTemplateElement(moduleTemplateElement);
 
+    IPasswordCredentials credentials = createCredentials(lmElement);
+    lifecycleManager.setCredentials(credentials);
+
     Consumer<Process> processInitializer = createProcessInitializater(lmElement);
     lifecycleManager.setProcessInitializer(processInitializer);
 
@@ -138,6 +145,49 @@ public class LMAppExtension extends AppExtension
     IManagedContainer container = repository.getContainer();
     String lifecycleManagerType = getDefaultLifecycleManagerType();
     return getContainerElement(lmElement, lifecycleManagerType, container);
+  }
+
+  /**
+   * @since 1.3
+   */
+  protected IPasswordCredentials createCredentials(Element lmElement)
+  {
+    IPasswordCredentials[] credentials = { null };
+
+    try
+    {
+      XMLUtil.handleChildElements(lmElement, child -> {
+        if ("credentials".equals(child.getTagName()))
+        {
+          if (credentials[0] == null)
+          {
+            String userID = getAttribute(child, "userId");
+            if (StringUtil.isEmpty(userID))
+            {
+              throw new IllegalStateException("userId not specified");
+            }
+
+            String password = getAttribute(child, "password");
+            if (StringUtil.isEmpty(password))
+            {
+              throw new IllegalStateException("Password not specified");
+            }
+
+            credentials[0] = new PasswordCredentials(userID, password);
+          }
+          else
+          {
+            OM.LOG.info("Multiple credentials specified. Using first.");
+          }
+        }
+      });
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    return credentials[0];
   }
 
   /**

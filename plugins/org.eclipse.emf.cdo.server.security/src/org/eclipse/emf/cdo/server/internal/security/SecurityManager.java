@@ -1750,6 +1750,7 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
     @Override
     public AuthorizationStrategy getAuthorizationStrategy()
     {
+      // Repository.setProtector() relies on null being returned here!
       return null;
     }
 

@@ -20,7 +20,56 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
+    <protector>
+      <userAuthenticator type="ldap">
+        <environment id="base">
+          <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
+          <property name="java.naming.provider.url" value="ldap://localhost:10389"/>
+          <property name="java.naming.security.authentication" value="simple"/>
+        </environment>
+        
+        <environment id="bind" inherits="base">
+          <property name="java.naming.security.principal" value="$$$system_property(CDO_BIND_DN)$$$"/>
+          <property name="java.naming.security.credentials" value="$$$system_property(CDO_BIND_PW)$$$"/>
+        </environment>
+        
+        <environment id="user" inherits="base">
+          <property name="java.naming.security.principal" value="$USER_DN$"/>
+          <property name="java.naming.security.credentials" value="$USER_PW$"/>
+        </environment>
+        
+        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameters USER_ID and USER_PW can be used"/>
+        
+        <loginUser environment="user" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used">
+          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
+        </loginUser>
+      </userAuthenticator> 
+      
+      <userAuthenticator type="file" path="@config/passwd.txt" portable="true" doc="Only the first authenticator is used!">
+        <passwordCrypter type="SHA-512" params="2874365"/>
+      </userAuthenticator>
+      
+      <authorizationStrategy type="additive"/>
+       
+      <revisionAuthorizer permission="write" doc="Lifecycle Manager">
+        <userId value="$$$system_property(LM_USER_ID)$$$"/>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="write" doc="Test Modules">
+        <and>
+          <ldapGroupAttribute key="cn" value="AMS Users" id="AMS_USERS"/>
+          <repositoryProperty key="cdo.lm.server.module_type_name" value="Test"/>
+        </and>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="read">
+        <matcher ref="AMS_USERS"/>
+      </revisionAuthorizer>
+    </protector>
+
+    <!--  
     <securityManager type="default" description="/security:annotation:home(/home)"/>
+    -->
     
     <store type="db">
       <property name="connectionKeepAlivePeriod" value="60"/>
@@ -38,6 +87,8 @@
     </store>
 
     <lifecycleManager type="default" systemName="CDO-LM" moduleDefinitionPath="module.md">
+      <credentials userId="$$$system_property(LM_USER_ID)$$$" password="$$$system_property(LM_USER_PW)$$$"/>
+      
       <dropType name="Tag" />    
       <dropType name="Milestone" />    
       <dropType name="Release" release="true" />

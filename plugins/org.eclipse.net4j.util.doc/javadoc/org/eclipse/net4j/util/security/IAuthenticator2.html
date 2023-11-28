@@ -75,11 +75,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></dd>
+<dd><code><a href="AdministrationPredicate.html" title="interface in org.eclipse.net4j.util.security">AdministrationPredicate</a></code>, <code><a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IAuthenticator2</span><span class="extends-implements">
-extends <a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a></span></div>
+extends <a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util.security">IAuthenticator</a>, <a href="AdministrationPredicate.html" title="interface in org.eclipse.net4j.util.security">AdministrationPredicate</a></span></div>
 <div class="block">Extension interface for authenticators that can update user credentials in addition to authenticating them.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -184,6 +184,8 @@ extends <a href="IAuthenticator.html" title="interface in org.eclipse.net4j.util
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isAdministrator</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
 <div class="block">Queries whether a given user has administrative privileges.</div>
 <dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="AdministrationPredicate.html#isAdministrator(java.lang.String)">isAdministrator</a></code>&nbsp;in interface&nbsp;<code><a href="AdministrationPredicate.html" title="interface in org.eclipse.net4j.util.security">AdministrationPredicate</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>userID</code> - an user ID, which may or may not exist</dd>
 <dt>Returns:</dt>

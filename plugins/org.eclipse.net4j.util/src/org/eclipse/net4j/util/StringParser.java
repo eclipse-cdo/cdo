@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.factory.SingletonFactory;
 import java.io.File;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.function.Function;
@@ -57,7 +58,7 @@ public interface StringParser<T> extends Function<String, T>
 
   public static final StringParser<BigDecimal> BIG_DECIMAL = BigDecimal::new;
 
-  public static final StringParser<Path> PATH = Path::of;
+  public static final StringParser<Path> PATH = str -> FileSystems.getDefault().getPath(str);
 
   public static final StringParser<File> FILE = File::new;
 

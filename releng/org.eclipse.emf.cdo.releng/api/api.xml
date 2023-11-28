@@ -10,16 +10,21 @@
             <message_argument value="org.eclipse.net4j.util.factory.Factory"/>
         </message_arguments>
     </delta>
-    <delta compatible="false" componentId="org.eclipse.emf.cdo.common(4.22.0)" element_type="ENUM_ELEMENT_TYPE" flags="25" key="canPrefetchLockStates()Z" kind="ADDED" message="Message not found for id: 0" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants$UnitOpcode">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="39" key="org.eclipse.emf.cdo.spi.server.AppExtension" kind="ADDED" message="A superclass has been added for type org.eclipse.emf.cdo.spi.server.AppExtension" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AppExtension">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode"/>
-            <message_argument value="canPrefetchLockStates()"/>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AppExtension"/>
         </message_arguments>
     </delta>
     <delta compatible="false" componentId="org.eclipse.emf.cdo.common(4.22.0)" element_type="ENUM_ELEMENT_TYPE" flags="25" key="parse(Ljava/lang/String;)Lorg/eclipse/emf/cdo/common/security/CDOPermission;" kind="ADDED" message="Message not found for id: 0" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.security.CDOPermission">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.security.CDOPermission"/>
             <message_argument value="parse(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.common(4.22.0)" element_type="ENUM_ELEMENT_TYPE" flags="25" key="canPrefetchLockStates()Z" kind="ADDED" message="Message not found for id: 0" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants$UnitOpcode">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode"/>
+            <message_argument value="canPrefetchLockStates()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.22.0)" element_type="FIELD_ELEMENT_TYPE" flags="31" key="create" kind="CHANGED" message="The 'final' keyword has been added for the non-visble field org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode.create" newModifiers="18" oldModifiers="2" restrictions="2" type_name="org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants$UnitOpcode">
@@ -91,6 +96,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.spi.cdo.CDOSessionProtocol"/>
             <message_argument value="requestUnit(int, CDOID, CDOProtocolConstants.UnitOpcode, CDORevisionHandler, OMMonitor)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getStoreConfig(Lorg/w3c/dom/Element;)Lorg/w3c/dom/Element;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.TransportConfigurator.getStoreConfig(Element)" newModifiers="1048580" oldModifiers="4" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="getStoreConfig(Element)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="equalsUpperOrLowerCase(Ljava/lang/String;Ljava/lang/String;)Z" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.util.StringUtil.equalsUpperOrLowerCase(String, String)" newModifiers="1048585" oldModifiers="9" restrictions="2" type_name="org.eclipse.net4j.util.StringUtil">
@@ -182,6 +193,13 @@
             <message_argument value="properties()"/>
         </message_arguments>
     </delta>
+    <delta compatible="false" componentId="org.eclipse.net4j.util(3.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.net4j.util.security.IAuthenticator2" kind="ADDED" message="The interface org.eclipse.net4j.util.security.AdministrationPredicate adds method isAdministrator(String) to org.eclipse.net4j.util.security.IAuthenticator2 that is not tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.net4j.util.security.IAuthenticator2">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IAuthenticator2"/>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="isAdministrator(String)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.security(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.server.security.ISecurityManager" kind="ADDED" message="The interface org.eclipse.net4j.util.security.IAuthenticator adds method authenticate(String, char[]) to org.eclipse.emf.cdo.server.security.ISecurityManager that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.server.security.ISecurityManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.security.ISecurityManager"/>
@@ -239,6 +257,12 @@
             <message_argument value="getProtector()"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="26" key="getDocument(Ljava/io/File;)Lorg/w3c/dom/Document;" kind="REMOVED" message="The method org.eclipse.emf.cdo.spi.server.AppExtension.getDocument(File) has been moved up in the hierarchy" newModifiers="20" oldModifiers="4" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AppExtension"/>
+            <message_argument value="getDocument(File)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="setProtector(Lorg/eclipse/emf/cdo/server/IRepositoryProtector;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalRepository.setProtector(IRepositoryProtector) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
@@ -285,6 +309,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOSessionConfiguration"/>
             <message_argument value="setLoginPeek(boolean)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="setParameters(Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The method org.eclipse.net4j.TransportConfigurator.setParameters(Map&lt;String,String&gt;) has been added, overriding a method from a superclass" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="setParameters(Map&lt;String,String&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.db(4.12.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="createSchema(Ljava/sql/Connection;Ljava/lang/String;)V" kind="ADDED" message="The method org.eclipse.net4j.db.IDBAdapter.createSchema(Connection, String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="1" type_name="org.eclipse.net4j.db.IDBAdapter">
@@ -619,6 +649,24 @@
             <message_argument value="3.18.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getCredentials()Lorg/eclipse/net4j/util/security/IPasswordCredentials;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.getCredentials() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="getCredentials()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setCredentials(Lorg/eclipse/net4j/util/security/IPasswordCredentials;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.setCredentials(IPasswordCredentials) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="setCredentials(IPasswordCredentials)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createCredentials(Lorg/w3c/dom/Element;)Lorg/eclipse/net4j/util/security/IPasswordCredentials;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.LMAppExtension.createCredentials(Element) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="createCredentials(Element)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="prepareContainer(Lorg/eclipse/net4j/util/container/IManagedContainer;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.CDOServerUtil.prepareContainer(IManagedContainer) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.server.CDOServerUtil">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.CDOServerUtil"/>
@@ -677,6 +725,42 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.util.CDOUtil"/>
             <message_argument value="isWritable(EObject)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="collectProperties(Lorg/w3c/dom/Element;Ljava/lang/String;Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;ILjava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;Lorg/eclipse/net4j/util/container/IManagedContainer;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.collectProperties(Element, String, Map&lt;String,String&gt;, int, Map&lt;String,String&gt;, IManagedContainer) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="collectProperties(Element, String, Map&lt;String,String&gt;, int, Map&lt;String,String&gt;, IManagedContainer)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="expandValue(Ljava/lang/String;Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;Lorg/eclipse/net4j/util/container/IManagedContainer;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.expandValue(String, Map&lt;String,String&gt;, IManagedContainer) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="expandValue(String, Map&lt;String,String&gt;, IManagedContainer)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getAttribute(Lorg/w3c/dom/Element;Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.getAttribute(Element, String) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="getAttribute(Element, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getParameters()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.getParameters() has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="getParameters()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getProperties(Lorg/w3c/dom/Element;ILjava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.getProperties(Element, int, Map&lt;String,String&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="getProperties(Element, int, Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getProperties(Lorg/w3c/dom/Element;ILjava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;Lorg/eclipse/net4j/util/container/IManagedContainer;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.TransportConfigurator.getProperties(Element, int, Map&lt;String,String&gt;, IManagedContainer) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="getProperties(Element, int, Map&lt;String,String&gt;, IManagedContainer)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.db(4.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="containsName(Ljava/util/Set&lt;Ljava/lang/String;&gt;;Ljava/lang/String;Z)Z" kind="ADDED" message="The non-abstract method org.eclipse.net4j.db.DBUtil.containsName(Set&lt;String&gt;, String, boolean) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.db.DBUtil">
@@ -853,6 +937,12 @@
             <message_argument value="withAuthorizationContext(Map&lt;String,Object&gt;, Runnable)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="credentials" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.credentials has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="credentials"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.7.1)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="THREAD_LOCAL" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.security.util.AuthorizationContext.THREAD_LOCAL has been removed" newModifiers="0" oldModifiers="26" restrictions="2" type_name="org.eclipse.emf.cdo.security.util.AuthorizationContext">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.security.util.AuthorizationContext"/>
@@ -865,16 +955,34 @@
             <message_argument value="supportingLoginPeeks"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="parameters" kind="ADDED" message="The non-visible field org.eclipse.net4j.TransportConfigurator.parameters has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="parameters"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="metaFactoryChildren" kind="ADDED" message="The non-visible field org.eclipse.net4j.util.container.ManagedContainer.metaFactoryChildren has been added" newModifiers="146" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.container.ManagedContainer">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.container.ManagedContainer"/>
             <message_argument value="metaFactoryChildren"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getRepository([Lorg/eclipse/emf/cdo/server/IRepository;Ljava/lang/String;)Lorg/eclipse/emf/cdo/spi/server/InternalRepository;" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.spi.server.AppExtension.getRepository(IRepository[], String) has been removed" newModifiers="0" oldModifiers="2" restrictions="4" type_name="org.eclipse.emf.cdo.spi.server.AppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AppExtension"/>
+            <message_argument value="getRepository(IRepository[], String)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="collectProperties(Lorg/w3c/dom/Element;Ljava/lang/String;Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;ILjava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.collectProperties(Element, String, Map&lt;String,String&gt;, int, Map&lt;String,String&gt;) has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator"/>
             <message_argument value="collectProperties(Element, String, Map&lt;String,String&gt;, int, Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="collectProperties(Lorg/w3c/dom/Element;Ljava/lang/String;Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;I)V" kind="REMOVED" message="The non-visible method org.eclipse.net4j.TransportConfigurator.collectProperties(Element, String, Map&lt;String,String&gt;, int) has been removed" newModifiers="0" oldModifiers="10" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="collectProperties(Element, String, Map&lt;String,String&gt;, int)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.22.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.common.security.LoginPeekException" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.common.security.LoginPeekException has been added to org.eclipse.emf.cdo_4.22.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.common.security.LoginPeekException">
@@ -922,6 +1030,48 @@
     <delta compatible="true" componentId="org.eclipse.emf.cdo.workspace(4.4.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepositoryProtector" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepositoryProtector has been added to org.eclipse.emf.cdo.workspace_4.4.4" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepositoryProtector">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.IRepositoryProtector"/>
+            <message_argument value="org.eclipse.emf.cdo.workspace_4.4.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.3.8)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.admin_4.3.8" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.3.8"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.12.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.db_4.12.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.12.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.lissome(4.3.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.lissome_4.3.5" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.lissome_4.3.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.mongodb(4.1.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.mongodb_4.1.3" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.mongodb_4.1.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.net4j(4.6.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.net4j_4.6.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.net4j_4.6.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.security(4.10.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server.security_4.10.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server.security_4.10.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.workspace(4.4.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.workspace_4.4.4" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
             <message_argument value="org.eclipse.emf.cdo.workspace_4.4.4"/>
         </message_arguments>
     </delta>
@@ -1006,6 +1156,48 @@
     <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.LongBiPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.LongBiPredicate has been added to org.eclipse.net4j_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.LongBiPredicate">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.LongBiPredicate"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j.db_4.11.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
             <message_argument value="org.eclipse.net4j_4.18.0"/>
         </message_arguments>
     </delta>
@@ -1513,6 +1705,228 @@
             <message_argument value="org.eclipse.net4j_4.18.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j.db_4.11.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j.db_4.11.3" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j_4.18.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j.db_4.11.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j.db_4.11.3" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j_4.18.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.emf.cdo.common_4.21.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.emf.cdo.transfer_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.11.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j.db_4.11.3" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.net4j.db_4.11.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.1.4)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j.trace_1.1.4" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.net4j.trace_1.1.4"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j.ui.shared_4.8.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.8.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.17.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j.util.ui_3.17.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.17.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j_4.18.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
+            <message_argument value="org.eclipse.net4j_4.18.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="METHOD_ELEMENT_TYPE" flags="38" key="getContainerElement&lt;T:Ljava/lang/Object;&gt;(Lorg/w3c/dom/Element;Ljava/lang/String;Lorg/eclipse/net4j/util/container/IManagedContainer;)TT;" kind="CHANGED" message="The static field org.eclipse.emf.cdo.lm.server.LMAppExtension.getContainerElement(Element, String, IManagedContainer) has been converted to an instance field" newModifiers="2" oldModifiers="10" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="getContainerElement(Element, String, IManagedContainer)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="METHOD_ELEMENT_TYPE" flags="38" key="getNamedChildren&lt;T:Ljava/lang/Object;&gt;(Lorg/w3c/dom/Element;Ljava/lang/String;Ljava/util/function/BiFunction&lt;Lorg/w3c/dom/Element;Ljava/lang/String;TT;&gt;;)Ljava/util/Collection&lt;TT;&gt;;" kind="CHANGED" message="The static field org.eclipse.emf.cdo.lm.server.LMAppExtension.getNamedChildren(Element, String, BiFunction&lt;Element,String,T&gt;) has been converted to an instance field" newModifiers="2" oldModifiers="10" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="getNamedChildren(Element, String, BiFunction&lt;Element,String,T&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.7.1)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="AUTHORIZATION_CONTEXT" kind="ADDED" message="The static field org.eclipse.emf.cdo.security.util.AuthorizationContext.AUTHORIZATION_CONTEXT has been added" newModifiers="26" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.security.util.AuthorizationContext">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.security.util.AuthorizationContext"/>
@@ -1579,6 +1993,12 @@
             <message_argument value="REPOSITORY_INJECTOR"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ELEM_PROPERTY" kind="ADDED" message="The static field org.eclipse.net4j.TransportConfigurator.ELEM_PROPERTY has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="ELEM_PROPERTY"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.db(4.12.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ALL_TABLE_NAME_TYPES" kind="ADDED" message="The static field org.eclipse.net4j.db.DBUtil.ALL_TABLE_NAME_TYPES has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.db.DBUtil">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.db.DBUtil"/>
@@ -1636,6 +2056,30 @@
     <delta compatible="false" componentId="org.eclipse.net4j.util(3.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="39" key="org.eclipse.net4j.util.factory.FactoryDescriptor" kind="REMOVED" message="The superclass hierarchy for org.eclipse.net4j.util.factory.FactoryDescriptor has been reduced" newModifiers="1048609" oldModifiers="1048609" restrictions="2" type_name="org.eclipse.net4j.util.factory.FactoryDescriptor">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.factory.FactoryDescriptor"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.TransportConfigurator" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.ParameterAware) for class org.eclipse.net4j.TransportConfigurator" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.net4j.TransportConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.TransportConfigurator"/>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.ParameterAware) for interface org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware" newModifiers="1545" oldModifiers="1545" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStoreFactory.ParameterAware"/>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.lm.server.LMAppExtension" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.container.IManagedContainer$ContainerAware,org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware,org.eclipse.net4j.util.container.IManagedContainerProvider) for class org.eclipse.emf.cdo.lm.server.LMAppExtension" newModifiers="33" oldModifiers="33" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="org.eclipse.net4j.util.container.IManagedContainer$ContainerAware,org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware,org.eclipse.net4j.util.container.IManagedContainerProvider"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.AppExtension" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.container.IManagedContainer$ContainerAware,org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware,org.eclipse.net4j.util.container.IManagedContainerProvider) for class org.eclipse.emf.cdo.spi.server.AppExtension" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AppExtension"/>
+            <message_argument value="org.eclipse.net4j.util.container.IManagedContainer$ContainerAware,org.eclipse.emf.cdo.server.IStoreFactory$ParameterAware,org.eclipse.net4j.util.container.IManagedContainerProvider"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.22.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.common.model.CDOType$Handler$Factory" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.factory.IFactoryKeyAware) for class org.eclipse.emf.cdo.common.model.CDOType.Handler.Factory" newModifiers="1033" oldModifiers="1033" restrictions="0" type_name="org.eclipse.emf.cdo.common.model.CDOType$Handler$Factory">
@@ -2118,6 +2562,12 @@
             <message_argument value="org.eclipse.net4j.util.properties.IPropertiesContainer"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.net4j.util.security.IAuthenticator2" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.security.AdministrationPredicate) for interface org.eclipse.net4j.util.security.IAuthenticator2" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.net4j.util.security.IAuthenticator2">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IAuthenticator2"/>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.security(4.11.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.security.ISecurityManager" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.security.IAuthenticator2,org.eclipse.net4j.util.security.IAuthenticator) for interface org.eclipse.emf.cdo.server.security.ISecurityManager" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.server.security.ISecurityManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.security.ISecurityManager"/>
@@ -2160,6 +2610,12 @@
             <message_argument value="org.eclipse.emf.cdo.server_4.20.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.server_4.20.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.server_4.20.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.DoubleBiPredicate" kind="ADDED" message="The type org.eclipse.net4j.util.DoubleBiPredicate has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.DoubleBiPredicate">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.DoubleBiPredicate"/>
@@ -2169,6 +2625,12 @@
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.LongBiPredicate" kind="ADDED" message="The type org.eclipse.net4j.util.LongBiPredicate has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.LongBiPredicate">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.LongBiPredicate"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ParameterAware" kind="ADDED" message="The type org.eclipse.net4j.util.ParameterAware has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ParameterAware">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ParameterAware"/>
             <message_argument value="org.eclipse.net4j.util_3.23.0"/>
         </message_arguments>
     </delta>
@@ -2241,6 +2703,36 @@
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.factory.TreeFactory" kind="ADDED" message="The type org.eclipse.net4j.util.factory.TreeFactory has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.factory.TreeFactory">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.factory.TreeFactory"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.security.AdministrationPredicate" kind="ADDED" message="The type org.eclipse.net4j.util.security.AdministrationPredicate has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.AdministrationPredicate">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.AdministrationPredicate"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.security.Crypter" kind="ADDED" message="The type org.eclipse.net4j.util.security.Crypter has been added to org.eclipse.net4j.util_3.23.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.Crypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.Crypter"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.security.ICrypter" kind="ADDED" message="The type org.eclipse.net4j.util.security.ICrypter has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.ICrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.ICrypter"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.security.IUserManagement" kind="ADDED" message="The type org.eclipse.net4j.util.security.IUserManagement has been added to org.eclipse.net4j.util_3.23.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.IUserManagement">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.IUserManagement"/>
+            <message_argument value="org.eclipse.net4j.util_3.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.security.MessageDigestCrypter" kind="ADDED" message="The type org.eclipse.net4j.util.security.MessageDigestCrypter has been added to org.eclipse.net4j.util_3.23.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.security.MessageDigestCrypter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.security.MessageDigestCrypter"/>
             <message_argument value="org.eclipse.net4j.util_3.23.0"/>
         </message_arguments>
     </delta>

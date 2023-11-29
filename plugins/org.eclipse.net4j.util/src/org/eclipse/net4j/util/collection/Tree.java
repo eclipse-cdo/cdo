@@ -266,37 +266,6 @@ public final class Tree implements Comparable<Tree>
     return builder;
   }
 
-  // public static void main(String[] args) throws Exception
-  // {
-  // Tree tree = Tree.builder().setName("ldap").setAttribute("ldap1", "val").setAttribute("ldap2", "val").addChild(c ->
-  // {
-  // c.setName("env").setAttribute("env1", "v\"a\"l").setAttribute("env2", "val");
-  // }).addChild(c -> {
-  // c.setName("auth").setAttribute("auth1", "val").setAttribute("auth2", "val");
-  // }).build();
-  //
-  // tree.visit(new Tree.Dumper(), null);
-  //
-  // // ---
-  //
-  // Builder copy = Tree.builder(tree);
-  // Builder auth = copy.child(1);
-  // auth.setAttribute("auth2", "modified");
-  // copy.build().visit(new Tree.Dumper(), null);
-  //
-  // // ---
-  //
-  // Document document = XMLConverter.convertTreeToDocument(tree);
-  //
-  // StringWriter writer = new StringWriter();
-  // Transformer transformer = TransformerFactory.newInstance().newTransformer();
-  // transformer.setOutputProperty(OutputKeys.OMIT_XML_DECLARATION, "yes");
-  // transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-  // transformer.setOutputProperty(OutputKeys.INDENT, "no");
-  // transformer.transform(new DOMSource(document), new StreamResult(writer));
-  // System.out.println(writer);
-  // }
-
   /**
    * @author Eike Stepper
    */

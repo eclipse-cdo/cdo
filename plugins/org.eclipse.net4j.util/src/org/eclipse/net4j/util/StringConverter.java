@@ -25,6 +25,8 @@ import java.util.Properties;
 import java.util.function.Function;
 
 /**
+ * Converts any kind of {@link Object objects} to strings.
+ *
  * @author Eike Stepper
  * @since 3.23
  */

@@ -30,6 +30,8 @@ import java.util.List;
 import java.util.function.Function;
 
 /**
+ * Creates products reflectively and configures them via product method annotations.
+ *
  * @author Eike Stepper
  * @since 3.23
  */

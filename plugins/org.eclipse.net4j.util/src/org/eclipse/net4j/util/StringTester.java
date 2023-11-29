@@ -19,6 +19,8 @@ import java.util.function.BiPredicate;
 import java.util.regex.Pattern;
 
 /**
+ * Tests the relationships of pairs of strings.
+ *
  * @author Eike Stepper
  * @since 3.23
  */

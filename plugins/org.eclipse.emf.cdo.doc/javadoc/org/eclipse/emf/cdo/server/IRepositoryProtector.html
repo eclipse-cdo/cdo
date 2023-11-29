@@ -75,11 +75,11 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code>org.eclipse.net4j.util.container.IManagedContainerProvider</code></dd>
+<dd><code>org.eclipse.net4j.util.container.IContainer&lt;<a href="IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&gt;</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IRepositoryProtector</span><span class="extends-implements">
-extends org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
+extends org.eclipse.net4j.util.container.IContainer&lt;<a href="IRepositoryProtector.UserInfo.html" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a>&gt;, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
 <div class="block">Protects a <a href="#getRepository()"><code>repository</code></a> by authenticating users and, optionally, authorizing read and write operations.</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -121,7 +121,16 @@ extends org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="IRepositoryProtector.UserInfo.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfo</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="IRepositoryProtector.UserInfoChangedEvent.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server">IRepositoryProtector.UserInfoChangedEvent</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h2>
+<code>org.eclipse.net4j.util.container.IContainer.Modifiable&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.container.IContainer.Persistable&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;, org.eclipse.net4j.util.container.IContainer.Persistence&lt;E extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
@@ -208,8 +217,14 @@ extends org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
 </div>
 </div>
 <div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h3>
+<code>getElements, isEmpty</code></div>
+<div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.container.IManagedContainerProvider">Methods inherited from interface&nbsp;org.eclipse.net4j.util.container.IManagedContainerProvider</h3>
 <code>getContainer</code></div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<code>addListener, getListeners, hasListeners, removeListener</code></div>
 </section>
 </li>
 </ul>

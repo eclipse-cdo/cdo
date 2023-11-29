@@ -184,6 +184,38 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
 
       return str;
     }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class True extends Matcher
+    {
+      public True()
+      {
+      }
+
+      @Override
+      public boolean matches(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider, CDORevision revision)
+      {
+        return true;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static class False extends Matcher
+    {
+      public False()
+      {
+      }
+
+      @Override
+      public boolean matches(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider, CDORevision revision)
+      {
+        return false;
+      }
+    }
   }
 
   /**

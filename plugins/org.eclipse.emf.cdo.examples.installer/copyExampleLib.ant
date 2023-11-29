@@ -32,6 +32,7 @@
 					<exclude name="target/" />
 					<exclude name=".settings/org.eclipse.mylyn*" />
 					<exclude name=".settings/org.eclipse.pde.api.tools.prefs" />
+					<exclude name="**/passwd*" />
 					<exclude name="**/.gitignore" />
 					<include name="**" />
 				</fileset>

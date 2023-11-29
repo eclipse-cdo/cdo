@@ -42,6 +42,8 @@
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" type="default" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer"/>
         <annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" type="additive" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Additive"/>
         <annotationFactory productGroup="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" type="subtractive" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Subtractive"/>
+      	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="true" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$Matcher$True"/>
+      	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="false" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$Matcher$False"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="matcher" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$RefMatcher"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="not" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$Not"/>
       	<annotationFactory productGroup="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" type="and" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$And"/>

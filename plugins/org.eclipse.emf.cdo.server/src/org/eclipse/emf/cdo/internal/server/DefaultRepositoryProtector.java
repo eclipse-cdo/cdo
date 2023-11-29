@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.server.IPermissionManager;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator.PasswordChangeSupport;
+import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
@@ -45,6 +46,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Tree;
+import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -52,17 +54,21 @@ import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.factory.IFactoryKey;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.security.IAuthenticator2;
+import org.eclipse.net4j.util.security.SecurityUtil;
 
+import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -72,7 +78,8 @@ import java.util.function.Consumer;
  * @author Eike Stepper
  * @since 4.20
  */
-public class DefaultRepositoryProtector extends Lifecycle implements IRepositoryProtector, IAuthenticator2, IPermissionManager, IRepository.WriteAccessHandler
+public class DefaultRepositoryProtector extends Container<UserInfo>
+    implements IRepositoryProtector, IAuthenticator2, IPermissionManager, IRepository.WriteAccessHandler
 {
   private static final String PROP_PROTECTOR_INITIALIZED = "org.eclipse.emf.cdo.server.protectorInitialized";
 
@@ -80,7 +87,11 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
 
   private final ConcurrentMap<IRepository, SecondaryRepository> secondaryRepositories = new ConcurrentHashMap<>();
 
-  private final ConcurrentMap<String, SessionUserInfo> sessionUserInfos = new ConcurrentHashMap<>();
+  private final MessageDigest passwordDigester;
+
+  private final byte[] salt;
+
+  private final Map<String, SessionUserInfo> sessionUserInfos = new HashMap<>();
 
   private final IListener sessionManagerListener = new ContainerEventAdapter<ISession>()
   {
@@ -123,6 +134,17 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
 
   public DefaultRepositoryProtector()
   {
+    try
+    {
+      passwordDigester = MessageDigest.getInstance("MD5");
+
+      salt = new byte[32];
+      new Random(System.currentTimeMillis()).nextBytes(salt);
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   @Override
@@ -243,28 +265,6 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
   }
 
   @Override
-  public void authenticate(String userID, char[] password) throws SecurityException
-  {
-    checkActive();
-
-    try
-    {
-      UserInfo userInfo = userAuthenticator.authenticateUser(userID, password);
-      if (userInfo != null)
-      {
-        sessionUserInfos.computeIfAbsent(userID, k -> new SessionUserInfo()).userInfo = userInfo;
-        return;
-      }
-    }
-    catch (SecurityException ex)
-    {
-      OM.LOG.info(ex);
-    }
-
-    denyAccess();
-  }
-
-  @Override
   public boolean isAdministrator(String userID)
   {
     checkActive();
@@ -300,9 +300,121 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
   }
 
   @Override
+  public boolean isEmpty()
+  {
+    synchronized (sessionUserInfos)
+    {
+      return sessionUserInfos.isEmpty();
+    }
+  }
+
+  @Override
+  public final UserInfo[] getElements()
+  {
+    List<UserInfo> userInfos = new ArrayList<>();
+
+    synchronized (sessionUserInfos)
+    {
+      for (SessionUserInfo sessionUserInfo : sessionUserInfos.values())
+      {
+        userInfos.add(sessionUserInfo.userInfo);
+      }
+    }
+
+    return userInfos.toArray(new UserInfo[userInfos.size()]);
+  }
+
+  @Override
+  public void authenticate(String userID, char[] password) throws SecurityException
+  {
+    checkActive();
+
+    try
+    {
+      UserInfo newUserInfo = userAuthenticator.authenticateUser(userID, password);
+      UserInfo oldUserInfo = null;
+
+      SessionUserInfo sessionUserInfo;
+      synchronized (sessionUserInfos)
+      {
+        sessionUserInfo = sessionUserInfos.get(userID);
+
+        if (newUserInfo != null)
+        {
+          // Authentication succeeded.
+
+          if (sessionUserInfo != null)
+          {
+            oldUserInfo = sessionUserInfo.userInfo;
+            if (oldUserInfo.equalsStructurally(newUserInfo))
+            {
+              oldUserInfo = null; // Don't fire event below.
+            }
+            else
+            {
+              sessionUserInfo.userInfo = newUserInfo;
+            }
+          }
+          else
+          {
+            sessionUserInfo = new SessionUserInfo();
+            sessionUserInfo.userInfo = newUserInfo;
+            sessionUserInfos.put(userID, sessionUserInfo);
+          }
+
+          sessionUserInfo.passwordDigest = digestPassword(password);
+        }
+      }
+
+      if (newUserInfo != null)
+      {
+        if (oldUserInfo != null)
+        {
+          fireEvent(new UserInfoChangedEvent(this, oldUserInfo, newUserInfo));
+        }
+
+        return; // Allow access.
+      }
+
+      // Authentication failed.
+      if (sessionUserInfo != null)
+      {
+        byte[] digest = digestPassword(password);
+        if (Arrays.equals(digest, sessionUserInfo.passwordDigest))
+        {
+          for (ISession session : sessionUserInfo.sessions)
+          {
+            OM.LOG.info("Closing session because user " + userID + " is no longer authenticated: " + session);
+
+            try
+            {
+              session.close();
+            }
+            catch (Exception ex)
+            {
+              OM.LOG.error(ex);
+            }
+          }
+        }
+      }
+    }
+    catch (SecurityException ex)
+    {
+      OM.LOG.info(ex);
+    }
+
+    denyAccess();
+  }
+
+  @Override
   public UserInfo getUserInfo(String userID)
   {
-    SessionUserInfo sessionUserInfo = sessionUserInfos.get(userID);
+    SessionUserInfo sessionUserInfo;
+    synchronized (sessionUserInfos)
+    {
+      sessionUserInfo = sessionUserInfos.get(userID);
+    }
+
     if (sessionUserInfo != null)
     {
       return sessionUserInfo.userInfo;
@@ -327,10 +439,23 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
     String userID = session.getUserID();
     if (userID != null)
     {
-      SessionUserInfo sessionUserInfo = sessionUserInfos.get(userID);
-      if (sessionUserInfo != null)
+      UserInfo userInfo = null;
+
+      synchronized (sessionUserInfos)
       {
-        sessionUserInfo.addSessionRef();
+        SessionUserInfo sessionUserInfo = sessionUserInfos.get(userID);
+        if (sessionUserInfo != null)
+        {
+          if (sessionUserInfo.addSession(session))
+          {
+            userInfo = sessionUserInfo.userInfo;
+          }
+        }
+      }
+
+      if (userInfo != null)
+      {
+        fireElementAddedEvent(userInfo);
       }
     }
   }
@@ -340,14 +465,25 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
     String userID = session.getUserID();
     if (userID != null)
     {
-      sessionUserInfos.computeIfPresent(userID, (k, sessionUserInfo) -> {
-        if (sessionUserInfo.removeSessionRef())
-        {
-          return null;
-        }
+      UserInfo userInfo = null;
 
-        return sessionUserInfo;
-      });
+      synchronized (sessionUserInfos)
+      {
+        SessionUserInfo sessionUserInfo = sessionUserInfos.get(userID);
+        if (sessionUserInfo != null)
+        {
+          if (sessionUserInfo.removeSession(session))
+          {
+            sessionUserInfos.remove(userID);
+            userInfo = sessionUserInfo.userInfo;
+          }
+        }
+      }
+
+      if (userInfo != null)
+      {
+        fireElementRemovedEvent(userInfo);
+      }
     }
   }
 
@@ -658,6 +794,22 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
     throw new SecurityException("Access denied"); //$NON-NLS-1$
   }
 
+  private byte[] digestPassword(char[] password)
+  {
+    if (password == null)
+    {
+      return null;
+    }
+
+    byte[] bytes = SecurityUtil.toString(password).getBytes();
+
+    synchronized (passwordDigester)
+    {
+      passwordDigester.update(salt);
+      return passwordDigester.digest(bytes);
+    }
+  }
+
   private void forEachCommitHandler(Consumer<CommitHandler> consumer)
   {
     for (CommitHandler handler : getCommitHandlers())
@@ -738,22 +890,27 @@ public class DefaultRepositoryProtector extends Lifecycle implements IRepository
   {
     private UserInfo userInfo;
 
-    private int sessionRefs;
+    private byte[] passwordDigest;
 
-    public synchronized void addSessionRef()
+    private final List<ISession> sessions = new ArrayList<>();
+
+    public boolean addSession(ISession session)
     {
-      ++sessionRefs;
+      boolean first = sessions.isEmpty();
+      sessions.add(session);
+      return first;
     }
 
-    public synchronized boolean removeSessionRef()
+    public boolean removeSession(ISession session)
     {
-      return --sessionRefs == 0;
+      sessions.remove(session);
+      return sessions.isEmpty();
     }
 
     @Override
     public String toString()
     {
-      return "SessionUserInfo[userInfo=" + userInfo + ", sessionRefs=" + super.toString() + "]";
+      return "SessionUserInfo[userInfo=" + userInfo + ", sessions=" + sessions + "]";
     }
   }
 

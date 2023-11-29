@@ -1802,6 +1802,42 @@ public class SecurityManager extends Lifecycle implements InternalSecurityManage
       return null;
     }
 
+    @Override
+    public boolean isEmpty()
+    {
+      return true;
+    }
+
+    @Override
+    public UserInfo[] getElements()
+    {
+      return new UserInfo[0];
+    }
+
+    @Override
+    public void addListener(IListener listener)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void removeListener(IListener listener)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean hasListeners()
+    {
+      return false;
+    }
+
+    @Override
+    public IListener[] getListeners()
+    {
+      return new IListener[0];
+    }
+
     /**
      * @author Eike Stepper
      */

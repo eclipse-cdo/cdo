@@ -80,7 +80,7 @@ public class LDAPUserAuthenticator extends UserAuthenticator
   }
 
   @Override
-  public LDAPUserInfo authenticateUser(String userID, char[] password)
+  public UserInfo authenticateUser(String userID, char[] password)
   {
     String userPW = SecurityUtil.toString(password);
     if (!StringUtil.isEmpty(userPW))
@@ -795,6 +795,13 @@ public class LDAPUserAuthenticator extends UserAuthenticator
     public boolean groupMember(LDAPDN groupDN)
     {
       return groupDNs.contains(groupDN);
+    }
+
+    @Override
+    protected boolean isStructurallyEqual(UserInfo userInfo)
+    {
+      LDAPUserInfo other = (LDAPUserInfo)userInfo;
+      return userDN == other.userDN && groupDNs.equals(other.groupDNs());
     }
   }
 }

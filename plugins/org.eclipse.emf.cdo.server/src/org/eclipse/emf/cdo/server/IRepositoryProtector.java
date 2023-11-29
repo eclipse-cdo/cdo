@@ -16,11 +16,14 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
+import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
+import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.security.AdministrationPredicate;
@@ -36,7 +39,7 @@ import java.util.function.BiPredicate;
  * @noextend This interface is not intended to be extended by clients.
  * @since 4.20
  */
-public interface IRepositoryProtector extends IManagedContainerProvider
+public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedContainerProvider
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryProtectors"; //$NON-NLS-1$
 
@@ -116,6 +119,11 @@ public interface IRepositoryProtector extends IManagedContainerProvider
       return Objects.equals(userID, other.userID);
     }
 
+    public final boolean equalsStructurally(Object obj)
+    {
+      return equals(obj) && isStructurallyEqual((UserInfo)obj);
+    }
+
     @Override
     public final int compareTo(UserInfo o)
     {
@@ -126,6 +134,46 @@ public interface IRepositoryProtector extends IManagedContainerProvider
     public String toString()
     {
       return "UserInfo[" + userID + "]";
+    }
+
+    protected boolean isStructurallyEqual(UserInfo userInfo)
+    {
+      return true;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class UserInfoChangedEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final UserInfo oldUserInfo;
+
+    private final UserInfo newUserInfo;
+
+    public UserInfoChangedEvent(IRepositoryProtector notifier, UserInfo oldUserInfo, UserInfo newUserInfo)
+    {
+      super(notifier);
+      this.oldUserInfo = oldUserInfo;
+      this.newUserInfo = newUserInfo;
+    }
+
+    @Override
+    public IRepositoryProtector getSource()
+    {
+      return (IRepositoryProtector)super.getSource();
+    }
+
+    public UserInfo getOldUserInfo()
+    {
+      return oldUserInfo;
+    }
+
+    public UserInfo getNewUserInfo()
+    {
+      return newUserInfo;
     }
   }
 

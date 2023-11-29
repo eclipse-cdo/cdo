@@ -165,7 +165,7 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
   public void setPassword(String userID, char[] newPassword)
   {
     checkActive();
-    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, convertPassword(newPassword), oldUserInfo.isAdministrator()));
+    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, convertPassword(newPassword), oldUserInfo.administrator()));
   }
 
   @Override
@@ -185,7 +185,7 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
       }
 
       FileUserInfo userInfo = userInfos.get(userID);
-      return userInfo != null && userInfo.isAdministrator();
+      return userInfo != null && userInfo.administrator();
     }
   }
 
@@ -370,7 +370,7 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
   private String convertLine(FileUserInfo userInfo)
   {
     String line = StringUtil.escape(userInfo.userID(), ':') + ':' + StringUtil.escape(userInfo.convertedPassword, ':');
-    if (userInfo.isAdministrator())
+    if (userInfo.administrator())
     {
       line += ":true";
     }
@@ -461,9 +461,16 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
       this.administrator = administrator;
     }
 
-    public boolean isAdministrator()
+    public final boolean administrator()
     {
       return administrator;
+    }
+
+    @Override
+    protected boolean isStructurallyEqual(UserInfo userInfo)
+    {
+      FileUserInfo other = (FileUserInfo)userInfo;
+      return administrator == other.administrator;
     }
   }
 }

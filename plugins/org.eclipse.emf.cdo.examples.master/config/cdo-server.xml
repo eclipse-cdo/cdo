@@ -30,31 +30,7 @@
 
     <!-- Example https://github.com/eclipse-cdo/cdo/issues/32
     <protector>
-      <userAuthenticator type="ldap">
-        <environment id="base">
-          <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
-          <property name="java.naming.provider.url" value="ldap://localhost:10389"/>
-          <property name="java.naming.security.authentication" value="simple"/>
-        </environment>
-        
-        <environment id="bind" inherits="base">
-          <property name="java.naming.security.principal" value="$$$system_property(CDO_BIND_DN)$$$"/>
-          <property name="java.naming.security.credentials" value="$$$system_property(CDO_BIND_PW)$$$"/>
-        </environment>
-        
-        <environment id="user" inherits="base">
-          <property name="java.naming.security.principal" value="$USER_DN$"/>
-          <property name="java.naming.security.credentials" value="$USER_PW$"/>
-        </environment>
-        
-        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameters USER_ID and USER_PW can be used"/>
-        
-        <loginUser environment="user" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used">
-          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
-        </loginUser>
-      </userAuthenticator> 
-      
-      <userAuthenticator type="file" path="@config/passwd.txt" portable="true" doc="Only the first authenticator is used!">
+      <userAuthenticator type="file" path="@config/passwd.txt" portable="true">
         <passwordCrypter type="SHA-512" params="2874365"/>
       </userAuthenticator>
       
@@ -72,7 +48,7 @@
       </revisionAuthorizer>
       
       <revisionAuthorizer permission="read">
-        <ldapGroupAttribute key="cn" value="AMS Users"/>
+        <true/>
       </revisionAuthorizer>
       
       <revisionAuthorizer permission="none" disabled="true" doc="Matcher Demo">
@@ -87,11 +63,6 @@
           <userId value="stepper"/>
           <userId value="LM.*" test="regex"/>
           <userAdministrator value="true"/>
-          <ldapUserDn value="uid=stepper,ou=Users,dc=example,dc=com"/>
-          <ldapUserDn value="uid=.*,ou=Users,dc=example,dc=com" test="regex"/>
-          <ldapUserAttribute key="uidNumber" value="10015"/>
-          <ldapGroupDn value="cn=CDO Users,ou=Groups,dc=example,dc=com"/>
-          <ldapGroupAttribute key="cn" value="CDO Users"/>
           
           <contextBranchId value="123" subBranches="true"/>
           <contextBranchName value="MAIN/team15"/>
@@ -117,6 +88,61 @@
           </and>
           
           <matcher ref="flipflop"/>
+        </or>
+      </revisionAuthorizer>
+    </protector>
+    -->
+
+    <!-- Example https://github.com/eclipse-cdo/cdo/issues/32
+    <protector>
+      <userAuthenticator type="ldap">
+        <environment id="base">
+          <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
+          <property name="java.naming.provider.url" value="ldap://localhost:10389"/>
+          <property name="java.naming.security.authentication" value="simple"/>
+        </environment>
+        
+        <environment id="bind" inherits="base">
+          <property name="java.naming.security.principal" value="$$$system_property(CDO_BIND_DN)$$$"/>
+          <property name="java.naming.security.credentials" value="$$$system_property(CDO_BIND_PW)$$$"/>
+        </environment>
+        
+        <environment id="user" inherits="base">
+          <property name="java.naming.security.principal" value="$USER_DN$"/>
+          <property name="java.naming.security.credentials" value="$USER_PW$"/>
+        </environment>
+        
+        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameters USER_ID and USER_PW can be used"/>
+        
+        <loginUser environment="user" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used">
+          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
+        </loginUser>
+      </userAuthenticator> 
+      
+      <authorizationStrategy type="additive"/>
+       
+      <revisionAuthorizer permission="none" operation="VETO">
+        <class value="http://www.eclipse.org/emf/CDO/security/4.1.0#//UserPassword"/>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="write">
+        <and>
+          <userId value="stepper"/>
+          <feature instanceOf="http://www.eclipse.org/emf/CDO/security/4.1.0#//Assignee" key="id" value="administrator" test="contains_ci"/>
+        </and>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="read">
+        <ldapGroupAttribute key="cn" value="AMS Users"/>
+      </revisionAuthorizer>
+      
+      <revisionAuthorizer permission="none" disabled="true" doc="Matcher Demo">
+        <or>
+          <ldapUserDn value="uid=stepper,ou=Users,dc=example,dc=com"/>
+          <ldapUserDn value="uid=.*,ou=Users,dc=example,dc=com" test="regex"/>
+          <ldapUserAttribute key="uidNumber" value="10015"/>
+          <ldapGroupDn value="cn=CDO Users,ou=Groups,dc=example,dc=com"/>
+          <ldapGroupAttribute key="cn" value="CDO Users"/>
         </or>
       </revisionAuthorizer>
     </protector>

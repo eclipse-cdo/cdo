@@ -23,6 +23,8 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
+ * Parses strings and returns any kind of {@link Object objects}.
+ *
  * @author Eike Stepper
  * @since 3.23
  */

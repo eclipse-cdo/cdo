@@ -730,6 +730,8 @@ public class RepositoryConfigurator implements IManagedContainerProvider
   }
 
   /**
+   * Can use <code>cdo-server.xml</code> markup elements to configure extended aspects of a {@link IRepository repository}.
+   *
    * @author Eike Stepper
    * @since 4.20
    */

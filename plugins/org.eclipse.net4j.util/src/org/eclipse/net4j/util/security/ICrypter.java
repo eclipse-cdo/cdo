@@ -13,6 +13,8 @@ package org.eclipse.net4j.util.security;
 import java.util.function.Function;
 
 /**
+ * Transforms byte arrays to byte arrays.
+ *
  * @author Eike Stepper
  * @since 3.23
  */

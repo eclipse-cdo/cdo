@@ -14,5 +14,6 @@ Export-Package: org.eclipse.net4j.util.doc;version="4.2.8",
  org.eclipse.net4j.util.doc.online;version="4.2.8",
  org.eclipse.net4j.util.doc.reference;version="4.2.8",
  org.eclipse.net4j.util.doc.reference.api;version="4.2.8",
+ org.eclipse.net4j.util.doc.reference.product;version="4.2.8",
  org.eclipse.net4j.util.doc.reference.schema;version="4.2.8"
 Automatic-Module-Name: org.eclipse.net4j.util.doc

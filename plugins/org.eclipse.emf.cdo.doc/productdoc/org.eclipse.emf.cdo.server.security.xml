@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">
+	<productGroup id="org.eclipse.emf.cdo.server.security.commitHandlers" name="CDO Commit Handlers" description="" deprecated="false">
+		<factory type="annotation" class="org.eclipse.emf.cdo.server.spi.security.AnnotationHandler$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
+		<factory type="home" class="org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.security.operationAuthorizers" name="CDO Operation Authorizers" description="" deprecated="false">
+		<factory type="ldapRequireGroup" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireGroup$Factory" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldapRequireUser" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireUser$Factory" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="requireGroup" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireGroup$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
+		<factory type="requireRole" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireRole$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
+		<factory type="requireUser" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireUser$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.security.managers" name="CDO Security Managers" description="" deprecated="false">
+		<factory type="annotation" class="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory$Annotation" contributor="org.eclipse.emf.cdo.server.security"/>
+		<factory type="default" class="org.eclipse.emf.cdo.server.spi.security.SecurityManagerFactory$Default" contributor="org.eclipse.emf.cdo.server.security"/>
+	</productGroup>
+</plugin>

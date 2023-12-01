@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.server.net4j" label="CDO Model Repository Server Net4j Support">
+	<productGroup id="org.eclipse.emf.cdo.server.net4j.failoverMonitors" name="Net4j Failover Monitors" description="" deprecated="false">
+		<factory type="net4j" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$Factory" contributor="org.eclipse.emf.cdo.server.net4j"/>
+	</productGroup>
+</plugin>

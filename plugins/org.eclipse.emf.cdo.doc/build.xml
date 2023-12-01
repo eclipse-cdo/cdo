@@ -28,6 +28,7 @@
   <property name="javadoc.name" value="${pluginName}" />
   <property name="javadoc.destdir" value="${project.path}/javadoc" />
   <property name="schemadoc.destdir" value="${project.path}/schemadoc" />
+  <property name="productdoc.destdir" value="${project.path}/productdoc" />
   <property name="article.destdir" value="${project.path}/html" />
   <property name="article.sources" value="${project.path}/src" />
 
@@ -533,6 +534,7 @@
 			<package name="org.eclipse.emf.cdo.doc.programmers.server" />
 			<package name="org.eclipse.emf.cdo.doc.reference" />
 			<package name="org.eclipse.emf.cdo.doc.reference.api" />
+			<package name="org.eclipse.emf.cdo.doc.reference.product" />
 			<package name="org.eclipse.emf.cdo.doc.reference.schema" />
 			<package name="org.eclipse.emf.cdo.doc.users" />
     </javadoc>

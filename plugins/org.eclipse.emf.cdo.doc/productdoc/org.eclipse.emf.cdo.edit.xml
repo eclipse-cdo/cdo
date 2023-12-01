@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.edit" label="CDO Model Repository Client Edit Support">
+	<productGroup id="org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories" name="CDO Annotation Item Provider Adapter Factories " description="" deprecated="false"/>
+</plugin>

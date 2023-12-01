@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
+	<productGroup id="org.eclipse.emf.cdo.workspace.bases" name="CDO Workspace Bases" description="" deprecated="false">
+		<factory type="folder" class="org.eclipse.emf.cdo.internal.workspace.FolderCDOWorkspaceBase$Factory" contributor="org.eclipse.emf.cdo.workspace"/>
+	</productGroup>
+</plugin>

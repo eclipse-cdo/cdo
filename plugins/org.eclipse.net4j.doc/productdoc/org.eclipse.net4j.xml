@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.net4j" label="Net4j Signalling Platform">
+	<productGroup id="org.eclipse.net4j.acceptorDescriptionParsers" name="Net4j Acceptor Description Parsers" description="" deprecated="false">
+		<factory type="jvm" class="org.eclipse.net4j.internal.jvm.JVMAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.jvm"/>
+		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.ws"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.acceptors" name="Net4j Acceptors" description="" deprecated="false">
+		<factory type="jvm" class="org.eclipse.net4j.internal.jvm.JVMAcceptorFactory" contributor="org.eclipse.net4j.jvm"/>
+		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPAcceptorFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptorFactory" contributor="org.eclipse.net4j.ws"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.bufferProviders" name="Net4j Buffer Providers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.internal.net4j.buffer.BufferPoolFactory" contributor="org.eclipse.net4j"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.clientProtocols" name="Net4j Client Protocols" description="" deprecated="false">
+		<factory type="cdo" class="org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocolFactory" contributor="org.eclipse.emf.cdo.net4j"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.connectors" name="Net4j Connectors" description="" deprecated="false">
+		<factory type="jvm" class="org.eclipse.net4j.internal.jvm.JVMConnectorFactory" contributor="org.eclipse.net4j.jvm"/>
+		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPConnectorFactory" contributor="org.eclipse.net4j.tcp"/>
+		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSConnectorFactory" contributor="org.eclipse.net4j.ws"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.selectors" name="Net4j Selectors" description="" deprecated="false">
+		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPSelectorFactory" contributor="org.eclipse.net4j.tcp"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols" description="" deprecated="false">
+		<factory type="cdo" class="org.eclipse.emf.cdo.server.internal.net4j.protocol.CDOServerProtocolFactory" contributor="org.eclipse.emf.cdo.server.net4j"/>
+		<factory type="cdo-admin" class="org.eclipse.emf.cdo.server.internal.admin.protocol.CDOAdminServerProtocol$Factory$Plugin" contributor="org.eclipse.emf.cdo.server.admin"/>
+		<factory type="failover" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$AgentProtocol$Factory" contributor="org.eclipse.emf.cdo.server.net4j"/>
+		<factory type="failover-client" class="org.eclipse.emf.cdo.server.net4j.FailoverMonitor$ClientProtocol$Factory" contributor="org.eclipse.emf.cdo.server.net4j"/>
+		<factory type="heartbeat" class="org.eclipse.net4j.signal.heartbeat.HeartBeatProtocol$Server$Factory" contributor="org.eclipse.net4j"/>
+	</productGroup>
+</plugin>

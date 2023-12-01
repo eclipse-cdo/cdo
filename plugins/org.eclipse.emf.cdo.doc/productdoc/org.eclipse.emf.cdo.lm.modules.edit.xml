@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.lm.modules.edit" label="CDO Model Repository Lifecycle Management Modules Edit Support">
+	<productGroup id="org.eclipse.emf.cdo.lm.modules.targetNameProviders" name="CDO Dependency Target Name Providers" description="" deprecated="false">
+		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMTargetNameProvider$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+	</productGroup>
+</plugin>

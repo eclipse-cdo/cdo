@@ -30,6 +30,10 @@ H6.CaptionFigColumn {
   vertical-align: baseline;
   text-transform: none;
 }
+H6.ProductGroupHeader {
+  font-size:16px; 
+  display:inline
+}
 P.Note {
   display: block;
   text-align: left;

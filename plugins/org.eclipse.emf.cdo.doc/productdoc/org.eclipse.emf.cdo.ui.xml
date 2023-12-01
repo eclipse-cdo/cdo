@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.ui" label="CDO Model Repository Client UI">
+	<productGroup id="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" name="CDO History Input Object Modifiers" description="" deprecated="false">
+		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMHistoryInputObjectModifier$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="CDO Load Resource Providers" description="" deprecated="false">
+		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="repository" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.emf.cdo.internal.ui.RepositoryLoadResourceProvider" contributor="org.eclipse.emf.cdo.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages" description="" deprecated="false">
+		<factory type="home" class="org.eclipse.emf.cdo.ui.UserInfo$Manager$HomeUserInfoStorage$Factory" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="preferences" class="org.eclipse.emf.cdo.ui.UserInfo$Manager$PreferencesUserInfoStorage$Factory" contributor="org.eclipse.emf.cdo.ui"/>
+	</productGroup>
+</plugin>

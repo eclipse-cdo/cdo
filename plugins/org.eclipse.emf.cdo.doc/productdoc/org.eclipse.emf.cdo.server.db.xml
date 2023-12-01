@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
+	<productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO Type Mapping Providers" description="" deprecated="false">
+		<factory type="registry" class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory" contributor="org.eclipse.emf.cdo.server.db"/>
+	</productGroup>
+</plugin>

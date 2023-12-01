@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.net4j.util" label="Net4j Utilities">
+	<productGroup id="org.eclipse.net4j.authenticators" name="Authenticators" description="" deprecated="false">
+		<factory type="file" class="org.eclipse.net4j.util.security.FileAuthenticatorFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="Authorizable Operations" description="" deprecated="false">
+		<factory type="org.eclipse.emf.cdo.ui.DeleteBranches" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="org.eclipse.emf.cdo.ui.RenameBranches" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.confirmationProviders" name="Confirmation Providers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default" contributor="org.eclipse.net4j.util"/>
+		<factory type="interactive" class="org.eclipse.net4j.util.ui.confirmation.InteractiveConfirmationProvider$Factory" contributor="org.eclipse.net4j.util.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.security.credentialsProviders" name="Credentials Providers" description="" deprecated="false">
+		<factory type="interactive" class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory" contributor="org.eclipse.net4j.util.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.security.crypters" name="Crypters" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.net4j.executorServices" name="Executor Services" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.metaFactories" name="Meta Factories" description="" deprecated="false">
+		<factory type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory" contributor="org.eclipse.net4j.util"/>
+		<factory type="org.eclipse.net4j.util.stringConverters" class="org.eclipse.net4j.util.StringConverter$MetaFactory" contributor="org.eclipse.net4j.util"/>
+		<factory type="org.eclipse.net4j.util.stringParsers" class="org.eclipse.net4j.util.StringParser$MetaFactory" contributor="org.eclipse.net4j.util"/>
+		<factory type="org.eclipse.net4j.util.stringTesters" class="org.eclipse.net4j.util.StringTester$MetaFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.Negotiators" name="Negotiators" description="" deprecated="false">
+		<factory type="challenge" class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.randomizers" name="Randomizers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.security.RandomizerFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.concurrent.delegateDetectors" name="Reentrant Lock Delegate Detectors" description="" deprecated="false">
+		<factory type="display" class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory" contributor="org.eclipse.net4j.util.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.streamWrappers" name="Stream Wrappers" description="" deprecated="false">
+		<factory type="gzip" class="org.eclipse.net4j.util.io.GZIPStreamWrapper$Factory" contributor="org.eclipse.net4j"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.stringConverters" name="String Converters" description="" deprecated="false">
+		<factory type="cdo.lm.server.lifecycle_manager" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+		<factory type="cdo.lm.server.module_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+		<factory type="cdo.lm.server.module_type_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+		<factory type="cdo.lm.server.repository_type" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+		<factory type="cdo.lm.server.system_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.stringParsers" name="String Parsers" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.net4j.util.stringTesters" name="String Testers" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.net4j.util.timers" name="Timers" description="" deprecated="false">
+		<factory type="daemon" class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.userManagers" name="User Managers" description="" deprecated="false">
+		<factory type="file" class="org.eclipse.net4j.util.security.FileUserManagerFactory" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
+</plugin>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.lm.server" label="CDO Model Repository Lifecycle Management Server">
+	<productGroup id="org.eclipse.emf.cdo.lm.server.lifecycleManagers" name="CDO Lifecycle Managers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.emf.cdo.lm.server.XMLLifecycleManager$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
+	</productGroup>
+</plugin>

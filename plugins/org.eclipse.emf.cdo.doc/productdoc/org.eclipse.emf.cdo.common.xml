@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.common" label="CDO Model Repository Common">
+	<productGroup id="org.eclipse.emf.cdo.common.ResourceSetConfigurers" name="Resource Set Configurers" description="" deprecated="false">
+		<factory type="lm" class="org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer$Factory" contributor="org.eclipse.emf.cdo.lm.client"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.common.model.typeHandlers" name="Type Handlers" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.emf.cdo.common.util.uriHandlers" name="URI Handlers" description="" deprecated="false">
+		<factory type="cdo.checkout.binary" class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler$BinaryURIHandler$Factory" contributor="org.eclipse.emf.cdo.explorer"/>
+		<factory type="cdo.checkout.text" class="org.eclipse.emf.cdo.internal.explorer.CDOExplorerURIHandler$TextURIHandler$Factory" contributor="org.eclipse.emf.cdo.explorer"/>
+	</productGroup>
+</plugin>

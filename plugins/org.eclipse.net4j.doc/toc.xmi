@@ -13,6 +13,13 @@
     <packages name="org.eclipse.net4j.signal.security"/>
     <packages name="org.eclipse.net4j.signal.wrapping"/>
     <packages name="org.eclipse.spi.net4j"/>
+    <productGroups id="org.eclipse.net4j.acceptorDescriptionParsers" name="Net4j Acceptor Description Parsers" description=""/>
+    <productGroups id="org.eclipse.net4j.acceptors" name="Net4j Acceptors" description=""/>
+    <productGroups id="org.eclipse.net4j.bufferProviders" name="Net4j Buffer Providers" description=""/>
+    <productGroups id="org.eclipse.net4j.clientProtocols" name="Net4j Client Protocols" description=""/>
+    <productGroups id="org.eclipse.net4j.connectors" name="Net4j Connectors" description=""/>
+    <productGroups id="org.eclipse.net4j.selectors" name="Net4j Selectors" description=""/>
+    <productGroups id="org.eclipse.net4j.serverProtocols" name="Net4j Server Protocols" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.jvm" label="Net4j Signalling Platform JVM Transport">
     <packages name="org.eclipse.net4j.jvm"/>

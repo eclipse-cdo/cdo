@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.net4j" label="CDO Model Repository Client Net4j Support">
+	<productGroup id="org.eclipse.emf.cdo.sessions" name="Net4j Sessions" description="" deprecated="false">
+		<factory type="cdo" class="org.eclipse.emf.cdo.internal.net4j.Net4jSessionFactory" contributor="org.eclipse.emf.cdo.net4j"/>
+	</productGroup>
+</plugin>

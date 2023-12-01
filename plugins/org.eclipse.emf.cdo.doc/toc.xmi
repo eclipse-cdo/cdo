@@ -16,6 +16,9 @@
     <packages name="org.eclipse.emf.internal.cdo"/>
     <packages name="org.eclipse.emf.spi.cdo"/>
     <extensionPoints name="viewProviders"/>
+    <productGroups id="org.eclipse.emf.cdo.annotationValidators" name="CDO Annotation Validators" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.conflictHandlers" name="CDO Conflict Handlers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.resourceSetClassNameProviders" name="CDO Resource Set Class Name Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.admin" label="CDO Model Repository Client Admin Support">
     <packages name="org.eclipse.emf.cdo.admin"/>
@@ -28,14 +31,19 @@
     <packages name="org.eclipse.emf.cdo.eresource.provider"/>
     <packages name="org.eclipse.emf.cdo.etypes.provider"/>
     <packages name="org.eclipse.emf.cdo.etypes.provider.annotation"/>
+    <productGroups id="org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories" name="CDO Annotation Item Provider Adapter Factories " description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.net4j" label="CDO Model Repository Client Net4j Support">
     <packages name="org.eclipse.emf.cdo.net4j"/>
+    <productGroups id="org.eclipse.emf.cdo.sessions" name="Net4j Sessions" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui" label="CDO Model Repository Client UI">
     <packages name="org.eclipse.emf.cdo.ui"/>
     <packages name="org.eclipse.emf.cdo.ui.widgets"/>
     <extensionPoints name="editorOpeners"/>
+    <productGroups id="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" name="CDO History Input Object Modifiers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="CDO Load Resource Providers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ui.admin" label="CDO Model Repository Client UI Admin"/>
   <article:Plugin name="org.eclipse.emf.cdo.ui.compare" label="CDO Model Repository Client UI Compare">
@@ -46,6 +54,7 @@
   <article:Plugin name="org.eclipse.emf.cdo.workspace" label="CDO Model Repository Client Workspace">
     <packages name="org.eclipse.emf.cdo.spi.workspace"/>
     <packages name="org.eclipse.emf.cdo.workspace"/>
+    <productGroups id="org.eclipse.emf.cdo.workspace.bases" name="CDO Workspace Bases" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.common" label="CDO Model Repository Common">
     <packages name="org.eclipse.emf.cdo.common"/>
@@ -72,6 +81,9 @@
     <packages name="org.eclipse.emf.cdo.spi.common.protocol"/>
     <packages name="org.eclipse.emf.cdo.spi.common.revision"/>
     <packages name="org.eclipse.emf.cdo.spi.common.util"/>
+    <productGroups id="org.eclipse.emf.cdo.common.ResourceSetConfigurers" name="Resource Set Configurers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.common.model.typeHandlers" name="Type Handlers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.common.util.uriHandlers" name="URI Handlers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.ecore.dependencies" label="CDO Model Repository Ecore Dependencies"/>
   <article:Plugin name="org.eclipse.emf.cdo.explorer" label="CDO Model Repository Explorer">
@@ -113,6 +125,7 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.modules.edit" label="CDO Model Repository Lifecycle Management Modules Edit Support">
     <packages name="org.eclipse.emf.cdo.lm.modules.provider"/>
+    <productGroups id="org.eclipse.emf.cdo.lm.modules.targetNameProviders" name="CDO Dependency Target Name Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.security" label="CDO Model Repository Lifecycle Management Security">
     <packages name="org.eclipse.emf.cdo.lm.security"/>
@@ -124,6 +137,7 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.server" label="CDO Model Repository Lifecycle Management Server">
     <packages name="org.eclipse.emf.cdo.lm.server"/>
+    <productGroups id="org.eclipse.emf.cdo.lm.server.lifecycleManagers" name="CDO Lifecycle Managers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.ui" label="CDO Model Repository Lifecycle Management UI"/>
   <article:Plugin name="org.eclipse.emf.cdo.security" label="CDO Model Repository Security">
@@ -144,15 +158,32 @@
     <extensionPoints name="appExtensions"/>
     <extensionPoints name="repositoryFactories"/>
     <extensionPoints name="storeFactories"/>
+    <productGroups id="org.eclipse.emf.cdo.server.browserPages" name="CDO Browser Pages" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.browsers" name="CDO Browsers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.commands" name="CDO Commands" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="CDO Repository Activity Logs" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" name="CDO Repository Configurator Extensions" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="CDO Repository Configurators" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" name="CDO Repository Protector Authorization Strategies" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers" name="CDO Repository Protector Commit Handlers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" name="CDO Repository Protector Revision Authorizers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" name="CDO Repository Protector User Authenticators" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.repositoryProtectors" name="CDO Repository Protectors" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" name="CDO Revision Authorizer Matchers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.admin" label="CDO Model Repository Server Admin Support">
     <packages name="org.eclipse.emf.cdo.server.admin"/>
     <packages name="org.eclipse.emf.cdo.server.spi.admin"/>
+    <productGroups id="org.eclipse.emf.cdo.server.admin.adminHandlers" name="CDO Administration Handlers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.admin.adminServers" name="CDO Administration Servers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers" name="CDO Repository Configuration Managers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
     <packages name="org.eclipse.emf.cdo.server.db"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO Type Mapping Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.embedded" label="CDO Model Repository Server Embedded Support">
     <packages name="org.eclipse.emf.cdo.server.embedded"/>
@@ -165,6 +196,7 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.net4j" label="CDO Model Repository Server Net4j Support">
     <packages name="org.eclipse.emf.cdo.server.net4j"/>
+    <productGroups id="org.eclipse.emf.cdo.server.net4j.failoverMonitors" name="Net4j Failover Monitors" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.ocl" label="CDO Model Repository Server OCL Support">
     <packages name="org.eclipse.emf.cdo.server.ocl"/>
@@ -172,6 +204,9 @@
   <article:Plugin name="org.eclipse.emf.cdo.server.security" label="CDO Model Repository Server Security Support">
     <packages name="org.eclipse.emf.cdo.server.security"/>
     <packages name="org.eclipse.emf.cdo.server.spi.security"/>
+    <productGroups id="org.eclipse.emf.cdo.server.security.commitHandlers" name="CDO Commit Handlers" description=""/>
+    <productGroups id="org.eclipse.net4j.util.security.operationAuthorizers" name="CDO Operation Authorizers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.security.managers" name="CDO Security Managers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.transfer" label="CDO Transfer Framework">
     <packages name="org.eclipse.emf.cdo.spi.transfer"/>
@@ -184,6 +219,7 @@
     <packages name="org.eclipse.emf.cdo.transfer.spi.ui"/>
     <packages name="org.eclipse.emf.cdo.transfer.ui"/>
     <packages name="org.eclipse.emf.cdo.transfer.ui.swt"/>
+    <productGroups id="org.eclipse.emf.cdo.transfer.ui.providers" name="CDO Transfer UI Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.transfer.workspace" label="CDO Transfer Framework Workspace Support">
     <packages name="org.eclipse.emf.cdo.transfer.spi.workspace"/>

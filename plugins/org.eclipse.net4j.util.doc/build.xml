@@ -28,6 +28,7 @@
   <property name="javadoc.name" value="${pluginName}" />
   <property name="javadoc.destdir" value="${project.path}/javadoc" />
   <property name="schemadoc.destdir" value="${project.path}/schemadoc" />
+  <property name="productdoc.destdir" value="${project.path}/productdoc" />
   <property name="article.destdir" value="${project.path}/html" />
   <property name="article.sources" value="${project.path}/src" />
 
@@ -318,6 +319,7 @@
 			<package name="org.eclipse.net4j.util.doc.online" />
 			<package name="org.eclipse.net4j.util.doc.reference" />
 			<package name="org.eclipse.net4j.util.doc.reference.api" />
+			<package name="org.eclipse.net4j.util.doc.reference.product" />
 			<package name="org.eclipse.net4j.util.doc.reference.schema" />
     </javadoc>
   </target>

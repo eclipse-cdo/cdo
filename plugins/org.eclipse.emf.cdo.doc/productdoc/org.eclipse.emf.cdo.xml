@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo" label="CDO Model Repository Client">
+	<productGroup id="org.eclipse.emf.cdo.annotationValidators" name="CDO Annotation Validators" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.emf.cdo.conflictHandlers" name="CDO Conflict Handlers" description="" deprecated="false">
+		<factory type="merge" class="org.eclipse.emf.cdo.ui.internal.compare.CompareConflictHandler$Factory" contributor="org.eclipse.emf.cdo.ui.compare"/>
+		<factory type="rollback" class="org.eclipse.emf.internal.cdo.transaction.RollbackConflictHandler$Factory" contributor="org.eclipse.emf.cdo"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.resourceSetClassNameProviders" name="CDO Resource Set Class Name Providers" description="" deprecated="false"/>
+</plugin>

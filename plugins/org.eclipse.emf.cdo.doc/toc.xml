@@ -226,6 +226,72 @@
         <topic label="mappingStrategies" href="schemadoc/org_eclipse_emf_cdo_server_db_mappingStrategies.html" icon="extpoint" />
       </topic>
     </topic>
+    <topic label="Product Group Reference" href="html/reference/product/index.html">
+      <topic label="CDO Model Repository Client" href="productdoc/org.eclipse.emf.cdo.annotationValidators.html" icon="plugin">
+        <topic label="CDO Annotation Validators" href="productdoc/org.eclipse.emf.cdo.annotationValidators.html" icon="productgroup" />
+        <topic label="CDO Conflict Handlers" href="productdoc/org.eclipse.emf.cdo.conflictHandlers.html" icon="productgroup" />
+        <topic label="CDO Resource Set Class Name Providers" href="productdoc/org.eclipse.emf.cdo.resourceSetClassNameProviders.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Client Edit Support" href="productdoc/org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories.html" icon="plugin">
+        <topic label="CDO Annotation Item Provider Adapter Factories " href="productdoc/org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Client Net4j Support" href="productdoc/org.eclipse.emf.cdo.sessions.html" icon="plugin">
+        <topic label="Net4j Sessions" href="productdoc/org.eclipse.emf.cdo.sessions.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Client UI" href="productdoc/org.eclipse.emf.cdo.ui.historyInputObjectModifiers.html" icon="plugin">
+        <topic label="CDO History Input Object Modifiers" href="productdoc/org.eclipse.emf.cdo.ui.historyInputObjectModifiers.html" icon="productgroup" />
+        <topic label="CDO Load Resource Providers" href="productdoc/org.eclipse.emf.cdo.ui.loadResourceProviders.html" icon="productgroup" />
+        <topic label="CDO User Info Storages" href="productdoc/org.eclipse.emf.cdo.ui.userInfoStorages.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Client Workspace" href="productdoc/org.eclipse.emf.cdo.workspace.bases.html" icon="plugin">
+        <topic label="CDO Workspace Bases" href="productdoc/org.eclipse.emf.cdo.workspace.bases.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Common" href="productdoc/org.eclipse.emf.cdo.common.ResourceSetConfigurers.html" icon="plugin">
+        <topic label="Resource Set Configurers" href="productdoc/org.eclipse.emf.cdo.common.ResourceSetConfigurers.html" icon="productgroup" />
+        <topic label="Type Handlers" href="productdoc/org.eclipse.emf.cdo.common.model.typeHandlers.html" icon="productgroup" />
+        <topic label="URI Handlers" href="productdoc/org.eclipse.emf.cdo.common.util.uriHandlers.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="plugin">
+        <topic label="CDO Dependency Target Name Providers" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Server" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="plugin">
+        <topic label="CDO Lifecycle Managers" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Server" href="productdoc/org.eclipse.emf.cdo.server.browserPages.html" icon="plugin">
+        <topic label="CDO Browser Pages" href="productdoc/org.eclipse.emf.cdo.server.browserPages.html" icon="productgroup" />
+        <topic label="CDO Browsers" href="productdoc/org.eclipse.emf.cdo.server.browsers.html" icon="productgroup" />
+        <topic label="CDO Commands" href="productdoc/org.eclipse.emf.cdo.server.commands.html" icon="productgroup" />
+        <topic label="CDO Query Handler Factories" href="productdoc/org.eclipse.emf.cdo.server.queryHandlerFactories.html" icon="productgroup" />
+        <topic label="CDO Repository Activity Logs" href="productdoc/org.eclipse.emf.cdo.server.repositoryActivityLogs.html" icon="productgroup" />
+        <topic label="CDO Repository Configurator Extensions" href="productdoc/org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions.html" icon="productgroup" />
+        <topic label="CDO Repository Configurators" href="productdoc/org.eclipse.emf.cdo.server.repositoryConfigurators.html" icon="productgroup" />
+        <topic label="CDO Repository Protector Authorization Strategies" href="productdoc/org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies.html" icon="productgroup" />
+        <topic label="CDO Repository Protector Commit Handlers" href="productdoc/org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers.html" icon="productgroup" />
+        <topic label="CDO Repository Protector Revision Authorizers" href="productdoc/org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers.html" icon="productgroup" />
+        <topic label="CDO Repository Protector User Authenticators" href="productdoc/org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators.html" icon="productgroup" />
+        <topic label="CDO Repository Protectors" href="productdoc/org.eclipse.emf.cdo.server.repositoryProtectors.html" icon="productgroup" />
+        <topic label="CDO Revision Authorizer Matchers" href="productdoc/org.eclipse.emf.cdo.server.revisionAuthorizerMatchers.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Server Admin Support" href="productdoc/org.eclipse.emf.cdo.server.admin.adminHandlers.html" icon="plugin">
+        <topic label="CDO Administration Handlers" href="productdoc/org.eclipse.emf.cdo.server.admin.adminHandlers.html" icon="productgroup" />
+        <topic label="CDO Administration Servers" href="productdoc/org.eclipse.emf.cdo.server.admin.adminServers.html" icon="productgroup" />
+        <topic label="CDO Repository Configuration Managers" href="productdoc/org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="plugin">
+        <topic label="CDO Type Mapping Providers" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Server Net4j Support" href="productdoc/org.eclipse.emf.cdo.server.net4j.failoverMonitors.html" icon="plugin">
+        <topic label="Net4j Failover Monitors" href="productdoc/org.eclipse.emf.cdo.server.net4j.failoverMonitors.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Server Security Support" href="productdoc/org.eclipse.emf.cdo.server.security.commitHandlers.html" icon="plugin">
+        <topic label="CDO Commit Handlers" href="productdoc/org.eclipse.emf.cdo.server.security.commitHandlers.html" icon="productgroup" />
+        <topic label="CDO Operation Authorizers" href="productdoc/org.eclipse.net4j.util.security.operationAuthorizers.html" icon="productgroup" />
+        <topic label="CDO Security Managers" href="productdoc/org.eclipse.emf.cdo.server.security.managers.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Transfer Framework UI" href="productdoc/org.eclipse.emf.cdo.transfer.ui.providers.html" icon="plugin">
+        <topic label="CDO Transfer UI Providers" href="productdoc/org.eclipse.emf.cdo.transfer.ui.providers.html" icon="productgroup" />
+      </topic>
+    </topic>
     <topic label="Store Feature Matrix" href="html/reference/StoreFeatures.html" />
     <topic label="DBStore Mapping Strategies" href="html/reference/MappingStrategies.html" />
   </topic>

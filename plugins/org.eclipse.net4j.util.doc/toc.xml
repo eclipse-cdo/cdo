@@ -52,6 +52,32 @@
       <topic label="productGroups" href="schemadoc/org_eclipse_net4j_util_productGroups.html" icon="extpoint" />
     </topic>
   </topic>
+  <topic label="Product Group Reference" href="html/product/index.html">
+    <topic label="Net4j Utilities" href="productdoc/org.eclipse.net4j.authenticators.html" icon="plugin">
+      <topic label="Authenticators" href="productdoc/org.eclipse.net4j.authenticators.html" icon="productgroup" />
+      <topic label="Authorizable Operations" href="productdoc/org.eclipse.net4j.util.security.authorizableOperations.html" icon="productgroup" />
+      <topic label="Confirmation Providers" href="productdoc/org.eclipse.net4j.util.confirmationProviders.html" icon="productgroup" />
+      <topic label="Credentials Providers" href="productdoc/org.eclipse.net4j.util.security.credentialsProviders.html" icon="productgroup" />
+      <topic label="Crypters" href="productdoc/org.eclipse.net4j.util.security.crypters.html" icon="productgroup" />
+      <topic label="Executor Services" href="productdoc/org.eclipse.net4j.executorServices.html" icon="productgroup" />
+      <topic label="Meta Factories" href="productdoc/org.eclipse.net4j.util.metaFactories.html" icon="productgroup" />
+      <topic label="Negotiators" href="productdoc/org.eclipse.net4j.Negotiators.html" icon="productgroup" />
+      <topic label="Randomizers" href="productdoc/org.eclipse.net4j.randomizers.html" icon="productgroup" />
+      <topic label="Reentrant Lock Delegate Detectors" href="productdoc/org.eclipse.net4j.util.concurrent.delegateDetectors.html" icon="productgroup" />
+      <topic label="Stream Wrappers" href="productdoc/org.eclipse.net4j.streamWrappers.html" icon="productgroup" />
+      <topic label="String Converters" href="productdoc/org.eclipse.net4j.util.stringConverters.html" icon="productgroup" />
+      <topic label="String Parsers" href="productdoc/org.eclipse.net4j.util.stringParsers.html" icon="productgroup" />
+      <topic label="String Testers" href="productdoc/org.eclipse.net4j.util.stringTesters.html" icon="productgroup" />
+      <topic label="Timers" href="productdoc/org.eclipse.net4j.util.timers.html" icon="productgroup" />
+      <topic label="User Managers" href="productdoc/org.eclipse.net4j.userManagers.html" icon="productgroup" />
+    </topic>
+    <topic label="Net4j Utilities UI" href="productdoc/org.eclipse.net4j.util.ui.elementWizards.html" icon="plugin">
+      <topic label="Element Wizards" href="productdoc/org.eclipse.net4j.util.ui.elementWizards.html" icon="productgroup" />
+      <topic label="Introspection Providers" href="productdoc/org.eclipse.net4j.util.ui.introspectionProviders.html" icon="productgroup" />
+      <topic label="Menu Fillers" href="productdoc/org.eclipse.net4j.util.ui.menuFillers.html" icon="productgroup" />
+      <topic label="Value Formatters" href="productdoc/org.eclipse.net4j.util.ui.valueFormatters.html" icon="productgroup" />
+    </topic>
+  </topic>
   <topic label="Online Docs" href="html/online/index.html">
     <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
     <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />

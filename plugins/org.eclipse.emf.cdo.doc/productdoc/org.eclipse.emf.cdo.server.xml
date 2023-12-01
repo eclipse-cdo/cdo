@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.server" label="CDO Model Repository Server">
+	<productGroup id="org.eclipse.emf.cdo.server.browserPages" name="CDO Browser Pages" description="" deprecated="false">
+		<factory type="db-queries" class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Queries$Factory" contributor="org.eclipse.emf.cdo.server.db"/>
+		<factory type="db-tables" class="org.eclipse.emf.cdo.server.internal.db.DBBrowserPage$Tables$Factory" contributor="org.eclipse.emf.cdo.server.db"/>
+		<factory type="lissome" class="org.eclipse.emf.cdo.server.internal.lissome.LissomeBrowserPage$Factory" contributor="org.eclipse.emf.cdo.server.lissome"/>
+		<factory type="mongodb" class="org.eclipse.emf.cdo.server.internal.mongodb.MongoDBBrowserPage$Factory" contributor="org.eclipse.emf.cdo.server.mongodb"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.browsers" name="CDO Browsers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.emf.cdo.server.CDOServerBrowser$ContainerBased$Factory" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.commands" name="CDO Commands" description="" deprecated="false">
+		<factory type="useradd" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdd" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="useradmin" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdmin" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="userdel" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserDelete" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="userpw" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserPassword" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.queryHandlerFactories" name="CDO Query Handler Factories" description="" deprecated="false">
+		<factory type="ocl" class="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler$Factory" contributor="org.eclipse.emf.cdo.server.ocl"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryActivityLogs" name="CDO Repository Activity Logs" description="" deprecated="false">
+		<factory type="rolling" class="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog$Rolling$Factory" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" name="CDO Repository Configurator Extensions" description="" deprecated="false">
+		<factory type="protector" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector$RepositoryConfiguratorExtension" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="CDO Repository Configurators" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator$Factory$Default" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" name="CDO Repository Protector Authorization Strategies" description="" deprecated="false">
+		<factory type="additive" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Additive" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="subtractive" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Subtractive" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers" name="CDO Repository Protector Commit Handlers" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" name="CDO Repository Protector Revision Authorizers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorUserAuthenticators" name="CDO Repository Protector User Authenticators" description="" deprecated="false">
+		<factory type="file" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.FileUserAuthenticator" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldap" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.LDAPUserAuthenticator" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectors" name="CDO Repository Protectors" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+	<productGroup id="org.eclipse.emf.cdo.server.revisionAuthorizerMatchers" name="CDO Revision Authorizer Matchers" description="" deprecated="false">
+		<factory type="and" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$And" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="branchId" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionBranchID" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="branchMain" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionBranchMain" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="branchName" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionBranchName" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="branchPath" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionBranchPath" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="class" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionClass" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="className" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionClassName" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextBranchId" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchID" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextBranchMain" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchMain" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextBranchName" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchName" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextBranchPath" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextBranchPath" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextHistorical" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextHistorical" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="contextTimeStamp" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$ContextTimeStamp" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="false" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$Matcher$False" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="feature" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$RevisionFeature" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="id" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionID" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="instanceOf" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionInstanceOf" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldapGroupAttribute" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$LDAPGroupAttribute" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldapGroupDn" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$LDAPGroupDN" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldapUserAttribute" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$LDAPUserAttribute" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="ldapUserDn" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$LDAPUserDN" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="matcher" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$RefMatcher" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="not" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$Not" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="or" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$Or" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="package" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionPackage" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="packageName" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionPackageName" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="repositoryName" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RepositoryName" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="repositoryPrimary" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RepositoryPrimary" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="repositoryProperty" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$RepositoryProperty" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="repositoryUuid" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RepositoryUUID" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="revised" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionRevised" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="sessionProperty" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$KeyValueMatcher$SessionProperty" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="timeStamp" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$RevisionTimeStamp" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="true" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$Matcher$True" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="userAdministrator" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$UserAdministrator" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="userId" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$ValueMatcher$UserID" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="xor" class="org.eclipse.net4j.util.factory.AnnotationFactory" productClass="org.eclipse.emf.cdo.internal.server.DefaultRevisionAuthorizer$OperationMatcher$Xor" contributor="org.eclipse.emf.cdo.server"/>
+	</productGroup>
+</plugin>

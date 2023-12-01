@@ -19,6 +19,7 @@
       <tocIcon id="plugin" altText="Plugin" openIcon="images/plugin.gif"/>
       <tocIcon id="package" altText="Package" openIcon="images/package.gif"/>
       <tocIcon id="extpoint" altText="Extension Point" openIcon="images/extpoint.gif"/>
+      <tocIcon id="productgroup" altText="Product Group" openIcon="images/productgroup.gif"/>
       <tocIcon id="external" altText="External Article" openIcon="images/external.gif"/>
    </extension>
 

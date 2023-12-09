@@ -15,13 +15,24 @@
 <h6 class="CaptionFigColumn SchemaHeader">Description: </h6>[Enter description of this extension point.]<p></p>
 <h6 class="CaptionFigColumn SchemaHeader">Configuration Markup:</h6>
 <p></p>
-<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.simpleFactory">simpleFactory</a>* , <a href="#e.factory">factory</a>* , <a href="#e.factories">factories</a>*)&gt;</p>
+<p class="code SchemaDtd">&lt;!ELEMENT <a name="e.extension">extension</a> (<a href="#e.annotationFactory">annotationFactory</a>* , <a href="#e.simpleFactory">simpleFactory</a>* , <a href="#e.factory">factory</a>* , <a href="#e.factories">factories</a>*)&gt;</p>
 <p class="code SchemaDtd">&lt;!ATTLIST extension</p>
 <p class="code SchemaDtdAttlist">point&nbsp;CDATA #REQUIRED</p>
 <p class="code SchemaDtdAttlist">id&nbsp;&nbsp;&nbsp;&nbsp;CDATA #IMPLIED</p>
 <p class="code SchemaDtdAttlist">name&nbsp;&nbsp;CDATA #IMPLIED&gt;</p>
 <p></p>
 <ul class="ConfigMarkupAttlistDesc">
+</ul>
+<br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.annotationFactory">annotationFactory</a> EMPTY&gt;</p>
+<p class="code SchemaDtd">&lt;!ATTLIST annotationFactory</p>
+<p class="code SchemaDtdAttlist">productGroup&nbsp;IDREF #REQUIRED</p>
+<p class="code SchemaDtdAttlist">type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDATA #REQUIRED</p>
+<p class="code SchemaDtdAttlist">productClass&nbsp;CDATA #REQUIRED&gt;</p>
+<p></p>
+<ul class="ConfigMarkupAttlistDesc">
+<li><b>productGroup</b> - </li>
+<li><b>type</b> - </li>
+<li><b>productClass</b> - </li>
 </ul>
 <br><p class="code SchemaDtd">&lt;!ELEMENT <a name="e.simpleFactory">simpleFactory</a> EMPTY&gt;</p>
 <p class="code SchemaDtd">&lt;!ATTLIST simpleFactory</p>
@@ -74,7 +85,7 @@
 
 <br>
 <p class="note SchemaCopyright">
-Copyright (c) 2007, 2012, 2021, 2022 Eike Stepper (Loehne, Germany) and others.<br>
+Copyright (c) 2007, 2012, 2021-2023 Eike Stepper (Loehne, Germany) and others.<br>
 All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at <a href="http://www.eclipse.org/legal/epl-v10.html">http://www.eclipse.org/legal/epl-v10.html</a>
 
 </p>

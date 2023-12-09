@@ -5,7 +5,7 @@
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.ui.loadResourceProviders" name="CDO Load Resource Providers" description="" deprecated="false">
 		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
-		<factory type="repository" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.emf.cdo.internal.ui.RepositoryLoadResourceProvider" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="repository" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.ui.RepositoryLoadResourceProvider" contributor="org.eclipse.emf.cdo.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.ui.userInfoStorages" name="CDO User Info Storages" description="" deprecated="false">
 		<factory type="home" class="org.eclipse.emf.cdo.ui.UserInfo$Manager$HomeUserInfoStorage$Factory" contributor="org.eclipse.emf.cdo.ui"/>

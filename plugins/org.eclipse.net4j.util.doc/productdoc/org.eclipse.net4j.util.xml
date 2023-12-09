@@ -34,85 +34,85 @@
 		<factory type="gzip" class="org.eclipse.net4j.util.io.GZIPStreamWrapper$Factory" contributor="org.eclipse.net4j"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringConverters" name="String Converters" description="" deprecated="false">
-		<factory type="cap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=CAP" contributor="org.eclipse.net4j.util"/>
-		<factory type="cap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=CAP_ALL" contributor="org.eclipse.net4j.util"/>
+		<factory type="cap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP" contributor="org.eclipse.net4j.util"/>
+		<factory type="cap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP_ALL" contributor="org.eclipse.net4j.util"/>
 		<factory type="cdo.lm.server.lifecycle_manager" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="cdo.lm.server.module_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="cdo.lm.server.module_type_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="cdo.lm.server.repository_type" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="cdo.lm.server.system_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
-		<factory type="chars" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=CHARS" contributor="org.eclipse.net4j.util"/>
-		<factory type="escape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=ESCAPE" contributor="org.eclipse.net4j.util"/>
-		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=IDENTITY" contributor="org.eclipse.net4j.util"/>
-		<factory type="lower" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=LOWER" contributor="org.eclipse.net4j.util"/>
-		<factory type="net4j_config_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=NET4J_CONFIG_PATH" contributor="org.eclipse.net4j.util"/>
-		<factory type="net4j_state_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=NET4J_STATE_PATH" contributor="org.eclipse.net4j.util"/>
-		<factory type="net4j_user_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=NET4J_USER_PATH" contributor="org.eclipse.net4j.util"/>
-		<factory type="property_uri" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=PROPERTY_URI" contributor="org.eclipse.net4j.util"/>
-		<factory type="safe" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=SAFE" contributor="org.eclipse.net4j.util"/>
-		<factory type="system_property" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=SYSTEM_PROPERTY" contributor="org.eclipse.net4j.util"/>
-		<factory type="uncap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=UNCAP" contributor="org.eclipse.net4j.util"/>
-		<factory type="uncap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=UNCAP_ALL" contributor="org.eclipse.net4j.util"/>
-		<factory type="unescape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=UNESCAPE" contributor="org.eclipse.net4j.util"/>
-		<factory type="upper" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringConverter, constantName=UPPER" contributor="org.eclipse.net4j.util"/>
+		<factory type="chars" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CHARS" contributor="org.eclipse.net4j.util"/>
+		<factory type="escape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.ESCAPE" contributor="org.eclipse.net4j.util"/>
+		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.IDENTITY" contributor="org.eclipse.net4j.util"/>
+		<factory type="lower" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.LOWER" contributor="org.eclipse.net4j.util"/>
+		<factory type="net4j_config_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_CONFIG_PATH" contributor="org.eclipse.net4j.util"/>
+		<factory type="net4j_state_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_STATE_PATH" contributor="org.eclipse.net4j.util"/>
+		<factory type="net4j_user_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_USER_PATH" contributor="org.eclipse.net4j.util"/>
+		<factory type="property_uri" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.PROPERTY_URI" contributor="org.eclipse.net4j.util"/>
+		<factory type="safe" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.SAFE" contributor="org.eclipse.net4j.util"/>
+		<factory type="system_property" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.SYSTEM_PROPERTY" contributor="org.eclipse.net4j.util"/>
+		<factory type="uncap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNCAP" contributor="org.eclipse.net4j.util"/>
+		<factory type="uncap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNCAP_ALL" contributor="org.eclipse.net4j.util"/>
+		<factory type="unescape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UNESCAPE" contributor="org.eclipse.net4j.util"/>
+		<factory type="upper" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.UPPER" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringParsers" name="String Parsers" description="" deprecated="false">
-		<factory type="boolean" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BOOLEAN" contributor="org.eclipse.net4j.util"/>
-		<factory type="byte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BYTE" contributor="org.eclipse.net4j.util"/>
-		<factory type="char" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=CHARACTER" contributor="org.eclipse.net4j.util"/>
-		<factory type="double" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=DOUBLE" contributor="org.eclipse.net4j.util"/>
-		<factory type="float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=IDENTITY" contributor="org.eclipse.net4j.util"/>
-		<factory type="int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=INTEGER" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.io.File" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=FILE" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Boolean" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BOOLEAN" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Byte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BYTE" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Character" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=CHARACTER" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Double" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=DOUBLE" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Integer" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=INTEGER" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Long" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=LONG" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.Short" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=SHORT" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.lang.String" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=IDENTITY" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.math.BigDecimal" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BIG_DECIMAL" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.math.BigInteger" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=BIG_INTEGER" contributor="org.eclipse.net4j.util"/>
-		<factory type="java.nio.file.Path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=PATH" contributor="org.eclipse.net4j.util"/>
-		<factory type="long" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=LONG" contributor="org.eclipse.net4j.util"/>
-		<factory type="short" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringParser, constantName=SHORT" contributor="org.eclipse.net4j.util"/>
+		<factory type="boolean" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BOOLEAN" contributor="org.eclipse.net4j.util"/>
+		<factory type="byte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BYTE" contributor="org.eclipse.net4j.util"/>
+		<factory type="char" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.CHARACTER" contributor="org.eclipse.net4j.util"/>
+		<factory type="double" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.DOUBLE" contributor="org.eclipse.net4j.util"/>
+		<factory type="float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.IDENTITY" contributor="org.eclipse.net4j.util"/>
+		<factory type="int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.INTEGER" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.io.File" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.FILE" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Boolean" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BOOLEAN" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Byte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BYTE" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Character" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.CHARACTER" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Double" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.DOUBLE" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Integer" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.INTEGER" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Long" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.LONG" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.Short" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.SHORT" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.lang.String" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.IDENTITY" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.math.BigDecimal" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BIG_DECIMAL" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.math.BigInteger" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.BIG_INTEGER" contributor="org.eclipse.net4j.util"/>
+		<factory type="java.nio.file.Path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.PATH" contributor="org.eclipse.net4j.util"/>
+		<factory type="long" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.LONG" contributor="org.eclipse.net4j.util"/>
+		<factory type="short" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringParser.SHORT" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringTesters" name="String Testers" description="" deprecated="false">
-		<factory type="contains" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=CONTAINS" contributor="org.eclipse.net4j.util"/>
-		<factory type="contains_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=CONTAINS_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="eq" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=EQ" contributor="org.eclipse.net4j.util"/>
-		<factory type="eq_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=EQ_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="eq_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=EQ_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="eq_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=EQ_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="glob" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GLOB" contributor="org.eclipse.net4j.util"/>
-		<factory type="glob_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GLOB_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="gt" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GT" contributor="org.eclipse.net4j.util"/>
-		<factory type="gt_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GT_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="gt_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GT_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="gt_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GT_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="gte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GTE" contributor="org.eclipse.net4j.util"/>
-		<factory type="gte_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GTE_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="gte_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GTE_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="gte_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=GTE_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="lt" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LT" contributor="org.eclipse.net4j.util"/>
-		<factory type="lt_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LT_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="lt_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LT_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="lt_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LT_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="lte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LTE" contributor="org.eclipse.net4j.util"/>
-		<factory type="lte_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LTE_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="lte_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LTE_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="lte_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=LTE_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="neq" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=NEQ" contributor="org.eclipse.net4j.util"/>
-		<factory type="neq_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=NEQ_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="neq_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=NEQ_FLOAT" contributor="org.eclipse.net4j.util"/>
-		<factory type="neq_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=NEQ_INT" contributor="org.eclipse.net4j.util"/>
-		<factory type="regex" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=REGEX" contributor="org.eclipse.net4j.util"/>
-		<factory type="regex_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=REGEX_CI" contributor="org.eclipse.net4j.util"/>
-		<factory type="regex_find" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=REGEX_FIND" contributor="org.eclipse.net4j.util"/>
-		<factory type="regex_find_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" factoryInfo="constantClass=org.eclipse.net4j.util.StringTester, constantName=REGEX_FIND_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="contains" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.CONTAINS" contributor="org.eclipse.net4j.util"/>
+		<factory type="contains_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.CONTAINS_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="eq" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.EQ" contributor="org.eclipse.net4j.util"/>
+		<factory type="eq_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.EQ_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="eq_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.EQ_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="eq_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.EQ_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="glob" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GLOB" contributor="org.eclipse.net4j.util"/>
+		<factory type="glob_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GLOB_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="gt" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GT" contributor="org.eclipse.net4j.util"/>
+		<factory type="gt_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GT_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="gt_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GT_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="gt_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GT_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="gte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GTE" contributor="org.eclipse.net4j.util"/>
+		<factory type="gte_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GTE_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="gte_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GTE_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="gte_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.GTE_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="lt" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LT" contributor="org.eclipse.net4j.util"/>
+		<factory type="lt_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LT_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="lt_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LT_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="lt_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LT_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="lte" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LTE" contributor="org.eclipse.net4j.util"/>
+		<factory type="lte_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LTE_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="lte_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LTE_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="lte_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.LTE_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="neq" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.NEQ" contributor="org.eclipse.net4j.util"/>
+		<factory type="neq_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.NEQ_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="neq_float" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.NEQ_FLOAT" contributor="org.eclipse.net4j.util"/>
+		<factory type="neq_int" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.NEQ_INT" contributor="org.eclipse.net4j.util"/>
+		<factory type="regex" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.REGEX" contributor="org.eclipse.net4j.util"/>
+		<factory type="regex_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.REGEX_CI" contributor="org.eclipse.net4j.util"/>
+		<factory type="regex_find" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.REGEX_FIND" contributor="org.eclipse.net4j.util"/>
+		<factory type="regex_find_ci" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringTester.REGEX_FIND_CI" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.timers" name="Timers" description="" deprecated="false">
 		<factory type="daemon" class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory" contributor="org.eclipse.net4j.util"/>

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.internal.util.factory;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.factory.Factory;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -37,7 +38,7 @@ public final class ConstantFactory extends Factory implements MarkupNames
     super(productGroup(configurationElement), type(configurationElement));
     bundleSymbolicName = configurationElement.getContributor().getName();
     constantClassName = Objects.requireNonNull(configurationElement.getAttribute(MarkupNames.CLASS));
-    constantName = Objects.requireNonNullElseGet(configurationElement.getAttribute(MarkupNames.NAME), () -> type(configurationElement).toUpperCase());
+    constantName = constantName(configurationElement);
   }
 
   @Override
@@ -73,5 +74,16 @@ public final class ConstantFactory extends Factory implements MarkupNames
   private static String type(IConfigurationElement configurationElement)
   {
     return configurationElement.getAttribute(MarkupNames.TYPE);
+  }
+
+  private static String constantName(IConfigurationElement configurationElement)
+  {
+    String constantName = configurationElement.getAttribute(MarkupNames.NAME);
+    if (StringUtil.isEmpty(constantName))
+    {
+      constantName = type(configurationElement).toUpperCase();
+    }
+
+    return constantName;
   }
 }

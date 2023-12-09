@@ -7,15 +7,15 @@
 		<factory type="org.eclipse.net4j.connectors:tcp" class="org.eclipse.net4j.internal.ui.container.TCPConnectorWizard$Factory" contributor="org.eclipse.net4j.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="Introspection Providers" description="" deprecated="false">
-		<factory type="java.lang.Iterable" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.net4j.util.internal.ui.views.IterableIntrospectionProvider" contributor="org.eclipse.net4j.util.ui"/>
-		<factory type="java.util.Map" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.net4j.util.internal.ui.views.MapIntrospectionProvider" contributor="org.eclipse.net4j.util.ui"/>
-		<factory type="org.eclipse.emf.cdo.CDOObject" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.emf.cdo.internal.ui.CDOIntrospectionProvider" contributor="org.eclipse.emf.cdo.ui"/>
-		<factory type="org.eclipse.emf.ecore.EObject" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.emf.cdo.internal.ui.EMFIntrospectionProvider" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="java.lang.Iterable" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.net4j.util.internal.ui.views.IterableIntrospectionProvider" contributor="org.eclipse.net4j.util.ui"/>
+		<factory type="java.util.Map" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.net4j.util.internal.ui.views.MapIntrospectionProvider" contributor="org.eclipse.net4j.util.ui"/>
+		<factory type="org.eclipse.emf.cdo.CDOObject" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.emf.cdo.internal.ui.CDOIntrospectionProvider" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="org.eclipse.emf.ecore.EObject" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.emf.cdo.internal.ui.EMFIntrospectionProvider" contributor="org.eclipse.emf.cdo.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers" description="" deprecated="false">
 		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description="" deprecated="false">
-		<factory type="org.eclipse.emf.ecore.ENamedElement" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" productClass="org.eclipse.emf.cdo.internal.ui.EMFValueFormatter" contributor="org.eclipse.emf.cdo.ui"/>
+		<factory type="org.eclipse.emf.ecore.ENamedElement" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" factoryInfo="productClass=org.eclipse.emf.cdo.internal.ui.EMFValueFormatter" contributor="org.eclipse.emf.cdo.ui"/>
 	</productGroup>
 </plugin>

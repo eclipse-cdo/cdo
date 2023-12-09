@@ -112,7 +112,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="class" type="string" use="required">
+         <attribute name="productClass" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -122,7 +122,7 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="name" type="string" use="required">
+         <attribute name="setterName" type="string">
             <annotation>
                <documentation>
                   

@@ -20,6 +20,7 @@
          <sequence>
             <element ref="annotationFactory" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="simpleFactory" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="constantFactory" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="factory" minOccurs="0" maxOccurs="unbounded"/>
             <element ref="factories" minOccurs="0" maxOccurs="unbounded"/>
          </sequence>
@@ -111,7 +112,7 @@
                </documentation>
             </annotation>
          </attribute>
-         <attribute name="productClass" type="string" use="required">
+         <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
@@ -121,7 +122,46 @@
                </appinfo>
             </annotation>
          </attribute>
-         <attribute name="setterName" type="string">
+         <attribute name="name" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+      </complexType>
+   </element>
+
+   <element name="constantFactory">
+      <complexType>
+         <attribute name="productGroup" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="identifier" basedOn="org.eclipse.net4j.util.productGroups/productGroup/@id"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="type" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+            </annotation>
+         </attribute>
+         <attribute name="class" type="string" use="required">
+            <annotation>
+               <documentation>
+                  
+               </documentation>
+               <appinfo>
+                  <meta.attribute kind="java"/>
+               </appinfo>
+            </annotation>
+         </attribute>
+         <attribute name="name" type="string">
             <annotation>
                <documentation>
                   

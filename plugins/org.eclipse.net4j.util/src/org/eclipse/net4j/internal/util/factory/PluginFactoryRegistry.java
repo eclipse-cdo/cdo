@@ -134,6 +134,10 @@ public class PluginFactoryRegistry extends HashMapRegistry<IFactoryKey, IFactory
         {
           registerFactory(new SimpleFactory(element));
         }
+        else if (CONSTANT_FACTORY.equals(name))
+        {
+          registerFactory(new ConstantFactory(element));
+        }
         else if (ANNOTATION_FACTORY.equals(name))
         {
           registerFactory(new AnnotationFactoryDescriptor(element));

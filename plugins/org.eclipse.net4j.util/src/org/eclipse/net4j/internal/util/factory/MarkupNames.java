@@ -21,6 +21,8 @@ public interface MarkupNames
 
   public static final String SIMPLE_FACTORY = "simpleFactory"; //$NON-NLS-1$
 
+  public static final String CONSTANT_FACTORY = "constantFactory"; //$NON-NLS-1$
+
   public static final String ANNOTATION_FACTORY = "annotationFactory"; //$NON-NLS-1$
 
   public static final String PRODUCT_GROUP = "productGroup"; //$NON-NLS-1$
@@ -32,6 +34,8 @@ public interface MarkupNames
   public static final String CLASS = "class"; //$NON-NLS-1$
 
   public static final String TYPE = "type"; //$NON-NLS-1$
+
+  public static final String NAME = "name"; //$NON-NLS-1$
 
   public static final String VALUE = "value"; //$NON-NLS-1$
 }

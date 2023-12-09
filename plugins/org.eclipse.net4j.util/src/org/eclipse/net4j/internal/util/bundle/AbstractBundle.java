@@ -17,6 +17,7 @@ import org.eclipse.net4j.internal.util.factory.PluginFactoryRegistry;
 import org.eclipse.net4j.internal.util.factory.SimpleFactory;
 import org.eclipse.net4j.internal.util.om.pref.Preferences;
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IElementProcessor;
@@ -47,6 +48,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
@@ -235,6 +237,32 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
                   {
                     throw productCreationException(description, ex);
                   }
+                }
+              };
+
+              container.registerFactory(factory);
+            }
+            else if (MarkupNames.CONSTANT_FACTORY.equals(child.name()))
+            {
+              String productGroup = child.attribute(MarkupNames.PRODUCT_GROUP);
+              String type = child.attribute(MarkupNames.TYPE);
+              String constantClassName = child.attribute(MarkupNames.CLASS);
+              String constantName = child.attribute(MarkupNames.NAME);
+              if (StringUtil.isEmpty(constantName))
+              {
+                constantName = type.toUpperCase();
+              }
+
+              Class<?> constantClass = OM.BUNDLE.loadClass(getBundleID(), constantClassName);
+              Field constantField = constantClass.getField(constantName);
+              Object product = constantField.get(null);
+
+              IFactory factory = new Factory(productGroup, type)
+              {
+                @Override
+                public Object create(String description) throws ProductCreationException
+                {
+                  return product;
                 }
               };
 

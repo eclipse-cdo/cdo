@@ -38,50 +38,84 @@
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
-      <factory
-            class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"
-            productGroup="org.eclipse.net4j.util.timers"
-            type="daemon"/>
-      <factory
-            class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory"
-            productGroup="org.eclipse.net4j.executorServices"
-            type="default"/>
-      <factory
-            productGroup="org.eclipse.net4j.randomizers"
-            type="default"
-            class="org.eclipse.net4j.util.security.RandomizerFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.userManagers"
-            type="file"
-            class="org.eclipse.net4j.util.security.FileUserManagerFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.authenticators"
-            type="file"
-            class="org.eclipse.net4j.util.security.FileAuthenticatorFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.Negotiators"
-            type="challenge"
-            class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.util.confirmationProviders"
-            type="default"
-            class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
-      <factory
-            productGroup="org.eclipse.net4j.util.metaFactories"
-            type="org.eclipse.net4j.util.stringConverters"
-            class="org.eclipse.net4j.util.StringConverter$MetaFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.util.metaFactories"
-            type="org.eclipse.net4j.util.stringParsers"
-            class="org.eclipse.net4j.util.StringParser$MetaFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.util.metaFactories"
-            type="org.eclipse.net4j.util.stringTesters"
-            class="org.eclipse.net4j.util.StringTester$MetaFactory"/>
-      <factory
-            productGroup="org.eclipse.net4j.util.metaFactories"
-            type="org.eclipse.net4j.util.security.crypters"
-            class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
+      <factory productGroup="org.eclipse.net4j.util.timers" type="daemon" class="org.eclipse.net4j.util.concurrent.TimerLifecycle$DaemonFactory"/>
+      <factory productGroup="org.eclipse.net4j.executorServices" type="default" class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory"/>
+      <factory productGroup="org.eclipse.net4j.randomizers" type="default" class="org.eclipse.net4j.util.security.RandomizerFactory"/>
+      <factory productGroup="org.eclipse.net4j.userManagers" type="file" class="org.eclipse.net4j.util.security.FileUserManagerFactory"/>
+      <factory productGroup="org.eclipse.net4j.authenticators" type="file" class="org.eclipse.net4j.util.security.FileAuthenticatorFactory"/>
+      <factory productGroup="org.eclipse.net4j.Negotiators" type="challenge" class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
+      <factory productGroup="org.eclipse.net4j.util.confirmationProviders" type="default" class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="identity" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="chars" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="safe" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="upper" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="lower" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="cap" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="cap_all" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="uncap" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="uncap_all" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="escape" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="unescape" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="net4j_user_path" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="net4j_state_path" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="net4j_config_path" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="system_property" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="property_uri" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="identity" class="org.eclipse.net4j.util.StringParser"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.String" class="org.eclipse.net4j.util.StringParser" name="IDENTITY"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="char" class="org.eclipse.net4j.util.StringParser" name="CHARACTER"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Character" class="org.eclipse.net4j.util.StringParser" name="CHARACTER"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="boolean" class="org.eclipse.net4j.util.StringParser" name="BOOLEAN"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Boolean" class="org.eclipse.net4j.util.StringParser" name="BOOLEAN"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="byte" class="org.eclipse.net4j.util.StringParser" name="BYTE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Byte" class="org.eclipse.net4j.util.StringParser" name="BYTE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="short" class="org.eclipse.net4j.util.StringParser" name="SHORT"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Short" class="org.eclipse.net4j.util.StringParser" name="SHORT"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="int" class="org.eclipse.net4j.util.StringParser" name="INTEGER"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Integer" class="org.eclipse.net4j.util.StringParser" name="INTEGER"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="long" class="org.eclipse.net4j.util.StringParser" name="LONG"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Long" class="org.eclipse.net4j.util.StringParser" name="LONG"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="float" class="org.eclipse.net4j.util.StringParser" name="FLOAT"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Float" class="org.eclipse.net4j.util.StringParser" name="FLOAT"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="double" class="org.eclipse.net4j.util.StringParser" name="DOUBLE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.lang.Double" class="org.eclipse.net4j.util.StringParser" name="DOUBLE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.math.BigInteger" class="org.eclipse.net4j.util.StringParser" name="BIG_INTEGER"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.math.BigDecimal" class="org.eclipse.net4j.util.StringParser" name="BIG_DECIMAL"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.nio.file.Path" class="org.eclipse.net4j.util.StringParser" name="PATH"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringParsers" type="java.io.File" class="org.eclipse.net4j.util.StringParser" name="FILE"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="eq" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="eq_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="eq_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="eq_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="neq" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="neq_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="neq_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="neq_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lt" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lt_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lt_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lt_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lte" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lte_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lte_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="lte_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gt" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gt_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gt_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gt_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gte" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gte_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gte_int" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="gte_float" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="contains" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="contains_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="regex" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="regex_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="regex_find" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="regex_find_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob" class="org.eclipse.net4j.util.StringTester"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob_ci" class="org.eclipse.net4j.util.StringTester"/>
+      <factory productGroup="org.eclipse.net4j.util.metaFactories" type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.elementProcessors">

@@ -8,9 +8,10 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.emf.cdo.lm.reviews;version="1.0.0",
- org.eclipse.emf.cdo.lm.reviews.impl;version="1.0.0",
- org.eclipse.emf.cdo.lm.reviews.util;version="1.0.0"
+Export-Package: org.eclipse.emf.cdo.lm.reviews;version="1.0.0";x-friends:="org.eclipse.emf.cdo.lm.reviews.edit",
+ org.eclipse.emf.cdo.lm.reviews.impl;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.lm.reviews.tests;version="1.0.0";x-internal:=true,
+ org.eclipse.emf.cdo.lm.reviews.util;version="1.0.0";x-friends:="org.eclipse.emf.cdo.lm.reviews.edit"
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.lm;bundle-version="[1.0.0,2.0.0)";visibility:=reexport
 Automatic-Module-Name: org.eclipse.emf.cdo.lm.reviews

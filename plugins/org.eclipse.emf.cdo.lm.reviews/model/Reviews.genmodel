@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclipse.emf.cdo.lm.reviews/src" creationIcons="false"
+    editorDirectory="" modelPluginID="org.eclipse.emf.cdo.lm.reviews" modelName="Reviews"
+    rootExtendsInterface="org.eclipse.emf.cdo.CDOObject" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
+    testsDirectory="" importerID="org.eclipse.emf.importer.ecore" featureDelegation="Dynamic"
+    complianceLevel="11.0" copyrightFields="false" providerRootExtendsClass="org.eclipse.e,f.cdo.edit.CDOItemProviderAdapter"
+    optimizedHasChildren="true" usedGenPackages="../../org.eclipse.emf.cdo/model/etypes.genmodel#//etypes ../../org.eclipse.emf.cdo.lm/model/LM.genmodel#//lm ../../org.eclipse.emf.cdo.lm.modules/model/Modules.genmodel#//modules"
+    operationReflection="true" importOrganizing="true" styleProviders="true" cleanup="true">
+  <foreignModel>Reviews.ecore</foreignModel>
+  <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
+  <genPackages prefix="Reviews" basePackage="org.eclipse.emf.cdo.lm" disposableProviderFactory="true"
+      extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="Reviews.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//CommentStatus">
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/None"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/Unresolved"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/Resolved"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//ReviewType">
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewType/Delivery"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewType/Drop"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//ReviewStatus">
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Open"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Conflict"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Merged"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Abandoned"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="Reviews.ecore#//Commentable">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reviews.ecore#//Commentable/comments"/>
+    </genClasses>
+    <genClasses ecoreClass="Reviews.ecore#//Comment">
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/commentable"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/status"/>
+    </genClasses>
+    <genClasses ecoreClass="Reviews.ecore#//ReviewTemplate">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//ReviewTemplate/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//ReviewTemplate/reviewers"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Reviews.ecore#//Review">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Review/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Review/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Review/reviewers"/>
+    </genClasses>
+    <genClasses ecoreClass="Reviews.ecore#//DeliveryReview">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//DeliveryReview/sourceChange"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//DeliveryReview/sourceCommit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//DeliveryReview/targetCommit"/>
+    </genClasses>
+    <genClasses ecoreClass="Reviews.ecore#//DropReview">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//DropReview/targetTimeStamp"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//DropReview/dropType"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

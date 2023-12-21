@@ -869,9 +869,16 @@
         <repository
             url="https://download.eclipse.org/oomph/simrel-orbit/release/4.28.0">
           <annotation
-              source="Required for wrong upper bound of com.google.guava in cdo.tests"/>
-          <annotation
-              source="Can be deleted in 4.26"/>
+              source="WhyThisOldObitVersion?">
+            <detail
+                key="justification">
+              <value>Required for wrong upper bound of com.google.guava in cdo.tests</value>
+            </detail>
+            <detail
+                key="comment">
+              <value>Can be deleted in 4.26</value>
+            </detail>
+          </annotation>
         </repository>
         <repository
             url="https://download.eclipse.org/modeling/emf/cdo/drops/R20231129-0739"/>

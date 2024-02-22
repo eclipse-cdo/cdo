@@ -428,6 +428,16 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   protected void doDeactivate() throws Exception
   {
     LifecycleUtil.deactivate(objectTypeMapper);
+
+    if (resourceFolderMapping != null)
+    {
+      // They will be deactivated in super.deactivateClassMappings();
+      resourceFolderMapping = null;
+      modelResourceMapping = null;
+      textResourceMapping = null;
+      binaryResourceMapping = null;
+    }
+
     super.doDeactivate();
   }
 

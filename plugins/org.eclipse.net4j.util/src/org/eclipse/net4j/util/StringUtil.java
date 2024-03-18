@@ -115,7 +115,7 @@ public final class StringUtil
         String key = entry.getKey();
         if (!isEmpty(key))
         {
-          String value = StringUtil.safe(entry.getValue());
+          String value = safe(entry.getValue());
           str = str.replace(key, value);
         }
       }

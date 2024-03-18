@@ -97,6 +97,9 @@ public class TypeMappingUtil
     return new TypeMappingDescriptor(id, factoryType, eClassifier, dbType);
   }
 
+  /**
+   * @author Eike Stepper
+   */
   public static class FactoryTypeParserException extends Exception
   {
     private static final long serialVersionUID = 1L;

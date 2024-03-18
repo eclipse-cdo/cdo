@@ -295,7 +295,6 @@ public class SystemImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
   }
 
   @Override
-  @SuppressWarnings("resource")
   public java.util.stream.Stream<Baseline> getAllBaselines()
   {
     java.util.stream.Stream<Baseline> result = null;

@@ -307,6 +307,7 @@ public class Scenario implements IScenario
     }
   }
 
+  @SuppressWarnings("resource")
   public static IScenario load()
   {
     File file = getStateFile();

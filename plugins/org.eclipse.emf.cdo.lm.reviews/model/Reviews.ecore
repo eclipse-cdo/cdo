@@ -5,10 +5,21 @@
   <eClassifiers xsi:type="ecore:EClass" name="Commentable" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo/model/etypes.ecore#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
         eType="#//Comment" containment="true" eOpposite="#//Comment/commentable"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unresolvedCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolvedCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Commentable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="commentable" eType="#//Commentable"
         eOpposite="#//Commentable/comments"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommentStatus"
+        defaultValueLiteral="None"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//Comment">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommentStatus"
         defaultValueLiteral="None"/>

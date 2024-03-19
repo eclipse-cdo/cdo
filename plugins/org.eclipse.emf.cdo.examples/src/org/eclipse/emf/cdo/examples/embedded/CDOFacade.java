@@ -37,8 +37,6 @@ public final class CDOFacade extends EmbeddedH2Repository
 
   private static final boolean BRANCHING = false;
 
-  private static final File DB_FOLDER = new File("./database");
-
   private CDOServerBrowser serverBrowser;
 
   private CDONet4jSession session;
@@ -49,7 +47,7 @@ public final class CDOFacade extends EmbeddedH2Repository
 
   private CDOFacade()
   {
-    super(NAME, AUDITING, BRANCHING, DB_FOLDER);
+    super(NAME, AUDITING, BRANCHING, new File("./database"));
   }
 
   public synchronized CDONet4jSession getSession(boolean openOnDemand)

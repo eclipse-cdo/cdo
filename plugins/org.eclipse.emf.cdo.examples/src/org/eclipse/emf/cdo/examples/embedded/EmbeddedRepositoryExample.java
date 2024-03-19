@@ -11,11 +11,15 @@
 package org.eclipse.emf.cdo.examples.embedded;
 
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.EresourcePackage;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.examples.company.Company;
 import org.eclipse.emf.cdo.examples.company.CompanyFactory;
+import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EcorePackage;
 
 /**
  * @author Eike Stepper
@@ -24,6 +28,12 @@ public class EmbeddedRepositoryExample
 {
   public static void main(String[] args) throws Exception
   {
+    // In stand-alone initialize the needed EPackages eagerly!
+    EcorePackage.eINSTANCE.getClass();
+    EresourcePackage.eINSTANCE.getClass();
+    EtypesPackage.eINSTANCE.getClass();
+    CompanyPackage.eINSTANCE.getClass();
+
     CDOFacade.INSTANCE.activate();
 
     try

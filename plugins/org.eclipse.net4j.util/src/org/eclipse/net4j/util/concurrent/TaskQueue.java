@@ -128,7 +128,7 @@ public abstract class TaskQueue<T>
             iterator.remove();
 
             // Reschedule current job.
-            setName("Resolve " + getJobName(currentTask));
+            setName(getJobName(currentTask) + " (rescheduled)");
             schedule();
           }
         }

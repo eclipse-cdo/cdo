@@ -64,6 +64,13 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
         lock();
 
+        if (lifecycleState != LifecycleState.INACTIVE)
+        {
+          // Someone else must have called activate() between the first "if" above and lock().
+          unlock();
+          return;
+        }
+
         IListener[] listeners = getListeners();
         if (listeners.length != 0)
         {
@@ -93,12 +100,12 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         }
       }
     }
-    catch (RuntimeException ex)
+    catch (RuntimeException | Error ex)
     {
       deferredActivate(false);
       throw ex;
     }
-    catch (Exception ex)
+    catch (Throwable ex)
     {
       deferredActivate(false);
       throw new LifecycleException(ex);
@@ -119,6 +126,18 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         }
 
         locked = lock();
+
+        if (lifecycleState != LifecycleState.ACTIVE)
+        {
+          // Someone else must have called deactivate() between the first "if" above and lock().
+          if (locked)
+          {
+            unlock();
+            locked = false;
+          }
+
+          return null;
+        }
 
         doBeforeDeactivate();
 
@@ -159,7 +178,7 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
 
       return null;
     }
-    catch (Exception ex)
+    catch (Exception | Error ex)
     {
       lifecycleState = LifecycleState.INACTIVE;
 
@@ -168,7 +187,12 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
         unlock();
       }
 
-      return ex;
+      if (ex instanceof Exception)
+      {
+        return (Exception)ex;
+      }
+
+      throw (Error)ex;
     }
   }
 

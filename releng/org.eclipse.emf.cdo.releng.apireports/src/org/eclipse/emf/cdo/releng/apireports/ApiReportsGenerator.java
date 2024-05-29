@@ -43,6 +43,7 @@ import org.eclipse.pde.api.tools.internal.provisional.model.IApiComponent;
 import org.eclipse.pde.api.tools.internal.provisional.model.IApiScope;
 import org.eclipse.pde.api.tools.internal.provisional.model.IApiTypeRoot;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import java.io.BufferedWriter;
@@ -137,10 +138,11 @@ public final class ApiReportsGenerator
             updateMonitor(progress);
 
             DeltaXmlVisitor visitor = new ApiDeltaVisitor();
-
             delta.accept(visitor);
+            Document document = visitor.getDocument();
 
-            writer.write(visitor.getXML());
+            String xml = org.eclipse.pde.api.tools.internal.util.Util.serializeDocument(document);
+            writer.write(xml);
             writer.flush();
 
             progress.worked(25);

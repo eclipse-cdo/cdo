@@ -11,13 +11,11 @@
 package org.eclipse.emf.cdo.examples.company.impl;
 
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
-import org.eclipse.emf.cdo.examples.company.OrderDetail;
 import org.eclipse.emf.cdo.examples.company.Product;
 import org.eclipse.emf.cdo.examples.company.VAT;
 
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
 /**
@@ -27,7 +25,6 @@ import org.eclipse.emf.ecore.EClass;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getOrderDetails <em>Order Details</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getVat <em>Vat</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.impl.ProductImpl#getPrice <em>Price</em>}</li>
@@ -84,17 +81,6 @@ public class ProductImpl extends CDOObjectImpl implements Product
   public void setName(String newName)
   {
     eSet(CompanyPackage.Literals.PRODUCT__NAME, newName);
-  }
-
-  /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  @SuppressWarnings("unchecked")
-  public EList<OrderDetail> getOrderDetails()
-  {
-    return (EList<OrderDetail>)eGet(CompanyPackage.Literals.PRODUCT__ORDER_DETAILS, true);
   }
 
   /**

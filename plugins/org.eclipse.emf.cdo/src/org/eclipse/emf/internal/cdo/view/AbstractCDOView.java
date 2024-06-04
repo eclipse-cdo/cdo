@@ -74,6 +74,7 @@ import org.eclipse.emf.cdo.view.CDOViewAdaptersNotifiedEvent;
 import org.eclipse.emf.cdo.view.CDOViewEvent;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
+import org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.emf.internal.cdo.bundle.OM;
@@ -176,6 +177,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   private CDOBranchPoint branchPoint;
 
   private CDOBranchPoint normalizedBranchPoint;
+
+  private URI uri;
 
   private CDOViewProvider provider;
 
@@ -467,7 +470,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public ResourceSet getResourceSet()
   {
-    return getViewSet().getResourceSet();
+    InternalCDOViewSet viewSet = getViewSet();
+    return viewSet == null ? null : viewSet.getResourceSet();
   }
 
   /**
@@ -572,17 +576,40 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   @Override
   public void setProvider(CDOViewProvider provider)
   {
-    this.provider = provider;
-
-    if (viewSet != null)
+    CDOViewProvider oldProvider = this.provider;
+    if (provider != oldProvider)
     {
-      viewSet.remapView(this);
-    }
+      this.provider = provider;
 
-    if (provider instanceof CDOViewProvider2)
-    {
-      uriHandler.setViewProvider2((CDOViewProvider2)provider);
+      if (viewSet != null)
+      {
+        viewSet.remapView(this);
+      }
+
+      if (provider instanceof CDOViewProvider2)
+      {
+        CDOViewProvider2 provider2 = (CDOViewProvider2)provider;
+        uri = provider2.getViewURI(this);
+        uriHandler.setViewProvider2(provider2);
+      }
+      else
+      {
+        uri = null;
+        uriHandler.setViewProvider2(null);
+      }
+
+      IListener[] listeners = getListeners();
+      if (listeners.length != 0)
+      {
+        fireEvent(new ViewProviderChangedEvent(oldProvider, provider), listeners);
+      }
     }
+  }
+
+  @Override
+  public URI getURI()
+  {
+    return uri;
   }
 
   @Override
@@ -2472,6 +2499,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
           if (isRoot)
           {
             resource.setRoot(true);
+            getResourceSet();
             rootResource = resource;
           }
         }
@@ -3381,6 +3409,48 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
     protected String formatAdditionalParameters()
     {
       return "oldBranchPoint=" + oldBranchPoint + ", branchPoint=" + branchPoint;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ViewProviderChangedEvent extends Event implements CDOViewProviderChangedEvent
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CDOViewProvider oldProvider;
+
+    private final CDOViewProvider provider;
+
+    public ViewProviderChangedEvent(CDOViewProvider oldProvider, CDOViewProvider provider)
+    {
+      this.oldProvider = oldProvider;
+      this.provider = provider;
+    }
+
+    @Override
+    public CDOViewProvider getOldProvider()
+    {
+      return oldProvider;
+    }
+
+    @Override
+    public CDOViewProvider getProvider()
+    {
+      return provider;
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return "CDOViewProviderChangedEvent";
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "oldProvider=" + oldProvider + ", provider=" + provider;
     }
   }
 

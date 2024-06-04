@@ -119,6 +119,11 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CDOViewProvider getProvider();
 
   /**
+   * @since 4.24
+   */
+  public URI getURI();
+
+  /**
    * Returns the {@link CDOViewSet view set} this view is associated with.
    *
    * @return The view set this view is associated with, never <code>null</code>.

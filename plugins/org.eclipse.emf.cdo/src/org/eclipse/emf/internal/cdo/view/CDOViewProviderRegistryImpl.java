@@ -323,13 +323,15 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     @Override
     public CDOView getView(URI uri, ResourceSet resourceSet)
     {
-      return getViewProvider().getView(uri, resourceSet);
+      CDOViewProvider viewProvider = getViewProvider();
+      return viewProvider.getView(uri, resourceSet);
     }
 
     @Override
     public URI getResourceURI(CDOView view, String path)
     {
-      return getViewProvider().getResourceURI(view, path);
+      CDOViewProvider viewProvider = getViewProvider();
+      return viewProvider.getResourceURI(view, path);
     }
 
     @Override

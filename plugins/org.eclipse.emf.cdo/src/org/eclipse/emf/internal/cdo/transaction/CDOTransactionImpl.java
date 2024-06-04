@@ -246,9 +246,9 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     COPY_OBJECT_METHOD = cdoInternalCopyTo;
   }
 
-  private Object transactionHandlersLock = new Object();
+  private final Object transactionHandlersLock = new Object();
 
-  private ConcurrentArray<CDOTransactionHandler1> transactionHandlers1 = new ConcurrentArray<CDOTransactionHandler1>()
+  private final ConcurrentArray<CDOTransactionHandler1> transactionHandlers1 = new ConcurrentArray<CDOTransactionHandler1>()
   {
     @Override
     protected CDOTransactionHandler1[] newArray(int length)
@@ -257,7 +257,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     }
   };
 
-  private ConcurrentArray<CDOTransactionHandler2> transactionHandlers2 = new ConcurrentArray<CDOTransactionHandler2>()
+  private final ConcurrentArray<CDOTransactionHandler2> transactionHandlers2 = new ConcurrentArray<CDOTransactionHandler2>()
   {
     @Override
     protected CDOTransactionHandler2[] newArray(int length)

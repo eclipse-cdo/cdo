@@ -14,6 +14,10 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 
+import org.eclipse.emf.internal.cdo.view.CDOViewSetImpl;
+
+import org.eclipse.net4j.util.container.IContainer;
+
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
@@ -30,8 +34,18 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOViewSet extends Notifier
+public interface CDOViewSet extends Notifier, IContainer<CDOView>
 {
+  /**
+   * @since 4.24
+   */
+  public static final IContainer<CDOViewSet> REGISTRY = CDOViewSetImpl.REGISTRY;
+
+  /**
+   * @since 4.24
+   */
+  public int getID();
+
   /**
    * @deprecated As of 4.4 use {@link #resolveView(URI)}.
    */
@@ -60,6 +74,14 @@ public interface CDOViewSet extends Notifier
    * @since 4.12
    */
   public void setDefaultClearAdapterPolicy(CDOAdapterPolicy defaultClearAdapterPolicy);
+
+  /**
+   * @since 4.24
+   */
+  public static CDOViewSet[] getViewSets()
+  {
+    return CDOViewSetImpl.getViewSets();
+  }
 
   /**
    * An unchecked {@link CDOException exception} being thrown from {@link CDOViewSet view sets}.

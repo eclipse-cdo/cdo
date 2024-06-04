@@ -59,6 +59,8 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Category/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Category/categories"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference model1.ecore#//Category/products"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//Category/mainProduct"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference model1.ecore#//Category/topProducts"/>
     </genClasses>
     <genClasses ecoreClass="model1.ecore#//Product1">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model1.ecore#//Product1/name"/>

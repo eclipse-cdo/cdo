@@ -842,6 +842,12 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
   }
 
   @Override
+  public URI getURI()
+  {
+    return delegate.getURI();
+  }
+
+  @Override
   public int getViewID()
   {
     return delegate.getViewID();

@@ -23,7 +23,7 @@ import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.widgets.BaselineComposite;
-import org.eclipse.emf.cdo.lm.util.LMMerger;
+import org.eclipse.emf.cdo.lm.util.LMMerger2;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -43,7 +43,7 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDeliveryAction extends LMAction<Stream>
 {
-  private static final LMMerger MERGER = new InteractiveDeliveryMerger();
+  private static final LMMerger2 MERGER = new InteractiveDeliveryMerger();
 
   private boolean changeWasNull;
 

@@ -8,11 +8,11 @@
         <setEntry value="org.eclipse.emf.cdo.lm.security:1.1.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.server:1.3.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.6.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202212280858:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.databinding.edit:1.8.0.v20230211-1150:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202401051648:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.databinding.edit:1.9.0.v20231208-1346:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.14.0.v20230211-1150:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.18.0.v20230224-1122:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.edit:2.19.0.v20230828-0616:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.edit:2.21.0.v20231208-1346:default:true:default:default"/>
         <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202211151334:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
@@ -45,7 +45,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Declipse.e4.inject.javax.warning=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
     <booleanAttribute key="restart" value="true"/>

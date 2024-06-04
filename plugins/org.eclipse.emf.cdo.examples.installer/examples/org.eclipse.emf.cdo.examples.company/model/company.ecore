@@ -36,8 +36,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="OrderDetail">
     <eStructuralFeatures xsi:type="ecore:EReference" name="order" lowerBound="1" eType="#//Order"
         eOpposite="#//Order/orderDetails"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="#//Product"
-        eOpposite="#//Product/orderDetails"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="product" eType="#//Product"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="price" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EFloat"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="PurchaseOrder" eSuperTypes="#//Order">
@@ -59,8 +58,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Product">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="orderDetails" upperBound="-1"
-        eType="#//OrderDetail" eOpposite="#//OrderDetail/product"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="vat" eType="#//VAT" defaultValueLiteral="vat15"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         transient="true"/>

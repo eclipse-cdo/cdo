@@ -32,7 +32,7 @@ public abstract class PersistableContainer<E> extends ModifiableContainer<E> imp
   }
 
   @Override
-  public final Persistence<E> getPersistence()
+  public Persistence<E> getPersistence()
   {
     return persistence;
   }
@@ -41,7 +41,7 @@ public abstract class PersistableContainer<E> extends ModifiableContainer<E> imp
    * @since 3.5
    */
   @Override
-  public final void setPersistence(Persistence<E> persistence)
+  public void setPersistence(Persistence<E> persistence)
   {
     this.persistence = persistence;
   }

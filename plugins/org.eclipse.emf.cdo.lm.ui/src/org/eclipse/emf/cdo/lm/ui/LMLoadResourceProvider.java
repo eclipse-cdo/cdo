@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.ui;
 
 import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration;
+import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.dialogs.SelectModuleResourcesDialog;
 import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider;
 import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider.ImageProvider;
@@ -19,6 +20,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Shell;
@@ -44,7 +46,7 @@ public class LMLoadResourceProvider implements CDOLoadResourceProvider, ImagePro
   @Override
   public Image getButtonImage(ResourceSet resourceSet)
   {
-    return null;
+    return ExtendedImageRegistry.INSTANCE.getImage(LMEditPlugin.getPlugin().getImage("full/obj16/Module"));
   }
 
   @Override

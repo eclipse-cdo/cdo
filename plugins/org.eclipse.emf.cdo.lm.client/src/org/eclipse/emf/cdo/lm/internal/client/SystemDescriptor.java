@@ -65,10 +65,13 @@ import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
 import org.eclipse.emf.cdo.lm.util.LMMerger;
+import org.eclipse.emf.cdo.lm.util.LMMerger2;
+import org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
@@ -82,6 +85,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.io.TMPUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OSGiUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
@@ -148,9 +153,9 @@ public final class SystemDescriptor implements ISystemDescriptor
 {
   public static final SystemDescriptor NO_SYSTEM = new SystemDescriptor();
 
-  private static final String KEY_SYSTEM_DESCRIPTOR = ISystemDescriptor.class.getName();
+  public static final String KEY_SYSTEM_DESCRIPTOR = ISystemDescriptor.class.getName();
 
-  private static final String KEY_MODULE_NAME = "org.eclipse.emf.cdo.lm.client.ModuleName";
+  public static final String KEY_MODULE_NAME = "org.eclipse.emf.cdo.lm.client.ModuleName";
 
   private static final String PROP_BASELINE_INDEX = "baseline.index";
 
@@ -729,12 +734,13 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
   }
 
+  @Override
   public Map<String, CDOView> configureModuleResourceSet(CDOView view) throws ResolutionException
   {
     ModuleDefinition rootDefinition = extractModuleDefinition(view);
     if (rootDefinition != null)
     {
-      Assembly assembly = AssemblyFactory.eINSTANCE.createAssembly();
+      Assembly assembly = createEmptyAssembly();
 
       try
       {
@@ -753,13 +759,26 @@ public final class SystemDescriptor implements ISystemDescriptor
     return null;
   }
 
-  private Map<String, CDOView> configureModuleResourceSet(ResourceSet resourceSet, Assembly assembly)
+  @Override
+  public Map<String, CDOView> configureModuleResourceSet(ResourceSet resourceSet, Assembly assembly)
   {
+    CDOView primaryView = CDOUtil.getView(resourceSet);
     Map<String, CDOView> moduleViews = new HashMap<>();
+
     assembly.forEachDependency(module -> {
       CDOView view = LMResourceSetConfiguration.openView(this, module, resourceSet);
       if (view != null)
       {
+        primaryView.addListener(new LifecycleEventAdapter()
+        {
+          @Override
+          protected void onDeactivated(ILifecycle lifecycle)
+          {
+            // Close secondary view.
+            LifecycleUtil.deactivate(view);
+          }
+        });
+
         moduleViews.put(module.getName(), view);
       }
     });
@@ -770,8 +789,7 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public Assembly resolve(ModuleDefinition rootDefinition, Baseline rootBaseline, IProgressMonitor monitor) throws ResolutionException
   {
-    Assembly assembly = AssemblyFactory.eINSTANCE.createAssembly();
-    assembly.setSystemName(systemName);
+    Assembly assembly = createEmptyAssembly();
 
     String rootModuleName = rootDefinition.getName();
     Version rootModuleVersion = rootDefinition.getVersion();
@@ -1120,7 +1138,25 @@ public final class SystemDescriptor implements ISystemDescriptor
       CDOBranchPointRef sourceBranchPointRef = sourceBranchRef.getPointRef(sourceCommitTime);
       CDOBranchPoint sourceBranchPoint = sourceBranch.getPoint(sourceCommitTime);
 
-      long targetCommitTime = merger.mergeDelivery(session, sourceBranchPoint, targetBranch);
+      long targetCommitTime;
+      if (merger instanceof LMMerger2)
+      {
+        LMMerger2 merger2 = (LMMerger2)merger;
+
+        LMMergeInfos infos = new LMMergeInfos();
+        infos.setSession(session);
+        infos.setSourceBaseline(change);
+        infos.setSourceBranchPoint(sourceBranchPoint);
+        infos.setTargetBaseline(stream);
+        infos.setTargetBranch(targetBranch);
+
+        targetCommitTime = merger2.mergeDelivery(infos);
+      }
+      else
+      {
+        targetCommitTime = merger.mergeDelivery(session, sourceBranchPoint, targetBranch);
+      }
+
       if (targetCommitTime != CDOBranchPoint.INVALID_DATE)
       {
         CDOBranchPointRef targetBranchPointRef = stream.getBranch().getPointRef(targetCommitTime);
@@ -1159,6 +1195,13 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     return result[0];
+  }
+
+  public Assembly createEmptyAssembly()
+  {
+    Assembly assembly = AssemblyFactory.eINSTANCE.createAssembly();
+    assembly.setSystemName(systemName);
+    return assembly;
   }
 
   private void addDependencies(ModuleDefinition from, FixedBaseline to)

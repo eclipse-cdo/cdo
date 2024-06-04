@@ -38,6 +38,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.equinox.p2.metadata.VersionRange;
@@ -45,6 +47,7 @@ import org.eclipse.equinox.p2.metadata.VersionRange;
 import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -101,6 +104,16 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
   public ModuleDefinition extractModuleDefinition(FloatingBaseline baseline, long timeStamp);
 
   public ModuleDefinition extractModuleDefinition(CDOView view);
+
+  /**
+   * @since 1.3
+   */
+  public Map<String, CDOView> configureModuleResourceSet(CDOView view) throws ResolutionException;
+
+  /**
+   * @since 1.3
+   */
+  public Map<String, CDOView> configureModuleResourceSet(ResourceSet resourceSet, Assembly assembly);
 
   public Assembly resolve(ModuleDefinition rootDefinition, Baseline baseline, IProgressMonitor monitor) //
       throws ResolutionException;

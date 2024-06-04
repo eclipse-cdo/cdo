@@ -115,7 +115,8 @@ public abstract class AbstractResourceSelectionDialog<INPUT> extends BaseDialog<
     {
       if (object instanceof CDOResource)
       {
-        uris.add(((CDOResource)object).getURI());
+        URI uri = ((CDOResource)object).getURI();
+        uris.add(uri);
       }
     }
 
@@ -239,6 +240,15 @@ public abstract class AbstractResourceSelectionDialog<INPUT> extends BaseDialog<
 
       if (object instanceof CDOResourceLeaf)
       {
+        if (object instanceof CDOResource)
+        {
+          CDOResource resource = (CDOResource)object;
+          if (resource.isRoot())
+          {
+            return !resource.getContents().isEmpty();
+          }
+        }
+
         return false;
       }
 
@@ -262,6 +272,15 @@ public abstract class AbstractResourceSelectionDialog<INPUT> extends BaseDialog<
 
       if (object instanceof CDOResourceLeaf)
       {
+        if (object instanceof CDOResource)
+        {
+          CDOResource resource = (CDOResource)object;
+          if (resource.isRoot())
+          {
+            return super.getChildren(resource);
+          }
+        }
+
         return new Object[0];
       }
 

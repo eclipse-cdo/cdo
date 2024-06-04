@@ -552,12 +552,30 @@ public interface Model1Package extends EPackage
   int CATEGORY__PRODUCTS = 2;
 
   /**
+   * The feature id for the '<em><b>Main Product</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__MAIN_PRODUCT = 3;
+
+  /**
+   * The feature id for the '<em><b>Top Products</b></em>' reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CATEGORY__TOP_PRODUCTS = 4;
+
+  /**
    * The number of structural features of the '<em>Category</em>' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CATEGORY_FEATURE_COUNT = 3;
+  int CATEGORY_FEATURE_COUNT = 5;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model1.impl.Product1Impl <em>Product1</em>}' class.
@@ -958,6 +976,28 @@ public interface Model1Package extends EPackage
    * @generated
    */
   EReference getCategory_Products();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.tests.model1.Category#getMainProduct <em>Main Product</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Main Product</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Category#getMainProduct()
+   * @see #getCategory()
+   * @generated
+   */
+  EReference getCategory_MainProduct();
+
+  /**
+   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.tests.model1.Category#getTopProducts <em>Top Products</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference list '<em>Top Products</em>'.
+   * @see org.eclipse.emf.cdo.tests.model1.Category#getTopProducts()
+   * @see #getCategory()
+   * @generated
+   */
+  EReference getCategory_TopProducts();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model1.Product1 <em>Product1</em>}'. <!--

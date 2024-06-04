@@ -65,7 +65,6 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
       super.getPropertyDescriptors(object);
 
       addNamePropertyDescriptor(object);
-      addOrderDetailsPropertyDescriptor(object);
       addVatPropertyDescriptor(object);
       addDescriptionPropertyDescriptor(object);
       addPricePropertyDescriptor(object);
@@ -83,18 +82,6 @@ public class ProductItemProvider extends CDOItemProviderAdapter implements IEdit
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Product_name_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Product_name_feature", "_UI_Product_type"),
         CompanyPackage.Literals.PRODUCT__NAME, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Order Details feature.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addOrderDetailsPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Product_orderDetails_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Product_orderDetails_feature", "_UI_Product_type"),
-        CompanyPackage.Literals.PRODUCT__ORDER_DETAILS, true, false, true, null, null, null));
   }
 
   /**

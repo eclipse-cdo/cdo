@@ -78,7 +78,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory
    *
    * @generated
    */
-  protected Collection<Object> supportedTypes = new ArrayList<>();
+  protected Collection<Object> supportedTypes = new ArrayList<Object>();
 
   /**
    * This constructs an instance.
@@ -367,7 +367,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory
     if (isFactoryForType(type))
     {
       Object adapter = super.adapt(object, type);
-      if (!(type instanceof Class<?>) || ((Class<?>)type).isInstance(adapter))
+      if (!(type instanceof Class<?>) || (((Class<?>)type).isInstance(adapter)))
       {
         return adapter;
       }
@@ -445,7 +445,7 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory
   }
 
   /**
-   * This disposes all of the item providers created by this factory.
+   * This disposes all of the item providers created by this factory. 
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -453,41 +453,23 @@ public class CompanyItemProviderAdapterFactory extends CompanyAdapterFactory
   public void dispose()
   {
     if (companyItemProvider != null)
-    {
       companyItemProvider.dispose();
-    }
     if (supplierItemProvider != null)
-    {
       supplierItemProvider.dispose();
-    }
     if (customerItemProvider != null)
-    {
       customerItemProvider.dispose();
-    }
     if (orderItemProvider != null)
-    {
       orderItemProvider.dispose();
-    }
     if (orderDetailItemProvider != null)
-    {
       orderDetailItemProvider.dispose();
-    }
     if (purchaseOrderItemProvider != null)
-    {
       purchaseOrderItemProvider.dispose();
-    }
     if (salesOrderItemProvider != null)
-    {
       salesOrderItemProvider.dispose();
-    }
     if (categoryItemProvider != null)
-    {
       categoryItemProvider.dispose();
-    }
     if (productItemProvider != null)
-    {
       productItemProvider.dispose();
-    }
   }
 
 }

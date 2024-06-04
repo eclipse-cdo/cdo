@@ -22,10 +22,16 @@ import org.eclipse.emf.cdo.view.CDOAdapterPolicy;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewProvider;
 import org.eclipse.emf.cdo.view.CDOViewProvider.CDOViewProvider2;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.emf.internal.cdo.messages.Messages;
 
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.IContainerDelta;
+import org.eclipse.net4j.util.container.SetContainer;
+import org.eclipse.net4j.util.container.SingleDeltaContainerEvent;
+import org.eclipse.net4j.util.event.IListener;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
@@ -60,9 +66,27 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 {
   public static final String KEY_VIEW_URI = "org.eclipse.emf.cdo.viewURI";
 
-  private Set<InternalCDOView> views = new LinkedHashSet<>();
+  public static final SetContainer<CDOViewSet> REGISTRY = new SetContainer<CDOViewSet>(CDOViewSet.class, new LinkedHashSet<>())
+  {
+    @Override
+    public void setPersistence(Persistence<CDOViewSet> persistence)
+    {
+      throw new UnsupportedOperationException();
+    }
+  };
 
-  private Map<URI, InternalCDOView> mapOfViews = new HashMap<>();
+  private static int lastID;
+
+  private final int id;
+
+  @ExcludeFromDump
+  private final org.eclipse.net4j.util.event.Notifier notifier = new org.eclipse.net4j.util.event.Notifier();
+
+  private final Set<InternalCDOView> views = new LinkedHashSet<>();
+
+  private final Map<URI, InternalCDOView> mapOfViews = new HashMap<>();
+
+  private final ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<>();
 
   private CDOResourceFactory resourceFactory;
 
@@ -72,10 +96,18 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
   private CDOAdapterPolicy defaultClearAdapterPolicy;
 
-  private ThreadLocal<Boolean> ignoreNotifications = new InheritableThreadLocal<>();
-
   public CDOViewSetImpl()
   {
+    synchronized (REGISTRY)
+    {
+      id = ++lastID;
+    }
+  }
+
+  @Override
+  public int getID()
+  {
+    return id;
   }
 
   @Override
@@ -124,6 +156,45 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
 
     return null;
+  }
+
+  @Override
+  public void addListener(IListener listener)
+  {
+    notifier.addListener(listener);
+  }
+
+  @Override
+  public void removeListener(IListener listener)
+  {
+    notifier.removeListener(listener);
+  }
+
+  @Override
+  public boolean hasListeners()
+  {
+    return notifier.hasListeners();
+  }
+
+  @Override
+  public IListener[] getListeners()
+  {
+    return notifier.getListeners();
+  }
+
+  @Override
+  public boolean isEmpty()
+  {
+    synchronized (views)
+    {
+      return views.isEmpty();
+    }
+  }
+
+  @Override
+  public CDOView[] getElements()
+  {
+    return getViews();
   }
 
   @Override
@@ -177,18 +248,11 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     return view;
   }
 
-  public InternalCDOView getView(String repositoryUUID)
-  {
-    synchronized (views)
-    {
-      return mapOfViews.get(repositoryUUID);
-    }
-  }
-
   @Override
   public void add(InternalCDOView view)
   {
     URI viewURI = getViewURI(view);
+    boolean first;
 
     synchronized (views)
     {
@@ -198,9 +262,21 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
         throw new CDOViewSetException(MessageFormat.format(Messages.getString("CDOViewSetImpl.2"), viewURI, lookupView)); //$NON-NLS-1$
       }
 
+      first = views.isEmpty();
+
       views.add(view);
       mapOfViews.put(viewURI, view);
     }
+
+    if (first)
+    {
+      synchronized (REGISTRY)
+      {
+        REGISTRY.addElement(this);
+      }
+    }
+
+    notifier.fireEvent(new SingleDeltaContainerEvent<>(this, view, IContainerDelta.Kind.ADDED));
 
     if (eNotificationRequired())
     {
@@ -212,6 +288,7 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
   public void remove(InternalCDOView view)
   {
     List<Resource> resToRemove = new ArrayList<>();
+    boolean last = false;
 
     synchronized (views)
     {
@@ -220,6 +297,8 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
       {
         URI viewURI = getViewURI(view);
         mapOfViews.remove(viewURI);
+
+        last = views.isEmpty();
 
         for (Resource resource : getResourceSet().getResources())
         {
@@ -232,6 +311,17 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
 
     getResourceSet().getResources().removeAll(resToRemove);
+
+    if (last)
+    {
+      synchronized (REGISTRY)
+      {
+        REGISTRY.removeElement(this);
+      }
+    }
+
+    notifier.fireEvent(new SingleDeltaContainerEvent<>(this, view, IContainerDelta.Kind.REMOVED));
+
     if (eNotificationRequired())
     {
       eNotify(new NotificationImpl(Notification.REMOVE, view, null));
@@ -367,6 +457,12 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
   }
 
+  @Override
+  public String toString()
+  {
+    return "View Set " + id;
+  }
+
   private void deregisterResources(Collection<?> potentialResources)
   {
     List<CDOResource> allDirtyResources = new ArrayList<>();
@@ -491,5 +587,10 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
     }
 
     return PluginContainerViewProvider.INSTANCE.getViewURI(view);
+  }
+
+  public static CDOViewSetImpl[] getViewSets()
+  {
+    return null;
   }
 }

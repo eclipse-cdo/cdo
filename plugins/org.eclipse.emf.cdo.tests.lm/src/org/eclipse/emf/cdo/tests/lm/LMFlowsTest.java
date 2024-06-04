@@ -118,4 +118,33 @@ public class LMFlowsTest extends AbstractLMTest
       // SUCCESS.
     }
   }
+
+  // public void testDelivery() throws Exception
+  // {
+  // ISystemDescriptor systemDescriptor = createSystemRepository();
+  // System system = systemDescriptor.getSystem();
+  //
+  // // Add supplier Module
+  // ModuleCreationResult supplierModuleCreationResult = createModule(systemDescriptor, system, MODULE_SUPPLIER,
+  // INITIAL_STREAM, 0, 1);
+  //
+  // // Module supplierModule = supplierModuleCreationResult.module;
+  // Stream supplierStream = supplierModuleCreationResult.stream;
+  // IAssemblyDescriptor supplierStreamDescriptor = supplierModuleCreationResult.assemblyDescriptor;
+  //
+  // Change change1 = createChange(systemDescriptor, supplierStream, CHANGE_1, MODULE_SUPPLIER + " - " + CHANGE_1,
+  // transaction -> {
+  // transaction.createResource(MODULE_SUPPLIER_A);
+  // });
+  //
+  // // Deliver change1 to supplierStream.
+  // deliverChange(systemDescriptor, supplierStream, change1);
+  //
+  // // Test delivery
+  // {
+  // CDOView view = supplierStreamDescriptor.getCheckout().openView();
+  // assertThat(view.hasResource(MODULE_SUPPLIER_A), is(true));
+  // view.close();
+  // }
+  // }
 }

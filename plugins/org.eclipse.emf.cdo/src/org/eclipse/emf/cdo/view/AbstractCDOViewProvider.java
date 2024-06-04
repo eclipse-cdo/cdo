@@ -162,4 +162,12 @@ public abstract class AbstractCDOViewProvider implements CDOViewProvider2
   {
     return ReflectUtil.getSimpleClassName(this);
   }
+
+  /**
+   * @since 4.24
+   */
+  protected static String schemeRegex(String scheme)
+  {
+    return Pattern.quote(scheme) + "://.*";
+  }
 }

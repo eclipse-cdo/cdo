@@ -24,6 +24,7 @@ import org.eclipse.ui.views.properties.PropertyDescriptor;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -258,7 +259,7 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     @Override
     public boolean isCompatibleWith(IPropertyDescriptor anotherProperty)
     {
-      return anotherProperty.getCategory().equals(getCategory()) && anotherProperty.getId().equals(getId());
+      return Objects.equals(anotherProperty.getCategory(), getCategory()) && Objects.equals(anotherProperty.getId(), getId());
     }
 
     @Override

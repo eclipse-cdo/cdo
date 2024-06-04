@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EClass;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getMainProduct <em>Main Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.impl.CategoryImpl#getTopProducts <em>Top Products</em>}</li>
  * </ul>
  *
  * @generated
@@ -103,6 +105,40 @@ public class CategoryImpl extends CDOObjectImpl implements Category
   public EList<Product1> getProducts()
   {
     return (EList<Product1>)eGet(Model1Package.eINSTANCE.getCategory_Products(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Product1 getMainProduct()
+  {
+    return (Product1)eGet(Model1Package.eINSTANCE.getCategory_MainProduct(), true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setMainProduct(Product1 newMainProduct)
+  {
+    eSet(Model1Package.eINSTANCE.getCategory_MainProduct(), newMainProduct);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  @SuppressWarnings("unchecked")
+  public EList<Product1> getTopProducts()
+  {
+    return (EList<Product1>)eGet(Model1Package.eINSTANCE.getCategory_TopProducts(), true);
   }
 
 } // CategoryImpl

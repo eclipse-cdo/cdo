@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.System;
+import org.eclipse.emf.cdo.lm.impl.SystemImpl;
 import org.eclipse.emf.cdo.lm.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
@@ -179,6 +180,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   public void setSystemName(String systemName)
   {
     checkInactive();
+    SystemImpl.checkName(systemName);
     this.systemName = systemName;
   }
 
@@ -684,23 +686,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   protected boolean isValidModuleName(String moduleName)
   {
-    if (moduleName == null)
-    {
-      return false;
-    }
-
-    String trimmed = moduleName.trim();
-    if (!Objects.equals(trimmed, moduleName))
-    {
-      return false;
-    }
-
-    if (trimmed.length() == 0)
-    {
-      return false;
-    }
-
-    return true;
+    return SystemImpl.isValidName(moduleName);
   }
 
   /**

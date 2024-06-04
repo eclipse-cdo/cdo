@@ -26,7 +26,6 @@ import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
-import org.eclipse.emf.cdo.lm.assembly.AssemblyFactory;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
@@ -230,7 +229,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     ModuleType moduleType = module.getType();
     System system = module.getSystem();
 
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(system);
+    SystemDescriptor systemDescriptor = (SystemDescriptor)ISystemManager.INSTANCE.getDescriptor(system);
     ModuleDefinition moduleDefinition = systemDescriptor.extractModuleDefinition(baseline);
 
     Assembly assembly = null;
@@ -246,8 +245,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
       OM.LOG.warn(ex);
 
       // Create an empty default assembly.
-      assembly = AssemblyFactory.eINSTANCE.createAssembly();
-      assembly.setSystemName(systemDescriptor.getSystemName());
+      assembly = systemDescriptor.createEmptyAssembly();
     }
 
     CDORepository moduleRepository = systemDescriptor.getModuleRepository(moduleName);
@@ -270,7 +268,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
         saveAssembly(checkout, assembly, false);
       }
 
-      if (reasons != null)
+      if (reasons != null && reasons.length != 0)
       {
         AssemblyManager.saveErrors(checkout, reasons);
       }
@@ -566,20 +564,28 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
 
   public static List<String> saveErrors(CDOCheckout checkout, ResolutionException.Reason[] reasons) throws IOException
   {
-    setCheckoutError(checkout, RESOLUTION_ERROR);
     List<String> errors = new ArrayList<>();
 
+    setCheckoutError(checkout, RESOLUTION_ERROR);
     File file = getErrorsFile(checkout, true);
-    try (FileWriter fileWriter = new FileWriter(file); BufferedWriter writer = new BufferedWriter(fileWriter))
-    {
-      for (ResolutionException.Reason reason : reasons)
-      {
-        String error = reason.toString();
-        errors.add(error);
 
-        writer.write(error);
-        writer.write(StringUtil.NL);
+    if (reasons != null && reasons.length != 0)
+    {
+      try (FileWriter fileWriter = new FileWriter(file); BufferedWriter writer = new BufferedWriter(fileWriter))
+      {
+        for (ResolutionException.Reason reason : reasons)
+        {
+          String error = reason.toString();
+          errors.add(error);
+
+          writer.write(error);
+          writer.write(StringUtil.NL);
+        }
       }
+    }
+    else
+    {
+      deleteFile(file);
     }
 
     return errors;

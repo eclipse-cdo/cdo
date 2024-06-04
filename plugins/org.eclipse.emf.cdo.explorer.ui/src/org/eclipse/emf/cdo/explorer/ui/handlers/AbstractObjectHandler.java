@@ -113,7 +113,8 @@ public abstract class AbstractObjectHandler extends AbstractBaseHandler<EObject>
   @Override
   protected void doExecute(ExecutionEvent event, IProgressMonitor monitor) throws Exception
   {
-    CDOView originalView = CDOUtil.getView(elements.get(0));
+    EObject element0 = elements.get(0);
+    CDOView originalView = CDOUtil.getView(element0);
     boolean newTransaction = originalView.isReadOnly();
     CDOTransaction transaction = newTransaction ? checkout.openTransaction() : (CDOTransaction)originalView;
 

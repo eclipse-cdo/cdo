@@ -41,4 +41,17 @@
          class="org.eclipse.emf.cdo.lm.internal.client.properties.ModuleCheckoutProperties$Tester"/>
    </extension>
 
+   <extension point="org.eclipse.emf.cdo.viewProviders">
+      <viewProvider
+            class="org.eclipse.emf.cdo.lm.internal.client.LMViewProvider"
+            priority="500"
+            regex="cdo\.lm://.*"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.protocol_parser">
+      <parser
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
+            protocolName="cdo.lm"/>
+   </extension>
+
 </plugin>

@@ -58,7 +58,7 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
 
   public CDOCheckoutViewProvider(int priority)
   {
-    super("cdo\\.checkout://.*", priority);
+    super(schemeRegex(SCHEME), priority);
   }
 
   @Override
@@ -151,7 +151,7 @@ public class CDOCheckoutViewProvider extends AbstractCDOViewProvider
     {
     }
 
-    public CDOView getView(final CDOCheckout checkout)
+    public CDOView getView(CDOCheckout checkout)
     {
       synchronized (views)
       {

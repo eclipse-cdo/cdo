@@ -27,25 +27,26 @@ public enum VAT implements Enumerator
 {
   /**
    * The '<em><b>Vat0</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #VAT0_VALUE
    * @generated
    * @ordered
    */
   VAT0(0, "vat0", "vat0"),
-
   /**
    * The '<em><b>Vat7</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #VAT7_VALUE
    * @generated
    * @ordered
    */
   VAT7(7, "vat7", "vat7"),
-
   /**
    * The '<em><b>Vat15</b></em>' literal object.
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @see #VAT15_VALUE
    * @generated
    * @ordered
@@ -55,10 +56,6 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat0</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>Vat0</b></em>' literal object isn't clear, there really should be more of a description
-   * here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #VAT0
    * @model name="vat0"
@@ -70,10 +67,6 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat7</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>Vat7</b></em>' literal object isn't clear, there really should be more of a description
-   * here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #VAT7
    * @model name="vat7"
@@ -85,10 +78,6 @@ public enum VAT implements Enumerator
   /**
    * The '<em><b>Vat15</b></em>' literal value.
    * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of '<em><b>Vat15</b></em>' literal object isn't clear, there really should be more of a description
-   * here...
-   * </p>
    * <!-- end-user-doc -->
    * @see #VAT15
    * @model name="vat15"
@@ -175,19 +164,22 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private final int value;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private final String name;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   private final String literal;
@@ -205,7 +197,8 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -215,7 +208,8 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -225,7 +219,8 @@ public enum VAT implements Enumerator
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -236,8 +231,8 @@ public enum VAT implements Enumerator
 
   /**
    * Returns the literal value of the enumerator, which is its string representation.
-   * <!-- begin-user-doc --> <!--
-   * end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
   @Override
@@ -245,5 +240,4 @@ public enum VAT implements Enumerator
   {
     return literal;
   }
-
-} // VAT
+}

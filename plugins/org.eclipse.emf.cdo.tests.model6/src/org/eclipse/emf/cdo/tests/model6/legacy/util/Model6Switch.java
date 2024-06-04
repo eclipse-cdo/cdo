@@ -493,13 +493,13 @@ public class Model6Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Properties Map Map.Entry</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Properties Map Entry</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Properties Map Map.Entry</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Properties Map Entry</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
@@ -509,13 +509,13 @@ public class Model6Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Properties Map Map.Entry Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Properties Map Entry Value</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Properties Map Map.Entry Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Properties Map Entry Value</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */

@@ -485,6 +485,7 @@ public final class CDOUtil
     if (notifier instanceof Resource)
     {
       Resource resource = (Resource)notifier;
+
       ResourceSet resourceSet = resource.getResourceSet();
       if (resourceSet != null)
       {
@@ -493,6 +494,13 @@ public final class CDOUtil
         {
           return viewSet;
         }
+      }
+      else if (resource instanceof CDOResource)
+      {
+        CDOResource cdoResource = (CDOResource)resource;
+
+        CDOView view = cdoResource.cdoView();
+        return view == null ? null : view.getViewSet();
       }
     }
 

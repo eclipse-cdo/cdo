@@ -28,12 +28,12 @@ import java.io.Serializable;
  */
 public final class CDOBranchPointRef implements Serializable
 {
+  private static final long serialVersionUID = 1L;
+
   /**
    * @since 4.12
    */
   public static final CDOBranchPointRef MAIN_HEAD = CDOBranchRef.MAIN.getHeadRef();
-
-  private static final long serialVersionUID = 1L;
 
   public static final String URI_SEPARATOR = "#"; //$NON-NLS-1$
 

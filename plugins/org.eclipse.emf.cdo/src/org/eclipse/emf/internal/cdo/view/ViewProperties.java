@@ -57,6 +57,16 @@ public class ViewProperties extends Properties<CDOView>
       }
     });
 
+    add(new Property<CDOView>("viewURI", //$NON-NLS-1$
+        "URI", "The URI of this view.", CATEGORY_VIEW)
+    {
+      @Override
+      protected Object eval(CDOView view)
+      {
+        return view.getURI();
+      }
+    });
+
     add(new Property<CDOView>("branchName") //$NON-NLS-1$
     {
       @Override

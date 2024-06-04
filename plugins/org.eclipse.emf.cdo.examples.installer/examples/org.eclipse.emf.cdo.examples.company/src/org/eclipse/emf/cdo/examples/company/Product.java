@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.examples.company;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -21,7 +20,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getName <em>Name</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getDescription <em>Description</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.examples.company.Product#getPrice <em>Price</em>}</li>
@@ -58,24 +56,6 @@ public interface Product extends EObject
    * @generated
    */
   void setName(String value);
-
-  /**
-   * Returns the value of the '<em><b>Order Details</b></em>' reference list.
-   * The list contents are of type {@link org.eclipse.emf.cdo.examples.company.OrderDetail}.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct <em>Product</em>}'.
-   * <!-- begin-user-doc -->
-   * <p>
-   * If the meaning of the '<em>Order Details</em>' reference list isn't clear, there really should be more of a
-   * description here...
-   * </p>
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Order Details</em>' reference list.
-   * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getProduct_OrderDetails()
-   * @see org.eclipse.emf.cdo.examples.company.OrderDetail#getProduct
-   * @model opposite="product"
-   * @generated
-   */
-  EList<OrderDetail> getOrderDetails();
 
   /**
    * Returns the value of the '<em><b>Vat</b></em>' attribute.

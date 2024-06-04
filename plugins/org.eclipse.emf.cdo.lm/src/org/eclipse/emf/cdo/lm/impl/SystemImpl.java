@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Module;
+import org.eclipse.emf.cdo.util.CDOURIUtil;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -23,6 +24,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 /**
@@ -324,4 +326,52 @@ public class SystemImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
     }
   }
 
+  /**
+   * @since 1.2
+   */
+  public static void checkName(String name) throws IllegalArgumentException
+  {
+    if (name == null)
+    {
+      throw new IllegalArgumentException("Name is null");
+    }
+
+    String trimmed = name.trim();
+    if (!Objects.equals(trimmed, name))
+    {
+      throw new IllegalArgumentException("Name contains leading or trailing whitespace: " + name);
+    }
+
+    if (trimmed.length() == 0)
+    {
+      throw new IllegalArgumentException("Name is empty");
+    }
+
+    if (name.indexOf(CDOURIUtil.SEGMENT_SEPARATOR_CHAR) != -1)
+    {
+      throw new IllegalArgumentException("Name contains a slash character: " + name);
+    }
+
+    if (name.indexOf(SEPARATOR) != -1)
+    {
+      throw new IllegalArgumentException("Name contains a colon character: " + name);
+    }
+  }
+
+  /**
+   * @since 1.2
+   */
+  public static boolean isValidName(String name)
+  {
+    try
+    {
+      checkName(name);
+    }
+    catch (IllegalArgumentException ex)
+    {
+      return false;
+    }
+
+    return true;
+  }
 } // SystemImpl

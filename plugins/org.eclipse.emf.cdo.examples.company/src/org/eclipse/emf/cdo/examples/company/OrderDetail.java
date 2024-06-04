@@ -59,7 +59,6 @@ public interface OrderDetail extends EObject
 
   /**
    * Returns the value of the '<em><b>Product</b></em>' reference.
-   * It is bidirectional and its opposite is '{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'.
    * <!-- begin-user-doc
    * -->
    * <p>
@@ -70,8 +69,7 @@ public interface OrderDetail extends EObject
    * @return the value of the '<em>Product</em>' reference.
    * @see #setProduct(Product)
    * @see org.eclipse.emf.cdo.examples.company.CompanyPackage#getOrderDetail_Product()
-   * @see org.eclipse.emf.cdo.examples.company.Product#getOrderDetails
-   * @model opposite="orderDetails"
+   * @model
    * @generated
    */
   Product getProduct();

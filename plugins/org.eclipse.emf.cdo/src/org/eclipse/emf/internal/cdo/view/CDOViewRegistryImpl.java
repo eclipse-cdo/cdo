@@ -105,5 +105,19 @@ public class CDOViewRegistryImpl extends AbstractRegistry<CDOView, CDOViewRegist
     {
       return view;
     }
+
+    @Override
+    public String toString()
+    {
+      StringBuilder builder = new StringBuilder();
+      builder.append("ViewRegistration[id=");
+      builder.append(id);
+      builder.append(", session=");
+      builder.append(view.getSession());
+      builder.append(", view=");
+      builder.append(view);
+      builder.append("]");
+      return builder.toString();
+    }
   }
 }

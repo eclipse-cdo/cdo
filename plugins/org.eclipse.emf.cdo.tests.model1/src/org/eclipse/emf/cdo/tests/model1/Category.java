@@ -23,6 +23,8 @@ import org.eclipse.emf.ecore.EObject;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getMainProduct <em>Main Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.Category#getTopProducts <em>Top Products</em>}</li>
  * </ul>
  *
  * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory()
@@ -88,5 +90,39 @@ public interface Category extends EObject
    * @generated
    */
   EList<Product1> getProducts();
+
+  /**
+   * Returns the value of the '<em><b>Main Product</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Main Product</em>' reference.
+   * @see #setMainProduct(Product1)
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_MainProduct()
+   * @model
+   * @generated
+   */
+  Product1 getMainProduct();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.tests.model1.Category#getMainProduct <em>Main Product</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Main Product</em>' reference.
+   * @see #getMainProduct()
+   * @generated
+   */
+  void setMainProduct(Product1 value);
+
+  /**
+   * Returns the value of the '<em><b>Top Products</b></em>' reference list.
+   * The list contents are of type {@link org.eclipse.emf.cdo.tests.model1.Product1}.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Top Products</em>' reference list.
+   * @see org.eclipse.emf.cdo.tests.model1.Model1Package#getCategory_TopProducts()
+   * @model
+   * @generated
+   */
+  EList<Product1> getTopProducts();
 
 } // Category

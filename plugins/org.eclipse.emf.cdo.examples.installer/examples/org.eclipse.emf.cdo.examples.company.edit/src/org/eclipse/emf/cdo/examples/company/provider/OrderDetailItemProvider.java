@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.examples.company.provider;
 import org.eclipse.emf.cdo.edit.CDOItemProviderAdapter;
 import org.eclipse.emf.cdo.examples.company.CompanyPackage;
 import org.eclipse.emf.cdo.examples.company.OrderDetail;
+import org.eclipse.emf.cdo.examples.company.Product;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -129,20 +132,32 @@ public class OrderDetailItemProvider extends CDOItemProviderAdapter implements I
   /**
    * This returns the label text for the adapted class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public String getText(Object object)
   {
     OrderDetail orderDetail = (OrderDetail)object;
-    return getString("_UI_OrderDetail_type") + " " + orderDetail.getPrice();
+    String label = getString("_UI_OrderDetail_type");
+
+    Product product = orderDetail.getProduct();
+    if (product != null)
+    {
+      String name = product.getName();
+      if (!StringUtil.isEmpty(name))
+      {
+        label += " " + name;
+      }
+    }
+
+    return label + " " + orderDetail.getPrice();
   }
 
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public void notifyChanged(Notification notification)
@@ -151,6 +166,7 @@ public class OrderDetailItemProvider extends CDOItemProviderAdapter implements I
 
     switch (notification.getFeatureID(OrderDetail.class))
     {
+    case CompanyPackage.ORDER_DETAIL__PRODUCT:
     case CompanyPackage.ORDER_DETAIL__PRICE:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

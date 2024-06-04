@@ -173,9 +173,7 @@ public class CompanyFactoryImpl extends EFactoryImpl implements CompanyFactory
   {
     VAT result = VAT.get(initialValue);
     if (result == null)
-    {
       throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
-    }
     return result;
   }
 

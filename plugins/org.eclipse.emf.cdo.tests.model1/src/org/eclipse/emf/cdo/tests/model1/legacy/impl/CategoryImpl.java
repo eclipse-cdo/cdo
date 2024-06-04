@@ -22,6 +22,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
+import org.eclipse.emf.ecore.util.EObjectResolvingEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import java.util.Collection;
@@ -35,6 +36,8 @@ import java.util.Collection;
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getName <em>Name</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getCategories <em>Categories</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getProducts <em>Products</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getMainProduct <em>Main Product</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.tests.model1.legacy.impl.CategoryImpl#getTopProducts <em>Top Products</em>}</li>
  * </ul>
  *
  * @generated
@@ -81,9 +84,29 @@ public class CategoryImpl extends EObjectImpl implements Category
   protected EList<Product1> products;
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * The cached value of the '{@link #getMainProduct() <em>Main Product</em>}' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getMainProduct()
    * @generated
+   * @ordered
    */
+  protected Product1 mainProduct;
+
+  /**
+  	 * The cached value of the '{@link #getTopProducts() <em>Top Products</em>}' reference list.
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @see #getTopProducts()
+  	 * @generated
+  	 * @ordered
+  	 */
+  protected EList<Product1> topProducts;
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   protected CategoryImpl()
   {
     super();
@@ -153,9 +176,73 @@ public class CategoryImpl extends EObjectImpl implements Category
   }
 
   /**
-   * <!-- begin-user-doc --> <!-- end-user-doc -->
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated
    */
+  @Override
+  public Product1 getMainProduct()
+  {
+    if (mainProduct != null && mainProduct.eIsProxy())
+    {
+      InternalEObject oldMainProduct = (InternalEObject)mainProduct;
+      mainProduct = (Product1)eResolveProxy(oldMainProduct);
+      if (mainProduct != oldMainProduct)
+      {
+        if (eNotificationRequired())
+        {
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, Model1Package.CATEGORY__MAIN_PRODUCT, oldMainProduct, mainProduct));
+        }
+      }
+    }
+    return mainProduct;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  public Product1 basicGetMainProduct()
+  {
+    return mainProduct;
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public void setMainProduct(Product1 newMainProduct)
+  {
+    Product1 oldMainProduct = mainProduct;
+    mainProduct = newMainProduct;
+    if (eNotificationRequired())
+    {
+      eNotify(new ENotificationImpl(this, Notification.SET, Model1Package.CATEGORY__MAIN_PRODUCT, oldMainProduct, mainProduct));
+    }
+  }
+
+  /**
+  	 * <!-- begin-user-doc -->
+  	 * <!-- end-user-doc -->
+  	 * @generated
+  	 */
+  @Override
+  public EList<Product1> getTopProducts()
+  {
+    if (topProducts == null)
+    {
+      topProducts = new EObjectResolvingEList<>(Product1.class, this, Model1Package.CATEGORY__TOP_PRODUCTS);
+    }
+    return topProducts;
+  }
+
+  /**
+  	 * <!-- begin-user-doc --> <!-- end-user-doc -->
+  	 * @generated
+  	 */
   @Override
   public NotificationChain eInverseRemove(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
@@ -184,6 +271,14 @@ public class CategoryImpl extends EObjectImpl implements Category
       return getCategories();
     case Model1Package.CATEGORY__PRODUCTS:
       return getProducts();
+    case Model1Package.CATEGORY__MAIN_PRODUCT:
+      if (resolve)
+      {
+        return getMainProduct();
+      }
+      return basicGetMainProduct();
+    case Model1Package.CATEGORY__TOP_PRODUCTS:
+      return getTopProducts();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -209,6 +304,13 @@ public class CategoryImpl extends EObjectImpl implements Category
       getProducts().clear();
       getProducts().addAll((Collection<? extends Product1>)newValue);
       return;
+    case Model1Package.CATEGORY__MAIN_PRODUCT:
+      setMainProduct((Product1)newValue);
+      return;
+    case Model1Package.CATEGORY__TOP_PRODUCTS:
+      getTopProducts().clear();
+      getTopProducts().addAll((Collection<? extends Product1>)newValue);
+      return;
     }
     super.eSet(featureID, newValue);
   }
@@ -231,6 +333,12 @@ public class CategoryImpl extends EObjectImpl implements Category
     case Model1Package.CATEGORY__PRODUCTS:
       getProducts().clear();
       return;
+    case Model1Package.CATEGORY__MAIN_PRODUCT:
+      setMainProduct((Product1)null);
+      return;
+    case Model1Package.CATEGORY__TOP_PRODUCTS:
+      getTopProducts().clear();
+      return;
     }
     super.eUnset(featureID);
   }
@@ -250,6 +358,10 @@ public class CategoryImpl extends EObjectImpl implements Category
       return categories != null && !categories.isEmpty();
     case Model1Package.CATEGORY__PRODUCTS:
       return products != null && !products.isEmpty();
+    case Model1Package.CATEGORY__MAIN_PRODUCT:
+      return mainProduct != null;
+    case Model1Package.CATEGORY__TOP_PRODUCTS:
+      return topProducts != null && !topProducts.isEmpty();
     }
     return super.eIsSet(featureID);
   }

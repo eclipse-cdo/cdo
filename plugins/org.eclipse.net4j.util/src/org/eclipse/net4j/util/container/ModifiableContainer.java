@@ -69,9 +69,19 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
     IContainerEvent<E> event = null;
     synchronized (this)
     {
+      boolean first = backingStoreIsEmpty();
+
       if (backingStoreAdd(element))
       {
-        elementAdded(element);
+        if (first)
+        {
+          firstElementAdded(element);
+        }
+        else
+        {
+          elementAdded(element);
+        }
+
         event = newContainerEvent(element, IContainerDelta.Kind.ADDED);
         notifyAll();
       }
@@ -102,11 +112,21 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
     ContainerEvent<E> event = null;
     synchronized (this)
     {
+      boolean first = backingStoreIsEmpty();
+
       for (E element : validElements)
       {
         if (backingStoreAdd(element))
         {
-          elementAdded(element);
+          if (first)
+          {
+            firstElementAdded(element);
+            first = false;
+          }
+          else
+          {
+            elementAdded(element);
+          }
 
           if (event == null)
           {
@@ -141,7 +161,15 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
     {
       if (backingStoreRemove(element))
       {
-        elementRemoved(element);
+        if (backingStoreIsEmpty())
+        {
+          lastElementRemoved(element);
+        }
+        else
+        {
+          elementAdded(element);
+        }
+
         event = newContainerEvent(element, IContainerDelta.Kind.REMOVED);
         notifyAll();
       }
@@ -167,7 +195,14 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
       {
         if (backingStoreRemove(element))
         {
-          elementRemoved(element);
+          if (backingStoreIsEmpty())
+          {
+            lastElementRemoved(element);
+          }
+          else
+          {
+            elementAdded(element);
+          }
 
           if (event == null)
           {
@@ -252,6 +287,15 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
 
   /**
    * Called inside synchronized(this).
+   * @since 3.24
+   */
+  protected void firstElementAdded(E element)
+  {
+    elementAdded(element);
+  }
+
+  /**
+   * Called inside synchronized(this).
    */
   protected void elementAdded(E element)
   {
@@ -262,6 +306,15 @@ public abstract class ModifiableContainer<E> extends Container<E> implements ICo
    */
   protected void elementRemoved(E element)
   {
+  }
+
+  /**
+   * Called inside synchronized(this).
+   * @since 3.24
+   */
+  protected void lastElementRemoved(E element)
+  {
+    elementRemoved(element);
   }
 
   protected abstract boolean backingStoreIsEmpty();

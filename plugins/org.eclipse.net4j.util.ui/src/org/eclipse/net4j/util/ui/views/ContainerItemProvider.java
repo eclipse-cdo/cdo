@@ -714,6 +714,7 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     {
       final List<Node> children = new ArrayList<>();
       final IContainer<Object> container = getContainer();
+      container.addListener(containerListener);
 
       if (isSlow(container))
       {
@@ -758,7 +759,6 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
         fillChildren(children, container);
       }
 
-      container.addListener(containerListener);
       return children;
     }
 

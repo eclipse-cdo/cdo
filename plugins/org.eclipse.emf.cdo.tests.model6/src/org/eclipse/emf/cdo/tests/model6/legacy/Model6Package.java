@@ -380,7 +380,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int PROPERTIES_MAP_FEATURE_COUNT = 3;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryImpl <em>Properties Map Map.Entry</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryImpl <em>Properties Map Entry</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryImpl
@@ -408,7 +408,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int PROPERTIES_MAP_ENTRY__VALUE = 1;
 
   /**
-   * The number of structural features of the '<em>Properties Map Map.Entry</em>' class.
+   * The number of structural features of the '<em>Properties Map Entry</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
@@ -417,7 +417,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int PROPERTIES_MAP_ENTRY_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryValueImpl <em>Properties Map Map.Entry Value</em>}' class.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryValueImpl <em>Properties Map Entry Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model6.legacy.impl.PropertiesMapEntryValueImpl
@@ -436,7 +436,7 @@ public interface Model6Package extends EPackage, org.eclipse.emf.cdo.tests.model
   int PROPERTIES_MAP_ENTRY_VALUE__LABEL = 0;
 
   /**
-   * The number of structural features of the '<em>Properties Map Map.Entry Value</em>' class.
+   * The number of structural features of the '<em>Properties Map Entry Value</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated

@@ -14,22 +14,17 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry.ResourceSetConfiguration;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
-import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
-import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
-import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -194,38 +189,8 @@ public final class LMResourceSetConfiguration implements IDeactivateable
 
   public static CDOView openView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
   {
-    String moduleName = module.getName();
-
-    try
-    {
-      CDORepository moduleRepository = systemDescriptor.getModuleRepository(moduleName);
-      if (moduleRepository != null)
-      {
-        CDOSession session = moduleRepository.acquireSession();
-
-        CDOBranchPointRef targetRef = module.getBranchPoint();
-        CDOBranchPoint target = targetRef.resolve(session.getBranchManager());
-
-        InternalCDOView view = (InternalCDOView)session.openView(target, resourceSet);
-        view.addListener(new LifecycleEventAdapter()
-        {
-          @Override
-          protected void onDeactivated(ILifecycle lifecycle)
-          {
-            moduleRepository.releaseSession();
-          }
-        });
-
-        return view;
-      }
-    }
-    catch (RemoteException ex)
-    {
-      OM.LOG.error("Failed to load referenced repository " + moduleName, ex);
-      return null;
-    }
-
-    return null;
+    URI viewURI = LMViewProvider.createViewURI(module);
+    return CDOViewProviderRegistry.INSTANCE.provideView(viewURI, resourceSet);
   }
 
   /**

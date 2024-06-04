@@ -52,8 +52,6 @@ public class CDOURIHandler implements URIHandler
 
   private CDOViewProvider2 viewProvider2;
 
-  private URI viewURI;
-
   public CDOURIHandler(InternalCDOView view)
   {
     this.view = view;
@@ -73,6 +71,7 @@ public class CDOURIHandler implements URIHandler
       return Objects.equals(repositoryUUID, view.getSession().getRepositoryInfo().getUUID());
     }
 
+    URI viewURI = view.getURI();
     if (viewURI != null)
     {
       URI uri2 = viewProvider2.getViewURI(uri);
@@ -145,7 +144,6 @@ public class CDOURIHandler implements URIHandler
   void setViewProvider2(CDOViewProvider2 viewProvider2)
   {
     this.viewProvider2 = viewProvider2;
-    viewURI = viewProvider2.getViewURI(view);
   }
 
   private String getPath(URI uri)

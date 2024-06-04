@@ -62,7 +62,7 @@
          id="org.eclipse.emf.cdo.view.properties"
          type="org.eclipse.emf.cdo.view.CDOView"
          namespace="org.eclipse.emf.cdo.view"
-         properties="open,viewID,branchName,branch,timeStamp,lastUpdateTime,rootResourcePermission,readOnly,dirty,durable,sessionID,userID,userAuthenticated,historical,autoReleaseLocks"
+         properties="open,viewID,viewURI,branchName,branch,timeStamp,lastUpdateTime,rootResourcePermission,readOnly,dirty,durable,sessionID,userID,userAuthenticated,historical,autoReleaseLocks"
          class="org.eclipse.emf.internal.cdo.view.ViewProperties$Tester"/>
       <propertyTester
          id="org.eclipse.emf.cdo.object.properties"

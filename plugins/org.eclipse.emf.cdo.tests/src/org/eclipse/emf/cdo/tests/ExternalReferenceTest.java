@@ -23,7 +23,9 @@ import org.eclipse.emf.cdo.tests.config.IModelConfig;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.Requires;
 import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.tests.model1.Supplier;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
 import org.eclipse.emf.cdo.tests.model4.GenRefSingleNonContained;
@@ -66,6 +68,32 @@ import java.util.Map;
 public class ExternalReferenceTest extends AbstractCDOTest
 {
   private static final String REPOSITORY_B_NAME = "repo2";
+
+  public void testExternalReference() throws Exception
+  {
+    getRepository(REPOSITORY_B_NAME);
+
+    CDOSession sessionA = openSession();
+    CDOSession sessionB = openSession(REPOSITORY_B_NAME);
+
+    ResourceSet resourceSet = new ResourceSetImpl();
+    CDOTransaction transactionA = sessionA.openTransaction(resourceSet);
+    CDOTransaction transactionB = sessionB.openTransaction(resourceSet);
+
+    CDOResource resA = transactionA.createResource(getResourcePath("/resA"));
+    CDOResource resB = transactionB.createResource(getResourcePath("/resB"));
+
+    Customer customerA = getModel1Factory().createCustomer();
+    resA.getContents().add(customerA);
+    transactionA.commit();
+
+    SalesOrder salesOrderB = getModel1Factory().createSalesOrder();
+    salesOrderB.setCustomer(customerA);
+    resB.getContents().add(salesOrderB);
+    transactionB.commit();
+
+    System.out.println();
+  }
 
   public void testExternalWithDynamicEObject() throws Exception
   {

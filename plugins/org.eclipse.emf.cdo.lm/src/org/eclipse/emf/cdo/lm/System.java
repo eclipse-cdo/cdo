@@ -38,6 +38,13 @@ import java.util.function.Consumer;
  */
 public interface System extends ModelElement
 {
+  public static final String RESOURCE_PATH = "/system";
+
+  /**
+   * @since 1.2
+   */
+  public static final String SEPARATOR = ":";
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
@@ -58,8 +65,6 @@ public interface System extends ModelElement
    * @generated
    */
   void setName(String value);
-
-  public static final String RESOURCE_PATH = "/system";
 
   /**
    * Returns the value of the '<em><b>Process</b></em>' containment reference.

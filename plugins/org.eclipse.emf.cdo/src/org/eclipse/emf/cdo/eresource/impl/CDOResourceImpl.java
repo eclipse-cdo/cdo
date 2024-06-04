@@ -1687,6 +1687,7 @@ public class CDOResourceImpl extends CDOResourceLeafImpl implements InternalCDOR
       InternalCDOViewSet viewSet = (InternalCDOViewSet)CDOUtil.getViewSet(oldResourceSet);
       if (viewSet == null)
       {
+        setResourceSet(resourceSet);
         return notifications;
       }
 

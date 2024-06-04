@@ -519,21 +519,12 @@ public interface CompanyPackage extends EPackage
   int PRODUCT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Order Details</b></em>' reference list. <!-- begin-user-doc --> <!-- end-user-doc
-   * -->
-   *
-   * @generated
-   * @ordered
-   */
-  int PRODUCT__ORDER_DETAILS = 1;
-
-  /**
    * The feature id for the '<em><b>Vat</b></em>' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int PRODUCT__VAT = 2;
+  int PRODUCT__VAT = 1;
 
   /**
    * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -541,7 +532,7 @@ public interface CompanyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRODUCT__DESCRIPTION = 3;
+  int PRODUCT__DESCRIPTION = 2;
 
   /**
    * The feature id for the '<em><b>Price</b></em>' attribute.
@@ -551,7 +542,7 @@ public interface CompanyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRODUCT__PRICE = 4;
+  int PRODUCT__PRICE = 3;
 
   /**
    * The number of structural features of the '<em>Product</em>' class.
@@ -559,7 +550,7 @@ public interface CompanyPackage extends EPackage
    * @generated
    * @ordered
    */
-  int PRODUCT_FEATURE_COUNT = 5;
+  int PRODUCT_FEATURE_COUNT = 4;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.examples.company.VAT <em>VAT</em>}' enum. <!--
@@ -790,17 +781,6 @@ public interface CompanyPackage extends EPackage
    * @generated
    */
   EAttribute getProduct_Name();
-
-  /**
-   * Returns the meta object for the reference list '{@link org.eclipse.emf.cdo.examples.company.Product#getOrderDetails <em>Order Details</em>}'.
-   * <!-- begin-user-doc
-   * --> <!-- end-user-doc -->
-   * @return the meta object for the reference list '<em>Order Details</em>'.
-   * @see org.eclipse.emf.cdo.examples.company.Product#getOrderDetails()
-   * @see #getProduct()
-   * @generated
-   */
-  EReference getProduct_OrderDetails();
 
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.examples.company.Product#getVat <em>Vat</em>}'.
@@ -1172,14 +1152,6 @@ public interface CompanyPackage extends EPackage
      * @generated
      */
     EAttribute PRODUCT__NAME = eINSTANCE.getProduct_Name();
-
-    /**
-     * The meta object literal for the '<em><b>Order Details</b></em>' reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PRODUCT__ORDER_DETAILS = eINSTANCE.getProduct_OrderDetails();
 
     /**
      * The meta object literal for the '<em><b>Vat</b></em>' attribute feature.

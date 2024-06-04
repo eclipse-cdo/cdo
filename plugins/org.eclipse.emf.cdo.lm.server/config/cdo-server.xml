@@ -20,6 +20,7 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
+    <!-- 
     <protector>
       <userAuthenticator type="ldap">
         <environment id="base">
@@ -66,6 +67,7 @@
         <matcher ref="AMS_USERS"/>
       </revisionAuthorizer>
     </protector>
+    -->
 
     <!--  
     <securityManager type="default" description="/security:annotation:home(/home)"/>

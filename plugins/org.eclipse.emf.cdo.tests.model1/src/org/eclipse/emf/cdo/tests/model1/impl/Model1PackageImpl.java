@@ -433,6 +433,28 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCategory_MainProduct()
+  {
+    return (EReference)categoryEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCategory_TopProducts()
+  {
+    return (EReference)categoryEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -717,6 +739,8 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
     createEAttribute(categoryEClass, CATEGORY__NAME);
     createEReference(categoryEClass, CATEGORY__CATEGORIES);
     createEReference(categoryEClass, CATEGORY__PRODUCTS);
+    createEReference(categoryEClass, CATEGORY__MAIN_PRODUCT);
+    createEReference(categoryEClass, CATEGORY__TOP_PRODUCTS);
 
     product1EClass = createEClass(PRODUCT1);
     createEAttribute(product1EClass, PRODUCT1__NAME);
@@ -843,6 +867,10 @@ public class Model1PackageImpl extends EPackageImpl implements Model1Package
         IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getCategory_Products(), getProduct1(), null, "products", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCategory_MainProduct(), getProduct1(), null, "mainProduct", null, 0, 1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCategory_TopProducts(), getProduct1(), null, "topProducts", null, 0, -1, Category.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(product1EClass, Product1.class, "Product1", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getProduct1_Name(), ecorePackage.getEString(), "name", null, 0, 1, Product1.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,

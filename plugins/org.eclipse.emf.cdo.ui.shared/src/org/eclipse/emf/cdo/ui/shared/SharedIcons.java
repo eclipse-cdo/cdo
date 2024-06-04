@@ -102,6 +102,11 @@ public class SharedIcons
 
   public static final String OBJ_SESSION_OFFLINE = OBJ + "cdo_session_offline" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @since 4.9
+   */
+  public static final String OBJ_VIEW_SET = OBJ + "cdo_view_set" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   public static final String OBJ_EDITOR = OBJ + "cdo_editor" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
   public static final String OBJ_EDITOR_READWRITE = OBJ + "cdo_editor_readwrite" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

@@ -67,6 +67,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOObjectHandler;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewLocksChangedEvent;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -423,6 +424,11 @@ public class CDOItemProvider extends ContainerItemProvider<IContainer<Object>>
       case OFFLINE:
         return SharedIcons.getImage(SharedIcons.OBJ_SESSION_OFFLINE);
       }
+    }
+
+    if (obj instanceof CDOViewSet)
+    {
+      return SharedIcons.getImage(SharedIcons.OBJ_VIEW_SET);
     }
 
     if (obj instanceof CDOView)

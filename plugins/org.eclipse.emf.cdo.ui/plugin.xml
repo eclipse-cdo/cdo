@@ -98,6 +98,12 @@
             name="%view.name.0"/>
       <view
             category="org.eclipse.emf.cdo"
+            class="org.eclipse.emf.cdo.internal.ui.views.CDOViewSetsView"
+            icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/cdo_view_sets.gif"
+            id="org.eclipse.emf.cdo.ui.CDOViewSetsView"
+            name="%view.name.5"/>
+      <view
+            category="org.eclipse.emf.cdo"
             class="org.eclipse.emf.cdo.internal.ui.views.CDOWatchListView"
             icon="platform:/plugin/org.eclipse.emf.cdo.ui.shared/icons/full/view16/watch_list.gif"
             id="org.eclipse.emf.cdo.ui.CDOWatchListView"

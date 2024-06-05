@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.tests.lm;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.System;
@@ -33,13 +32,13 @@ public class LMFlowsTest extends AbstractLMTest
 {
   private static final String INITIAL_STREAM = "InitialStream";
 
-  private static final String MODULE_CLIENT = "ModuleClient";
+  private static final String CLIENT_MODULE = "ClientModule";
 
-  private static final String MODULE_SUPPLIER = "ModuleSupplier";
+  private static final String SUPPLIER_MODULE = "SupplierModule";
 
-  private static final String MODULE_SUPPLIER_A = "ModuleSupplierA";
+  private static final String SUPPLIER_RESOURCE_A = "SupplierResourceA";
 
-  private static final String MODULE_SUPPLIER_B = "ModuleSupplierB";
+  private static final String SUPPLIER_RESOURCE_B = "SupplierResourceB";
 
   private static final String CHANGE_1 = "Change1";
 
@@ -48,61 +47,57 @@ public class LMFlowsTest extends AbstractLMTest
     ISystemDescriptor systemDescriptor = createSystemRepository();
     System system = systemDescriptor.getSystem();
 
-    // Add supplier Module
-    ModuleCreationResult supplierModuleCreationResult = createModule(systemDescriptor, system, MODULE_SUPPLIER, INITIAL_STREAM, 0, 1);
-
-    // Module supplierModule = supplierModuleCreationResult.module;
-    Stream supplierStream = supplierModuleCreationResult.stream;
+    // Add SupplierModule.
+    ModuleCreationResult supplierModuleCreationResult = createModule(systemDescriptor, system, SUPPLIER_MODULE, INITIAL_STREAM, 0, 1);
     IAssemblyDescriptor supplierStreamDescriptor = supplierModuleCreationResult.assemblyDescriptor;
+    Stream supplierStream = supplierModuleCreationResult.stream;
 
-    Change change1 = createChange(systemDescriptor, supplierStream, CHANGE_1, MODULE_SUPPLIER + " - " + CHANGE_1, transaction -> {
-      transaction.createResource(MODULE_SUPPLIER_A);
+    // Create change1 in SupplierModule.
+    Change change1 = createChange(systemDescriptor, supplierStream, CHANGE_1, SUPPLIER_MODULE + " - " + CHANGE_1, transaction -> {
+      transaction.createResource(SUPPLIER_RESOURCE_A);
     });
 
     // Deliver change1 to supplierStream.
     deliverChange(systemDescriptor, supplierStream, change1);
 
-    // Test delivery
+    // Test delivery.
     {
       CDOView view = supplierStreamDescriptor.getCheckout().openView();
-      assertThat(view.hasResource(MODULE_SUPPLIER_A), is(true));
+      assertThat(view.hasResource(SUPPLIER_RESOURCE_A), is(true));
       view.close();
     }
 
-    // Add ModuleClient
-    ModuleCreationResult clientModuleCreationResult = createModule(systemDescriptor, system, MODULE_CLIENT, INITIAL_STREAM, 0, 1);
-    // Module clientModule = clientModuleCreationResult.module;
-    // Stream clientStream = clientModuleCreationResult.stream;
-
+    // Add ClientModule.
+    ModuleCreationResult clientModuleCreationResult = createModule(systemDescriptor, system, CLIENT_MODULE, INITIAL_STREAM, 0, 1);
     IAssemblyDescriptor clientStreamDescriptor = clientModuleCreationResult.assemblyDescriptor;
 
-    // Create dependency from clientModule to supplierModule
-    createDependencyAndUpdate(clientStreamDescriptor, MODULE_SUPPLIER);
+    // Add dependency on SupplierModule to ClientModule.
+    createDependencyAndUpdate(clientStreamDescriptor, SUPPLIER_MODULE);
 
-    // Modify ModuleClient
+    // Modify stream of SupplierModule.
     editStream(supplierStreamDescriptor, transaction -> {
-      transaction.createResource(MODULE_SUPPLIER_B);
+      transaction.createResource(SUPPLIER_RESOURCE_B);
     });
 
-    // Publish a Tag for ModuleSupplier and update ModuleClient.
-    URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + "://" + MODULE_SUPPLIER + "/" + MODULE_SUPPLIER_B);
+    // Publish a Tag for SupplierModule and update ClientModule.
+    URI uri = createModuleResourceURI(SUPPLIER_MODULE, SUPPLIER_RESOURCE_B);
     publishTagUpdateClientAndCheckUri(systemDescriptor, system, supplierStream, clientStreamDescriptor, uri);
 
-    // Remove dependency on ModuleSupplier from ModuleClient and update ModuleClient.
+    // Remove dependency on SupplierModule from ClientModule and update ClientModule.
     removeDependencies(clientStreamDescriptor);
 
-    // Add dependency on ModuleSupplier back to ModuleClient and update ModuleClient.
-    createDependencyAndUpdate(clientStreamDescriptor, MODULE_SUPPLIER);
+    // Add dependency on SupplierModule back to ClientModule and update ClientModule.
+    createDependencyAndUpdate(clientStreamDescriptor, SUPPLIER_MODULE);
 
     // Create a new change that can be deleted because it was never delivered.
-    Change change2 = createChange(systemDescriptor, supplierStream, "Change2", MODULE_SUPPLIER + " - Change2", transaction -> {
+    Change change2 = createChange(systemDescriptor, supplierStream, "Change2", SUPPLIER_MODULE + " - Change2", transaction -> {
       transaction.createResource("To Be Deleted");
     });
 
     systemDescriptor.deleteChange(change2, new NullProgressMonitor());
 
     // Create another new change that can not be deleted because it has been delivered already.
-    Change change3 = createChange(systemDescriptor, supplierStream, "Change3", MODULE_SUPPLIER + " - Change3", transaction -> {
+    Change change3 = createChange(systemDescriptor, supplierStream, "Change3", SUPPLIER_MODULE + " - Change3", transaction -> {
       transaction.createResource("Not Deleteable");
     });
 

@@ -15,7 +15,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.lm.Baseline;
@@ -50,13 +49,13 @@ public class LMVersionEvolutionTest extends AbstractLMTest
 {
   private static final String INITIAL_STREAM = "InitialStream";
 
-  private static final String MODULE_CLIENT = "ModuleClient";
+  private static final String CLIENT_MODULE = "ClientModule";
 
-  private static final String MODULE_CLIENT_A = "ModuleClientA";
+  private static final String CLIENT_RESOURCE = "ClientResource";
 
-  private static final String MODULE_SUPPLIER = "ModuleSupplier";
+  private static final String SUPPLIER_MODULE = "SupplierModule";
 
-  private static final String MODULE_SUPPLIER_A = "ModuleSupplierA";
+  private static final String SUPPLIER_RESOURCE = "SupplierResource";
 
   private static final String SUPPLIER_DROP_TYPE = "SupplierDropType";
 
@@ -67,17 +66,14 @@ public class LMVersionEvolutionTest extends AbstractLMTest
     ISystemDescriptor systemDescriptor = createSystemRepository();
     System system = systemDescriptor.getSystem();
 
-    /*
-     * Add supplier Module
-     */
-    ModuleCreationResult supplierModuleCreationResult = createModule(systemDescriptor, system, MODULE_SUPPLIER, INITIAL_STREAM, 0, 1);
-
+    // Add SupplierModule.
+    ModuleCreationResult supplierModuleCreationResult = createModule(systemDescriptor, system, SUPPLIER_MODULE, INITIAL_STREAM, 0, 1);
+    IAssemblyDescriptor supplierStreamDescriptor = supplierModuleCreationResult.assemblyDescriptor;
     Module supplierModule = supplierModuleCreationResult.module;
     Stream supplierStream = supplierModuleCreationResult.stream;
-    IAssemblyDescriptor supplierStreamDescriptor = supplierModuleCreationResult.assemblyDescriptor;
 
     editStream(supplierStreamDescriptor, transaction -> {
-      CDOResource resource = transaction.createResource(MODULE_SUPPLIER_A);
+      CDOResource resource = transaction.createResource(SUPPLIER_RESOURCE);
       DropType dropType = LMFactory.eINSTANCE.createDropType();
       dropType.setName(SUPPLIER_DROP_TYPE);
       System sys = LMFactory.eINSTANCE.createSystem();
@@ -85,44 +81,30 @@ public class LMVersionEvolutionTest extends AbstractLMTest
       Process process = LMFactory.eINSTANCE.createProcess();
       process.getDropTypes().add(dropType);
       sys.setProcess(process);
-      // EClass eClass = EcoreFactory.eINSTANCE.createEClass();
-      // eClass.setName(SUPPLIER_TYPE);
       resource.getContents().add(sys);
     });
 
     publishTag(systemDescriptor, system, supplierStream, "Tag0.1");
 
-    /*
-     * Add ModuleClient
-     */
-    ModuleCreationResult clientModuleCreationResult = createModule(systemDescriptor, system, MODULE_CLIENT, INITIAL_STREAM, 0, 1);
-    // Module clientModule = clientModuleCreationResult.module;
-    // Stream clientStream = clientModuleCreationResult.stream;
+    // Add ClientModule.
+    ModuleCreationResult clientModuleCreationResult = createModule(systemDescriptor, system, CLIENT_MODULE, INITIAL_STREAM, 0, 1);
     IAssemblyDescriptor clientStreamDescriptor = clientModuleCreationResult.assemblyDescriptor;
 
-    /*
-     * Create dependency from clientModule to supplierModule
-     */
-    createDependency(clientStreamDescriptor, MODULE_SUPPLIER, new VersionRange("[0.0.0,1.0.0)"));
+    // Create dependency on SupplierModule to ClientModule.
+    createDependency(clientStreamDescriptor, SUPPLIER_MODULE, new VersionRange("[0.0.0,1.0.0)"));
 
-    /*
-     * Update the client
-     */
-    updateClient(clientStreamDescriptor);
+    // Update the ClientModule descriptor.
+    updateAssemblyDescriptor(clientStreamDescriptor);
 
-    /*
-     * Modify ModuleClient
-     */
+    // Modify ClientModule.
     editStream(clientStreamDescriptor, transaction -> {
-      CDOResource resourceClient = transaction.createResource(MODULE_CLIENT_A);
+      CDOResource resourceClient = transaction.createResource(CLIENT_RESOURCE);
 
       CDOView view = clientStreamDescriptor.getCheckout().openView();
       ResourceSet resourceSet = view.getResourceSet();
 
-      /*
-       * Retrieve drop from supplier
-       */
-      URI uri = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + "://" + MODULE_SUPPLIER + "/" + MODULE_SUPPLIER_A);
+      // Retrieve drop from supplier.
+      URI uri = createModuleResourceURI(SUPPLIER_MODULE, SUPPLIER_RESOURCE);
       CDOResource resourceSupplier = (CDOResource)resourceSet.getResource(uri, true);
       assertThat(resourceSupplier, notNullValue());
       EObject eObject = resourceSupplier.getContents().get(0);
@@ -151,17 +133,13 @@ public class LMVersionEvolutionTest extends AbstractLMTest
       resourceClient.getContents().add(clientSystem);
     });
 
-    /*
-     * Check client refers to supplier
-     */
+    // Check client refers to supplier.
     retrieveValueAndTest(clientStreamDescriptor, //
         resourceSupplier -> assertNotEquals(0, resourceSupplier.getContents().size()), //
         element -> assertNotEquals(null, element));
 
-    /*
-     * Try to get a version not published yet
-     */
-    updateDependency(clientStreamDescriptor, MODULE_SUPPLIER, new VersionRange("[1.0.0,2.0.0)"));
+    // Try to get a version not published yet.
+    updateDependency(clientStreamDescriptor, SUPPLIER_MODULE, new VersionRange("[1.0.0,2.0.0)"));
 
     try
     {
@@ -173,33 +151,23 @@ public class LMVersionEvolutionTest extends AbstractLMTest
       // Success
     }
 
-    /*
-     * Make changes on supplier
-     */
+    // Make changes on supplier.
     editStream(supplierStreamDescriptor, transaction -> {
-      CDOResource resource = transaction.getResource(MODULE_SUPPLIER_A);
+      CDOResource resource = transaction.getResource(SUPPLIER_RESOURCE);
       resource.getContents().clear();
     });
 
-    /*
-     * Create release from initial stream of supplier
-     */
+    // Create release from initial stream of supplier.
     publishRelease(systemDescriptor, system, supplierStream, "Release0.1");
     supplierStream.getLastRelease();
 
-    /*
-     * Create a new stream for 1.0
-     */
+    // Create a new stream for 1.0.
     Stream stream1_0 = createStream(systemDescriptor, supplierModule, supplierStream.getLastRelease(), 1, 0, "Stream1.0");
 
-    /*
-     * Check that initialStream is now maintenance
-     */
+    // Check that initialStream is now maintenance.
     assertThat(supplierStream.getMode(), is(StreamMode.MAINTENANCE));
 
-    /*
-     * Try to create tag from 1.0 stream of supplier
-     */
+    // Try to create tag from 1.0 stream of supplier.
     try
     {
       publishTag(systemDescriptor, system, stream1_0, TAG1_0);
@@ -207,15 +175,13 @@ public class LMVersionEvolutionTest extends AbstractLMTest
     }
     catch (CDOException expected)
     {
-      // Success
+      // Success:
       // Module definition version 0.1.0 is inconsistent with the stream version 1.0
     }
 
-    setModuleVersion(stream1_0, MODULE_SUPPLIER, 1, 0, 0);
+    setModuleVersion(stream1_0, SUPPLIER_MODULE, 1, 0, 0);
 
-    /*
-     * Create tag from 1.0 stream of supplier
-     */
+    // Create tag from 1.0 stream of supplier.
     publishTag(systemDescriptor, system, stream1_0, TAG1_0);
 
     Baseline baseline = stream1_0.getContents().stream().filter(b -> b.getName().equals(TAG1_0)).findAny().orElse(null);
@@ -226,22 +192,16 @@ public class LMVersionEvolutionTest extends AbstractLMTest
       assertTrue(tag1_0.getVersion().compareTo(Version.createOSGi(1, 0, 0)) > 0);
     }
 
-    /*
-     * Update dependency in client
-     */
-    updateDependency(clientStreamDescriptor, MODULE_SUPPLIER, new VersionRange("[1.0.0,2.0.0)"));
+    // Update dependency in client.
+    updateDependency(clientStreamDescriptor, SUPPLIER_MODULE, new VersionRange("[1.0.0,2.0.0)"));
 
     Updates updates = waitForUpdates(clientStreamDescriptor);
     assertEquals(2, updates.getModifications().size());
 
-    /*
-     * Update the client
-     */
-    updateClient(clientStreamDescriptor);
+    // Update the client.
+    updateAssemblyDescriptor(clientStreamDescriptor);
 
-    /*
-     * Check that client model cannot resolve the supplier model element (because deleted)
-     */
+    // Check that client model cannot resolve the supplier model element (because deleted).
     retrieveValueAndTest(clientStreamDescriptor, //
         resourceSupplier -> assertEquals(0, resourceSupplier.getContents().size()), //
         element -> assertEquals(null, element));
@@ -250,12 +210,12 @@ public class LMVersionEvolutionTest extends AbstractLMTest
   private void retrieveValueAndTest(IAssemblyDescriptor clientStreamDescriptor, Consumer<Resource> testResource, Consumer<DropType> testDropType)
   {
     CDOTransaction transaction = clientStreamDescriptor.getCheckout().openTransaction();
-    URI uriSupplier = URI.createURI(CDOProtocolConstants.PROTOCOL_NAME + "://" + MODULE_SUPPLIER + "/" + MODULE_SUPPLIER_A);
+    URI uriSupplier = createModuleResourceURI(SUPPLIER_MODULE, SUPPLIER_RESOURCE);
 
     CDOResource resourceSupplier = (CDOResource)transaction.getResourceSet().getResource(uriSupplier, true);
     testResource.accept(resourceSupplier);
 
-    CDOResource clientResource = transaction.getResource(MODULE_CLIENT_A);
+    CDOResource clientResource = transaction.getResource(CLIENT_RESOURCE);
 
     System sampleClientSystem = (System)clientResource.getContents().get(0);
     Module sampleClientModule = sampleClientSystem.getModules().get(0);
@@ -291,7 +251,7 @@ public class LMVersionEvolutionTest extends AbstractLMTest
     {
       return obj2 == null;
     }
-  
+
     return obj1.equals(obj2);
   }
 }

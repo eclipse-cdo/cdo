@@ -386,7 +386,8 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     assertThat(clientStreamDescriptor.hasUpdatesAvailable(), is(false));
 
     // Verify that the uri resource is not visible, yet.
-    CDOView view = clientStreamDescriptor.getCheckout().openView();
+    CDOCheckout checkout = clientStreamDescriptor.getCheckout();
+    CDOView view = checkout.openView();
     ResourceSet resourceSet = view.getResourceSet();
 
     try
@@ -415,10 +416,10 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     view.close();
   }
 
-  protected void updateClient(IAssemblyDescriptor clientStreamDescriptor) throws Exception
+  protected void updateAssemblyDescriptor(IAssemblyDescriptor assemblyDescriptor) throws Exception
   {
-    waitForUpdates(clientStreamDescriptor);
-    clientStreamDescriptor.update();
+    waitForUpdates(assemblyDescriptor);
+    assemblyDescriptor.update();
   }
 
   protected void updateDependency(IAssemblyDescriptor clientStreamDescriptor, String supplierName, VersionRange newVersionRange) throws Exception
@@ -481,6 +482,11 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
   protected void createDependencyAndUpdate(IAssemblyDescriptor clientStreamDescriptor, String supplierName) throws Exception
   {
     createDependencyAndUpdate(clientStreamDescriptor, supplierName, null);
+  }
+
+  protected static URI createModuleResourceURI(String moduleName, String resourcePath)
+  {
+    return URI.createURI("cdo.lm://" + SYSTEM_NAME + ":" + moduleName + "/" + resourcePath);
   }
 
   protected static ISystemDescriptor createSystemRepository()

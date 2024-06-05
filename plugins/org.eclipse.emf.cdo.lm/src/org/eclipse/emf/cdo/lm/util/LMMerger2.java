@@ -22,6 +22,11 @@ import org.eclipse.emf.cdo.session.CDOSession;
  */
 public interface LMMerger2 extends LMMerger
 {
+  /**
+   * Merges the changes indicated by the given {@link LMMergeInfos merge infos} and returns the time stamp of the
+   * resulting commit into the merge target branch, or {@link CDOBranchPoint#INVALID_DATE CDOBranchPoint.INVALID_DATE}
+   * if no commit has happened.
+   */
   public long mergeDelivery(LMMergeInfos infos);
 
   /**

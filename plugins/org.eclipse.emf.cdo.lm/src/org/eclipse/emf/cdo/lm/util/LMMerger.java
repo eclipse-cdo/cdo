@@ -54,5 +54,10 @@ public interface LMMerger
     }
   };
 
+  /**
+   * Merges the changes from the given source branch point into the given target branch and returns the time stamp of the
+   * resulting commit into the merge target branch, or {@link CDOBranchPoint#INVALID_DATE CDOBranchPoint.INVALID_DATE}
+   * if no commit has happened.
+   */
   public long mergeDelivery(CDOSession session, CDOBranchPoint sourceBranchPoint, CDOBranch targetBranch);
 }

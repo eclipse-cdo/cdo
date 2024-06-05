@@ -22,14 +22,14 @@
             <message_argument value="setPersistence(IContainer.Persistence&lt;E&gt;)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.edit" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.edit_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.edit" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.edit_1.0.1 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.0"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews_1.0.1 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.0.0"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.0.1"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="SEPARATOR" kind="ADDED" message="The field org.eclipse.emf.cdo.lm.System.SEPARATOR has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.System">
@@ -129,6 +129,13 @@
             <message_argument value="1.3.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui.compare" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui.compare (from version 4.7.3 to 4.8.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare"/>
+            <message_argument value="4.7.3"/>
+            <message_argument value="4.8.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.shared(4.9.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui.shared" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui.shared (from version 4.8.0 to 4.9.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.shared"/>
@@ -155,19 +162,19 @@
             <message_argument value="isValidName(String)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="commitChanges(Lorg/eclipse/core/runtime/IProgressMonitor;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.commitChanges(IProgressMonitor) has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="commitChanges(Lorg/eclipse/core/runtime/IProgressMonitor;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.commitChanges(IProgressMonitor) has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
             <message_argument value="commitChanges(IProgressMonitor)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isModal()Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.isModal() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isModal()Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.isModal() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
             <message_argument value="isModal()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setModal(Z)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.setModal(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setModal(Z)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.setModal(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
             <message_argument value="setModal(boolean)"/>
@@ -191,13 +198,13 @@
             <message_argument value="lastElementRemoved(E)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="modal" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.modal has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="modal" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.modal has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
             <message_argument value="modal"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="handleMerges(Lorg/eclipse/emf/spi/cdo/InternalCDOTransaction;Lorg/eclipse/emf/common/util/EList&lt;Lorg/eclipse/emf/compare/Diff;&gt;;)Z" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.handleMerges(InternalCDOTransaction, EList&lt;Diff&gt;) has been removed" newModifiers="0" oldModifiers="10" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.8.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="handleMerges(Lorg/eclipse/emf/spi/cdo/InternalCDOTransaction;Lorg/eclipse/emf/common/util/EList&lt;Lorg/eclipse/emf/compare/Diff;&gt;;)Z" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.handleMerges(InternalCDOTransaction, EList&lt;Diff&gt;) has been removed" newModifiers="0" oldModifiers="10" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
             <message_argument value="handleMerges(InternalCDOTransaction, EList&lt;Diff&gt;)"/>

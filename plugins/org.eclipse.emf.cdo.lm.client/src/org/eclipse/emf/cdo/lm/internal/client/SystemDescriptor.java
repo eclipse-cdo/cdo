@@ -680,17 +680,17 @@ public final class SystemDescriptor implements ISystemDescriptor
       return moduleDefinition;
     }
 
-    return extractModuleDefinitionModuleDefinition((FloatingBaseline)baseline, CDOBranchPoint.UNSPECIFIED_DATE, moduleName);
+    return extractModuleDefinition((FloatingBaseline)baseline, CDOBranchPoint.UNSPECIFIED_DATE, moduleName);
   }
 
   @Override
   public ModuleDefinition extractModuleDefinition(FloatingBaseline baseline, long timeStamp)
   {
     String moduleName = baseline.getModule().getName();
-    return extractModuleDefinitionModuleDefinition(baseline, timeStamp, moduleName);
+    return extractModuleDefinition(baseline, timeStamp, moduleName);
   }
 
-  private ModuleDefinition extractModuleDefinitionModuleDefinition(FloatingBaseline baseline, long timeStamp, String moduleName)
+  private ModuleDefinition extractModuleDefinition(FloatingBaseline baseline, long timeStamp, String moduleName)
   {
     ModuleDefinition[] result = { null };
 

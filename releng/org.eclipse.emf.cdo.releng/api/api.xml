@@ -1,5 +1,27 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="7" key="org.eclipse.emf.cdo.view.CDOViewSet" kind="ADDED" message="Message not found for id: 0" newModifiers="8" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="47" key="org.eclipse.emf.cdo.view.CDOViewSet" kind="ADDED" message="Message not found for id: 0" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.24.0)" element_type="METHOD_ELEMENT_TYPE" flags="18" key="getPersistence()Lorg/eclipse/net4j/util/container/IContainer$Persistence&lt;TE;&gt;;" kind="CHANGED" message="The 'final' keyword has been removed for method org.eclipse.net4j.util.container.PersistableContainer.getPersistence()" newModifiers="1" oldModifiers="17" restrictions="0" type_name="org.eclipse.net4j.util.container.PersistableContainer">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.container.PersistableContainer"/>
+            <message_argument value="getPersistence()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.24.0)" element_type="METHOD_ELEMENT_TYPE" flags="18" key="setPersistence(Lorg/eclipse/net4j/util/container/IContainer$Persistence&lt;TE;&gt;;)V" kind="CHANGED" message="The 'final' keyword has been removed for method org.eclipse.net4j.util.container.PersistableContainer.setPersistence(IContainer.Persistence&lt;E&gt;)" newModifiers="1" oldModifiers="17" restrictions="0" type_name="org.eclipse.net4j.util.container.PersistableContainer">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.container.PersistableContainer"/>
+            <message_argument value="setPersistence(IContainer.Persistence&lt;E&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.edit" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.edit_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.0"/>
@@ -8,6 +30,315 @@
     <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.0.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="SEPARATOR" kind="ADDED" message="The field org.eclipse.emf.cdo.lm.System.SEPARATOR has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.System">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.System"/>
+            <message_argument value="SEPARATOR"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="REGISTRY" kind="ADDED" message="The field org.eclipse.emf.cdo.view.CDOViewSet.REGISTRY has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="REGISTRY"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.view.CDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.container.IContainer adds method isEmpty() to org.eclipse.emf.cdo.view.CDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.container.IContainer"/>
+            <message_argument value="isEmpty()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.container.IContainer adds method isEmpty() to org.eclipse.emf.spi.cdo.InternalCDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.container.IContainer"/>
+            <message_argument value="isEmpty()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.view.CDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.event.INotifier adds method addListener(IListener) to org.eclipse.emf.cdo.view.CDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.event.INotifier"/>
+            <message_argument value="addListener(IListener)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="ADDED" message="The interface org.eclipse.net4j.util.event.INotifier adds method addListener(IListener) to org.eclipse.emf.spi.cdo.InternalCDOViewSet that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.event.INotifier"/>
+            <message_argument value="addListener(IListener)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.3.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="configureModuleResourceSet(Lorg/eclipse/emf/cdo/view/CDOView;)Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/emf/cdo/view/CDOView;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.client.ISystemDescriptor.configureModuleResourceSet(CDOView) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.client.ISystemDescriptor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client.ISystemDescriptor"/>
+            <message_argument value="configureModuleResourceSet(CDOView)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.3.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="configureModuleResourceSet(Lorg/eclipse/emf/ecore/resource/ResourceSet;Lorg/eclipse/emf/cdo/lm/assembly/Assembly;)Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/emf/cdo/view/CDOView;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.client.ISystemDescriptor.configureModuleResourceSet(ResourceSet, Assembly) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.client.ISystemDescriptor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client.ISystemDescriptor"/>
+            <message_argument value="configureModuleResourceSet(ResourceSet, Assembly)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getURI()Lorg/eclipse/emf/common/util/URI;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.getURI() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+            <message_argument value="getURI()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getURI()Lorg/eclipse/emf/common/util/URI;" kind="ADDED" message="The method org.eclipse.emf.cdo.view.CDOView.getURI() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
+            <message_argument value="getURI()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.view.CDOViewSet.getID() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="getID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getViewSets()[Lorg/eclipse/emf/cdo/view/CDOViewSet;" kind="ADDED" message="The method org.eclipse.emf.cdo.view.CDOViewSet.getViewSets() has been added in an interface that is tagged with '@noimplement'" newModifiers="9" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="getViewSets()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo (from version 4.23.0 to 4.24.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo"/>
+            <message_argument value="4.23.0"/>
+            <message_argument value="4.24.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm (from version 1.1.1 to 1.2.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm"/>
+            <message_argument value="1.1.1"/>
+            <message_argument value="1.2.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm.client" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm.client (from version 1.2.1 to 1.3.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client"/>
+            <message_argument value="1.2.1"/>
+            <message_argument value="1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.shared(4.9.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui.shared" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui.shared (from version 4.8.0 to 4.9.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.shared"/>
+            <message_argument value="4.8.0"/>
+            <message_argument value="4.9.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.24.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util (from version 3.23.1 to 3.24.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util"/>
+            <message_argument value="3.23.1"/>
+            <message_argument value="3.24.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="checkName(Ljava/lang/String;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.SystemImpl.checkName(String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.SystemImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.SystemImpl"/>
+            <message_argument value="checkName(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isValidName(Ljava/lang/String;)Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.SystemImpl.isValidName(String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.SystemImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.SystemImpl"/>
+            <message_argument value="isValidName(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="commitChanges(Lorg/eclipse/core/runtime/IProgressMonitor;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.commitChanges(IProgressMonitor) has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
+            <message_argument value="commitChanges(IProgressMonitor)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isModal()Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.isModal() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
+            <message_argument value="isModal()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setModal(Z)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.setModal(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
+            <message_argument value="setModal(boolean)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="schemeRegex(Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.view.AbstractCDOViewProvider.schemeRegex(String) has been added" newModifiers="12" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.view.AbstractCDOViewProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.AbstractCDOViewProvider"/>
+            <message_argument value="schemeRegex(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.24.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="firstElementAdded(TE;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.container.ModifiableContainer.firstElementAdded(E) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.container.ModifiableContainer">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.container.ModifiableContainer"/>
+            <message_argument value="firstElementAdded(E)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.24.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="lastElementRemoved(TE;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.container.ModifiableContainer.lastElementRemoved(E) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.container.ModifiableContainer">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.container.ModifiableContainer"/>
+            <message_argument value="lastElementRemoved(E)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="modal" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input.modal has been added" newModifiers="2" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil$Input">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input"/>
+            <message_argument value="modal"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.compare(4.7.4)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="handleMerges(Lorg/eclipse/emf/spi/cdo/InternalCDOTransaction;Lorg/eclipse/emf/common/util/EList&lt;Lorg/eclipse/emf/compare/Diff;&gt;;)Z" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.handleMerges(InternalCDOTransaction, EList&lt;Diff&gt;) has been removed" newModifiers="0" oldModifiers="10" restrictions="2" type_name="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil"/>
+            <message_argument value="handleMerges(InternalCDOTransaction, EList&lt;Diff&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.2.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.LMMerger2" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.LMMerger2 has been added to org.eclipse.emf.cdo.lm.client_1.2.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.LMMerger2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.LMMerger2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.client_1.2.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.LMMerger2" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.LMMerger2 has been added to org.eclipse.emf.cdo.lm.edit_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.LMMerger2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.LMMerger2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.edit_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.security(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.LMMerger2" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.LMMerger2 has been added to org.eclipse.emf.cdo.lm.security_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.LMMerger2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.LMMerger2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.security_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.LMMerger2" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.LMMerger2 has been added to org.eclipse.emf.cdo.lm.server_1.3.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.LMMerger2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.LMMerger2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.admin(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.admin_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.admin_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.compare(4.7.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.compare_4.7.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.compare_4.7.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.dawn(2.3.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.dawn_2.3.6" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn_2.3.6"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.edit(4.6.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.edit_4.6.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.edit_4.6.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.expressions(4.4.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.expressions_4.4.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.expressions_4.4.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.gmf.notation(1.10.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.gmf.notation_1.10.2" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.gmf.notation_1.10.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.security(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.lm.security_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.security_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.lm_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.lm_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.6.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.net4j_4.6.3" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.net4j_4.6.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.security(4.7.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.security_4.7.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.security_4.7.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.admin(4.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.server.admin_4.4.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.server.admin_4.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.server_4.20.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.server_4.20.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.repository(4.3.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.transfer.repository_4.3.5" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer.repository_4.3.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.16.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo.ui_4.16.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.16.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui.shared(4.9.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="OBJ_VIEW_SET" kind="ADDED" message="The static field org.eclipse.emf.cdo.ui.shared.SharedIcons.OBJ_VIEW_SET has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.ui.shared.SharedIcons">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.ui.shared.SharedIcons"/>
+            <message_argument value="OBJ_VIEW_SET"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.view.CDOViewSet" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.container.IContainer) for interface org.eclipse.emf.cdo.view.CDOViewSet" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.container.IContainer"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOViewSet" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.container.IContainer) for interface org.eclipse.emf.spi.cdo.InternalCDOViewSet" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOViewSet">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOViewSet"/>
+            <message_argument value="org.eclipse.net4j.util.event.INotifier,org.eclipse.net4j.util.container.IContainer"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.lm.util.LMMerger2" kind="ADDED" message="The type org.eclipse.emf.cdo.lm.util.LMMerger2 has been added to org.eclipse.emf.cdo.lm_1.2.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.LMMerger2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.LMMerger2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm_1.2.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.24.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent" kind="ADDED" message="The type org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent has been added to org.eclipse.emf.cdo_4.24.0" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOViewProviderChangedEvent"/>
+            <message_argument value="org.eclipse.emf.cdo_4.24.0"/>
         </message_arguments>
     </delta>
 </deltas>

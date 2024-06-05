@@ -73,6 +73,10 @@ loadScripts(document, 'script');</script>
 <h1 title="Interface LMMerger" class="title">Interface LMMerger</h1>
 </div>
 <section class="class-description" id="class-description">
+<dl class="notes">
+<dt>All Known Subinterfaces:</dt>
+<dd><code><a href="LMMerger2.html" title="interface in org.eclipse.emf.cdo.lm.util">LMMerger2</a></code></dd>
+</dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">LMMerger</span></div>
 <dl class="notes">
@@ -112,7 +116,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBranchPoint,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;targetBranch)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Merges the changes from the given source branch point into the given target branch and returns the time stamp of the
+ resulting commit into the merge target branch, or <a href="../../common/branch/CDOBranchPoint.html#INVALID_DATE"><code>CDOBranchPoint.INVALID_DATE</code></a>
+ if no commit has happened.</div>
+</div>
 </div>
 </div>
 </div>
@@ -147,6 +155,9 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">long</span>&nbsp;<span class="element-name">mergeDelivery</span><wbr><span class="parameters">(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBranchPoint,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;targetBranch)</span></div>
+<div class="block">Merges the changes from the given source branch point into the given target branch and returns the time stamp of the
+ resulting commit into the merge target branch, or <a href="../../common/branch/CDOBranchPoint.html#INVALID_DATE"><code>CDOBranchPoint.INVALID_DATE</code></a>
+ if no commit has happened.</div>
 </section>
 </li>
 </ul>

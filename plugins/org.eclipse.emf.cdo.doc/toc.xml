@@ -140,6 +140,9 @@
       <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.lm.modules.provider" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Lifecycle Management Reviews Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/reviews/provider/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.reviews.provider" href="javadoc/org/eclipse/emf/cdo/lm/reviews/provider/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Lifecycle Management Security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.lm.security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.lm.security.impl" href="javadoc/org/eclipse/emf/cdo/lm/security/impl/package-summary.html" icon="package" />

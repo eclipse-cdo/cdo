@@ -202,15 +202,25 @@ implements <a href="IContainer.Modifiable.html" title="interface in org.eclipse.
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Called inside synchronized(this).</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getComponentType()" class="member-name-link">getComponentType</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getElements()" class="member-name-link">getElements</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#firstElementAdded(E)" class="member-name-link">firstElementAdded</a><wbr>(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called inside synchronized(this).</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getComponentType()" class="member-name-link">getComponentType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getElements()" class="member-name-link">getElements</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#lastElementRemoved(E)" class="member-name-link">lastElementRemoved</a><wbr>(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called inside synchronized(this).</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeAllElements(java.util.Collection)" class="member-name-link">removeAllElements</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&gt;&nbsp;elements)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -366,6 +376,17 @@ implements <a href="IContainer.Modifiable.html" title="interface in org.eclipse.
 </section>
 </li>
 <li>
+<section class="detail" id="firstElementAdded(E)">
+<h3 id="firstElementAdded(java.lang.Object)">firstElementAdded</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">firstElementAdded</span><wbr><span class="parameters">(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</span></div>
+<div class="block">Called inside synchronized(this).</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.24</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="elementAdded(E)">
 <h3 id="elementAdded(java.lang.Object)">elementAdded</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">elementAdded</span><wbr><span class="parameters">(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</span></div>
@@ -377,6 +398,17 @@ implements <a href="IContainer.Modifiable.html" title="interface in org.eclipse.
 <h3 id="elementRemoved(java.lang.Object)">elementRemoved</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">elementRemoved</span><wbr><span class="parameters">(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</span></div>
 <div class="block">Called inside synchronized(this).</div>
+</section>
+</li>
+<li>
+<section class="detail" id="lastElementRemoved(E)">
+<h3 id="lastElementRemoved(java.lang.Object)">lastElementRemoved</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lastElementRemoved</span><wbr><span class="parameters">(<a href="ModifiableContainer.html" title="type parameter in ModifiableContainer">E</a>&nbsp;element)</span></div>
+<div class="block">Called inside synchronized(this).</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.24</dd>
+</dl>
 </section>
 </li>
 <li>

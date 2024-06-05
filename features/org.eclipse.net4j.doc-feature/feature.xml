@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.net4j.doc"
       label="%featureName"
-      version="4.3.8.qualifier"
+      version="4.3.9.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">

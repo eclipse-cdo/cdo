@@ -145,6 +145,7 @@
 				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/impl/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/util/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.reviews.edit/src/org/eclipse/emf/cdo/lm/reviews/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security.edit/src/org/eclipse/emf/cdo/lm/security/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/impl/*.java" />
@@ -308,6 +309,9 @@
 			</group>
 			<group title="CDO Model Repository Lifecycle Management Modules Edit Support">
 				<package name="org.eclipse.emf.cdo.lm.modules.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Reviews Edit Support">
+				<package name="org.eclipse.emf.cdo.lm.reviews.provider" />
 			</group>
 			<group title="CDO Model Repository Lifecycle Management Security">
 				<package name="org.eclipse.emf.cdo.lm.security" />

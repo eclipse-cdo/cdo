@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo.features</groupId>
   <artifactId>org.eclipse.net4j.db.derby</artifactId>
-  <version>4.2.504-SNAPSHOT</version>
+  <version>4.2.505-SNAPSHOT</version>
   <packaging>eclipse-feature</packaging>
 
 </project>

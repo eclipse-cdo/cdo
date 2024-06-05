@@ -11,12 +11,10 @@
 package org.eclipse.emf.cdo.ui.compare;
 
 import org.eclipse.emf.cdo.CDOObject;
-import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.compare.CDOCompareUtil;
 import org.eclipse.emf.cdo.compare.CDOComparisonScope;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
@@ -24,8 +22,6 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.revision.CDOIDMapper;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.transaction.CDOCommitContext;
 import org.eclipse.emf.cdo.transaction.CDODefaultTransactionHandler2;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -33,6 +29,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOItemProvider;
 import org.eclipse.emf.cdo.ui.internal.compare.bundle.OM;
 import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.CommitException;
+import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
@@ -49,7 +47,6 @@ import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.Comparison;
 import org.eclipse.emf.compare.Diff;
-import org.eclipse.emf.compare.DifferenceState;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
@@ -60,7 +57,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
@@ -68,6 +64,7 @@ import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.swt.graphics.Image;
@@ -478,36 +475,48 @@ public final class CDOCompareEditorUtil
           CompareUI.openCompareEditor(input, activateEditor);
         }
       });
+
+      return true;
     }
-    else
+
+    input.setModal(true);
+    EList<Diff> differences = new BasicEList<>();
+
+    UIUtil.getDisplay().syncExec(new Runnable()
     {
-      EList<Diff> differences = new BasicEList<>();
-
-      UIUtil.getDisplay().syncExec(new Runnable()
+      @Override
+      public void run()
       {
-        @Override
-        public void run()
-        {
-          CompareUI.openCompareDialog(input);
+        CompareUI.openCompareDialog(input);
 
-          if (rightView instanceof InternalCDOTransaction)
-          {
-            Comparison comparison = input.getComparison();
-            differences.addAll(comparison.getDifferences());
-          }
-        }
-      });
-
-      if (!differences.isEmpty() && rightView instanceof InternalCDOTransaction)
-      {
-        if (!handleMerges((InternalCDOTransaction)rightView, differences))
+        if (rightView instanceof InternalCDOTransaction)
         {
-          return false;
+          Comparison comparison = input.getComparison();
+          differences.addAll(comparison.getDifferences());
         }
       }
+    });
+
+    if (!input.isOK())
+    {
+      // The Cancel button must have been pressed.
+      return false;
     }
 
-    return input.isOK();
+    if (differences.isEmpty())
+    {
+      return false;
+    }
+
+    try
+    {
+      input.commitChanges(new NullProgressMonitor());
+      return true;
+    }
+    catch (Exception ex)
+    {
+      return false;
+    }
   }
 
   /**
@@ -746,63 +755,66 @@ public final class CDOCompareEditorUtil
     }
   }
 
-  private static boolean handleMerges(InternalCDOTransaction transaction, EList<Diff> differences)
-  {
-    Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
-    Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
-    InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
-
-    boolean unmergedConflicts = false;
-
-    for (Diff diff : differences)
-    {
-      if (diff.getState() != DifferenceState.MERGED)
-      {
-        unmergedConflicts = true;
-      }
-      else
-      {
-        Match match = diff.getMatch();
-
-        EObject left = match.getLeft();
-        EObject right = match.getRight();
-
-        if (left != null && right != null)
-        {
-          InternalCDOObject leftObject = (InternalCDOObject)CDOUtil.getCDOObject(left);
-          InternalCDOObject rightObject = (InternalCDOObject)CDOUtil.getCDOObject(right);
-
-          InternalCDORevision leftRevision = leftObject.cdoRevision();
-          cleanRevisions.put(rightObject, leftRevision);
-          int remoteVersion = leftRevision.getVersion();
-
-          InternalCDORevision rightRevision = rightObject.cdoRevision();
-          if (rightRevision.getBranch() != leftRevision.getBranch() //
-              || rightRevision.getTimeStamp() != leftRevision.getTimeStamp() //
-              || rightRevision.getVersion() != leftRevision.getVersion())
-          {
-            rightRevision = rightRevision.copy();
-            rightRevision.setBranchPoint(leftRevision);
-            rightRevision.setVersion(remoteVersion);
-
-            rightObject.cdoInternalSetRevision(rightRevision);
-            revisionManager.internRevision(rightRevision);
-          }
-
-          InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
-          if (revisionDelta != null)
-          {
-            revisionDelta.setVersion(remoteVersion);
-          }
-
-          transaction.removeConflict(rightObject);
-          rightObject.cdoInternalSetState(CDOState.DIRTY);
-        }
-      }
-    }
-
-    return !unmergedConflicts;
-  }
+  // private static boolean handleMerges(InternalCDOTransaction transaction, EList<Diff> differences)
+  // {
+  // Map<InternalCDOObject, InternalCDORevision> cleanRevisions = transaction.getCleanRevisions();
+  // Map<CDOID, CDORevisionDelta> revisionDeltas = transaction.getLastSavepoint().getRevisionDeltas2();
+  // InternalCDORevisionManager revisionManager = transaction.getSession().getRevisionManager();
+  //
+  // boolean unmergedConflicts = false;
+  //
+  // for (Diff diff : differences)
+  // {
+  // if (diff.getState() != DifferenceState.MERGED)
+  // {
+  // int xxxxx;
+  // // Can merges with DISCARDS be committed???
+  //
+  // unmergedConflicts = true;
+  // }
+  // else
+  // {
+  // Match match = diff.getMatch();
+  //
+  // EObject left = match.getLeft();
+  // EObject right = match.getRight();
+  //
+  // if (left != null && right != null)
+  // {
+  // InternalCDOObject leftObject = (InternalCDOObject)CDOUtil.getCDOObject(left);
+  // InternalCDOObject rightObject = (InternalCDOObject)CDOUtil.getCDOObject(right);
+  //
+  // InternalCDORevision leftRevision = leftObject.cdoRevision();
+  // cleanRevisions.put(rightObject, leftRevision);
+  // int remoteVersion = leftRevision.getVersion();
+  //
+  // InternalCDORevision rightRevision = rightObject.cdoRevision();
+  // if (rightRevision.getBranch() != leftRevision.getBranch() //
+  // || rightRevision.getTimeStamp() != leftRevision.getTimeStamp() //
+  // || rightRevision.getVersion() != leftRevision.getVersion())
+  // {
+  // rightRevision = rightRevision.copy();
+  // rightRevision.setBranchPoint(leftRevision);
+  // rightRevision.setVersion(remoteVersion);
+  //
+  // rightObject.cdoInternalSetRevision(rightRevision);
+  // revisionManager.internRevision(rightRevision);
+  // }
+  //
+  // InternalCDORevisionDelta revisionDelta = (InternalCDORevisionDelta)revisionDeltas.get(rightRevision.getID());
+  // if (revisionDelta != null)
+  // {
+  // revisionDelta.setVersion(remoteVersion);
+  // }
+  //
+  // transaction.removeConflict(rightObject);
+  // rightObject.cdoInternalSetState(CDOState.DIRTY);
+  // }
+  // }
+  // }
+  //
+  // return !unmergedConflicts;
+  // }
 
   /**
    * @author Eike Stepper
@@ -820,6 +832,8 @@ public final class CDOCompareEditorUtil
     private List<Runnable> disposeRunnables;
 
     private boolean suppressCommit;
+
+    private boolean modal;
 
     private CDOCommitInfo commitInfo;
 
@@ -879,6 +893,22 @@ public final class CDOCompareEditorUtil
       return compareImage();
     }
 
+    /**
+     * @since 4.7
+     */
+    public boolean isModal()
+    {
+      return modal;
+    }
+
+    /**
+     * @since 4.7
+     */
+    public void setModal(boolean modal)
+    {
+      this.modal = modal;
+    }
+
     public void setDisposeRunnables(List<Runnable> disposeRunnables)
     {
       this.disposeRunnables = disposeRunnables;
@@ -886,6 +916,23 @@ public final class CDOCompareEditorUtil
 
     @Override
     public void saveChanges(IProgressMonitor monitor) throws CoreException
+    {
+      super.saveChanges(monitor);
+
+      if (!modal)
+      {
+        try
+        {
+          commitChanges(monitor);
+        }
+        catch (Exception ex)
+        {
+          OM.BUNDLE.coreException(ex);
+        }
+      }
+    }
+
+    private void commitChanges(IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
     {
       if (targetView instanceof InternalCDOTransaction)
       {
@@ -937,21 +984,14 @@ public final class CDOCompareEditorUtil
           }
         }
 
-        try
+        if (!suppressCommit)
         {
-          if (!suppressCommit)
-          {
-            CDOBranchPoint mergeSource = sourceView.isHistorical() ? CDOBranchUtil.copyBranchPoint(sourceView)
-                : sourceView.getBranch().getPoint(sourceView.getLastUpdateTime());
+          CDOBranchPoint mergeSource = sourceView.isHistorical() ? CDOBranchUtil.copyBranchPoint(sourceView)
+              : sourceView.getBranch().getPoint(sourceView.getLastUpdateTime());
 
-            transaction.setCommitMergeSource(mergeSource);
-            commitInfo = transaction.commit(monitor);
-            setDirty(false);
-          }
-        }
-        catch (Exception ex)
-        {
-          OM.BUNDLE.coreException(ex);
+          transaction.setCommitMergeSource(mergeSource);
+          commitInfo = transaction.commit(monitor);
+          setDirty(false);
         }
       }
     }
@@ -964,6 +1004,9 @@ public final class CDOCompareEditorUtil
       return commitInfo;
     }
 
+    /**
+     * Returns <code>true</code> if the OK button was pressed, <code>false</code> otherwise.
+     */
     public boolean isOK()
     {
       return ok;

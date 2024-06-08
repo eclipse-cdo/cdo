@@ -258,6 +258,11 @@ public final class CDOCommonUtil
       return UNSPECIFIED_DATE_STRING;
     }
 
+    if (timeStamp == CDORevision.INVALID_DATE)
+    {
+      return "INVALID";
+    }
+
     synchronized (DATE_FORMAT)
     {
       return DATE_FORMAT.format(new Date(timeStamp));

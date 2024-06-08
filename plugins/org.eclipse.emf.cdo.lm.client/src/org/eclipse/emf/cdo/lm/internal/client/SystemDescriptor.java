@@ -974,6 +974,12 @@ public final class SystemDescriptor implements ISystemDescriptor
   public Drop createDrop(Stream stream, DropType dropType, long timeStamp, String label, IProgressMonitor monitor)
       throws ConcurrentAccessException, CommitException
   {
+    if (timeStamp == CDOBranchPoint.UNSPECIFIED_DATE || //
+        timeStamp == CDOBranchPoint.INVALID_DATE)
+    {
+      throw new IllegalArgumentException("Illegal timestamp: " + timeStamp);
+    }
+
     return modify(stream, s -> {
       ModuleDefinition moduleDefinition = extractModuleDefinition(s, timeStamp);
       String moduleName = moduleDefinition.getName();

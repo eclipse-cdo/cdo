@@ -41,6 +41,7 @@ import java.io.PrintStream;
 import java.io.Reader;
 import java.io.Writer;
 import java.lang.reflect.Method;
+import java.net.MalformedURLException;
 import java.net.ServerSocket;
 import java.net.URI;
 import java.net.URL;
@@ -213,6 +214,14 @@ public final class IOUtil
     {
       IOUtil.closeSilent(socket);
     }
+  }
+
+  /**
+   * @since 3.25
+   */
+  public static URL newURL(String url) throws MalformedURLException
+  {
+    return IOUtil.newURL(url);
   }
 
   /**

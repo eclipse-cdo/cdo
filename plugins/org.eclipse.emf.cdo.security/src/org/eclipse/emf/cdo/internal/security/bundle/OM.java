@@ -12,6 +12,7 @@
 package org.eclipse.emf.cdo.internal.security.bundle;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.OSGiActivator;
@@ -90,7 +91,7 @@ public abstract class OM
     {
       try
       {
-        return new URL(getBaseURL() + "icons/" + key);
+        return IOUtil.newURL(getBaseURL() + "icons/" + key);
       }
       catch (MalformedURLException e)
       {

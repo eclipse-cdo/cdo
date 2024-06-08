@@ -14,6 +14,7 @@ import org.eclipse.net4j.internal.util.bundle.AbstractBundle;
 import org.eclipse.net4j.internal.util.bundle.AbstractPlatform;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.AbstractIterator;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.core.runtime.FileLocator;
 import org.eclipse.core.runtime.Platform;
@@ -54,7 +55,7 @@ public class OSGiBundle extends AbstractBundle
       String str = baseURL.toExternalForm();
       if (str.endsWith("/./")) //$NON-NLS-1$
       {
-        baseURL = new URL(str.substring(0, str.length() - 2));
+        baseURL = IOUtil.newURL(str.substring(0, str.length() - 2));
       }
 
       return baseURL;

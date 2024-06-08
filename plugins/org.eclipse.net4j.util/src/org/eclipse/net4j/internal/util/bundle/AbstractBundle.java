@@ -497,7 +497,7 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
       path = path.substring(1);
     }
 
-    URL url = new URL(base + path);
+    URL url = IOUtil.newURL(base + path);
     return url.openStream();
   }
 

@@ -134,20 +134,22 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     {
       String poolName = toString();
 
-      ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<Runnable>());
-      Runnable task;
-      boolean first = true;
-
-      while ((task = queue.poll()) != null)
+      try (ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<>()))
       {
-        if (first)
-        {
-          OM.LOG.warn("Potential deadlock detected in " + poolName + ". Executing " + size + " tasks...");
-          first = false;
-        }
+        Runnable task;
+        boolean first = true;
 
-        incrementRunTasks();
-        executor.execute(task);
+        while ((task = queue.poll()) != null)
+        {
+          if (first)
+          {
+            OM.LOG.warn("Potential deadlock detected in " + poolName + ". Executing " + size + " tasks...");
+            first = false;
+          }
+
+          incrementRunTasks();
+          executor.execute(task);
+        }
       }
     }
   }

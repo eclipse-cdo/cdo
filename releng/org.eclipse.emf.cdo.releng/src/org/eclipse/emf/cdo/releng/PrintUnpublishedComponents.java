@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
+import java.net.URI;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
@@ -59,7 +60,7 @@ public class PrintUnpublishedComponents
 
   private static void initDrop() throws MalformedURLException, IOException
   {
-    URL url = new URL("http://download.eclipse.org/modeling/emf/cdo/drops/" + DROP + "/index.xml");
+    URL url = URI.create("http://download.eclipse.org/modeling/emf/cdo/drops/" + DROP + "/index.xml").toURL();
     InputStream stream = url.openStream();
 
     try

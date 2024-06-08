@@ -249,7 +249,7 @@ public class LegacyBundle extends AbstractBundle
       {
         // If we can open an input stream, then the plugin.properties is there,
         // and we have a good base URL.
-        URL u = new URL(url.toString() + "plugin.properties");
+        URL u = IOUtil.newURL(url.toString() + "plugin.properties");
         InputStream inputStream = null;
 
         try
@@ -268,7 +268,7 @@ public class LegacyBundle extends AbstractBundle
         // If the plugin.properties isn't within the root of the archive, create
         // a new URI for the folder location of the archive, so we can look in
         // the folder that contains it.
-        url = trimSegments(new URL(url.getFile()), 1);
+        url = trimSegments(IOUtil.newURL(url.getFile()), 1);
       }
     }
 
@@ -296,7 +296,7 @@ public class LegacyBundle extends AbstractBundle
       {
         // If we can open an input stream, then the plugin.properties is in the
         // folder, and we have a good base URL.
-        InputStream inputStream = new URL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
+        InputStream inputStream = IOUtil.newURL(url.toString() + "plugin.properties").openStream(); //$NON-NLS-1$
         inputStream.close();
         baseURL = url;
       }
@@ -354,7 +354,7 @@ public class LegacyBundle extends AbstractBundle
       path = path.substring(0, pos);
     }
 
-    return new URL(url.getProtocol() + ":" + path + "/"); //$NON-NLS-1$ //$NON-NLS-2$
+    return IOUtil.newURL(url.getProtocol() + ":" + path + "/"); //$NON-NLS-1$ //$NON-NLS-2$
   }
 
   /**

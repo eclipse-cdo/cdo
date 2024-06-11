@@ -221,7 +221,7 @@ public final class IOUtil
    */
   public static URL newURL(String url) throws MalformedURLException
   {
-    return IOUtil.newURL(url);
+    return URI.create(url).toURL();
   }
 
   /**

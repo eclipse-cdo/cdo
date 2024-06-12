@@ -735,9 +735,42 @@ public final class SystemDescriptor implements ISystemDescriptor
   }
 
   @Override
-  public Map<String, CDOView> configureModuleResourceSet(CDOView view) throws ResolutionException
+  public ResourceSet createModuleResourceSet(Baseline baseline) throws ResolutionException
   {
-    ModuleDefinition rootDefinition = extractModuleDefinition(view);
+    Module module = baseline.getModule();
+    CDORepository moduleRepository = getModuleRepository(module.getName());
+    CDOSession moduleSession = moduleRepository.acquireSession();
+
+    CDOBranchPointRef branchPointRef = baseline.getBranchPoint();
+    CDOBranchPoint branchPoint = branchPointRef.resolve(moduleSession.getBranchManager());
+
+    CDOView primaryView;
+    if (baseline.isFloating())
+    {
+      primaryView = moduleSession.openTransaction(branchPoint);
+    }
+    else
+    {
+      primaryView = moduleSession.openView(branchPoint);
+    }
+
+    primaryView.addListener(new LifecycleEventAdapter()
+    {
+      @Override
+      protected void onDeactivated(ILifecycle lifecycle)
+      {
+        moduleRepository.releaseSession();
+      }
+    });
+
+    configureModuleResourceSet(primaryView);
+    return primaryView.getResourceSet();
+  }
+
+  @Override
+  public Map<String, CDOView> configureModuleResourceSet(CDOView primaryView) throws ResolutionException
+  {
+    ModuleDefinition rootDefinition = extractModuleDefinition(primaryView);
     if (rootDefinition != null)
     {
       Assembly assembly = createEmptyAssembly();
@@ -752,7 +785,7 @@ public final class SystemDescriptor implements ISystemDescriptor
         return null;
       }
 
-      ResourceSet resourceSet = view.getResourceSet();
+      ResourceSet resourceSet = primaryView.getResourceSet();
       return configureModuleResourceSet(resourceSet, assembly);
     }
 

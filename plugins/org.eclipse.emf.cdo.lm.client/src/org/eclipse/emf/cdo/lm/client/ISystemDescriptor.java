@@ -106,6 +106,11 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
   public ModuleDefinition extractModuleDefinition(CDOView view);
 
   /**
+   * @since 1.4
+   */
+  public ResourceSet createModuleResourceSet(Baseline baseline) throws ResolutionException;
+
+  /**
    * @since 1.3
    */
   public Map<String, CDOView> configureModuleResourceSet(CDOView view) throws ResolutionException;

@@ -157,11 +157,9 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     String testName = getClass().getSimpleName() + "." + getName();
     msg("+++++++++++++++++++++++ " + testName + "() +++++++++++++++++++++++");
 
-    File testFolder = new File(TEST_FOLDER, testName);
-    msg("Test folder: " + testFolder);
-
-    File dbFolder = new File(testFolder, "db");
+    File dbFolder = getTestFolder("db");
     dbFolder.mkdirs();
+    msg("Test folder: " + dbFolder.getParentFile());
 
     systemRepository = createRepository(SYSTEM_NAME, dbFolder);
 
@@ -207,6 +205,15 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
     LifecycleUtil.deactivate(systemRepository);
 
     msg("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+  }
+
+  protected File getTestFolder(String name)
+  {
+    String testName = getClass().getSimpleName() + "." + getName();
+    File testFolder = new File(TEST_FOLDER, testName);
+    File result = new File(testFolder, name);
+    result.mkdirs();
+    return result;
   }
 
   protected Stream createStream(ISystemDescriptor systemDescriptor, Module module, Drop base, int major, int minor, String streamCodeName) throws Exception

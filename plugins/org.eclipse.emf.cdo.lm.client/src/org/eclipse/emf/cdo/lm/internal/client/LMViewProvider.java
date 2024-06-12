@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.lm.System;
-import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
@@ -113,12 +112,25 @@ public class LMViewProvider extends AbstractCDOViewProvider
     return super.getViewURI(uri);
   }
 
+  public static URI createViewURI(String systemName, String moduleName)
+  {
+    String authority = createAuthority(systemName, moduleName);
+    return URI.createHierarchicalURI(SCHEME, authority, null, null, null);
+  }
+
   public static URI createViewURI(AssemblyModule module)
   {
-    Assembly assembly = module.getAssembly();
-    String systemName = assembly.getSystemName();
-    String moduleName = module.getName();
-    String authority = createAuthority(systemName, moduleName);
+    return createViewURI(module, false);
+  }
+
+  public static URI createViewURI(AssemblyModule module, boolean ignoreBranchPoint)
+  {
+    URI uri = createViewURI(module.getAssembly().getSystemName(), module.getName());
+
+    if (ignoreBranchPoint)
+    {
+      return uri;
+    }
 
     CDOBranchPointRef branchPoint = module.getBranchPoint();
     Map<String, String> parameters = new LinkedHashMap<>();
@@ -126,7 +138,7 @@ public class LMViewProvider extends AbstractCDOViewProvider
     parameters.put(PARAM_TIME_STAMP, branchPoint.getTimeStampSpec());
     String query = CDOURIUtil.formatQuery(parameters);
 
-    return URI.createHierarchicalURI(SCHEME, authority, null, query, null);
+    return URI.createHierarchicalURI(uri.scheme(), uri.authority(), null, query, null);
   }
 
   private static String createAuthority(String systemName, String moduleName)

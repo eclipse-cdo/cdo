@@ -12,13 +12,17 @@ package org.eclipse.net4j.util.collection;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Function;
 
 /**
  * Various static helper methods.
@@ -42,6 +46,108 @@ public final class CollectionUtil
 
     System.out.println(list);
     return list.iterator();
+  }
+
+  /**
+   * @since 3.25
+   */
+  public static <NODE> List<NODE> topologicalSort(Collection<NODE> nodes, Function<NODE, Collection<NODE>> edgeProvider)
+  {
+    return topologicalSort(nodes, edgeProvider, false);
+  }
+
+  /**
+   * @since 3.25
+   */
+  public static <NODE> List<NODE> topologicalSort(Collection<NODE> nodes, Function<NODE, Collection<NODE>> edgeProvider, boolean reverse)
+  {
+    final class NodeInfo<N>
+    {
+      N node;
+
+      List<NodeInfo<N>> edgeInfos = new ArrayList<>();
+
+      int indegree; // Number of incoming edges.
+
+      NodeInfo(N node)
+      {
+        this.node = node;
+      }
+    }
+
+    Map<NODE, NodeInfo<NODE>> infos = new HashMap<>();
+
+    // Populate nodes.
+    for (NODE node : nodes)
+    {
+      infos.put(node, new NodeInfo<>(node));
+    }
+
+    // Populate edges and increase indegrees.
+    for (NODE node : nodes)
+    {
+      NodeInfo<NODE> info = infos.get(node);
+
+      Collection<NODE> edges = edgeProvider.apply(node);
+      if (edges != null)
+      {
+        for (NODE edge : edges)
+        {
+          NodeInfo<NODE> edgeInfo = infos.get(edge);
+          if (edgeInfo == null)
+          {
+            throw new IllegalStateException("Edge is not a node: " + edge);
+          }
+
+          info.edgeInfos.add(edgeInfo);
+          ++edgeInfo.indegree;
+        }
+      }
+    }
+
+    Queue<NodeInfo<NODE>> queue = new LinkedList<>();
+
+    // Initialize queue with nodes that have no incoming edges.
+    for (NodeInfo<NODE> info : infos.values())
+    {
+      if (info.indegree == 0)
+      {
+        queue.add(info);
+      }
+    }
+
+    int size = nodes.size();
+    List<NODE> result = new ArrayList<>(size);
+
+    // Move nodes from the queue to the result list while decreasing the indegree of their edges.
+    while (!queue.isEmpty())
+    {
+      NodeInfo<NODE> info = queue.poll();
+
+      if (reverse)
+      {
+        result.add(0, info.node);
+      }
+      else
+      {
+        result.add(info.node);
+      }
+
+      for (NodeInfo<NODE> edgeInfo : info.edgeInfos)
+      {
+        if (--edgeInfo.indegree == 0)
+        {
+          queue.add(edgeInfo);
+        }
+      }
+    }
+
+    if (result.size() != size)
+    {
+      throw new IllegalStateException("Cycle detected");
+    }
+
+    return result;
   }
 
   /**

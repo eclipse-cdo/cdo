@@ -300,7 +300,7 @@
       <repositoryList
           name="2024-09">
         <repository
-            url="https://download.eclipse.org/releases/2024-06"/>
+            url="https://download.eclipse.org/releases/2024-09"/>
         <repository
             url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
@@ -1653,7 +1653,7 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.target.platform"
-        value="2024-06"/>
+        value="2024-09"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"

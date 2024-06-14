@@ -13,7 +13,12 @@ package org.eclipse.emf.cdo.tests.lm;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.lm.Module;
+import org.eclipse.emf.cdo.lm.Stream;
+import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
+import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.internal.client.LMImporter;
 import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportModule;
@@ -21,6 +26,7 @@ import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportResolution;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -42,21 +48,33 @@ public class LMImporterTest extends AbstractLMTest
   {
     LMImporter importer = new LMImporter();
 
+    // Build on-disk test model and configure 3 modules to import.
     ResourceSet resourceSet = createXMLResourceSet();
     ImportModule base = createTestModule(importer, resourceSet, "base");
     ImportModule ext1 = createTestModule(importer, resourceSet, "ext1", "base");
     ImportModule ext2 = createTestModule(importer, resourceSet, "ext2", "ext1", "base");
 
+    // Resolve the models to import and derive dependency information.
     ImportResolution resolution = importer.resolve(createXMLResourceSet());
     assertThat(resolution.getModuleInfos().get(0).getModule(), is(base));
     assertThat(resolution.getModuleInfos().get(1).getModule(), is(ext1));
     assertThat(resolution.getModuleInfos().get(2).getModule(), is(ext2));
 
+    // Perform the module imports.
     ISystemDescriptor systemDescriptor = createSystemRepository();
     List<Module> modules = resolution.importModules(systemDescriptor);
     assertThat(modules.get(0).getName(), is(base.getName()));
     assertThat(modules.get(1).getName(), is(ext1.getName()));
     assertThat(modules.get(2).getName(), is(ext2.getName()));
+
+    // Use a "base" module checkout to verify that the custom copy paths are respected.
+    Stream baseStream = modules.get(0).getStreams().get(0);
+    IAssemblyDescriptor baseDescriptor = IAssemblyManager.INSTANCE.createDescriptor("base assembly descriptor", baseStream, monitor());
+    CDOCheckout baseCheckout = baseDescriptor.getCheckout();
+    CDOView baseView = baseCheckout.openView(true);
+    CDOResource baseResource = baseView.getResource("moved/renamed.xml"); // Use the custom path.
+    Category baseCategory = (Category)baseResource.getContents().get(0);
+    assertThat(baseCategory.getName(), is("base products"));
   }
 
   private ImportModule createTestModule(LMImporter importer, ResourceSet resourceSet, String name, String... dependencies) throws IOException
@@ -88,7 +106,7 @@ public class LMImporterTest extends AbstractLMTest
     resource.save(null);
 
     ImportModule module = importer.addModule(name, rootURI);
-    module.addResource("model.xml");
+    module.addResource("model.xml").setCopyPath("moved/renamed.xml");
     return module;
   }
 

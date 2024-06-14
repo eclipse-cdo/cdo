@@ -402,10 +402,7 @@ public final class LMImporter
       return parent == null;
     }
 
-    public boolean isFolder()
-    {
-      return getType() == Type.FOLDER;
-    }
+    public abstract boolean isFolder();
 
     public boolean isLeaf()
     {
@@ -466,6 +463,12 @@ public final class LMImporter
       public Type getType()
       {
         return Type.FOLDER;
+      }
+
+      @Override
+      public boolean isFolder()
+      {
+        return true;
       }
 
       @Override
@@ -571,10 +574,50 @@ public final class LMImporter
     /**
      * @author Eike Stepper
      */
-    public static final class ImportResource extends ImportElement
+    public static abstract class ImportLeaf<CONTENTS> extends ImportElement
     {
-      private UnaryOperator<EList<EObject>> contentsModifier;
+      private UnaryOperator<CONTENTS> contentsModifier;
 
+      private String copyPath;
+
+      private ImportLeaf(ImportFolder parent, String name)
+      {
+        super(parent, name);
+        copyPath = getPath();
+      }
+
+      @Override
+      public boolean isFolder()
+      {
+        return false;
+      }
+
+      public UnaryOperator<CONTENTS> getContentsModifier()
+      {
+        return contentsModifier;
+      }
+
+      public void setContentsModifier(UnaryOperator<CONTENTS> contentsModifier)
+      {
+        this.contentsModifier = contentsModifier;
+      }
+
+      public String getCopyPath()
+      {
+        return copyPath;
+      }
+
+      public void setCopyPath(String copyPath)
+      {
+        this.copyPath = copyPath;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class ImportResource extends ImportLeaf<EList<EObject>>
+    {
       private Resource resource;
 
       private ImportResource(ImportFolder parent, String name)
@@ -588,16 +631,6 @@ public final class LMImporter
         return Type.RESOURCE;
       }
 
-      public UnaryOperator<EList<EObject>> getContentsModifier()
-      {
-        return contentsModifier;
-      }
-
-      public void setContentsModifier(UnaryOperator<EList<EObject>> contentsModifier)
-      {
-        this.contentsModifier = contentsModifier;
-      }
-
       public Resource getResource()
       {
         return resource;
@@ -607,10 +640,8 @@ public final class LMImporter
     /**
      * @author Eike Stepper
      */
-    public static final class ImportBinary extends ImportElement
+    public static final class ImportBinary extends ImportLeaf<InputStream>
     {
-      private UnaryOperator<InputStream> contentsModifier;
-
       private ImportBinary(ImportFolder parent, String name)
       {
         super(parent, name);
@@ -621,26 +652,14 @@ public final class LMImporter
       {
         return Type.BINARY;
       }
-
-      public UnaryOperator<InputStream> getContentsModifier()
-      {
-        return contentsModifier;
-      }
-
-      public void setContentsModifier(UnaryOperator<InputStream> contentsModifier)
-      {
-        this.contentsModifier = contentsModifier;
-      }
     }
 
     /**
      * @author Eike Stepper
      */
-    public static final class ImportText extends ImportElement
+    public static final class ImportText extends ImportLeaf<Reader>
     {
       private final String encoding;
-
-      private UnaryOperator<Reader> contentsModifier;
 
       private ImportText(ImportFolder parent, String name, String encoding)
       {
@@ -657,16 +676,6 @@ public final class LMImporter
       public String getEncoding()
       {
         return encoding;
-      }
-
-      public UnaryOperator<Reader> getContentsModifier()
-      {
-        return contentsModifier;
-      }
-
-      public void setContentsModifier(UnaryOperator<Reader> contentsModifier)
-      {
-        this.contentsModifier = contentsModifier;
       }
     }
   }
@@ -860,7 +869,7 @@ public final class LMImporter
 
       Collection<EObject> copyContents = copier.copyAll(contents);
 
-      String path = element.getPath();
+      String path = element.getCopyPath();
       CDOResource result = copier.getTransaction().createResource(path);
       result.getContents().addAll(copyContents);
       return result;
@@ -885,7 +894,7 @@ public final class LMImporter
           }
         }
 
-        String path = element.getPath();
+        String path = element.getCopyPath();
         CDOBinaryResource result = copier.getTransaction().createBinaryResource(path);
         result.setContents(new CDOBlob(inputStream));
         return result;
@@ -915,7 +924,7 @@ public final class LMImporter
           }
         }
 
-        String path = element.getPath();
+        String path = element.getCopyPath();
         CDOTextResource result = copier.getTransaction().createTextResource(path);
         result.setEncoding(encoding);
         result.setContents(new CDOClob(reader));

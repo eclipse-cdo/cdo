@@ -62,7 +62,6 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     return pages.size() * pageCapacity - firstFree - lastFree;
   }
 
-  @Override
   public void addFirst(E e)
   {
     E[] page;
@@ -88,7 +87,6 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     page[--firstFree] = e;
   }
 
-  @Override
   public void addLast(E e)
   {
     E[] page;
@@ -214,13 +212,11 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     return true;
   }
 
-  @Override
   public E removeFirst()
   {
     throw new UnsupportedOperationException();
   }
 
-  @Override
   public E removeLast()
   {
     throw new UnsupportedOperationException();
@@ -236,13 +232,11 @@ public class GrowingRandomAccessList<E> extends AbstractList<E> implements Queue
     throw new UnsupportedOperationException();
   }
 
-  @Override
   public E getFirst()
   {
     return get(0);
   }
 
-  @Override
   public E getLast()
   {
     return get(size() - 1);

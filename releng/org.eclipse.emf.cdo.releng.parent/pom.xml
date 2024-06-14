@@ -38,7 +38,9 @@ Eike Stepper - initial API and implementation
     <pluginRepository>
       <id>eclipse-maven-snapshots</id>
       <url>https://repo.eclipse.org/content/repositories/snapshots</url>
-      <snapshots><enabled>true</enabled></snapshots>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </pluginRepository>
     
     <!-- Eclipse CBI -->
@@ -49,7 +51,9 @@ Eike Stepper - initial API and implementation
     <pluginRepository>
       <id>eclipse-cbi-snapshots</id>
       <url>https://repo.eclipse.org/content/repositories/cbi-snapshots</url>
-      <snapshots><enabled>true</enabled></snapshots>
+      <snapshots>
+        <enabled>true</enabled>
+      </snapshots>
     </pluginRepository>
     
   <!-- Tycho
@@ -156,8 +160,11 @@ Eike Stepper - initial API and implementation
               <version>1.0.0-SNAPSHOT</version>
             </artifact>
           </target>
-          <!--executionEnvironmentDefault>JavaSE-${javaVersion}</executionEnvironmentDefault-->
-          <!--<includePackedArtifacts>true</includePackedArtifacts>-->
+            <!--<executionEnvironment>JavaSE-21</executionEnvironment>-->
+            <!--<executionEnvironment>org.eclipse.justj.openjdk.hotspot.jre.minimal-17</executionEnvironment>-->
+            <!--  This is needed for Tycho 2.0.0, but breaks 1.7.0 because the compiler source/target levels are not set properly.-->
+            <!--<executionEnvironmentDefault>JavaSE-${javaVersion}</executionEnvironmentDefault>-->
+            <!--<includePackedArtifacts>true</includePackedArtifacts>-->
             <environments>
               <environment>
                 <os>win32</os>

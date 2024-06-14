@@ -134,7 +134,7 @@ public class PrintTraceHandler implements OMTraceHandler
 
     final Thread thread = Thread.currentThread();
     final String threadName = thread.getName();
-    final long threadID = thread.threadId();
+    final long threadID = thread.getId();
     final int threadPriority = thread.getPriority();
     final Thread.State threadState = thread.getState();
 

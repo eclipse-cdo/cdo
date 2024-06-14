@@ -133,9 +133,11 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
     if (size > 0)
     {
       String poolName = toString();
+      ExecutorService executor = null;
 
-      try (ExecutorService executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<>()))
+      try
       {
+        executor = new ThreadPoolExecutor(0, Integer.MAX_VALUE, 100L, TimeUnit.MICROSECONDS, new SynchronousQueue<>());
         Runnable task;
         boolean first = true;
 
@@ -149,6 +151,13 @@ public class ThreadPool extends ThreadPoolExecutor implements RejectedExecutionH
 
           incrementRunTasks();
           executor.execute(task);
+        }
+      }
+      finally
+      {
+        if (executor != null)
+        {
+          executor.shutdown();
         }
       }
     }

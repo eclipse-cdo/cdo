@@ -49,6 +49,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.common.util.EList;
@@ -74,6 +75,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -597,9 +599,10 @@ public final class LMImporter
         return contentsModifier;
       }
 
-      public void setContentsModifier(UnaryOperator<CONTENTS> contentsModifier)
+      public ImportLeaf<CONTENTS> setContentsModifier(UnaryOperator<CONTENTS> contentsModifier)
       {
         this.contentsModifier = contentsModifier;
+        return this;
       }
 
       public String getCopyPath()
@@ -607,9 +610,10 @@ public final class LMImporter
         return copyPath;
       }
 
-      public void setCopyPath(String copyPath)
+      public ImportLeaf<CONTENTS> setCopyPath(String copyPath)
       {
         this.copyPath = copyPath;
+        return this;
       }
     }
 
@@ -635,6 +639,18 @@ public final class LMImporter
       {
         return resource;
       }
+
+      @Override
+      public ImportResource setContentsModifier(UnaryOperator<EList<EObject>> contentsModifier)
+      {
+        return (ImportResource)super.setContentsModifier(contentsModifier);
+      }
+
+      @Override
+      public ImportResource setCopyPath(String copyPath)
+      {
+        return (ImportResource)super.setCopyPath(copyPath);
+      }
     }
 
     /**
@@ -651,6 +667,18 @@ public final class LMImporter
       public Type getType()
       {
         return Type.BINARY;
+      }
+
+      @Override
+      public ImportBinary setContentsModifier(UnaryOperator<InputStream> contentsModifier)
+      {
+        return (ImportBinary)super.setContentsModifier(contentsModifier);
+      }
+
+      @Override
+      public ImportBinary setCopyPath(String copyPath)
+      {
+        return (ImportBinary)super.setCopyPath(copyPath);
       }
     }
 
@@ -676,6 +704,44 @@ public final class LMImporter
       public String getEncoding()
       {
         return encoding;
+      }
+
+      @Override
+      public ImportText setContentsModifier(UnaryOperator<Reader> contentsModifier)
+      {
+        return (ImportText)super.setContentsModifier(contentsModifier);
+      }
+
+      public ImportText setStringContentsModifier(UnaryOperator<String> stringModifier)
+      {
+        return (ImportText)super.setContentsModifier(new StringContentsModifier(stringModifier));
+      }
+
+      @Override
+      public ImportText setCopyPath(String copyPath)
+      {
+        return (ImportText)super.setCopyPath(copyPath);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class StringContentsModifier implements UnaryOperator<Reader>
+    {
+      private final UnaryOperator<String> stringModifier;
+
+      public StringContentsModifier(UnaryOperator<String> stringModifier)
+      {
+        this.stringModifier = stringModifier;
+      }
+
+      @Override
+      public Reader apply(Reader in)
+      {
+        String text = IOUtil.readText(in);
+        text = stringModifier.apply(text);
+        return new StringReader(text);
       }
     }
   }

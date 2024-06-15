@@ -742,6 +742,23 @@ public final class IOUtil
   }
 
   /**
+   * @since 3.25
+   */
+  public static String readText(Reader input) throws IORuntimeException
+  {
+    try
+    {
+      CharArrayWriter output = new CharArrayWriter();
+      copyCharacter(input, output);
+      return output.toString();
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
+  }
+
+  /**
    * @since 3.4
    */
   public static String readText(URL url) throws IORuntimeException
@@ -766,7 +783,7 @@ public final class IOUtil
         charset = Charset.forName(encoding);
       }
 
-      input = new InputStreamReader(connection.getInputStream(), charset);
+      input = new BufferedReader(new InputStreamReader(connection.getInputStream(), charset));
     }
     catch (IOException ex)
     {
@@ -775,13 +792,7 @@ public final class IOUtil
 
     try
     {
-      CharArrayWriter output = new CharArrayWriter();
-      copyCharacter(input, output);
-      return output.toString();
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
+      return readText(input);
     }
     finally
     {
@@ -798,13 +809,7 @@ public final class IOUtil
 
     try
     {
-      CharArrayWriter output = new CharArrayWriter();
-      copyCharacter(input, output);
-      return output.toString();
-    }
-    catch (IOException ex)
-    {
-      throw new IORuntimeException(ex);
+      return readText(input);
     }
     finally
     {

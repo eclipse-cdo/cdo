@@ -28,77 +28,132 @@ import java.util.List;
 public enum ReviewStatus implements Enumerator
 {
   /**
-   * The '<em><b>Open</b></em>' literal object.
+   * The '<em><b>New</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #OPEN_VALUE
+   * @see #NEW_VALUE
    * @generated
    * @ordered
    */
-  OPEN(0, "Open", "Open"),
-
+  NEW(0, "New", "New"),
   /**
-   * The '<em><b>Conflict</b></em>' literal object.
+   * The '<em><b>Source Outdated</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #CONFLICT_VALUE
+  * <!-- end-user-doc -->
+   * @see #SOURCE_OUTDATED_VALUE
    * @generated
    * @ordered
    */
-  CONFLICT(1, "Conflict", "Conflict"),
-
+  SOURCE_OUTDATED(1, "SourceOutdated", "SourceOutdated"),
   /**
-   * The '<em><b>Merged</b></em>' literal object.
+   * The '<em><b>Target Outdated</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #MERGED_VALUE
+  * <!-- end-user-doc -->
+   * @see #TARGET_OUTDATED_VALUE
    * @generated
    * @ordered
    */
-  MERGED(2, "Merged", "Merged"),
-
+  TARGET_OUTDATED(2, "TargetOutdated", "TargetOutdated"),
+  /**
+   * The '<em><b>Outdated</b></em>' literal object.
+   * <!-- begin-user-doc -->
+  * <!-- end-user-doc -->
+   * @see #OUTDATED_VALUE
+   * @generated
+   * @ordered
+   */
+  OUTDATED(3, "Outdated", "Outdated"),
+  /**
+   * The '<em><b>Submitted</b></em>' literal object.
+   * <!-- begin-user-doc -->
+  * <!-- end-user-doc -->
+   * @see #SUBMITTED_VALUE
+   * @generated
+   * @ordered
+   */
+  SUBMITTED(4, "Submitted", "Submitted"),
   /**
    * The '<em><b>Abandoned</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
+  * <!-- end-user-doc -->
    * @see #ABANDONED_VALUE
    * @generated
    * @ordered
    */
-  ABANDONED(3, "Abandoned", "Abandoned");
-
+  ABANDONED(5, "Abandoned", "Abandoned"),
   /**
-   * The '<em><b>Open</b></em>' literal value.
+   * The '<em><b>Restoring</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #OPEN
-   * @model name="Open"
+   * @see #RESTORING_VALUE
    * @generated
    * @ordered
    */
-  public static final int OPEN_VALUE = 0;
-
+  RESTORING(6, "Restoring", "Restoring"),
   /**
-   * The '<em><b>Conflict</b></em>' literal value.
+   * The '<em><b>Deleted</b></em>' literal object.
    * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #CONFLICT
-   * @model name="Conflict"
+  * <!-- end-user-doc -->
+   * @see #DELETED_VALUE
    * @generated
    * @ordered
    */
-  public static final int CONFLICT_VALUE = 1;
+  DELETED(7, "Deleted", "Deleted");
 
   /**
-   * The '<em><b>Merged</b></em>' literal value.
+   * The '<em><b>New</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #MERGED
-   * @model name="Merged"
+   * @see #NEW
+   * @model name="New"
    * @generated
    * @ordered
    */
-  public static final int MERGED_VALUE = 2;
+  public static final int NEW_VALUE = 0;
+
+  /**
+   * The '<em><b>Source Outdated</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #SOURCE_OUTDATED
+   * @model name="SourceOutdated"
+   * @generated
+   * @ordered
+   */
+  public static final int SOURCE_OUTDATED_VALUE = 1;
+
+  /**
+   * The '<em><b>Target Outdated</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #TARGET_OUTDATED
+   * @model name="TargetOutdated"
+   * @generated
+   * @ordered
+   */
+  public static final int TARGET_OUTDATED_VALUE = 2;
+
+  /**
+   * The '<em><b>Outdated</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #OUTDATED
+   * @model name="Outdated"
+   * @generated
+   * @ordered
+   */
+  public static final int OUTDATED_VALUE = 3;
+
+  /**
+   * The '<em><b>Submitted</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #SUBMITTED
+   * @model name="Submitted"
+   * @generated
+   * @ordered
+   */
+  public static final int SUBMITTED_VALUE = 4;
 
   /**
    * The '<em><b>Abandoned</b></em>' literal value.
@@ -109,7 +164,29 @@ public enum ReviewStatus implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int ABANDONED_VALUE = 3;
+  public static final int ABANDONED_VALUE = 5;
+
+  /**
+   * The '<em><b>Restoring</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #RESTORING
+   * @model name="Restoring"
+   * @generated
+   * @ordered
+   */
+  public static final int RESTORING_VALUE = 6;
+
+  /**
+   * The '<em><b>Deleted</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #DELETED
+   * @model name="Deleted"
+   * @generated
+   * @ordered
+   */
+  public static final int DELETED_VALUE = 7;
 
   /**
    * An array of all the '<em><b>Review Status</b></em>' enumerators.
@@ -117,7 +194,8 @@ public enum ReviewStatus implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
-  private static final ReviewStatus[] VALUES_ARRAY = new ReviewStatus[] { OPEN, CONFLICT, MERGED, ABANDONED, };
+  private static final ReviewStatus[] VALUES_ARRAY = new ReviewStatus[] { NEW, SOURCE_OUTDATED, TARGET_OUTDATED, OUTDATED, SUBMITTED, ABANDONED, RESTORING,
+      DELETED, };
 
   /**
    * A public read-only list of all the '<em><b>Review Status</b></em>' enumerators.
@@ -181,16 +259,44 @@ public enum ReviewStatus implements Enumerator
   {
     switch (value)
     {
-    case OPEN_VALUE:
-      return OPEN;
-    case CONFLICT_VALUE:
-      return CONFLICT;
-    case MERGED_VALUE:
-      return MERGED;
+    case NEW_VALUE:
+      return NEW;
+    case SOURCE_OUTDATED_VALUE:
+      return SOURCE_OUTDATED;
+    case TARGET_OUTDATED_VALUE:
+      return TARGET_OUTDATED;
+    case OUTDATED_VALUE:
+      return OUTDATED;
+    case SUBMITTED_VALUE:
+      return SUBMITTED;
     case ABANDONED_VALUE:
       return ABANDONED;
+    case RESTORING_VALUE:
+      return RESTORING;
+    case DELETED_VALUE:
+      return DELETED;
     }
     return null;
+  }
+
+  public static ReviewStatus getOutdated(boolean sourceOutdated, boolean targetOutdated)
+  {
+    if (sourceOutdated)
+    {
+      if (targetOutdated)
+      {
+        return OUTDATED;
+      }
+
+      return SOURCE_OUTDATED;
+    }
+
+    if (targetOutdated)
+    {
+      return TARGET_OUTDATED;
+    }
+
+    return NEW;
   }
 
   /**
@@ -270,6 +376,16 @@ public enum ReviewStatus implements Enumerator
   public String toString()
   {
     return literal;
+  }
+
+  public boolean isOpen()
+  {
+    return value < SUBMITTED_VALUE;
+  }
+
+  public boolean isClosed()
+  {
+    return !isOpen();
   }
 
 } // ReviewStatus

@@ -31,6 +31,7 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.ArrayContentProvider;
 import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -40,7 +41,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewStreamAction extends LMAction<Module>
+public class NewStreamAction extends LMAction.NewElement<Module>
 {
   private static final int INVALID_VERSION = -1;
 
@@ -58,9 +59,9 @@ public class NewStreamAction extends LMAction<Module>
 
   private CommonStreamParameters<Module> streamParameters;
 
-  public NewStreamAction(IWorkbenchPage page, AdapterFactory adapterFactory, Module module)
+  public NewStreamAction(IWorkbenchPage page, StructuredViewer viewer, AdapterFactory adapterFactory, Module module)
   {
-    super(page, //
+    super(page, viewer, //
         "New Stream" + INTERACTIVE, //
         "Add a new stream to module '" + module.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Stream")), //
@@ -168,9 +169,9 @@ public class NewStreamAction extends LMAction<Module>
   }
 
   @Override
-  protected void doRun(Module module, IProgressMonitor monitor) throws Exception
+  protected CDOObject newElement(Module module, IProgressMonitor monitor) throws Exception
   {
-    systemDescriptor.createStream(module, base, streamParameters, monitor);
+    return systemDescriptor.createStream(module, base, streamParameters, monitor);
   }
 
   /**

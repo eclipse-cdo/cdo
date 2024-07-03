@@ -26,6 +26,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
@@ -324,6 +325,20 @@ public class SystemImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
     {
       module.forEachBaseline(consumer);
     }
+  }
+
+  @Override
+  public boolean forEachBaseline(Predicate<Baseline> predicate)
+  {
+    for (Module module : getModules())
+    {
+      if (module.forEachBaseline(predicate))
+      {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**

@@ -48,6 +48,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/impl/ExtendedBaseline.java" type="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <filter id="576782386">
+            <message_arguments>
+                <message_argument value="Baseline"/>
+                <message_argument value="ExtendedBaseline"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/impl/FixedBaselineImpl.java" type="org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl">
         <filter id="576725006">
             <message_arguments>

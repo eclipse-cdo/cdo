@@ -10,9 +10,11 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
+import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.NotificationChain;
@@ -22,6 +24,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Comment</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -290,6 +293,20 @@ public class CommentImpl extends CommentableImpl implements Comment
       return getStatus() != STATUS_EDEFAULT;
     }
     return super.eIsSet(featureID);
+  }
+
+  @Override
+  public System getSystem()
+  {
+    Commentable commentable = getCommentable();
+    return commentable == null ? null : commentable.getSystem();
+  }
+
+  @Override
+  public Review getReview()
+  {
+    Commentable commentable = getCommentable();
+    return commentable == null ? null : commentable.getReview();
   }
 
 } // CommentImpl

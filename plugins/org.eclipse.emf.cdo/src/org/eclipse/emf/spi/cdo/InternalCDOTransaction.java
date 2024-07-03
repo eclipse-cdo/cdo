@@ -54,6 +54,16 @@ public interface InternalCDOTransaction extends CDOTransaction, InternalCDOUserT
   public CommitToken getCommitToken();
 
   /**
+   * @since 4.25
+   */
+  public Map<String, String> getCommitProperties();
+
+  /**
+   * @since 4.25
+   */
+  public void setCommitProperties(Map<String, String> properties);
+
+  /**
    * @since 4.6
    */
   public CDOBranchPoint getCommitMergeSource();

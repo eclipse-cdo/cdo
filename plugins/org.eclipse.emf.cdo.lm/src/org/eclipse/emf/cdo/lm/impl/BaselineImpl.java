@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
+import org.eclipse.emf.cdo.lm.Delivery;
+import org.eclipse.emf.cdo.lm.Drop;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.Stream;
@@ -339,11 +341,55 @@ public abstract class BaselineImpl extends ModelElementImpl implements Baseline
     return CDOBranchPoint.UNSPECIFIED_DATE;
   }
 
+  /**
+   * @since 1.3
+   */
+  public static int type(Object o)
+  {
+    if (o instanceof Change)
+    {
+      return 500;
+    }
+
+    if (o instanceof Drop)
+    {
+      return ((Drop)o).isRelease() ? 400 : 300;
+    }
+
+    if (o instanceof Delivery)
+    {
+      return 200;
+    }
+
+    if (o instanceof ExtendedBaseline)
+    {
+      return ((ExtendedBaseline)o).getSortPriority();
+    }
+
+    return 10000; // Unknown.
+  }
+
   public static int change(Object o)
   {
     if (o instanceof Change)
     {
       return 1;
+    }
+
+    return 0;
+  }
+
+  /**
+   * @since 1.3
+   */
+  public static int extended(Object o)
+  {
+    if (o instanceof Baseline)
+    {
+      if (!(o instanceof Stream || o instanceof Change || o instanceof Delivery || o instanceof Drop))
+      {
+        return 1;
+      }
     }
 
     return 0;

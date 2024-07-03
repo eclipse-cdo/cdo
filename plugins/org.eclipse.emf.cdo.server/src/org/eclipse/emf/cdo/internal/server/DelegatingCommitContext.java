@@ -69,6 +69,12 @@ public abstract class DelegatingCommitContext implements IStoreAccessor.CommitCo
   }
 
   @Override
+  public Map<String, String> getCommitProperties()
+  {
+    return getDelegate().getCommitProperties();
+  }
+
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry()
   {
     return getDelegate().getPackageRegistry();

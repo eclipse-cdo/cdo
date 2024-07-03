@@ -149,6 +149,12 @@ public class CDOXACommitContextImpl implements InternalCDOXACommitContext
   }
 
   @Override
+  public Map<String, String> getCommitProperties()
+  {
+    return delegateCommitContext.getCommitProperties();
+  }
+
+  @Override
   public CDOBranchPoint getCommitMergeSource()
   {
     return delegateCommitContext.getCommitMergeSource();

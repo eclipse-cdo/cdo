@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.AppExtension;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
@@ -50,7 +51,7 @@ public class LMAppExtension extends AppExtension
       "org.eclipse.emf.cdo.lm.server.LMAppExtension.DEFAULT_LIFECYCLE_MANAGER_TYPE", //
       XMLLifecycleManager.Factory.DEFAULT_TYPE);
 
-  private final Map<InternalRepository, XMLLifecycleManager> lifecycleManagers = new HashMap<>();
+  private static final Map<InternalRepository, XMLLifecycleManager> LIFECYCLE_MANAGERS = Collections.synchronizedMap(new HashMap<>());
 
   public LMAppExtension()
   {
@@ -82,7 +83,7 @@ public class LMAppExtension extends AppExtension
   @Override
   protected void stop(InternalRepository repository) throws Exception
   {
-    XMLLifecycleManager lifecycleManager = lifecycleManagers.get(repository);
+    XMLLifecycleManager lifecycleManager = LIFECYCLE_MANAGERS.remove(repository);
     if (lifecycleManager != null)
     {
       OM.LOG.info("Deactivating lifecycle manager of repository " + repository.getName());
@@ -93,13 +94,13 @@ public class LMAppExtension extends AppExtension
   private void configureLifecycleManager(InternalRepository repository, Element lmElement)
   {
     String systemName = getAttribute(lmElement, "systemName");
-    if (systemName == null || systemName.isEmpty())
+    if (StringUtil.isEmpty(systemName))
     {
       throw new IllegalStateException("A systemName must be specified for the lifecycle manager of repository " + repository.getName()); //$NON-NLS-1$
     }
 
     String moduleDefinitionPath = getAttribute(lmElement, "moduleDefinitionPath");
-    if (moduleDefinitionPath == null || moduleDefinitionPath.isEmpty())
+    if (StringUtil.isEmpty(moduleDefinitionPath))
     {
       moduleDefinitionPath = "module.md";
     }
@@ -129,7 +130,7 @@ public class LMAppExtension extends AppExtension
     OM.LOG.info("Activating lifecycle manager of repository " + repository.getName());
     lifecycleManager.activate();
 
-    lifecycleManagers.put(repository, lifecycleManager);
+    LIFECYCLE_MANAGERS.put(repository, lifecycleManager);
   }
 
   /**
@@ -144,7 +145,7 @@ public class LMAppExtension extends AppExtension
   {
     IManagedContainer container = repository.getContainer();
     String lifecycleManagerType = getDefaultLifecycleManagerType();
-    return getContainerElement(lmElement, lifecycleManagerType, container);
+    return getContainerElement(lmElement, lifecycleManagerType, "systemName", container);
   }
 
   /**
@@ -248,7 +249,7 @@ public class LMAppExtension extends AppExtension
     return result;
   }
 
-  private <T> T getContainerElement(Element element, String defaultType, IManagedContainer container)
+  private <T> T getContainerElement(Element element, String defaultType, String descriptionAttribute, IManagedContainer container)
   {
     String type = getAttribute(element, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
@@ -256,7 +257,12 @@ public class LMAppExtension extends AppExtension
       type = defaultType;
     }
 
-    String description = getAttribute(element, "description"); //$NON-NLS-1$
+    if (StringUtil.isEmpty(descriptionAttribute))
+    {
+      descriptionAttribute = "description";//$NON-NLS-1$
+    }
+
+    String description = getAttribute(element, descriptionAttribute);
     if (StringUtil.isEmpty(description))
     {
       Map<String, String> properties = RepositoryConfigurator.getProperties(element, 1, null, container);
@@ -267,6 +273,14 @@ public class LMAppExtension extends AppExtension
     T containerElement = (T)container.getElement(AbstractLifecycleManager.Factory.PRODUCT_GROUP, type, description, false);
 
     return containerElement;
+  }
+
+  /**
+   * @since 1.4
+   */
+  public static XMLLifecycleManager getLifecycleManager(IRepository repository)
+  {
+    return LIFECYCLE_MANAGERS.get(repository);
   }
 
   /**

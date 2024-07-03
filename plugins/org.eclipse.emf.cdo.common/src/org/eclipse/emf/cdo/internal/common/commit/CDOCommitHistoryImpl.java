@@ -44,6 +44,8 @@ import java.util.Map;
  */
 public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CDOCommitHistory
 {
+  private static final ThreadLocal<Long> START_TIME_THREAD_LOCAL = new ThreadLocal<>();
+
   private static final CDOCommitInfo[] NO_ELEMENTS = {};
 
   private final TriggerLoadElement triggerLoadElement = new TriggerLoadElementImpl();
@@ -51,6 +53,8 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   private final CDOCommitInfoManager manager;
 
   private final CDOBranch branch;
+
+  private final long startTime;
 
   private final IListener branchListener = new IListener()
   {
@@ -83,6 +87,17 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     super(true);
     this.manager = manager;
     this.branch = branch;
+
+    Long time = START_TIME_THREAD_LOCAL.get();
+    if (time != null)
+    {
+      startTime = time;
+      START_TIME_THREAD_LOCAL.remove();
+    }
+    else
+    {
+      startTime = CDOBranchPoint.UNSPECIFIED_DATE;
+    }
   }
 
   @Override
@@ -95,6 +110,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   public final CDOBranch getBranch()
   {
     return branch;
+  }
+
+  public final long getStartTime()
+  {
+    return startTime;
   }
 
   @Override
@@ -534,7 +554,22 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
   protected boolean filterCommitInfo(CDOCommitInfo commitInfo)
   {
     CDOBranch commitBranch = commitInfo.getBranch();
-    return commitBranch.isDeleted() || branch != null && commitBranch != branch;
+    if (commitBranch.isDeleted())
+    {
+      return true;
+    }
+
+    if (branch != null && commitBranch != branch)
+    {
+      return true;
+    }
+
+    if (startTime != CDOBranchPoint.UNSPECIFIED_DATE && commitInfo.getTimeStamp() < startTime)
+    {
+      return true;
+    }
+
+    return false;
   }
 
   protected final boolean addCommitInfo(CDOCommitInfo commitInfo)
@@ -657,6 +692,11 @@ public class CDOCommitHistoryImpl extends Container<CDOCommitInfo> implements CD
     }
 
     return commitInfos.getLast();
+  }
+
+  public static void setNextStartTime(long startTime)
+  {
+    START_TIME_THREAD_LOCAL.set(startTime);
   }
 
   /**

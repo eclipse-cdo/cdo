@@ -125,6 +125,10 @@
         </store>
       </moduleTemplate>
     </lifecycleManager>
+      
+    <reviewManager type="default">
+      <participantManager type="ldap"/>
+    </reviewManager>
   </repository>
 
 </cdoServer>

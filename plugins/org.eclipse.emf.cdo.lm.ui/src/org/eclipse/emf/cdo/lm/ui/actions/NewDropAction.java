@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.ui.actions;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.lm.Drop;
 import org.eclipse.emf.cdo.lm.DropType;
@@ -32,7 +31,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 import org.eclipse.equinox.p2.metadata.Version;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -44,7 +42,7 @@ import java.util.concurrent.atomic.AtomicLong;
 /**
  * @author Eike Stepper
  */
-public class NewDropAction extends LMAction.NewElement<Stream>
+public class NewDropAction extends LMAction<Stream>
 {
   private static final long INVALID_DATE = CDOBranchPoint.INVALID_DATE;
 
@@ -68,9 +66,9 @@ public class NewDropAction extends LMAction.NewElement<Stream>
 
   private Text labelText;
 
-  public NewDropAction(IWorkbenchPage page, StructuredViewer viewer, Stream stream, DropType dropType)
+  public NewDropAction(IWorkbenchPage page, Stream stream, DropType dropType)
   {
-    super(page, viewer, //
+    super(page, //
         "New " + dropType.getName() + INTERACTIVE, //
         "Add a new " + dropType.getName().toLowerCase() + " to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage(dropType.isRelease() ? "full/obj16/Release" : "full/obj16/Drop")), //
@@ -162,9 +160,9 @@ public class NewDropAction extends LMAction.NewElement<Stream>
   }
 
   @Override
-  protected CDOObject newElement(Stream stream, IProgressMonitor monitor) throws Exception
+  protected void doRun(Stream stream, IProgressMonitor monitor) throws Exception
   {
-    return systemDescriptor.createDrop(stream, dropType, timeStamp, labelString, monitor);
+    systemDescriptor.createDrop(stream, dropType, timeStamp, labelString, monitor);
   }
 
   private void scheduleVersionExtraction(FloatingBaseline baseline)

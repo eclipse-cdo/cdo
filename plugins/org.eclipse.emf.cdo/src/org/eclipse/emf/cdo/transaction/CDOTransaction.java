@@ -253,16 +253,6 @@ public interface CDOTransaction extends CDOView, CDOCommonTransaction, CDOUserTr
   public void setCommitComment(String comment);
 
   /**
-   * @since 4.25
-   */
-  public String getCommitProperty(String key);
-
-  /**
-   * @since 4.25
-   */
-  public String setCommitProperty(String key, String value);
-
-  /**
    * @since 4.0
    */
   public void setCommittables(Set<? extends EObject> committables);

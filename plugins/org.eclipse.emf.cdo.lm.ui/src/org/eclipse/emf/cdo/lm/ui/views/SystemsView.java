@@ -12,8 +12,6 @@ package org.eclipse.emf.cdo.lm.ui.views;
 
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
-import org.eclipse.emf.cdo.lm.Delivery;
-import org.eclipse.emf.cdo.lm.Drop;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.Module;
@@ -40,10 +38,8 @@ import org.eclipse.emf.cdo.ui.DecoratingStyledLabelProvider;
 import org.eclipse.net4j.ui.shared.SharedIcons;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
-import org.eclipse.net4j.util.ui.MenuFiller;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.MultiViewersView;
@@ -67,7 +63,6 @@ import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PlatformUI;
 
@@ -192,7 +187,7 @@ public class SystemsView extends MultiViewersView
     else if (element instanceof System)
     {
       System system = (System)element;
-      manager.add(new NewModuleAction(page, treeViewer, system));
+      manager.add(new NewModuleAction(page, system));
 
       manager.add(new Action("Close")
       {
@@ -207,43 +202,41 @@ public class SystemsView extends MultiViewersView
     else if (element instanceof Module)
     {
       Module module = (Module)element;
-      manager.add(new NewStreamAction(page, treeViewer, adapterFactory, module));
+      manager.add(new NewStreamAction(page, adapterFactory, module));
       manager.add(new DeleteModuleAction(page, module));
     }
     else if (element instanceof Baseline)
     {
       Baseline baseline = (Baseline)element;
 
-      if (baseline instanceof Delivery || baseline instanceof Drop)
+      manager.add(new CheckoutAction(page, baseline));
+      manager.add(new Separator());
+
+      if (baseline instanceof FixedBaseline)
       {
         FixedBaseline fixedBaseline = (FixedBaseline)baseline;
-        manager.add(new CheckoutAction(page, baseline));
-        manager.add(new Separator());
-
         Stream stream = fixedBaseline.getStream();
-        manager.add(new NewChangeAction(page, treeViewer, stream, fixedBaseline));
+
+        manager.add(new NewChangeAction(page, stream, fixedBaseline));
         manager.add(new Separator());
       }
       else if (baseline instanceof Stream)
       {
         Stream stream = (Stream)baseline;
-        manager.add(new CheckoutAction(page, baseline));
-        manager.add(new Separator());
-        manager.add(new NewChangeAction(page, treeViewer, stream, null));
-        manager.add(new NewDeliveryAction(page, treeViewer, stream, null));
+
+        manager.add(new NewChangeAction(page, stream, null));
+        manager.add(new NewDeliveryAction(page, stream, null));
         manager.add(new Separator());
 
         EList<DropType> possibleDropTypes = stream.getSystem().getProcess().getDropTypes();
         for (DropType dropType : possibleDropTypes)
         {
-          manager.add(new NewDropAction(page, treeViewer, stream, dropType));
+          manager.add(new NewDropAction(page, stream, dropType));
         }
       }
       else if (baseline instanceof Change)
       {
         Change change = (Change)baseline;
-        manager.add(new CheckoutAction(page, baseline));
-        manager.add(new Separator());
 
         if (change.getDeliveries().isEmpty())
         {
@@ -255,18 +248,13 @@ public class SystemsView extends MultiViewersView
         {
           if (change.getDeliveryPoint(s) == null)
           {
-            manager.add(new NewDeliveryAction(page, treeViewer, s, change));
+            manager.add(new NewDeliveryAction(page, s, change));
           }
         }
       }
     }
 
-    manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-
-    IPluginContainer.INSTANCE.forEachElement( //
-        MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class, //
-        filler -> filler.fillMenu(page, viewer, manager, element));
-
+    manager.add(new Separator());
   }
 
   @Override

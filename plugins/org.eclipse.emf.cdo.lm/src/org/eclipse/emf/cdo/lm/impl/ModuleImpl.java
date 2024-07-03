@@ -27,7 +27,6 @@ import org.eclipse.emf.ecore.util.InternalEList;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
@@ -355,7 +354,7 @@ public class ModuleImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
 
     for (Stream stream : getStreams())
     {
-      java.util.stream.Stream<Baseline> element = java.util.stream.Stream.of(stream);
+      java.util.stream.Stream<Baseline> element = stream.getContents().stream();
       if (result == null)
       {
         result = element;
@@ -364,9 +363,6 @@ public class ModuleImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
       {
         result = java.util.stream.Stream.concat(result, element);
       }
-
-      element = stream.getContents().stream();
-      result = java.util.stream.Stream.concat(result, element);
     }
 
     return result;
@@ -379,20 +375,6 @@ public class ModuleImpl extends ModelElementImpl implements org.eclipse.emf.cdo.
     {
       stream.forEachBaseline(consumer);
     }
-  }
-
-  @Override
-  public boolean forEachBaseline(Predicate<Baseline> predicate)
-  {
-    for (Stream stream : getStreams())
-    {
-      if (stream.forEachBaseline(predicate))
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   public static String name(Object o)

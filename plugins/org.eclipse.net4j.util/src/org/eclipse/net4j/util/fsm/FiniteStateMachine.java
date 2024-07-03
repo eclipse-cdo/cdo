@@ -17,7 +17,6 @@ import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
-import java.io.PrintStream;
 import java.text.MessageFormat;
 
 /**
@@ -171,40 +170,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     }
   }
 
-  /**
-   * @since 3.25
-   */
-  public void dump(PrintStream out)
-  {
-    out.println(getClass().getSimpleName());
-
-    for (STATE state : states)
-    {
-      out.println("  " + state);
-
-      for (EVENT event : events)
-      {
-        System.out.print("    " + event + " --> ");
-
-        int s = state.ordinal();
-        int e = event.ordinal();
-        ITransition<STATE, EVENT, SUBJECT, ?> transition = transitions[s][e];
-        if (transition == IGNORE)
-        {
-          System.out.println("IGNORE");
-        }
-        else if (transition == FAIL)
-        {
-          System.out.println("FAIL");
-        }
-        else
-        {
-          System.out.println(transition.getClass().getSimpleName());
-        }
-      }
-    }
-  }
-
   @SuppressWarnings("unchecked")
   protected ITransition<STATE, EVENT, SUBJECT, ?> createIgnoreTransition(STATE state, EVENT event)
   {
@@ -270,6 +235,50 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    * A {@link ITransition transition} that does nothing.
    *
    * @author Eike Stepper
+   * @deprecated Use {@link FiniteStateMachine#IGNORE}
+   */
+  @Deprecated
+  public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
+  {
+    @Override
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public String toString()
+    {
+      return "IGNORE"; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * A {@link ITransition transition} that throws an {@link IllegalStateException}.
+   *
+   * @author Eike Stepper
+   * @deprecated Use {@link FiniteStateMachine#FAIL}
+   */
+  @Deprecated
+  public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
+  {
+    @Override
+    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
+    {
+      // Do nothing
+    }
+
+    @Override
+    public String toString()
+    {
+      return "FAIL"; //$NON-NLS-1$
+    }
+  }
+
+  /**
+   * A {@link ITransition transition} that does nothing.
+   *
+   * @author Eike Stepper
    */
   private static class InternalIgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
@@ -293,13 +302,10 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
    */
   private static class InternalFailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
-    /**
-     * Causes an {@link IllegalStateException} to be thrown in {@link FiniteStateMachine#process(Object, Enum, Object)}.
-     */
     @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
-      // Do nothing.
+      // Do nothing
     }
 
     @Override
@@ -378,50 +384,6 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
     public Enum<?> getNewState()
     {
       return newState;
-    }
-  }
-
-  /**
-   * A {@link ITransition transition} that does nothing.
-   *
-   * @author Eike Stepper
-   * @deprecated Use {@link FiniteStateMachine#IGNORE}
-   */
-  @Deprecated
-  public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
-  {
-    @Override
-    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public String toString()
-    {
-      return "IGNORE"; //$NON-NLS-1$
-    }
-  }
-
-  /**
-   * A {@link ITransition transition} that throws an {@link IllegalStateException}.
-   *
-   * @author Eike Stepper
-   * @deprecated Use {@link FiniteStateMachine#FAIL}
-   */
-  @Deprecated
-  public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
-  {
-    @Override
-    public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
-    {
-      // Do nothing
-    }
-
-    @Override
-    public String toString()
-    {
-      return "FAIL"; //$NON-NLS-1$
     }
   }
 }

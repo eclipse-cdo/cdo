@@ -1138,12 +1138,6 @@ public abstract class SynchronizableRepository extends Repository.Default implem
         }
 
         @Override
-        public Map<String, String> getCommitProperties()
-        {
-          return WriteThroughCommitContext.this.getCommitProperties();
-        }
-
-        @Override
         public CDOBranchPoint getCommitMergeSource()
         {
           return WriteThroughCommitContext.this.getCommitMergeSource();

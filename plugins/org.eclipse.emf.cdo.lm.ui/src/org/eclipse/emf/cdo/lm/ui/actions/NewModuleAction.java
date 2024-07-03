@@ -10,9 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.ui.actions;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.lm.LMFactory;
-import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Process;
 import org.eclipse.emf.cdo.lm.System;
@@ -32,7 +30,6 @@ import org.eclipse.jface.viewers.ComboViewer;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
@@ -45,7 +42,7 @@ import java.util.List;
 /**
  * @author Eike Stepper
  */
-public class NewModuleAction extends LMAction.NewElement<System>
+public class NewModuleAction extends LMAction<System>
 {
   private static final ModuleType NO_MODULE_TYPE = LMFactory.eINSTANCE.createModuleType("");
 
@@ -57,9 +54,9 @@ public class NewModuleAction extends LMAction.NewElement<System>
 
   private CommonStreamParameters<System> streamParameters;
 
-  public NewModuleAction(IWorkbenchPage page, TreeViewer viewer, System system)
+  public NewModuleAction(IWorkbenchPage page, System system)
   {
-    super(page, viewer, //
+    super(page, //
         "New Module" + INTERACTIVE, //
         "Add a new module to system '" + system.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Module")), //
@@ -169,10 +166,9 @@ public class NewModuleAction extends LMAction.NewElement<System>
   }
 
   @Override
-  protected CDOObject newElement(System system, IProgressMonitor monitor) throws Exception
+  protected void doRun(System system, IProgressMonitor monitor) throws Exception
   {
-    Module module = systemDescriptor.createModule(name, type, streamParameters, monitor);
-    return module.getStreams().get(0);
+    systemDescriptor.createModule(name, type, streamParameters, monitor);
   }
 
   /**

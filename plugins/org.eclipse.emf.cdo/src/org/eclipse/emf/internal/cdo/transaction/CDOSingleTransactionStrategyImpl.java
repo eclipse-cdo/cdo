@@ -106,7 +106,6 @@ public class CDOSingleTransactionStrategyImpl implements CDOTransactionStrategy
 
     String comment = transaction.getCommitComment();
     transaction.setCommitComment(null);
-    transaction.setCommitProperties(null);
 
     CDOBranchPoint mergeSource = transaction.getCommitMergeSource();
     transaction.setCommitMergeSource(null);

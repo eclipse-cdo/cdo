@@ -14,9 +14,9 @@ import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
-import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
+import org.eclipse.emf.cdo.lm.reviews.ReviewType;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
@@ -30,7 +30,6 @@ import org.eclipse.emf.ecore.plugin.EcorePlugin;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
- * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * @generated
  */
@@ -82,8 +81,6 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
     {
     case ReviewsPackage.COMMENT:
       return createComment();
-    case ReviewsPackage.HEADING:
-      return createHeading();
     case ReviewsPackage.REVIEW_TEMPLATE:
       return createReviewTemplate();
     case ReviewsPackage.DELIVERY_REVIEW:
@@ -107,6 +104,8 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
     {
     case ReviewsPackage.COMMENT_STATUS:
       return createCommentStatusFromString(eDataType, initialValue);
+    case ReviewsPackage.REVIEW_TYPE:
+      return createReviewTypeFromString(eDataType, initialValue);
     case ReviewsPackage.REVIEW_STATUS:
       return createReviewStatusFromString(eDataType, initialValue);
     default:
@@ -126,6 +125,8 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
     {
     case ReviewsPackage.COMMENT_STATUS:
       return convertCommentStatusToString(eDataType, instanceValue);
+    case ReviewsPackage.REVIEW_TYPE:
+      return convertReviewTypeToString(eDataType, instanceValue);
     case ReviewsPackage.REVIEW_STATUS:
       return convertReviewStatusToString(eDataType, instanceValue);
     default:
@@ -143,18 +144,6 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
   {
     CommentImpl comment = new CommentImpl();
     return comment;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Heading createHeading()
-  {
-    HeadingImpl heading = new HeadingImpl();
-    return heading;
   }
 
   /**
@@ -214,6 +203,31 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
    * @generated
    */
   public String convertCommentStatusToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public ReviewType createReviewTypeFromString(EDataType eDataType, String initialValue)
+  {
+    ReviewType result = ReviewType.get(initialValue);
+    if (result == null)
+    {
+      throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    }
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertReviewTypeToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

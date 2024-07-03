@@ -112,8 +112,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/label"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/impact"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute LM.ecore#//Change/branch"/>
-      <genFeatures property="Readonly" notify="false" children="true" createChild="false"
-          ecoreFeature="ecore:EReference LM.ecore#//Change/deliveries"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Change/deliveries"/>
     </genClasses>
     <genClasses ecoreClass="LM.ecore#//Delivery">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference LM.ecore#//Delivery/change"/>

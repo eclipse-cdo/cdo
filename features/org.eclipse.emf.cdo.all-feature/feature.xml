@@ -40,7 +40,7 @@
          version="0.0.0"/>
 
    <includes
-         id="org.eclipse.emf.cdo.lm.reviews"
+         id="org.eclipse.emf.cdo.lm"
          version="0.0.0"/>
 
    <includes

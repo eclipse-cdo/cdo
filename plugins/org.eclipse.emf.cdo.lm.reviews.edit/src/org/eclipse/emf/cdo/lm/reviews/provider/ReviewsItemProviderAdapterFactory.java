@@ -129,31 +129,6 @@ public class ReviewsItemProviderAdapterFactory extends ReviewsAdapterFactory
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.lm.reviews.Heading} instances.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected HeadingItemProvider headingItemProvider;
-
-  /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.lm.reviews.Heading}.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Adapter createHeadingAdapter()
-  {
-    if (headingItemProvider == null)
-    {
-      headingItemProvider = new HeadingItemProvider(this);
-    }
-
-    return headingItemProvider;
-  }
-
-  /**
    * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.lm.reviews.ReviewTemplate} instances.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -380,10 +355,6 @@ public class ReviewsItemProviderAdapterFactory extends ReviewsAdapterFactory
     if (commentItemProvider != null)
     {
       commentItemProvider.dispose();
-    }
-    if (headingItemProvider != null)
-    {
-      headingItemProvider.dispose();
     }
     if (reviewTemplateItemProvider != null)
     {

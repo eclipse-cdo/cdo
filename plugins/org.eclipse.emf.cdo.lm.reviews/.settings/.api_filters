@@ -1,13 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.lm.reviews" version="2">
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Commentable.java" type="org.eclipse.emf.cdo.lm.reviews.Commentable">
-        <filter id="571473929">
-            <message_arguments>
-                <message_argument value="SystemElement"/>
-                <message_argument value="Commentable"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/DeliveryReview.java" type="org.eclipse.emf.cdo.lm.reviews.DeliveryReview">
         <filter id="571473929">
             <message_arguments>
@@ -24,14 +16,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Heading.java" type="org.eclipse.emf.cdo.lm.reviews.Heading">
-        <filter id="576782386">
-            <message_arguments>
-                <message_argument value="Comment"/>
-                <message_argument value="Heading"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/Review.java" type="org.eclipse.emf.cdo.lm.reviews.Review">
         <filter id="571473929">
             <message_arguments>
@@ -40,80 +24,11 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/CommentImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="Comment"/>
-                <message_argument value="CommentImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/CommentableImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
-        <filter id="574668824">
-            <message_arguments>
-                <message_argument value="Commentable"/>
-                <message_argument value="CommentableImpl"/>
-                <message_argument value="SystemElement"/>
-            </message_arguments>
-        </filter>
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="Commentable"/>
-                <message_argument value="CommentableImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/DeliveryReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="DeliveryReview"/>
-                <message_argument value="DeliveryReviewImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/DropReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="DropReview"/>
-                <message_argument value="DropReviewImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="BaselineImpl"/>
                 <message_argument value="ReviewImpl"/>
-            </message_arguments>
-        </filter>
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="Review"/>
-                <message_argument value="ReviewImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewTemplateImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ReviewTemplate"/>
-                <message_argument value="ReviewTemplateImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewsFactoryImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ReviewsFactory"/>
-                <message_argument value="ReviewsFactoryImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewsPackageImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl">
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="ReviewsPackage"/>
-                <message_argument value="ReviewsPackageImpl"/>
             </message_arguments>
         </filter>
     </resource>

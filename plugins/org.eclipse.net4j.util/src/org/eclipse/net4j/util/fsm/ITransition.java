@@ -11,11 +11,10 @@
 package org.eclipse.net4j.util.fsm;
 
 /**
- * Encapsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.
+ * Encpsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.
  *
  * @author Eike Stepper
  */
-@FunctionalInterface
 public interface ITransition<STATE extends Enum<?>, EVENT extends Enum<?>, SUBJECT, DATA>
 {
   public void execute(SUBJECT subject, STATE state, EVENT event, DATA data);

@@ -42,7 +42,6 @@ import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -119,7 +118,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
     long lastUpdateTime = in.readXLong();
     int commitNumber = in.readXInt();
     String commitComment = in.readString();
-    Map<String, String> commitProperties = ExtendedIOUtil.readProperties(in);
     CDOBranchPoint commitMergeSource = CDOBranchUtil.readBranchPointOrNull(in);
     long optimisticLockingTimeout = in.readXLong();
 
@@ -269,7 +267,6 @@ public class CommitTransactionIndication extends CDOServerIndicationWithMonitori
       commitContext.setDetachedObjectTypes(detachedObjectTypes);
       commitContext.setDetachedObjectVersions(detachedObjectVersions);
       commitContext.setCommitComment(commitComment);
-      commitContext.setCommitProperties(commitProperties);
       commitContext.setCommitMergeSource(commitMergeSource);
       commitContext.setLobs(getIndicationStream());
       commitContext.setLocksOnNewObjects(locksOnNewObjects);

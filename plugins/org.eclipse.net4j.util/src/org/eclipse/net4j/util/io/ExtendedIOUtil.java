@@ -32,9 +32,6 @@ import java.io.ObjectStreamClass;
 import java.io.OutputStream;
 import java.io.Reader;
 import java.io.Writer;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
 
 /**
  * @author Eike Stepper
@@ -470,39 +467,6 @@ public final class ExtendedIOUtil
     }
 
     return literals[ordinal - Byte.MIN_VALUE - 1];
-  }
-
-  /**
-   * @since 3.25
-   */
-  public static void writeProperties(DataOutput out, Map<String, String> properties) throws IOException
-  {
-    int size = properties == null ? 0 : properties.size();
-    writeVarInt(out, size);
-
-    for (Entry<String, String> entry : properties.entrySet())
-    {
-      writeString(out, entry.getKey());
-      writeString(out, entry.getValue());
-    }
-  }
-
-  /**
-   * @since 3.25
-   */
-  public static Map<String, String> readProperties(DataInput in) throws IOException
-  {
-    int size = readVarInt(in);
-    Map<String, String> properties = new HashMap<>(size);
-
-    for (int i = 0; i < size; i++)
-    {
-      String key = readString(in);
-      String value = readString(in);
-      properties.put(key, value);
-    }
-
-    return properties;
   }
 
   /**

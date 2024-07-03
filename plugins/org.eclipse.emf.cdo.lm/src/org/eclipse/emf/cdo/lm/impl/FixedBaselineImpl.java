@@ -115,7 +115,24 @@ public abstract class FixedBaselineImpl extends BaselineImpl implements FixedBas
   @Override
   public EList<Change> getBasedChanges()
   {
-    return getBasedChanges(this);
+    EList<Change> result = new BasicEList<>();
+
+    for (Stream stream : getModule().getStreams())
+    {
+      for (Baseline baseline : stream.getContents())
+      {
+        if (baseline instanceof Change)
+        {
+          Change change = (Change)baseline;
+          if (change.getBase() == this)
+          {
+            result.add(change);
+          }
+        }
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -244,31 +261,6 @@ public abstract class FixedBaselineImpl extends BaselineImpl implements FixedBas
     }
 
     return branchPoint.getTimeStamp();
-  }
-
-  /**
-   * @since 1.3
-   */
-  public static EList<Change> getBasedChanges(FixedBaseline fixedBaseline)
-  {
-    EList<Change> result = new BasicEList<>();
-
-    for (Stream stream : fixedBaseline.getModule().getStreams())
-    {
-      for (Baseline baseline : stream.getContents())
-      {
-        if (baseline instanceof Change)
-        {
-          Change change = (Change)baseline;
-          if (change.getBase() == fixedBaseline)
-          {
-            result.add(change);
-          }
-        }
-      }
-    }
-
-    return result;
   }
 
 } // FixedBaselineImpl

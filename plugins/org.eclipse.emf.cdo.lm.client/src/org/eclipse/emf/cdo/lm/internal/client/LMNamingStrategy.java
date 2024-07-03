@@ -23,11 +23,6 @@ public final class LMNamingStrategy
 
   public static String getChangeBranchName(String changeLabel)
   {
-    return "change-" + sanitizeBranchName(changeLabel);
-  }
-
-  public static String sanitizeBranchName(String branchName)
-  {
-    return branchName.trim().replace('/', '-').replace(' ', '-');
+    return "change-" + changeLabel.trim().replace('/', '-').replace(' ', '-');
   }
 }

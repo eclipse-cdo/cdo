@@ -67,7 +67,7 @@
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.lm.InstallUpdates"
-            name="%install.updates.name"
+            name="%command.name"
             defaultHandler="org.eclipse.emf.cdo.lm.ui.actions.InstallUpdatesHandler"/>
   </extension>
 
@@ -92,9 +92,9 @@
          <command
                commandId="org.eclipse.emf.cdo.lm.InstallUpdates"
                icon="icons/Update.gif"
-               label="%install.updates.label"
+               label="%command.label"
                style="push"
-               tooltip="%install.updates.tooltip">
+               tooltip="%command.tooltip">
             <visibleWhen checkEnabled="false">
                <with variable="activeMenuSelection">
                   <iterate ifEmpty="false">

@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.ui.actions;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
@@ -32,7 +31,6 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -43,7 +41,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewDeliveryAction extends LMAction.NewElement<Stream>
+public class NewDeliveryAction extends LMAction<Stream>
 {
   private static final LMMerger2 MERGER = new InteractiveDeliveryMerger();
 
@@ -61,9 +59,9 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
 
   private Button deleteCheckoutsButton;
 
-  public NewDeliveryAction(IWorkbenchPage page, StructuredViewer viewer, Stream stream, Change change)
+  public NewDeliveryAction(IWorkbenchPage page, Stream stream, Change change)
   {
-    super(page, viewer, //
+    super(page, //
         (change == null ? "New Delivery" : "Deliver to " + stream.getTypeAndName()) + INTERACTIVE, //
         "Add a new delivery to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Delivery")), //
@@ -182,7 +180,7 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
   }
 
   @Override
-  protected CDOObject newElement(Stream stream, IProgressMonitor monitor) throws Exception
+  protected void doRun(Stream stream, IProgressMonitor monitor) throws Exception
   {
     Delivery delivery = systemDescriptor.createDelivery(stream, change, MERGER, monitor);
 
@@ -201,7 +199,5 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
         }
       }
     }
-
-    return delivery;
   }
 }

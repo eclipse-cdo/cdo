@@ -10,11 +10,9 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
-import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
-import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -62,10 +60,8 @@ public class DropReviewItemProvider extends ReviewItemProvider
       super.getPropertyDescriptors(object);
 
       addVersionPropertyDescriptor(object);
-      addDeliveryPropertyDescriptor(object);
       addTargetTimeStampPropertyDescriptor(object);
       addDropTypePropertyDescriptor(object);
-      addDropLabelPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -85,19 +81,6 @@ public class DropReviewItemProvider extends ReviewItemProvider
   }
 
   /**
-   * This adds a property descriptor for the Delivery feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addDeliveryPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DropReview_delivery_feature"), getString("_UI_PropertyDescriptor_description", "_UI_DropReview_delivery_feature", "_UI_DropReview_type"),
-        ReviewsPackage.Literals.DROP_REVIEW__DELIVERY, false, false, true, null, null, null));
-  }
-
-  /**
    * This adds a property descriptor for the Target Time Stamp feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -108,7 +91,7 @@ public class DropReviewItemProvider extends ReviewItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DropReview_targetTimeStamp_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_DropReview_targetTimeStamp_feature", "_UI_DropReview_type"),
-        ReviewsPackage.Literals.DROP_REVIEW__TARGET_TIME_STAMP, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.DROP_REVIEW__TARGET_TIME_STAMP, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -121,21 +104,7 @@ public class DropReviewItemProvider extends ReviewItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DropReview_dropType_feature"), getString("_UI_PropertyDescriptor_description", "_UI_DropReview_dropType_feature", "_UI_DropReview_type"),
-        ReviewsPackage.Literals.DROP_REVIEW__DROP_TYPE, false, false, true, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Drop Label feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addDropLabelPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_DropReview_dropLabel_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_DropReview_dropLabel_feature", "_UI_DropReview_type"),
-        ReviewsPackage.Literals.DROP_REVIEW__DROP_LABEL, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.DROP_REVIEW__DROP_TYPE, true, false, true, null, null, null));
   }
 
   /**
@@ -175,22 +144,12 @@ public class DropReviewItemProvider extends ReviewItemProvider
    * This returns DropReview.gif.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public Object getImage(Object object)
   {
-    DropReview review = (DropReview)object;
-    DropType dropType = review.getDropType();
-    String key = dropType != null && dropType.isRelease() ? "Release" : "Drop";
-    return overlayImage(object, getResourceLocator().getImage("full/obj16/" + key + "Review"));
-  }
-
-  @Override
-  protected Object overlayImage(Object object, Object image)
-  {
-    image = super.overlayImage(object, image);
-    return CommentableItemProvider.overlayCommentableImage((Review)object, image);
+    return overlayImage(object, getResourceLocator().getImage("full/obj16/DropReview"));
   }
 
   /**
@@ -220,19 +179,14 @@ public class DropReviewItemProvider extends ReviewItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public Object getStyledText(Object object)
   {
-    DropReview review = (DropReview)object;
-    DropType dropType = review.getDropType();
-    String type = dropType == null ? getString("_UI_Drop") : dropType.getName();
-
-    StyledString styledString = new StyledString(type + " " + getString("_UI_Review_type"), StyledString.Style.QUALIFIER_STYLER) //
-        .append(" ").append(Integer.toString(review.getId()) + " - " + review.getDropLabel());
-
-    return appendStatus(styledString, review);
+    DropReview dropReview = (DropReview)object;
+    return new StyledString(getString("_UI_DropReview_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
+        .append(Boolean.toString(dropReview.isFloating()));
   }
 
   /**
@@ -251,7 +205,6 @@ public class DropReviewItemProvider extends ReviewItemProvider
     {
     case ReviewsPackage.DROP_REVIEW__VERSION:
     case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
-    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:

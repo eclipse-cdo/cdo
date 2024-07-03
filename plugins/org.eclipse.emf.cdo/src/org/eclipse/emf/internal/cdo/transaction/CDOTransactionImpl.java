@@ -282,8 +282,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
 
   private String commitComment;
 
-  private final Map<String, String> commitProperties = new HashMap<>();
-
   private CommitToken commitToken;
 
   private CDOBranchPoint commitMergeSource;
@@ -4212,83 +4210,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
   }
 
   @Override
-  public Map<String, String> getCommitProperties()
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return new HashMap<>(commitProperties);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  @Override
-  public void setCommitProperties(Map<String, String> properties)
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        commitProperties.clear();
-
-        if (properties != null)
-        {
-          commitProperties.putAll(properties);
-        }
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  @Override
-  public String getCommitProperty(String key)
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return commitProperties.get(key);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  @Override
-  public String setCommitProperty(String key, String value)
-  {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return commitProperties.put(key, value);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-  }
-
-  @Override
   public CDOBranchPoint getCommitMergeSource()
   {
     synchronized (getViewMonitor())
@@ -4881,12 +4802,6 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     public String getCommitComment()
     {
       return transaction.getCommitComment();
-    }
-
-    @Override
-    public Map<String, String> getCommitProperties()
-    {
-      return transaction.getCommitProperties();
     }
 
     @Override

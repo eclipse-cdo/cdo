@@ -11,17 +11,14 @@
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.StyledString;
-import org.eclipse.emf.edit.provider.StyledString.Style;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -35,12 +32,6 @@ import java.util.List;
  */
 public class CommentItemProvider extends CommentableItemProvider
 {
-  private static final Style STYLE_UNRESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/220/40/40")).toStyle();
-
-  private static final Style STYLE_RESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/20/180/20")).toStyle();
-
-  private ItemPropertyDescriptor statusPropertyDescriptor;
-
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
@@ -81,22 +72,20 @@ public class CommentItemProvider extends CommentableItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Comment_text_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_text_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__TEXT, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.COMMENT__TEXT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
    * This adds a property descriptor for the Status feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   protected void addStatusPropertyDescriptor(Object object)
   {
-    // Remember the statusPropertyDescriptor for appendStatus() below.
-    statusPropertyDescriptor = createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Comment_status_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_status_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__STATUS, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null);
-    itemPropertyDescriptors.add(statusPropertyDescriptor);
+        ReviewsPackage.Literals.COMMENT__STATUS, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -109,13 +98,6 @@ public class CommentItemProvider extends CommentableItemProvider
   public Object getImage(Object object)
   {
     return overlayImage(object, getResourceLocator().getImage("full/obj16/Comment"));
-  }
-
-  @Override
-  protected Object overlayImage(Object object, Object image)
-  {
-    image = super.overlayImage(object, image);
-    return CommentableItemProvider.overlayCommentableImage((Comment)object, image);
   }
 
   /**
@@ -145,34 +127,22 @@ public class CommentItemProvider extends CommentableItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public Object getStyledText(Object object)
   {
-    Comment comment = (Comment)object;
-    StyledString styledString = new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(comment.getText());
-
-    CommentStatus status = comment.getStatus();
-    Style style = null;
-    if (status == CommentStatus.UNRESOLVED)
+    String label = ((Comment)object).getText();
+    StyledString styledLabel = new StyledString();
+    if (label == null || label.length() == 0)
     {
-      style = STYLE_UNRESOLVED;
+      styledLabel.append(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER);
     }
-    else if (status == CommentStatus.RESOLVED)
+    else
     {
-      style = STYLE_RESOLVED;
+      styledLabel.append(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
     }
-
-    if (style != null)
-    {
-      getPropertyDescriptors(comment); // Ensure that the descriptors are initialized.
-
-      String statusLabel = statusPropertyDescriptor.getLabelProvider(comment).getText(status);
-      styledString.append("  ").append("[" + statusLabel + "]", style);
-    }
-
-    return styledString;
+    return styledLabel;
   }
 
   /**
@@ -180,26 +150,20 @@ public class CommentItemProvider extends CommentableItemProvider
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
 
-    Object notifier = notification.getNotifier();
     switch (notification.getFeatureID(Comment.class))
     {
     case ReviewsPackage.COMMENT__TEXT:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
-      return;
-
     case ReviewsPackage.COMMENT__STATUS:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
-      CommentableItemProvider.propagateNotification(this, notification, notifier);
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
-
     super.notifyChanged(notification);
   }
 

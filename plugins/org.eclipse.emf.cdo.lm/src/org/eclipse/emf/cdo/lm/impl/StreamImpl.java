@@ -34,7 +34,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> An implementation of the model object
@@ -867,31 +866,10 @@ public class StreamImpl extends FloatingBaselineImpl implements Stream
   @Override
   public void forEachBaseline(Consumer<Baseline> consumer)
   {
-    consumer.accept(this);
-
     for (Baseline baseline : getContents())
     {
       consumer.accept(baseline);
     }
-  }
-
-  @Override
-  public boolean forEachBaseline(Predicate<Baseline> predicate)
-  {
-    if (predicate.test(this))
-    {
-      return true;
-    }
-
-    for (Baseline baseline : getContents())
-    {
-      if (predicate.test(baseline))
-      {
-        return true;
-      }
-    }
-
-    return false;
   }
 
   @Override

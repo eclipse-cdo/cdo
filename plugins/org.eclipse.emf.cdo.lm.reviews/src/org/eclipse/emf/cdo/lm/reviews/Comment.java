@@ -13,8 +13,6 @@ package org.eclipse.emf.cdo.lm.reviews;
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Comment</b></em>'.
- * @noextend This interface is not intended to be extended by clients.
- * @noimplement This interface is not intended to be implemented by clients.
  * <!-- end-user-doc -->
  *
  * <p>
@@ -41,7 +39,7 @@ public interface Comment extends Commentable
    * @see #setCommentable(Commentable)
    * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getComment_Commentable()
    * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getComments
-   * @model opposite="comments" required="true" transient="false"
+   * @model opposite="comments" transient="false"
    * @generated
    */
   Commentable getCommentable();

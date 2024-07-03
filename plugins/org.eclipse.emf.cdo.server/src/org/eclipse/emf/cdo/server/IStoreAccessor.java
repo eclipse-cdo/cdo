@@ -306,11 +306,6 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public String getCommitComment();
 
     /**
-     * @since 4.21
-     */
-    public Map<String, String> getCommitProperties();
-
-    /**
      * @since 4.6
      */
     public CDOBranchPoint getCommitMergeSource();

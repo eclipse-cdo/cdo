@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.function.Consumer;
-import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
@@ -340,11 +339,6 @@ public interface Stream extends FloatingBaseline
   EList<Change> getBasedChanges();
 
   public void forEachBaseline(Consumer<Baseline> consumer);
-
-  /**
-   * @since 1.3
-   */
-  public boolean forEachBaseline(Predicate<Baseline> predicate);
 
   public Baseline getBaseline(String baselineName);
 

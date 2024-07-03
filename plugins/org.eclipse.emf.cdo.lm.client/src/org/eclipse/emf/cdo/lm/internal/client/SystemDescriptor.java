@@ -855,7 +855,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     List<IInstallableUnit> ius = new ArrayList<>();
 
     system.forEachBaseline(baseline -> {
-      if (baseline instanceof Delivery || baseline instanceof Drop)
+      if (baseline instanceof FixedBaseline)
       {
         FixedBaseline fixedBaseline = (FixedBaseline)baseline;
         String moduleName = fixedBaseline.getModule().getName();
@@ -1159,24 +1159,19 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public Delivery createDelivery(Stream stream, Change change, LMMerger merger, IProgressMonitor monitor) throws ConcurrentAccessException, CommitException
   {
-    return createDelivery(stream, change, change, merger, monitor);
-  }
-
-  public Delivery createDelivery(Stream stream, Change change, FloatingBaseline mergeSource, LMMerger merger, IProgressMonitor monitor) throws CommitException
-  {
     Delivery[] result = { null };
     CommitException[] commitException = { null };
 
     String moduleName = stream.getModule().getName();
-    withModuleSession(moduleName, moduleSession -> {
-      CDOBranchRef sourceBranchRef = mergeSource.getBranch();
+    withModuleSession(moduleName, session -> {
+      CDOBranchRef sourceBranchRef = change.getBranch();
       CDOBranchRef targetBranchRef = stream.getBranch();
 
-      CDOBranchManager branchManager = moduleSession.getBranchManager();
+      CDOBranchManager branchManager = session.getBranchManager();
       CDOBranch sourceBranch = sourceBranchRef.resolve(branchManager);
       CDOBranch targetBranch = targetBranchRef.resolve(branchManager);
 
-      CDOCommitInfoManager commitInfoManager = moduleSession.getCommitInfoManager();
+      CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
       long sourceCommitTime = commitInfoManager.getLastCommitOfBranch(sourceBranch, true);
 
       CDOBranchPointRef sourceBranchPointRef = sourceBranchRef.getPointRef(sourceCommitTime);
@@ -1188,8 +1183,8 @@ public final class SystemDescriptor implements ISystemDescriptor
         LMMerger2 merger2 = (LMMerger2)merger;
 
         LMMergeInfos infos = new LMMergeInfos();
-        infos.setSession(moduleSession);
-        infos.setSourceBaseline(mergeSource);
+        infos.setSession(session);
+        infos.setSourceBaseline(change);
         infos.setSourceBranchPoint(sourceBranchPoint);
         infos.setTargetBaseline(stream);
         infos.setTargetBranch(targetBranch);
@@ -1198,7 +1193,7 @@ public final class SystemDescriptor implements ISystemDescriptor
       }
       else
       {
-        targetCommitTime = merger.mergeDelivery(moduleSession, sourceBranchPoint, targetBranch);
+        targetCommitTime = merger.mergeDelivery(session, sourceBranchPoint, targetBranch);
       }
 
       if (targetCommitTime != CDOBranchPoint.INVALID_DATE)
@@ -1248,7 +1243,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     return assembly;
   }
 
-  public void addDependencies(ModuleDefinition from, FixedBaseline to)
+  private void addDependencies(ModuleDefinition from, FixedBaseline to)
   {
     for (DependencyDefinition dependencyDefinition : from.getDependencies())
     {

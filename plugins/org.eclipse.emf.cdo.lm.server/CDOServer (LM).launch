@@ -94,8 +94,6 @@
         <setEntry value="org.eclipse.emf.cdo.examples.company@default:default"/>
         <setEntry value="org.eclipse.emf.cdo.expressions@default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.modules@default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm.reviews.server@default:default"/>
-        <setEntry value="org.eclipse.emf.cdo.lm.reviews@default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.security@default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.server@default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm@default:default"/>

@@ -15,10 +15,6 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 
-import org.eclipse.net4j.util.StringUtil;
-
-import org.eclipse.emf.common.util.ResourceLocator;
-
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.swt.SWT;
@@ -34,20 +30,15 @@ public class CheckoutAction extends LMAction<Baseline>
 {
   private String checkoutLabel;
 
-  public CheckoutAction(IWorkbenchPage page, ResourceLocator resourceLocator, String text, Baseline baseline)
+  public CheckoutAction(IWorkbenchPage page, String text, Baseline baseline)
   {
     super(page, //
         text == null ? "Checkout " + baseline.getTypeAndName() + INTERACTIVE : text, //
-        "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase(), //
+        "Create a checkout for the selected " + LMEditPlugin.INSTANCE.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase(), //
         OM.getImageDescriptor("icons/checkout.gif"), //
-        "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase() + ".", //
+        "Create a checkout for the selected " + LMEditPlugin.INSTANCE.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase() + ".", //
         "icons/Checkout.png", //
         baseline);
-  }
-
-  public CheckoutAction(IWorkbenchPage page, String text, Baseline baseline)
-  {
-    this(page, LMEditPlugin.INSTANCE, text, baseline);
   }
 
   public CheckoutAction(IWorkbenchPage page, Baseline baseline)
@@ -75,7 +66,6 @@ public class CheckoutAction extends LMAction<Baseline>
       Text checkoutLabelText = new Text(parent, SWT.BORDER | SWT.SINGLE);
       checkoutLabelText.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).create());
       checkoutLabelText.setText(checkoutLabel);
-      checkoutLabelText.selectAll();
       checkoutLabelText.addModifyListener(e -> {
         checkoutLabel = checkoutLabelText.getText();
         validateDialog();
@@ -99,7 +89,7 @@ public class CheckoutAction extends LMAction<Baseline>
   @Override
   protected void doRun(Baseline baseline, IProgressMonitor progressMonitor) throws Exception
   {
-    checkout(baseline, checkoutLabel, progressMonitor);
+    checkout(baseline, progressMonitor);
   }
 
   public static String getCheckoutLabel(Baseline baseline)
@@ -107,13 +97,9 @@ public class CheckoutAction extends LMAction<Baseline>
     return "Module " + baseline.getModule().getName() + " - " + baseline.getTypeAndName();
   }
 
-  public static void checkout(Baseline baseline, String checkoutLabel, IProgressMonitor monitor) throws Exception
+  public static void checkout(Baseline baseline, IProgressMonitor monitor) throws Exception
   {
-    if (StringUtil.isEmpty(checkoutLabel))
-    {
-      checkoutLabel = getCheckoutLabel(baseline);
-    }
-
+    String checkoutLabel = getCheckoutLabel(baseline);
     IAssemblyManager.INSTANCE.createDescriptor(checkoutLabel, baseline, monitor);
   }
 }

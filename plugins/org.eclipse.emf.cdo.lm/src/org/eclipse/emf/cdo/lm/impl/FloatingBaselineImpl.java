@@ -201,15 +201,7 @@ public abstract class FloatingBaselineImpl extends BaselineImpl implements Float
   @Override
   public CDOBranchPointRef getBranchPoint()
   {
-    return getBranchPoint(this);
-  }
-
-  /**
-   * @since 1.3
-   */
-  public static CDOBranchPointRef getBranchPoint(FloatingBaseline floatingBaseline)
-  {
-    CDOBranchRef branch = floatingBaseline.getBranch();
+    CDOBranchRef branch = getBranch();
     if (branch == null)
     {
       return null;

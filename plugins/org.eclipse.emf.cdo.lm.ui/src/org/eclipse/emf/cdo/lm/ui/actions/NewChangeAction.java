@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.ui.actions;
 
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
@@ -33,7 +32,6 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
@@ -45,7 +43,7 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewChangeAction extends LMAction.NewElement<Stream>
+public class NewChangeAction extends LMAction<Stream>
 {
   private ISystemDescriptor systemDescriptor;
 
@@ -65,9 +63,9 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
 
   private Text checkoutLabelText;
 
-  public NewChangeAction(IWorkbenchPage page, StructuredViewer viewer, Stream stream, FixedBaseline base)
+  public NewChangeAction(IWorkbenchPage page, Stream stream, FixedBaseline base)
   {
-    super(page, viewer, //
+    super(page, //
         "New Change" + INTERACTIVE, //
         "Add a new change to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Change")), //
@@ -222,7 +220,7 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
   }
 
   @Override
-  protected CDOObject newElement(Stream stream, IProgressMonitor monitor) throws Exception
+  protected void doRun(Stream stream, IProgressMonitor monitor) throws Exception
   {
     monitor.beginTask("", checkout ? 2 : 1);
 
@@ -234,7 +232,7 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
       {
         try
         {
-          CheckoutAction.checkout(change, checkoutLabelString, SubMonitor.convert(monitor, 1));
+          CheckoutAction.checkout(change, SubMonitor.convert(monitor, 1));
         }
         catch (Exception ex)
         {
@@ -248,7 +246,6 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
     }
 
     monitor.done();
-    return change;
   }
 
   private String getCheckoutLabel()

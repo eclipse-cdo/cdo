@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
+import org.eclipse.emf.cdo.lm.reviews.ReviewType;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -56,9 +57,24 @@ public class ReviewTemplateItemProvider extends CommentableItemProvider
     {
       super.getPropertyDescriptors(object);
 
+      addTypePropertyDescriptor(object);
       addReviewersPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Type feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addTypePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_ReviewTemplate_type_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_ReviewTemplate_type_feature", "_UI_ReviewTemplate_type"),
+        ReviewsPackage.Literals.REVIEW_TEMPLATE__TYPE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -119,9 +135,18 @@ public class ReviewTemplateItemProvider extends CommentableItemProvider
   @Override
   public Object getStyledText(Object object)
   {
-    ReviewTemplate reviewTemplate = (ReviewTemplate)object;
-    return new StyledString(getString("_UI_ReviewTemplate_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
-        .append(Integer.toString(reviewTemplate.getCommentCount()));
+    ReviewType labelValue = ((ReviewTemplate)object).getType();
+    String label = labelValue == null ? null : labelValue.toString();
+    StyledString styledLabel = new StyledString();
+    if (label == null || label.length() == 0)
+    {
+      styledLabel.append(getString("_UI_ReviewTemplate_type"), StyledString.Style.QUALIFIER_STYLER);
+    }
+    else
+    {
+      styledLabel.append(getString("_UI_ReviewTemplate_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
+    }
+    return styledLabel;
   }
 
   /**
@@ -138,6 +163,7 @@ public class ReviewTemplateItemProvider extends CommentableItemProvider
 
     switch (notification.getFeatureID(ReviewTemplate.class))
     {
+    case ReviewsPackage.REVIEW_TEMPLATE__TYPE:
     case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;

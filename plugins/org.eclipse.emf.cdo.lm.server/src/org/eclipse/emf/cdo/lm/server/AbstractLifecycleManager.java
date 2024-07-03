@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.server;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
@@ -23,7 +22,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORemoveFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.lm.FloatingBaseline;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Module;
@@ -40,7 +38,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.security.Role;
 import org.eclipse.emf.cdo.security.User;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
 import org.eclipse.emf.cdo.server.IRepositoryProtector;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -66,7 +63,6 @@ import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
@@ -99,7 +95,6 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 import java.util.function.Function;
-import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
@@ -124,10 +119,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   private CDOSession systemSession;
 
-  private CDOView systemView;
-
-  private System system;
-
   private String moduleDefinitionPath;
 
   private final Map<String, InternalRepository> moduleRepositories = new HashMap<>();
@@ -139,24 +130,13 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     @Override
     public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
     {
-      if (isMainBranch(commitContext))
-      {
-        handleCommit(commitContext);
-      }
+      handleCommit(commitContext);
     }
 
     @Override
     public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
     {
-      if (isMainBranch(commitContext))
-      {
-        fireEvent(new SystemCommitEvent(commitContext));
-      }
-    }
-
-    private boolean isMainBranch(CommitContext commitContext)
-    {
-      return commitContext.getBranchPoint().getBranch().isMainBranch();
+      // Do nothing.
     }
   };
 
@@ -178,14 +158,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   public final IJVMConnector getConnector()
   {
     return connector;
-  }
-
-  /**
-   * @since 1.4
-   */
-  public final System getSystem()
-  {
-    return system;
   }
 
   public InternalRepository getSystemRepository()
@@ -286,12 +258,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   }
 
   @Override
-  public String toString()
-  {
-    return super.toString() + "[system=" + systemName + "]";
-  }
-
-  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
@@ -330,11 +296,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
     List<Pair<String, String>> moduleInfos = new ArrayList<>();
     initSystemRepository(systemSession, (moduleName, moduleTypeName) -> moduleInfos.add(Pair.create(moduleName, moduleTypeName)));
-
-    systemView = systemSession.openView();
-
-    CDOResource systemResource = systemView.getResource(System.RESOURCE_PATH);
-    system = (System)systemResource.getContents().get(0);
 
     for (Pair<String, String> info : moduleInfos)
     {
@@ -493,9 +454,52 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
               addedContent -> handleBaselineAddition(commitContext, addedContent), //
               removeFeatureDelta -> handleBaselineDeletion(commitContext, revisionDelta, removeFeatureDelta));
         }
+
+        // TODO Implement more server-side validations.
       }
 
       createNewModuleInfos(commitContext, newModules);
+
+      // InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      // if (newObjects != null) {
+      // for (int i = 0; i < newObjects.length; i++) {
+      // InternalCDORevision addedStream = newObjects[i];
+      // if (addedStream.getEClass() == STREAM) {
+      // CDOID moduleID = (CDOID) addedStream.getContainerID();
+      //
+      // handleListDelta(commitContext, revision, MODULE__STREAMS, true, addedStream
+      // -> {
+      // CDOID streamID = addedStream.getID();
+      // CDOID moduleID = (CDOID) addedStream.getContainerID();
+      // CDOID baseDropID = (CDOID) addedStream.getValue(STREAM__BASE);
+      //
+      // // Fork and wait to avoid a mess with StoreThreadLocal.
+      // long startTimeStamp = executeAgainstModuleSession(commitContext, moduleID,
+      // session -> {
+      // if (CDOIDUtil.isNull(baseDropID)) {
+      // return session.getRepositoryInfo().getCreationTime();
+      // }
+      //
+      // InternalCDORevision baseDrop = (InternalCDORevision) commitContext
+      // .getRevision(baseDropID);
+      // CDOBranchPointRef baseBranchPoint = (CDOBranchPointRef) baseDrop
+      // .getValue(DROP__BRANCH_POINT);
+      // return baseBranchPoint.getTimeStamp();
+      // });
+      //
+      // commitContext.modify(context -> {
+      // for (CDOIDAndVersion newObject : context.getChangeSetData().getNewObjects())
+      // {
+      // if (newObject.getID() == streamID) {
+      // InternalCDORevision streamRevision = (InternalCDORevision) newObject;
+      // streamRevision.set(STREAM__START_TIME_STAMP, 0, startTimeStamp);
+      // }
+      // }
+      // });
+      // });
+      // }
+      // }
+      // }
     }
   }
 
@@ -554,7 +558,38 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   protected void handleBaselineAddition(CommitContext commitContext, InternalCDORevision addedContent)
   {
-    fireEvent(new NewBaselineEvent(commitContext, addedContent));
+    // if (addedContent.getEClass() == DROP)
+    // {
+    // CDOID dropID = addedContent.getID();
+    //
+    // CDOID streamID = (CDOID)addedContent.getContainerID();
+    // InternalCDORevision stream = (InternalCDORevision)commitContext.getRevision(streamID);
+    //
+    // String branchPath = getBranch(stream).getBranchPath();
+    //
+    // CDOID moduleID = (CDOID)stream.getContainerID();
+    // AtomicReference<ModuleDefinition> moduleDefinitionHolder = new AtomicReference<>();
+    //
+    // // Fork and wait to avoid a mess with StoreThreadLocal.
+    // CDOBranchPointRef branchPointRef = executeAgainstModuleSession(commitContext, moduleID, session -> {
+    // CDOBranch branch = session.getBranchManager().getBranch(branchPath);
+    // CDOBranchPoint branchPoint = branch.getPoint(commitContext.getBranchPoint().getTimeStamp());
+    // return new CDOBranchPointRef(branchPoint);
+    // });
+    //
+    // commitContext.modify(context -> {
+    // CDOChangeSetData changeSetData = context.getChangeSetData();
+    // List<CDOIDAndVersion> newObjects = changeSetData.getNewObjects();
+    // for (CDOIDAndVersion newObject : newObjects)
+    // {
+    // if (newObject.getID() == dropID)
+    // {
+    // InternalCDORevision dropRevision = (InternalCDORevision)newObject;
+    // dropRevision.set(DROP__BRANCH_POINT, 0, branchPointRef.getURI());
+    // }
+    // }
+    // });
+    // }
   }
 
   /**
@@ -579,17 +614,29 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
         CDOID moduleTypeID = newModule.getModuleTypeID();
         CDOID initialStreamID = newModule.getInitialStreamID();
 
-        Process process = system.getProcess();
-        Version initialModuleVersion = process.getInitialModuleVersion();
+        CDOView systemView = systemSession.openView();
+        Version initialModuleVersion;
+        String moduleTypeName;
 
-        ModuleType moduleType = moduleTypeID == null ? null : (ModuleType)systemView.getObject(moduleTypeID);
-        String moduleTypeName = moduleType == null ? null : moduleType.getName();
+        try
+        {
+          CDOResource systemResource = systemView.getResource(System.RESOURCE_PATH);
+          System system = (System)systemResource.getContents().get(0);
+          Process process = system.getProcess();
+          initialModuleVersion = process.getInitialModuleVersion();
+
+          ModuleType moduleType = moduleTypeID == null ? null : (ModuleType)systemView.getObject(moduleTypeID);
+          moduleTypeName = moduleType == null ? null : moduleType.getName();
+        }
+        finally
+        {
+          systemView.close();
+        }
 
         createNewModule(moduleName, moduleTypeName);
 
         CDOSession moduleSession = getModuleSession(moduleName);
         CDOTransaction moduleTransaction = moduleSession.openTransaction();
-        long moduleCreationTime = moduleSession.getRepositoryInfo().getCreationTime();
 
         try
         {
@@ -604,13 +651,14 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
             moduleDefinitionResource.getContents().add(moduleDefinition);
             moduleTransaction.commit();
 
+            long creationTime = moduleSession.getRepositoryInfo().getCreationTime();
             commitContext.modify(context -> {
               for (CDOIDAndVersion newObject : context.getChangeSetData().getNewObjects())
               {
                 if (newObject.getID() == initialStreamID)
                 {
                   InternalCDORevision streamRevision = (InternalCDORevision)newObject;
-                  streamRevision.set(STREAM__START_TIME_STAMP, 0, moduleCreationTime);
+                  streamRevision.set(STREAM__START_TIME_STAMP, 0, creationTime);
                 }
               }
             });
@@ -659,21 +707,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       properties.put(LMRepositoryProperties.MODULE_NAME, moduleName);
       properties.put(LMRepositoryProperties.MODULE_TYPE_NAME, moduleTypeName);
 
-      moduleRepository.addHandler(new WriteAccessHandler()
-      {
-        @Override
-        public void handleTransactionBeforeCommitting(ITransaction transaction, CommitContext commitContext, OMMonitor monitor) throws RuntimeException
-        {
-          // Do nothing.
-        }
-
-        @Override
-        public void handleTransactionAfterCommitted(ITransaction transaction, CommitContext commitContext, OMMonitor monitor)
-        {
-          fireEvent(new ModuleCommitEvent(moduleName, moduleTypeName, commitContext));
-        }
-      });
-
       CDOServerUtil.addRepository(container, moduleRepository);
       securitySupport.addModuleRepository(moduleRepository, moduleName, moduleTypeName);
       moduleRepositories.put(moduleName, moduleRepository);
@@ -708,32 +741,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
 
     return configuration;
-  }
-
-  private FloatingBaseline determineBaseline(String moduleName, CDOBranch branch)
-  {
-    CDOBranchRef branchRef = new CDOBranchRef(branch);
-    FloatingBaseline[] result = { null };
-
-    Module module = system.getModule(moduleName);
-    if (module != null)
-    {
-      module.forEachBaseline(baseline -> {
-        if (baseline instanceof FloatingBaseline)
-        {
-          FloatingBaseline floatingBaseline = (FloatingBaseline)baseline;
-          if (floatingBaseline.getBranch().equals(branchRef))
-          {
-            result[0] = floatingBaseline;
-            return true;
-          }
-        }
-
-        return false;
-      });
-    }
-
-    return result[0];
   }
 
   @SuppressWarnings("unused")
@@ -823,52 +830,30 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     map.clear();
   }
 
-  private static AbstractLifecycleManager of(IManagedContainer container, Predicate<AbstractLifecycleManager> predicate)
+  public static CDOBranchRef getBranch(CDORevision floatingBaseline)
   {
-    for (Object element : container.getElements(AbstractLifecycleManager.Factory.PRODUCT_GROUP))
+    String branchPath = null;
+
+    EClass eClass = floatingBaseline.getEClass();
+    if (eClass == STREAM)
     {
-      if (element instanceof AbstractLifecycleManager)
+      branchPath = (String)floatingBaseline.data().get(STREAM__MAINTENANCE_BRANCH, 0);
+      if (branchPath == null)
       {
-        AbstractLifecycleManager lifecycleManager = (AbstractLifecycleManager)element;
-        if (predicate.test(lifecycleManager))
-        {
-          return lifecycleManager;
-        }
+        branchPath = (String)floatingBaseline.data().get(STREAM__DEVELOPMENT_BRANCH, 0);
       }
     }
+    else if (eClass == CHANGE)
+    {
+      branchPath = (String)floatingBaseline.data().get(CHANGE__BRANCH, 0);
+    }
 
-    return null;
-  }
+    if (branchPath == null)
+    {
+      return null;
+    }
 
-  /**
-   * @since 1.4
-   */
-  public static AbstractLifecycleManager of(IManagedContainer container, String systemName)
-  {
-    return of(container, lm -> Objects.equals(lm.getSystemName(), systemName));
-  }
-
-  /**
-   * @since 1.4
-   */
-  public static AbstractLifecycleManager of(IManagedContainer container, IRepository repository)
-  {
-    return of(container, lm -> {
-      if (lm.getSystemRepository() == repository)
-      {
-        return true;
-      }
-
-      for (InternalRepository moduleRepository : lm.getModuleRepositories().values())
-      {
-        if (moduleRepository == repository)
-        {
-          return true;
-        }
-      }
-
-      return false;
-    });
+    return new CDOBranchRef(branchPath);
   }
 
   static
@@ -933,38 +918,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   }
 
   /**
-   * @deprecated As of 1.4 not used anymore. Doesn't work with DeliveryReviews.
-   */
-  @Deprecated
-  public static CDOBranchRef getBranch(CDORevision floatingBaseline)
-  {
-    // String branchPath = null;
-    //
-    // EClass eClass = floatingBaseline.getEClass();
-    // if (eClass == STREAM)
-    // {
-    // branchPath = (String)floatingBaseline.data().get(STREAM__MAINTENANCE_BRANCH, 0);
-    // if (branchPath == null)
-    // {
-    // branchPath = (String)floatingBaseline.data().get(STREAM__DEVELOPMENT_BRANCH, 0);
-    // }
-    // }
-    // else if (eClass == CHANGE)
-    // {
-    // branchPath = (String)floatingBaseline.data().get(CHANGE__BRANCH, 0);
-    // }
-    //
-    // if (branchPath == null)
-    // {
-    // return null;
-    // }
-    //
-    // return new CDOBranchRef(branchPath);
-
-    throw new UnsupportedOperationException();
-  }
-
-  /**
    * @author Eike Stepper
    * @since 1.2
    */
@@ -1010,165 +963,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       builder.append(initialStreamID);
       builder.append("]");
       return builder.toString();
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 1.4
-   */
-  public final class ModuleCommitEvent extends Event
-  {
-    private static final long serialVersionUID = 1L;
-
-    private final String moduleName;
-
-    private final String moduleTypeName;
-
-    private final CommitContext commitContext;
-
-    private transient FloatingBaseline commitBaseline;
-
-    private ModuleCommitEvent(String moduleName, String moduleTypeName, CommitContext commitContext)
-    {
-      super(AbstractLifecycleManager.this);
-      this.moduleName = moduleName;
-      this.moduleTypeName = moduleTypeName;
-      this.commitContext = commitContext;
-    }
-
-    @Override
-    public AbstractLifecycleManager getSource()
-    {
-      return (AbstractLifecycleManager)super.getSource();
-    }
-
-    public String getSystemName()
-    {
-      return getSource().getSystemName();
-    }
-
-    public String getModuleName()
-    {
-      return moduleName;
-    }
-
-    public String getModuleTypeName()
-    {
-      return moduleTypeName;
-    }
-
-    public CommitContext getCommitContext()
-    {
-      return commitContext;
-    }
-
-    public CDOBranch getCommitBranch()
-    {
-      return commitContext.getBranchPoint().getBranch();
-    }
-
-    public FloatingBaseline getCommitBaseline()
-    {
-      if (commitBaseline == null)
-      {
-        CDOBranch branch = getCommitBranch();
-        commitBaseline = determineBaseline(moduleName, branch);
-      }
-
-      return commitBaseline;
-    }
-
-    @Override
-    protected String formatAdditionalParameters()
-    {
-      return "moduleName=" + moduleName + ", moduleTypeName=" + moduleTypeName + ", commitContext=" + commitContext;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 1.4
-   */
-  public final class SystemCommitEvent extends Event
-  {
-    private static final long serialVersionUID = 1L;
-
-    private final CommitContext commitContext;
-
-    private SystemCommitEvent(CommitContext commitContext)
-    {
-      super(AbstractLifecycleManager.this);
-      this.commitContext = commitContext;
-    }
-
-    @Override
-    public AbstractLifecycleManager getSource()
-    {
-      return (AbstractLifecycleManager)super.getSource();
-    }
-
-    public String getSystemName()
-    {
-      return getSource().getSystemName();
-    }
-
-    public CommitContext getCommitContext()
-    {
-      return commitContext;
-    }
-
-    @Override
-    protected String formatAdditionalParameters()
-    {
-      return "commitContext=" + commitContext;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 1.4
-   */
-  public final class NewBaselineEvent extends Event
-  {
-    private static final long serialVersionUID = 1L;
-
-    private final CommitContext commitContext;
-
-    private final CDORevision newBaseline;
-
-    private NewBaselineEvent(CommitContext commitContext, CDORevision newBaseline)
-    {
-      super(AbstractLifecycleManager.this);
-      this.commitContext = commitContext;
-      this.newBaseline = newBaseline;
-    }
-
-    @Override
-    public AbstractLifecycleManager getSource()
-    {
-      return (AbstractLifecycleManager)super.getSource();
-    }
-
-    public String getSystemName()
-    {
-      return getSource().getSystemName();
-    }
-
-    public CommitContext getCommitContext()
-    {
-      return commitContext;
-    }
-
-    public CDORevision getNewBaseline()
-    {
-      return newBaseline;
-    }
-
-    @Override
-    protected String formatAdditionalParameters()
-    {
-      return "commitContext=" + commitContext + ", newBaseline=" + newBaseline;
     }
   }
 

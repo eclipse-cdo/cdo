@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.ui.CDOTopicProvider.Listener;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic.TopicChangedEvent;
 import org.eclipse.emf.cdo.ui.UserInfo;
+import org.eclipse.emf.cdo.ui.UserInfo.Manager;
 import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserChangedEvent;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 
@@ -108,7 +109,7 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
   private static final boolean EXPAND_SELECTION = //
       OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.ui.CDORemoteTopicsView.EXPAND_SELECTION"); //$NON-NLS-1$
 
-  private UserInfo.Manager userInfoManager;
+  private Manager userInfoManager;
 
   private AutoCloseable userInfoListener;
 

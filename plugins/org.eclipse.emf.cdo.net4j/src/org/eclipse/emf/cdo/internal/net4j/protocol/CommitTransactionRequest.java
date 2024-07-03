@@ -48,6 +48,7 @@ import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
+import org.eclipse.net4j.util.io.ExtendedIOUtil;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
@@ -65,6 +66,7 @@ import java.io.Reader;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -77,7 +79,9 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
 
   private final String commitComment;
 
-  private CDOBranchPoint commitMergeSource;
+  private final Map<String, String> commitProperties;
+
+  private final CDOBranchPoint commitMergeSource;
 
   private final CDOCommitData commitData;
 
@@ -117,6 +121,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     }
 
     commitComment = context.getCommitComment();
+    commitProperties = context.getCommitProperties();
     commitMergeSource = context.getCommitMergeSource();
     commitData = context.getCommitData();
     lobs = context.getLobs();
@@ -160,6 +165,7 @@ public class CommitTransactionRequest extends CDOClientRequestWithMonitoring<Com
     out.writeXLong(getLastUpdateTime());
     out.writeXInt(commitNumber);
     out.writeString(commitComment);
+    ExtendedIOUtil.writeProperties(out, commitProperties);
     CDOBranchUtil.writeBranchPointOrNull(out, commitMergeSource);
     out.writeXLong(transaction.options().getOptimisticLockingTimeout());
 

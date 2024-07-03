@@ -149,6 +149,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private String commitComment;
 
+  private Map<String, String> commitProperties;
+
   private CDOBranchPoint commitMergeSource;
 
   private boolean usingEcore;
@@ -282,6 +284,12 @@ public class TransactionCommitContext implements InternalCommitContext
   public String getCommitComment()
   {
     return commitComment;
+  }
+
+  @Override
+  public Map<String, String> getCommitProperties()
+  {
+    return commitProperties;
   }
 
   @Override
@@ -700,6 +708,12 @@ public class TransactionCommitContext implements InternalCommitContext
   public void setCommitComment(String commitComment)
   {
     this.commitComment = commitComment;
+  }
+
+  @Override
+  public void setCommitProperties(Map<String, String> commitProperties)
+  {
+    this.commitProperties = commitProperties;
   }
 
   @Override

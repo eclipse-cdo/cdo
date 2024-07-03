@@ -2,9 +2,12 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="reviews" nsURI="http://www.eclipse.org/emf/CDO/lm/reviews/1.0.0"
     nsPrefix="reviews">
-  <eClassifiers xsi:type="ecore:EClass" name="Commentable" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo/model/etypes.ecore#//ModelElement">
+  <eClassifiers xsi:type="ecore:EClass" name="Commentable" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="review" lowerBound="1"
+        eType="#//Review" changeable="false" volatile="true" transient="true" derived="true"
+        resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
-        eType="#//Comment" containment="true" eOpposite="#//Comment/commentable"/>
+        eType="#//Comment" containment="true" resolveProxies="false" eOpposite="#//Comment/commentable"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="commentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unresolvedCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
@@ -13,57 +16,70 @@
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Commentable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="commentable" eType="#//Commentable"
-        eOpposite="#//Commentable/comments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="commentable" lowerBound="1"
+        eType="#//Commentable" eOpposite="#//Commentable/comments"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommentStatus"
         defaultValueLiteral="None"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//Comment">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommentStatus"
-        defaultValueLiteral="None"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//Comment"/>
   <eClassifiers xsi:type="ecore:EClass" name="ReviewTemplate" eSuperTypes="#//Commentable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" eType="#//ReviewType"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewers" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Review" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Baseline #//Commentable">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="type" lowerBound="1" eType="#//ReviewType"
-        changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewers" lowerBound="1"
         upperBound="-1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" lowerBound="1"
+        eType="#//ReviewStatus"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DeliveryReview" eSuperTypes="#//Review ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//FloatingBaseline">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="base" lowerBound="1" eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//FixedBaseline"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="impact" lowerBound="1"
+        eType="ecore:EEnum ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Impact"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="branch" lowerBound="1"
+        eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"
+        defaultValueLiteral=""/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="deliveries" upperBound="-1"
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Delivery"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sourceChange" lowerBound="1"
-        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Change"/>
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Change"
+        resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceCommit" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetCommit" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="rebaseCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="DropReview" eSuperTypes="#//Review ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//FixedBaseline">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="delivery" lowerBound="1"
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Delivery"
+        resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="targetTimeStamp" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong" changeable="false"
+        volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dropType" lowerBound="1"
-        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//DropType"/>
+        eType="ecore:EClass ../../org.eclipse.emf.cdo.lm/model/LM.ecore#//DropType"
+        resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="dropLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="CommentStatus">
     <eLiterals name="None" literal="None"/>
     <eLiterals name="Unresolved" value="1"/>
     <eLiterals name="Resolved" value="2"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="ReviewType">
-    <eLiterals name="Delivery"/>
-    <eLiterals name="Drop" value="1"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ReviewStatus">
-    <eLiterals name="Open"/>
-    <eLiterals name="Conflict" value="1"/>
-    <eLiterals name="Merged" value="2"/>
-    <eLiterals name="Abandoned" value="3"/>
+    <eLiterals name="New" literal="New"/>
+    <eLiterals name="SourceOutdated" value="1" literal="SourceOutdated"/>
+    <eLiterals name="TargetOutdated" value="2" literal="TargetOutdated"/>
+    <eLiterals name="Outdated" value="3" literal="Outdated"/>
+    <eLiterals name="Submitted" value="4" literal="Submitted"/>
+    <eLiterals name="Abandoned" value="5"/>
+    <eLiterals name="Restoring" value="6" literal="Restoring"/>
+    <eLiterals name="Deleted" value="7" literal="Deleted"/>
   </eClassifiers>
 </ecore:EPackage>

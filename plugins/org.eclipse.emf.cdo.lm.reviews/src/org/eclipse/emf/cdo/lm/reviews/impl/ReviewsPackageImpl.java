@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
+import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
-import org.eclipse.emf.cdo.lm.reviews.ReviewType;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
@@ -35,6 +35,7 @@ import org.eclipse.emf.ecore.impl.EPackageImpl;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
+ * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * @generated
  */
@@ -53,6 +54,13 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   private EClass commentEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass headingEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -88,13 +96,6 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   private EEnum commentStatusEEnum = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EEnum reviewTypeEEnum = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -192,9 +193,53 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EReference getCommentable_Comments()
+  public EReference getCommentable_Review()
   {
     return (EReference)commentableEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getCommentable_Comments()
+  {
+    return (EReference)commentableEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getCommentable_CommentCount()
+  {
+    return (EAttribute)commentableEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getCommentable_UnresolvedCount()
+  {
+    return (EAttribute)commentableEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getCommentable_ResolvedCount()
+  {
+    return (EAttribute)commentableEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -247,6 +292,17 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
+  public EClass getHeading()
+  {
+    return headingEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getReviewTemplate()
   {
     return reviewTemplateEClass;
@@ -258,20 +314,9 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getReviewTemplate_Type()
-  {
-    return (EAttribute)reviewTemplateEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EAttribute getReviewTemplate_Reviewers()
   {
-    return (EAttribute)reviewTemplateEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)reviewTemplateEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -291,7 +336,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getReview_Type()
+  public EAttribute getReview_Id()
   {
     return (EAttribute)reviewEClass.getEStructuralFeatures().get(0);
   }
@@ -324,6 +369,17 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
+  public EAttribute getReview_Status()
+  {
+    return (EAttribute)reviewEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getDeliveryReview()
   {
     return deliveryReviewEClass;
@@ -335,7 +391,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EReference getDeliveryReview_SourceChange()
+  public EReference getDeliveryReview_Base()
   {
     return (EReference)deliveryReviewEClass.getEStructuralFeatures().get(0);
   }
@@ -346,7 +402,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getDeliveryReview_SourceCommit()
+  public EAttribute getDeliveryReview_Impact()
   {
     return (EAttribute)deliveryReviewEClass.getEStructuralFeatures().get(1);
   }
@@ -357,9 +413,64 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getDeliveryReview_TargetCommit()
+  public EAttribute getDeliveryReview_Branch()
   {
     return (EAttribute)deliveryReviewEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDeliveryReview_Deliveries()
+  {
+    return (EReference)deliveryReviewEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDeliveryReview_SourceChange()
+  {
+    return (EReference)deliveryReviewEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDeliveryReview_SourceCommit()
+  {
+    return (EAttribute)deliveryReviewEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDeliveryReview_TargetCommit()
+  {
+    return (EAttribute)deliveryReviewEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDeliveryReview_RebaseCount()
+  {
+    return (EAttribute)deliveryReviewEClass.getEStructuralFeatures().get(7);
   }
 
   /**
@@ -379,9 +490,20 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
+  public EReference getDropReview_Delivery()
+  {
+    return (EReference)dropReviewEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EAttribute getDropReview_TargetTimeStamp()
   {
-    return (EAttribute)dropReviewEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)dropReviewEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -392,7 +514,18 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
   @Override
   public EReference getDropReview_DropType()
   {
-    return (EReference)dropReviewEClass.getEStructuralFeatures().get(1);
+    return (EReference)dropReviewEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDropReview_DropLabel()
+  {
+    return (EAttribute)dropReviewEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -404,17 +537,6 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
   public EEnum getCommentStatus()
   {
     return commentStatusEEnum;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EEnum getReviewType()
-  {
-    return reviewTypeEEnum;
   }
 
   /**
@@ -463,34 +585,46 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
 
     // Create classes and their features
     commentableEClass = createEClass(COMMENTABLE);
+    createEReference(commentableEClass, COMMENTABLE__REVIEW);
     createEReference(commentableEClass, COMMENTABLE__COMMENTS);
+    createEAttribute(commentableEClass, COMMENTABLE__COMMENT_COUNT);
+    createEAttribute(commentableEClass, COMMENTABLE__UNRESOLVED_COUNT);
+    createEAttribute(commentableEClass, COMMENTABLE__RESOLVED_COUNT);
 
     commentEClass = createEClass(COMMENT);
     createEReference(commentEClass, COMMENT__COMMENTABLE);
     createEAttribute(commentEClass, COMMENT__TEXT);
     createEAttribute(commentEClass, COMMENT__STATUS);
 
+    headingEClass = createEClass(HEADING);
+
     reviewTemplateEClass = createEClass(REVIEW_TEMPLATE);
-    createEAttribute(reviewTemplateEClass, REVIEW_TEMPLATE__TYPE);
     createEAttribute(reviewTemplateEClass, REVIEW_TEMPLATE__REVIEWERS);
 
     reviewEClass = createEClass(REVIEW);
-    createEAttribute(reviewEClass, REVIEW__TYPE);
+    createEAttribute(reviewEClass, REVIEW__ID);
     createEAttribute(reviewEClass, REVIEW__AUTHOR);
     createEAttribute(reviewEClass, REVIEW__REVIEWERS);
+    createEAttribute(reviewEClass, REVIEW__STATUS);
 
     deliveryReviewEClass = createEClass(DELIVERY_REVIEW);
+    createEReference(deliveryReviewEClass, DELIVERY_REVIEW__BASE);
+    createEAttribute(deliveryReviewEClass, DELIVERY_REVIEW__IMPACT);
+    createEAttribute(deliveryReviewEClass, DELIVERY_REVIEW__BRANCH);
+    createEReference(deliveryReviewEClass, DELIVERY_REVIEW__DELIVERIES);
     createEReference(deliveryReviewEClass, DELIVERY_REVIEW__SOURCE_CHANGE);
     createEAttribute(deliveryReviewEClass, DELIVERY_REVIEW__SOURCE_COMMIT);
     createEAttribute(deliveryReviewEClass, DELIVERY_REVIEW__TARGET_COMMIT);
+    createEAttribute(deliveryReviewEClass, DELIVERY_REVIEW__REBASE_COUNT);
 
     dropReviewEClass = createEClass(DROP_REVIEW);
+    createEReference(dropReviewEClass, DROP_REVIEW__DELIVERY);
     createEAttribute(dropReviewEClass, DROP_REVIEW__TARGET_TIME_STAMP);
     createEReference(dropReviewEClass, DROP_REVIEW__DROP_TYPE);
+    createEAttribute(dropReviewEClass, DROP_REVIEW__DROP_LABEL);
 
     // Create enums
     commentStatusEEnum = createEEnum(COMMENT_STATUS);
-    reviewTypeEEnum = createEEnum(REVIEW_TYPE);
     reviewStatusEEnum = createEEnum(REVIEW_STATUS);
   }
 
@@ -522,16 +656,17 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     setNsURI(eNS_URI);
 
     // Obtain other dependent packages
-    EtypesPackage theEtypesPackage = (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
     LMPackage theLMPackage = (LMPackage)EPackage.Registry.INSTANCE.getEPackage(LMPackage.eNS_URI);
+    EtypesPackage theEtypesPackage = (EtypesPackage)EPackage.Registry.INSTANCE.getEPackage(EtypesPackage.eNS_URI);
 
     // Create type parameters
 
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    commentableEClass.getESuperTypes().add(theEtypesPackage.getModelElement());
+    commentableEClass.getESuperTypes().add(theLMPackage.getSystemElement());
     commentEClass.getESuperTypes().add(getCommentable());
+    headingEClass.getESuperTypes().add(getComment());
     reviewTemplateEClass.getESuperTypes().add(getCommentable());
     reviewEClass.getESuperTypes().add(theLMPackage.getBaseline());
     reviewEClass.getESuperTypes().add(getCommentable());
@@ -542,44 +677,68 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
 
     // Initialize classes, features, and operations; add parameters
     initEClass(commentableEClass, Commentable.class, "Commentable", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getCommentable_Review(), getReview(), null, "review", null, 1, 1, Commentable.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getCommentable_Comments(), getComment(), getComment_Commentable(), "comments", null, 0, -1, Commentable.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommentable_CommentCount(), ecorePackage.getEInt(), "commentCount", null, 0, 1, Commentable.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommentable_UnresolvedCount(), ecorePackage.getEInt(), "unresolvedCount", null, 0, 1, Commentable.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getCommentable_ResolvedCount(), ecorePackage.getEInt(), "resolvedCount", null, 0, 1, Commentable.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getComment_Commentable(), getCommentable(), getCommentable_Comments(), "commentable", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE,
+    initEReference(getComment_Commentable(), getCommentable(), getCommentable_Comments(), "commentable", null, 1, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComment_Text(), ecorePackage.getEString(), "text", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComment_Status(), getCommentStatus(), "status", "None", 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(headingEClass, Heading.class, "Heading", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
     initEClass(reviewTemplateEClass, ReviewTemplate.class, "ReviewTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReviewTemplate_Type(), getReviewType(), "type", null, 0, 1, ReviewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
-        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReviewTemplate_Reviewers(), ecorePackage.getEString(), "reviewers", null, 0, -1, ReviewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(reviewEClass, Review.class, "Review", IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getReview_Type(), getReviewType(), "type", null, 1, 1, Review.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
-        IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReview_Id(), ecorePackage.getEInt(), "id", null, 1, 1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
+        IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReview_Author(), ecorePackage.getEString(), "author", null, 1, 1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getReview_Reviewers(), ecorePackage.getEString(), "reviewers", null, 1, -1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getReview_Status(), getReviewStatus(), "status", null, 1, 1, Review.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(deliveryReviewEClass, DeliveryReview.class, "DeliveryReview", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getDeliveryReview_SourceChange(), theLMPackage.getChange(), null, "sourceChange", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT,
+    initEReference(getDeliveryReview_Base(), theLMPackage.getFixedBaseline(), null, "base", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDeliveryReview_Impact(), theLMPackage.getImpact(), "impact", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDeliveryReview_Branch(), theEtypesPackage.getBranchRef(), "branch", "", 1, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeliveryReview_Deliveries(), theLMPackage.getDelivery(), null, "deliveries", null, 0, -1, DeliveryReview.class, !IS_TRANSIENT,
         !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDeliveryReview_SourceChange(), theLMPackage.getChange(), null, "sourceChange", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT,
+        !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDeliveryReview_SourceCommit(), ecorePackage.getELong(), "sourceCommit", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getDeliveryReview_TargetCommit(), ecorePackage.getELong(), "targetCommit", null, 1, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDeliveryReview_RebaseCount(), ecorePackage.getEInt(), "rebaseCount", null, 0, 1, DeliveryReview.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(dropReviewEClass, DropReview.class, "DropReview", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getDropReview_TargetTimeStamp(), ecorePackage.getELong(), "targetTimeStamp", null, 1, 1, DropReview.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDropReview_Delivery(), theLMPackage.getDelivery(), null, "delivery", null, 1, 1, DropReview.class, !IS_TRANSIENT, !IS_VOLATILE,
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDropReview_TargetTimeStamp(), ecorePackage.getELong(), "targetTimeStamp", null, 1, 1, DropReview.class, IS_TRANSIENT, IS_VOLATILE,
+        !IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
     initEReference(getDropReview_DropType(), theLMPackage.getDropType(), null, "dropType", null, 1, 1, DropReview.class, !IS_TRANSIENT, !IS_VOLATILE,
-        IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+        IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDropReview_DropLabel(), ecorePackage.getEString(), "dropLabel", null, 0, 1, DropReview.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(commentStatusEEnum, CommentStatus.class, "CommentStatus");
@@ -587,15 +746,15 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     addEEnumLiteral(commentStatusEEnum, CommentStatus.UNRESOLVED);
     addEEnumLiteral(commentStatusEEnum, CommentStatus.RESOLVED);
 
-    initEEnum(reviewTypeEEnum, ReviewType.class, "ReviewType");
-    addEEnumLiteral(reviewTypeEEnum, ReviewType.DELIVERY);
-    addEEnumLiteral(reviewTypeEEnum, ReviewType.DROP);
-
     initEEnum(reviewStatusEEnum, ReviewStatus.class, "ReviewStatus");
-    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.OPEN);
-    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.CONFLICT);
-    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.MERGED);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.NEW);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.SOURCE_OUTDATED);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.TARGET_OUTDATED);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.OUTDATED);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.SUBMITTED);
     addEEnumLiteral(reviewStatusEEnum, ReviewStatus.ABANDONED);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.RESTORING);
+    addEEnumLiteral(reviewStatusEEnum, ReviewStatus.DELETED);
 
     // Create resource
     createResource(eNS_URI);

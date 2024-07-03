@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
+import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
@@ -102,6 +103,12 @@ public class ReviewsAdapterFactory extends AdapterFactoryImpl
     public Adapter caseComment(Comment object)
     {
       return createCommentAdapter();
+    }
+
+    @Override
+    public Adapter caseHeading(Heading object)
+    {
+      return createHeadingAdapter();
     }
 
     @Override
@@ -217,6 +224,21 @@ public class ReviewsAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createCommentAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.Heading <em>Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.lm.reviews.Heading
+   * @generated
+   */
+  public Adapter createHeadingAdapter()
   {
     return null;
   }

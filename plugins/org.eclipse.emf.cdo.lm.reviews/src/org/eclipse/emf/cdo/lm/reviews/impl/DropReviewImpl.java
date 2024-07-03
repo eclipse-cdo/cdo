@@ -10,18 +10,24 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
+import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.lm.Change;
+import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.Dependency;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.LMPackage;
+import org.eclipse.emf.cdo.lm.Stream;
+import org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -33,6 +39,7 @@ import java.util.Collection;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Drop Review</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
@@ -40,8 +47,10 @@ import java.util.Collection;
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getVersion <em>Version</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getDependencies <em>Dependencies</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getDelivery <em>Delivery</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getTargetTimeStamp <em>Target Time Stamp</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getDropType <em>Drop Type</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl#getDropLabel <em>Drop Label</em>}</li>
  * </ul>
  *
  * @generated
@@ -67,6 +76,16 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
    * @ordered
    */
   protected static final long TARGET_TIME_STAMP_EDEFAULT = 0L;
+
+  /**
+   * The default value of the '{@link #getDropLabel() <em>Drop Label</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getDropLabel()
+   * @generated
+   * @ordered
+   */
+  protected static final String DROP_LABEL_EDEFAULT = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -129,9 +148,9 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
    * @generated
    */
   @Override
-  public long getTargetTimeStamp()
+  public Delivery getDelivery()
   {
-    return (Long)eDynamicGet(ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP, ReviewsPackage.Literals.DROP_REVIEW__TARGET_TIME_STAMP, true, true);
+    return (Delivery)eDynamicGet(ReviewsPackage.DROP_REVIEW__DELIVERY, ReviewsPackage.Literals.DROP_REVIEW__DELIVERY, true, true);
   }
 
   /**
@@ -140,9 +159,21 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
    * @generated
    */
   @Override
-  public void setTargetTimeStamp(long newTargetTimeStamp)
+  public void setDelivery(Delivery newDelivery)
   {
-    eDynamicSet(ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP, ReviewsPackage.Literals.DROP_REVIEW__TARGET_TIME_STAMP, newTargetTimeStamp);
+    eDynamicSet(ReviewsPackage.DROP_REVIEW__DELIVERY, ReviewsPackage.Literals.DROP_REVIEW__DELIVERY, newDelivery);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public long getTargetTimeStamp()
+  {
+    Delivery delivery = getDelivery();
+    return delivery == null ? CDOBranchPoint.INVALID_DATE : delivery.getBaseTimeStamp();
   }
 
   /**
@@ -154,16 +185,6 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   public DropType getDropType()
   {
     return (DropType)eDynamicGet(ReviewsPackage.DROP_REVIEW__DROP_TYPE, ReviewsPackage.Literals.DROP_REVIEW__DROP_TYPE, true, true);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public DropType basicGetDropType()
-  {
-    return (DropType)eDynamicGet(ReviewsPackage.DROP_REVIEW__DROP_TYPE, ReviewsPackage.Literals.DROP_REVIEW__DROP_TYPE, false, true);
   }
 
   /**
@@ -183,11 +204,31 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
    * @generated
    */
   @Override
+  public String getDropLabel()
+  {
+    return (String)eDynamicGet(ReviewsPackage.DROP_REVIEW__DROP_LABEL, ReviewsPackage.Literals.DROP_REVIEW__DROP_LABEL, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setDropLabel(String newDropLabel)
+  {
+    eDynamicSet(ReviewsPackage.DROP_REVIEW__DROP_LABEL, ReviewsPackage.Literals.DROP_REVIEW__DROP_LABEL, newDropLabel);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
   public EList<Change> getBasedChanges()
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return FixedBaselineImpl.getBasedChanges(this);
   }
 
   /**
@@ -220,14 +261,14 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
       return getVersion();
     case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
       return getDependencies();
+    case ReviewsPackage.DROP_REVIEW__DELIVERY:
+      return getDelivery();
     case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
       return getTargetTimeStamp();
     case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      if (resolve)
-      {
-        return getDropType();
-      }
-      return basicGetDropType();
+      return getDropType();
+    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+      return getDropLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -250,11 +291,14 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
       getDependencies().clear();
       getDependencies().addAll((Collection<? extends Dependency>)newValue);
       return;
-    case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
-      setTargetTimeStamp((Long)newValue);
+    case ReviewsPackage.DROP_REVIEW__DELIVERY:
+      setDelivery((Delivery)newValue);
       return;
     case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
       setDropType((DropType)newValue);
+      return;
+    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+      setDropLabel((String)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -276,11 +320,14 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
     case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
       getDependencies().clear();
       return;
-    case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
-      setTargetTimeStamp(TARGET_TIME_STAMP_EDEFAULT);
+    case ReviewsPackage.DROP_REVIEW__DELIVERY:
+      setDelivery((Delivery)null);
       return;
     case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
       setDropType((DropType)null);
+      return;
+    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+      setDropLabel(DROP_LABEL_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -300,10 +347,14 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
       return VERSION_EDEFAULT == null ? getVersion() != null : !VERSION_EDEFAULT.equals(getVersion());
     case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
       return !getDependencies().isEmpty();
+    case ReviewsPackage.DROP_REVIEW__DELIVERY:
+      return getDelivery() != null;
     case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
       return getTargetTimeStamp() != TARGET_TIME_STAMP_EDEFAULT;
     case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      return basicGetDropType() != null;
+      return getDropType() != null;
+    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+      return DROP_LABEL_EDEFAULT == null ? getDropLabel() != null : !DROP_LABEL_EDEFAULT.equals(getDropLabel());
     }
     return super.eIsSet(featureID);
   }
@@ -398,21 +449,68 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   }
 
   @Override
-  public String getName()
+  public String getTypeName()
   {
-    return null;
+    return "Drop Review";
   }
 
   @Override
-  public CDOBranchPointRef getBranchPoint()
+  public String getName()
   {
-    return null;
+    return getDropLabel();
+  }
+
+  @Override
+  public int getSortPriority()
+  {
+    DropType dropType = getDropType();
+    return dropType != null && dropType.isRelease() ? 275 : 250;
   }
 
   @Override
   public long getBaseTimeStamp()
   {
-    return 0;
+    return getTargetTimeStamp();
+  }
+
+  @Override
+  public CDOBranchPointRef getBranchPoint()
+  {
+    Stream stream = getStream();
+    if (stream == null)
+    {
+      stream = getContainerStream();
+    }
+
+    if (stream == null)
+    {
+      return null;
+    }
+
+    CDOBranchRef targetBranch = stream.getBranch();
+    if (targetBranch == null)
+    {
+      return null;
+    }
+
+    long baseTimeStamp = getBaseTimeStamp();
+    return targetBranch.getPointRef(baseTimeStamp);
+  }
+
+  private Stream getContainerStream()
+  {
+    EObject container = eContainer();
+    while (container != null)
+    {
+      if (container instanceof Stream)
+      {
+        return (Stream)container;
+      }
+
+      container = container.eContainer();
+    }
+
+    return null;
   }
 
 } // DropReviewImpl

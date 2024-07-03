@@ -65,6 +65,10 @@ Eike Stepper - initial API and implementation
     <module>../../../plugins/org.eclipse.emf.cdo.lm.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.modules</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.modules.edit</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.lm.reviews</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.lm.reviews.edit</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.lm.reviews.server</module>
+    <module>../../../plugins/org.eclipse.emf.cdo.lm.reviews.ui</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.security</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.security.edit</module>
     <module>../../../plugins/org.eclipse.emf.cdo.lm.server</module>

@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
+import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
@@ -98,6 +99,10 @@ public class ReviewsSwitch<T> extends Switch<T>
       T result = caseCommentable(commentable);
       if (result == null)
       {
+        result = caseSystemElement(commentable);
+      }
+      if (result == null)
+      {
         result = caseModelElement(commentable);
       }
       if (result == null)
@@ -116,7 +121,37 @@ public class ReviewsSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
+        result = caseSystemElement(comment);
+      }
+      if (result == null)
+      {
         result = caseModelElement(comment);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case ReviewsPackage.HEADING:
+    {
+      Heading heading = (Heading)theEObject;
+      T result = caseHeading(heading);
+      if (result == null)
+      {
+        result = caseComment(heading);
+      }
+      if (result == null)
+      {
+        result = caseCommentable(heading);
+      }
+      if (result == null)
+      {
+        result = caseSystemElement(heading);
+      }
+      if (result == null)
+      {
+        result = caseModelElement(heading);
       }
       if (result == null)
       {
@@ -131,6 +166,10 @@ public class ReviewsSwitch<T> extends Switch<T>
       if (result == null)
       {
         result = caseCommentable(reviewTemplate);
+      }
+      if (result == null)
+      {
+        result = caseSystemElement(reviewTemplate);
       }
       if (result == null)
       {
@@ -293,6 +332,22 @@ public class ReviewsSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseComment(Comment object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Heading</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Heading</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseHeading(Heading object)
   {
     return null;
   }

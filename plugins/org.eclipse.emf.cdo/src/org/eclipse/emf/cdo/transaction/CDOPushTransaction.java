@@ -1284,6 +1284,18 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     delegate.setCommitComment(comment);
   }
 
+  @Override
+  public String getCommitProperty(String key)
+  {
+    return delegate.getCommitProperty(key);
+  }
+
+  @Override
+  public String setCommitProperty(String key, String value)
+  {
+    return delegate.setCommitProperty(key, value);
+  }
+
   /**
    * @since 4.0
    */

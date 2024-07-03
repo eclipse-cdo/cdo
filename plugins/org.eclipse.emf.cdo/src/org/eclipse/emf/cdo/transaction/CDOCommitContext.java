@@ -73,6 +73,11 @@ public interface CDOCommitContext extends CDOBranchProvider
   public String getCommitComment();
 
   /**
+   * @since 4.25
+   */
+  public Map<String, String> getCommitProperties();
+
+  /**
    * @since 4.6
    */
   public CDOBranchPoint getCommitMergeSource();

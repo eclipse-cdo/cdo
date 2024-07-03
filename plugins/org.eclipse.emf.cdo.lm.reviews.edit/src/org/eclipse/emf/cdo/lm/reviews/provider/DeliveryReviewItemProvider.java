@@ -10,9 +10,13 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
+import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
+import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+
+import org.eclipse.net4j.util.StringUtil;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -58,9 +62,14 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
       super.getPropertyDescriptors(object);
 
       addClosedPropertyDescriptor(object);
+      addBasePropertyDescriptor(object);
+      addImpactPropertyDescriptor(object);
+      addBranchPropertyDescriptor(object);
+      addDeliveriesPropertyDescriptor(object);
       addSourceChangePropertyDescriptor(object);
       addSourceCommitPropertyDescriptor(object);
       addTargetCommitPropertyDescriptor(object);
+      addRebaseCountPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
@@ -80,6 +89,62 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
   }
 
   /**
+   * This adds a property descriptor for the Base feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addBasePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DeliveryReview_base_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_base_feature", "_UI_DeliveryReview_type"),
+        ReviewsPackage.Literals.DELIVERY_REVIEW__BASE, false, false, true, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Impact feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addImpactPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DeliveryReview_impact_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_impact_feature", "_UI_DeliveryReview_type"),
+        ReviewsPackage.Literals.DELIVERY_REVIEW__IMPACT, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Branch feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addBranchPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DeliveryReview_branch_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_branch_feature", "_UI_DeliveryReview_type"),
+        ReviewsPackage.Literals.DELIVERY_REVIEW__BRANCH, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Deliveries feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addDeliveriesPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DeliveryReview_deliveries_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_deliveries_feature", "_UI_DeliveryReview_type"),
+        ReviewsPackage.Literals.DELIVERY_REVIEW__DELIVERIES, false, false, true, null, null, null));
+  }
+
+  /**
    * This adds a property descriptor for the Source Change feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -90,7 +155,7 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DeliveryReview_sourceChange_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_sourceChange_feature", "_UI_DeliveryReview_type"),
-        ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_CHANGE, true, false, true, null, null, null));
+        ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_CHANGE, false, false, true, null, null, null));
   }
 
   /**
@@ -104,7 +169,7 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DeliveryReview_sourceCommit_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_sourceCommit_feature", "_UI_DeliveryReview_type"),
-        ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_COMMIT, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_COMMIT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -118,7 +183,21 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_DeliveryReview_targetCommit_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_targetCommit_feature", "_UI_DeliveryReview_type"),
-        ReviewsPackage.Literals.DELIVERY_REVIEW__TARGET_COMMIT, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.DELIVERY_REVIEW__TARGET_COMMIT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Rebase Count feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addRebaseCountPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_DeliveryReview_rebaseCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_DeliveryReview_rebaseCount_feature", "_UI_DeliveryReview_type"),
+        ReviewsPackage.Literals.DELIVERY_REVIEW__REBASE_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -131,6 +210,13 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
   public Object getImage(Object object)
   {
     return overlayImage(object, getResourceLocator().getImage("full/obj16/DeliveryReview"));
+  }
+
+  @Override
+  protected Object overlayImage(Object object, Object image)
+  {
+    image = super.overlayImage(object, image);
+    return CommentableItemProvider.overlayCommentableImage((Review)object, image);
   }
 
   /**
@@ -160,14 +246,20 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getStyledText(Object object)
   {
-    DeliveryReview deliveryReview = (DeliveryReview)object;
-    return new StyledString(getString("_UI_DeliveryReview_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
-        .append(Boolean.toString(deliveryReview.isFloating()));
+    DeliveryReview review = (DeliveryReview)object;
+    StyledString styledString = new StyledString(getString("_UI_DeliveryReview_type"), StyledString.Style.QUALIFIER_STYLER) //
+        .append(" ").append(Integer.toString(review.getId()));
+
+    Change change = review.getSourceChange();
+    String name = change == null ? null : change.getName();
+    styledString.append(" - ").append(StringUtil.isEmpty(name) ? "???" : name);
+
+    return appendStatus(styledString, review);
   }
 
   /**
@@ -185,8 +277,11 @@ public class DeliveryReviewItemProvider extends ReviewItemProvider
     switch (notification.getFeatureID(DeliveryReview.class))
     {
     case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
+    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
     case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
+    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }

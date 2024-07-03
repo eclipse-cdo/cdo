@@ -39,6 +39,7 @@ Eike Stepper - initial API and implementation
     <module>../../../features/org.eclipse.emf.cdo.examples.installer-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.license-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.lm-feature</module>
+    <module>../../../features/org.eclipse.emf.cdo.lm.reviews-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.migrator-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.sdk-feature</module>
     <module>../../../features/org.eclipse.emf.cdo.server-feature</module>

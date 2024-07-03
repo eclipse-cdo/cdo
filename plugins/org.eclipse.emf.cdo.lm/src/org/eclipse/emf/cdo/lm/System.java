@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.common.util.EList;
 
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
@@ -112,5 +113,10 @@ public interface System extends ModelElement
   public java.util.stream.Stream<Baseline> getAllBaselines();
 
   public void forEachBaseline(Consumer<Baseline> consumer);
+
+  /**
+   * @since 1.3
+   */
+  public boolean forEachBaseline(Predicate<Baseline> predicate);
 
 } // System

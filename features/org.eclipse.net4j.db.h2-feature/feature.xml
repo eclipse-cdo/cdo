@@ -12,7 +12,7 @@
 <feature
       id="org.eclipse.net4j.db.h2"
       label="%featureName"
-      version="4.5.5.qualifier"
+      version="5.0.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">
@@ -42,7 +42,7 @@
          unpack="false"/>
 
    <plugin
-         id="org.h2"
+         id="com.h2database"
          download-size="0"
          install-size="0"
          version="0.0.0"

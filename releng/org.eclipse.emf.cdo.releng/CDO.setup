@@ -248,7 +248,7 @@
         </detail>
         <detail
             key="extraUnits">
-          <value>org.eclipse.orbit.mongodb, org.h2, org.slf4j.api, org.apache.commons.lang, org.apache.log4j, org.eclipse.jetty.websocket.server, org.eclipse.jetty.websocket.client</value>
+          <value>org.eclipse.orbit.mongodb, org.slf4j.api, org.apache.commons.lang, org.apache.log4j, org.eclipse.jetty.websocket.server, org.eclipse.jetty.websocket.client</value>
         </detail>
         <detail
             key="generateImplicitUnits">
@@ -304,7 +304,7 @@
         <repository
             url="https://download.eclipse.org/eclipse/updates/latest"/>
         <repository
-            url="https://download.eclipse.org/tools/orbit/downloads/latest-S"/>
+            url="https://download.eclipse.org/tools/orbit/simrel/maven-osgi/nightly/latest"/>
         <repository
             url="https://download.eclipse.org/tools/orbit/downloads/drops/R20220302172233/repository">
           <annotation

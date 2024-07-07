@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.db.tests
-Bundle-Version: 4.1.0.qualifier
+Bundle-Version: 4.1.1.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -16,17 +16,14 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.db.hsqldb;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.db.mysql;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.db.postgresql;bundle-version="[4.0.0,5.0.0)";resolution:=optional;visibility:=reexport
-Import-Package: org.h2;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.command;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.expression;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.jdbc;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.jdbcx;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.util;version="[1.0.0,2.0.0)";resolution:=optional,
- org.h2.value;version="[1.0.0,2.0.0)";resolution:=optional,
- com.mysql.jdbc;version="[5.1.0,6.0.0)";resolution:=optional,
+Import-Package: com.mysql.jdbc;version="[5.1.0,6.0.0)";resolution:=optional,
  com.mysql.jdbc.jdbc2.optional;version="[5.1.0,6.0.0)";resolution:=optional,
  org.apache.derby.jdbc;version="[10.0.0,11.0.0)";resolution:=optional,
+ org.h2.jdbc;version="[2.0.0,3.0.0)";resolution:=optional,
+ org.h2.jdbcx;version="[2.0.0,3.0.0)";resolution:=optional,
+ org.h2.util;version="[2.0.0,3.0.0)";resolution:=optional,
+ org.h2.value;version="[2.0.0,3.0.0)";resolution:=optional,
  org.hsqldb.jdbc;version="[2.0.0,3.0.0)";resolution:=optional
-Export-Package: org.eclipse.net4j.db.tests;version="4.1.0";x-internal:=true,
- org.eclipse.net4j.db.tests.bundle;version="4.1.0";x-internal:=true
+Export-Package: org.eclipse.net4j.db.tests;version="4.1.1";x-internal:=true,
+ org.eclipse.net4j.db.tests.bundle;version="4.1.1";x-internal:=true
 Automatic-Module-Name: org.eclipse.net4j.db.tests

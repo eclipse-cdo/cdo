@@ -52,7 +52,7 @@ public class ResolveCommentAction extends LMAction<Comment>
   @Override
   protected void doRun(Comment comment, IProgressMonitor monitor) throws Exception
   {
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(getContext().getSystem());
+    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(comment);
     systemDescriptor.modify(comment, c -> {
       c.setStatus(CommentStatus.RESOLVED);
       return null;

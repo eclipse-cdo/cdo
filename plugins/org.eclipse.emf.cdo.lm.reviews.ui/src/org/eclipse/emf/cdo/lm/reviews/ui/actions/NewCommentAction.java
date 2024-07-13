@@ -43,19 +43,22 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewCommentAction extends LMAction.NewElement<Commentable>
 {
+  private final boolean heading;
+
   private String text;
 
   private CommentStatus status = CommentStatus.NONE;
 
-  public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, Commentable commentable)
+  public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, Commentable commentable, boolean heading)
   {
     super(page, viewer, //
-        "New Comment" + INTERACTIVE, //
-        "Add a new comment", //
-        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/Comment")), //
-        "Add a new comment.", //
-        "icons/wizban/NewComment.png", //
+        "New " + getTypeString(heading) + INTERACTIVE, //
+        "Add a new " + getTypeString(heading).toLowerCase(), //
+        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/" + getTypeString(heading))), //
+        "Add a new " + getTypeString(heading).toLowerCase() + ".", //
+        "icons/wizban/New" + getTypeString(heading) + ".png", //
         commentable);
+    this.heading = heading;
   }
 
   @Override
@@ -72,8 +75,14 @@ public class NewCommentAction extends LMAction.NewElement<Commentable>
       label.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).create());
       label.setText("Text:");
 
-      Text textArea = new Text(parent, SWT.BORDER | SWT.MULTI);
-      textArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).create());
+      int style = SWT.BORDER;
+      if (!heading)
+      {
+        style |= SWT.MULTI;
+      }
+
+      Text textArea = new Text(parent, style);
+      textArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, !heading).align(SWT.FILL, SWT.FILL).create());
       textArea.addModifyListener(event -> {
         text = textArea.getText();
         validateDialog();
@@ -81,12 +90,7 @@ public class NewCommentAction extends LMAction.NewElement<Commentable>
     }
 
     {
-      Label label = new Label(parent, SWT.NONE);
-      label.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).create());
-      label.setText("Needs Resolution:");
-
-      Button button = new Button(parent, SWT.CHECK);
-      button.setLayoutData(GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.CENTER).create());
+      Button button = newCheckBox(parent, "Needs Resolution");
       button.addSelectionListener(new SelectionAdapter()
       {
         @Override
@@ -113,14 +117,32 @@ public class NewCommentAction extends LMAction.NewElement<Commentable>
   @Override
   protected CDOObject newElement(Commentable commentable, IProgressMonitor monitor) throws Exception
   {
-    Comment comment = ReviewsFactory.eINSTANCE.createComment();
+    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(commentable);
+    String author = systemDescriptor.getSystemRepository().getCredentials().getUserID();
+
+    Comment comment = createComment();
+    comment.setAuthor(author);
     comment.setText(text);
     comment.setStatus(status);
 
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(getContext().getSystem());
     return systemDescriptor.modify(commentable, c -> {
       c.getComments().add(comment);
       return comment;
     }, monitor);
+  }
+
+  private Comment createComment()
+  {
+    if (heading)
+    {
+      return ReviewsFactory.eINSTANCE.createHeading();
+    }
+
+    return ReviewsFactory.eINSTANCE.createComment();
+  }
+
+  private static String getTypeString(boolean heading)
+  {
+    return heading ? "Heading" : "Comment";
   }
 }

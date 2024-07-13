@@ -266,13 +266,31 @@ public interface ReviewsPackage extends EPackage
   int COMMENT__COMMENTABLE = COMMENTABLE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Parent Heading</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__PARENT_HEADING = COMMENTABLE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__AUTHOR = COMMENTABLE_FEATURE_COUNT + 2;
+
+  /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMENT__TEXT = COMMENTABLE_FEATURE_COUNT + 1;
+  int COMMENT__TEXT = COMMENTABLE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -281,7 +299,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__STATUS = COMMENTABLE_FEATURE_COUNT + 2;
+  int COMMENT__STATUS = COMMENTABLE_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Comment</em>' class.
@@ -290,7 +308,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 3;
+  int COMMENT_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 5;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -393,6 +411,24 @@ public interface ReviewsPackage extends EPackage
   int HEADING__COMMENTABLE = COMMENT__COMMENTABLE;
 
   /**
+   * The feature id for the '<em><b>Parent Heading</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__PARENT_HEADING = COMMENT__PARENT_HEADING;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__AUTHOR = COMMENT__AUTHOR;
+
+  /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -411,13 +447,49 @@ public interface ReviewsPackage extends EPackage
   int HEADING__STATUS = COMMENT__STATUS;
 
   /**
+   * The feature id for the '<em><b>Previous Heading</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__PREVIOUS_HEADING = COMMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Next Heading</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__NEXT_HEADING = COMMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Parent Index</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__PARENT_INDEX = COMMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Outline Number</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int HEADING__OUTLINE_NUMBER = COMMENT_FEATURE_COUNT + 3;
+
+  /**
    * The number of structural features of the '<em>Heading</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HEADING_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 0;
+  int HEADING_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 4;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -1430,6 +1502,28 @@ public interface ReviewsPackage extends EPackage
   EReference getComment_Commentable();
 
   /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getParentHeading <em>Parent Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parent Heading</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getParentHeading()
+   * @see #getComment()
+   * @generated
+   */
+  EReference getComment_ParentHeading();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor <em>Author</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Author</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor()
+   * @see #getComment()
+   * @generated
+   */
+  EAttribute getComment_Author();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getText <em>Text</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1460,6 +1554,50 @@ public interface ReviewsPackage extends EPackage
    * @generated
    */
   EClass getHeading();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getPreviousHeading <em>Previous Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Previous Heading</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getPreviousHeading()
+   * @see #getHeading()
+   * @generated
+   */
+  EReference getHeading_PreviousHeading();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getNextHeading <em>Next Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Next Heading</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getNextHeading()
+   * @see #getHeading()
+   * @generated
+   */
+  EReference getHeading_NextHeading();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getParentIndex <em>Parent Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Parent Index</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getParentIndex()
+   * @see #getHeading()
+   * @generated
+   */
+  EAttribute getHeading_ParentIndex();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getOutlineNumber <em>Outline Number</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Outline Number</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getOutlineNumber()
+   * @see #getHeading()
+   * @generated
+   */
+  EAttribute getHeading_OutlineNumber();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.ReviewTemplate <em>Review Template</em>}'.
@@ -1801,6 +1939,22 @@ public interface ReviewsPackage extends EPackage
     EReference COMMENT__COMMENTABLE = eINSTANCE.getComment_Commentable();
 
     /**
+     * The meta object literal for the '<em><b>Parent Heading</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMMENT__PARENT_HEADING = eINSTANCE.getComment_ParentHeading();
+
+    /**
+     * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMMENT__AUTHOR = eINSTANCE.getComment_Author();
+
+    /**
      * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -1825,6 +1979,38 @@ public interface ReviewsPackage extends EPackage
      * @generated
      */
     EClass HEADING = eINSTANCE.getHeading();
+
+    /**
+     * The meta object literal for the '<em><b>Previous Heading</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HEADING__PREVIOUS_HEADING = eINSTANCE.getHeading_PreviousHeading();
+
+    /**
+     * The meta object literal for the '<em><b>Next Heading</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference HEADING__NEXT_HEADING = eINSTANCE.getHeading_NextHeading();
+
+    /**
+     * The meta object literal for the '<em><b>Parent Index</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HEADING__PARENT_INDEX = eINSTANCE.getHeading_ParentIndex();
+
+    /**
+     * The meta object literal for the '<em><b>Outline Number</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute HEADING__OUTLINE_NUMBER = eINSTANCE.getHeading_OutlineNumber();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl <em>Review Template</em>}' class.

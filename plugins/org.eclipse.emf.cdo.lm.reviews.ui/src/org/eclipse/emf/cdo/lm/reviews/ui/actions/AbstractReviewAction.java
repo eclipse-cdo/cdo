@@ -44,7 +44,7 @@ public abstract class AbstractReviewAction extends LMAction<Review>
   protected final void preRun() throws Exception
   {
     Review review = getContext();
-    systemDescriptor = ISystemManager.INSTANCE.getDescriptor(review.getSystem());
+    systemDescriptor = ISystemManager.INSTANCE.getDescriptor(review);
 
     preRun(review, systemDescriptor);
     super.preRun();

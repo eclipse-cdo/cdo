@@ -32,7 +32,6 @@ import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.SubMonitor;
 import org.eclipse.jface.layout.GridDataFactory;
-import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
@@ -50,8 +49,6 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
   private final DropType dropType;
 
   private String dropLabel;
-
-  private Button checkoutButton;
 
   private boolean checkout;
 
@@ -101,17 +98,9 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
     }
 
     {
-      new Label(parent, SWT.NONE);
-
-      Composite composite = new Composite(parent, SWT.NONE);
-      composite.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).grab(true, false).create());
-      composite.setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
-
-      checkoutButton = new Button(composite, SWT.CHECK);
-      checkoutButton.setText("Checkout");
-      checkoutButton.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).create());
-      checkoutButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
-        checkout = checkoutButton.getSelection();
+      Button button = newCheckBox(parent, "Checkout");
+      button.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+        checkout = button.getSelection();
         validateDialog();
       }));
     }
@@ -132,6 +121,7 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
   protected CDOObject newElement(Delivery delivery, IProgressMonitor monitor) throws Exception
   {
     ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(delivery);
+    String author = systemDescriptor.getSystemRepository().getCredentials().getUserID();
 
     DropReview review = systemDescriptor.modify(delivery, d -> {
       DropReview r = ReviewsFactory.eINSTANCE.createDropReview();
@@ -140,7 +130,7 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
       r.setDropLabel(dropLabel);
       r.setVersion(d.getVersion());
       r.getDependencies().addAll(EcoreUtil.copyAll(d.getDependencies()));
-      r.setAuthor(systemDescriptor.getSystemRepository().getCredentials().getUserID());
+      r.setAuthor(author);
       d.getStream().insertContent(r);
 
       Annotation annotation = ReviewsPackage.getAnnotation(d, true);

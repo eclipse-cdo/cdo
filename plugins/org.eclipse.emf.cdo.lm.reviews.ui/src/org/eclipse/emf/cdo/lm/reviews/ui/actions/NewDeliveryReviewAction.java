@@ -152,11 +152,13 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
     // org.eclipse.emf.cdo.lm.reviews.server.ReviewManager.handleNewReview()
 
     ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(stream);
+    String author = systemDescriptor.getSystemRepository().getCredentials().getUserID();
+
     DeliveryReview review = systemDescriptor.modify(stream, s -> {
       Change c = s.cdoView().getObject(change);
 
       DeliveryReview r = ReviewsFactory.eINSTANCE.createDeliveryReview();
-      r.setAuthor(systemDescriptor.getSystemRepository().getCredentials().getUserID());
+      r.setAuthor(author);
       r.setSourceChange(change);
       s.insertContent(r);
 

@@ -270,9 +270,31 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
+  public EReference getComment_ParentHeading()
+  {
+    return (EReference)commentEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getComment_Author()
+  {
+    return (EAttribute)commentEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EAttribute getComment_Text()
   {
-    return (EAttribute)commentEClass.getEStructuralFeatures().get(1);
+    return (EAttribute)commentEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -283,7 +305,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
   @Override
   public EAttribute getComment_Status()
   {
-    return (EAttribute)commentEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)commentEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -295,6 +317,50 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
   public EClass getHeading()
   {
     return headingEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHeading_PreviousHeading()
+  {
+    return (EReference)headingEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getHeading_NextHeading()
+  {
+    return (EReference)headingEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHeading_ParentIndex()
+  {
+    return (EAttribute)headingEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getHeading_OutlineNumber()
+  {
+    return (EAttribute)headingEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -593,10 +659,16 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
 
     commentEClass = createEClass(COMMENT);
     createEReference(commentEClass, COMMENT__COMMENTABLE);
+    createEReference(commentEClass, COMMENT__PARENT_HEADING);
+    createEAttribute(commentEClass, COMMENT__AUTHOR);
     createEAttribute(commentEClass, COMMENT__TEXT);
     createEAttribute(commentEClass, COMMENT__STATUS);
 
     headingEClass = createEClass(HEADING);
+    createEReference(headingEClass, HEADING__PREVIOUS_HEADING);
+    createEReference(headingEClass, HEADING__NEXT_HEADING);
+    createEAttribute(headingEClass, HEADING__PARENT_INDEX);
+    createEAttribute(headingEClass, HEADING__OUTLINE_NUMBER);
 
     reviewTemplateEClass = createEClass(REVIEW_TEMPLATE);
     createEAttribute(reviewTemplateEClass, REVIEW_TEMPLATE__REVIEWERS);
@@ -691,12 +763,24 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     initEClass(commentEClass, Comment.class, "Comment", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getComment_Commentable(), getCommentable(), getCommentable_Comments(), "commentable", null, 1, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE,
         IS_CHANGEABLE, !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComment_ParentHeading(), getHeading(), null, "parentHeading", null, 0, 1, Comment.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComment_Author(), ecorePackage.getEString(), "author", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComment_Text(), ecorePackage.getEString(), "text", null, 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getComment_Status(), getCommentStatus(), "status", "None", 0, 1, Comment.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(headingEClass, Heading.class, "Heading", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getHeading_PreviousHeading(), getHeading(), null, "previousHeading", null, 0, 1, Heading.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEReference(getHeading_NextHeading(), getHeading(), null, "nextHeading", null, 0, 1, Heading.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHeading_ParentIndex(), ecorePackage.getEInt(), "parentIndex", null, 0, 1, Heading.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
+    initEAttribute(getHeading_OutlineNumber(), ecorePackage.getEString(), "outlineNumber", null, 0, 1, Heading.class, IS_TRANSIENT, IS_VOLATILE, !IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, IS_DERIVED, IS_ORDERED);
 
     initEClass(reviewTemplateEClass, ReviewTemplate.class, "ReviewTemplate", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getReviewTemplate_Reviewers(), ecorePackage.getEString(), "reviewers", null, 0, -1, ReviewTemplate.class, !IS_TRANSIENT, !IS_VOLATILE,

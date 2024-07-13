@@ -135,7 +135,8 @@ public class ReviewsMenuFiller implements MenuFiller
       if (review == null || review.getStatus().isOpen())
       {
         menu.add(new Separator());
-        menu.add(new NewCommentAction(page, viewer, commentable));
+        menu.add(new NewCommentAction(page, viewer, commentable, false));
+        menu.add(new NewCommentAction(page, viewer, commentable, true));
 
         if (commentable instanceof Comment)
         {

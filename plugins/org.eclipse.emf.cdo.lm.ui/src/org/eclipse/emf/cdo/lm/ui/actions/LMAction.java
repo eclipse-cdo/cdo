@@ -20,6 +20,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
+import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -32,6 +33,7 @@ import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IWorkbenchPage;
 
@@ -122,6 +124,16 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
   }
 
   protected abstract void fillDialogArea(LMDialog dialog, Composite parent);
+
+  protected final Button newCheckBox(Composite parent, String text)
+  {
+    new Label(parent, SWT.NONE);
+
+    Button checkBox = new Button(parent, SWT.CHECK);
+    checkBox.setText(text);
+    checkBox.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).create());
+    return checkBox;
+  }
 
   protected final void openError(String message)
   {

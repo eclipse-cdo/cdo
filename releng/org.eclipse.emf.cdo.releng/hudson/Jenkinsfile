@@ -1,0 +1,146 @@
+pipeline {
+  agent any
+
+   options {
+    buildDiscarder(logRotator(numToKeepStr: '10'))
+    disableConcurrentBuilds()
+    // skipDefaultCheckout true
+    checkoutToSubdirectory('git')
+  }
+
+  tools {
+    maven 'apache-maven-latest'
+    jdk 'temurin-jdk17-latest'
+  }
+
+  environment {
+    CHECKOUT = 'false'
+    PUBLISH_LOCATION = 'simrel/orbit-legacy'
+    BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d-%H%M').trim()
+  }
+
+
+  parameters {
+    choice(
+      name: 'BUILD_TYPE',
+      choices: ['<default>', 'N', 'I', 'S', 'R'],
+      description: '''
+        Choose the type of build.
+        '''
+    )
+
+    booleanParam(
+      name: 'skipTests',
+      defaultValue: false,
+      description: 'Whether to skip the tests.'
+    )
+  }
+
+  stages {
+    stage('Display Parameters') {
+      steps {
+        script {
+          def description = """
+BUILD_TYPE=${params.BUILD_TYPE}
+BUILD_TIMESTAMP=${env.BUILD_TIMESTAMP}
+""".trim()
+          echo description
+          currentBuild.description = description.replace("\n", "<br/>").replace("<", "&lt;")
+          env.BUILD_TYPE = params.BUILD_TYPE
+          env.skipTests = params.skipTests
+        }
+      }
+    }
+
+    stage('Git Checkout') {
+      when {
+        environment name: 'CHECKOUT', value: 'true'
+      }
+      steps {
+        script {
+          def gitVariables = checkout(
+            poll: false,
+            scm: [
+              $class: 'GitSCM',
+              branches: [[name: '*' + '/master']],
+              doGenerateSubmoduleConfigurations: false,
+              submoduleCfg: [],
+              extensions: [
+                [$class: 'CloneOption', shallow: false],
+                [$class: 'RelativeTargetDirectory', relativeTargetDir: 'git']
+              ],
+              userRemoteConfigs: [[url: 'https://github.com/eclipse-cdo/cdo.git' ]]
+            ]
+          )
+
+          echo "$gitVariables"
+          env.GIT_COMMIT = gitVariables.GIT_COMMIT
+        }
+      }
+    }
+
+    stage('Ant Build') {
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant
+            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/rewrite-target-definition.ant
+          '''
+        }
+      }
+    }
+
+    stage('Build CDO') {
+      steps {
+        sshagent(['projects-storage.eclipse.org-bot-ssh']) {
+          sh '''
+            mvn \
+              -f git/pom.xml \
+              --no-transfer-progress \
+              -DBUILD_INFO_PROPERTIES=$WORKSPACE/build-info.properties \
+              -DCDO_TESTS=IntegrationTests \
+              -DSIGNING_MARKER=$WORKSPACE/signing.marker \
+              -DskipTests=$skipTests \
+              clean \
+              verify
+            '''
+        }
+      }
+    }
+    
+    stage('Generate') {
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh '''
+            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/generate.ant -Dskip.tests=$skipTests
+          '''
+        }
+      }
+    }
+
+  }
+
+  post {
+    always {
+      archiveArtifacts '**'
+    }
+
+    failure {
+      mail to: 'stepper@esc-net.de',
+      subject: "[CDO CI] Build Failure ${currentBuild.fullDisplayName}",
+      mimeType: 'text/html',
+      body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
+    }
+
+    fixed {
+      mail to: 'stepper@esc-net.de',
+      subject: "[CDO CI] Back to normal ${currentBuild.fullDisplayName}",
+      mimeType: 'text/html',
+      body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
+    }
+
+    cleanup {
+      deleteDir()
+    }
+  }
+}

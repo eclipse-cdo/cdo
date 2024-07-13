@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
+import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
@@ -31,6 +32,8 @@ import org.eclipse.emf.ecore.InternalEObject;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getCommentable <em>Commentable</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getParentHeading <em>Parent Heading</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getText <em>Text</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getStatus <em>Status</em>}</li>
  * </ul>
@@ -39,6 +42,16 @@ import org.eclipse.emf.ecore.InternalEObject;
  */
 public class CommentImpl extends CommentableImpl implements Comment
 {
+  /**
+   * The default value of the '{@link #getAuthor() <em>Author</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getAuthor()
+   * @generated
+   * @ordered
+   */
+  protected static final String AUTHOR_EDEFAULT = null;
+
   /**
    * The default value of the '{@link #getText() <em>Text</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -111,6 +124,58 @@ public class CommentImpl extends CommentableImpl implements Comment
   public void setCommentable(Commentable newCommentable)
   {
     eDynamicSet(ReviewsPackage.COMMENT__COMMENTABLE, ReviewsPackage.Literals.COMMENT__COMMENTABLE, newCommentable);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated NOT
+   */
+  @Override
+  public Heading getParentHeading()
+  {
+    Commentable commentable = getCommentable();
+    while (commentable != null)
+    {
+      if (commentable instanceof Heading)
+      {
+        return (Heading)commentable;
+      }
+
+      if (commentable instanceof Comment)
+      {
+        Comment comment = (Comment)commentable;
+        commentable = comment.getCommentable();
+      }
+      else
+      {
+        break;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String getAuthor()
+  {
+    return (String)eDynamicGet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.COMMENT__AUTHOR, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setAuthor(String newAuthor)
+  {
+    eDynamicSet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.COMMENT__AUTHOR, newAuthor);
   }
 
   /**
@@ -221,6 +286,10 @@ public class CommentImpl extends CommentableImpl implements Comment
     {
     case ReviewsPackage.COMMENT__COMMENTABLE:
       return getCommentable();
+    case ReviewsPackage.COMMENT__PARENT_HEADING:
+      return getParentHeading();
+    case ReviewsPackage.COMMENT__AUTHOR:
+      return getAuthor();
     case ReviewsPackage.COMMENT__TEXT:
       return getText();
     case ReviewsPackage.COMMENT__STATUS:
@@ -241,6 +310,9 @@ public class CommentImpl extends CommentableImpl implements Comment
     {
     case ReviewsPackage.COMMENT__COMMENTABLE:
       setCommentable((Commentable)newValue);
+      return;
+    case ReviewsPackage.COMMENT__AUTHOR:
+      setAuthor((String)newValue);
       return;
     case ReviewsPackage.COMMENT__TEXT:
       setText((String)newValue);
@@ -265,6 +337,9 @@ public class CommentImpl extends CommentableImpl implements Comment
     case ReviewsPackage.COMMENT__COMMENTABLE:
       setCommentable((Commentable)null);
       return;
+    case ReviewsPackage.COMMENT__AUTHOR:
+      setAuthor(AUTHOR_EDEFAULT);
+      return;
     case ReviewsPackage.COMMENT__TEXT:
       setText(TEXT_EDEFAULT);
       return;
@@ -287,6 +362,10 @@ public class CommentImpl extends CommentableImpl implements Comment
     {
     case ReviewsPackage.COMMENT__COMMENTABLE:
       return getCommentable() != null;
+    case ReviewsPackage.COMMENT__PARENT_HEADING:
+      return getParentHeading() != null;
+    case ReviewsPackage.COMMENT__AUTHOR:
+      return AUTHOR_EDEFAULT == null ? getAuthor() != null : !AUTHOR_EDEFAULT.equals(getAuthor());
     case ReviewsPackage.COMMENT__TEXT:
       return TEXT_EDEFAULT == null ? getText() != null : !TEXT_EDEFAULT.equals(getText());
     case ReviewsPackage.COMMENT__STATUS:

@@ -29,8 +29,8 @@ public class UnresolveCommentAction extends LMAction<Comment>
   public UnresolveCommentAction(IWorkbenchPage page, Comment comment)
   {
     super(page, //
-        "Unresolve", //
-        "Unresolve the comment", //
+        "Needs Resolution", //
+        "Mark the comment as unresolved", //
         OM.getImageDescriptor("icons/Unresolve.gif"), //
         null, //
         null, //
@@ -52,7 +52,7 @@ public class UnresolveCommentAction extends LMAction<Comment>
   @Override
   protected void doRun(Comment comment, IProgressMonitor monitor) throws Exception
   {
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(getContext().getSystem());
+    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(comment);
     systemDescriptor.modify(comment, c -> {
       c.setStatus(CommentStatus.UNRESOLVED);
       return null;

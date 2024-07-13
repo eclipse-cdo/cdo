@@ -2,12 +2,17 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
+import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.Heading;
+import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
+import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.StyledString;
+import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
 import java.util.List;
@@ -44,8 +49,66 @@ public class HeadingItemProvider extends CommentItemProvider
     {
       super.getPropertyDescriptors(object);
 
+      addPreviousHeadingPropertyDescriptor(object);
+      addNextHeadingPropertyDescriptor(object);
+      addParentIndexPropertyDescriptor(object);
+      addOutlineNumberPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Previous Heading feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addPreviousHeadingPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Heading_previousHeading_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Heading_previousHeading_feature", "_UI_Heading_type"),
+        ReviewsPackage.Literals.HEADING__PREVIOUS_HEADING, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Next Heading feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addNextHeadingPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Heading_nextHeading_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Heading_nextHeading_feature", "_UI_Heading_type"),
+        ReviewsPackage.Literals.HEADING__NEXT_HEADING, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Parent Index feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addParentIndexPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Heading_parentIndex_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Heading_parentIndex_feature", "_UI_Heading_type"),
+        ReviewsPackage.Literals.HEADING__PARENT_INDEX, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Outline Number feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addOutlineNumberPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Heading_outlineNumber_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Heading_outlineNumber_feature", "_UI_Heading_type"),
+        ReviewsPackage.Literals.HEADING__OUTLINE_NUMBER, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -87,13 +150,25 @@ public class HeadingItemProvider extends CommentItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getStyledText(Object object)
   {
-    Heading heading = (Heading)object;
-    return new StyledString(getString("_UI_Heading_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Integer.toString(heading.getCommentCount()));
+    return super.getStyledText(object);
+  }
+
+  @Override
+  protected String getTypeString()
+  {
+    return getString("_UI_Heading_type");
+  }
+
+  @Override
+  protected String getTextString(Comment comment)
+  {
+    String outlineNumber = ((Heading)comment).getOutlineNumber();
+    return outlineNumber + " " + super.getTextString(comment);
   }
 
   /**
@@ -107,6 +182,14 @@ public class HeadingItemProvider extends CommentItemProvider
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
+
+    switch (notification.getFeatureID(Heading.class))
+    {
+    case ReviewsPackage.HEADING__PARENT_INDEX:
+    case ReviewsPackage.HEADING__OUTLINE_NUMBER:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    }
     super.notifyChanged(notification);
   }
 

@@ -45,15 +45,12 @@ import org.eclipse.emf.ecore.EObject;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.equinox.p2.metadata.Version;
-import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
 import org.eclipse.ui.IWorkbenchPage;
 
 /**
@@ -66,8 +63,6 @@ public class SubmitReviewAction extends AbstractReviewAction
   private IAssemblyDescriptor[] assemblyDescriptors = {};
 
   private boolean deleteCheckouts;
-
-  private Button deleteCheckoutsButton;
 
   public SubmitReviewAction(IWorkbenchPage page, StructuredViewer viewer, Review review)
   {
@@ -91,23 +86,14 @@ public class SubmitReviewAction extends AbstractReviewAction
   protected void fillDialogArea(LMDialog dialog, Composite parent, Review review, ISystemDescriptor systemDescriptor)
   {
     {
-      new Label(parent, SWT.NONE);
-
-      deleteCheckoutsButton = new Button(parent, SWT.CHECK);
-      deleteCheckoutsButton.setText("Delete checkout(s)");
-      deleteCheckoutsButton.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).create());
-      deleteCheckoutsButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
-        deleteCheckouts = deleteCheckoutsButton.getSelection();
+      Button button = newCheckBox(parent, "Delete checkout(s)");
+      button.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
+        deleteCheckouts = button.getSelection();
         validateDialog();
       }));
 
-      deleteCheckoutsButton.setSelection(deleteCheckouts);
-      deleteCheckoutsButton.setEnabled(assemblyDescriptors.length != 0);
-
-      // if (!changeWasNull)
-      // {
-      // deleteCheckoutsButton.setFocus();
-      // }
+      button.setSelection(deleteCheckouts);
+      button.setEnabled(assemblyDescriptors.length != 0);
     }
   }
 

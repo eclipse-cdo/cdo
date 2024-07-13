@@ -65,10 +65,39 @@ public class CommentItemProvider extends CommentableItemProvider
     {
       super.getPropertyDescriptors(object);
 
+      addParentHeadingPropertyDescriptor(object);
+      addAuthorPropertyDescriptor(object);
       addTextPropertyDescriptor(object);
       addStatusPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Parent Heading feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addParentHeadingPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Comment_parentHeading_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Comment_parentHeading_feature", "_UI_Comment_type"),
+        ReviewsPackage.Literals.COMMENT__PARENT_HEADING, false, false, false, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Author feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addAuthorPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Comment_author_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_author_feature", "_UI_Comment_type"),
+        ReviewsPackage.Literals.COMMENT__AUTHOR, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -151,10 +180,12 @@ public class CommentItemProvider extends CommentableItemProvider
   public Object getStyledText(Object object)
   {
     Comment comment = (Comment)object;
-    StyledString styledString = new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(comment.getText());
+    StyledString styledString = new StyledString(getTypeString(), StyledString.Style.QUALIFIER_STYLER) //
+        .append(" ").append(getTextString(comment));
 
-    CommentStatus status = comment.getStatus();
     Style style = null;
+    CommentStatus status = comment.getStatus();
+
     if (status == CommentStatus.UNRESOLVED)
     {
       style = STYLE_UNRESOLVED;
@@ -173,6 +204,16 @@ public class CommentItemProvider extends CommentableItemProvider
     }
 
     return styledString;
+  }
+
+  protected String getTypeString()
+  {
+    return getString("_UI_Comment_type");
+  }
+
+  protected String getTextString(Comment comment)
+  {
+    return comment.getText();
   }
 
   /**

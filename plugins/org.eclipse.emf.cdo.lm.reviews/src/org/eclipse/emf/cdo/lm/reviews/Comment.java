@@ -22,6 +22,8 @@ package org.eclipse.emf.cdo.lm.reviews;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.Comment#getCommentable <em>Commentable</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.Comment#getParentHeading <em>Parent Heading</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.Comment#getText <em>Text</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.Comment#getStatus <em>Status</em>}</li>
  * </ul>
@@ -41,7 +43,7 @@ public interface Comment extends Commentable
    * @see #setCommentable(Commentable)
    * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getComment_Commentable()
    * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getComments
-   * @model opposite="comments" required="true" transient="false"
+   * @model opposite="comments" resolveProxies="false" required="true" transient="false"
    * @generated
    */
   Commentable getCommentable();
@@ -55,6 +57,39 @@ public interface Comment extends Commentable
    * @generated
    */
   void setCommentable(Commentable value);
+
+  /**
+   * Returns the value of the '<em><b>Parent Heading</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Parent Heading</em>' reference.
+   * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getComment_ParentHeading()
+   * @model resolveProxies="false" transient="true" changeable="false" volatile="true" derived="true"
+   * @generated
+   */
+  Heading getParentHeading();
+
+  /**
+   * Returns the value of the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Author</em>' attribute.
+   * @see #setAuthor(String)
+   * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getComment_Author()
+   * @model
+   * @generated
+   */
+  String getAuthor();
+
+  /**
+   * Sets the value of the '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor <em>Author</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Author</em>' attribute.
+   * @see #getAuthor()
+   * @generated
+   */
+  void setAuthor(String value);
 
   /**
    * Returns the value of the '<em><b>Text</b></em>' attribute.

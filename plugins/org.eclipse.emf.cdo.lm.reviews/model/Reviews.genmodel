@@ -36,10 +36,17 @@
     </genClasses>
     <genClasses ecoreClass="Reviews.ecore#//Comment">
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/commentable"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/parentHeading"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/author"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/text"/>
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/status"/>
     </genClasses>
-    <genClasses ecoreClass="Reviews.ecore#//Heading"/>
+    <genClasses ecoreClass="Reviews.ecore#//Heading">
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Heading/previousHeading"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Heading/nextHeading"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Heading/parentIndex"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Heading/outlineNumber"/>
+    </genClasses>
     <genClasses ecoreClass="Reviews.ecore#//ReviewTemplate">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//ReviewTemplate/reviewers"/>
     </genClasses>

@@ -150,11 +150,7 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
     }
 
     {
-      new Label(parent, SWT.NONE);
-
-      deleteCheckoutsButton = new Button(parent, SWT.CHECK);
-      deleteCheckoutsButton.setText("Delete checkout(s)");
-      deleteCheckoutsButton.setLayoutData(GridDataFactory.fillDefaults().align(SWT.FILL, SWT.CENTER).create());
+      deleteCheckoutsButton = newCheckBox(parent, "Delete checkout(s)");
       deleteCheckoutsButton.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
         deleteCheckouts = deleteCheckoutsButton.getSelection();
         validateDialog();

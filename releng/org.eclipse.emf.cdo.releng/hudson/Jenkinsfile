@@ -2,10 +2,15 @@ pipeline {
   agent any
 
    options {
+    timeout(time: 120, unit: 'MINUTES')
     buildDiscarder(logRotator(numToKeepStr: '10'))
     disableConcurrentBuilds()
     // skipDefaultCheckout true
     checkoutToSubdirectory('git')
+  }
+
+  triggers {
+     cron('0 1 * * 5')
   }
 
   tools {
@@ -37,22 +42,19 @@ pipeline {
   }
 
   stages {
-    stage('Display Parameters') {
+    stage('Parameters') {
       steps {
         script {
-          def description = """
-BUILD_TYPE=${params.BUILD_TYPE}
-BUILD_TIMESTAMP=${env.BUILD_TIMESTAMP}
-""".trim()
+          def description = "${params.BUILD_TYPE}${env.BUILD_TIMESTAMP}"
           echo description
-          currentBuild.description = description.replace("\n", "<br/>").replace("<", "&lt;")
+          currentBuild.description = description.replace("<", "&lt;").replace("\n", "<br/>")
           env.BUILD_TYPE = params.BUILD_TYPE
           env.skipTests = params.skipTests
         }
       }
     }
 
-    stage('Git Checkout') {
+    stage('Checkout') {
       when {
         environment name: 'CHECKOUT', value: 'true'
       }
@@ -79,7 +81,7 @@ BUILD_TIMESTAMP=${env.BUILD_TIMESTAMP}
       }
     }
 
-    stage('Ant Build') {
+    stage('Preprocess') {
       steps {
         withAnt(installation: 'apache-ant-latest') {
           sh '''
@@ -90,7 +92,7 @@ BUILD_TIMESTAMP=${env.BUILD_TIMESTAMP}
       }
     }
 
-    stage('Build CDO') {
+    stage('Build') {
       steps {
         sshagent(['projects-storage.eclipse.org-bot-ssh']) {
           sh '''
@@ -108,7 +110,7 @@ BUILD_TIMESTAMP=${env.BUILD_TIMESTAMP}
       }
     }
     
-    stage('Generate') {
+    stage('Postprocess') {
       steps {
         withAnt(installation: 'apache-ant-latest') {
           sh '''

@@ -163,6 +163,26 @@ pipeline {
 }
 
 def getProps(path) {
+  Map<String, String> props = new Map<>()
+  Pattern pattern = Pattern.compile("([^= ]+) *= *(.*)")
+  BufferedReader stream = new BufferedReader(new FileReader(file(path)))
+  
+  try {
+    String line
+    while ((line = stream.readLine()) != null) {
+      Matcher matcher = pattern.match(line)
+      if (matcher.find()) {
+        props.put(matcher.geroup(1), matcher.group(2))       
+      }
+    }
+
+    return props
+  } finally {
+    stream.close()
+  }
+}
+
+def getPropsOrig(path) {
   Properties props = new Properties()
   InputStream stream = new FileInputStream(file(path))
   

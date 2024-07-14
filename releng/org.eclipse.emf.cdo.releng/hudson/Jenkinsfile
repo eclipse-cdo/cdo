@@ -135,7 +135,6 @@ pipeline {
         }
       }
     }
-
   }
 
   post {
@@ -161,16 +160,16 @@ pipeline {
       deleteDir()
     }
   }
+}
 
-  def getProps(path) {
-    Properties props = new Properties()
-    in = new FileInputStream(file(path))
-    
-    try {
-      props.load(in)
-      return props
-    } finally {
-      in.close()
-    }
+def getProps(path) {
+  Properties props = new Properties()
+  in = new FileInputStream(file(path))
+  
+  try {
+    props.load(in)
+    return props
+  } finally {
+    in.close()
   }
 }

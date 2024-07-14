@@ -42,17 +42,36 @@ pipeline {
   }
 
   stages {
+    stage('Build-Info') {
+      steps {
+        withAnt(installation: 'apache-ant-latest') {
+          sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant'
+        }
+        
+        def props = readProperties  file: 'build-info.properties'
+        env.BUILD_VERSION = props['build.version']
+        env.BUILD_TYPE = props['build.type']
+        env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']
+        env.BUILD_QUALIFIER = props['build.qualifier']
+        env.BUILD_SIGN = props['build.sign']
+        env.BUILD_TRIGGER = props['build.trigger']
+
+        env.skipTests = params.skipTests
+        currentBuild.description = env.BUILD_QUALIFIER
+      }
+    }
+
+/*
     stage('Parameters') {
       steps {
         script {
           def description = "${params.BUILD_TYPE}${env.BUILD_TIMESTAMP}"
           echo description
           currentBuild.description = description.replace("<", "&lt;").replace("\n", "<br/>")
-          env.BUILD_TYPE = params.BUILD_TYPE
-          env.skipTests = params.skipTests
         }
       }
     }
+*/
 
     stage('Checkout') {
       when {
@@ -81,13 +100,10 @@ pipeline {
       }
     }
 
-    stage('Preprocess') {
+    stage('Rewrite-Target-Definition') {
       steps {
         withAnt(installation: 'apache-ant-latest') {
-          sh '''
-            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant
-            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/rewrite-target-definition.ant
-          '''
+          sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/rewrite-target-definition.ant'
         }
       }
     }
@@ -110,12 +126,10 @@ pipeline {
       }
     }
     
-    stage('Postprocess') {
+    stage('Generate') {
       steps {
         withAnt(installation: 'apache-ant-latest') {
-          sh '''
-            ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/generate.ant -Dskip.tests=$skipTests
-          '''
+          sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/generate.ant -Dskip.tests=$skipTests'
         }
       }
     }

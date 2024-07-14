@@ -49,6 +49,7 @@ pipeline {
         }
         
         script {
+          /*
           def props = getProps('build-info.properties')
           env.BUILD_VERSION = props['build.version']
           env.BUILD_TYPE = props['build.type']
@@ -57,14 +58,14 @@ pipeline {
           env.BUILD_SIGN = props['build.sign']
           env.BUILD_TRIGGER = props['build.trigger']
           env.skipTests = params.skipTests
-          
+
           currentBuild.description = env.BUILD_QUALIFIER
+          */
         }
       }
     }
 
-/*
-    stage('Parameters') {
+    stage('Description') {
       steps {
         script {
           def description = "${params.BUILD_TYPE}${env.BUILD_TIMESTAMP}"
@@ -73,7 +74,6 @@ pipeline {
         }
       }
     }
-*/
 
     stage('Checkout') {
       when {

@@ -164,13 +164,13 @@ pipeline {
 
 def getProps(path) {
   Map<String, String> props = new Map<>()
-  Pattern pattern = Pattern.compile("([^= ]+) *= *(.*)")
+  java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("([^= ]+) *= *(.*)")
   BufferedReader stream = new BufferedReader(new FileReader(file(path)))
   
   try {
     String line
     while ((line = stream.readLine()) != null) {
-      Matcher matcher = pattern.match(line)
+      java.util.regex.Matcher matcher = pattern.match(line)
       if (matcher.find()) {
         props.put(matcher.geroup(1), matcher.group(2))       
       }

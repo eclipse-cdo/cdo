@@ -165,7 +165,7 @@ pipeline {
 def getProps(path) {
   Map<String, String> props = new HashMap<>()
   java.util.regex.Pattern pattern = java.util.regex.Pattern.compile("([^= ]+) *= *(.*)")
-  BufferedReader stream = new BufferedReader(new FileReader(file(path)))
+  BufferedReader stream = new BufferedReader(new FileReader(path))
   
   try {
     String line

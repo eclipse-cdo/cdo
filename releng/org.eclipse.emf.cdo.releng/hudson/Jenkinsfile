@@ -48,16 +48,18 @@ pipeline {
           sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant'
         }
         
-        def props = readProperties  file: 'build-info.properties'
-        env.BUILD_VERSION = props['build.version']
-        env.BUILD_TYPE = props['build.type']
-        env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']
-        env.BUILD_QUALIFIER = props['build.qualifier']
-        env.BUILD_SIGN = props['build.sign']
-        env.BUILD_TRIGGER = props['build.trigger']
-
-        env.skipTests = params.skipTests
-        currentBuild.description = env.BUILD_QUALIFIER
+        script {
+          def props = readProperties  file: 'build-info.properties'
+          env.BUILD_VERSION = props['build.version']
+          env.BUILD_TYPE = props['build.type']
+          env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']
+          env.BUILD_QUALIFIER = props['build.qualifier']
+          env.BUILD_SIGN = props['build.sign']
+          env.BUILD_TRIGGER = props['build.trigger']
+          env.skipTests = params.skipTests
+          
+          currentBuild.description = env.BUILD_QUALIFIER
+        }
       }
     }
 

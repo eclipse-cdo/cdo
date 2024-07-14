@@ -51,7 +51,7 @@ pipeline {
         script {
           def getProps(path) {
             Properties props = new Properties()
-            def in = new FileInputStream(file(path))
+            in = new FileInputStream(file(path))
             
             try {
               props.load(in)

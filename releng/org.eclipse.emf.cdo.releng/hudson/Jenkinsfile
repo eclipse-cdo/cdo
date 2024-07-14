@@ -48,8 +48,8 @@ pipeline {
           sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant'
         }
         
+        /*
         script {
-          /*
           def props = getProps('build-info.properties')
           env.BUILD_VERSION = props['build.version']
           env.BUILD_TYPE = props['build.type']
@@ -60,8 +60,8 @@ pipeline {
           env.skipTests = params.skipTests
 
           currentBuild.description = env.BUILD_QUALIFIER
-          */
         }
+        */
       }
     }
 

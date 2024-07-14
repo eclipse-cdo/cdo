@@ -49,7 +49,19 @@ pipeline {
         }
         
         script {
-          def props = readProperties  file: 'build-info.properties'
+          def getProps(path) {
+            Properties props = new Properties()
+            def in = new FileInputStream(file(path))
+            
+            try {
+              props.load(in)
+              return props
+            } finally {
+              in.close()
+            }
+          }
+          
+          def props = getProps('build-info.properties')
           env.BUILD_VERSION = props['build.version']
           env.BUILD_TYPE = props['build.type']
           env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']

@@ -164,12 +164,12 @@ pipeline {
 
 def getProps(path) {
   Properties props = new Properties()
-  InputStream in = new FileInputStream(file(path))
+  InputStream stream = new FileInputStream(file(path))
   
   try {
-    props.load(in)
+    props.load(stream)
     return props
   } finally {
-    in.close()
+    stream.close()
   }
 }

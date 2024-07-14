@@ -49,18 +49,6 @@ pipeline {
         }
         
         script {
-          def getProps(path) {
-            Properties props = new Properties()
-            in = new FileInputStream(file(path))
-            
-            try {
-              props.load(in)
-              return props
-            } finally {
-              in.close()
-            }
-          }
-          
           def props = getProps('build-info.properties')
           env.BUILD_VERSION = props['build.version']
           env.BUILD_TYPE = props['build.type']
@@ -171,6 +159,18 @@ pipeline {
 
     cleanup {
       deleteDir()
+    }
+  }
+
+  def getProps(path) {
+    Properties props = new Properties()
+    in = new FileInputStream(file(path))
+    
+    try {
+      props.load(in)
+      return props
+    } finally {
+      in.close()
     }
   }
 }

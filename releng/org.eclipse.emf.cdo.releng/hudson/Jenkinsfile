@@ -1,3 +1,11 @@
+def getBuildInfo() {
+  def props = readProperties(file: 'build-info.properties')
+//  props['new_rev'] = props['rev'].toInteger() + 1
+//  props['swt_version'] = props['maj_ver'] + props['min_ver'] + 'r' + props['rev']
+//  props['new_version'] = props['maj_ver'] + props['min_ver'] + 'r' + props['new_rev']
+  return props
+}
+
 pipeline {
   agent any
 
@@ -49,8 +57,10 @@ pipeline {
         }
         
         /*
+        */
         script {
-          def props = getProps('build-info.properties')
+//          def props = getProps('build-info.properties')
+          def props = getBuildInfo()
           env.BUILD_VERSION = props['build.version']
           env.BUILD_TYPE = props['build.type']
           env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']
@@ -61,7 +71,6 @@ pipeline {
 
           currentBuild.description = env.BUILD_QUALIFIER
         }
-        */
       }
     }
 
@@ -129,9 +138,12 @@ pipeline {
     }
     
     stage('Generate') {
+      when {
+        branch 'master'
+      }
       steps {
         withAnt(installation: 'apache-ant-latest') {
-          sh 'ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/generate.ant -Dskip.tests=$skipTests'
+          sh "ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/generate.ant -Dskip.tests=$skipTests"
         }
       }
     }

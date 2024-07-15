@@ -14,13 +14,13 @@ pipeline {
   }
 
   tools {
-    maven 'apache-maven-latest'
     jdk 'temurin-jdk17-latest'
+    ant 'apache-ant-latest'
+    maven 'apache-maven-latest'
   }
 
   environment {
     CHECKOUT = 'false'
-    PUBLISH_LOCATION = 'simrel/orbit-legacy'
     BUILD_TIMESTAMP = sh(returnStdout: true, script: 'date +%Y%m%d-%H%M').trim()
   }
 
@@ -44,7 +44,7 @@ pipeline {
   stages {
     stage('Initialize Build Info') {
       steps {
-        withAnt(installation: 'apache-ant-latest') {
+        withAnt {
           sh '''
             ant -f git/releng/org.eclipse.emf.cdo.releng/hudson/build-info.ant
           '''
@@ -65,7 +65,7 @@ pipeline {
       }
     }
 
-    stage('Checkout Branch') {
+    stage('Checkout Git Branch') {
       when {
         environment name: 'CHECKOUT', value: 'true'
       }
@@ -102,7 +102,7 @@ pipeline {
       }
     }
 
-    stage('Build Tycho') {
+    stage('Build With Tycho') {
       steps {
         sshagent(['projects-storage.eclipse.org-bot-ssh']) {
           sh '''
@@ -120,7 +120,7 @@ pipeline {
       }
     }
     
-    stage('Generate') {
+    stage('Generate Additional Artifacts') {
       when {
         branch 'master'
       }
@@ -136,7 +136,8 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties'
+      archiveArtifacts artifacts: 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties',
+        allowEmptyArchive: true
     }
 
     failure {
@@ -157,12 +158,4 @@ pipeline {
       deleteDir()
     }
   }
-}
-
-def getBuildInfo() {
-  def props = readProperties(file: 'build-info.properties')
-//  props['new_rev'] = props['rev'].toInteger() + 1
-//  props['swt_version'] = props['maj_ver'] + props['min_ver'] + 'r' + props['rev']
-//  props['new_version'] = props['maj_ver'] + props['min_ver'] + 'r' + props['new_rev']
-  return props
 }

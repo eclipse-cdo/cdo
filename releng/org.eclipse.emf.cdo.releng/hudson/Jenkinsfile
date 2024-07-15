@@ -74,6 +74,7 @@ pipeline {
       }
     }
 
+    /*
     stage('Description') {
       steps {
         script {
@@ -83,6 +84,7 @@ pipeline {
         }
       }
     }
+    */
 
     stage('Checkout') {
       when {
@@ -195,10 +197,10 @@ def getProps(path) {
 }
 
 def getPropsOrig(path) {
-  Properties props = new Properties()
   InputStream stream = new FileInputStream(file(path))
   
   try {
+    Properties props = new Properties()
     props.load(stream)
     return props
   } finally {

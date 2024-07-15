@@ -136,7 +136,7 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts '**'
+      archiveArtifacts 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties'
     }
 
     failure {

@@ -61,7 +61,8 @@ pipeline {
           env.SKIP_TESTS = params.SKIP_TESTS
 
           echo "JOB_NAME = $JOB_NAME" 
-          echo "JOB_URL = $JOB_URL" 
+          echo "JOB_URL = $JOB_URL"
+          sh "printenv"
           currentBuild.description = env.BUILD_QUALIFIER
         }
       }

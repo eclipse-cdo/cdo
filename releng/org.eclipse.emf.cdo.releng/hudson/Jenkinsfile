@@ -60,9 +60,8 @@ pipeline {
           env.BUILD_TRIGGER = props['build.trigger']
           env.SKIP_TESTS = params.SKIP_TESTS
 
-          echo "JOB_NAME = $JOB_NAME" 
-          echo "JOB_URL = $JOB_URL"
-          sh "printenv"
+          // sh "printenv | sort"
+          
           currentBuild.description = env.BUILD_QUALIFIER
         }
       }

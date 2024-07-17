@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
+import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -19,6 +20,7 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
@@ -142,9 +144,9 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
 
   protected abstract void handleMergeFromSource(REVIEW review, long sourceCommit);
 
-  protected abstract void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch);
+  protected abstract void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit);
 
-  protected abstract void handleSubmit(REVIEW review, Object data);
+  protected abstract void handleSubmit(REVIEW review, FixedBaseline submitResult);
 
   protected abstract void handleAbandon(REVIEW review);
 
@@ -352,7 +354,12 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     @Override
     public ReviewStatus execute(REVIEW review, ReviewStatus status, Object data)
     {
-      handleRebaseToTarget(review, (CDOBranchRef)data);
+      @SuppressWarnings("unchecked")
+      Pair<CDOBranchRef, Long> rebaseBranchAndTargetCommit = (Pair<CDOBranchRef, Long>)data;
+      CDOBranchRef rebaseBranch = rebaseBranchAndTargetCommit.getElement1();
+      long targetCommit = rebaseBranchAndTargetCommit.getElement2();
+
+      handleRebaseToTarget(review, rebaseBranch, targetCommit);
       return status == ReviewStatus.OUTDATED ? ReviewStatus.SOURCE_OUTDATED : ReviewStatus.NEW;
     }
   }
@@ -365,7 +372,7 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     @Override
     public ReviewStatus execute(REVIEW review, ReviewStatus status, Object data)
     {
-      handleSubmit(review, data);
+      handleSubmit(review, (FixedBaseline)data);
       return ReviewStatus.SUBMITTED;
     }
   }
@@ -467,13 +474,13 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     }
 
     @Override
-    protected final void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch)
+    protected final void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit)
     {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    protected final void handleSubmit(REVIEW review, Object data)
+    protected final void handleSubmit(REVIEW review, FixedBaseline submitResult)
     {
       throw new UnsupportedOperationException();
     }

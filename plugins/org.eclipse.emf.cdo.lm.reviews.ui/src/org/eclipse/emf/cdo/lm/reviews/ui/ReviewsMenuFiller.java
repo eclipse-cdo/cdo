@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.Commentable;
+import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
@@ -135,8 +136,8 @@ public class ReviewsMenuFiller implements MenuFiller
       if (review == null || review.getStatus().isOpen())
       {
         menu.add(new Separator());
-        menu.add(new NewCommentAction(page, viewer, commentable, false));
         menu.add(new NewCommentAction(page, viewer, commentable, true));
+        menu.add(new NewCommentAction(page, viewer, commentable, false));
 
         if (commentable instanceof Comment)
         {
@@ -162,10 +163,24 @@ public class ReviewsMenuFiller implements MenuFiller
 
   private void addSubmitAction(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Review review)
   {
-    if (review.getUnresolvedCount() == 0)
+    if (review.getUnresolvedCount() > 0)
     {
-      menu.add(new SubmitReviewAction(page, viewer, review));
+      return;
     }
+
+    if (review instanceof DeliveryReview)
+    {
+      DeliveryReview deliveryReview = (DeliveryReview)review;
+      Stream stream = deliveryReview.getStream();
+      Change sourceChange = deliveryReview.getSourceChange();
+
+      if (sourceChange.getDeliveryPoint(stream) != null)
+      {
+        return;
+      }
+    }
+
+    menu.add(new SubmitReviewAction(page, viewer, review));
   }
 
   /**

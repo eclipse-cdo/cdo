@@ -12,15 +12,19 @@ package org.eclipse.emf.cdo.lm.reviews.ui;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.etypes.Annotation;
+import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.Drop;
+import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine;
+
+import org.eclipse.emf.common.util.EList;
 
 /**
  * @author Eike Stepper
@@ -44,15 +48,19 @@ public final class ClientReviewStatemachine<REVIEW extends Review> extends Revie
   }
 
   @Override
-  protected void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch)
+  protected void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit)
   {
     DeliveryReview deliveryReview = (DeliveryReview)review;
     deliveryReview.setRebaseCount(deliveryReview.getRebaseCount() + 1);
     deliveryReview.setBranch(rebaseBranch);
+    deliveryReview.setTargetCommit(targetCommit);
+
+    EList<Baseline> contents = review.getStream().getContents();
+    contents.move(0, deliveryReview);
   }
 
   @Override
-  protected void handleSubmit(REVIEW review, Object data)
+  protected void handleSubmit(REVIEW review, FixedBaseline submitResult)
   {
     Stream stream = review.getStream();
 
@@ -61,7 +69,7 @@ public final class ClientReviewStatemachine<REVIEW extends Review> extends Revie
       DeliveryReview deliveryReview = (DeliveryReview)review;
       Change change = deliveryReview.getSourceChange();
 
-      Delivery delivery = (Delivery)data;
+      Delivery delivery = (Delivery)submitResult;
       delivery.setChange(change);
       stream.insertContent(delivery);
 
@@ -74,7 +82,7 @@ public final class ClientReviewStatemachine<REVIEW extends Review> extends Revie
     {
       DropReview dropReview = (DropReview)review;
 
-      Drop drop = (Drop)data;
+      Drop drop = (Drop)submitResult;
       drop = dropReview.cdoView().getObject(drop);
 
       Annotation annotation = ReviewsPackage.getAnnotation(drop, true);

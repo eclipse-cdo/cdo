@@ -185,12 +185,8 @@ public class ReviewManager extends Lifecycle implements LMPackage.Literals, Revi
   protected void handleModuleCommit(ModuleCommitEvent event)
   {
     Map<String, String> commitProperties = event.getCommitContext().getCommitProperties();
-    if (commitProperties.containsKey(ReviewStatemachine.PROP_SUBMITTING))
-    {
-      // This is the commit of a SubmitReview action.
-      // Don't touch the review status!
-      return;
-    }
+    String value = commitProperties.get(ReviewStatemachine.PROP_SUBMITTING);
+    int submittingReviewID = value == null ? -1 : Integer.valueOf(value);
 
     FloatingBaseline baseline = event.getCommitBaseline();
     if (baseline instanceof Stream)
@@ -201,6 +197,14 @@ public class ReviewManager extends Lifecycle implements LMPackage.Literals, Revi
         if (content instanceof DeliveryReview)
         {
           DeliveryReview review = (DeliveryReview)content;
+
+          if (review.getId() == submittingReviewID)
+          {
+            // This is the commit of a SubmitReview action.
+            // Don't touch the review status!
+            return;
+          }
+
           deliveriesReviewStatemachine.process(review, ReviewEvent.CommitInTarget, null);
         }
       });
@@ -209,8 +213,16 @@ public class ReviewManager extends Lifecycle implements LMPackage.Literals, Revi
     {
       Change change = (Change)baseline;
 
-      forEachAnnotationObject(change, true, DeliveryReview.class, //
-          review -> deliveriesReviewStatemachine.process(review, ReviewEvent.CommitInSource, null));
+      forEachAnnotationObject(change, true, DeliveryReview.class, review -> {
+        if (review.getId() == submittingReviewID)
+        {
+          // This is the commit of a SubmitReview action.
+          // Don't touch the review status!
+          return;
+        }
+
+        deliveriesReviewStatemachine.process(review, ReviewEvent.CommitInSource, null);
+      });
     }
   }
 

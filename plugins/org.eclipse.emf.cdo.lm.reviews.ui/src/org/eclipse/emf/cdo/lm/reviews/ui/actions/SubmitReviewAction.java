@@ -38,7 +38,6 @@ import org.eclipse.emf.cdo.lm.util.LMMerger;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 
-import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.ecore.EObject;
@@ -123,7 +122,7 @@ public class SubmitReviewAction extends AbstractReviewAction
         CDOBranchPointRef sourceBranchPointRef = sourceBranchRef.getPointRef(sourceCommitTime);
         CDOBranchPoint sourceBranchPoint = sourceBranch.getPoint(sourceCommitTime);
 
-        LMMerger merger = new SubmitDeliveryMerger();
+        LMMerger merger = new SubmitDeliveryMerger(deliveryReview);
         long targetCommitTime = merger.mergeDelivery(moduleSession, sourceBranchPoint, targetBranch);
 
         if (targetCommitTime != CDOBranchPoint.INVALID_DATE)
@@ -193,15 +192,20 @@ public class SubmitReviewAction extends AbstractReviewAction
    */
   private static final class SubmitDeliveryMerger extends CoreDeliveryMerger
   {
-    public SubmitDeliveryMerger()
+    private final DeliveryReview review;
+
+    public SubmitDeliveryMerger(DeliveryReview review)
     {
+      this.review = review;
     }
 
     @Override
     protected CDOTransaction openTransaction(CDOSession session, CDOBranch branch)
     {
+      String reviewID = Integer.toString(review.getId());
+
       CDOTransaction transaction = super.openTransaction(session, branch);
-      transaction.setCommitProperty(ReviewStatemachine.PROP_SUBMITTING, StringUtil.TRUE);
+      transaction.setCommitProperty(ReviewStatemachine.PROP_SUBMITTING, reviewID);
       return transaction;
     }
   }

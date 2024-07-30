@@ -36,8 +36,11 @@ import java.util.Comparator;
  */
 public interface Baseline extends StreamElement
 {
-  public static final Comparator<Object> COMPARATOR = Comparator.comparingLong(BaselineImpl::time).thenComparingInt(BaselineImpl::change)
-      .thenComparing(BaselineImpl::name).reversed();
+  public static final Comparator<Object> COMPARATOR = //
+      Comparator.comparingLong(BaselineImpl::time) //
+          .thenComparingInt(BaselineImpl::type) //
+          .thenComparing(BaselineImpl::name) //
+          .reversed();
 
   /**
    * Returns the value of the '<em><b>Stream</b></em>' container reference.

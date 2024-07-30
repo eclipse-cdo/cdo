@@ -82,6 +82,23 @@ public final class CDOBranchRef implements Serializable
     return getPointRef(CDOBranchPoint.UNSPECIFIED_DATE);
   }
 
+  /**
+   * @since 4.23
+   */
+  public CDOBranchRef getBaseBranchRef()
+  {
+    if (!isMainBranch())
+    {
+      int lastSlash = branchPath.lastIndexOf(CDOBranch.PATH_SEPARATOR);
+      if (lastSlash != -1)
+      {
+        return new CDOBranchRef(branchPath.substring(0, lastSlash));
+      }
+    }
+
+    return null;
+  }
+
   public CDOBranch resolve(CDOBranchManager branchManager)
   {
     return branchManager.getBranch(branchPath);

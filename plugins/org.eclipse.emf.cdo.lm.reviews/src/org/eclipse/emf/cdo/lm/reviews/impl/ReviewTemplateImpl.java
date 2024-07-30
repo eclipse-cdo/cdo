@@ -10,24 +10,27 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.lm.System;
+import org.eclipse.emf.cdo.lm.SystemElement;
+import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
-import org.eclipse.emf.cdo.lm.reviews.ReviewType;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 
 import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Review Template</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl#getType <em>Type</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl#getReviewers <em>Reviewers</em>}</li>
  * </ul>
  *
@@ -35,16 +38,6 @@ import java.util.Collection;
  */
 public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplate
 {
-  /**
-   * The default value of the '{@link #getType() <em>Type</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getType()
-   * @generated
-   * @ordered
-   */
-  protected static final ReviewType TYPE_EDEFAULT = ReviewType.DELIVERY;
-
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -71,28 +64,6 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public ReviewType getType()
-  {
-    return (ReviewType)eDynamicGet(ReviewsPackage.REVIEW_TEMPLATE__TYPE, ReviewsPackage.Literals.REVIEW_TEMPLATE__TYPE, true, true);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setType(ReviewType newType)
-  {
-    eDynamicSet(ReviewsPackage.REVIEW_TEMPLATE__TYPE, ReviewsPackage.Literals.REVIEW_TEMPLATE__TYPE, newType);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   @SuppressWarnings("unchecked")
   @Override
   public EList<String> getReviewers()
@@ -110,8 +81,6 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__TYPE:
-      return getType();
     case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
       return getReviewers();
     }
@@ -129,9 +98,6 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__TYPE:
-      setType((ReviewType)newValue);
-      return;
     case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
       getReviewers().clear();
       getReviewers().addAll((Collection<? extends String>)newValue);
@@ -150,9 +116,6 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__TYPE:
-      setType(TYPE_EDEFAULT);
-      return;
     case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
       getReviewers().clear();
       return;
@@ -170,12 +133,33 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__TYPE:
-      return getType() != TYPE_EDEFAULT;
     case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
       return !getReviewers().isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  @Override
+  public System getSystem()
+  {
+    EObject container = eContainer();
+    while (container != null)
+    {
+      if (container instanceof SystemElement)
+      {
+        return ((SystemElement)container).getSystem();
+      }
+
+      container = container.eContainer();
+    }
+
+    return null;
+  }
+
+  @Override
+  public Review getReview()
+  {
+    return null;
   }
 
 } // ReviewTemplateImpl

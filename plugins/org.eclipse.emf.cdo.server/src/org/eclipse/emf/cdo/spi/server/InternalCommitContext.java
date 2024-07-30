@@ -171,6 +171,11 @@ public interface InternalCommitContext extends IStoreAccessor.CommitContext, CDO
   public void setCommitComment(String comment);
 
   /**
+   * @since 4.21
+   */
+  public void setCommitProperties(Map<String, String> properties);
+
+  /**
    * @since 4.6
    */
   public void setCommitMergeSource(CDOBranchPoint mergeSource);

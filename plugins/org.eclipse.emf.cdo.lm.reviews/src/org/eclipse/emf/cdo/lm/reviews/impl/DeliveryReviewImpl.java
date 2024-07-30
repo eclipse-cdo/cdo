@@ -12,31 +12,41 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
+import org.eclipse.emf.cdo.etypes.EtypesFactory;
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.FloatingBaseline;
+import org.eclipse.emf.cdo.lm.Impact;
 import org.eclipse.emf.cdo.lm.LMPackage;
+import org.eclipse.emf.cdo.lm.impl.FloatingBaselineImpl;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 
-import java.lang.reflect.InvocationTargetException;
+import java.util.Collection;
 
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Delivery Review</b></em>'.
+ * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#isClosed <em>Closed</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getBase <em>Base</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getImpact <em>Impact</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getBranch <em>Branch</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getDeliveries <em>Deliveries</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getSourceChange <em>Source Change</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getSourceCommit <em>Source Commit</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getTargetCommit <em>Target Commit</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl#getRebaseCount <em>Rebase Count</em>}</li>
  * </ul>
  *
  * @generated
@@ -52,6 +62,26 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
    * @ordered
    */
   protected static final boolean CLOSED_EDEFAULT = false;
+
+  /**
+   * The default value of the '{@link #getImpact() <em>Impact</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getImpact()
+   * @generated
+   * @ordered
+   */
+  protected static final Impact IMPACT_EDEFAULT = Impact.MICRO;
+
+  /**
+   * The default value of the '{@link #getBranch() <em>Branch</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getBranch()
+   * @generated
+   * @ordered
+   */
+  protected static final CDOBranchRef BRANCH_EDEFAULT = (CDOBranchRef)EtypesFactory.eINSTANCE.createFromString(EtypesPackage.eINSTANCE.getBranchRef(), "");
 
   /**
    * The default value of the '{@link #getSourceCommit() <em>Source Commit</em>}' attribute.
@@ -72,6 +102,16 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
    * @ordered
    */
   protected static final long TARGET_COMMIT_EDEFAULT = 0L;
+
+  /**
+   * The default value of the '{@link #getRebaseCount() <em>Rebase Count</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getRebaseCount()
+   * @generated
+   * @ordered
+   */
+  protected static final int REBASE_COUNT_EDEFAULT = 0;
 
   /**
    * <!-- begin-user-doc -->
@@ -125,16 +165,6 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   public Change getSourceChange()
   {
     return (Change)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE, ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_CHANGE, true, true);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public Change basicGetSourceChange()
-  {
-    return (Change)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE, ReviewsPackage.Literals.DELIVERY_REVIEW__SOURCE_CHANGE, false, true);
   }
 
   /**
@@ -198,11 +228,9 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
    * @generated
    */
   @Override
-  public FixedBaseline getBase()
+  public int getRebaseCount()
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return (Integer)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT, ReviewsPackage.Literals.DELIVERY_REVIEW__REBASE_COUNT, true, true);
   }
 
   /**
@@ -211,11 +239,65 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
    * @generated
    */
   @Override
+  public void setRebaseCount(int newRebaseCount)
+  {
+    eDynamicSet(ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT, ReviewsPackage.Literals.DELIVERY_REVIEW__REBASE_COUNT, newRebaseCount);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FixedBaseline getBase()
+  {
+    return (FixedBaseline)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__BASE, ReviewsPackage.Literals.DELIVERY_REVIEW__BASE, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setBase(FixedBaseline newBase)
+  {
+    eDynamicSet(ReviewsPackage.DELIVERY_REVIEW__BASE, ReviewsPackage.Literals.DELIVERY_REVIEW__BASE, newBase);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Impact getImpact()
+  {
+    return (Impact)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__IMPACT, ReviewsPackage.Literals.DELIVERY_REVIEW__IMPACT, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setImpact(Impact newImpact)
+  {
+    eDynamicSet(ReviewsPackage.DELIVERY_REVIEW__IMPACT, ReviewsPackage.Literals.DELIVERY_REVIEW__IMPACT, newImpact);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
   public EList<Delivery> getDeliveries()
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return (EList<Delivery>)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__DELIVERIES, ReviewsPackage.Literals.DELIVERY_REVIEW__DELIVERIES, true, true);
   }
 
   /**
@@ -226,9 +308,18 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   @Override
   public CDOBranchRef getBranch()
   {
-    // TODO: implement this method
-    // Ensure that you remove @generated or mark it @generated NOT
-    throw new UnsupportedOperationException();
+    return (CDOBranchRef)eDynamicGet(ReviewsPackage.DELIVERY_REVIEW__BRANCH, ReviewsPackage.Literals.DELIVERY_REVIEW__BRANCH, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setBranch(CDOBranchRef newBranch)
+  {
+    eDynamicSet(ReviewsPackage.DELIVERY_REVIEW__BRANCH, ReviewsPackage.Literals.DELIVERY_REVIEW__BRANCH, newBranch);
   }
 
   /**
@@ -243,16 +334,22 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     {
     case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
       return isClosed();
+    case ReviewsPackage.DELIVERY_REVIEW__BASE:
+      return getBase();
+    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+      return getImpact();
+    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+      return getBranch();
+    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+      return getDeliveries();
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      if (resolve)
-      {
-        return getSourceChange();
-      }
-      return basicGetSourceChange();
+      return getSourceChange();
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
       return getSourceCommit();
     case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
       return getTargetCommit();
+    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+      return getRebaseCount();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -262,6 +359,7 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
@@ -269,6 +367,19 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     {
     case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
       setClosed((Boolean)newValue);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__BASE:
+      setBase((FixedBaseline)newValue);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+      setImpact((Impact)newValue);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+      setBranch((CDOBranchRef)newValue);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+      getDeliveries().clear();
+      getDeliveries().addAll((Collection<? extends Delivery>)newValue);
       return;
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
       setSourceChange((Change)newValue);
@@ -278,6 +389,9 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
       return;
     case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
       setTargetCommit((Long)newValue);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+      setRebaseCount((Integer)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -296,6 +410,18 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
       setClosed(CLOSED_EDEFAULT);
       return;
+    case ReviewsPackage.DELIVERY_REVIEW__BASE:
+      setBase((FixedBaseline)null);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+      setImpact(IMPACT_EDEFAULT);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+      setBranch(BRANCH_EDEFAULT);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+      getDeliveries().clear();
+      return;
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
       setSourceChange((Change)null);
       return;
@@ -304,6 +430,9 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
       return;
     case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
       setTargetCommit(TARGET_COMMIT_EDEFAULT);
+      return;
+    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+      setRebaseCount(REBASE_COUNT_EDEFAULT);
       return;
     }
     super.eUnset(featureID);
@@ -321,12 +450,22 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     {
     case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
       return isClosed() != CLOSED_EDEFAULT;
+    case ReviewsPackage.DELIVERY_REVIEW__BASE:
+      return getBase() != null;
+    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+      return getImpact() != IMPACT_EDEFAULT;
+    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+      return BRANCH_EDEFAULT == null ? getBranch() != null : !BRANCH_EDEFAULT.equals(getBranch());
+    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+      return !getDeliveries().isEmpty();
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      return basicGetSourceChange() != null;
+      return getSourceChange() != null;
     case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
       return getSourceCommit() != SOURCE_COMMIT_EDEFAULT;
     case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
       return getTargetCommit() != TARGET_COMMIT_EDEFAULT;
+    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+      return getRebaseCount() != REBASE_COUNT_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -373,51 +512,6 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedOperationID(int baseOperationID, Class<?> baseClass)
-  {
-    if (baseClass == FloatingBaseline.class)
-    {
-      switch (baseOperationID)
-      {
-      case LMPackage.FLOATING_BASELINE___GET_BASE:
-        return ReviewsPackage.DELIVERY_REVIEW___GET_BASE;
-      case LMPackage.FLOATING_BASELINE___GET_DELIVERIES:
-        return ReviewsPackage.DELIVERY_REVIEW___GET_DELIVERIES;
-      case LMPackage.FLOATING_BASELINE___GET_BRANCH:
-        return ReviewsPackage.DELIVERY_REVIEW___GET_BRANCH;
-      default:
-        return -1;
-      }
-    }
-    return super.eDerivedOperationID(baseOperationID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
-  {
-    switch (operationID)
-    {
-    case ReviewsPackage.DELIVERY_REVIEW___GET_BASE:
-      return getBase();
-    case ReviewsPackage.DELIVERY_REVIEW___GET_DELIVERIES:
-      return getDeliveries();
-    case ReviewsPackage.DELIVERY_REVIEW___GET_BRANCH:
-      return getBranch();
-    }
-    return super.eInvoke(operationID, arguments);
-  }
-
   @Override
   public boolean isFloating()
   {
@@ -425,21 +519,44 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   }
 
   @Override
+  public String getTypeName()
+  {
+    return "Delivery Review";
+  }
+
+  @Override
   public String getName()
   {
-    return null;
+    return Integer.toString(getId()) + " - " + getSourceChangeName();
+  }
+
+  @Override
+  public int getSortPriority()
+  {
+    return 600;
+  }
+
+  private String getSourceChangeName()
+  {
+    Change change = getSourceChange();
+    if (change == null)
+    {
+      return "???";
+    }
+
+    return change.getName();
   }
 
   @Override
   public CDOBranchPointRef getBranchPoint()
   {
-    return null;
+    return FloatingBaselineImpl.getBranchPoint(this);
   }
 
   @Override
   public long getBaseTimeStamp()
   {
-    return 0;
+    return getTargetCommit();
   }
 
 } // DeliveryReviewImpl

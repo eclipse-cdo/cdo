@@ -22,6 +22,8 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.TitleAreaDialog;
 import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
@@ -102,11 +104,16 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
   {
     if (bannerImage == null && bannerImagePath != null)
     {
-      ImageDescriptor descriptor = OM.Activator.INSTANCE.loadImageDescriptor(bannerImagePath);
+      ImageDescriptor descriptor = getImageDescriptor(bannerImagePath);
       bannerImage = descriptor.createImage(getDisplay());
     }
 
     return bannerImage;
+  }
+
+  protected ImageDescriptor getImageDescriptor(String imagePath)
+  {
+    return OM.Activator.INSTANCE.loadImageDescriptor(imagePath);
   }
 
   protected boolean isDialogNeeded()
@@ -204,6 +211,12 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
     }
 
     @Override
+    protected boolean isResizable()
+    {
+      return true;
+    }
+
+    @Override
     protected void configureShell(Shell newShell)
     {
       LMAction.this.configureShell(this, newShell);
@@ -273,5 +286,32 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
     {
       super.configureShell(newShell);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class NewElement<CONTEXT extends CDOObject> extends LMAction<CONTEXT>
+  {
+    private final StructuredViewer viewer;
+
+    public NewElement(IWorkbenchPage page, StructuredViewer viewer, String text, String toolTipText, ImageDescriptor image, String bannerMessage,
+        String bannerImagePath, CONTEXT context)
+    {
+      super(page, text, toolTipText, image, bannerMessage, bannerImagePath, context);
+      this.viewer = viewer;
+    }
+
+    @Override
+    protected final void doRun(CONTEXT context, IProgressMonitor monitor) throws Exception
+    {
+      CDOObject element = newElement(context, monitor);
+      if (element != null)
+      {
+        UIUtil.asyncExec(() -> viewer.setSelection(new StructuredSelection(element)));
+      }
+    }
+
+    protected abstract CDOObject newElement(CONTEXT context, IProgressMonitor monitor) throws Exception;
   }
 }

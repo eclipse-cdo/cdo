@@ -16,6 +16,7 @@ import org.eclipse.emf.common.util.EList;
 
 import java.util.Comparator;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * <!-- begin-user-doc --> A representation of the model object
@@ -128,5 +129,10 @@ public interface Module extends SystemElement
   public java.util.stream.Stream<Baseline> getAllBaselines();
 
   public void forEachBaseline(Consumer<Baseline> consumer);
+
+  /**
+   * @since 1.3
+   */
+  public boolean forEachBaseline(Predicate<Baseline> predicate);
 
 } // Module

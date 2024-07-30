@@ -208,7 +208,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
     {
       if (branch != null)
       {
-        ((InternalCDOBranch)branch).fireDeletedEvent();
+        branch.fireDeletedEvent();
       }
     }
   }

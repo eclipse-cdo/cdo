@@ -18,7 +18,6 @@ import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.internal.embedded.EmbeddedRepository;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
 
 import org.eclipse.net4j.acceptor.IAcceptor;
@@ -190,10 +189,10 @@ public abstract class CDOEmbeddedRepositoryConfig extends Lifecycle implements I
     initProperties(container, properties);
 
     repository = new EmbeddedRepository(this);
-    ((InternalRepository)repository).setContainer(container);
-    ((InternalRepository)repository).setName(repositoryName);
-    ((InternalRepository)repository).setStore((InternalStore)store);
-    ((InternalRepository)repository).setProperties(properties);
+    repository.setContainer(container);
+    repository.setName(repositoryName);
+    repository.setStore((InternalStore)store);
+    repository.setProperties(properties);
 
     activateRepository(repository);
 

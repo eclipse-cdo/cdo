@@ -273,7 +273,7 @@ public class CommitIntegrityCheck
       }
       else if (featureDelta instanceof CDOClearFeatureDelta)
       {
-        EStructuralFeature feat = ((CDOClearFeatureDelta)featureDelta).getFeature();
+        EStructuralFeature feat = featureDelta.getFeature();
         InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
         int n = cleanRev.size(feat);
         for (int i = 0; i < n; i++)
@@ -285,7 +285,7 @@ public class CommitIntegrityCheck
       }
       else if (featureDelta instanceof CDOUnsetFeatureDelta)
       {
-        EStructuralFeature feat = ((CDOUnsetFeatureDelta)featureDelta).getFeature();
+        EStructuralFeature feat = featureDelta.getFeature();
         InternalCDORevision cleanRev = transaction.getCleanRevisions().get(dirtyObject);
         Object idOrObject = cleanRev.getValue(feat);
         CDOID id = (CDOID)transaction.convertObjectToID(idOrObject);

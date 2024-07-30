@@ -24,8 +24,6 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
-
 import org.eclipse.net4j.util.collection.MultiMap;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
@@ -582,7 +580,7 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
                 {
                   if (!multiSavepoint || originalFeatureDeltas.add(featureDelta))
                   {
-                    CDOFeatureDelta copy = ((InternalCDOFeatureDelta)featureDelta).copy();
+                    CDOFeatureDelta copy = featureDelta.copy();
                     oldRevisionDelta.addFeatureDelta(copy, null);
                   }
                 }

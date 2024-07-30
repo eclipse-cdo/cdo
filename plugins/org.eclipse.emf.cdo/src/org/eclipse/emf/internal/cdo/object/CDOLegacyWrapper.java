@@ -1288,7 +1288,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       {
         if (object.eGet(oppositeReference) != instance)
         {
-          object.eInverseAdd(instance, oppositeReference.getFeatureID(), ((EObject)instance).getClass(), null);
+          object.eInverseAdd(instance, oppositeReference.getFeatureID(), instance.getClass(), null);
         }
       }
     }

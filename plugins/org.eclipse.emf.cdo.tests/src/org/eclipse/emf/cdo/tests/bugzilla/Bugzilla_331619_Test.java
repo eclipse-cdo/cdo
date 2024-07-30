@@ -106,7 +106,7 @@ public class Bugzilla_331619_Test extends AbstractCDOTest
       results = view.queryXRefs(Collections.singleton(CDOUtil.getCDOObject(oRef)));
       assertEquals(2, results.size());
 
-      conName = (EAttribute)((EObject)results.get(0).getSourceObject()).eClass().getEStructuralFeature("conname");
+      conName = (EAttribute)results.get(0).getSourceObject().eClass().getEStructuralFeature("conname");
       String conName1 = (String)results.get(0).getSourceObject().eGet(conName);
       String conName2 = (String)results.get(1).getSourceObject().eGet(conName);
 

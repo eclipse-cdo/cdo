@@ -189,7 +189,7 @@ public final class BufferUtil
             if (max > 0)
             {
               str = str.substring(0, max);
-              ((java.nio.Buffer)byteBuffer).position(start);
+              byteBuffer.position(start);
               continue;
             }
           }
@@ -210,9 +210,9 @@ public final class BufferUtil
       int end = byteBuffer.position();
       short size = (short)Math.abs(end - start);
 
-      ((java.nio.Buffer)byteBuffer).position(sizePosition);
+      byteBuffer.position(sizePosition);
       byteBuffer.putShort(size);
-      ((java.nio.Buffer)byteBuffer).position(end);
+      byteBuffer.position(end);
     }
   }
 

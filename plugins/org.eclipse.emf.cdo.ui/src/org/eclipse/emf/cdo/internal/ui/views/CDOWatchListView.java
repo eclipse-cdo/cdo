@@ -386,7 +386,7 @@ public class CDOWatchListView extends ViewPart implements ISelectionProvider
     private void checkDetached(Notification msg)
     {
       // TODO Remote detach won't be shown in the UI, the object will be just removed from the viewer
-      if (((CDODeltaNotification)msg).getEventType() == CDODeltaNotification.DETACH_OBJECT)
+      if (msg.getEventType() == CDODeltaNotification.DETACH_OBJECT)
       {
         Object obj = msg.getNotifier();
         container.removeElement(CDOUtil.getCDOObject((EObject)obj));

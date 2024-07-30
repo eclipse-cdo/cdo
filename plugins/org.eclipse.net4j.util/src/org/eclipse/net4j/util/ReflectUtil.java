@@ -986,7 +986,7 @@ public final class ReflectUtil
     {
       if (exception instanceof ReflectionException)
       {
-        return (Exception)((ReflectionException)exception).getCause();
+        return (Exception)exception.getCause();
       }
 
       return exception;

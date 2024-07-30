@@ -589,7 +589,7 @@ public class CDOListFeatureDeltaImpl extends CDOFeatureDeltaImpl implements CDOL
   {
     for (CDOFeatureDelta featureDelta : listChanges)
     {
-      ((CDOFeatureDeltaImpl)featureDelta).applyTo(revision);
+      featureDelta.applyTo(revision);
     }
 
     return null;

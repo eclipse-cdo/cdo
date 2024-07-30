@@ -37,7 +37,6 @@ import org.eclipse.emf.cdo.common.util.PartialCollectionLoadingNotSupportedExcep
 import org.eclipse.emf.cdo.internal.common.revision.CDOListImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.revision.CDOReferenceAdjuster;
-import org.eclipse.emf.cdo.spi.common.revision.InternalCDOFeatureDelta;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
@@ -45,7 +44,6 @@ import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -100,7 +98,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     {
       for (CDOFeatureDelta delta : revisionDelta.getFeatureDeltas())
       {
-        CDOFeatureDelta copy = ((InternalCDOFeatureDelta)delta).copy();
+        CDOFeatureDelta copy = delta.copy();
         addFeatureDelta(copy, null);
       }
     }
@@ -278,7 +276,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
   {
     for (CDOFeatureDelta featureDelta : featureDeltas.values())
     {
-      ((CDOFeatureDeltaImpl)featureDelta).applyTo(revision);
+      featureDelta.applyTo(revision);
     }
   }
 
@@ -386,7 +384,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
       EStructuralFeature feature = featureDelta.getFeature();
       if (filter.test(feature))
       {
-        ((CDOFeatureDeltaImpl)featureDelta).accept(visitor);
+        featureDelta.accept(visitor);
       }
     }
   }
@@ -444,7 +442,7 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
       }
       else
       {
-        Object defaultValue = ((EAttribute)feature).getDefaultValue();
+        Object defaultValue = feature.getDefaultValue();
         if (defaultValue != null)
         {
           originValue = convertDefaultValue(originValue, defaultValue);

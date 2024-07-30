@@ -34,7 +34,6 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 
 /**
  * @author Eike Stepper
@@ -186,7 +185,7 @@ public final class NetRenderer implements Listener
       cellForeground = gc.getForeground();
       cellBackground = gc.getBackground();
 
-      CDOCommitInfo commitInfo = (CDOCommitInfo)((TableItem)event.item).getData();
+      CDOCommitInfo commitInfo = (CDOCommitInfo)event.item.getData();
       return drawCell(commitInfo, event.index, justMeasureWidth);
     }
     catch (Throwable ex)

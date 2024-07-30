@@ -19,7 +19,6 @@ import org.eclipse.emf.cdo.server.IRepository.Props;
 import org.eclipse.emf.cdo.server.IUnit;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.IRepositoryConfig;
@@ -241,7 +240,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
     };
 
     Map<String, String> props = getRepositoryProperties();
-    ((InternalRepository)repository).setProperties(props);
+    repository.setProperties(props);
 
     repository.setName(IRepositoryConfig.REPOSITORY_NAME);
 

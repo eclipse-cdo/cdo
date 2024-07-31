@@ -138,22 +138,29 @@ pipeline {
 
   post {
     always {
-      archiveArtifacts artifacts: 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties',
+      junit
+        testResults: 'tests/test-report.xml', 
+        allowEmptyResults: true
+        
+      archiveArtifacts
+        artifacts: 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties',
         allowEmptyArchive: true
     }
 
     failure {
-      mail to: 'stepper@esc-net.de',
-      subject: "[CDO CI] Build Failure ${currentBuild.fullDisplayName}",
-      mimeType: 'text/html',
-      body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
+      mail
+        to: 'stepper@esc-net.de',
+        subject: "[CDO CI] Build Failure ${currentBuild.fullDisplayName}",
+        mimeType: 'text/html',
+        body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
     }
 
     fixed {
-      mail to: 'stepper@esc-net.de',
-      subject: "[CDO CI] Back to normal ${currentBuild.fullDisplayName}",
-      mimeType: 'text/html',
-      body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
+      mail
+        to: 'stepper@esc-net.de',
+        subject: "[CDO CI] Back to normal ${currentBuild.fullDisplayName}",
+        mimeType: 'text/html',
+        body: "Project: ${env.JOB_NAME}<br/>Build Number: ${env.BUILD_NUMBER}<br/>Build URL: ${env.BUILD_URL}<br/>Console: ${env.BUILD_URL}/console"
     }
 
     cleanup {

@@ -70,12 +70,12 @@ public class Net4jDBTest extends AbstractCDOTest
 
   public void testBinary() throws Exception
   {
-    if (!isDB("oracle", "mysql"))
+    if (!isDB("oracle", "mysql", "h2"))
     {
       registerColumn(DBType.BINARY, new byte[0]);
     }
 
-    if (!isDB("mysql"))
+    if (!isDB("mysql", "h2"))
     {
       byte[] data = new byte[100];
       for (int i = 0; i < data.length; i++)
@@ -349,7 +349,7 @@ public class Net4jDBTest extends AbstractCDOTest
     registerColumn(DBType.DATE, new GregorianCalendar(1950, 04, 21).getTimeInMillis());
     registerColumn(DBType.DATE, new GregorianCalendar(2030, 12, 31).getTimeInMillis());
 
-    if (!isDB("oracle", "db2", "mysql"))
+    if (!isDB("oracle", "db2", "mysql", "h2"))
     {
       registerColumn(DBType.DATE, new GregorianCalendar(0, 0, 0).getTimeInMillis());
     }

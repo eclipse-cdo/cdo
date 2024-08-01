@@ -19,6 +19,8 @@ import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBAdapter;
 
+import org.h2.api.ErrorCode;
+
 import javax.sql.DataSource;
 
 import java.sql.Connection;
@@ -34,7 +36,7 @@ public class H2Adapter extends DBAdapter
 {
   private static final String NAME = "h2"; //$NON-NLS-1$
 
-  public static final String VERSION = "1.1.114"; //$NON-NLS-1$
+  public static final String VERSION = String.valueOf("2.3.230"); //$NON-NLS-1$
 
   private static final String DEFAULT_SCHEMA_NAME = "public"; //$NON-NLS-1$
 
@@ -71,7 +73,11 @@ public class H2Adapter extends DBAdapter
 
     case LONGVARBINARY:
     case VARBINARY:
-      return "BLOB"; //$NON-NLS-1$
+    case BLOB:
+      return "BINARY LARGE OBJECT"; //$NON-NLS-1$
+
+    case CLOB:
+      return "CHARACTER LARGE OBJECT"; //$NON-NLS-1$
     }
 
     return super.getTypeName(field);
@@ -108,6 +114,22 @@ public class H2Adapter extends DBAdapter
   }
 
   @Override
+  public boolean isTableNotFoundException(SQLException ex)
+  {
+    int errorCode = ex.getErrorCode();
+    switch (errorCode)
+    {
+    case ErrorCode.TABLE_OR_VIEW_NOT_FOUND_1:
+    case ErrorCode.TABLE_OR_VIEW_NOT_FOUND_WITH_CANDIDATES_2:
+    case ErrorCode.TABLE_OR_VIEW_NOT_FOUND_DATABASE_EMPTY_1:
+      return true;
+
+    default:
+      return false;
+    }
+  }
+
+  @Override
   public String sqlRenameField(IDBField field, String oldName)
   {
     return "ALTER TABLE " + field.getTable() + " ALTER COLUMN " + oldName + " RENAME TO " + field;
@@ -123,10 +145,9 @@ public class H2Adapter extends DBAdapter
       @Override
       public Object run(Connection connection) throws SQLException
       {
-
         if (dropIfExists)
         {
-          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + DBUtil.quoted(name));
+          DBUtil.execute(connection, "DROP SCHEMA IF EXISTS " + DBUtil.quoted(name) + " CASCADE");
         }
 
         DBUtil.execute(connection, "CREATE SCHEMA IF NOT EXISTS " + DBUtil.quoted(name));

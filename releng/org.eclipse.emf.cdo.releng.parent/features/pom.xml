@@ -23,7 +23,6 @@ Eike Stepper - initial API and implementation
     <relativePath>..</relativePath>
   </parent>
 
-  <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.features</artifactId>
   <version>4.7.0-SNAPSHOT</version>
   <packaging>pom</packaging>

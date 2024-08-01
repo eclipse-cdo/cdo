@@ -24,4 +24,13 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/db/h2/H2Adapter.java" type="org.eclipse.net4j.db.h2.H2Adapter">
+        <filter id="389242988">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
+                <message_argument value="VERSION"/>
+                <message_argument value="1.1.114"/>
+            </message_arguments>
+        </filter>
+    </resource>
 </component>

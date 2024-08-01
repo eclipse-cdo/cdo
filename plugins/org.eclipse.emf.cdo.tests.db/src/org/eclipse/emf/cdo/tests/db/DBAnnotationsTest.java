@@ -445,6 +445,17 @@ public class DBAnnotationsTest extends AbstractCDOTest
 
   private String getClobString()
   {
-    return getRepositoryConfig().getName().toLowerCase().startsWith("mysql") ? "LONGTEXT" : "CLOB";
+    String db = getRepositoryConfig().getName().toLowerCase();
+    if (db.startsWith("mysql"))
+    {
+      return "LONGTEXT";
+    }
+
+    if (db.startsWith("h2"))
+    {
+      return "CHARACTER LARGE OBJECT"; // com.h2database
+    }
+
+    return "CLOB";
   }
 }

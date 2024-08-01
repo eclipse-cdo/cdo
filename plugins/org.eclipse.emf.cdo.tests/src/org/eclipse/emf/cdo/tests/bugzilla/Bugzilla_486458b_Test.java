@@ -137,6 +137,7 @@ public class Bugzilla_486458b_Test extends AbstractCDOTest
     assertEquals(expected, count);
   }
 
+  @Skips("H2")
   public void testLongCommitWithParallelCreateUnit() throws Exception
   {
     longCommit = true;

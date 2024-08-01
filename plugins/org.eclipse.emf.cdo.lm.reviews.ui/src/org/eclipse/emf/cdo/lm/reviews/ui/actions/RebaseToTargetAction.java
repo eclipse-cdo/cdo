@@ -22,14 +22,13 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
+import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.RebaseToTargetResult;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.util.LMMerger2;
 import org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos;
-
-import org.eclipse.net4j.util.collection.Pair;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
@@ -74,7 +73,7 @@ public class RebaseToTargetAction extends AbstractReviewAction
   {
     DeliveryReview deliveryReview = (DeliveryReview)review;
     String moduleName = deliveryReview.getModule().getName();
-    Pair<CDOBranchRef, Long> rebaseBranchAndTargetCommit = Pair.create();
+    RebaseToTargetResult result = new RebaseToTargetResult();
 
     systemDescriptor.withModuleSession(moduleName, moduleSession -> {
       CDOBranchManager branchManager = moduleSession.getBranchManager();
@@ -90,11 +89,11 @@ public class RebaseToTargetAction extends AbstractReviewAction
       CDOBranch streamBranch = streamBranchRef.resolve(branchManager);
 
       long lastStreamCommitTime = commitInfoManager.getLastCommitOfBranch(streamBranch, true);
-      rebaseBranchAndTargetCommit.setElement2(lastStreamCommitTime);
+      result.targetCommit = lastStreamCommitTime;
 
       int rebaseCount = deliveryReview.getRebaseCount() + 1;
       CDOBranch rebaseBranch = streamBranch.createBranch("review-" + deliveryReview.getId() + "-" + rebaseCount, lastStreamCommitTime);
-      rebaseBranchAndTargetCommit.setElement1(new CDOBranchRef(rebaseBranch));
+      result.rebaseBranch = new CDOBranchRef(rebaseBranch);
 
       LMMergeInfos infos = new LMMergeInfos();
       infos.setSession(moduleSession);
@@ -104,12 +103,11 @@ public class RebaseToTargetAction extends AbstractReviewAction
       infos.setTargetBranch(rebaseBranch);
 
       LMMerger2 merger = new InteractiveDeliveryMerger();
-      merger.mergeDelivery(infos);
+      result.success = merger.mergeDelivery(infos) != CDOBranchPoint.INVALID_DATE;
     });
 
-    ClientReviewStatemachine.DELIVERIES.process(deliveryReview, ReviewEvent.RebaseToTarget, rebaseBranchAndTargetCommit);
-
-    updateCheckouts(review, systemDescriptor, rebaseBranchAndTargetCommit.getElement1());
+    ClientReviewStatemachine.DELIVERIES.process(deliveryReview, ReviewEvent.RebaseToTarget, result);
+    updateCheckouts(review, systemDescriptor, result.rebaseBranch);
   }
 
   private static void updateCheckouts(Review review, ISystemDescriptor systemDescriptor, CDOBranchRef rebaseBranchRef)

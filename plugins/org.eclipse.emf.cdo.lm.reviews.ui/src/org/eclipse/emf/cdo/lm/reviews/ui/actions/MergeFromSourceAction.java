@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.lm.reviews.ui.actions;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
+import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.MergeFromSourceResult;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
@@ -59,8 +60,11 @@ public class MergeFromSourceAction extends AbstractReviewAction
   protected void doRun(Review review, ISystemDescriptor systemDescriptor, IProgressMonitor monitor) throws Exception
   {
     DeliveryReview deliveryReview = (DeliveryReview)review;
-    long sourceCommit = NewDeliveryReviewAction.mergeFromSource(systemDescriptor, deliveryReview, deliveryReview);
 
-    ClientReviewStatemachine.DELIVERIES.process(deliveryReview, ReviewEvent.MergeFromSource, sourceCommit);
+    MergeFromSourceResult result = NewDeliveryReviewAction.mergeFromSource(systemDescriptor, deliveryReview, deliveryReview);
+    if (result.isSuccess())
+    {
+      ClientReviewStatemachine.DELIVERIES.process(deliveryReview, ReviewEvent.MergeFromSource, result);
+    }
   }
 }

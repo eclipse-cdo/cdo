@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Review;
@@ -20,7 +21,6 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
-import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 
@@ -142,9 +142,9 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
 
   protected abstract void handleCommitInTarget(REVIEW review);
 
-  protected abstract void handleMergeFromSource(REVIEW review, long sourceCommit);
+  protected abstract void handleMergeFromSource(REVIEW review, MergeFromSourceResult result);
 
-  protected abstract void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit);
+  protected abstract void handleRebaseToTarget(REVIEW review, RebaseToTargetResult result);
 
   protected abstract void handleSubmit(REVIEW review, FixedBaseline submitResult);
 
@@ -341,7 +341,7 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     @Override
     public ReviewStatus execute(REVIEW review, ReviewStatus status, Object data)
     {
-      handleMergeFromSource(review, (long)data);
+      handleMergeFromSource(review, (MergeFromSourceResult)data);
       return status == ReviewStatus.OUTDATED ? ReviewStatus.TARGET_OUTDATED : ReviewStatus.NEW;
     }
   }
@@ -354,12 +354,7 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     @Override
     public ReviewStatus execute(REVIEW review, ReviewStatus status, Object data)
     {
-      @SuppressWarnings("unchecked")
-      Pair<CDOBranchRef, Long> rebaseBranchAndTargetCommit = (Pair<CDOBranchRef, Long>)data;
-      CDOBranchRef rebaseBranch = rebaseBranchAndTargetCommit.getElement1();
-      long targetCommit = rebaseBranchAndTargetCommit.getElement2();
-
-      handleRebaseToTarget(review, rebaseBranch, targetCommit);
+      handleRebaseToTarget(review, (RebaseToTargetResult)data);
       return status == ReviewStatus.OUTDATED ? ReviewStatus.SOURCE_OUTDATED : ReviewStatus.NEW;
     }
   }
@@ -431,6 +426,46 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
   /**
    * @author Eike Stepper
    */
+  public static final class MergeFromSourceResult
+  {
+    public long sourceCommit = CDOBranchPoint.INVALID_DATE;
+
+    public long targetCommit = CDOBranchPoint.INVALID_DATE;
+
+    public MergeFromSourceResult()
+    {
+    }
+
+    public boolean isSuccess()
+    {
+      return targetCommit != CDOBranchPoint.INVALID_DATE;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class RebaseToTargetResult
+  {
+    public CDOBranchRef rebaseBranch;
+
+    public long targetCommit = CDOBranchPoint.INVALID_DATE;
+
+    public boolean success;
+
+    public RebaseToTargetResult()
+    {
+    }
+
+    public boolean isSuccess()
+    {
+      return success;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   public static abstract class Client<REVIEW extends Review> extends ReviewStatemachine<REVIEW>
   {
     public Client(boolean dropReviews)
@@ -468,13 +503,13 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     }
 
     @Override
-    protected final void handleMergeFromSource(REVIEW review, long sourceCommit)
+    protected void handleMergeFromSource(REVIEW review, MergeFromSourceResult result)
     {
       throw new UnsupportedOperationException();
     }
 
     @Override
-    protected final void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit)
+    protected void handleRebaseToTarget(REVIEW review, RebaseToTargetResult result)
     {
       throw new UnsupportedOperationException();
     }

@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.MergeFromSourceResult;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
@@ -171,9 +172,9 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
     return review;
   }
 
-  public static long mergeFromSource(ISystemDescriptor systemDescriptor, DeliveryReview review, FloatingBaseline targetBaseline)
+  public static MergeFromSourceResult mergeFromSource(ISystemDescriptor systemDescriptor, DeliveryReview review, FloatingBaseline targetBaseline)
   {
-    long[] sourceCommit = { CDOBranchPoint.INVALID_DATE };
+    MergeFromSourceResult result = new MergeFromSourceResult();
 
     Change sourceChange = review.getSourceChange();
     String moduleName = review.getModule().getName();
@@ -187,8 +188,8 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
       CDOBranch targetBranch = targetBranchRef.resolve(branchManager);
 
       CDOCommitInfoManager commitInfoManager = session.getCommitInfoManager();
-      sourceCommit[0] = commitInfoManager.getLastCommitOfBranch(sourceBranch, true);
-      CDOBranchPoint sourceBranchPoint = sourceBranch.getPoint(sourceCommit[0]);
+      long sourceCommit = commitInfoManager.getLastCommitOfBranch(sourceBranch, true);
+      CDOBranchPoint sourceBranchPoint = sourceBranch.getPoint(sourceCommit);
 
       LMMergeInfos infos = new LMMergeInfos();
       infos.setSession(session);
@@ -198,9 +199,10 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
       infos.setTargetBranch(targetBranch);
 
       LMMerger2 merger = new InteractiveDeliveryMerger();
-      merger.mergeDelivery(infos);
+      result.targetCommit = merger.mergeDelivery(infos);
+      result.sourceCommit = sourceCommit;
     });
 
-    return sourceCommit[0];
+    return result;
   }
 }

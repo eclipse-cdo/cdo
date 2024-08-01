@@ -10,7 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.ui;
 
-import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Change;
@@ -41,19 +40,24 @@ public final class ClientReviewStatemachine<REVIEW extends Review> extends Revie
   }
 
   @Override
-  protected void handleMergeFromSource(REVIEW review, long sourceCommit)
+  protected void handleMergeFromSource(REVIEW review, MergeFromSourceResult result)
   {
     DeliveryReview deliveryReview = (DeliveryReview)review;
-    deliveryReview.setSourceCommit(sourceCommit);
+    deliveryReview.setSourceCommit(result.sourceCommit);
   }
 
   @Override
-  protected void handleRebaseToTarget(REVIEW review, CDOBranchRef rebaseBranch, long targetCommit)
+  protected void handleRebaseToTarget(REVIEW review, RebaseToTargetResult result)
   {
     DeliveryReview deliveryReview = (DeliveryReview)review;
     deliveryReview.setRebaseCount(deliveryReview.getRebaseCount() + 1);
-    deliveryReview.setBranch(rebaseBranch);
-    deliveryReview.setTargetCommit(targetCommit);
+    deliveryReview.setBranch(result.rebaseBranch);
+
+    if (result.isSuccess())
+    {
+      // Only remember the merge if it was successful.
+      deliveryReview.setTargetCommit(result.targetCommit);
+    }
 
     EList<Baseline> contents = review.getStream().getContents();
     contents.move(0, deliveryReview);

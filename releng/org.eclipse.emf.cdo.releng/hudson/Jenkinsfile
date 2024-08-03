@@ -53,7 +53,7 @@ pipeline {
         script {
           def props = readProperties(file: 'build-info.properties')
           env.BUILD_VERSION = props['build.version']
-          env.BUILD_TYPE = props['build.type']
+          env.BUILD_TYPE_EFFECTIVE = props['build.type']
           env.BUILD_QUALIFIER_DATE = props['build.qualifier.date']
           env.BUILD_QUALIFIER = props['build.qualifier']
           env.BUILD_SIGN = props['build.sign']

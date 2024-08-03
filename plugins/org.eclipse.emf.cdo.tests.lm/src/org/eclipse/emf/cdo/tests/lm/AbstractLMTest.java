@@ -133,7 +133,7 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
   private static InternalRepository createRepository(String name, File dbFolder)
   {
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + dbFolder.toURI() + "/" + name);
+    dataSource.setURL("jdbc:h2:" + dbFolder + "/" + name);
 
     IMappingStrategy mappingStrategy = CDODBUtil.createHorizontalMappingStrategy(true, true);
     IDBAdapter dbAdapter = new H2Adapter();

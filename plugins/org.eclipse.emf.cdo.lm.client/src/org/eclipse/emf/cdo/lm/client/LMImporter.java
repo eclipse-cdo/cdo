@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.lm.internal.client;
+package org.eclipse.emf.cdo.lm.client;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
@@ -27,13 +27,13 @@ import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.ModuleType;
 import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.StreamSpec;
-import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportElement.ImportBinary;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportElement.ImportFolder;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportElement.ImportResource;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportElement.ImportText;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportElement.Type;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportElement.ImportBinary;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportElement.ImportFolder;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportElement.ImportResource;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportElement.ImportText;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportElement.Type;
+import org.eclipse.emf.cdo.lm.internal.client.SystemDescriptor;
 import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
@@ -93,9 +93,20 @@ import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
+ * @since 1.4
  */
 public final class LMImporter
 {
+  public static final UnaryOperator<URI> EXTERNAL_REFERENCE_PRESERVER = uri -> uri;
+
+  public static final UnaryOperator<URI> EXTERNAL_REFERENCE_REJECTER = uri -> {
+    throw new IllegalStateException("External reference: " + uri);
+  };
+
+  public static final UnaryOperator<URI> EXTERNAL_REFERENCE_UNSETTER = uri -> null;
+
+  private static final URI EXTERNAL_REFERENCE_UNSET_MARKER = URI.createURI("UNSET_EXTERNAL_REFERENCE://cdo.lm");
+
   private final Map<String, ImportModule> modules = new HashMap<>();
 
   private final Map<URI, ImportElement> elements = new HashMap<>();
@@ -128,6 +139,22 @@ public final class LMImporter
 
   public ImportResolution resolve(ResourceSet resourceSet)
   {
+    return resolve(resourceSet, false);
+  }
+
+  public ImportResolution resolve(ResourceSet resourceSet, boolean rejectExternalReferences)
+  {
+    UnaryOperator<URI> externalReferenceHandler = rejectExternalReferences ? EXTERNAL_REFERENCE_REJECTER : null;
+    return resolve(resourceSet, externalReferenceHandler);
+  }
+
+  public ImportResolution resolve(ResourceSet resourceSet, UnaryOperator<URI> externalReferenceHandler)
+  {
+    if (externalReferenceHandler == null)
+    {
+      externalReferenceHandler = EXTERNAL_REFERENCE_PRESERVER;
+    }
+
     for (ImportModule module : modules.values())
     {
       module.accept(element -> {
@@ -140,6 +167,7 @@ public final class LMImporter
     }
 
     EcoreUtil.resolveAll(resourceSet);
+    Map<EObject, URI> externalReferences = new HashMap<>(); // targetObject -> handledURI
 
     for (ImportElement element : elements.values())
     {
@@ -162,12 +190,20 @@ public final class LMImporter
                 throw new IllegalStateException("Unresolved proxy: " + ((InternalEObject)target).eProxyURI());
               }
 
-              Resource targetResource = target.eResource();
-              URI targetURI = targetResource.getURI();
-              ImportElement targetElement = elements.get(targetURI);
+              URI targetURI = EcoreUtil.getURI(target);
+              URI targetElementURI = targetURI.trimFragment();
+
+              ImportElement targetElement = elements.get(targetElementURI);
               if (targetElement == null)
               {
-                throw new IllegalStateException("External reference: " + EcoreUtil.getURI(target));
+                URI handledURI = externalReferenceHandler.apply(targetURI);
+                if (handledURI == null)
+                {
+                  handledURI = EXTERNAL_REFERENCE_UNSET_MARKER;
+                }
+
+                externalReferences.put(target, handledURI);
+                continue;
               }
 
               ImportModule targetModule = targetElement.getModule();
@@ -181,7 +217,7 @@ public final class LMImporter
       }
     }
 
-    return new ImportResolution(resourceSet);
+    return new ImportResolution(resourceSet, externalReferences);
   }
 
   private void registerElement(ImportElement element)
@@ -753,11 +789,14 @@ public final class LMImporter
   {
     private final ResourceSet resourceSet;
 
+    private final Map<EObject, URI> externalReferences;
+
     private final List<ModuleInfo> moduleInfos = new ArrayList<>();
 
-    private ImportResolution(ResourceSet resourceSet)
+    private ImportResolution(ResourceSet resourceSet, Map<EObject, URI> externalReferences)
     {
       this.resourceSet = resourceSet;
+      this.externalReferences = externalReferences;
 
       for (ImportModule module : CollectionUtil.topologicalSort(modules.values(), ImportModule::getDependencies, true))
       {
@@ -781,6 +820,11 @@ public final class LMImporter
     public ResourceSet getResourceSet()
     {
       return resourceSet;
+    }
+
+    public Map<EObject, URI> getExternalReferences()
+    {
+      return Collections.unmodifiableMap(externalReferences);
     }
 
     public List<ModuleInfo> getModuleInfos()
@@ -1089,6 +1133,7 @@ public final class LMImporter
 
       public ModuleCopier(Map<EObject, Pair<ModuleInfo, CDOID>> objectMappings, CDOTransaction transaction)
       {
+        super(true, false);
         this.objectMappings = objectMappings;
         this.transaction = transaction;
       }
@@ -1126,6 +1171,22 @@ public final class LMImporter
 
           CDOView view = getViewSafe(elementModuleInfo);
           return view.getObject(elementID);
+        }
+
+        URI handledURI = externalReferences.get(key);
+        if (handledURI != null)
+        {
+          if (handledURI == EXTERNAL_REFERENCE_UNSET_MARKER)
+          {
+            return null;
+          }
+
+          ResourceSet targetResourceSet = transaction.getResourceSet();
+          EObject targetObject = targetResourceSet.getEObject(handledURI, true);
+          if (targetObject != null)
+          {
+            return targetObject;
+          }
         }
 
         return super.get(key);

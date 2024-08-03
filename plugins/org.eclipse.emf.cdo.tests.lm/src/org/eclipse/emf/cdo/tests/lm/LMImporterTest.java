@@ -24,13 +24,16 @@ import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportModule;
-import org.eclipse.emf.cdo.lm.internal.client.LMImporter.ImportResolution;
+import org.eclipse.emf.cdo.lm.client.LMImporter;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportModule;
+import org.eclipse.emf.cdo.lm.client.LMImporter.ImportResolution;
 import org.eclipse.emf.cdo.tests.lm.bundle.OM;
 import org.eclipse.emf.cdo.tests.model1.Category;
+import org.eclipse.emf.cdo.tests.model1.Company;
+import org.eclipse.emf.cdo.tests.model1.Customer;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.Product1;
+import org.eclipse.emf.cdo.tests.model1.SalesOrder;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.io.IOUtil;
@@ -39,6 +42,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMLResourceFactoryImpl;
 
 import java.io.File;
@@ -59,43 +63,67 @@ public class LMImporterTest extends AbstractLMTest
 
     // Build on-disk test model and configure 3 modules to import.
     ResourceSet resourceSet = createXMLResourceSet();
-    ImportModule base = createTestModule(importer, resourceSet, "base");
-    ImportModule ext1 = createTestModule(importer, resourceSet, "ext1", "base");
-    ImportModule ext2 = createTestModule(importer, resourceSet, "ext2", "ext1", "base");
+    Customer externalCustomer = createExternalCustomer(resourceSet);
+    ImportModule mod0 = createTestModule(importer, resourceSet, externalCustomer, "mod0");
+    ImportModule mod1 = createTestModule(importer, resourceSet, externalCustomer, "mod1", "mod0");
+    ImportModule mod2 = createTestModule(importer, resourceSet, externalCustomer, "mod2", "mod1", "mod0");
 
     // Resolve the models to import and derive dependency information.
     ImportResolution resolution = importer.resolve(createXMLResourceSet());
-    assertThat(resolution.getModuleInfos().get(0).getModule(), is(base));
-    assertThat(resolution.getModuleInfos().get(1).getModule(), is(ext1));
-    assertThat(resolution.getModuleInfos().get(2).getModule(), is(ext2));
+    assertThat(resolution.getModuleInfos().get(0).getModule(), is(mod0));
+    assertThat(resolution.getModuleInfos().get(1).getModule(), is(mod1));
+    assertThat(resolution.getModuleInfos().get(2).getModule(), is(mod2));
 
     // Perform the module imports.
     ISystemDescriptor systemDescriptor = createSystemRepository();
     List<Module> modules = resolution.importModules(systemDescriptor);
-    assertThat(modules.get(0).getName(), is(base.getName()));
-    assertThat(modules.get(1).getName(), is(ext1.getName()));
-    assertThat(modules.get(2).getName(), is(ext2.getName()));
+    assertThat(modules.get(0).getName(), is(mod0.getName()));
+    assertThat(modules.get(1).getName(), is(mod1.getName()));
+    assertThat(modules.get(2).getName(), is(mod2.getName()));
 
     // Create a "base" module checkout.
-    Stream baseStream = modules.get(0).getStreams().get(0);
-    IAssemblyDescriptor baseDescriptor = IAssemblyManager.INSTANCE.createDescriptor("base assembly descriptor", baseStream, monitor());
-    CDOCheckout baseCheckout = baseDescriptor.getCheckout();
-    CDOView baseView = baseCheckout.openView(true);
+    Stream mod0Stream = modules.get(0).getStreams().get(0);
+    IAssemblyDescriptor mod0Descriptor = IAssemblyManager.INSTANCE.createDescriptor("base assembly descriptor", mod0Stream, monitor());
+    CDOCheckout mod0Checkout = mod0Descriptor.getCheckout();
+    CDOView mod0View = mod0Checkout.openView(true);
 
     // Verify that the custom copy paths are respected.
-    CDOResource baseResource = baseView.getResource("moved/renamed.xml"); // Use the custom path.
-    Category baseCategory = (Category)baseResource.getContents().get(0);
-    assertThat(baseCategory.getName(), is("base products"));
+    CDOResource mod0Resource = mod0View.getResource("moved/renamed.xml"); // Use the custom path.
+    Company mod0Company = (Company)mod0Resource.getContents().get(0);
+    Category mod0Category = mod0Company.getCategories().get(0);
+    assertThat(mod0Category.getName(), is("mod0 products"));
 
     // Verify that text resources are imported and their contents are modified.
-    CDOTextResource baseText = baseView.getTextResource("manifest.txt");
+    CDOTextResource baseText = mod0View.getTextResource("manifest.txt");
     CDOClob baseClob = baseText.getContents();
     String baseString = baseClob.getString();
     assertThat(baseString, startsWith("Manifest-Version: 1.0"));
     assertThat(baseString, containsString("CDO.server.net4j"));
+
+    // Verify that the external reference is preserved.
+    SalesOrder salesOrder = mod0Company.getSalesOrders().get(0);
+    Customer customer = salesOrder.getCustomer();
+    URI customerURI = EcoreUtil.getURI(customer);
+    assertThat(customerURI.scheme(), is("file"));
   }
 
-  private ImportModule createTestModule(LMImporter importer, ResourceSet resourceSet, String name, String... dependencies) throws IOException
+  private Customer createExternalCustomer(ResourceSet resourceSet) throws IOException
+  {
+    File xmlDir = getTestFolder("xml");
+    URI xmlURI = URI.createFileURI(xmlDir.getAbsolutePath());
+
+    Resource resource = resourceSet.createResource(xmlURI.appendSegment("external.xml"));
+
+    Customer externalCustomer = Model1Factory.eINSTANCE.createCustomer();
+    externalCustomer.setName("external customer");
+    resource.getContents().add(externalCustomer);
+
+    resource.save(null);
+    return externalCustomer;
+  }
+
+  private ImportModule createTestModule(LMImporter importer, ResourceSet resourceSet, Customer externalCustomer, String name, String... dependencies)
+      throws IOException
   {
     File xmlDir = getTestFolder("xml");
     URI xmlURI = URI.createFileURI(xmlDir.getAbsolutePath());
@@ -103,9 +131,13 @@ public class LMImporterTest extends AbstractLMTest
     URI rootURI = xmlURI.appendSegment(name);
     Resource resource = resourceSet.createResource(rootURI.appendSegment("model.xml"));
 
+    Company company = Model1Factory.eINSTANCE.createCompany();
+    company.setName(name + " company");
+    resource.getContents().add(company);
+
     Category category = Model1Factory.eINSTANCE.createCategory();
     category.setName(name + " products");
-    resource.getContents().add(category);
+    company.getCategories().add(category);
 
     for (int i = 0; i < 3; i++)
     {
@@ -114,10 +146,15 @@ public class LMImporterTest extends AbstractLMTest
       category.getProducts().add(product);
     }
 
+    SalesOrder salesOrder = Model1Factory.eINSTANCE.createSalesOrder();
+    salesOrder.setCustomer(externalCustomer);
+    company.getSalesOrders().add(salesOrder);
+
     for (String dependency : dependencies)
     {
       Resource dependencyResource = resourceSet.getResource(xmlURI.appendSegment(dependency).appendSegment("model.xml"), true);
-      Category dependencyCategory = (Category)dependencyResource.getContents().get(0);
+      Company dependencyCompany = (Company)dependencyResource.getContents().get(0);
+      Category dependencyCategory = dependencyCompany.getCategories().get(0);
       category.getTopProducts().addAll(dependencyCategory.getProducts());
     }
 

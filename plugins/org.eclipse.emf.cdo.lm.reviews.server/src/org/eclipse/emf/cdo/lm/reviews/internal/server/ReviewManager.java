@@ -75,6 +75,7 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * @author Eike Stepper
@@ -656,7 +657,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     protected String formatAdditionalParameters()
     {
       return "type=" + type + ", cdoid=" + cdoid + ", changedFeatures=" + //
-          changedFeatures.stream().map(ReviewManagerEvent::formatFeatureName).toList();
+          changedFeatures.stream().map(ReviewManagerEvent::formatFeatureName).collect(Collectors.toList());
     }
 
     private static String formatFeatureName(EStructuralFeature feature)

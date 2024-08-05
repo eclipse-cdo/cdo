@@ -8,12 +8,12 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.lm.reviews.server;
+package org.eclipse.emf.cdo.lm.reviews.internal.server;
 
-import org.eclipse.emf.cdo.lm.reviews.server.internal.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.server.IReviewManager;
 import org.eclipse.emf.cdo.lm.server.LMAppExtension;
 import org.eclipse.emf.cdo.lm.server.XMLLifecycleManager;
-import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.spi.server.AppExtension;
 import org.eclipse.emf.cdo.spi.server.IAppExtension4;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -21,14 +21,11 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Eike Stepper
@@ -38,10 +35,8 @@ public class ReviewsAppExtension extends AppExtension implements IAppExtension4
   public static final int PRIORITY = PRIORITY_DEFAULT + 100;
 
   private static final String DEFAULT_REVIEW_MANAGER_TYPE = OMPlatform.INSTANCE.getProperty( //
-      "org.eclipse.emf.cdo.lm.reviews.server.ReviewsAppExtension.DEFAULT_REVIEW_MANAGER_TYPE", //
+      "org.eclipse.emf.cdo.lm.reviews.internal.server.ReviewsAppExtension.DEFAULT_REVIEW_MANAGER_TYPE", //
       ReviewManager.DEFAULT_TYPE);
-
-  private static final Map<InternalRepository, ReviewManager> REVIEW_MANAGERS = Collections.synchronizedMap(new HashMap<>());
 
   public ReviewsAppExtension()
   {
@@ -79,11 +74,11 @@ public class ReviewsAppExtension extends AppExtension implements IAppExtension4
   @Override
   protected void stop(InternalRepository repository) throws Exception
   {
-    ReviewManager reviewManager = REVIEW_MANAGERS.remove(repository);
+    IReviewManager reviewManager = ReviewManager.ReviewManagerRegistry.INSTANCE.removeReviewManager(repository);
     if (reviewManager != null)
     {
       OM.LOG.info("Deactivating review manager of repository " + repository.getName());
-      reviewManager.deactivate();
+      LifecycleUtil.deactivate(reviewManager);
     }
   }
 
@@ -101,7 +96,7 @@ public class ReviewsAppExtension extends AppExtension implements IAppExtension4
     OM.LOG.info("Activating review manager of repository " + repository.getName());
     reviewManager.activate();
 
-    REVIEW_MANAGERS.put(repository, reviewManager);
+    ReviewManager.ReviewManagerRegistry.INSTANCE.addReviewManager(repository, reviewManager);
   }
 
   /**
@@ -133,10 +128,5 @@ public class ReviewsAppExtension extends AppExtension implements IAppExtension4
     T containerElement = (T)container.createElement(ReviewManager.PRODUCT_GROUP, type, config);
 
     return containerElement;
-  }
-
-  public static ReviewManager getReviewManager(IRepository repository)
-  {
-    return REVIEW_MANAGERS.get(repository);
   }
 }

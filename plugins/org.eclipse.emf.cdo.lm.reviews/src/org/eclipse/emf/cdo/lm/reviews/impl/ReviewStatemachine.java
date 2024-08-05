@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
+import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
@@ -23,6 +24,8 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
+
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -181,6 +184,63 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     init(status, event, transition);
   }
 
+  public static <REVIEW extends Review> CDOCommitInfo modify(REVIEW review, Consumer<REVIEW> modifier)
+  {
+    CDOSession session = review.cdoView().getSession();
+
+    ConcurrentAccessException[] exception = { null };
+    CDOCommitInfo[] result = { null };
+
+    for (int i = 0; i <= COMMIT_RETRIES; i++)
+    {
+      CDOTransaction transaction = session.openTransaction();
+      exception[0] = null;
+
+      try
+      {
+        transaction.syncExec(() -> {
+          REVIEW transactionalReview = transaction.getObject(review);
+          modifier.accept(transactionalReview);
+
+          if (!transaction.isDirty())
+          {
+            return;
+          }
+
+          try
+          {
+            result[0] = transaction.commit();
+            exception[0] = null;
+          }
+          catch (ConcurrentAccessException ex)
+          {
+            exception[0] = ex;
+          }
+          catch (CommitException ex)
+          {
+            throw ex.wrap();
+          }
+        });
+
+        if (exception[0] == null)
+        {
+          return result[0];
+        }
+      }
+      finally
+      {
+        transaction.close();
+      }
+    }
+
+    if (exception[0] != null)
+    {
+      throw exception[0].wrap();
+    }
+
+    return result[0];
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -249,59 +309,13 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
     @Override
     public final void execute(REVIEW review, ReviewStatus status, ReviewEvent event, Object data)
     {
-      CDOSession session = review.cdoView().getSession();
-      ConcurrentAccessException[] concurrentAccessException = { null };
-
-      for (int i = 0; i <= COMMIT_RETRIES; i++)
-      {
-        CDOTransaction transaction = session.openTransaction();
-        concurrentAccessException[0] = null;
-
-        try
+      modify(review, transactionalReview -> {
+        ReviewStatus newStatus = execute(transactionalReview, status, data);
+        if (newStatus != status)
         {
-          transaction.syncExec(() -> {
-            REVIEW transactionalReview = transaction.getObject(review);
-
-            ReviewStatus newStatus = execute(transactionalReview, status, data);
-            if (newStatus != status)
-            {
-              changeState(transactionalReview, newStatus);
-            }
-
-            if (!transaction.isDirty())
-            {
-              return;
-            }
-
-            try
-            {
-              transaction.commit();
-            }
-            catch (ConcurrentAccessException ex)
-            {
-              concurrentAccessException[0] = ex;
-            }
-            catch (CommitException ex)
-            {
-              throw ex.wrap();
-            }
-          });
-
-          if (concurrentAccessException[0] == null)
-          {
-            return;
-          }
+          changeState(transactionalReview, newStatus);
         }
-        finally
-        {
-          transaction.close();
-        }
-      }
-
-      if (concurrentAccessException[0] != null)
-      {
-        throw concurrentAccessException[0].wrap();
-      }
+      });
     }
 
     protected abstract ReviewStatus execute(REVIEW review, ReviewStatus status, Object data);

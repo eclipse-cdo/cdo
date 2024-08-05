@@ -18,16 +18,15 @@
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
-      <factory productGroup="org.eclipse.emf.cdo.lm.reviews.server.reviewManagers" type="default" class="org.eclipse.emf.cdo.lm.reviews.server.ReviewManager"/>
       <annotationFactory
-            productClass="org.eclipse.emf.cdo.lm.reviews.server.ReviewManager"
+            productClass="org.eclipse.emf.cdo.lm.reviews.internal.server.ReviewManager"
             productGroup="org.eclipse.emf.cdo.lm.reviews.server.reviewManagers"
             type="default">
       </annotationFactory>
    </extension>
    
    <extension point="org.eclipse.emf.cdo.server.appExtensions">
-      <appExtension class="org.eclipse.emf.cdo.lm.reviews.server.ReviewsAppExtension"/>
+      <appExtension class="org.eclipse.emf.cdo.lm.reviews.internal.server.ReviewsAppExtension"/>
    </extension>
 
 </plugin>

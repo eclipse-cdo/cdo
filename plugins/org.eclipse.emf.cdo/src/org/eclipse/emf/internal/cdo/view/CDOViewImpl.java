@@ -1916,7 +1916,7 @@ public class CDOViewImpl extends AbstractCDOView
   }
 
   @Override
-  public boolean runAfterUpdate(final long updateTime, final Runnable runnable)
+  public boolean runAfterUpdate(long updateTime, Runnable runnable)
   {
     synchronized (getViewMonitor())
     {

@@ -12,4 +12,4 @@
 /**
  * Server integration of the CDO Lifecycle Management Reviews.
  */
-package org.eclipse.emf.cdo.lm.reviews.server;
+package org.eclipse.emf.cdo.lm.reviews.internal.server;

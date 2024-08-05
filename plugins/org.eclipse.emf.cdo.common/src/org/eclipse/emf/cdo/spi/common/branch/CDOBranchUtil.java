@@ -144,6 +144,14 @@ public final class CDOBranchUtil
   }
 
   /**
+   * @since 4.23
+   */
+  public static CDOBranchPoint adjustTime(CDOBranchPoint branchPoint, long deltaMillis)
+  {
+    return branchPoint.getBranch().getPoint(branchPoint.getTimeStamp() + deltaMillis);
+  }
+
+  /**
    * @since 4.14
    */
   public static CDOBranch adjustBranch(CDOBranch branch, CDOBranchManager branchManager)

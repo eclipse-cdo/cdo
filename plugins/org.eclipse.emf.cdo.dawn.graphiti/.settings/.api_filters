@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.dawn.graphiti" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.console.DebugGEF">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.console.DebugGEF"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.console.DebugGEFAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.console.DebugGEFAction"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.stackview.CommandStackInspector">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.stackview.CommandStackInspector"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.stackview.CommandStackInspectorPage">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.stackview.CommandStackInspectorPage"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.stackview.CommandStackViewerAction">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.stackview.CommandStackViewerAction"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.stackview.TreeContentProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.stackview.TreeContentProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.gef.ui.stackview.TreeLabelProvider">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.gef.ui.stackview.TreeLabelProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

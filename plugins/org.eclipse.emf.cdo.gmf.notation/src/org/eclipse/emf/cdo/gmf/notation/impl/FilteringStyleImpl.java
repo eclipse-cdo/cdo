@@ -58,7 +58,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
   /**
    * The default value of the '{@link #getFilteringKeys() <em>Filtering
    * Keys</em>}' attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getFilteringKeys()
    * @generated NOT
    * @ordered
@@ -118,7 +118,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -138,7 +138,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -264,7 +264,7 @@ public class FilteringStyleImpl extends CDOObjectImpl implements FilteringStyle
     case NotationPackage.FILTERING_STYLE__FILTERING:
       return getFiltering() != FILTERING_EDEFAULT;
     case NotationPackage.FILTERING_STYLE__FILTERING_KEYS:
-      return FILTERING_KEYS_EDEFAULT == null ? getFilteringKeys() != null : !FILTERING_KEYS_EDEFAULT.equals(getFilteringKeys());
+      return FILTERING_KEYS_EDEFAULT == null ? getFilteringKeysGen() != null : !FILTERING_KEYS_EDEFAULT.equals(getFilteringKeysGen());
     case NotationPackage.FILTERING_STYLE__FILTERED_OBJECTS:
       return !getFilteredObjects().isEmpty();
     }

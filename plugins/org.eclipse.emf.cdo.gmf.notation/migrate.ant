@@ -261,6 +261,23 @@
     </replaceregexp>
 
 		<!--
+		  GMF's hand-modified getters are called in eIsSet method and could lead to a NPE.
+		  Call the getXyzGen getters instead.
+		-->
+		<replaceregexp file="${impl}/SortingStyleImpl.java" flags="gs" byline="false">
+			<regexp pattern="(public boolean eIsSet\(int featureID\).*)getSortingKeys\(\)(.*)getSortingKeys\(\)(.*return eDynamicIsSet\(featureID\);)" />
+			<substitution expression="\1getSortingKeysGen()\2getSortingKeysGen()\3" />
+		</replaceregexp>
+		<replaceregexp file="${impl}/RelativeBendpointsImpl.java" flags="gs" byline="false">
+			<regexp pattern="(public boolean eIsSet\(int featureID\).*)getPoints\(\)(.*)getPoints\(\)(.*return eDynamicIsSet\(featureID\);)" />
+			<substitution expression="\1getPointsGen()\2getPointsGen()\3" />
+		</replaceregexp>
+		<replaceregexp file="${impl}/FilteringStyleImpl.java" flags="gs" byline="false">
+			<regexp pattern="(public boolean eIsSet\(int featureID\).*)getFilteringKeys\(\)(.*)getFilteringKeys\(\)(.*return eDynamicIsSet\(featureID\);)" />
+			<substitution expression="\1getFilteringKeysGen()\2getFilteringKeysGen()\3" />
+		</replaceregexp>
+
+		<!--
 		  Apply source cleanup to the 'org.eclipse.emf.cdo.gmf.notation' project.
 		  This ensures that only relevant changes appear in the Git history.
 		-->

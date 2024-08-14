@@ -164,7 +164,21 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
       CDOURIUtil.appendQueryParameter(query, CDOURIData.TRANSACTIONAL_PARAMETER, "true");
     }
 
-    URI uri = URI.createHierarchicalURI("cdo.net4j." + transport, authority, null, query.toString(), null).appendSegment(repositoryName);
+    String[] servicePathSegments = null;
+    if (authority.contains(CDOURIUtil.SEGMENT_SEPARATOR))
+    {
+      URI uri = URI.createURI(transport + "://" + authority);
+      authority = uri.authority();
+      servicePathSegments = uri.segments();
+    }
+
+    URI uri = URI.createHierarchicalURI("cdo.net4j." + transport, authority, null, query.toString(), null);
+
+    if (servicePathSegments != null && servicePathSegments.length > 0)
+    {
+      uri = uri.appendSegments(servicePathSegments);
+    }
+    uri = uri.appendSegment(repositoryName);
     return CDOURIUtil.appendResourcePath(uri, resourcePath);
   }
 

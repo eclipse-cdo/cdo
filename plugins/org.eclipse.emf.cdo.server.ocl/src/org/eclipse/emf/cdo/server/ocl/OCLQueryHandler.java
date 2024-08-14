@@ -44,6 +44,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.OCL;
 import org.eclipse.ocl.ParserException;
@@ -64,6 +65,8 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.ProblemAware;
 import org.eclipse.ocl.util.Tuple;
 
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -97,6 +100,10 @@ public class OCLQueryHandler implements IQueryHandler
       .unmodifiableSet(new java.util.HashSet<>(Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
 
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
+
+  private static final Method OLD_OCL_NEW_INSTANCE_METHOD = getOCLMethod("newInstance");
+
+  private static final Method NEW_OCL_NEW_INSTANCE_METHOD = getOCLMethod("newInstanceAbstract");
 
   private boolean lazyExtents = true;
 
@@ -206,7 +213,7 @@ public class OCLQueryHandler implements IQueryHandler
   {
     EcoreEnvironmentFactory envFactory = new CDOEnvironmentFactory(view.getSession().getPackageRegistry());
 
-    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
+    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = createOCL(envFactory);
     CDOAdditionalOperation.registerOperations((CDOEnvironment)ocl.getEnvironment());
     ocl.setExtentMap(extentMap);
     return ocl;
@@ -488,6 +495,51 @@ public class OCLQueryHandler implements IQueryHandler
     return result;
   }
 
+  private static Method getOCLMethod(String methodName)
+  {
+    try
+    {
+      return OCL.class.getDeclaredMethod(methodName, EnvironmentFactory.class);
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return null;
+  }
+
+  private static OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(EcoreEnvironmentFactory envFactory)
+  {
+    try
+    {
+      if (OLD_OCL_NEW_INSTANCE_METHOD != null)
+      {
+        @SuppressWarnings("unchecked")
+        OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = //
+            (OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject>)OLD_OCL_NEW_INSTANCE_METHOD.invoke(null, envFactory);
+        return ocl;
+      }
+
+      if (NEW_OCL_NEW_INSTANCE_METHOD != null)
+      {
+        @SuppressWarnings("unchecked")
+        OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = //
+            (OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject>)NEW_OCL_NEW_INSTANCE_METHOD.invoke(null, envFactory);
+        return ocl;
+      }
+    }
+    catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    // TODO Change the newInstance() call to the newer newInstanceAbstract() call once OCL has shipped a new build.
+    // See https://www.eclipse.org/lists/cross-project-issues-dev/msg19930.html
+    // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=416470
+    return OCL.newInstance(envFactory);
+  }
+
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new Factory());
@@ -513,7 +565,7 @@ public class OCLQueryHandler implements IQueryHandler
   }
 
   /**
-   * An abstraction of the {@link EClassifier classifier} and/or {@link EObject obejct} of an OCL query context parameter.
+   * An abstraction of the {@link EClassifier classifier} and/or {@link EObject object} of an OCL query context parameter.
    *
    * @author Eike Stepper
    * @since 4.2

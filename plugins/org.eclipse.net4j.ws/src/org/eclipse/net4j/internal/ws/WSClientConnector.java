@@ -14,9 +14,9 @@ import org.eclipse.net4j.ws.jetty.Net4jWebSocket;
 
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.Path;
-import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.client.ClientUpgradeRequest;
-import org.eclipse.jetty.websocket.client.WebSocketClient;
+import org.eclipse.jetty.ee8.websocket.api.Session;
+import org.eclipse.jetty.ee8.websocket.client.ClientUpgradeRequest;
+import org.eclipse.jetty.ee8.websocket.client.WebSocketClient;
 
 import java.net.URI;
 import java.net.URISyntaxException;

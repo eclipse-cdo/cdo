@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2016, 2018-2021 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2016, 2018-2021, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Christian W. Damus (CEA) - don't remove statically registered packages from registry
+ *    Maxime Porhel (Obeo) - WebSocket support adaptation to Jetty 12
  */
 package org.eclipse.emf.cdo.tests.config.impl;
 
@@ -54,10 +55,10 @@ import org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.eclipse.jetty.ee8.servlet.ServletContextHandler;
+import org.eclipse.jetty.ee8.servlet.ServletHolder;
+import org.eclipse.jetty.ee8.websocket.server.config.JettyWebSocketServletContainerInitializer;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.server.ServerConnector;
-import org.eclipse.jetty.servlet.ServletContextHandler;
-import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -816,16 +817,15 @@ public abstract class SessionConfig extends Config implements ISessionConfig
         if (server == null)
         {
           System.out.println("Starting Jetty...");
-          server = new Server();
-
-          ServerConnector connector = new ServerConnector(server);
-          connector.setPort(HTTP_PORT);
-          server.addConnector(connector);
+          server = new Server(HTTP_PORT);
 
           ServletContextHandler handler = new ServletContextHandler(ServletContextHandler.SESSIONS);
           handler.setContextPath("/");
-          handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
           server.setHandler(handler);
+
+          JettyWebSocketServletContainerInitializer.configure(handler, null);
+          handler.addServlet(new ServletHolder("net4j", Net4jWebSocketServlet.class), "/net4j");
+
           server.start();
         }
       }

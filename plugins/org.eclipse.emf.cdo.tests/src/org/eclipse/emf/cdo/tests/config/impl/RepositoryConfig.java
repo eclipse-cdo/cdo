@@ -377,7 +377,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected IManagedContainer createServerContainer()
   {
-    ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "DISABLE_FEATURE_MAP_CHECKS"), null, true, true);
+    ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "disableFeatureMapChecks"), null, true, true);
 
     IManagedContainer container = ContainerUtil.createContainer();
     container.setName("server");

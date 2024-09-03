@@ -221,7 +221,8 @@ public final class IOUtil
    */
   public static URL newURL(String url) throws MalformedURLException
   {
-    return URI.create(url).toURL();
+    String escapedUrlString = url.replace(" ", "%20");
+    return URI.create(escapedUrlString).toURL();
   }
 
   /**

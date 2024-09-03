@@ -221,7 +221,11 @@ public final class IOUtil
    */
   public static URL newURL(String url) throws MalformedURLException
   {
-    return URI.create(url).toURL();
+    // The java.net.URL constructor becomes deprecated as of Java-20.
+    // URI.create(url).toURL() is not an equivalent replacement because
+    // the URL syntax is validated/rejected much more thoroughly.
+    // Here is a central place to deal with future removal of the URL constructor.
+    return new URL(url);
   }
 
   /**

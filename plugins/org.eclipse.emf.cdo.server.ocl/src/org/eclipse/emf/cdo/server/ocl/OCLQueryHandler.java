@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -65,7 +66,6 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.ProblemAware;
 import org.eclipse.ocl.util.Tuple;
 
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
@@ -529,15 +529,12 @@ public class OCLQueryHandler implements IQueryHandler
         return ocl;
       }
     }
-    catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException ex)
+    catch (ReflectiveOperationException ex)
     {
-      //$FALL-THROUGH$
+      throw WrappedException.wrap(ex);
     }
 
-    // TODO Change the newInstance() call to the newer newInstanceAbstract() call once OCL has shipped a new build.
-    // See https://www.eclipse.org/lists/cross-project-issues-dev/msg19930.html
-    // See https://bugs.eclipse.org/bugs/show_bug.cgi?id=416470
-    return OCL.newInstance(envFactory);
+    throw new CDOException("OCL is missing");
   }
 
   public static void prepareContainer(IManagedContainer container)

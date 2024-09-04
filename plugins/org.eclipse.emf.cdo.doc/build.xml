@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2006-2021, 2023, 2024 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -146,6 +146,10 @@
 				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/impl/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.modules/src/org/eclipse/emf/cdo/lm/modules/util/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.reviews.edit/src/org/eclipse/emf/cdo/lm/reviews/provider/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.reviews.server/src/org/eclipse/emf/cdo/lm/reviews/server/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.reviews/src/org/eclipse/emf/cdo/lm/reviews/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.reviews/src/org/eclipse/emf/cdo/lm/reviews/impl/*.java" />
+				<include name="org.eclipse.emf.cdo.lm.reviews/src/org/eclipse/emf/cdo/lm/reviews/util/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security.edit/src/org/eclipse/emf/cdo/lm/security/provider/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/*.java" />
 				<include name="org.eclipse.emf.cdo.lm.security/src/org/eclipse/emf/cdo/lm/security/impl/*.java" />
@@ -310,8 +314,16 @@
 			<group title="CDO Model Repository Lifecycle Management Modules Edit Support">
 				<package name="org.eclipse.emf.cdo.lm.modules.provider" />
 			</group>
+			<group title="CDO Model Repository Lifecycle Management Reviews">
+				<package name="org.eclipse.emf.cdo.lm.reviews" />
+				<package name="org.eclipse.emf.cdo.lm.reviews.impl" />
+				<package name="org.eclipse.emf.cdo.lm.reviews.util" />
+			</group>
 			<group title="CDO Model Repository Lifecycle Management Reviews Edit Support">
 				<package name="org.eclipse.emf.cdo.lm.reviews.provider" />
+			</group>
+			<group title="CDO Model Repository Lifecycle Management Reviews Server">
+				<package name="org.eclipse.emf.cdo.lm.reviews.server" />
 			</group>
 			<group title="CDO Model Repository Lifecycle Management Security">
 				<package name="org.eclipse.emf.cdo.lm.security" />

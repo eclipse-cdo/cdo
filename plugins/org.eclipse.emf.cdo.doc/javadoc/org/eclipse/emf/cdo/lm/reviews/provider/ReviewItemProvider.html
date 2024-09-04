@@ -97,7 +97,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">ReviewItemProvider</span>
 <span class="extends-implements">extends <a href="../../provider/BaselineItemProvider.html" title="class in org.eclipse.emf.cdo.lm.provider">BaselineItemProvider</a></span></div>
-<div class="block">This is the item provider adapter for a <code>Review</code> object.
+<div class="block">This is the item provider adapter for a <a href="../Review.html" title="interface in org.eclipse.emf.cdo.lm.reviews"><code>Review</code></a> object.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
@@ -171,15 +171,44 @@ loadScripts(document, 'script');</script>
 <div class="block">This adds a property descriptor for the Author feature.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addReviewersPropertyDescriptor(java.lang.Object)" class="member-name-link">addReviewersPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addCommentCountPropertyDescriptor(java.lang.Object)" class="member-name-link">addCommentCountPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">This adds a property descriptor for the Reviewers feature.</div>
+<div class="block">This adds a property descriptor for the Comment Count feature.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addTypePropertyDescriptor(java.lang.Object)" class="member-name-link">addTypePropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addIdPropertyDescriptor(java.lang.Object)" class="member-name-link">addIdPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">This adds a property descriptor for the Type feature.</div>
+<div class="block">This adds a property descriptor for the Id feature.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addResolvedCountPropertyDescriptor(java.lang.Object)" class="member-name-link">addResolvedCountPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This adds a property descriptor for the Resolved Count feature.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addReviewersPropertyDescriptor(java.lang.Object)" class="member-name-link">addReviewersPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This adds a property descriptor for the Reviewers feature.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addReviewPropertyDescriptor(java.lang.Object)" class="member-name-link">addReviewPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This adds a property descriptor for the Review feature.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addStatusPropertyDescriptor(java.lang.Object)" class="member-name-link">addStatusPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This adds a property descriptor for the Status feature.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addUnresolvedCountPropertyDescriptor(java.lang.Object)" class="member-name-link">addUnresolvedCountPropertyDescriptor</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">This adds a property descriptor for the Unresolved Count feature.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/StyledString.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">StyledString</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#appendStatus(org.eclipse.emf.edit.provider.StyledString,org.eclipse.emf.cdo.lm.reviews.Review)" class="member-name-link">appendStatus</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/StyledString.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">StyledString</a>&nbsp;styledString,
+ <a href="../Review.html" title="interface in org.eclipse.emf.cdo.lm.reviews">Review</a>&nbsp;review)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collectNewChildDescriptors(java.util.Collection,java.lang.Object)" class="member-name-link">collectNewChildDescriptors</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;&nbsp;newChildDescriptors,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
@@ -315,10 +344,58 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="addTypePropertyDescriptor(java.lang.Object)">
-<h3>addTypePropertyDescriptor</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addTypePropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
-<div class="block">This adds a property descriptor for the Type feature.
+<section class="detail" id="addReviewPropertyDescriptor(java.lang.Object)">
+<h3>addReviewPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addReviewPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Review feature.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc --></div>
+<dl class="notes">
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addCommentCountPropertyDescriptor(java.lang.Object)">
+<h3>addCommentCountPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addCommentCountPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Comment Count feature.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc --></div>
+<dl class="notes">
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addUnresolvedCountPropertyDescriptor(java.lang.Object)">
+<h3>addUnresolvedCountPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addUnresolvedCountPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Unresolved Count feature.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc --></div>
+<dl class="notes">
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addResolvedCountPropertyDescriptor(java.lang.Object)">
+<h3>addResolvedCountPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addResolvedCountPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Resolved Count feature.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc --></div>
+<dl class="notes">
+<dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addIdPropertyDescriptor(java.lang.Object)">
+<h3>addIdPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addIdPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Id feature.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
@@ -347,6 +424,19 @@ loadScripts(document, 'script');</script>
  <!-- end-user-doc --></div>
 <dl class="notes">
 <dt>Generated</dt>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="addStatusPropertyDescriptor(java.lang.Object)">
+<h3>addStatusPropertyDescriptor</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addStatusPropertyDescriptor</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</span></div>
+<div class="block">This adds a property descriptor for the Status feature.
+ <!-- begin-user-doc -->
+ <!-- end-user-doc --></div>
+<dl class="notes">
+<dt>Generated</dt>
+<dd>NOT</dd>
 </dl>
 </section>
 </li>
@@ -439,6 +529,7 @@ loadScripts(document, 'script');</script>
 <dt>Overrides:</dt>
 <dd><code><a href="../../provider/BaselineItemProvider.html#notifyChanged(org.eclipse.emf.common.notify.Notification)">notifyChanged</a></code>&nbsp;in class&nbsp;<code><a href="../../provider/BaselineItemProvider.html" title="class in org.eclipse.emf.cdo.lm.provider">BaselineItemProvider</a></code></dd>
 <dt>Generated</dt>
+<dd>NOT</dd>
 </dl>
 </section>
 </li>
@@ -456,6 +547,13 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="../../provider/BaselineItemProvider.html#collectNewChildDescriptors(java.util.Collection,java.lang.Object)">collectNewChildDescriptors</a></code>&nbsp;in class&nbsp;<code><a href="../../provider/BaselineItemProvider.html" title="class in org.eclipse.emf.cdo.lm.provider">BaselineItemProvider</a></code></dd>
 <dt>Generated</dt>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="appendStatus(org.eclipse.emf.edit.provider.StyledString,org.eclipse.emf.cdo.lm.reviews.Review)">
+<h3>appendStatus</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/StyledString.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">StyledString</a></span>&nbsp;<span class="element-name">appendStatus</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/StyledString.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">StyledString</a>&nbsp;styledString,
+ <a href="../Review.html" title="interface in org.eclipse.emf.cdo.lm.reviews">Review</a>&nbsp;review)</span></div>
 </section>
 </li>
 </ul>

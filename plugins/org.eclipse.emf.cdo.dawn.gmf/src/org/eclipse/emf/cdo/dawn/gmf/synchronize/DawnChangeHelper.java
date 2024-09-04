@@ -115,13 +115,12 @@ public class DawnChangeHelper
 
     final IAdaptable viewAdapter = (IAdaptable)((List<?>)createViewRequest.getNewObject()).get(0);
     final EditPartViewer viewer = diagramEP.getViewer();
-    final EditPart kep = (EditPart)viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
+    final EditPart kep = viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
     return kep;
   }
 
   public static EditPart createAttribute(final Node node, IElementType elementType, IGraphicalEditPart parentEditpart)
   {
-
     if (TRACER.isEnabled())
     {
       TRACER.format("ElementType: {0}  semanticHint {1}", elementType, ((IHintedType)elementType).getSemanticHint()); //$NON-NLS-1$
@@ -143,7 +142,7 @@ public class DawnChangeHelper
 
     final IAdaptable viewAdapter = (IAdaptable)((List<?>)createViewRequest.getNewObject()).get(0);
     final EditPartViewer viewer = parentEditpart.getViewer();
-    final EditPart kep = (EditPart)viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
+    final EditPart kep = viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
     return kep;
   }
 
@@ -168,7 +167,7 @@ public class DawnChangeHelper
 
     final IAdaptable viewAdapter = (IAdaptable)((List<?>)createViewRequest.getNewObject()).get(0);
     final EditPartViewer viewer = diagramEP.getViewer();
-    return (EditPart)viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
+    return viewer.getEditPartRegistry().get(viewAdapter.getAdapter(View.class));
   }
 
   /***************************************
@@ -383,7 +382,7 @@ public class DawnChangeHelper
 
     final EditPartViewer viewer = root.getViewer();
 
-    final EditPart ret = (EditPart)viewer.getEditPartRegistry().get(((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
+    final EditPart ret = viewer.getEditPartRegistry().get(((ConnectionViewAndElementDescriptor)req.getNewObject()).getAdapter(View.class));
 
     if (ret != null)
     {

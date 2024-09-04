@@ -390,7 +390,7 @@ public class DawnDiagramUpdater
 
   public static EditPart findEditPart(View view, EditPartViewer viewer)
   {
-    return (EditPart)viewer.getEditPartRegistry().get(view);
+    return viewer.getEditPartRegistry().get(view);
   }
 
   /**

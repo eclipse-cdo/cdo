@@ -140,8 +140,16 @@
       <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.lm.modules.provider" href="javadoc/org/eclipse/emf/cdo/lm/modules/provider/package-summary.html" icon="package" />
       </topic>
+      <topic label="CDO Model Repository Lifecycle Management Reviews" href="javadoc/org/eclipse/emf/cdo/lm/reviews/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.reviews" href="javadoc/org/eclipse/emf/cdo/lm/reviews/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.reviews.impl" href="javadoc/org/eclipse/emf/cdo/lm/reviews/impl/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.lm.reviews.util" href="javadoc/org/eclipse/emf/cdo/lm/reviews/util/package-summary.html" icon="package" />
+      </topic>
       <topic label="CDO Model Repository Lifecycle Management Reviews Edit Support" href="javadoc/org/eclipse/emf/cdo/lm/reviews/provider/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.lm.reviews.provider" href="javadoc/org/eclipse/emf/cdo/lm/reviews/provider/package-summary.html" icon="package" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Reviews Server" href="javadoc/org/eclipse/emf/cdo/lm/reviews/server/package-summary.html" icon="plugin">
+        <topic label="org.eclipse.emf.cdo.lm.reviews.server" href="javadoc/org/eclipse/emf/cdo/lm/reviews/server/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Lifecycle Management Security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.lm.security" href="javadoc/org/eclipse/emf/cdo/lm/security/package-summary.html" icon="package" />
@@ -256,6 +264,9 @@
       </topic>
       <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="plugin">
         <topic label="CDO Dependency Target Name Providers" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="productgroup" />
+      </topic>
+      <topic label="CDO Model Repository Lifecycle Management Reviews Server" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="plugin">
+        <topic label="CDO Review Managers" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="productgroup" />
       </topic>
       <topic label="CDO Model Repository Lifecycle Management Server" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="plugin">
         <topic label="CDO Lifecycle Managers" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="productgroup" />

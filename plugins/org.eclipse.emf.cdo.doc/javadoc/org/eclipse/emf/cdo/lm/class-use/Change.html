@@ -68,6 +68,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The generated EMF implementation of the CDO Lifecycle Management model.</div>
 </div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews">org.eclipse.emf.cdo.lm.reviews</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews.impl">org.eclipse.emf.cdo.lm.reviews.impl</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.util">org.eclipse.emf.cdo.lm.util</a></div>
 <div class="col-last odd-row-color">
 <div class="block">The generated EMF utilities of the CDO Lifecycle Management model.</div>
@@ -207,9 +211,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">FixedBaselineImpl.</span><code><a href="../impl/FixedBaselineImpl.html#getBasedChanges()" class="member-name-link">getBasedChanges</a>()</code></div>
 <div class="col-last even-row-color"></div>
-<div class="col-first odd-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StreamImpl.</span><code><a href="../impl/StreamImpl.html#getBasedChanges()" class="member-name-link">getBasedChanges</a>()</code></div>
-<div class="col-last odd-row-color"></div>
+<div class="col-first odd-row-color"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FixedBaselineImpl.</span><code><a href="../impl/FixedBaselineImpl.html#getBasedChanges(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">getBasedChanges</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;fixedBaseline)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StreamImpl.</span><code><a href="../impl/StreamImpl.html#getBasedChanges()" class="member-name-link">getBasedChanges</a>()</code></div>
+<div class="col-last even-row-color"></div>
 </div>
 <div class="caption"><span>Methods in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.lm.impl</a> with parameters of type <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
 <div class="summary-table three-column-summary">
@@ -225,6 +232,65 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DeliveryImpl.</span><code><a href="../impl/DeliveryImpl.html#setChange(org.eclipse.emf.cdo.lm.Change)" class="member-name-link">setChange</a><wbr>(<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&nbsp;newChange)</code></div>
+<div class="col-last even-row-color"></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews">
+<h2>Uses of <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a> in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a></h2>
+<div class="caption"><span>Methods in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a> that return <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReview.</span><code><a href="../reviews/DeliveryReview.html#getSourceChange()" class="member-name-link">getSourceChange</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the value of the '<em><b>Source Change</b></em>' reference.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a> with parameters of type <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReview.</span><code><a href="../reviews/DeliveryReview.html#setSourceChange(org.eclipse.emf.cdo.lm.Change)" class="member-name-link">setSourceChange</a><wbr>(<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the value of the '<a href="../reviews/DeliveryReview.html#getSourceChange()"><code><em>Source Change</em></code></a>' reference.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews.impl">
+<h2>Uses of <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a> in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a></h2>
+<div class="caption"><span>Methods in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> that return <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReviewImpl.</span><code><a href="../reviews/impl/DeliveryReviewImpl.html#getSourceChange()" class="member-name-link">getSourceChange</a>()</code></div>
+<div class="col-last even-row-color"></div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> that return types with arguments of type <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DropReviewImpl.</span><code><a href="../reviews/impl/DropReviewImpl.html#getBasedChanges()" class="member-name-link">getBasedChanges</a>()</code></div>
+<div class="col-last even-row-color"></div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> with parameters of type <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReviewImpl.</span><code><a href="../reviews/impl/DeliveryReviewImpl.html#setSourceChange(org.eclipse.emf.cdo.lm.Change)" class="member-name-link">setSourceChange</a><wbr>(<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&nbsp;newSourceChange)</code></div>
 <div class="col-last even-row-color"></div>
 </div>
 </section>

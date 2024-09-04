@@ -68,8 +68,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The generated EMF implementation of the CDO Lifecycle Management model.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.util">org.eclipse.emf.cdo.lm.util</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews">org.eclipse.emf.cdo.lm.reviews</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews.impl">org.eclipse.emf.cdo.lm.reviews.impl</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews.util">org.eclipse.emf.cdo.lm.reviews.util</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.lm.util">org.eclipse.emf.cdo.lm.util</a></div>
+<div class="col-last even-row-color">
 <div class="block">The generated EMF utilities of the CDO Lifecycle Management model.</div>
 </div>
 </div>
@@ -187,9 +193,108 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm">Change</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FixedBaselineImpl.</span><code><a href="../impl/FixedBaselineImpl.html#getBasedChanges(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">getBasedChanges</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;fixedBaseline)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ChangeImpl.</span><code><a href="../impl/ChangeImpl.html#setBase(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">setBase</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;newBase)</code></div>
+<div class="col-last odd-row-color"></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews">
+<h2>Uses of <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a> in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a></h2>
+<div class="caption"><span>Subinterfaces of <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a> in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/DropReview.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.reviews">DropReview</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A representation of the model object '<em><b>Drop Review</b></em>'.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a> that return <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReview.</span><code><a href="../reviews/DeliveryReview.html#getBase()" class="member-name-link">getBase</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the value of the '<em><b>Base</b></em>' reference.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a> with parameters of type <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ChangeImpl.</span><code><a href="../impl/ChangeImpl.html#setBase(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">setBase</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;newBase)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReview.</span><code><a href="../reviews/DeliveryReview.html#setBase(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">setBase</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;value)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Sets the value of the '<a href="../reviews/DeliveryReview.html#getBase()"><code><em>Base</em></code></a>' reference.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews.impl">
+<h2>Uses of <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a> in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a></h2>
+<div class="caption"><span>Classes in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> that implement <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/impl/DropReviewImpl.html" class="type-name-link" title="class in org.eclipse.emf.cdo.lm.reviews.impl">DropReviewImpl</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">An implementation of the model object '<em><b>Drop Review</b></em>'.</div>
+</div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> that return <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReviewImpl.</span><code><a href="../reviews/impl/DeliveryReviewImpl.html#getBase()" class="member-name-link">getBase</a>()</code></div>
 <div class="col-last even-row-color"></div>
+</div>
+<div class="caption"><span>Methods in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> with parameters of type <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>protected abstract void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReviewStatemachine.</span><code><a href="../reviews/impl/ReviewStatemachine.html#handleSubmit(REVIEW,org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">handleSubmit</a><wbr>(<a href="../reviews/impl/ReviewStatemachine.html" title="type parameter in ReviewStatemachine">REVIEW</a>&nbsp;review,
+ <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;submitResult)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ReviewStatemachine.Server.</span><code><a href="../reviews/impl/ReviewStatemachine.Server.html#handleSubmit(REVIEW,org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">handleSubmit</a><wbr>(<a href="../reviews/impl/ReviewStatemachine.Server.html" title="type parameter in ReviewStatemachine.Server">REVIEW</a>&nbsp;review,
+ <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;submitResult)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DeliveryReviewImpl.</span><code><a href="../reviews/impl/DeliveryReviewImpl.html#setBase(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">setBase</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;newBase)</code></div>
+<div class="col-last even-row-color"></div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews.util">
+<h2>Uses of <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a> in <a href="../reviews/util/package-summary.html">org.eclipse.emf.cdo.lm.reviews.util</a></h2>
+<div class="caption"><span>Methods in <a href="../reviews/util/package-summary.html">org.eclipse.emf.cdo.lm.reviews.util</a> with parameters of type <a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../reviews/util/ReviewsSwitch.html" title="type parameter in ReviewsSwitch">T</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReviewsSwitch.</span><code><a href="../reviews/util/ReviewsSwitch.html#caseFixedBaseline(org.eclipse.emf.cdo.lm.FixedBaseline)" class="member-name-link">caseFixedBaseline</a><wbr>(<a href="../FixedBaseline.html" title="interface in org.eclipse.emf.cdo.lm">FixedBaseline</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the result of interpreting the object as an instance of '<em>Fixed Baseline</em>'.</div>
+</div>
 </div>
 </section>
 </li>

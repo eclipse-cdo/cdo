@@ -127,10 +127,19 @@
     <packages name="org.eclipse.emf.cdo.lm.modules.provider"/>
     <productGroups id="org.eclipse.emf.cdo.lm.modules.targetNameProviders" name="CDO Dependency Target Name Providers" description=""/>
   </article:Plugin>
-  <article:Plugin name="org.eclipse.emf.cdo.lm.reviews" label="CDO Model Repository Lifecycle Management Reviews"/>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.reviews" label="CDO Model Repository Lifecycle Management Reviews">
+    <packages name="org.eclipse.emf.cdo.lm.reviews"/>
+    <packages name="org.eclipse.emf.cdo.lm.reviews.impl"/>
+    <packages name="org.eclipse.emf.cdo.lm.reviews.util"/>
+  </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.reviews.edit" label="CDO Model Repository Lifecycle Management Reviews Edit Support">
     <packages name="org.eclipse.emf.cdo.lm.reviews.provider"/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.reviews.server" label="CDO Model Repository Lifecycle Management Reviews Server">
+    <packages name="org.eclipse.emf.cdo.lm.reviews.server"/>
+    <productGroups id="org.eclipse.emf.cdo.lm.reviews.server.reviewManagers" name="CDO Review Managers" description=""/>
+  </article:Plugin>
+  <article:Plugin name="org.eclipse.emf.cdo.lm.reviews.ui" label="CDO Model Repository Lifecycle Management Reviews UI"/>
   <article:Plugin name="org.eclipse.emf.cdo.lm.security" label="CDO Model Repository Lifecycle Management Security">
     <packages name="org.eclipse.emf.cdo.lm.security"/>
     <packages name="org.eclipse.emf.cdo.lm.security.impl"/>

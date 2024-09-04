@@ -44,7 +44,11 @@ org.eclipse.emf.cdo.lm.modules.impl
 org.eclipse.emf.cdo.lm.modules.provider
 org.eclipse.emf.cdo.lm.modules.util
 org.eclipse.emf.cdo.lm.provider
+org.eclipse.emf.cdo.lm.reviews
+org.eclipse.emf.cdo.lm.reviews.impl
 org.eclipse.emf.cdo.lm.reviews.provider
+org.eclipse.emf.cdo.lm.reviews.server
+org.eclipse.emf.cdo.lm.reviews.util
 org.eclipse.emf.cdo.lm.security
 org.eclipse.emf.cdo.lm.security.impl
 org.eclipse.emf.cdo.lm.security.provider

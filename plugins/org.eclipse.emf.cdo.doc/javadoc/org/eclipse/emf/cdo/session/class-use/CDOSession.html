@@ -217,23 +217,32 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>long</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LMMerger.</span><code><a href="../../lm/util/LMMerger.html#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+<div class="col-second even-row-color"><span class="type-name-label">CoreDeliveryMerger.</span><code><a href="../../lm/util/CoreDeliveryMerger.html#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBranchPoint,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;targetBranch)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>long</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LMMerger.</span><code><a href="../../lm/util/LMMerger.html#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBranchPoint,
+ <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;targetBranch)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Merges the changes from the given source branch point into the given target branch and returns the time stamp of the
  resulting commit into the merge target branch, or <a href="../../common/branch/CDOBranchPoint.html#INVALID_DATE"><code>CDOBranchPoint.INVALID_DATE</code></a>
  if no commit has happened.</div>
 </div>
-<div class="col-first odd-row-color"><code>default long</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">LMMerger2.</span><code><a href="../../lm/util/LMMerger2.html#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+<div class="col-first even-row-color"><code>default long</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">LMMerger2.</span><code><a href="../../lm/util/LMMerger2.html#mergeDelivery(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">mergeDelivery</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;sourceBranchPoint,
  <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;targetBranch)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Deprecated.</span>
 <div class="deprecation-comment">As of 1.2 implement <a href="../../lm/util/LMMerger2.html#mergeDelivery(org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos)"><code>LMMerger2.mergeDelivery(LMMergeInfos)</code></a>.</div>
 </div>
 </div>
+<div class="col-first odd-row-color"><code>protected <a href="../../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CoreDeliveryMerger.</span><code><a href="../../lm/util/CoreDeliveryMerger.html#openTransaction(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">openTransaction</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
+ <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">LMMerger2.LMMergeInfos.</span><code><a href="../../lm/util/LMMerger2.LMMergeInfos.html#setSession(org.eclipse.emf.cdo.session.CDOSession)" class="member-name-link">setSession</a><wbr>(<a href="../CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>

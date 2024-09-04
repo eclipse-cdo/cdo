@@ -14,6 +14,7 @@
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers" description="" deprecated="false">
 		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsMenuFiller$Factory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description="" deprecated="false">
 		<factory type="org.eclipse.emf.ecore.ENamedElement" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.ui.EMFValueFormatter" contributor="org.eclipse.emf.cdo.ui"/>

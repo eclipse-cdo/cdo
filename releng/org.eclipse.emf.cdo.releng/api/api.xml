@@ -1,13 +1,224 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <deltas>
-    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.edit" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.edit_1.0.1 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.5)" element_type="CLASS_ELEMENT_TYPE" flags="7" key="org.eclipse.net4j.db.h2.H2Adapter" kind="ADDED" message="A static initializer has been added to type org.eclipse.net4j.db.h2.H2Adapter" newModifiers="8" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.1"/>
+            <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews_1.0.1 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.edit" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.edit_1.0.2 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.0.1"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.server" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.server_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.server_1.0.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews.ui" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews.ui_1.0.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.ui_1.0.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.emf.cdo.lm.reviews" kind="ADDED" message="The API component org.eclipse.emf.cdo.lm.reviews_1.1.0 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.1.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.net4j.db.h2(4.5.5)" element_type="FIELD_ELEMENT_TYPE" flags="54" key="VERSION" kind="REMOVED" message="The constant value 1.1.114 has been removed for org.eclipse.net4j.db.h2.H2Adapter.VERSION" newModifiers="25" oldModifiers="25" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
+            <message_argument value="VERSION"/>
+            <message_argument value="1.1.114"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getBranch(Lorg/eclipse/emf/cdo/common/revision/CDORevision;)Lorg/eclipse/emf/cdo/common/branch/CDOBranchRef;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.getBranch(CDORevision)" newModifiers="1048585" oldModifiers="9" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="getBranch(CDORevision)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="ModuleCommitEvent" kind="ADDED" message="The member type ModuleCommitEvent has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="ModuleCommitEvent"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="NewBaselineEvent" kind="ADDED" message="The member type NewBaselineEvent has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="NewBaselineEvent"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="SystemCommitEvent" kind="ADDED" message="The member type SystemCommitEvent has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="SystemCommitEvent"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.Module.forEachBaseline(Predicate&lt;Baseline&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.Module">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.Module"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.Stream.forEachBaseline(Predicate&lt;Baseline&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.Stream">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.Stream"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.System.forEachBaseline(Predicate&lt;Baseline&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.System">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.System"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.4.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="createModuleResourceSet(Lorg/eclipse/emf/cdo/lm/Baseline;)Lorg/eclipse/emf/ecore/resource/ResourceSet;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.client.ISystemDescriptor.createModuleResourceSet(Baseline) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.client.ISystemDescriptor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client.ISystemDescriptor"/>
+            <message_argument value="createModuleResourceSet(Baseline)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.impl.ModuleImpl.forEachBaseline(Predicate&lt;Baseline&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.ModuleImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ModuleImpl"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.impl.StreamImpl.forEachBaseline(Predicate&lt;Baseline&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.StreamImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.StreamImpl"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="forEachBaseline(Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/Baseline;&gt;;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.impl.SystemImpl.forEachBaseline(Predicate&lt;Baseline&gt;) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.SystemImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.SystemImpl"/>
+            <message_argument value="forEachBaseline(Predicate&lt;Baseline&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.2)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getChildFeature(Ljava/lang/Object;Ljava/lang/Object;)Lorg/eclipse/emf/ecore/EStructuralFeature;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.provider.ChangeItemProvider.getChildFeature(Object, Object) has been added, overriding a method from a superclass" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider"/>
+            <message_argument value="getChildFeature(Object, Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.2)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getChildrenFeatures(Ljava/lang/Object;)Ljava/util/Collection&lt;+Lorg/eclipse/emf/ecore/EStructuralFeature;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.provider.ChangeItemProvider.getChildrenFeatures(Object) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider"/>
+            <message_argument value="getChildrenFeatures(Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.2)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="wrap(Lorg/eclipse/emf/ecore/EObject;Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/Object;I)Ljava/lang/Object;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.provider.ChangeItemProvider.wrap(EObject, EStructuralFeature, Object, int) has been added, overriding a method from a superclass" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.provider.ChangeItemProvider"/>
+            <message_argument value="wrap(EObject, EStructuralFeature, Object, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="toString()Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.toString() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="toString()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.21.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getCommitProperties()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext.getCommitProperties() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IStoreAccessor$CommitContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext"/>
+            <message_argument value="getCommitProperties()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.21.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="setCommitProperties(Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalCommitContext.setCommitProperties(Map&lt;String,String&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalCommitContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalCommitContext"/>
+            <message_argument value="setCommitProperties(Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getCommitProperties()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOCommitContext.getCommitProperties() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOCommitContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOCommitContext"/>
+            <message_argument value="getCommitProperties()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getCommitProperty(Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.getCommitProperty(String) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+            <message_argument value="getCommitProperty(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="setCommitProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.setCommitProperty(String, String) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+            <message_argument value="setCommitProperty(String, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getCommitProperty(Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOTransaction.getCommitProperty(String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+            <message_argument value="getCommitProperty(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="setCommitProperty(Ljava/lang/String;Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOTransaction.setCommitProperty(String, String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+            <message_argument value="setCommitProperty(String, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getCommitProperties()Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.InternalCDOTransaction.getCommitProperties() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
+            <message_argument value="getCommitProperties()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="setCommitProperties(Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.InternalCDOTransaction.setCommitProperties(Map&lt;String,String&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
+            <message_argument value="setCommitProperties(Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.5)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="isTableNotFoundException(Ljava/sql/SQLException;)Z" kind="ADDED" message="The method org.eclipse.net4j.db.h2.H2Adapter.isTableNotFoundException(SQLException) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
+            <message_argument value="isTableNotFoundException(SQLException)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.25.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo (from version 4.24.0 to 4.25.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo"/>
+            <message_argument value="4.24.0"/>
+            <message_argument value="4.25.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.common" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.common (from version 4.22.1 to 4.23.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common"/>
+            <message_argument value="4.22.1"/>
+            <message_argument value="4.23.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm (from version 1.2.0 to 1.3.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm"/>
+            <message_argument value="1.2.0"/>
+            <message_argument value="1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm.client" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm.client (from version 1.3.0 to 1.4.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client"/>
+            <message_argument value="1.3.0"/>
+            <message_argument value="1.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm.server (from version 1.3.1 to 1.4.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server"/>
+            <message_argument value="1.3.1"/>
+            <message_argument value="1.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server (from version 4.20.0 to 4.21.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server"/>
+            <message_argument value="4.20.0"/>
+            <message_argument value="4.21.0"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.net4j.util" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.net4j.util (from version 3.24.0 to 3.25.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
@@ -17,10 +228,922 @@
             <message_argument value="3.25.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getBaseBranchRef()Lorg/eclipse/emf/cdo/common/branch/CDOBranchRef;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.branch.CDOBranchRef.getBaseBranchRef() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.branch.CDOBranchRef">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchRef"/>
+            <message_argument value="getBaseBranchRef()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="extended(Ljava/lang/Object;)I" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.BaselineImpl.extended(Object) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.BaselineImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.BaselineImpl"/>
+            <message_argument value="extended(Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="type(Ljava/lang/Object;)I" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.BaselineImpl.type(Object) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.BaselineImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.BaselineImpl"/>
+            <message_argument value="type(Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getBasedChanges(Lorg/eclipse/emf/cdo/lm/FixedBaseline;)Lorg/eclipse/emf/common/util/EList&lt;Lorg/eclipse/emf/cdo/lm/Change;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl.getBasedChanges(FixedBaseline) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.FixedBaselineImpl"/>
+            <message_argument value="getBasedChanges(FixedBaseline)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getBranchPoint(Lorg/eclipse/emf/cdo/lm/FloatingBaseline;)Lorg/eclipse/emf/cdo/common/branch/CDOBranchPointRef;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.impl.FloatingBaselineImpl.getBranchPoint(FloatingBaseline) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.impl.FloatingBaselineImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.FloatingBaselineImpl"/>
+            <message_argument value="getBranchPoint(FloatingBaseline)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="determineBaseline(Ljava/lang/String;Lorg/eclipse/emf/cdo/common/branch/CDOBranch;)Lorg/eclipse/emf/cdo/lm/FloatingBaseline;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.determineBaseline(String, CDOBranch) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="determineBaseline(String, CDOBranch)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getSystem()Lorg/eclipse/emf/cdo/lm/System;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.getSystem() has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="getSystem()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="of(Lorg/eclipse/net4j/util/container/IManagedContainer;Lorg/eclipse/emf/cdo/server/IRepository;)Lorg/eclipse/emf/cdo/lm/server/AbstractLifecycleManager;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.of(IManagedContainer, IRepository) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="of(IManagedContainer, IRepository)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="of(Lorg/eclipse/net4j/util/container/IManagedContainer;Ljava/util/function/Predicate&lt;Lorg/eclipse/emf/cdo/lm/server/AbstractLifecycleManager;&gt;;)Lorg/eclipse/emf/cdo/lm/server/AbstractLifecycleManager;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.of(IManagedContainer, Predicate&lt;AbstractLifecycleManager&gt;) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="of(IManagedContainer, Predicate&lt;AbstractLifecycleManager&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="of(Lorg/eclipse/net4j/util/container/IManagedContainer;Ljava/lang/String;)Lorg/eclipse/emf/cdo/lm/server/AbstractLifecycleManager;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.of(IManagedContainer, String) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="of(IManagedContainer, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getContainerElement&lt;T:Ljava/lang/Object;&gt;(Lorg/w3c/dom/Element;Ljava/lang/String;Ljava/lang/String;Lorg/eclipse/net4j/util/container/IManagedContainer;)TT;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.LMAppExtension.getContainerElement(Element, String, String, IManagedContainer) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="getContainerElement(Element, String, String, IManagedContainer)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getLifecycleManager(Lorg/eclipse/emf/cdo/server/IRepository;)Lorg/eclipse/emf/cdo/lm/server/XMLLifecycleManager;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.LMAppExtension.getLifecycleManager(IRepository) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="getLifecycleManager(IRepository)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.5.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createOCL(Lorg/eclipse/ocl/ecore/EcoreEnvironmentFactory;)Lorg/eclipse/ocl/OCL&lt;*Lorg/eclipse/emf/ecore/EClassifier;*******Lorg/eclipse/ocl/ecore/Constraint;Lorg/eclipse/emf/ecore/EClass;Lorg/eclipse/emf/ecore/EObject;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.createOCL(EcoreEnvironmentFactory) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler"/>
+            <message_argument value="createOCL(EcoreEnvironmentFactory)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.5.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getOCLMethod(Ljava/lang/String;)Ljava/lang/reflect/Method;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.getOCLMethod(String) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler"/>
+            <message_argument value="getOCLMethod(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="adjustTime(Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;J)Lorg/eclipse/emf/cdo/common/branch/CDOBranchPoint;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil.adjustTime(CDOBranchPoint, long) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil"/>
+            <message_argument value="adjustTime(CDOBranchPoint, long)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="topologicalSort&lt;NODE:Ljava/lang/Object;&gt;(Ljava/util/Collection&lt;TNODE;&gt;;Ljava/util/function/Function&lt;TNODE;Ljava/util/Collection&lt;TNODE;&gt;;&gt;;)Ljava/util/List&lt;TNODE;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.CollectionUtil.topologicalSort(Collection&lt;NODE&gt;, Function&lt;NODE,Collection&lt;NODE&gt;&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.CollectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.CollectionUtil"/>
+            <message_argument value="topologicalSort(Collection&lt;NODE&gt;, Function&lt;NODE,Collection&lt;NODE&gt;&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="topologicalSort&lt;NODE:Ljava/lang/Object;&gt;(Ljava/util/Collection&lt;TNODE;&gt;;Ljava/util/function/Function&lt;TNODE;Ljava/util/Collection&lt;TNODE;&gt;;&gt;;Z)Ljava/util/List&lt;TNODE;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.CollectionUtil.topologicalSort(Collection&lt;NODE&gt;, Function&lt;NODE,Collection&lt;NODE&gt;&gt;, boolean) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.CollectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.CollectionUtil"/>
+            <message_argument value="topologicalSort(Collection&lt;NODE&gt;, Function&lt;NODE,Collection&lt;NODE&gt;&gt;, boolean)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="dump(Ljava/io/PrintStream;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.fsm.FiniteStateMachine.dump(PrintStream) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.fsm.FiniteStateMachine">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.fsm.FiniteStateMachine"/>
+            <message_argument value="dump(PrintStream)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="readProperties(Ljava/io/DataInput;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.ExtendedIOUtil.readProperties(DataInput) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.io.ExtendedIOUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.io.ExtendedIOUtil"/>
+            <message_argument value="readProperties(DataInput)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="writeProperties(Ljava/io/DataOutput;Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.ExtendedIOUtil.writeProperties(DataOutput, Map&lt;String,String&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.io.ExtendedIOUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.io.ExtendedIOUtil"/>
+            <message_argument value="writeProperties(DataOutput, Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="newURL(Ljava/lang/String;)Ljava/net/URL;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.IOUtil.newURL(String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.io.IOUtil">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.io.IOUtil"/>
             <message_argument value="newURL(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="readText(Ljava/io/Reader;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.io.IOUtil.readText(Reader) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.io.IOUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.io.IOUtil"/>
+            <message_argument value="readText(Reader)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="system" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.system has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="system"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="systemView" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.systemView has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="systemView"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="lifecycleManagers" kind="REMOVED" message="The non-visible field org.eclipse.emf.cdo.lm.server.LMAppExtension.lifecycleManagers has been removed" newModifiers="0" oldModifiers="18" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="lifecycleManagers"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getContainerElement&lt;T:Ljava/lang/Object;&gt;(Lorg/w3c/dom/Element;Ljava/lang/String;Lorg/eclipse/net4j/util/container/IManagedContainer;)TT;" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.lm.server.LMAppExtension.getContainerElement(Element, String, IManagedContainer) has been removed" newModifiers="0" oldModifiers="2" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="getContainerElement(Element, String, IManagedContainer)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.impl.ExtendedBaseline has been added to org.eclipse.emf.cdo.lm.client_1.3.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.client_1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.impl.ExtendedBaseline has been added to org.eclipse.emf.cdo.lm.edit_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.edit_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.security(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.impl.ExtendedBaseline has been added to org.eclipse.emf.cdo.lm.security_1.1.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.security_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.impl.ExtendedBaseline has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.Comment" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.Comment has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.Comment">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.CommentStatus" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.CommentStatus has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.reviews.CommentStatus">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.CommentStatus"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.Commentable" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.Commentable has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.Commentable">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.DeliveryReview" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.DeliveryReview has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.DeliveryReview">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.DeliveryReview"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.DropReview" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.DropReview has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.DropReview">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.DropReview"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.Heading" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.Heading has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.Heading">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.Heading"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.Review" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.Review has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.Review">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.Review"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.ReviewStatus" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.ReviewStatus has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="16433" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.reviews.ReviewStatus">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewStatus"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.ReviewTemplate" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.ReviewTemplate has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.ReviewTemplate">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewTemplate"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.ReviewsFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.ReviewsFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.ReviewsFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.ReviewsPackage has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger has been added to org.eclipse.emf.cdo.lm.client_1.3.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.client_1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.edit(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger has been added to org.eclipse.emf.cdo.lm.edit_1.1.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.edit_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.security(1.1.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger has been added to org.eclipse.emf.cdo.lm.security_1.1.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.security_1.1.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.CDOServerBrowser" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.CDOServerBrowser has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.CDOServerExporter" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.CDOServerExporter has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerExporter">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerExporter"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.CDOServerImporter" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.CDOServerImporter has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerImporter">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerImporter"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.CDOServerUtil" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.CDOServerUtil has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ContainmentCycleDetectedException" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ContainmentCycleDetectedException has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1048609" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ContainmentCycleDetectedException">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ContainmentCycleDetectedException"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ILockingManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ILockingManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ILockingManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ILockingManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IMEMStore" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IMEMStore has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1050113" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IMEMStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IMEMStore"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IPermissionManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IPermissionManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IPermissionManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IPermissionManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IQueryContext" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IQueryContext has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IQueryContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IQueryContext"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IQueryHandler" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IQueryHandler has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IQueryHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IQueryHandler"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IQueryHandlerProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IQueryHandlerProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IQueryHandlerProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IQueryHandlerProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepository" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepository has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IRepository"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepositoryFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepositoryFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IRepositoryFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IRepositoryFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepositoryProtector" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepositoryProtector has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepositoryProtector">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IRepositoryProtector"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepositoryProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepositoryProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IRepositoryProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IRepositoryProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IRepositorySynchronizer" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IRepositorySynchronizer has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepositorySynchronizer">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IRepositorySynchronizer"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ISession" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ISession has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.ISession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ISession"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ISessionManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ISessionManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.ISessionManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ISessionManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IStore" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IStore has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStore"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IStoreAccessor" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IStoreAccessor has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStoreAccessor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStoreAccessor"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IStoreChunkReader" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IStoreChunkReader has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStoreChunkReader">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStoreChunkReader"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IStoreFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IStoreFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStoreFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IStoreFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ISynchronizableRepository" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ISynchronizableRepository has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.ISynchronizableRepository">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ISynchronizableRepository"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ITopic" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ITopic has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ITopic">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ITopic"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ITopicManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ITopicManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ITopicManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ITopicManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ITransaction" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ITransaction has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.ITransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ITransaction"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IUnit" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IUnit has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IUnit">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IUnit"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IUnitManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IUnitManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IUnitManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IUnitManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.IView" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.IView has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.IView"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.RepositoryNotFoundException" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.RepositoryNotFoundException has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.RepositoryNotFoundException">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.RepositoryNotFoundException"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.StoreThreadLocal" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.StoreThreadLocal has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.StoreThreadLocal">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.StoreThreadLocal"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.mem.IMEMStore" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.mem.IMEMStore has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.mem.IMEMStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.mem.IMEMStore"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.mem.MEMStoreUtil" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.mem.MEMStoreUtil has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.mem.MEMStoreUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.mem.MEMStoreUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractAppExtension has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AbstractOperationAuthorizer"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AppExtension has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.AuthenticationUtil" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.AuthenticationUtil has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.AuthenticationUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.AuthenticationUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.CDOCommand" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.CDOCommand has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.CDOCommand">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.CDOCommand"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.ContainerQueryHandlerProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.ContainerRepositoryProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.DelegatingQueryResourcesContext" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.DelegatingQueryResourcesContext has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.DelegatingQueryResourcesContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.DelegatingQueryResourcesContext"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.DurableLockArea" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.DurableLockArea has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1048609" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.spi.server.DurableLockArea">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.DurableLockArea"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.FactoriesQueryHandlerProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.FactoriesQueryHandlerProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.FactoriesQueryHandlerProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.FactoriesQueryHandlerProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAppExtension" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAppExtension has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.IAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAppExtension"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAppExtension2" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAppExtension2 has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.IAppExtension2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAppExtension2"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAppExtension3" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAppExtension3 has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.IAppExtension3">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAppExtension3"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAppExtension4" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAppExtension4 has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.IAppExtension4">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAppExtension4"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAppExtension5" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAppExtension5 has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.IAppExtension5">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAppExtension5"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.IAuthenticationProtocol"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.ICommitConflictResolver" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.ICommitConflictResolver has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.ICommitConflictResolver">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.ICommitConflictResolver"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.ISessionProtocol" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.ISessionProtocol has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.ISessionProtocol">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.ISessionProtocol"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalCommitContext" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalCommitContext has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalCommitContext">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalCommitContext"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalCommitManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalCommitManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalCommitManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalCommitManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalLockManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalLockManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalLockManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalLockManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalQueryManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalQueryManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalQueryManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalQueryManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalQueryResult" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalQueryResult has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalQueryResult">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalQueryResult"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalRepository" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalRepository has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepositorySynchronizer"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalSession" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalSession has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSession">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSession"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalSessionManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalSessionManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSessionManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalStore" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalStore has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.InternalStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalStore"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSynchronizableRepository"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalTopic" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalTopic has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.InternalTopic">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalTopic"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalTopicManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalTopicManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.InternalTopicManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalTopicManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalTransaction" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalTransaction has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalTransaction"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalUnitManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalUnitManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalUnitManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalUnitManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.InternalView" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.InternalView has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.InternalView"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.LongIDStore" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.LongIDStore has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.LongIDStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.LongIDStore"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.LongIDStoreAccessor"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.ObjectWriteAccessHandler"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1048625" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.PluginRepositoryProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.QueryHandlerFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.QueryHandlerFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.QueryHandlerFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.QueryHandlerFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.RepositoryActivityLog has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.RepositoryConfigurator has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.RepositoryFactory" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.RepositoryFactory has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryFactory">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.RepositoryFactory"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.RepositoryUserManager" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.RepositoryUserManager has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryUserManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.RepositoryUserManager"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.Store" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.Store has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.Store">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.StoreAccessor" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.StoreAccessor has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.StoreAccessor">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.StoreAccessor"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.StoreAccessorBase" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.StoreAccessorBase has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.StoreAccessorBase">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.StoreAccessorBase"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.StoreAccessorPool" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.StoreAccessorPool has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.StoreAccessorPool">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.StoreAccessorPool"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.StoreChunkReader" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.StoreChunkReader has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="1057" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.StoreChunkReader">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.StoreChunkReader"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.3.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.spi.server.SyncingUtil" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.spi.server.SyncingUtil has been added to org.eclipse.emf.cdo.lm.server_1.3.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.SyncingUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.SyncingUtil"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.server_1.3.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.console.DebugGEF" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.console.DebugGEF has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.console.DebugGEF">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.console.DebugGEF"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.console.DebugGEFAction" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.console.DebugGEFAction has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.console.DebugGEFAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.console.DebugGEFAction"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.stackview.CommandStackInspector" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.stackview.CommandStackInspector has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.stackview.CommandStackInspector">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.stackview.CommandStackInspector"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.stackview.CommandStackInspectorPage" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.stackview.CommandStackInspectorPage has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.stackview.CommandStackInspectorPage">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.stackview.CommandStackInspectorPage"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.stackview.CommandStackViewerAction" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.stackview.CommandStackViewerAction has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.stackview.CommandStackViewerAction">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.stackview.CommandStackViewerAction"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.stackview.TreeContentProvider" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.stackview.TreeContentProvider has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.stackview.TreeContentProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.stackview.TreeContentProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.dawn.graphiti(2.3.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.gef.ui.stackview.TreeLabelProvider" kind="REMOVED" message="The re-exported type org.eclipse.gef.ui.stackview.TreeLabelProvider has been removed from org.eclipse.emf.cdo.dawn.graphiti_2.3.2" newModifiers="0" oldModifiers="1048609" restrictions="0" type_name="org.eclipse.gef.ui.stackview.TreeLabelProvider">
+        <message_arguments>
+            <message_argument value="org.eclipse.gef.ui.stackview.TreeLabelProvider"/>
+            <message_argument value="org.eclipse.emf.cdo.dawn.graphiti_2.3.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.4.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="LIFECYCLE_MANAGERS" kind="ADDED" message="The static field org.eclipse.emf.cdo.lm.server.LMAppExtension.LIFECYCLE_MANAGERS has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.LMAppExtension">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.LMAppExtension"/>
+            <message_argument value="LIFECYCLE_MANAGERS"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.5.1)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="NEW_OCL_NEW_INSTANCE_METHOD" kind="ADDED" message="The static field org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.NEW_OCL_NEW_INSTANCE_METHOD has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler"/>
+            <message_argument value="NEW_OCL_NEW_INSTANCE_METHOD"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.ocl(4.5.1)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="OLD_OCL_NEW_INSTANCE_METHOD" kind="ADDED" message="The static field org.eclipse.emf.cdo.server.ocl.OCLQueryHandler.OLD_OCL_NEW_INSTANCE_METHOD has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.ocl.OCLQueryHandler"/>
+            <message_argument value="OLD_OCL_NEW_INSTANCE_METHOD"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.client(1.4.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.lm.client.LMImporter" kind="ADDED" message="The type org.eclipse.emf.cdo.lm.client.LMImporter has been added to org.eclipse.emf.cdo.lm.client_1.4.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.client.LMImporter">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.client.LMImporter"/>
+            <message_argument value="org.eclipse.emf.cdo.lm.client_1.4.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline" kind="ADDED" message="The type org.eclipse.emf.cdo.lm.impl.ExtendedBaseline has been added to org.eclipse.emf.cdo.lm_1.3.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.impl.ExtendedBaseline"/>
+            <message_argument value="org.eclipse.emf.cdo.lm_1.3.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm(1.3.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger" kind="ADDED" message="The type org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger has been added to org.eclipse.emf.cdo.lm_1.3.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger"/>
+            <message_argument value="org.eclipse.emf.cdo.lm_1.3.0"/>
         </message_arguments>
     </delta>
 </deltas>

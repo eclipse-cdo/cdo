@@ -20,7 +20,7 @@ Signalling Platform.
 
 You can set up a pre-configured IDE for the development of CDO using the following link:
 
-[![Create Eclipse Development Environment for CDO](https://download.eclipse.org/oomph/www/setups/svg/cdo.svg)](https://www.eclipse.org/setups/installer/?url=https://raw.githubusercontent.com/eclipse-cdo/cdo/refs/heads/master/releng/org.eclipse.emf.cdo.releng/CDOConfiguration.setup&show=true "Click to open Eclipse-Installer Auto Launch or drag onto your running installer's title area")
+[![Create Eclipse Development Environment for CDO](https://download.eclipse.org/oomph/www/setups/svg/cdo.svg)](https://www.eclipse.org/setups/installer/?url=https://raw.githubusercontent.com/eclipse-cdo/cdo/master/releng/org.eclipse.emf.cdo.releng/CDOConfiguration.setup&show=true "Click to open Eclipse-Installer Auto Launch or drag onto your running installer's title area")
 
 
 ## Developer resources

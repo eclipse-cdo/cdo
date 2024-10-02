@@ -8,6 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  *    Teerawat Chaiyakijpichet (No Magic Asia Ltd.) - maintenance (SSL)
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.tests.bugzilla;
 
@@ -24,6 +25,7 @@ import org.eclipse.net4j.internal.tcp.ssl.SSLServerConnector;
 import org.eclipse.net4j.internal.ws.WSAcceptor;
 import org.eclipse.net4j.internal.ws.WSAcceptorFactory;
 import org.eclipse.net4j.internal.ws.WSServerConnector;
+import org.eclipse.net4j.internal.wss.WSSAcceptorFactory;
 import org.eclipse.net4j.tcp.ITCPAcceptor;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
@@ -51,6 +53,7 @@ public class Bugzilla_241463_Test extends AbstractConfigTest
     container.registerFactory(new FakeTCPAcceptorFactory());
     container.registerFactory(new FakeSSLAcceptorFactory());
     container.registerFactory(new FakeWSAcceptorFactory());
+    container.registerFactory(new FakeWSSAcceptorFactory());
     return container;
   }
 
@@ -190,6 +193,33 @@ public class Bugzilla_241463_Test extends AbstractConfigTest
    * @author Eike Stepper
    */
   private static final class FakeWSAcceptorFactory extends WSAcceptorFactory
+  {
+    @Override
+    protected WSAcceptor createAcceptor()
+    {
+      return new WSAcceptor()
+      {
+        @Override
+        protected WSServerConnector createConnector()
+        {
+          return new WSServerConnector(this)
+          {
+
+            @Override
+            public InternalChannel inverseOpenChannel(short channelID, String protocolID, int protocolVersion)
+            {
+              throw new RuntimeException("Simulated problem"); //$NON-NLS-1$
+            }
+          };
+        }
+      };
+    }
+  }
+
+  /**
+   * @author Maxime Porhel
+   */
+  private static final class FakeWSSAcceptorFactory extends WSSAcceptorFactory
   {
     @Override
     protected WSAcceptor createAcceptor()

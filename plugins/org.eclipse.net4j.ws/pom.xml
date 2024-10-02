@@ -17,15 +17,14 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-	  <groupId>org.eclipse.emf.cdo</groupId>
+	<groupId>org.eclipse.emf.cdo</groupId>
     <artifactId>org.eclipse.emf.cdo.plugins</artifactId>
     <version>4.7.0-SNAPSHOT</version>
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
 
-  <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.net4j.ws</artifactId>
-  <version>1.2.3-SNAPSHOT</version>
+  <version>1.3.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

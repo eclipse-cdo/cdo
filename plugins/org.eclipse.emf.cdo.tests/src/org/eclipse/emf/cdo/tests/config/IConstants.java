@@ -45,6 +45,8 @@ public interface IConstants
 
   public static final SessionConfig WS = Net4j.WS.INSTANCE;
 
+  public static final SessionConfig WSS = Net4j.WSS.INSTANCE;
+
   public static final ModelConfig NATIVE = ModelConfig.Native.INSTANCE;
 
   public static final ModelConfig LEGACY = ModelConfig.Legacy.INSTANCE;

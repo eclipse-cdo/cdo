@@ -7,5 +7,5 @@ Fragment-Host: org.eclipse.emf.ecore;bundle-version="[2.5.0,3.0.0)"
 Bundle-RequiredExecutionEnvironment: J2SE-1.5
 Bundle-Vendor: %providerName
 Bundle-Localization: fragment
-Export-Package: org.eclipse.emf.ecore.impl
+Export-Package: org.eclipse.emf.ecore.impl;version="4.2.600"
 Automatic-Module-Name: org.eclipse.emf.cdo.ecore.retrofit

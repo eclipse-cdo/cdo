@@ -7,6 +7,12 @@
                 <message_argument value="1.1.0"/>
             </message_arguments>
         </filter>
+        <filter comment="63" id="923795461">
+            <message_arguments>
+                <message_argument value="1.3.0"/>
+                <message_argument value="1.2.3"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/net4j/internal/ws/WSServerConnector.java" type="org.eclipse.net4j.internal.ws.WSServerConnector">
         <filter id="574619656">
@@ -32,7 +38,34 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/ws/jetty/Net4jWebSocket.java" type="org.eclipse.net4j.ws.jetty.Net4jWebSocket">
+        <filter comment="63" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocket"/>
+                <message_argument value="getSession()"/>
+            </message_arguments>
+        </filter>
+        <filter comment="63" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocket"/>
+                <message_argument value="onWebSocketConnect(Session)"/>
+            </message_arguments>
+        </filter>
+        <filter comment="63" id="1141899266">
+            <message_arguments>
+                <message_argument value="1.1"/>
+                <message_argument value="1.3"/>
+                <message_argument value="getSession()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.java" type="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet">
+        <filter comment="63" id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>
+                <message_argument value="configure(JettyWebSocketServletFactory)"/>
+            </message_arguments>
+        </filter>
         <filter id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.ws.jetty.Net4jWebSocketServlet"/>

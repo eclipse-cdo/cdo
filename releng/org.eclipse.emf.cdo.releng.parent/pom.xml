@@ -153,6 +153,7 @@ Eike Stepper - initial API and implementation
           <artifactId>target-platform-configuration</artifactId>
           <version>${tycho-version}</version>
           <configuration>
+          <pomDependencies>consider</pomDependencies>
           <target>
             <artifact>
               <groupId>org.eclipse.emf.cdo</groupId>

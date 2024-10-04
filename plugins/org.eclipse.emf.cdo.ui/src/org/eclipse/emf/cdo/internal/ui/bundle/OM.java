@@ -102,6 +102,10 @@ public abstract class OM
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {
+    if (image == null)
+    {
+      return null;
+    }
     ComposedImage composedImage = new OverlayImage(image, overlayImage, x, y);
     return ExtendedImageRegistry.INSTANCE.getImage(composedImage);
   }

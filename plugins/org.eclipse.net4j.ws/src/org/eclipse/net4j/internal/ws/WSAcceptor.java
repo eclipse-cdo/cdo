@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2020, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.net4j.internal.ws;
 
@@ -35,6 +36,8 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
 
   private String name;
 
+  private String type = WSUtil.FACTORY_TYPE;
+
   public WSAcceptor()
   {
   }
@@ -51,6 +54,12 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
     this.name = name;
   }
 
+  public void setType(String type)
+  {
+    checkInactive();
+    this.type = type;
+  }
+
   public WSServerConnector handleAccept(Net4jWebSocket webSocket)
   {
     WSServerConnector connector = createConnector();
@@ -64,6 +73,10 @@ public class WSAcceptor extends Acceptor implements IWSAcceptor
   @Override
   public String toString()
   {
+    if (!WSUtil.FACTORY_TYPE.equalsIgnoreCase(type))
+    {
+      return MessageFormat.format("WSAcceptor[{0}, {1}]", type, name); //$NON-NLS-1$
+    }
     return MessageFormat.format("WSAcceptor[{0}]", name); //$NON-NLS-1$
   }
 

@@ -10,8 +10,8 @@
  */
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.channel.IChannel;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;

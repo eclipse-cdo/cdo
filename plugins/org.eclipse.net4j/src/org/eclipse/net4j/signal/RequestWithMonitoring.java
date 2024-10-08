@@ -10,9 +10,9 @@
  */
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.ImplementationError;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;

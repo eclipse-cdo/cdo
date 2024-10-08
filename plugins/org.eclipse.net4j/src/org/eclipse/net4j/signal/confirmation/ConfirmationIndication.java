@@ -10,9 +10,9 @@
  */
 package org.eclipse.net4j.signal.confirmation;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.confirmation.Confirmation;
 import org.eclipse.net4j.util.confirmation.IConfirmationProvider;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;

@@ -35,6 +35,7 @@
      <productGroup id="org.eclipse.net4j.util.stringParsers" name="%productGroup.name.11"/>
      <productGroup id="org.eclipse.net4j.util.stringTesters" name="%productGroup.name.12"/>
      <productGroup id="org.eclipse.net4j.util.security.crypters" name="%productGroup.name.13"/>
+     <productGroup id="org.eclipse.net4j.util.exceptionHandlers" name="%productGroup.name.14"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

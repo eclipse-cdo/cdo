@@ -11,13 +11,13 @@
  */
 package org.eclipse.net4j.signal;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.IBuffer;
 import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;

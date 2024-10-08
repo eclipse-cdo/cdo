@@ -10,7 +10,6 @@
  */
 package org.eclipse.spi.net4j;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
@@ -23,6 +22,7 @@ import org.eclipse.net4j.protocol.IProtocol3;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ProtocolVersionException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;

@@ -10,7 +10,6 @@
  */
 package org.eclipse.net4j.signal.heartbeat;
 
-import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
@@ -18,6 +17,7 @@ import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.Timeouter;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;

@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j;
+package org.eclipse.net4j.util;
 
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -18,7 +18,7 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 
 /**
  * @author Eike Stepper
- * @since 4.20
+ * @since 3.26
  */
 @FunctionalInterface
 public interface ExceptionHandler
@@ -30,7 +30,7 @@ public interface ExceptionHandler
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
-    public static final String PRODUCT_GROUP = "org.eclipse.net4j.exceptionHandlers";
+    public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.exceptionHandlers";
 
     public Factory(String type)
     {

@@ -10,6 +10,7 @@
  */
 package org.eclipse.spi.net4j;
 
+import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.ITransportConfig;
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.buffer.IBuffer;
@@ -468,7 +469,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     }
     catch (RuntimeException ex)
     {
-      OM.LOG.error(ex);
+      ExceptionHandler.Factory.handle(channel, ex, "MonitorProgressRequest failed", OM.LOG);
       throw ex;
     }
   }

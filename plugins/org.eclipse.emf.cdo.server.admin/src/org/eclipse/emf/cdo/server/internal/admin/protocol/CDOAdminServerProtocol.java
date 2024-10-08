@@ -38,7 +38,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 /**
  * @author Eike Stepper
  */
-public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol, IManagedContainerProvider
+public class CDOAdminServerProtocol extends SignalProtocol<CDOAdminServer> implements IAuthenticationProtocol
 {
   public static final long DEFAULT_NEGOTIATION_TIMEOUT = 15 * 1000;
 

@@ -16,6 +16,9 @@ import org.eclipse.net4j.protocol.IProtocol3;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
@@ -32,7 +35,7 @@ import java.util.concurrent.ExecutorService;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol3<INFRA_STRUCTURE>, IExecutorServiceProvider
+public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IProtocol3<INFRA_STRUCTURE>, IExecutorServiceProvider, IManagedContainerProvider
 {
   private String type;
 
@@ -74,6 +77,12 @@ public abstract class Protocol<INFRA_STRUCTURE> extends Lifecycle implements IPr
   public int getVersion()
   {
     return UNSPECIFIED_VERSION;
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return ContainerUtil.getContainer(channel);
   }
 
   @Override

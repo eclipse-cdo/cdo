@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -138,7 +139,7 @@ public abstract class SignalReactor extends Signal
         }
         catch (Throwable ex)
         {
-          OM.LOG.error("ReportingMonitorTask failed", ex);
+          ExceptionHandler.Factory.handle(SignalReactor.this, ex, "ReportingMonitorTask failed", OM.LOG);
           cancel();
         }
       }
@@ -189,7 +190,7 @@ public abstract class SignalReactor extends Signal
         IChannel channel = protocol.getChannel();
         if (LifecycleUtil.isActive(channel))
         {
-          OM.LOG.error(ex);
+          ExceptionHandler.Factory.handle(SignalReactor.this, ex, "MonitorProgressRequest failed", OM.LOG);
         }
       }
     }

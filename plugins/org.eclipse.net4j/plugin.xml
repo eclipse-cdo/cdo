@@ -21,6 +21,7 @@
      <productGroup id="org.eclipse.net4j.acceptors" name="%productGroup.name.3"/>
      <productGroup id="org.eclipse.net4j.connectors" name="%productGroup.name.4"/>
      <productGroup id="org.eclipse.net4j.selectors" name="%productGroup.name.5"/>
+     <productGroup id="org.eclipse.net4j.exceptionHandlers" name="%productGroup.name.6"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">

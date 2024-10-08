@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal;
 
+import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
 import org.eclipse.net4j.util.ImplementationError;
@@ -167,7 +168,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
               }
               catch (Exception ex)
               {
-                OM.LOG.error(ex);
+                ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorCanceledRequest failed", OM.LOG);
               }
 
               return;
@@ -272,7 +273,7 @@ public abstract class RequestWithMonitoring<RESULT> extends RequestWithConfirmat
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
+          ExceptionHandler.Factory.handle(RequestWithMonitoring.this, ex, "MonitorremoteMonitor.done() failed", OM.LOG);
         }
         finally
         {

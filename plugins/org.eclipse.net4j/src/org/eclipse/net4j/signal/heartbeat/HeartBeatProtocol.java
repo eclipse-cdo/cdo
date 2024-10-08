@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal.heartbeat;
 
+import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.channel.IChannelMultiplexer;
 import org.eclipse.net4j.connector.IConnector;
@@ -298,7 +299,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
           }
           catch (Exception ex)
           {
-            OM.LOG.error("HeartBeatProtocolTask failed", ex);
+            ExceptionHandler.Factory.handle(Server.this, ex, "HeartBeatProtocolTask failed", OM.LOG);
           }
         }
       };

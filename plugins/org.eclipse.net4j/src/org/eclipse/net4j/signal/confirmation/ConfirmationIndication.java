@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.signal.confirmation;
 
+import org.eclipse.net4j.ExceptionHandler;
 import org.eclipse.net4j.signal.IndicationWithMonitoring;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.util.confirmation.Confirmation;
@@ -89,7 +90,7 @@ public class ConfirmationIndication<PROTOCOL extends SignalProtocol<?> & IConfir
     catch (Throwable ex)
     {
       out.writeBoolean(false);
-      OM.LOG.error(ex);
+      ExceptionHandler.Factory.handle(this, ex, "", OM.LOG);
     }
     finally
     {

@@ -45,7 +45,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
   /**
    * The default value of the '{@link #getPoints() <em>Points</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getPoints()
    * @generated NOT
    * @ordered
@@ -85,7 +85,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -105,7 +105,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -202,7 +202,7 @@ public class RelativeBendpointsImpl extends CDOObjectImpl implements RelativeBen
     switch (featureID)
     {
     case NotationPackage.RELATIVE_BENDPOINTS__POINTS:
-      return POINTS_EDEFAULT == null ? getPoints() != null : !POINTS_EDEFAULT.equals(getPoints());
+      return POINTS_EDEFAULT == null ? getPointsGen() != null : !POINTS_EDEFAULT.equals(getPointsGen());
     }
     return eDynamicIsSet(featureID);
   }

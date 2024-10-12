@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.impl.BaselineImpl;
 import org.eclipse.emf.cdo.lm.impl.ExtendedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
@@ -21,6 +22,7 @@ import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -130,6 +132,24 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   protected EClass eStaticClass()
   {
     return ReviewsPackage.Literals.REVIEW;
+  }
+
+  @Override
+  public Stream getStream()
+  {
+    EObject container = eContainer();
+
+    while (container != null)
+    {
+      if (container instanceof Stream)
+      {
+        return (Stream)container;
+      }
+
+      container = container.eContainer();
+    }
+
+    return null;
   }
 
   /**

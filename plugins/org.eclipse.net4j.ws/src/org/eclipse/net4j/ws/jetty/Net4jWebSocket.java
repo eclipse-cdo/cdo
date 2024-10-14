@@ -31,9 +31,9 @@ import org.eclipse.net4j.util.security.INegotiationContext.Receiver;
 import org.eclipse.net4j.util.security.NegotiationException;
 import org.eclipse.net4j.ws.IWSConnector;
 
-import org.eclipse.jetty.websocket.api.Session;
-import org.eclipse.jetty.websocket.api.WebSocketListener;
-import org.eclipse.jetty.websocket.api.WriteCallback;
+import org.eclipse.jetty.ee8.websocket.api.Session;
+import org.eclipse.jetty.ee8.websocket.api.WebSocketListener;
+import org.eclipse.jetty.ee8.websocket.api.WriteCallback;
 import org.eclipse.spi.net4j.InternalChannel;
 
 import java.io.IOException;

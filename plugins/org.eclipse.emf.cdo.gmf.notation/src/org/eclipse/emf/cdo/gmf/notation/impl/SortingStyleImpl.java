@@ -59,7 +59,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
   /**
    * The default value of the '{@link #getSortingKeys() <em>Sorting Keys</em>}'
    * attribute. <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @see #getSortingKeys()
    * @generated NOT
    * @ordered
@@ -119,7 +119,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -139,7 +139,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
-   * 
+   *
    * @generated NOT
    */
   @Override
@@ -270,7 +270,7 @@ public class SortingStyleImpl extends CDOObjectImpl implements SortingStyle
     case NotationPackage.SORTING_STYLE__SORTING:
       return getSorting() != SORTING_EDEFAULT;
     case NotationPackage.SORTING_STYLE__SORTING_KEYS:
-      return SORTING_KEYS_EDEFAULT == null ? getSortingKeys() != null : !SORTING_KEYS_EDEFAULT.equals(getSortingKeys());
+      return SORTING_KEYS_EDEFAULT == null ? getSortingKeysGen() != null : !SORTING_KEYS_EDEFAULT.equals(getSortingKeysGen());
     case NotationPackage.SORTING_STYLE__SORTED_OBJECTS:
       return !getSortedObjects().isEmpty();
     }

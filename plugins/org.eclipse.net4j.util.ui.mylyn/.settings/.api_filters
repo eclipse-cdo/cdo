@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.net4j.util.ui.mylyn" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="3.3.0"/>
+                <message_argument value="3.3.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="3.18.0"/>
+                <message_argument value="3.17.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.AbstractWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.AbstractWindowHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ArrangeWindowsHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CloseDialogHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CloseDialogHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.4.0"/>
+            </message_arguments>
+        </filter>
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaTitlePathUpdater"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.5.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUIEnhancer"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.CocoaUtil">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.CocoaUtil"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.FullscreenWindowHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.MinimizeWindowHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.SWTCocoaEnhancerDelegate"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.ui.internal.cocoa.ZoomWindowHandler">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.ui.internal.cocoa.ZoomWindowHandler"/>
+                <message_argument value="org.eclipse.net4j.util.ui_3.3.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>
+path="src/org/eclipse/net4j/util/ui/views/ContainerItemProvider.java" type="org.eclipse.net4j.util.ui.views.ContainerItemProvider$AbstractNode">
+        <filter id="576725006">
+            <message_arguments>
+                <message_argument value="Node"/>
+                <message_argument value="AbstractNode"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/FirstChildLayout.java" type="org.eclipse.net4j.util.ui.widgets.FirstChildLayout">
+        <filter id="1108344834">
+            <message_arguments>
+                <message_argument value="3.5"/>
+                <message_argument value="3.6"/>
+                <message_argument value="org.eclipse.net4j.util.ui.widgets.FirstChildLayout"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/ImageButton.java" type="org.eclipse.net4j.util.ui.widgets.ImageButton">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Label"/>
+                <message_argument value="ImageButton"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

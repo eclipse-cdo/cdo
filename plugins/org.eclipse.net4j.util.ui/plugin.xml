@@ -19,6 +19,8 @@
      <productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="%productGroup.name.0"/>
      <productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="%productGroup.name.1"/>
      <productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="%productGroup.name.2"/>
+     <productGroup id="org.eclipse.net4j.util.ui.openHandlers" name="%productGroup.name.3"/>
+     <productGroup id="org.eclipse.net4j.util.ui.chatAdvisors" name="%productGroup.name.4"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
@@ -34,6 +36,10 @@
             productGroup="org.eclipse.net4j.util.concurrent.delegateDetectors"
             type="display"
             class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.ui.chatAdvisors"
+            type="default"
+            class="org.eclipse.net4j.util.ui.chat.ChatAdvisor$Factory"/>
       <simpleFactory
             productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
             type="java.lang.Iterable"

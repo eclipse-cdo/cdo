@@ -8,7 +8,7 @@
         <setEntry value="org.eclipse.emf.cdo.lm.security:1.1.1.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm.server:1.4.0.qualifier:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.cdo.security.edit:4.6.0.qualifier:default:true:default:default"/>
-        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202401051648:default:true:default:default"/>
+        <setEntry value="org.eclipse.emf.compare.edit:4.3.1.202406060900:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.databinding.edit:1.10.0.v20240604-0832:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.edit:2.15.0.v20240604-0832:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.ecore.editor:2.19.0.v20240604-0832:default:true:default:default"/>

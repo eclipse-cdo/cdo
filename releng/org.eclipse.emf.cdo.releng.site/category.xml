@@ -48,6 +48,7 @@
   <feature id="org.eclipse.net4j.util" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
   <feature id="org.eclipse.net4j.util.doc" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
   <feature id="org.eclipse.net4j.util.ui" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
+  <feature id="org.eclipse.net4j.util.ui.mylyn" version="0.0.0"><category name="org.eclipse.net4j.util.category"/></feature>
 
   <!-- Others -->
   <category-def name="org.eclipse.emf.cdo.releng.hidden.category" label="Others"/>

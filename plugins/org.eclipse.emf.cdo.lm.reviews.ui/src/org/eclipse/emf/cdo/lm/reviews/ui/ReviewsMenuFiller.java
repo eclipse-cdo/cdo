@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.lm.reviews.ui.actions.MergeFromSourceAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewCommentAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewDeliveryReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewDropReviewAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.OpenReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.RebaseToTargetAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.ResolveCommentAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.RestoreReviewAction;
@@ -56,6 +57,8 @@ public class ReviewsMenuFiller implements MenuFiller
   @Override
   public boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
   {
+    int oldSize = menu.getItems().length;
+
     if (selectedElement instanceof Stream)
     {
       Stream stream = (Stream)selectedElement;
@@ -86,6 +89,11 @@ public class ReviewsMenuFiller implements MenuFiller
     else if (selectedElement instanceof Review)
     {
       Review review = (Review)selectedElement;
+
+      if (OpenReviewAction.ENABLED)
+      {
+        menu.add(new OpenReviewAction(page, review));
+      }
 
       menu.add(new CheckoutAction(page, ReviewsEditPlugin.INSTANCE, null, review));
       menu.add(new Separator());
@@ -158,7 +166,7 @@ public class ReviewsMenuFiller implements MenuFiller
       }
     }
 
-    return false;
+    return menu.getItems().length > oldSize;
   }
 
   private void addSubmitAction(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Review review)

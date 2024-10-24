@@ -14,8 +14,15 @@ import org.eclipse.net4j.util.StringParser.EnumStringParser;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 
+import javax.swing.text.MutableAttributeSet;
+import javax.swing.text.html.HTML.Tag;
+import javax.swing.text.html.HTMLEditorKit;
+import javax.swing.text.html.parser.ParserDelegator;
+
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -459,6 +466,47 @@ public final class StringUtil
     }
 
     return builder.toString();
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static String stripHTML(String html)
+  {
+    try
+    {
+      StringBuilder builder = new StringBuilder();
+
+      new ParserDelegator().parse(new StringReader(html), new HTMLEditorKit.ParserCallback()
+      {
+        @Override
+        public void handleText(char[] text, int pos)
+        {
+          builder.append(text);
+        }
+
+        @Override
+        public void handleSimpleTag(Tag t, MutableAttributeSet a, int pos)
+        {
+          if (t.breaksFlow())
+          {
+            builder.append("\n"); //$NON-NLS-1$
+          }
+        }
+      }, Boolean.TRUE);
+
+      return builder.toString();
+    }
+    catch (LinkageError ex)
+    {
+      // If the JDK doesn't provide AWT support this can happen.
+      // https://bugs.eclipse.org/bugs/show_bug.cgi?id=544340
+      return html;
+    }
+    catch (IOException ex)
+    {
+      return html;
+    }
   }
 
   public static int compare(String s1, String s2)

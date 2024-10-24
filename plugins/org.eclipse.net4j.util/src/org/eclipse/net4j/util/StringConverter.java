@@ -134,6 +134,18 @@ public interface StringConverter extends Function<Object, String>
     }
   };
 
+  /**
+   * @since 3.26
+   */
+  public static final StringConverter STRIP_HTML = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      return value == null ? null : StringUtil.stripHTML(value.toString());
+    }
+  };
+
   public static final StringConverter NET4J_USER_PATH = new StringConverter()
   {
     @Override
@@ -271,6 +283,7 @@ public interface StringConverter extends Function<Object, String>
         new SingletonFactory(PG, "uncap_all", UNCAP_ALL), //
         new SingletonFactory(PG, "escape", ESCAPE), //
         new SingletonFactory(PG, "unescape", UNESCAPE), //
+        new SingletonFactory(PG, "strip_html", STRIP_HTML), //
         new SingletonFactory(PG, "net4j_user_path", NET4J_USER_PATH), //
         new SingletonFactory(PG, "net4j_state_path", NET4J_STATE_PATH), //
         new SingletonFactory(PG, "net4j_config_path", NET4J_CONFIG_PATH), //

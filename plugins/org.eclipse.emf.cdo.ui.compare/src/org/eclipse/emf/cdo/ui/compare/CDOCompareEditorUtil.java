@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
+import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -68,11 +69,16 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -82,6 +88,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -448,14 +455,9 @@ public final class CDOCompareEditorUtil
   {
     if (input == null)
     {
-      UIUtil.getDisplay().syncExec(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          Shell shell = UIUtil.getShell();
-          MessageDialog.openInformation(shell, "Compare", "There are no differences between the selected inputs.");
-        }
+      UIUtil.getDisplay().syncExec(() -> {
+        Shell shell = UIUtil.getShell();
+        MessageDialog.openInformation(shell, "Compare", "There are no differences between the selected inputs.");
       });
 
       return false;
@@ -467,13 +469,28 @@ public final class CDOCompareEditorUtil
       List<Runnable> disposeRunnables = removeDisposeRunnables();
       input.setDisposeRunnables(disposeRunnables);
 
-      UIUtil.getDisplay().asyncExec(new Runnable()
-      {
-        @Override
-        public void run()
+      UIUtil.getDisplay().asyncExec(() -> {
+        IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
+        page.addPartListener(new IPartListener2()
         {
-          CompareUI.openCompareEditor(input, activateEditor);
-        }
+          @Override
+          public void partOpened(IWorkbenchPartReference partRef)
+          {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part instanceof IEditorPart)
+            {
+              IEditorPart editor = (IEditorPart)part;
+              IEditorInput editorInput = editor.getEditorInput();
+              if (editorInput == input)
+              {
+                input.editorOpened(editor);
+                page.removePartListener(this);
+              }
+            }
+          }
+        });
+
+        CompareUI.openCompareEditor(input, activateEditor);
       });
 
       return true;
@@ -482,18 +499,13 @@ public final class CDOCompareEditorUtil
     input.setModal(true);
     EList<Diff> differences = new BasicEList<>();
 
-    UIUtil.getDisplay().syncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        CompareUI.openCompareDialog(input);
+    UIUtil.getDisplay().syncExec(() -> {
+      CompareUI.openCompareDialog(input);
 
-        if (rightView instanceof InternalCDOTransaction)
-        {
-          Comparison comparison = input.getComparison();
-          differences.addAll(comparison.getDifferences());
-        }
+      if (rightView instanceof InternalCDOTransaction)
+      {
+        Comparison comparison = input.getComparison();
+        differences.addAll(comparison.getDifferences());
       }
     });
 
@@ -818,6 +830,75 @@ public final class CDOCompareEditorUtil
 
   /**
    * @author Eike Stepper
+   * @since 4.9
+   */
+  @FunctionalInterface
+  public interface EditorConsumer
+  {
+    public void editorOpened(IEditorPart editor);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.9
+   */
+  @FunctionalInterface
+  public interface ContentsCreator
+  {
+    public Control createContents(Composite parent, Function<Composite, Control> defaultContentsCreator);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static class InputHolder implements Consumer<Input>, EditorConsumer, ContentsCreator, IDeactivateable
+  {
+    private Input input;
+
+    public InputHolder()
+    {
+    }
+
+    public Input getInput()
+    {
+      return input;
+    }
+
+    @Override
+    public void accept(Input input)
+    {
+      this.input = input;
+      activate(input);
+    }
+
+    @Override
+    public void editorOpened(IEditorPart editor)
+    {
+    }
+
+    @Override
+    public Control createContents(Composite parent, Function<Composite, Control> defaultContentsCreator)
+    {
+      return defaultContentsCreator.apply(parent);
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void activate(Input input)
+    {
+    }
+
+    @Override
+    public Exception deactivate()
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    * @since 4.4
    */
   @SuppressWarnings("restriction")
@@ -829,15 +910,21 @@ public final class CDOCompareEditorUtil
 
     private final Comparison comparison;
 
+    private final boolean suppressCommit;
+
+    private final Consumer<Input> inputConsumer;
+
     private List<Runnable> disposeRunnables;
 
-    private boolean suppressCommit;
-
     private boolean modal;
+
+    private boolean editionSelectionDialog;
 
     private CDOCommitInfo commitInfo;
 
     private boolean ok;
+
+    private IEditorPart editor;
 
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
         AdapterFactory adapterFactory)
@@ -850,12 +937,12 @@ public final class CDOCompareEditorUtil
       suppressCommit = isSuppressCommit();
       SUPPRESS_COMMIT.remove();
 
-      Consumer<Input> consumer = INPUT_CONSUMER.get();
+      inputConsumer = INPUT_CONSUMER.get();
       INPUT_CONSUMER.remove();
 
-      if (consumer != null)
+      if (inputConsumer != null)
       {
-        consumer.accept(this);
+        inputConsumer.accept(this);
       }
     }
 
@@ -871,6 +958,25 @@ public final class CDOCompareEditorUtil
 
     private void dispose()
     {
+      if (inputConsumer instanceof IDeactivateable)
+      {
+        Throwable exception;
+
+        try
+        {
+          exception = ((IDeactivateable)inputConsumer).deactivate();
+        }
+        catch (Throwable ex)
+        {
+          exception = ex;
+        }
+
+        if (exception != null)
+        {
+          OM.LOG.warn(exception);
+        }
+      }
+
       AdapterFactory adapterFactory = getAdapterFactory();
       if (adapterFactory instanceof ComposedAdapterFactory)
       {
@@ -907,6 +1013,49 @@ public final class CDOCompareEditorUtil
     public void setModal(boolean modal)
     {
       this.modal = modal;
+    }
+
+    @Override
+    public boolean isEditionSelectionDialog()
+    {
+      return editionSelectionDialog;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void setEditionSelectionDialog(boolean editionSelectionDialog)
+    {
+      this.editionSelectionDialog = editionSelectionDialog;
+    }
+
+    @Override
+    public Control createContents(Composite parent)
+    {
+      if (inputConsumer instanceof ContentsCreator)
+      {
+        ContentsCreator contentsCreator = (ContentsCreator)inputConsumer;
+        return contentsCreator.createContents(parent, super::createContents);
+      }
+
+      return super.createContents(parent);
+    }
+
+    /**
+     * @since 4.9
+     */
+    public IEditorPart getEditor()
+    {
+      return editor;
+    }
+
+    private void editorOpened(IEditorPart editor)
+    {
+      this.editor = editor;
+      if (inputConsumer instanceof EditorConsumer)
+      {
+        ((EditorConsumer)inputConsumer).editorOpened(editor);
+      }
     }
 
     public void setDisposeRunnables(List<Runnable> disposeRunnables)
@@ -1037,30 +1186,6 @@ public final class CDOCompareEditorUtil
       {
         dispose();
       }
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 4.6
-   */
-  public static class InputHolder implements Consumer<Input>
-  {
-    private Input input;
-
-    public InputHolder()
-    {
-    }
-
-    public Input getInput()
-    {
-      return input;
-    }
-
-    @Override
-    public void accept(Input input)
-    {
-      this.input = input;
     }
   }
 

@@ -18,6 +18,10 @@
              productGroup="org.eclipse.net4j.util.ui.menuFillers"
              type="lm.reviews"
              class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsMenuFiller$Factory"/>
+       <factory
+             productGroup="org.eclipse.net4j.util.ui.openHandlers"
+             type="lm.reviews"
+             class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory"/>
     </extension>
 
 </plugin>

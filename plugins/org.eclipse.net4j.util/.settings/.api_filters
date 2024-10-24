@@ -16,6 +16,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/StringConverter.java" type="org.eclipse.net4j.util.StringConverter">
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="STRIP_HTML"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/collection/FastList.java" type="org.eclipse.net4j.util.collection.FastList">
         <filter id="338792546">
             <message_arguments>

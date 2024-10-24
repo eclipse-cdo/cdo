@@ -15,6 +15,8 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassLoaderClassResolver;
+import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.BufferedInputStream;
@@ -328,6 +330,58 @@ public final class IOUtil
   public static FileWriter openWriter(File file) throws IORuntimeException
   {
     return openWriter(file, false);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static BufferedInputStream buffered(InputStream in)
+  {
+    if (in instanceof BufferedInputStream)
+    {
+      return (BufferedInputStream)in;
+    }
+
+    return new BufferedInputStream(in);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static BufferedReader buffered(Reader in)
+  {
+    if (in instanceof BufferedReader)
+    {
+      return (BufferedReader)in;
+    }
+
+    return new BufferedReader(in);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static BufferedOutputStream buffered(OutputStream out)
+  {
+    if (out instanceof BufferedOutputStream)
+    {
+      return (BufferedOutputStream)out;
+    }
+
+    return new BufferedOutputStream(out);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static BufferedWriter buffered(Writer out)
+  {
+    if (out instanceof BufferedWriter)
+    {
+      return (BufferedWriter)out;
+    }
+
+    return new BufferedWriter(out);
   }
 
   public static Exception closeSilent(Closeable closeable)
@@ -840,6 +894,47 @@ public final class IOUtil
     finally
     {
       closeSilent(input);
+    }
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static <T> T readObject(File file) throws Exception
+  {
+    return readObject(file, (ClassResolver)null);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static <T> T readObject(File file, ClassLoader classLoader) throws Exception
+  {
+    return readObject(file, new ClassLoaderClassResolver(classLoader));
+  }
+
+  /**
+   * @since 3.26
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> T readObject(File file, final ClassResolver classResolver) throws Exception
+  {
+    try (ExtendedDataInputStream in = ExtendedDataInputStream.wrap(buffered(openInputStream(file))))
+    {
+      return (T)ExtendedIOUtil.readObject(in, classResolver);
+    }
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static void writeObject(File file, Object object) throws Exception
+  {
+    mkdirs(file.getParentFile());
+
+    try (ExtendedDataOutputStream out = ExtendedDataOutputStream.wrap(buffered(openOutputStream(file))))
+    {
+      ExtendedIOUtil.writeObject(out, object);
     }
   }
 

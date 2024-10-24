@@ -1,0 +1,108 @@
+<html>
+
+<head>
+  <style>
+    body {
+      line-height: 1;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-block-start: 0;
+      margin-block-end: 0;
+      border-spacing: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    /* Pure Layout */
+    .pl {
+      padding: 0;
+    }
+
+    .date-line {
+      padding-left: 44px;
+    }
+
+    .date {
+      vertical-align: middle;
+      color: #999999;
+      font-size: smaller;
+    }
+
+    .date-line td:not(.date) {
+      width: 50%;
+    }
+
+    .info {
+      vertical-align: top;
+      color: #999999;
+      font-size: smaller;
+    }
+
+    .container {
+      padding: 5px 0 0 0;
+    }
+
+    .container-own {
+      padding: 5px 0 0 0;
+      text-align: right;
+    }
+
+    .avatar-column {
+      width: 42px;
+      vertical-align: top;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+    }
+
+    .bubble {
+      color: #393939;
+      font-size: smaller;
+      background-color: #f1f1f1;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      padding: .5em .8em;
+      margin: 0;
+    }
+
+    .bubble-own {
+      color: #393939;
+      font-size: smaller;
+      background-color: #ccf7ff;
+      border-top-left-radius: 10px;
+      border-bottom-left-radius: 10px;
+      padding: .5em .8em;
+      margin: 0;
+      text-align: right;
+    }
+
+    .bubble-last {
+      border-bottom-left-radius: 10px;
+    }
+
+    .bubble-last-own {
+      border-bottom-right-radius: 10px;
+    }
+
+    .bubble * {
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+
+    .bubble-own * {
+      padding: 0;
+      margin: 0;
+      border: 0;
+    }
+  </style>
+</head>
+
+<body>
+  ${MESSAGES}
+</body>
+
+</html>

@@ -20,6 +20,7 @@ import org.eclipse.ui.IWorkbenchPage;
  * @author Eike Stepper
  * @since 3.9
  */
+@FunctionalInterface
 public interface MenuFiller
 {
   public boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement);

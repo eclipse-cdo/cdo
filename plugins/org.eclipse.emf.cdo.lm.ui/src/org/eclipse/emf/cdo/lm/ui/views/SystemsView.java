@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.ui.MenuFiller;
+import org.eclipse.net4j.util.ui.OpenHandler;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.SafeAction;
 import org.eclipse.net4j.util.ui.views.MultiViewersView;
@@ -266,13 +267,15 @@ public class SystemsView extends MultiViewersView
     IPluginContainer.INSTANCE.forEachElement( //
         MenuFiller.Factory.PRODUCT_GROUP, MenuFiller.class, //
         filler -> filler.fillMenu(page, viewer, manager, element));
-
   }
 
   @Override
   protected void doubleClicked(Object object)
   {
-    super.doubleClicked(object);
+    if (OpenHandler.Factory.handleOpen(IPluginContainer.INSTANCE, getSite().getPage(), treeViewer, object))
+    {
+      return;
+    }
 
     if (object instanceof ISystemDescriptor)
     {

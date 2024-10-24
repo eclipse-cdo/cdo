@@ -159,7 +159,7 @@ public final class ChatComposite extends Composite
 
   protected Browser createMessageBrowser()
   {
-    Browser browser = new Browser(this, SWT.NONE);
+    Browser browser = new Browser(this, SWT.EDGE);
     browser.addLocationListener(LocationListener.changedAdapter(e -> messageBrowser.execute("window.scrollTo(0, document.body.scrollHeight)")));
     return browser;
   }

@@ -105,6 +105,7 @@ public class ChatAdvisor<DATA>
       if (!entryField.computeSize(SWT.DEFAULT, SWT.DEFAULT).equals(oldSize))
       {
         chatComposite.layout(true);
+        chatComposite.refreshMessageBrowser();
       }
 
       chatComposite.getSendButton().setVisible(entry.length() != 0);

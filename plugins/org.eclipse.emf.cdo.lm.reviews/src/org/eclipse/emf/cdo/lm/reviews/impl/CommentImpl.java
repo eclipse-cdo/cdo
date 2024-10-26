@@ -10,17 +10,20 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.System;
+import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
-import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 
 import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
+
+import java.lang.reflect.InvocationTargetException;
 
 /**
  * <!-- begin-user-doc -->
@@ -31,27 +34,19 @@ import org.eclipse.emf.ecore.InternalEObject;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getCommentable <em>Commentable</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getParentHeading <em>Parent Heading</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getText <em>Text</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getStatus <em>Status</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getAuthor <em>Author</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getCreationTime <em>Creation Time</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getEditTime <em>Edit Time</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getContainer <em>Container</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getReview <em>Review</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getReplyTo <em>Reply To</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class CommentImpl extends CommentableImpl implements Comment
+public class CommentImpl extends ModelElementImpl implements Comment
 {
-  /**
-   * The default value of the '{@link #getAuthor() <em>Author</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getAuthor()
-   * @generated
-   * @ordered
-   */
-  protected static final String AUTHOR_EDEFAULT = null;
-
   /**
    * The default value of the '{@link #getText() <em>Text</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -63,14 +58,36 @@ public class CommentImpl extends CommentableImpl implements Comment
   protected static final String TEXT_EDEFAULT = null;
 
   /**
-   * The default value of the '{@link #getStatus() <em>Status</em>}' attribute.
+   * The default value of the '{@link #getAuthor() <em>Author</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getStatus()
+   * @see #getAuthor()
    * @generated
    * @ordered
    */
-  protected static final CommentStatus STATUS_EDEFAULT = CommentStatus.NONE;
+  protected static final String AUTHOR_EDEFAULT = null;
+
+  /**
+   * The default value of the '{@link #getCreationTime() <em>Creation Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @see #getCreationTime()
+   * @generated
+   * @ordered
+   */
+  protected static final long CREATION_TIME_EDEFAULT = 0L;
+
+  /**
+   * The default value of the '{@link #getEditTime() <em>Edit Time</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @see #getEditTime()
+   * @generated
+   * @ordered
+   */
+  protected static final long EDIT_TIME_EDEFAULT = 0L;
 
   /**
    * <!-- begin-user-doc -->
@@ -99,19 +116,20 @@ public class CommentImpl extends CommentableImpl implements Comment
    * @generated
    */
   @Override
-  public Commentable getCommentable()
+  public TopicContainer getContainer()
   {
-    return (Commentable)eDynamicGet(ReviewsPackage.COMMENT__COMMENTABLE, ReviewsPackage.Literals.COMMENT__COMMENTABLE, true, true);
+    return (TopicContainer)eDynamicGet(ReviewsPackage.COMMENT__CONTAINER, ReviewsPackage.Literals.COMMENT__CONTAINER, true, true);
   }
 
   /**
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetCommentable(Commentable newCommentable, NotificationChain msgs)
+  public NotificationChain basicSetContainer(TopicContainer newContainer, NotificationChain msgs)
   {
-    msgs = eBasicSetContainer((InternalEObject)newCommentable, ReviewsPackage.COMMENT__COMMENTABLE, msgs);
+    msgs = eBasicSetContainer((InternalEObject)newContainer, ReviewsPackage.COMMENT__CONTAINER, msgs);
     return msgs;
   }
 
@@ -121,39 +139,9 @@ public class CommentImpl extends CommentableImpl implements Comment
    * @generated
    */
   @Override
-  public void setCommentable(Commentable newCommentable)
+  public void setContainer(TopicContainer newContainer)
   {
-    eDynamicSet(ReviewsPackage.COMMENT__COMMENTABLE, ReviewsPackage.Literals.COMMENT__COMMENTABLE, newCommentable);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  @Override
-  public Heading getParentHeading()
-  {
-    Commentable commentable = getCommentable();
-    while (commentable != null)
-    {
-      if (commentable instanceof Heading)
-      {
-        return (Heading)commentable;
-      }
-
-      if (commentable instanceof Comment)
-      {
-        Comment comment = (Comment)commentable;
-        commentable = comment.getCommentable();
-      }
-      else
-      {
-        break;
-      }
-    }
-
-    return null;
+    eDynamicSet(ReviewsPackage.COMMENT__CONTAINER, ReviewsPackage.Literals.COMMENT__CONTAINER, newContainer);
   }
 
   /**
@@ -164,7 +152,7 @@ public class CommentImpl extends CommentableImpl implements Comment
   @Override
   public String getAuthor()
   {
-    return (String)eDynamicGet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.COMMENT__AUTHOR, true, true);
+    return (String)eDynamicGet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.AUTHORABLE__AUTHOR, true, true);
   }
 
   /**
@@ -175,7 +163,84 @@ public class CommentImpl extends CommentableImpl implements Comment
   @Override
   public void setAuthor(String newAuthor)
   {
-    eDynamicSet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.COMMENT__AUTHOR, newAuthor);
+    eDynamicSet(ReviewsPackage.COMMENT__AUTHOR, ReviewsPackage.Literals.AUTHORABLE__AUTHOR, newAuthor);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public long getCreationTime()
+  {
+    return (Long)eDynamicGet(ReviewsPackage.COMMENT__CREATION_TIME, ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setCreationTime(long newCreationTime)
+  {
+    eDynamicSet(ReviewsPackage.COMMENT__CREATION_TIME, ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, newCreationTime);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public long getEditTime()
+  {
+    return (Long)eDynamicGet(ReviewsPackage.COMMENT__EDIT_TIME, ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setEditTime(long newEditTime)
+  {
+    eDynamicSet(ReviewsPackage.COMMENT__EDIT_TIME, ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, newEditTime);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Comment getReplyTo()
+  {
+    return (Comment)eDynamicGet(ReviewsPackage.COMMENT__REPLY_TO, ReviewsPackage.Literals.COMMENT__REPLY_TO, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Comment basicGetReplyTo()
+  {
+    return (Comment)eDynamicGet(ReviewsPackage.COMMENT__REPLY_TO, ReviewsPackage.Literals.COMMENT__REPLY_TO, false, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setReplyTo(Comment newReplyTo)
+  {
+    eDynamicSet(ReviewsPackage.COMMENT__REPLY_TO, ReviewsPackage.Literals.COMMENT__REPLY_TO, newReplyTo);
   }
 
   /**
@@ -186,7 +251,7 @@ public class CommentImpl extends CommentableImpl implements Comment
   @Override
   public String getText()
   {
-    return (String)eDynamicGet(ReviewsPackage.COMMENT__TEXT, ReviewsPackage.Literals.COMMENT__TEXT, true, true);
+    return (String)eDynamicGet(ReviewsPackage.COMMENT__TEXT, ReviewsPackage.Literals.AUTHORABLE__TEXT, true, true);
   }
 
   /**
@@ -197,29 +262,7 @@ public class CommentImpl extends CommentableImpl implements Comment
   @Override
   public void setText(String newText)
   {
-    eDynamicSet(ReviewsPackage.COMMENT__TEXT, ReviewsPackage.Literals.COMMENT__TEXT, newText);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public CommentStatus getStatus()
-  {
-    return (CommentStatus)eDynamicGet(ReviewsPackage.COMMENT__STATUS, ReviewsPackage.Literals.COMMENT__STATUS, true, true);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setStatus(CommentStatus newStatus)
-  {
-    eDynamicSet(ReviewsPackage.COMMENT__STATUS, ReviewsPackage.Literals.COMMENT__STATUS, newStatus);
+    eDynamicSet(ReviewsPackage.COMMENT__TEXT, ReviewsPackage.Literals.AUTHORABLE__TEXT, newText);
   }
 
   /**
@@ -232,12 +275,12 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
+    case ReviewsPackage.COMMENT__CONTAINER:
       if (eInternalContainer() != null)
       {
         msgs = eBasicRemoveFromContainer(msgs);
       }
-      return basicSetCommentable((Commentable)otherEnd, msgs);
+      return basicSetContainer((TopicContainer)otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
   }
@@ -252,8 +295,8 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      return basicSetCommentable(null, msgs);
+    case ReviewsPackage.COMMENT__CONTAINER:
+      return basicSetContainer(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -268,8 +311,8 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (eContainerFeatureID())
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      return eInternalContainer().eInverseRemove(this, ReviewsPackage.COMMENTABLE__COMMENTS, Commentable.class, msgs);
+    case ReviewsPackage.COMMENT__CONTAINER:
+      return eInternalContainer().eInverseRemove(this, ReviewsPackage.TOPIC_CONTAINER__COMMENTS, TopicContainer.class, msgs);
     }
     return super.eBasicRemoveFromContainerFeature(msgs);
   }
@@ -284,16 +327,24 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      return getCommentable();
-    case ReviewsPackage.COMMENT__PARENT_HEADING:
-      return getParentHeading();
-    case ReviewsPackage.COMMENT__AUTHOR:
-      return getAuthor();
     case ReviewsPackage.COMMENT__TEXT:
       return getText();
-    case ReviewsPackage.COMMENT__STATUS:
-      return getStatus();
+    case ReviewsPackage.COMMENT__AUTHOR:
+      return getAuthor();
+    case ReviewsPackage.COMMENT__CREATION_TIME:
+      return getCreationTime();
+    case ReviewsPackage.COMMENT__EDIT_TIME:
+      return getEditTime();
+    case ReviewsPackage.COMMENT__CONTAINER:
+      return getContainer();
+    case ReviewsPackage.COMMENT__REVIEW:
+      return getReview();
+    case ReviewsPackage.COMMENT__REPLY_TO:
+      if (resolve)
+      {
+        return getReplyTo();
+      }
+      return basicGetReplyTo();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -308,17 +359,23 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      setCommentable((Commentable)newValue);
+    case ReviewsPackage.COMMENT__TEXT:
+      setText((String)newValue);
       return;
     case ReviewsPackage.COMMENT__AUTHOR:
       setAuthor((String)newValue);
       return;
-    case ReviewsPackage.COMMENT__TEXT:
-      setText((String)newValue);
+    case ReviewsPackage.COMMENT__CREATION_TIME:
+      setCreationTime((Long)newValue);
       return;
-    case ReviewsPackage.COMMENT__STATUS:
-      setStatus((CommentStatus)newValue);
+    case ReviewsPackage.COMMENT__EDIT_TIME:
+      setEditTime((Long)newValue);
+      return;
+    case ReviewsPackage.COMMENT__CONTAINER:
+      setContainer((TopicContainer)newValue);
+      return;
+    case ReviewsPackage.COMMENT__REPLY_TO:
+      setReplyTo((Comment)newValue);
       return;
     }
     super.eSet(featureID, newValue);
@@ -334,17 +391,23 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      setCommentable((Commentable)null);
+    case ReviewsPackage.COMMENT__TEXT:
+      setText(TEXT_EDEFAULT);
       return;
     case ReviewsPackage.COMMENT__AUTHOR:
       setAuthor(AUTHOR_EDEFAULT);
       return;
-    case ReviewsPackage.COMMENT__TEXT:
-      setText(TEXT_EDEFAULT);
+    case ReviewsPackage.COMMENT__CREATION_TIME:
+      setCreationTime(CREATION_TIME_EDEFAULT);
       return;
-    case ReviewsPackage.COMMENT__STATUS:
-      setStatus(STATUS_EDEFAULT);
+    case ReviewsPackage.COMMENT__EDIT_TIME:
+      setEditTime(EDIT_TIME_EDEFAULT);
+      return;
+    case ReviewsPackage.COMMENT__CONTAINER:
+      setContainer((TopicContainer)null);
+      return;
+    case ReviewsPackage.COMMENT__REPLY_TO:
+      setReplyTo((Comment)null);
       return;
     }
     super.eUnset(featureID);
@@ -360,32 +423,106 @@ public class CommentImpl extends CommentableImpl implements Comment
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENT__COMMENTABLE:
-      return getCommentable() != null;
-    case ReviewsPackage.COMMENT__PARENT_HEADING:
-      return getParentHeading() != null;
-    case ReviewsPackage.COMMENT__AUTHOR:
-      return AUTHOR_EDEFAULT == null ? getAuthor() != null : !AUTHOR_EDEFAULT.equals(getAuthor());
     case ReviewsPackage.COMMENT__TEXT:
       return TEXT_EDEFAULT == null ? getText() != null : !TEXT_EDEFAULT.equals(getText());
-    case ReviewsPackage.COMMENT__STATUS:
-      return getStatus() != STATUS_EDEFAULT;
+    case ReviewsPackage.COMMENT__AUTHOR:
+      return AUTHOR_EDEFAULT == null ? getAuthor() != null : !AUTHOR_EDEFAULT.equals(getAuthor());
+    case ReviewsPackage.COMMENT__CREATION_TIME:
+      return getCreationTime() != CREATION_TIME_EDEFAULT;
+    case ReviewsPackage.COMMENT__EDIT_TIME:
+      return getEditTime() != EDIT_TIME_EDEFAULT;
+    case ReviewsPackage.COMMENT__CONTAINER:
+      return getContainer() != null;
+    case ReviewsPackage.COMMENT__REVIEW:
+      return getReview() != null;
+    case ReviewsPackage.COMMENT__REPLY_TO:
+      return basicGetReplyTo() != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Authorable.class)
+    {
+      switch (derivedFeatureID)
+      {
+      case ReviewsPackage.COMMENT__TEXT:
+        return ReviewsPackage.AUTHORABLE__TEXT;
+      case ReviewsPackage.COMMENT__AUTHOR:
+        return ReviewsPackage.AUTHORABLE__AUTHOR;
+      case ReviewsPackage.COMMENT__CREATION_TIME:
+        return ReviewsPackage.AUTHORABLE__CREATION_TIME;
+      case ReviewsPackage.COMMENT__EDIT_TIME:
+        return ReviewsPackage.AUTHORABLE__EDIT_TIME;
+      default:
+        return -1;
+      }
+    }
+    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
+  {
+    if (baseClass == Authorable.class)
+    {
+      switch (baseFeatureID)
+      {
+      case ReviewsPackage.AUTHORABLE__TEXT:
+        return ReviewsPackage.COMMENT__TEXT;
+      case ReviewsPackage.AUTHORABLE__AUTHOR:
+        return ReviewsPackage.COMMENT__AUTHOR;
+      case ReviewsPackage.AUTHORABLE__CREATION_TIME:
+        return ReviewsPackage.COMMENT__CREATION_TIME;
+      case ReviewsPackage.AUTHORABLE__EDIT_TIME:
+        return ReviewsPackage.COMMENT__EDIT_TIME;
+      default:
+        return -1;
+      }
+    }
+    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Object eInvoke(int operationID, EList<?> arguments) throws InvocationTargetException
+  {
+    switch (operationID)
+    {
+    case ReviewsPackage.COMMENT___GET_SYSTEM:
+      return getSystem();
+    }
+    return super.eInvoke(operationID, arguments);
   }
 
   @Override
   public System getSystem()
   {
-    Commentable commentable = getCommentable();
-    return commentable == null ? null : commentable.getSystem();
+    TopicContainer container = getContainer();
+    return container == null ? null : container.getSystem();
   }
 
   @Override
   public Review getReview()
   {
-    Commentable commentable = getCommentable();
-    return commentable == null ? null : commentable.getReview();
+    TopicContainer container = getContainer();
+    return container == null ? null : container.getReview();
   }
 
 } // CommentImpl

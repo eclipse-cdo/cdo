@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.lm.reviews.server" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="1.1.0"/>
+                <message_argument value="1.0.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/internal/server/ReviewManager.java" type="org.eclipse.emf.cdo.lm.reviews.internal.server.ReviewManager">
         <filter id="574619656">
             <message_arguments>

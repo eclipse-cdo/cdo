@@ -12,10 +12,11 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
+import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
@@ -29,32 +30,34 @@ import java.util.Collection;
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Commentable</b></em>'.
+ * @since 1.2
  * @noextend This class is not intended to be subclassed by clients.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl#getReview <em>Review</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl#getComments <em>Comments</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl#getCommentCount <em>Comment Count</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl#getUnresolvedCount <em>Unresolved Count</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl#getResolvedCount <em>Resolved Count</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getReview <em>Review</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getTopics <em>Topics</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getComments <em>Comments</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getTopicCount <em>Topic Count</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getUnresolvedCount <em>Unresolved Count</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl#getResolvedCount <em>Resolved Count</em>}</li>
  * </ul>
  *
  * @generated
  */
-public abstract class CommentableImpl extends ModelElementImpl implements Commentable
+public abstract class TopicContainerImpl extends ModelElementImpl implements TopicContainer
 {
   /**
-   * The default value of the '{@link #getCommentCount() <em>Comment Count</em>}' attribute.
+   * The default value of the '{@link #getTopicCount() <em>Topic Count</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getCommentCount()
+   * @see #getTopicCount()
    * @generated
    * @ordered
    */
-  protected static final int COMMENT_COUNT_EDEFAULT = 0;
+  protected static final int TOPIC_COUNT_EDEFAULT = 0;
 
   /**
    * The default value of the '{@link #getUnresolvedCount() <em>Unresolved Count</em>}' attribute.
@@ -81,7 +84,7 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
    * <!-- end-user-doc -->
    * @generated
    */
-  protected CommentableImpl()
+  protected TopicContainerImpl()
   {
     super();
   }
@@ -94,7 +97,7 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   @Override
   protected EClass eStaticClass()
   {
-    return ReviewsPackage.Literals.COMMENTABLE;
+    return ReviewsPackage.Literals.TOPIC_CONTAINER;
   }
 
   /**
@@ -110,11 +113,11 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
+  @SuppressWarnings("unchecked")
   public EList<Comment> getComments()
   {
-    return (EList<Comment>)eDynamicGet(ReviewsPackage.COMMENTABLE__COMMENTS, ReviewsPackage.Literals.COMMENTABLE__COMMENTS, true, true);
+    return (EList<Comment>)eDynamicGet(ReviewsPackage.TOPIC_CONTAINER__COMMENTS, ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS, true, true);
   }
 
   /**
@@ -123,9 +126,9 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
    * @generated NOT
    */
   @Override
-  public int getCommentCount()
+  public int getTopicCount()
   {
-    return getCommentCount(this);
+    return getTopicCount(this);
   }
 
   /**
@@ -153,6 +156,18 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
+  public EList<Topic> getTopics()
+  {
+    return (EList<Topic>)eDynamicGet(ReviewsPackage.TOPIC_CONTAINER__TOPICS, ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
    * @generated NOT
    */
   @Override
@@ -169,7 +184,9 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getTopics()).basicAdd(otherEnd, msgs);
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
     }
     return super.eInverseAdd(otherEnd, featureID, msgs);
@@ -185,7 +202,9 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      return ((InternalEList<?>)getTopics()).basicRemove(otherEnd, msgs);
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -201,15 +220,17 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__REVIEW:
+    case ReviewsPackage.TOPIC_CONTAINER__REVIEW:
       return getReview();
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      return getTopics();
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       return getComments();
-    case ReviewsPackage.COMMENTABLE__COMMENT_COUNT:
-      return getCommentCount();
-    case ReviewsPackage.COMMENTABLE__UNRESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT:
+      return getTopicCount();
+    case ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT:
       return getUnresolvedCount();
-    case ReviewsPackage.COMMENTABLE__RESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT:
       return getResolvedCount();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -226,7 +247,11 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      getTopics().clear();
+      getTopics().addAll((Collection<? extends Topic>)newValue);
+      return;
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       getComments().clear();
       getComments().addAll((Collection<? extends Comment>)newValue);
       return;
@@ -244,7 +269,10 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      getTopics().clear();
+      return;
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       getComments().clear();
       return;
     }
@@ -261,15 +289,17 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (featureID)
     {
-    case ReviewsPackage.COMMENTABLE__REVIEW:
+    case ReviewsPackage.TOPIC_CONTAINER__REVIEW:
       return getReview() != null;
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      return !getTopics().isEmpty();
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
       return !getComments().isEmpty();
-    case ReviewsPackage.COMMENTABLE__COMMENT_COUNT:
-      return getCommentCount() != COMMENT_COUNT_EDEFAULT;
-    case ReviewsPackage.COMMENTABLE__UNRESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT:
+      return getTopicCount() != TOPIC_COUNT_EDEFAULT;
+    case ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT:
       return getUnresolvedCount() != UNRESOLVED_COUNT_EDEFAULT;
-    case ReviewsPackage.COMMENTABLE__RESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT:
       return getResolvedCount() != RESOLVED_COUNT_EDEFAULT;
     }
     return super.eIsSet(featureID);
@@ -285,68 +315,68 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
   {
     switch (operationID)
     {
-    case ReviewsPackage.COMMENTABLE___GET_SYSTEM:
+    case ReviewsPackage.TOPIC_CONTAINER___GET_SYSTEM:
       return getSystem();
     }
     return super.eInvoke(operationID, arguments);
   }
 
-  public static CommentStatistics getCommentStatistics(Commentable commentable)
+  public static TopicStatistics getTopicStatistics(TopicContainer container)
   {
-    CommentStatistics statistics = new CommentStatistics();
-    updateCommentStatistics(statistics, commentable);
+    TopicStatistics statistics = new TopicStatistics();
+    updateCommentStatistics(statistics, container);
     return statistics;
   }
 
-  static void updateCommentStatistics(CommentStatistics statistics, Commentable commentable)
+  static void updateCommentStatistics(TopicStatistics statistics, TopicContainer container)
   {
-    if (commentable instanceof Comment)
+    if (container instanceof Topic)
     {
-      Comment comment = (Comment)commentable;
+      Topic topic = (Topic)container;
 
-      CommentStatus status = comment.getStatus();
-      if (status == CommentStatus.NONE)
+      TopicStatus status = topic.getStatus();
+      if (status == null || status == TopicStatus.NONE)
       {
         statistics.incNoneCount();
       }
-      else if (status == CommentStatus.UNRESOLVED)
+      else if (status == TopicStatus.UNRESOLVED)
       {
         statistics.incUnresolvedCount();
       }
-      else if (status == CommentStatus.RESOLVED)
+      else if (status == TopicStatus.RESOLVED)
       {
         statistics.incResolvedCount();
       }
     }
 
-    for (Comment comment : commentable.getComments())
+    for (Topic topic : container.getTopics())
     {
-      updateCommentStatistics(statistics, comment);
+      updateCommentStatistics(statistics, topic);
     }
   }
 
-  static int getCommentCount(Commentable commentable)
+  static int getTopicCount(TopicContainer container)
   {
-    CommentStatistics statistics = getCommentStatistics(commentable);
+    TopicStatistics statistics = getTopicStatistics(container);
     return statistics.getTotalCount();
   }
 
-  static int getUnresolvedCount(Commentable commentable)
+  static int getUnresolvedCount(TopicContainer container)
   {
-    CommentStatistics statistics = getCommentStatistics(commentable);
+    TopicStatistics statistics = getTopicStatistics(container);
     return statistics.getUnresolvedCount();
   }
 
-  static int getResolvedCount(Commentable commentable)
+  static int getResolvedCount(TopicContainer container)
   {
-    CommentStatistics statistics = getCommentStatistics(commentable);
+    TopicStatistics statistics = getTopicStatistics(container);
     return statistics.getResolvedCount();
   }
 
   /**
    * @author Eike Stepper
    */
-  public static final class CommentStatistics
+  public static final class TopicStatistics
   {
     private int noneCount;
 
@@ -354,7 +384,7 @@ public abstract class CommentableImpl extends ModelElementImpl implements Commen
 
     private int resolvedCount;
 
-    private CommentStatistics()
+    private TopicStatistics()
     {
     }
 

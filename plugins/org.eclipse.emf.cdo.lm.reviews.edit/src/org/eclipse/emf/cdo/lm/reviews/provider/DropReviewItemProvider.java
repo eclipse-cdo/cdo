@@ -190,7 +190,7 @@ public class DropReviewItemProvider extends ReviewItemProvider
   protected Object overlayImage(Object object, Object image)
   {
     image = super.overlayImage(object, image);
-    return CommentableItemProvider.overlayCommentableImage((Review)object, image);
+    return TopicContainerItemProvider.overlayTopicContainerImage((Review)object, image);
   }
 
   /**

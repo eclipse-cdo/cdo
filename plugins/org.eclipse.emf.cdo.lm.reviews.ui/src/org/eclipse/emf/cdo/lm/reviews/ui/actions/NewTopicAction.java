@@ -13,9 +13,10 @@ package org.eclipse.emf.cdo.lm.reviews.ui.actions;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
+import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
@@ -29,6 +30,9 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -37,18 +41,22 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewCommentAction extends LMAction.NewElement<TopicContainer>
+public class NewTopicAction extends LMAction.NewElement<TopicContainer>
 {
   private String text;
 
-  public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, TopicContainer container)
+  private boolean heading;
+
+  private TopicStatus status;
+
+  public NewTopicAction(IWorkbenchPage page, StructuredViewer viewer, TopicContainer container)
   {
     super(page, viewer, //
-        "New Comment" + INTERACTIVE, //
-        "Add a new comment", //
-        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/Comment")), //
-        "Add a new comment.", //
-        "icons/wizban/NewComment.png", //
+        "New Topic" + INTERACTIVE, //
+        "Add a new topic", //
+        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/Topic")), //
+        "Add a new topic.", //
+        "icons/wizban/NewTopic.png", //
         container);
   }
 
@@ -73,6 +81,32 @@ public class NewCommentAction extends LMAction.NewElement<TopicContainer>
         validateDialog();
       });
     }
+
+    {
+      Button button = newCheckBox(parent, "Heading");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          heading = button.getSelection();
+          validateDialog();
+        }
+      });
+    }
+
+    {
+      Button button = newCheckBox(parent, "Needs Resolution");
+      button.addSelectionListener(new SelectionAdapter()
+      {
+        @Override
+        public void widgetSelected(SelectionEvent e)
+        {
+          status = button.getSelection() ? TopicStatus.UNRESOLVED : null;
+          validateDialog();
+        }
+      });
+    }
   }
 
   @Override
@@ -89,13 +123,15 @@ public class NewCommentAction extends LMAction.NewElement<TopicContainer>
   @Override
   protected CDOObject newElement(TopicContainer container, IProgressMonitor monitor) throws Exception
   {
-    Comment comment = ReviewsFactory.eINSTANCE.createComment();
-    comment.setText(text);
+    Topic topic = ReviewsFactory.eINSTANCE.createTopic();
+    topic.setText(text);
+    topic.setHeading(heading);
+    topic.setStatus(status);
 
     ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(container);
     return systemDescriptor.modify(container, tc -> {
-      tc.getComments().add(comment);
-      return comment;
+      tc.getTopics().add(topic);
+      return topic;
     }, monitor);
   }
 }

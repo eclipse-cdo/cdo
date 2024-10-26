@@ -17,14 +17,15 @@ import org.eclipse.emf.cdo.lm.FloatingBaseline;
 import org.eclipse.emf.cdo.lm.ModuleElement;
 import org.eclipse.emf.cdo.lm.StreamElement;
 import org.eclipse.emf.cdo.lm.SystemElement;
+import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
-import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -93,17 +94,53 @@ public class ReviewsSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-    case ReviewsPackage.COMMENTABLE:
+    case ReviewsPackage.AUTHORABLE:
     {
-      Commentable commentable = (Commentable)theEObject;
-      T result = caseCommentable(commentable);
+      Authorable authorable = (Authorable)theEObject;
+      T result = caseAuthorable(authorable);
       if (result == null)
       {
-        result = caseSystemElement(commentable);
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case ReviewsPackage.TOPIC_CONTAINER:
+    {
+      TopicContainer topicContainer = (TopicContainer)theEObject;
+      T result = caseTopicContainer(topicContainer);
+      if (result == null)
+      {
+        result = caseSystemElement(topicContainer);
       }
       if (result == null)
       {
-        result = caseModelElement(commentable);
+        result = caseModelElement(topicContainer);
+      }
+      if (result == null)
+      {
+        result = defaultCase(theEObject);
+      }
+      return result;
+    }
+    case ReviewsPackage.TOPIC:
+    {
+      Topic topic = (Topic)theEObject;
+      T result = caseTopic(topic);
+      if (result == null)
+      {
+        result = caseTopicContainer(topic);
+      }
+      if (result == null)
+      {
+        result = caseAuthorable(topic);
+      }
+      if (result == null)
+      {
+        result = caseSystemElement(topic);
+      }
+      if (result == null)
+      {
+        result = caseModelElement(topic);
       }
       if (result == null)
       {
@@ -117,41 +154,15 @@ public class ReviewsSwitch<T> extends Switch<T>
       T result = caseComment(comment);
       if (result == null)
       {
-        result = caseCommentable(comment);
-      }
-      if (result == null)
-      {
         result = caseSystemElement(comment);
       }
       if (result == null)
       {
+        result = caseAuthorable(comment);
+      }
+      if (result == null)
+      {
         result = caseModelElement(comment);
-      }
-      if (result == null)
-      {
-        result = defaultCase(theEObject);
-      }
-      return result;
-    }
-    case ReviewsPackage.HEADING:
-    {
-      Heading heading = (Heading)theEObject;
-      T result = caseHeading(heading);
-      if (result == null)
-      {
-        result = caseComment(heading);
-      }
-      if (result == null)
-      {
-        result = caseCommentable(heading);
-      }
-      if (result == null)
-      {
-        result = caseSystemElement(heading);
-      }
-      if (result == null)
-      {
-        result = caseModelElement(heading);
       }
       if (result == null)
       {
@@ -165,7 +176,7 @@ public class ReviewsSwitch<T> extends Switch<T>
       T result = caseReviewTemplate(reviewTemplate);
       if (result == null)
       {
-        result = caseCommentable(reviewTemplate);
+        result = caseTopicContainer(reviewTemplate);
       }
       if (result == null)
       {
@@ -191,7 +202,7 @@ public class ReviewsSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
-        result = caseCommentable(review);
+        result = caseTopicContainer(review);
       }
       if (result == null)
       {
@@ -233,7 +244,7 @@ public class ReviewsSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
-        result = caseCommentable(deliveryReview);
+        result = caseTopicContainer(deliveryReview);
       }
       if (result == null)
       {
@@ -275,7 +286,7 @@ public class ReviewsSwitch<T> extends Switch<T>
       }
       if (result == null)
       {
-        result = caseCommentable(dropReview);
+        result = caseTopicContainer(dropReview);
       }
       if (result == null)
       {
@@ -305,17 +316,33 @@ public class ReviewsSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Commentable</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Authorable</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Commentable</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Authorable</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseCommentable(Commentable object)
+  public T caseAuthorable(Authorable object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Topic Container</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Topic Container</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseTopicContainer(TopicContainer object)
   {
     return null;
   }
@@ -337,17 +364,17 @@ public class ReviewsSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Heading</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Topic</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Heading</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Topic</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseHeading(Heading object)
+  public T caseTopic(Topic object)
   {
     return null;
   }

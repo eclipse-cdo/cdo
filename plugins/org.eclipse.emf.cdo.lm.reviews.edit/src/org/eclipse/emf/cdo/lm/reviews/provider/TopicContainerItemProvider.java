@@ -1,20 +1,13 @@
-/*
- * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
- * All rights reserved. This program and the accompanying materials
- * are made available under the terms of the Eclipse Public License v1.0
- * which accompanies this distribution, and is available at
- * http://www.eclipse.org/legal/epl-v10.html
- *
- * Contributors:
- *    Eike Stepper - initial API and implementation
+/**
  */
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
 import org.eclipse.emf.cdo.etypes.provider.ModelElementItemProvider;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
+import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
-import org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl;
-import org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl.CommentStatistics;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
+import org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl;
+import org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl.TopicStatistics;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
@@ -33,12 +26,13 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This is the item provider adapter for a {@link org.eclipse.emf.cdo.lm.reviews.Commentable} object.
+ * This is the item provider adapter for a {@link org.eclipse.emf.cdo.lm.reviews.TopicContainer} object.
  * <!-- begin-user-doc -->
+ * @since 1.1
  * <!-- end-user-doc -->
  * @generated
  */
-public class CommentableItemProvider extends ModelElementItemProvider
+public class TopicContainerItemProvider extends ModelElementItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -46,7 +40,7 @@ public class CommentableItemProvider extends ModelElementItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
-  public CommentableItemProvider(AdapterFactory adapterFactory)
+  public TopicContainerItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
@@ -65,7 +59,7 @@ public class CommentableItemProvider extends ModelElementItemProvider
       super.getPropertyDescriptors(object);
 
       addReviewPropertyDescriptor(object);
-      addCommentCountPropertyDescriptor(object);
+      addTopicCountPropertyDescriptor(object);
       addUnresolvedCountPropertyDescriptor(object);
       addResolvedCountPropertyDescriptor(object);
     }
@@ -73,30 +67,17 @@ public class CommentableItemProvider extends ModelElementItemProvider
   }
 
   /**
-   * This adds a property descriptor for the Review feature.
+   * This adds a property descriptor for the Topic Count feature.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addReviewPropertyDescriptor(Object object)
+  protected void addTopicCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_review_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Commentable_review_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__REVIEW, false, false, false, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Comment Count feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addCommentCountPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_commentCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_commentCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__COMMENT_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_topicCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_topicCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__TOPIC_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -108,9 +89,9 @@ public class CommentableItemProvider extends ModelElementItemProvider
   protected void addUnresolvedCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_unresolvedCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_unresolvedCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__UNRESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_unresolvedCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_unresolvedCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__UNRESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -122,9 +103,23 @@ public class CommentableItemProvider extends ModelElementItemProvider
   protected void addResolvedCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_resolvedCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_resolvedCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__RESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_resolvedCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_resolvedCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__RESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Review feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addReviewPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_TopicContainer_review_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_review_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__REVIEW, true, false, true, null, null, null));
   }
 
   /**
@@ -141,7 +136,8 @@ public class CommentableItemProvider extends ModelElementItemProvider
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ReviewsPackage.Literals.COMMENTABLE__COMMENTS);
+      childrenFeatures.add(ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS);
+      childrenFeatures.add(ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS);
     }
     return childrenFeatures;
   }
@@ -192,32 +188,63 @@ public class CommentableItemProvider extends ModelElementItemProvider
   @Override
   public Object getStyledText(Object object)
   {
-    Commentable commentable = (Commentable)object;
-    return new StyledString(getString("_UI_Commentable_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
-        .append(Integer.toString(commentable.getCommentCount()));
+    TopicContainer topicContainer = (TopicContainer)object;
+    return new StyledString(getString("_UI_TopicContainer_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
+        .append(Integer.toString(topicContainer.getTopicCount()));
   }
 
   /**
    * This handles model notifications by calling {@link #updateChildren} to update any cached
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
+   * @since 1.1
+   * @deprecated Only here to show the unmodified code created by the generator in contrast to the
+   * hand-modified {@link #notifyChanged(Notification)}. <b>Do not attempt to call notifyChangedGen()
+   * from notifyChanged() as that would lead to StackOverflowError between TopicContainerItemProvider
+   * and TopicItemProvider!</b>
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
+  @Deprecated
+  public void notifyChangedGen(Notification notification)
+  {
+    updateChildren(notification);
+
+    switch (notification.getFeatureID(TopicContainer.class))
+    {
+    case ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
+    }
+    super.notifyChanged(notification);
+  }
+
   @Override
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
 
-    Object notifier = notification.getNotifier();
-    switch (notification.getFeatureID(Commentable.class))
+    switch (notification.getFeatureID(TopicContainer.class))
     {
-    case ReviewsPackage.COMMENTABLE__COMMENTS:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, true, true));
-      propagateNotification(this, notification, notifier);
+    case ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT:
+    case ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
+    case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
+      propagateNotification(this, notification, notification.getNotifier());
       return;
     }
-
     super.notifyChanged(notification);
   }
 
@@ -232,11 +259,15 @@ public class CommentableItemProvider extends ModelElementItemProvider
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS, ReviewsFactory.eINSTANCE.createTopic()));
+
+    newChildDescriptors.add(createChildParameter(ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS, ReviewsFactory.eINSTANCE.createComment()));
   }
 
-  static Object overlayCommentableImage(Commentable commentable, Object image)
+  static Object overlayTopicContainerImage(TopicContainer container, Object image)
   {
-    CommentStatistics statistics = CommentableImpl.getCommentStatistics(commentable);
+    TopicStatistics statistics = TopicContainerImpl.getTopicStatistics(container);
 
     String overlayKey = null;
     if (statistics.getUnresolvedCount() != 0)
@@ -265,12 +296,11 @@ public class CommentableItemProvider extends ModelElementItemProvider
     {
       EObject eContainer = ((EObject)notifier).eContainer();
 
-      while (eContainer instanceof Commentable)
+      while (eContainer instanceof TopicContainer)
       {
         itemProvider.fireNotifyChanged(new ViewerNotification(notification, eContainer, false, true));
         eContainer = eContainer.eContainer();
       }
     }
   }
-
 }

@@ -30,7 +30,7 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class ReviewTemplateItemProvider extends CommentableItemProvider
+public class ReviewTemplateItemProvider extends TopicContainerItemProvider
 {
   /**
    * This constructs an instance from a factory and a notifier.
@@ -121,7 +121,7 @@ public class ReviewTemplateItemProvider extends CommentableItemProvider
   {
     ReviewTemplate reviewTemplate = (ReviewTemplate)object;
     return new StyledString(getString("_UI_ReviewTemplate_type"), StyledString.Style.QUALIFIER_STYLER).append(" ")
-        .append(Integer.toString(reviewTemplate.getCommentCount()));
+        .append(Integer.toString(reviewTemplate.getTopicCount()));
   }
 
   /**

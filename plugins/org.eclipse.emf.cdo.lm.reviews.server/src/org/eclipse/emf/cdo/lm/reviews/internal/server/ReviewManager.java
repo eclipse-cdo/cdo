@@ -70,6 +70,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -96,7 +97,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
 
   private AbstractLifecycleManager lifecycleManager;
 
-  private IListener lifecycleManagerListener = new IListener()
+  private final IListener lifecycleManagerListener = new IListener()
   {
     @Override
     public void notifyEvent(IEvent event)
@@ -104,17 +105,17 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
       if (event instanceof SystemCommitEvent)
       {
         SystemCommitEvent e = (SystemCommitEvent)event;
-        handleSystemCommit(e);
+        handleSystemCommitEvent(e);
       }
       else if (event instanceof ModuleCommitEvent)
       {
         ModuleCommitEvent e = (ModuleCommitEvent)event;
-        handleModuleCommit(e);
+        handleModuleCommitEvent(e);
       }
       else if (event instanceof NewBaselineEvent)
       {
         NewBaselineEvent e = (NewBaselineEvent)event;
-        handleNewBaseline(e);
+        handleNewBaselineEvent(e);
       }
     }
   };
@@ -170,6 +171,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     executorService = ConcurrencyUtil.getExecutorService(lifecycleManager.getContainer());
     loadLastReviewID();
 
+    lifecycleManager.addSystemCommitHandler(this::handleSystemCommit);
     lifecycleManager.addListener(lifecycleManagerListener);
   }
 
@@ -177,13 +179,37 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
   protected void doDeactivate() throws Exception
   {
     lifecycleManager.removeListener(lifecycleManagerListener);
+    lifecycleManager.removeSystemCommitHandler(this::handleSystemCommit);
 
     saveLastReviewID();
     executorService = null;
     super.doDeactivate();
   }
 
-  protected void handleSystemCommit(SystemCommitEvent systemCommitEvent)
+  protected void handleSystemCommit(CommitContext commitContext)
+  {
+    String author = commitContext.getUserID();
+    long timeStamp = commitContext.getBranchPoint().getTimeStamp();
+
+    InternalCDORevision[] newObjects = commitContext.getNewObjects();
+    for (int i = 0; i < newObjects.length; i++)
+    {
+      InternalCDORevision revision = newObjects[i];
+      if (isAuthorableClass(revision.getEClass()))
+      {
+        int index = i;
+        commitContext.modify(modificationContext -> {
+          List<CDOIDAndVersion> list = modificationContext.getChangeSetData().getNewObjects();
+          InternalCDORevision element = (InternalCDORevision)list.get(index);
+          element.setValue(AUTHORABLE__AUTHOR, author);
+          element.setValue(AUTHORABLE__CREATION_TIME, timeStamp);
+          element.setValue(AUTHORABLE__EDIT_TIME, null);
+        });
+      }
+    }
+  }
+
+  protected void handleSystemCommitEvent(SystemCommitEvent systemCommitEvent)
   {
     CommitContext commitContext = systemCommitEvent.getCommitContext();
     long timeStamp = commitContext.getBranchPoint().getTimeStamp();
@@ -199,8 +225,10 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
 
     if (events != null)
     {
-      for (InternalCDORevision newObject : commitContext.getNewObjects())
+      InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      for (int i = 0; i < newObjects.length; i++)
       {
+        InternalCDORevision newObject = newObjects[i];
         EClass eClass = newObject.getEClass();
 
         if (isReviewClass(eClass))
@@ -243,11 +271,11 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
           });
         }
       }
-      else if (events != null && isCommentClass(eClass))
+      else if (events != null && isAuthorableClass(eClass))
       {
-        CDOID commentID = dirtyObjectDelta.getID();
+        CDOID authorableID = dirtyObjectDelta.getID();
 
-        InternalCDORevision reviewRevision = getReviewRevision(commentID, commitContext);
+        InternalCDORevision reviewRevision = getReviewRevision(authorableID, commitContext);
         if (reviewRevision != null)
         {
           CDOID reviewID = reviewRevision.getID();
@@ -271,7 +299,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     }
   }
 
-  protected void handleModuleCommit(ModuleCommitEvent event)
+  protected void handleModuleCommitEvent(ModuleCommitEvent event)
   {
     Map<String, String> commitProperties = event.getCommitContext().getCommitProperties();
     String value = commitProperties.get(ReviewStatemachine.PROP_SUBMITTING);
@@ -315,7 +343,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     }
   }
 
-  protected void handleNewBaseline(NewBaselineEvent event)
+  protected void handleNewBaselineEvent(NewBaselineEvent event)
   {
     CDORevision baseline = event.getNewBaseline();
     EClass eClass = baseline.getEClass();
@@ -476,7 +504,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
       return revision;
     }
 
-    if (isCommentClass(eClass))
+    if (isAuthorableClass(eClass))
     {
       CDOID containerID = (CDOID)revision.getContainerID();
       if (!CDOIDUtil.isNull(containerID))
@@ -497,9 +525,9 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     return eClass == DELIVERY_REVIEW || eClass == DROP_REVIEW;
   }
 
-  private static boolean isCommentClass(EClass eClass)
+  private static boolean isAuthorableClass(EClass eClass)
   {
-    return eClass == COMMENT || eClass == HEADING;
+    return eClass == TOPIC || eClass == COMMENT;
   }
 
   private static <T extends EObject> void forEachAnnotationObject(ModelElement modelElement, boolean referenced, Class<T> type, Consumer<T> consumer)

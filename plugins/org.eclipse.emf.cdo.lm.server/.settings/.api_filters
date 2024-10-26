@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<component id="org.eclipse.emf.cdo.lm.server" version="2">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="926941240">
+            <message_arguments>
+                <message_argument value="1.5.0"/>
+                <message_argument value="1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.CommentStatus">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.CommentStatus"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.server_1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Commentable">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.server_1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Heading">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Heading"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.server_1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.server_1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.server_1.4.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+</component>

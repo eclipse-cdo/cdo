@@ -1,6 +1,138 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.lm.reviews.edit" version="2">
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.CommentStatus">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.CommentStatus"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Commentable">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Heading">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Heading"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl">
+        <filter id="305422471">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.provider.CommentableItemProvider">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentableItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentableItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.provider.HeadingItemProvider">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.HeadingItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.0.2"/>
+            </message_arguments>
+        </filter>
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.HeadingItemProvider"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.edit_1.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/provider/CommentItemProvider.java" type="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider"/>
+                <message_argument value="addParentHeadingPropertyDescriptor(Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider"/>
+                <message_argument value="addStatusPropertyDescriptor(Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider"/>
+                <message_argument value="getTextString(Comment)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider"/>
+                <message_argument value="getTypeString()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.CommentItemProvider"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/provider/ReviewItemProvider.java" type="org.eclipse.emf.cdo.lm.reviews.provider.ReviewItemProvider">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.ReviewItemProvider"/>
+                <message_argument value="addCommentCountPropertyDescriptor(Object)"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/provider/ReviewTemplateItemProvider.java" type="org.eclipse.emf.cdo.lm.reviews.provider.ReviewTemplateItemProvider">
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.ReviewTemplateItemProvider"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/provider/ReviewsItemProviderAdapterFactory.java" type="org.eclipse.emf.cdo.lm.reviews.provider.ReviewsItemProviderAdapterFactory">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.ReviewsItemProviderAdapterFactory"/>
+                <message_argument value="topicItemProvider"/>
+            </message_arguments>
+        </filter>
+        <filter id="338755678">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.ReviewsItemProviderAdapterFactory"/>
+                <message_argument value="headingItemProvider"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.provider.ReviewsItemProviderAdapterFactory"/>
+                <message_argument value="createHeadingAdapter()"/>
+            </message_arguments>
+        </filter>
         <filter id="576720909">
             <message_arguments>
                 <message_argument value="ReviewsAdapterFactory"/>

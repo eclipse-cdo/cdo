@@ -2,44 +2,56 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="reviews" nsURI="http://www.eclipse.org/emf/CDO/lm/reviews/1.0.0"
     nsPrefix="reviews">
-  <eClassifiers xsi:type="ecore:EClass" name="Commentable" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="review" lowerBound="1"
-        eType="#//Review" changeable="false" volatile="true" transient="true" derived="true"
-        resolveProxies="false"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Authorable" abstract="true" interface="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="creationTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="editTime" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="TopicContainer" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="review" eType="#//Review"
+        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="topics" upperBound="-1"
+        eType="#//Topic" containment="true" resolveProxies="false" eOpposite="#//Topic/container"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="comments" upperBound="-1"
-        eType="#//Comment" containment="true" resolveProxies="false" eOpposite="#//Comment/commentable"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="commentCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        eType="#//Comment" containment="true" resolveProxies="false" eOpposite="#//Comment/container"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="topicCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unresolvedCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="resolvedCount" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Commentable">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="commentable" lowerBound="1"
-        eType="#//Commentable" resolveProxies="false" eOpposite="#//Commentable/comments"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parentHeading" eType="#//Heading"
+  <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//TopicContainer #//Authorable">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="heading" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelReference" eType="#//ModelReference"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//TopicStatus"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
+        eType="#//TopicContainer" eOpposite="#//TopicContainer/topics"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parentHeading" eType="#//Topic"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//CommentStatus"
-        defaultValueLiteral="None"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Heading" eSuperTypes="#//Comment">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="previousHeading" eType="#//Heading"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="previousHeading" eType="#//Topic"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="nextHeading" eType="#//Heading"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="nextHeading" eType="#//Topic"
         changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
-        changeable="false" volatile="true" transient="true" derived="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="outlineNumber" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
         changeable="false" volatile="true" transient="true" derived="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
+        changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReviewTemplate" eSuperTypes="#//Commentable">
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement #//Authorable">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
+        eType="#//TopicContainer" resolveProxies="false" eOpposite="#//TopicContainer/comments"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="review" eType="#//Review"
+        changeable="false" volatile="true" transient="true" derived="true" resolveProxies="false"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="replyTo" eType="#//Comment"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ReviewTemplate" eSuperTypes="#//TopicContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="reviewers" upperBound="-1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Review" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Baseline #//Commentable">
+  <eClassifiers xsi:type="ecore:EClass" name="Review" abstract="true" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//Baseline #//TopicContainer">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -79,11 +91,6 @@
         resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dropLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="CommentStatus">
-    <eLiterals name="None" literal="None"/>
-    <eLiterals name="Unresolved" value="1"/>
-    <eLiterals name="Resolved" value="2"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="ReviewStatus">
     <eLiterals name="New" literal="New"/>
     <eLiterals name="SourceOutdated" value="1" literal="SourceOutdated"/>
@@ -94,4 +101,10 @@
     <eLiterals name="Restoring" value="6" literal="Restoring"/>
     <eLiterals name="Deleted" value="7" literal="Deleted"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TopicStatus">
+    <eLiterals name="None"/>
+    <eLiterals name="Unresolved" value="1"/>
+    <eLiterals name="Resolved" value="2"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ModelReference" instanceClassName="org.eclipse.emf.cdo.lm.reviews.ModelReference"/>
 </ecore:EPackage>

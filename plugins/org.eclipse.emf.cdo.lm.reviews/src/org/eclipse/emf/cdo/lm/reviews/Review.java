@@ -35,7 +35,7 @@ import org.eclipse.emf.common.util.EList;
  * @model abstract="true"
  * @generated
  */
-public interface Review extends Baseline, Commentable
+public interface Review extends Baseline, TopicContainer
 {
   /**
    * Returns the value of the '<em><b>Id</b></em>' attribute.

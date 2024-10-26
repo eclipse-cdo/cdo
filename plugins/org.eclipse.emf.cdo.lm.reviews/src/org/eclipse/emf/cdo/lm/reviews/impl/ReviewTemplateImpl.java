@@ -36,7 +36,7 @@ import java.util.Collection;
  *
  * @generated
  */
-public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplate
+public class ReviewTemplateImpl extends TopicContainerImpl implements ReviewTemplate
 {
   /**
    * <!-- begin-user-doc -->
@@ -81,8 +81,8 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
-      return getReviewers();
+      case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
+        return getReviewers();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -98,10 +98,10 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
-      getReviewers().clear();
-      getReviewers().addAll((Collection<? extends String>)newValue);
-      return;
+      case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
+        getReviewers().clear();
+        getReviewers().addAll((Collection<? extends String>)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -116,9 +116,9 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
-      getReviewers().clear();
-      return;
+      case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
+        getReviewers().clear();
+        return;
     }
     super.eUnset(featureID);
   }
@@ -133,8 +133,8 @@ public class ReviewTemplateImpl extends CommentableImpl implements ReviewTemplat
   {
     switch (featureID)
     {
-    case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
-      return !getReviewers().isEmpty();
+      case ReviewsPackage.REVIEW_TEMPLATE__REVIEWERS:
+        return !getReviewers().isEmpty();
     }
     return super.eIsSet(featureID);
   }

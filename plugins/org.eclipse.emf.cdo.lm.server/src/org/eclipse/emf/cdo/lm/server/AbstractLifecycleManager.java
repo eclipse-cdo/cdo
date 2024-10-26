@@ -64,6 +64,7 @@ import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.Event;
@@ -157,6 +158,15 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     private boolean isMainBranch(CommitContext commitContext)
     {
       return commitContext.getBranchPoint().getBranch().isMainBranch();
+    }
+  };
+
+  private final ConcurrentArray<SystemCommitHandler> systemCommitHandlers = new ConcurrentArray<>()
+  {
+    @Override
+    protected SystemCommitHandler[] newArray(int length)
+    {
+      return new SystemCommitHandler[length];
     }
   };
 
@@ -283,6 +293,22 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
       return session;
     }
+  }
+
+  /**
+   * @since 1.5
+   */
+  public void addSystemCommitHandler(SystemCommitHandler handler)
+  {
+    systemCommitHandlers.add(handler);
+  }
+
+  /**
+   * @since 1.5
+   */
+  public void removeSystemCommitHandler(SystemCommitHandler handler)
+  {
+    systemCommitHandlers.remove(handler);
   }
 
   @Override
@@ -463,6 +489,11 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   protected void handleCommit(CommitContext commitContext)
   {
+    for (SystemCommitHandler handler : systemCommitHandlers.get())
+    {
+      handler.handleCommit(commitContext);
+    }
+
     InternalCDORevisionDelta[] dirtyObjectDeltas = commitContext.getDirtyObjectDeltas();
     if (dirtyObjectDeltas != null)
     {
@@ -813,33 +844,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
   }
 
-  private static void deactivate(Map<String, ?> map)
-  {
-    for (Object value : map.values())
-    {
-      LifecycleUtil.deactivate(value);
-    }
-
-    map.clear();
-  }
-
-  private static AbstractLifecycleManager of(IManagedContainer container, Predicate<AbstractLifecycleManager> predicate)
-  {
-    for (Object element : container.getElements(AbstractLifecycleManager.Factory.PRODUCT_GROUP))
-    {
-      if (element instanceof AbstractLifecycleManager)
-      {
-        AbstractLifecycleManager lifecycleManager = (AbstractLifecycleManager)element;
-        if (predicate.test(lifecycleManager))
-        {
-          return lifecycleManager;
-        }
-      }
-    }
-
-    return null;
-  }
-
   /**
    * @since 1.4
    */
@@ -869,6 +873,33 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
       return false;
     });
+  }
+
+  private static AbstractLifecycleManager of(IManagedContainer container, Predicate<AbstractLifecycleManager> predicate)
+  {
+    for (Object element : container.getElements(AbstractLifecycleManager.Factory.PRODUCT_GROUP))
+    {
+      if (element instanceof AbstractLifecycleManager)
+      {
+        AbstractLifecycleManager lifecycleManager = (AbstractLifecycleManager)element;
+        if (predicate.test(lifecycleManager))
+        {
+          return lifecycleManager;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  private static void deactivate(Map<String, ?> map)
+  {
+    for (Object value : map.values())
+    {
+      LifecycleUtil.deactivate(value);
+    }
+
+    map.clear();
   }
 
   static
@@ -1015,6 +1046,54 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   /**
    * @author Eike Stepper
+   * @since 1.5
+   */
+  public interface SystemCommitHandler
+  {
+    public void handleCommit(CommitContext commitContext) throws RuntimeException;
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 1.4
+   */
+  public final class SystemCommitEvent extends Event
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final CommitContext commitContext;
+
+    private SystemCommitEvent(CommitContext commitContext)
+    {
+      super(AbstractLifecycleManager.this);
+      this.commitContext = commitContext;
+    }
+
+    @Override
+    public AbstractLifecycleManager getSource()
+    {
+      return (AbstractLifecycleManager)super.getSource();
+    }
+
+    public String getSystemName()
+    {
+      return getSource().getSystemName();
+    }
+
+    public CommitContext getCommitContext()
+    {
+      return commitContext;
+    }
+
+    @Override
+    protected String formatAdditionalParameters()
+    {
+      return "commitContext=" + commitContext;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    * @since 1.4
    */
   public final class ModuleCommitEvent extends Event
@@ -1083,45 +1162,6 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     protected String formatAdditionalParameters()
     {
       return "moduleName=" + moduleName + ", moduleTypeName=" + moduleTypeName + ", commitContext=" + commitContext;
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 1.4
-   */
-  public final class SystemCommitEvent extends Event
-  {
-    private static final long serialVersionUID = 1L;
-
-    private final CommitContext commitContext;
-
-    private SystemCommitEvent(CommitContext commitContext)
-    {
-      super(AbstractLifecycleManager.this);
-      this.commitContext = commitContext;
-    }
-
-    @Override
-    public AbstractLifecycleManager getSource()
-    {
-      return (AbstractLifecycleManager)super.getSource();
-    }
-
-    public String getSystemName()
-    {
-      return getSource().getSystemName();
-    }
-
-    public CommitContext getCommitContext()
-    {
-      return commitContext;
-    }
-
-    @Override
-    protected String formatAdditionalParameters()
-    {
-      return "commitContext=" + commitContext;
     }
   }
 

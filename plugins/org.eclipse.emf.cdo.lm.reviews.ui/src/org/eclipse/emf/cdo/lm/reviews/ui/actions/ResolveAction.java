@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.lm.reviews.ui.actions;
 
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 
@@ -24,9 +24,9 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class ResolveCommentAction extends LMAction<Comment>
+public class ResolveAction extends LMAction<Topic>
 {
-  public ResolveCommentAction(IWorkbenchPage page, Comment comment)
+  public ResolveAction(IWorkbenchPage page, Topic topic)
   {
     super(page, //
         "Resolve", //
@@ -34,7 +34,7 @@ public class ResolveCommentAction extends LMAction<Comment>
         OM.getImageDescriptor("icons/Resolve.gif"), //
         null, //
         null, //
-        comment);
+        topic);
   }
 
   @Override
@@ -50,11 +50,11 @@ public class ResolveCommentAction extends LMAction<Comment>
   }
 
   @Override
-  protected void doRun(Comment comment, IProgressMonitor monitor) throws Exception
+  protected void doRun(Topic topic, IProgressMonitor monitor) throws Exception
   {
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(comment);
-    systemDescriptor.modify(comment, c -> {
-      c.setStatus(CommentStatus.RESOLVED);
+    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(topic);
+    systemDescriptor.modify(topic, t -> {
+      t.setStatus(TopicStatus.RESOLVED);
       return null;
     }, monitor);
 

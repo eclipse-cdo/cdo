@@ -42,13 +42,13 @@ public interface ReviewsFactory extends EFactory
   Comment createComment();
 
   /**
-   * Returns a new object of class '<em>Heading</em>'.
+   * Returns a new object of class '<em>Topic</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Heading</em>'.
+   * @return a new object of class '<em>Topic</em>'.
    * @generated
    */
-  Heading createHeading();
+  Topic createTopic();
 
   /**
    * Returns a new object of class '<em>Review Template</em>'.

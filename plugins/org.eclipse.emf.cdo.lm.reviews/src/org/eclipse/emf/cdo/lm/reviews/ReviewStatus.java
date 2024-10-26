@@ -194,8 +194,17 @@ public enum ReviewStatus implements Enumerator
    * <!-- end-user-doc -->
    * @generated
    */
-  private static final ReviewStatus[] VALUES_ARRAY = new ReviewStatus[] { NEW, SOURCE_OUTDATED, TARGET_OUTDATED, OUTDATED, SUBMITTED, ABANDONED, RESTORING,
-      DELETED, };
+  private static final ReviewStatus[] VALUES_ARRAY = new ReviewStatus[]
+    {
+      NEW,
+      SOURCE_OUTDATED,
+      TARGET_OUTDATED,
+      OUTDATED,
+      SUBMITTED,
+      ABANDONED,
+      RESTORING,
+      DELETED,
+    };
 
   /**
    * A public read-only list of all the '<em><b>Review Status</b></em>' enumerators.
@@ -259,22 +268,14 @@ public enum ReviewStatus implements Enumerator
   {
     switch (value)
     {
-    case NEW_VALUE:
-      return NEW;
-    case SOURCE_OUTDATED_VALUE:
-      return SOURCE_OUTDATED;
-    case TARGET_OUTDATED_VALUE:
-      return TARGET_OUTDATED;
-    case OUTDATED_VALUE:
-      return OUTDATED;
-    case SUBMITTED_VALUE:
-      return SUBMITTED;
-    case ABANDONED_VALUE:
-      return ABANDONED;
-    case RESTORING_VALUE:
-      return RESTORING;
-    case DELETED_VALUE:
-      return DELETED;
+      case NEW_VALUE: return NEW;
+      case SOURCE_OUTDATED_VALUE: return SOURCE_OUTDATED;
+      case TARGET_OUTDATED_VALUE: return TARGET_OUTDATED;
+      case OUTDATED_VALUE: return OUTDATED;
+      case SUBMITTED_VALUE: return SUBMITTED;
+      case ABANDONED_VALUE: return ABANDONED;
+      case RESTORING_VALUE: return RESTORING;
+      case DELETED_VALUE: return DELETED;
     }
     return null;
   }

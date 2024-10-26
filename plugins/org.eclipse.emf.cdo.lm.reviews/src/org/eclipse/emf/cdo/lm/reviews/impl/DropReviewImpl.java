@@ -241,8 +241,8 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-      return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
+      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
+        return ((InternalEList<?>)getDependencies()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -257,18 +257,18 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DROP_REVIEW__VERSION:
-      return getVersion();
-    case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-      return getDependencies();
-    case ReviewsPackage.DROP_REVIEW__DELIVERY:
-      return getDelivery();
-    case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
-      return getTargetTimeStamp();
-    case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      return getDropType();
-    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
-      return getDropLabel();
+      case ReviewsPackage.DROP_REVIEW__VERSION:
+        return getVersion();
+      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
+        return getDependencies();
+      case ReviewsPackage.DROP_REVIEW__DELIVERY:
+        return getDelivery();
+      case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
+        return getTargetTimeStamp();
+      case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
+        return getDropType();
+      case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+        return getDropLabel();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -284,22 +284,22 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DROP_REVIEW__VERSION:
-      setVersion((Version)newValue);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-      getDependencies().clear();
-      getDependencies().addAll((Collection<? extends Dependency>)newValue);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DELIVERY:
-      setDelivery((Delivery)newValue);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      setDropType((DropType)newValue);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
-      setDropLabel((String)newValue);
-      return;
+      case ReviewsPackage.DROP_REVIEW__VERSION:
+        setVersion((Version)newValue);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
+        getDependencies().clear();
+        getDependencies().addAll((Collection<? extends Dependency>)newValue);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DELIVERY:
+        setDelivery((Delivery)newValue);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
+        setDropType((DropType)newValue);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+        setDropLabel((String)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -314,21 +314,21 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DROP_REVIEW__VERSION:
-      setVersion(VERSION_EDEFAULT);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-      getDependencies().clear();
-      return;
-    case ReviewsPackage.DROP_REVIEW__DELIVERY:
-      setDelivery((Delivery)null);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      setDropType((DropType)null);
-      return;
-    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
-      setDropLabel(DROP_LABEL_EDEFAULT);
-      return;
+      case ReviewsPackage.DROP_REVIEW__VERSION:
+        setVersion(VERSION_EDEFAULT);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
+        getDependencies().clear();
+        return;
+      case ReviewsPackage.DROP_REVIEW__DELIVERY:
+        setDelivery((Delivery)null);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
+        setDropType((DropType)null);
+        return;
+      case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+        setDropLabel(DROP_LABEL_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -343,18 +343,18 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DROP_REVIEW__VERSION:
-      return VERSION_EDEFAULT == null ? getVersion() != null : !VERSION_EDEFAULT.equals(getVersion());
-    case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-      return !getDependencies().isEmpty();
-    case ReviewsPackage.DROP_REVIEW__DELIVERY:
-      return getDelivery() != null;
-    case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
-      return getTargetTimeStamp() != TARGET_TIME_STAMP_EDEFAULT;
-    case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
-      return getDropType() != null;
-    case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
-      return DROP_LABEL_EDEFAULT == null ? getDropLabel() != null : !DROP_LABEL_EDEFAULT.equals(getDropLabel());
+      case ReviewsPackage.DROP_REVIEW__VERSION:
+        return VERSION_EDEFAULT == null ? getVersion() != null : !VERSION_EDEFAULT.equals(getVersion());
+      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
+        return !getDependencies().isEmpty();
+      case ReviewsPackage.DROP_REVIEW__DELIVERY:
+        return getDelivery() != null;
+      case ReviewsPackage.DROP_REVIEW__TARGET_TIME_STAMP:
+        return getTargetTimeStamp() != TARGET_TIME_STAMP_EDEFAULT;
+      case ReviewsPackage.DROP_REVIEW__DROP_TYPE:
+        return getDropType() != null;
+      case ReviewsPackage.DROP_REVIEW__DROP_LABEL:
+        return DROP_LABEL_EDEFAULT == null ? getDropLabel() != null : !DROP_LABEL_EDEFAULT.equals(getDropLabel());
     }
     return super.eIsSet(featureID);
   }
@@ -371,12 +371,9 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
     {
       switch (derivedFeatureID)
       {
-      case ReviewsPackage.DROP_REVIEW__VERSION:
-        return LMPackage.FIXED_BASELINE__VERSION;
-      case ReviewsPackage.DROP_REVIEW__DEPENDENCIES:
-        return LMPackage.FIXED_BASELINE__DEPENDENCIES;
-      default:
-        return -1;
+        case ReviewsPackage.DROP_REVIEW__VERSION: return LMPackage.FIXED_BASELINE__VERSION;
+        case ReviewsPackage.DROP_REVIEW__DEPENDENCIES: return LMPackage.FIXED_BASELINE__DEPENDENCIES;
+        default: return -1;
       }
     }
     return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
@@ -394,12 +391,9 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
     {
       switch (baseFeatureID)
       {
-      case LMPackage.FIXED_BASELINE__VERSION:
-        return ReviewsPackage.DROP_REVIEW__VERSION;
-      case LMPackage.FIXED_BASELINE__DEPENDENCIES:
-        return ReviewsPackage.DROP_REVIEW__DEPENDENCIES;
-      default:
-        return -1;
+        case LMPackage.FIXED_BASELINE__VERSION: return ReviewsPackage.DROP_REVIEW__VERSION;
+        case LMPackage.FIXED_BASELINE__DEPENDENCIES: return ReviewsPackage.DROP_REVIEW__DEPENDENCIES;
+        default: return -1;
       }
     }
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
@@ -417,10 +411,8 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
     {
       switch (baseOperationID)
       {
-      case LMPackage.FIXED_BASELINE___GET_BASED_CHANGES:
-        return ReviewsPackage.DROP_REVIEW___GET_BASED_CHANGES;
-      default:
-        return -1;
+        case LMPackage.FIXED_BASELINE___GET_BASED_CHANGES: return ReviewsPackage.DROP_REVIEW___GET_BASED_CHANGES;
+        default: return -1;
       }
     }
     return super.eDerivedOperationID(baseOperationID, baseClass);
@@ -436,8 +428,8 @@ public class DropReviewImpl extends ReviewImpl implements DropReview
   {
     switch (operationID)
     {
-    case ReviewsPackage.DROP_REVIEW___GET_BASED_CHANGES:
-      return getBasedChanges();
+      case ReviewsPackage.DROP_REVIEW___GET_BASED_CHANGES:
+        return getBasedChanges();
     }
     return super.eInvoke(operationID, arguments);
   }

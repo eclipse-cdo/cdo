@@ -18,10 +18,10 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
@@ -209,34 +209,39 @@ public class OpenReviewAction extends AbstractReviewAction
         @Override
         protected Control createControl2(Composite parent)
         {
-          ChatAdvisor<?> advisor = IPluginContainer.INSTANCE.getElementOrNull(ChatAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
-
-          chatComposite = new ChatComposite(parent, SWT.NONE, //
-              advisor, //
-              "estepper", //
-              // "fnoyrit", //
-              ReviewEditorHandler.this::computeMessages, //
-              ReviewEditorHandler.this::sendMessage);
-
-          EContentAdapter adapter = new EContentAdapter()
-          {
-            @Override
-            public void notifyChanged(Notification notification)
-            {
-              super.notifyChanged(notification);
-
-              if (!notification.isTouch())
-              {
-                UIUtil.asyncExec(parent.getDisplay(), chatComposite::refreshMessageBrowser);
-              }
-            }
-          };
-
-          review.eAdapters().add(adapter);
-          chatComposite.addDisposeListener(e -> review.eAdapters().remove(adapter));
+          chatComposite = createChatCompoiste(parent);
           return chatComposite;
         }
       };
+    }
+
+    private ChatComposite createChatCompoiste(Composite parent)
+    {
+      ChatAdvisor<?> advisor = IPluginContainer.INSTANCE.getElementOrNull(ChatAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+
+      ChatComposite chatComposite = new ChatComposite(parent, SWT.NONE, //
+          advisor, //
+          "estepper", //
+          ReviewEditorHandler.this::computeMessages, //
+          ReviewEditorHandler.this::sendMessage);
+
+      EContentAdapter adapter = new EContentAdapter()
+      {
+        @Override
+        public void notifyChanged(Notification notification)
+        {
+          super.notifyChanged(notification);
+
+          if (!notification.isTouch())
+          {
+            UIUtil.asyncExec(parent.getDisplay(), chatComposite::refreshMessageBrowser);
+          }
+        }
+      };
+
+      review.eAdapters().add(adapter);
+      chatComposite.addDisposeListener(e -> review.eAdapters().remove(adapter));
+      return chatComposite;
     }
 
     private void sendMessage(String markup)
@@ -265,7 +270,9 @@ public class OpenReviewAction extends AbstractReviewAction
       return messages.toArray(new ChatMessage[messages.size()]);
     }
 
-    private static void addMessages(List<ChatMessage> messages, Commentable commentable)
+    private static final Pattern OBJECT_REFERENCE_PATTERN = Pattern.compile("(.*)(\\*\\*CDO\\[([^\\]]+)\\]\\*\\*)(.*)");
+
+    private static void addMessages(List<ChatMessage> messages, TopicContainer container)
     {
       Author[] authors;
 
@@ -284,7 +291,7 @@ public class OpenReviewAction extends AbstractReviewAction
       Author author = null;
       Random random = new Random(4711L);
 
-      for (Comment comment : commentable.getComments())
+      for (Comment comment : container.getComments())
       {
         if (--a <= 0)
         {
@@ -342,8 +349,6 @@ public class OpenReviewAction extends AbstractReviewAction
         });
       }
     }
-
-    private static final Pattern OBJECT_REFERENCE_PATTERN = Pattern.compile("(.*)(\\*\\*CDO\\[([^\\]]+)\\]\\*\\*)(.*)");
 
     private void updateObjectReference(CDOID id, String name)
     {

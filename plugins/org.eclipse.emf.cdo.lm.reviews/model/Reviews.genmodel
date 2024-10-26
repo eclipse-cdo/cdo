@@ -12,11 +12,6 @@
   <modelPluginVariables>CDO=org.eclipse.emf.cdo</modelPluginVariables>
   <genPackages prefix="Reviews" basePackage="org.eclipse.emf.cdo.lm" disposableProviderFactory="true"
       extensibleProviderFactory="true" childCreationExtenders="true" ecorePackage="Reviews.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//CommentStatus">
-      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/None"/>
-      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/Unresolved"/>
-      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//CommentStatus/Resolved"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//ReviewStatus">
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/New"/>
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/SourceOutdated"/>
@@ -27,25 +22,41 @@
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Restoring"/>
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//ReviewStatus/Deleted"/>
     </genEnums>
-    <genClasses image="false" ecoreClass="Reviews.ecore#//Commentable">
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Commentable/review"/>
-      <genFeatures property="None" children="true" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Commentable/comments"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Commentable/commentCount"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Commentable/unresolvedCount"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Commentable/resolvedCount"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="Reviews.ecore#//TopicStatus">
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//TopicStatus/None"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//TopicStatus/Unresolved"/>
+      <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//TopicStatus/Resolved"/>
+    </genEnums>
+    <genDataTypes ecoreDataType="Reviews.ecore#//ModelReference"/>
+    <genClasses image="false" ecoreClass="Reviews.ecore#//Authorable">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/text"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/author"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/creationTime"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/editTime"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="Reviews.ecore#//TopicContainer">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//TopicContainer/review"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reviews.ecore#//TopicContainer/topics"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference Reviews.ecore#//TopicContainer/comments"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//TopicContainer/topicCount"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//TopicContainer/unresolvedCount"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//TopicContainer/resolvedCount"/>
+    </genClasses>
+    <genClasses ecoreClass="Reviews.ecore#//Topic">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/heading"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/modelReference"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/status"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/container"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/parentHeading"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/previousHeading"/>
+      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/nextHeading"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/outlineNumber"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/parentIndex"/>
     </genClasses>
     <genClasses ecoreClass="Reviews.ecore#//Comment">
-      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/commentable"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/parentHeading"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/author"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/text"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Comment/status"/>
-    </genClasses>
-    <genClasses ecoreClass="Reviews.ecore#//Heading">
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Heading/previousHeading"/>
-      <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Heading/nextHeading"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Heading/parentIndex"/>
-      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Heading/outlineNumber"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/container"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/review"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//Comment/replyTo"/>
     </genClasses>
     <genClasses ecoreClass="Reviews.ecore#//ReviewTemplate">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//ReviewTemplate/reviewers"/>

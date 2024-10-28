@@ -31,11 +31,12 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.ui.EntryControlAdvisor;
 import org.eclipse.net4j.util.ui.UIUtil;
-import org.eclipse.net4j.util.ui.chat.ChatAdvisor;
 import org.eclipse.net4j.util.ui.chat.ChatComposite;
 import org.eclipse.net4j.util.ui.chat.ChatMessage;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
+import org.eclipse.net4j.util.ui.chat.ChatRenderer;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.emf.common.notify.Adapter;
@@ -61,8 +62,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
@@ -217,13 +216,17 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private ChatComposite createChatCompoiste(Composite parent)
     {
-      ChatAdvisor<?> advisor = IPluginContainer.INSTANCE.getElementOrNull(ChatAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+      EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull(EntryControlAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+      ChatRenderer renderer = IPluginContainer.INSTANCE.getElementOrNull(ChatRenderer.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
 
-      ChatComposite chatComposite = new ChatComposite(parent, SWT.NONE, //
-          advisor, //
-          "estepper", //
-          ReviewEditorHandler.this::computeMessages, //
-          ReviewEditorHandler.this::sendMessage);
+      ChatComposite.Config config = new ChatComposite.Config();
+      config.setOwnUserID("estepper");
+      config.setMessageProvider(ReviewEditorHandler.this::computeMessages);
+      config.setChatRenderer(renderer);
+      config.setEntryControlAdvisor(entryControlAdvisor);
+      config.setSendHandler(ReviewEditorHandler.this::sendMessage);
+
+      ChatComposite chatComposite = new ChatComposite(parent, SWT.NONE, config);
 
       EContentAdapter adapter = new EContentAdapter()
       {
@@ -269,8 +272,6 @@ public class OpenReviewAction extends AbstractReviewAction
       review.cdoView().syncExec(() -> addMessages(messages, review));
       return messages.toArray(new ChatMessage[messages.size()]);
     }
-
-    private static final Pattern OBJECT_REFERENCE_PATTERN = Pattern.compile("(.*)(\\*\\*CDO\\[([^\\]]+)\\]\\*\\*)(.*)");
 
     private static void addMessages(List<ChatMessage> messages, TopicContainer container)
     {
@@ -352,30 +353,30 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private void updateObjectReference(CDOID id, String name)
     {
-      String objectReference = "**CDO[" + id;
-      if (name != null)
-      {
-        objectReference += "::" + name;
-      }
-
-      objectReference += "]**";
-
-      ChatAdvisor<?> advisor = chatComposite.getAdvisor();
-      String entry = advisor.getEntry(chatComposite);
-
-      Matcher matcher = OBJECT_REFERENCE_PATTERN.matcher(entry);
-      if (matcher.matches())
-      {
-        String begin = matcher.group(1);
-        String end = matcher.group(4);
-        entry = begin + objectReference + end;
-      }
-      else
-      {
-        entry = objectReference + " " + entry;
-      }
-
-      advisor.setEntry(chatComposite, entry);
+      // String objectReference = "**CDO[" + id;
+      // if (name != null)
+      // {
+      // objectReference += "::" + name;
+      // }
+      //
+      // objectReference += "]**";
+      //
+      // ChatAdvisor advisor = chatComposite.getAdvisor();
+      // String entry = advisor.getEntry(chatComposite);
+      //
+      // Matcher matcher = OBJECT_REFERENCE_PATTERN.matcher(entry);
+      // if (matcher.matches())
+      // {
+      // String begin = matcher.group(1);
+      // String end = matcher.group(4);
+      // entry = begin + objectReference + end;
+      // }
+      // else
+      // {
+      // entry = objectReference + " " + entry;
+      // }
+      //
+      // advisor.setEntry(chatComposite, entry);
     }
 
     private void selectedMatch(Match match)

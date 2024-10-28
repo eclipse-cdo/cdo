@@ -8,7 +8,10 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.util.ui.chat;
+package org.eclipse.net4j.util.ui.widgets;
+
+import org.eclipse.net4j.util.ui.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
 
 import org.eclipse.jface.layout.FillLayoutFactory;
 import org.eclipse.swt.SWT;
@@ -16,14 +19,14 @@ import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Scrollable;
 
 /**
  * @author Eike Stepper
  * @since 3.19
  */
-public final class EntryField extends Composite
+public class RoundedEntryField extends Composite
 {
   private static final int MAX_HEIGHT = 160;
 
@@ -35,21 +38,19 @@ public final class EntryField extends Composite
 
   private final Color entryBackground;
 
-  private final Scrollable control;
+  private final EntryControlAdvisor advisor;
+
+  private final Control control;
 
   private Point lastComputedSize;
 
   private boolean verticalBarVisible;
 
-  public EntryField(ChatComposite parent, int style)
+  public RoundedEntryField(Composite parent, int style, Color entryBackground, EntryControlAdvisor advisor, ControlConfig controlConfig)
   {
     super(parent, style | SWT.DOUBLE_BUFFERED);
-
-    Display display = getDisplay();
-    setBackground(display.getSystemColor(SWT.COLOR_WHITE));
-
-    entryBackground = new Color(display, 241, 241, 241);
-    addDisposeListener(e -> entryBackground.dispose());
+    this.entryBackground = entryBackground;
+    this.advisor = advisor;
 
     addPaintListener(e -> {
       Rectangle box = getClientArea();
@@ -59,21 +60,37 @@ public final class EntryField extends Composite
     });
 
     setLayout(FillLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).create());
-    control = parent.getAdvisor().createEntryControl(this);
+
+    control = advisor.createControl(this, controlConfig);
+    control.setBackground(entryBackground);
   }
 
-  @Override
-  public ChatComposite getParent()
-  {
-    return (ChatComposite)super.getParent();
-  }
-
-  public Color getEntryBackground()
+  public final Color getEntryBackground()
   {
     return entryBackground;
   }
 
-  public Point getLastComputedSize()
+  public EntryControlAdvisor getAdvisor()
+  {
+    return advisor;
+  }
+
+  public final Control getControl()
+  {
+    return control;
+  }
+
+  public final String getEntry()
+  {
+    return advisor.getEntry(control);
+  }
+
+  public final void setEntry(String entry)
+  {
+    advisor.setEntry(control, entry);
+  }
+
+  public final Point getLastComputedSize()
   {
     return lastComputedSize;
   }
@@ -110,10 +127,15 @@ public final class EntryField extends Composite
       vBarVisible = false;
     }
 
-    if (verticalBarVisible != vBarVisible)
+    if (control instanceof Scrollable)
     {
-      verticalBarVisible = vBarVisible;
-      control.getVerticalBar().setVisible(vBarVisible);
+      Scrollable scrollable = (Scrollable)control;
+
+      if (verticalBarVisible != vBarVisible)
+      {
+        verticalBarVisible = vBarVisible;
+        scrollable.getVerticalBar().setVisible(vBarVisible);
+      }
     }
 
     newSize.y += MARGIN_TWICE;

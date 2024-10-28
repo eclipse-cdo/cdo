@@ -15,9 +15,13 @@
 
   <extension point="org.eclipse.net4j.util.factories">
       <factory
-            productGroup="org.eclipse.net4j.util.ui.chatAdvisors"
+            productGroup="org.eclipse.net4j.util.ui.entryControlAdvisors"
             type="mylyn"
-            class="org.eclipse.net4j.util.ui.internal.mylyn.MylynChatAdvisor$Factory"/>
+            class="org.eclipse.net4j.util.ui.internal.mylyn.MylynEntryControlAdvisor$Factory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.ui.chatRenderers"
+            type="mylyn"
+            class="org.eclipse.net4j.util.ui.internal.mylyn.MylynChatRenderer$Factory"/>
   </extension>
    
 </plugin>

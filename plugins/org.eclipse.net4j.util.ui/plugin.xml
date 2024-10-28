@@ -20,7 +20,8 @@
      <productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="%productGroup.name.1"/>
      <productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="%productGroup.name.2"/>
      <productGroup id="org.eclipse.net4j.util.ui.openHandlers" name="%productGroup.name.3"/>
-     <productGroup id="org.eclipse.net4j.util.ui.chatAdvisors" name="%productGroup.name.4"/>
+     <productGroup id="org.eclipse.net4j.util.ui.entryControlAdvisors" name="%productGroup.name.4"/>
+     <productGroup id="org.eclipse.net4j.util.ui.chatRenderers" name="%productGroup.name.5"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
@@ -37,9 +38,13 @@
             type="display"
             class="org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector$Factory"/>
       <factory
-            productGroup="org.eclipse.net4j.util.ui.chatAdvisors"
+            productGroup="org.eclipse.net4j.util.ui.entryControlAdvisors"
             type="default"
-            class="org.eclipse.net4j.util.ui.chat.ChatAdvisor$Factory"/>
+            class="org.eclipse.net4j.util.ui.EntryControlAdvisor$Factory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.ui.chatRenderers"
+            type="default"
+            class="org.eclipse.net4j.util.ui.chat.ChatRenderer$Factory"/>
       <simpleFactory
             productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
             type="java.lang.Iterable"

@@ -11,7 +11,15 @@
 package org.eclipse.net4j.util.ui.chat;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
+import org.eclipse.net4j.util.ui.chat.ChatMessage.Provider;
+import org.eclipse.net4j.util.ui.chat.ChatRenderer.BubbleGroup;
+import org.eclipse.net4j.util.ui.chat.ChatRenderer.DateLine;
+import org.eclipse.net4j.util.ui.chat.ChatRenderer.Renderable;
+import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -21,7 +29,9 @@ import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.MouseListener;
 import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 
@@ -32,7 +42,6 @@ import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
@@ -44,10 +53,6 @@ import java.util.function.Consumer;
  */
 public final class ChatComposite extends Composite
 {
-  private static final String MESSAGES = "${MESSAGES}";
-
-  private static final int MESSAGES_LENGTH = MESSAGES.length();
-
   private static final ZoneId ZONE_ID = TimeZone.getDefault().toZoneId();
 
   private static final String SEND_MESSAGE = OM.BUNDLE.getTranslationSupport().getString("chat.send.message");
@@ -56,40 +61,18 @@ public final class ChatComposite extends Composite
 
   private static Image sendMessageHoverImage;
 
-  private final ChatAdvisor<?> advisor;
-
-  private final String ownUserID;
-
-  private final ChatMessage.Provider messageProvider;
-
-  private final Consumer<String> sendHandler;
-
-  private final String htmlTemplate;
-
-  private final int htmlMessagesPos;
+  private final Config config;
 
   private final Browser messageBrowser;
 
-  private final EntryField entryField;
+  private final RoundedEntryField entryField;
 
   private final Label sendButton;
 
-  private Object advisorData;
-
-  public ChatComposite(Composite parent, int style, //
-      ChatAdvisor<?> advisor, //
-      String ownUserID, //
-      ChatMessage.Provider messageProvider, //
-      Consumer<String> sendHandler)
+  public ChatComposite(Composite parent, int style, Config config)
   {
     super(parent, style);
-    this.advisor = advisor;
-    this.ownUserID = ownUserID;
-    this.messageProvider = messageProvider;
-    this.sendHandler = sendHandler;
-
-    htmlTemplate = advisor.getHtmlTemplate();
-    htmlMessagesPos = htmlTemplate.indexOf(MESSAGES);
+    this.config = new Config(config);
 
     setLayout(GridLayoutFactory.fillDefaults().numColumns(2).margins(10, 10).create());
     setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
@@ -97,7 +80,7 @@ public final class ChatComposite extends Composite
     messageBrowser = createMessageBrowser();
     messageBrowser.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true).create());
 
-    if (sendHandler != null)
+    if (config.getSendHandler() != null)
     {
       entryField = createEntryField();
       entryField.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
@@ -112,17 +95,11 @@ public final class ChatComposite extends Composite
     }
 
     refreshMessageBrowser();
-    advisor.setEntry(this, "");
   }
 
-  public ChatAdvisor<?> getAdvisor()
+  public Config getConfig()
   {
-    return advisor;
-  }
-
-  public ChatMessage.Provider getMessageProvider()
-  {
-    return messageProvider;
+    return new Config(config);
   }
 
   public Browser getMessageBrowser()
@@ -130,13 +107,7 @@ public final class ChatComposite extends Composite
     return messageBrowser;
   }
 
-  public void refreshMessageBrowser()
-  {
-    String html = renderChatHTML();
-    messageBrowser.setText(html, true);
-  }
-
-  public EntryField getEntryField()
+  public RoundedEntryField getEntryField()
   {
     return entryField;
   }
@@ -146,35 +117,48 @@ public final class ChatComposite extends Composite
     return sendButton;
   }
 
-  public Consumer<String> getSendHandler()
-  {
-    return sendHandler;
-  }
-
   @Override
   public boolean setFocus()
   {
     return entryField == null ? messageBrowser.setFocus() : entryField.setFocus();
   }
 
-  protected Browser createMessageBrowser()
+  public void refreshMessageBrowser()
+  {
+    List<Renderable> renderables = getRenderables();
+    ChatRenderer renderer = config.getChatRenderer();
+  
+    String html = renderer.renderHTML(renderables);
+    messageBrowser.setText(html, true);
+  }
+
+  private Browser createMessageBrowser()
   {
     Browser browser = new Browser(this, SWT.EDGE);
     browser.addLocationListener(LocationListener.changedAdapter(e -> messageBrowser.execute("window.scrollTo(0, document.body.scrollHeight)")));
     return browser;
   }
 
-  protected EntryField createEntryField()
+  private RoundedEntryField createEntryField()
   {
-    return new EntryField(this, SWT.NONE);
+    Color entryBackground = new Color(getDisplay(), 241, 241, 241);
+    addDisposeListener(e -> entryBackground.dispose());
+
+    EntryControlAdvisor entryControlAdvisor = config.getEntryControlAdvisor();
+
+    ControlConfig controlConfig = new ControlConfig();
+    controlConfig.setModifyHandler(control -> handleEntryModify());
+    controlConfig.setOkHandler(control -> sendEntry());
+
+    return new RoundedEntryField(this, SWT.NONE, entryBackground, entryControlAdvisor, controlConfig);
   }
 
-  protected Label createSendButton()
+  private Label createSendButton()
   {
     Label label = new Label(this, SWT.NONE);
     label.setImage(getSendMessageImage());
     label.setToolTipText(SEND_MESSAGE);
-    label.addMouseListener(MouseListener.mouseDownAdapter(e -> advisor.sendEntry(this)));
+    label.addMouseListener(MouseListener.mouseDownAdapter(e -> sendEntry()));
     label.addMouseTrackListener(new MouseTrackAdapter()
     {
       @Override
@@ -199,35 +183,41 @@ public final class ChatComposite extends Composite
     return label;
   }
 
-  Object getAdvisorData()
+  private void handleEntryModify()
   {
-    return advisorData;
-  }
-
-  void setAdvisorData(Object advisorData)
-  {
-    this.advisorData = advisorData;
-  }
-
-  private String renderChatHTML()
-  {
-    StringBuilder builder = new StringBuilder();
-    builder.append("\n<table width=\"100%\">\n");
-
-    for (Renderable renderable : getRenderables())
+    String entry = entryField.getEntry();
+    if (entry != null)
     {
-      renderable.render(builder);
+      UIUtil.asyncExec(getDisplay(), () -> {
+        Point oldSize = entryField.getLastComputedSize();
+        if (!entryField.computeSize(SWT.DEFAULT, SWT.DEFAULT).equals(oldSize))
+        {
+          layout(true);
+          refreshMessageBrowser();
+        }
+
+        sendButton.setVisible(entry.length() != 0);
+      });
     }
+  }
 
-    builder.append("</table width=\"100%\">\n");
-
-    StringBuilder html = new StringBuilder(htmlTemplate);
-    html.replace(htmlMessagesPos, htmlMessagesPos + MESSAGES_LENGTH, builder.toString());
-    return html.toString();
+  private void sendEntry()
+  {
+    String entry = entryField.getEntry();
+    if (entry != null)
+    {
+      entry = entry.trim();
+      if (entry.length() != 0)
+      {
+        config.getSendHandler().accept(entry);
+        UIUtil.asyncExec(getDisplay(), () -> entryField.setEntry(""));
+      }
+    }
   }
 
   private List<Renderable> getRenderables()
   {
+    Provider messageProvider = config.getMessageProvider();
     ChatMessage[] messages = messageProvider.getMessages();
     Arrays.sort(messages);
 
@@ -248,6 +238,7 @@ public final class ChatComposite extends Composite
       }
 
       Author author = message.getAuthor();
+      String ownUserID = config.getOwnUserID();
       boolean own = Objects.equals(author.getUserID(), ownUserID);
 
       LocalTime time = creationTime.toLocalTime();
@@ -286,166 +277,79 @@ public final class ChatComposite extends Composite
   /**
    * @author Eike Stepper
    */
-  public abstract class Renderable
+  public static final class Config
   {
-    private Renderable()
+    private String ownUserID;
+
+    private ChatMessage.Provider messageProvider;
+
+    private ChatRenderer chatRenderer;
+
+    private EntryControlAdvisor entryControlAdvisor;
+
+    private Consumer<String> sendHandler;
+
+    private Config(Config source)
+    {
+      ownUserID = source.ownUserID;
+      messageProvider = source.messageProvider;
+      chatRenderer = source.chatRenderer;
+      entryControlAdvisor = source.entryControlAdvisor;
+      sendHandler = source.sendHandler;
+    }
+
+    public Config()
     {
     }
 
-    public final void render(StringBuilder html)
+    public String getOwnUserID()
     {
-      html.append("<tr><td>");
-      doRender(html);
-      html.append("</td></tr>");
+      return ownUserID;
     }
 
-    protected abstract void doRender(StringBuilder html);
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public final class DateLine extends Renderable
-  {
-    private final LocalDate date;
-
-    private DateLine(LocalDate date)
+    public void setOwnUserID(String ownUserID)
     {
-      this.date = date;
+      this.ownUserID = ownUserID;
     }
 
-    public final LocalDate getDate()
+    public ChatMessage.Provider getMessageProvider()
     {
-      return date;
+      return messageProvider;
     }
 
-    @Override
-    protected void doRender(StringBuilder html)
+    public void setMessageProvider(ChatMessage.Provider messageProvider)
     {
-      advisor.render(html, this);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public final class BubbleGroup extends Renderable
-  {
-    private final Author author;
-
-    private final boolean own;
-
-    private final LinkedList<Bubble> bubbles = new LinkedList<>()
-    {
-      private static final long serialVersionUID = 1L;
-
-      @Override
-      public Bubble getFirst()
-      {
-        return isEmpty() ? null : super.getFirst();
-      }
-
-      @Override
-      public Bubble getLast()
-      {
-        return isEmpty() ? null : super.getLast();
-      }
-    };
-
-    private BubbleGroup(Author author, boolean own)
-    {
-      this.author = author;
-      this.own = own;
+      this.messageProvider = messageProvider;
     }
 
-    public Author getAuthor()
+    public ChatRenderer getChatRenderer()
     {
-      return author;
+      return chatRenderer;
     }
 
-    public boolean isOwn()
+    public void setChatRenderer(ChatRenderer chatRenderer)
     {
-      return own;
+      this.chatRenderer = chatRenderer;
     }
 
-    public LinkedList<Bubble> getBubbles()
+    public EntryControlAdvisor getEntryControlAdvisor()
     {
-      return bubbles;
+      return entryControlAdvisor;
     }
 
-    public LocalTime getFirstBubbleTime()
+    public void setEntryControlAdvisor(EntryControlAdvisor entryControlAdvisor)
     {
-      Bubble bubble = bubbles.getFirst();
-      return bubble == null ? null : bubble.getTime();
+      this.entryControlAdvisor = entryControlAdvisor;
     }
 
-    public LocalTime getLastBubbleTime()
+    public Consumer<String> getSendHandler()
     {
-      Bubble bubble = bubbles.getLast();
-      return bubble == null ? null : bubble.getTime();
+      return sendHandler;
     }
 
-    public Bubble addBubble(LocalTime time, String text)
+    public void setSendHandler(Consumer<String> sendHandler)
     {
-      Bubble bubble = new Bubble(this, time, text);
-      bubbles.add(bubble);
-      return bubble;
-    }
-
-    @Override
-    protected void doRender(StringBuilder html)
-    {
-      advisor.render(html, this);
-    }
-  }
-
-  /**
-   * @author Eike Stepper
-   */
-  public final class Bubble extends Renderable
-  {
-    private final BubbleGroup groupRenderable;
-
-    private final LocalTime time;
-
-    private final String text;
-
-    private Bubble(BubbleGroup groupRenderable, LocalTime time, String text)
-    {
-      this.groupRenderable = groupRenderable;
-      this.time = time;
-      this.text = text;
-    }
-
-    public BubbleGroup getGroupRenderable()
-    {
-      return groupRenderable;
-    }
-
-    public LocalTime getTime()
-    {
-      return time;
-    }
-
-    public String getText()
-    {
-      return text;
-    }
-
-    @Override
-    protected void doRender(StringBuilder html)
-    {
-      advisor.render(html, this);
-    }
-
-    public boolean isFirst()
-    {
-      return groupRenderable.bubbles.getFirst() == this;
-    }
-
-    public boolean isLast()
-    {
-      return groupRenderable.bubbles.getLast() == this;
+      this.sendHandler = sendHandler;
     }
   }
 }

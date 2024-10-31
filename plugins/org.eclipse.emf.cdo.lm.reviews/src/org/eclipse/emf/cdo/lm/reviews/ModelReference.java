@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 
 import org.eclipse.net4j.util.StringUtil;
 
+import java.util.Objects;
+
 /**
  * @author Eike Stepper
  * @since 1.2
@@ -31,6 +33,11 @@ public final class ModelReference
   {
     this.objectID = objectID;
     this.featureName = featureName;
+  }
+
+  public ModelReference(CDOID objectID)
+  {
+    this(objectID, null);
   }
 
   public ModelReference(String str)
@@ -64,6 +71,34 @@ public final class ModelReference
   public String getFeatureName()
   {
     return featureName;
+  }
+
+  @Override
+  public int hashCode()
+  {
+    return Objects.hash(objectID, featureName);
+  }
+
+  @Override
+  public boolean equals(Object obj)
+  {
+    if (this == obj)
+    {
+      return true;
+    }
+
+    if (obj == null)
+    {
+      return false;
+    }
+
+    if (getClass() != obj.getClass())
+    {
+      return false;
+    }
+
+    ModelReference other = (ModelReference)obj;
+    return objectID == other.objectID && Objects.equals(featureName, other.featureName);
   }
 
   @Override

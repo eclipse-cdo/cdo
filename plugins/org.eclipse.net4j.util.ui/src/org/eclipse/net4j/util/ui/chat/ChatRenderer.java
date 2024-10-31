@@ -27,6 +27,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.LinkedList;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -56,9 +57,7 @@ public class ChatRenderer
 
   public String renderHTML(Iterable<Renderable> renderables)
   {
-    StringBuilder html = new StringBuilder();
-    renderHTML(renderables, html);
-    return html.toString();
+    return build(html -> renderHTML(renderables, html));
   }
 
   public void renderHTML(Iterable<Renderable> renderables, StringBuilder html)
@@ -183,11 +182,15 @@ public class ChatRenderer
     html.append("</p>");
   }
 
+  public String renderHTML(String markup)
+  {
+    return build(html -> renderHTML(markup, html));
+  }
+
   public String stripMarkup(String markup)
   {
-    StringBuilder html = new StringBuilder();
-    renderHTML(markup, html);
-    return StringUtil.stripHTML(html.toString());
+    String html = renderHTML(markup);
+    return StringUtil.stripHTML(html);
   }
 
   protected String getDateString(LocalDate date)
@@ -232,6 +235,13 @@ public class ChatRenderer
     {
       throw new IORuntimeException(ex);
     }
+  }
+
+  private static String build(Consumer<StringBuilder> htmlConsumer)
+  {
+    StringBuilder html = new StringBuilder();
+    htmlConsumer.accept(html);
+    return html.toString();
   }
 
   /**

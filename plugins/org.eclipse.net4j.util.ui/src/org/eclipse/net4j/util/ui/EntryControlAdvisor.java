@@ -27,8 +27,6 @@ import java.util.function.Consumer;
  */
 public class EntryControlAdvisor
 {
-  public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.ui.entryControlAdvisors";
-
   private static final String ADVISOR_KEY = "net4j.entryControlAdvisor";
 
   public EntryControlAdvisor()
@@ -42,13 +40,13 @@ public class EntryControlAdvisor
     return control;
   }
 
-  public Control doCreateControl(Composite parent, ControlConfig config)
+  protected Control doCreateControl(Composite parent, ControlConfig config)
   {
     Text text = new Text(parent, SWT.MULTI | SWT.V_SCROLL);
     text.addModifyListener(e -> processModifyEvent(text, config));
     text.addKeyListener(KeyListener.keyPressedAdapter(e -> processKeyEvent(text, config, e)));
     return text;
-
+  
   }
 
   public String getEntry(Control control)
@@ -109,6 +107,12 @@ public class EntryControlAdvisor
 
     public ControlConfig()
     {
+    }
+
+    public ControlConfig(ControlConfig source)
+    {
+      modifyHandler = source.modifyHandler;
+      okHandler = source.okHandler;
     }
 
     public Consumer<Control> getModifyHandler()

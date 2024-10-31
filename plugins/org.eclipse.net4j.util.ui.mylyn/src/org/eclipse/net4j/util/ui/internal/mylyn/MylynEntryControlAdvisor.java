@@ -51,7 +51,7 @@ public class MylynEntryControlAdvisor extends EntryControlAdvisor
   }
 
   @Override
-  public Control doCreateControl(Composite parent, ControlConfig config)
+  protected Control doCreateControl(Composite parent, ControlConfig config)
   {
     IDocument document = new Document();
 
@@ -67,10 +67,6 @@ public class MylynEntryControlAdvisor extends EntryControlAdvisor
     text.setData(MarkupLanguage.class.getName(), markupLanguage);
     text.setData(ISourceViewer.class.getName(), viewer);
     text.addVerifyKeyListener(e -> processKeyEvent(text, config, e));
-
-    // ISharedTextColors sharedTextColors = EditorsUI.getSharedTextColors();
-    // ProjectionSupport projectionSupport = new ProjectionSupport(viewer, null, sharedTextColors);
-    // projectionSupport.install();
 
     document.addDocumentListener(new IDocumentListener()
     {

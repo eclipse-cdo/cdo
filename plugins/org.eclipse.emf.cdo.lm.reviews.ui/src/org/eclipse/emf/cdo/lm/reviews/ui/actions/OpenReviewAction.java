@@ -19,8 +19,10 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
+import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
@@ -32,18 +34,19 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.ui.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatComposite;
 import org.eclipse.net4j.util.ui.chat.ChatMessage;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer;
+import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.compare.AttributeChange;
-import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.ReferenceChange;
 import org.eclipse.emf.ecore.EObject;
@@ -52,16 +55,23 @@ import org.eclipse.emf.edit.tree.TreeNode;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.jface.layout.GridDataFactory;
+import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
@@ -143,7 +153,15 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final ISystemDescriptor systemDescriptor;
 
+    private ChatRenderer renderer;
+
+    private RoundedEntryField topicEntryField;
+
     private ChatComposite chatComposite;
+
+    private final Map<ModelReference, Topic> topics = new HashMap<>();
+
+    private Topic currentTopic;
 
     public ReviewEditorHandler(DeliveryReview review, ISystemDescriptor systemDescriptor)
     {
@@ -168,19 +186,24 @@ public class OpenReviewAction extends AbstractReviewAction
               EObject data = ((TreeNode)target).getData();
               if (data instanceof Match)
               {
-                selectedMatch((Match)data);
+                Match match = (Match)data;
+
+                CDOID id = getMatchObjectID(match);
+                selectTopic(new ModelReference(id));
               }
               else if (data instanceof AttributeChange)
               {
-                selectedAttributeChange((AttributeChange)data);
+                AttributeChange diff = (AttributeChange)data;
+
+                CDOID id = getMatchObjectID(diff.getMatch());
+                selectTopic(new ModelReference(id, diff.getAttribute().getName()));
               }
               else if (data instanceof ReferenceChange)
               {
-                selectedReferenceChange((ReferenceChange)data);
-              }
-              else if (data instanceof Diff)
-              {
-                selectedDiff((Diff)data);
+                ReferenceChange diff = (ReferenceChange)data;
+
+                CDOID id = getMatchObjectID(diff.getMatch());
+                selectTopic(new ModelReference(id, diff.getReference().getName()));
               }
             }
           }
@@ -208,21 +231,61 @@ public class OpenReviewAction extends AbstractReviewAction
         @Override
         protected Control createControl2(Composite parent)
         {
-          chatComposite = createChatCompoiste(parent);
-          return chatComposite;
+          Display display = parent.getDisplay();
+          Color entryBackgroundColor = new Color(display, 241, 241, 241);
+          addDisposeListener(e -> entryBackgroundColor.dispose());
+
+          renderer = IPluginContainer.INSTANCE.getElementOrNull(ChatRenderer.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+          EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull(EntryControlAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+
+          Composite composite = new Composite(parent, SWT.NONE);
+          composite.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
+          composite.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+
+          topicEntryField = createTopicEntryField(composite, entryBackgroundColor, entryControlAdvisor);
+          topicEntryField.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+
+          chatComposite = createChatComposite(composite, entryBackgroundColor, entryControlAdvisor);
+          chatComposite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
+
+          return composite;
         }
       };
     }
 
-    private ChatComposite createChatCompoiste(Composite parent)
+    private RoundedEntryField createTopicEntryField(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
     {
-      EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull(EntryControlAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
-      ChatRenderer renderer = IPluginContainer.INSTANCE.getElementOrNull(ChatRenderer.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+      ControlConfig controlConfig = new ControlConfig();
+      controlConfig.setOkHandler(control -> {
+        if (currentTopic != null)
+        {
+          try
+          {
+            systemDescriptor.modify(currentTopic, t -> {
+              String entry = entryControlAdvisor.getEntry(control);
+              t.setText(entry);
+              return true;
+            }, null);
+          }
+          catch (Exception ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+      });
 
+      UnaryOperator<String> previewProvider = markup -> renderer.renderHTML(markup);
+
+      return new RoundedEntryField(parent, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, true);
+    }
+
+    private ChatComposite createChatComposite(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
+    {
       ChatComposite.Config config = new ChatComposite.Config();
       config.setOwnUserID("estepper");
       config.setMessageProvider(ReviewEditorHandler.this::computeMessages);
       config.setChatRenderer(renderer);
+      config.setEntryBackgroundColor(entryBackgroundColor);
       config.setEntryControlAdvisor(entryControlAdvisor);
       config.setSendHandler(ReviewEditorHandler.this::sendMessage);
 
@@ -247,16 +310,56 @@ public class OpenReviewAction extends AbstractReviewAction
       return chatComposite;
     }
 
+    private void selectTopic(ModelReference modelReference)
+    {
+      Topic topic = topics.computeIfAbsent(modelReference, k -> {
+        Topic t = review.getTopic(modelReference);
+        if (t == null)
+        {
+          try
+          {
+            t = systemDescriptor.modify(review, r -> {
+              Topic newTopic = ReviewsFactory.eINSTANCE.createTopic();
+              newTopic.setModelReference(modelReference);
+
+              r.getTopics().add(newTopic);
+              return newTopic;
+            }, null);
+          }
+          catch (Exception ex)
+          {
+            throw WrappedException.wrap(ex);
+          }
+        }
+
+        return t;
+      });
+
+      if (topic != currentTopic)
+      {
+        currentTopic = topic;
+        topicEntryField.setEntry(currentTopic == null ? null : currentTopic.getText());
+        chatComposite.refreshMessageBrowser();
+      }
+    }
+
+    private ChatMessage[] computeMessages()
+    {
+      List<ChatMessage> messages = new ArrayList<>();
+      review.cdoView().syncExec(() -> addMessages(messages, currentTopic == null ? review : currentTopic));
+      return messages.toArray(new ChatMessage[messages.size()]);
+    }
+
     private void sendMessage(String markup)
     {
       Comment comment = ReviewsFactory.eINSTANCE.createComment();
-      comment.setAuthor(review.cdoView().getSession().getUserID());
       comment.setText(markup);
 
+      TopicContainer container = currentTopic == null ? review : currentTopic;
       try
       {
-        systemDescriptor.modify(review, r -> {
-          r.getComments().add(comment);
+        systemDescriptor.modify(container, c -> {
+          c.getComments().add(comment);
           return true;
         }, null);
       }
@@ -264,13 +367,6 @@ public class OpenReviewAction extends AbstractReviewAction
       {
         throw WrappedException.wrap(ex);
       }
-    }
-
-    private ChatMessage[] computeMessages()
-    {
-      List<ChatMessage> messages = new ArrayList<>();
-      review.cdoView().syncExec(() -> addMessages(messages, review));
-      return messages.toArray(new ChatMessage[messages.size()]);
     }
 
     private static void addMessages(List<ChatMessage> messages, TopicContainer container)
@@ -281,7 +377,6 @@ public class OpenReviewAction extends AbstractReviewAction
       {
         List<Author> authorsList = IOUtil.readObject(new File("/develop/authors.bin"), Author.class.getClassLoader());
         authors = authorsList.toArray(new Author[authorsList.size()]);
-
       }
       catch (Exception ex)
       {
@@ -349,62 +444,6 @@ public class OpenReviewAction extends AbstractReviewAction
           }
         });
       }
-    }
-
-    private void updateObjectReference(CDOID id, String name)
-    {
-      // String objectReference = "**CDO[" + id;
-      // if (name != null)
-      // {
-      // objectReference += "::" + name;
-      // }
-      //
-      // objectReference += "]**";
-      //
-      // ChatAdvisor advisor = chatComposite.getAdvisor();
-      // String entry = advisor.getEntry(chatComposite);
-      //
-      // Matcher matcher = OBJECT_REFERENCE_PATTERN.matcher(entry);
-      // if (matcher.matches())
-      // {
-      // String begin = matcher.group(1);
-      // String end = matcher.group(4);
-      // entry = begin + objectReference + end;
-      // }
-      // else
-      // {
-      // entry = objectReference + " " + entry;
-      // }
-      //
-      // advisor.setEntry(chatComposite, entry);
-    }
-
-    private void selectedMatch(Match match)
-    {
-      CDOID id = getMatchObjectID(match);
-      updateObjectReference(id, null);
-      System.out.println("### Match " + id);
-    }
-
-    private void selectedAttributeChange(AttributeChange diff)
-    {
-      CDOID id = getMatchObjectID(diff.getMatch());
-      String name = diff.getAttribute().getName();
-      updateObjectReference(id, name);
-      System.out.println("### AttributeChange " + id + "::" + name);
-    }
-
-    private void selectedReferenceChange(ReferenceChange diff)
-    {
-      CDOID id = getMatchObjectID(diff.getMatch());
-      String name = diff.getReference().getName();
-      updateObjectReference(id, name);
-      System.out.println("### ReferenceChange " + id + "::" + name);
-    }
-
-    private void selectedDiff(Diff diff)
-    {
-      System.out.println("### Diff " + getMatchObjectID(diff.getMatch()) + " --> " + diff);
     }
 
     private static CDOID getMatchObjectID(Match match)

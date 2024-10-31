@@ -19,6 +19,7 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -47,9 +48,17 @@ public abstract class OM
 
   public static final OMPreference<Boolean> PREF_ACTIVE_PART = PREFS.init("PREF_ACTIVE_PART", false); //$NON-NLS-1$
 
-  public static ImageDescriptor getImageDescriptor(String imageFilePath)
+  /**
+   * @since 3.19
+   */
+  public static Image getImage(String path)
   {
-    return Activator.imageDescriptorFromPlugin(BUNDLE_ID, imageFilePath);
+    return Activator.INSTANCE.getImage(path);
+  }
+
+  public static ImageDescriptor getImageDescriptor(String path)
+  {
+    return Activator.INSTANCE.getImageDescriptor(path);
   }
 
   /**

@@ -51,6 +51,7 @@ public interface ChatMessage extends Comparable<ChatMessage>
 
     private final String shortName;
 
+    // https://www.gravatar.com/avatar/
     private final URI avatar;
 
     public Author(String userID, String fullName, String shortName, URI avatar)

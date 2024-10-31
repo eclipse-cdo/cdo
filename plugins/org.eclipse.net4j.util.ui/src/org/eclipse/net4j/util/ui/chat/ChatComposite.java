@@ -13,12 +13,13 @@ package org.eclipse.net4j.util.ui.chat;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.ui.EntryControlAdvisor;
 import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
-import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Provider;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.BubbleGroup;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.DateLine;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.Renderable;
+import org.eclipse.net4j.util.ui.widgets.ImageButton;
+import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
 import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
 
 import org.eclipse.jface.layout.GridDataFactory;
@@ -26,14 +27,11 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationListener;
-import org.eclipse.swt.events.MouseEvent;
-import org.eclipse.swt.events.MouseListener;
-import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Color;
-import org.eclipse.swt.graphics.Image;
-import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Display;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -46,6 +44,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
@@ -57,24 +56,20 @@ public final class ChatComposite extends Composite
 
   private static final String SEND_MESSAGE = OM.BUNDLE.getTranslationSupport().getString("chat.send.message");
 
-  private static Image sendMessageImage;
-
-  private static Image sendMessageHoverImage;
-
   private final Config config;
 
   private final Browser messageBrowser;
 
   private final RoundedEntryField entryField;
 
-  private final Label sendButton;
+  private final Control sendButton;
 
   public ChatComposite(Composite parent, int style, Config config)
   {
     super(parent, style);
     this.config = new Config(config);
 
-    setLayout(GridLayoutFactory.fillDefaults().numColumns(2).margins(10, 10).create());
+    setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
     setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
     messageBrowser = createMessageBrowser();
@@ -97,9 +92,12 @@ public final class ChatComposite extends Composite
     refreshMessageBrowser();
   }
 
-  public Config getConfig()
+  private boolean isMessageBrowserScrolledToBottom()
   {
-    return new Config(config);
+    int scrollTop = ((Double)messageBrowser.evaluate("return document.body.scrollTop;")).intValue();
+    int scrollHeight = ((Double)messageBrowser.evaluate("return document.body.scrollHeight;")).intValue();
+    int height = messageBrowser.getSize().y;
+    return scrollTop + height == scrollHeight;
   }
 
   public Browser getMessageBrowser()
@@ -112,7 +110,7 @@ public final class ChatComposite extends Composite
     return entryField;
   }
 
-  public Label getSendButton()
+  public Control getSendButton()
   {
     return sendButton;
   }
@@ -127,91 +125,94 @@ public final class ChatComposite extends Composite
   {
     List<Renderable> renderables = getRenderables();
     ChatRenderer renderer = config.getChatRenderer();
-  
+
     String html = renderer.renderHTML(renderables);
     messageBrowser.setText(html, true);
+  }
+
+  public boolean revealLastMessage()
+  {
+    return messageBrowser.execute("window.scrollTo(0, document.body.scrollHeight)");
   }
 
   private Browser createMessageBrowser()
   {
     Browser browser = new Browser(this, SWT.EDGE);
-    browser.addLocationListener(LocationListener.changedAdapter(e -> messageBrowser.execute("window.scrollTo(0, document.body.scrollHeight)")));
+    browser.addLocationListener(LocationListener.changedAdapter(e -> revealLastMessage()));
     return browser;
   }
 
   private RoundedEntryField createEntryField()
   {
-    Color entryBackground = new Color(getDisplay(), 241, 241, 241);
-    addDisposeListener(e -> entryBackground.dispose());
+    Display display = getDisplay();
 
+    Color entryBackgroundColor = config.getEntryBackgroundColor();
     EntryControlAdvisor entryControlAdvisor = config.getEntryControlAdvisor();
 
     ControlConfig controlConfig = new ControlConfig();
     controlConfig.setModifyHandler(control -> handleEntryModify());
     controlConfig.setOkHandler(control -> sendEntry());
 
-    return new RoundedEntryField(this, SWT.NONE, entryBackground, entryControlAdvisor, controlConfig);
-  }
+    UnaryOperator<String> previewProvider = markup -> config.getChatRenderer().renderHTML(markup);
 
-  private Label createSendButton()
-  {
-    Label label = new Label(this, SWT.NONE);
-    label.setImage(getSendMessageImage());
-    label.setToolTipText(SEND_MESSAGE);
-    label.addMouseListener(MouseListener.mouseDownAdapter(e -> sendEntry()));
-    label.addMouseTrackListener(new MouseTrackAdapter()
+    boolean[] lastScrolledToBottom = { isMessageBrowserScrolledToBottom() };
+    display.timerExec(500, new Runnable()
     {
       @Override
-      public void mouseEnter(MouseEvent e)
+      public void run()
       {
-        if (label.isEnabled())
+        if (!messageBrowser.isDisposed())
         {
-          label.setImage(getSendMessageHoverImage());
-        }
-      }
-
-      @Override
-      public void mouseExit(MouseEvent e)
-      {
-        if (label.isEnabled())
-        {
-          label.setImage(getSendMessageImage());
+          lastScrolledToBottom[0] = isMessageBrowserScrolledToBottom();
+          display.timerExec(500, this);
         }
       }
     });
 
-    return label;
+    RoundedEntryField entryField = new RoundedEntryField(this, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, false);
+
+    int[] lastEntryFieldHeight = { SWT.DEFAULT };
+    entryField.addControlListener(ControlListener.controlResizedAdapter(e -> {
+      int height = entryField.getSize().y;
+      if (height != lastEntryFieldHeight[0])
+      {
+        if (lastScrolledToBottom[0])
+        {
+          revealLastMessage();
+        }
+
+        lastEntryFieldHeight[0] = height;
+      }
+    }));
+
+    return entryField;
+  }
+
+  private Control createSendButton()
+  {
+    ImageButton button = new ImageButton(this, OM.getImage("icons/send_message_hover.png"), OM.getImage("icons/send_message.png"));
+    button.setToolTipText(SEND_MESSAGE);
+    button.setSelectionMode(SelectionMode.MouseDown);
+    button.setSelectionRunnable(this::sendEntry);
+    button.setVisible(false);
+    return button;
   }
 
   private void handleEntryModify()
   {
     String entry = entryField.getEntry();
-    if (entry != null)
-    {
-      UIUtil.asyncExec(getDisplay(), () -> {
-        Point oldSize = entryField.getLastComputedSize();
-        if (!entryField.computeSize(SWT.DEFAULT, SWT.DEFAULT).equals(oldSize))
-        {
-          layout(true);
-          refreshMessageBrowser();
-        }
-
-        sendButton.setVisible(entry.length() != 0);
-      });
-    }
+    sendButton.setVisible(entry.length() != 0);
   }
 
   private void sendEntry()
   {
-    String entry = entryField.getEntry();
-    if (entry != null)
+    String entry = entryField.getEntry().trim();
+    if (entry.length() != 0)
     {
-      entry = entry.trim();
-      if (entry.length() != 0)
-      {
-        config.getSendHandler().accept(entry);
-        UIUtil.asyncExec(getDisplay(), () -> entryField.setEntry(""));
-      }
+      config.getSendHandler().accept(entry);
+
+      entryField.setPreviewMode(false);
+      entryField.setEntry(null);
     }
   }
 
@@ -254,26 +255,6 @@ public final class ChatComposite extends Composite
     return renderables;
   }
 
-  private static Image getSendMessageImage()
-  {
-    if (sendMessageImage == null)
-    {
-      sendMessageImage = OM.getImageDescriptor("icons/send_message.png").createImage();
-    }
-
-    return sendMessageImage;
-  }
-
-  private static Image getSendMessageHoverImage()
-  {
-    if (sendMessageHoverImage == null)
-    {
-      sendMessageHoverImage = OM.getImageDescriptor("icons/send_message_hover.png").createImage();
-    }
-
-    return sendMessageHoverImage;
-  }
-
   /**
    * @author Eike Stepper
    */
@@ -285,15 +266,18 @@ public final class ChatComposite extends Composite
 
     private ChatRenderer chatRenderer;
 
+    private Color entryBackgroundColor;
+
     private EntryControlAdvisor entryControlAdvisor;
 
     private Consumer<String> sendHandler;
 
-    private Config(Config source)
+    public Config(Config source)
     {
       ownUserID = source.ownUserID;
       messageProvider = source.messageProvider;
       chatRenderer = source.chatRenderer;
+      entryBackgroundColor = source.entryBackgroundColor;
       entryControlAdvisor = source.entryControlAdvisor;
       sendHandler = source.sendHandler;
     }
@@ -330,6 +314,16 @@ public final class ChatComposite extends Composite
     public void setChatRenderer(ChatRenderer chatRenderer)
     {
       this.chatRenderer = chatRenderer;
+    }
+
+    public Color getEntryBackgroundColor()
+    {
+      return entryBackgroundColor;
+    }
+
+    public void setEntryBackgroundColor(Color entryBackgroundColor)
+    {
+      this.entryBackgroundColor = entryBackgroundColor;
     }
 
     public EntryControlAdvisor getEntryControlAdvisor()

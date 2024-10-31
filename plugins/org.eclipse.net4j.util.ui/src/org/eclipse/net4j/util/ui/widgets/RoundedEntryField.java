@@ -226,7 +226,11 @@ public class RoundedEntryField extends Composite
         }
 
         updateControlVerticalBar(lastControlHeight);
-        originalModifyHandler.accept(control);
+
+        if (originalModifyHandler != null)
+        {
+          originalModifyHandler.accept(control);
+        }
       }
     });
 

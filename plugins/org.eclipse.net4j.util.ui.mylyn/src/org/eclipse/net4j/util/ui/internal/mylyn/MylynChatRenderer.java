@@ -19,6 +19,7 @@ import org.eclipse.mylyn.wikitext.parser.builder.HtmlDocumentBuilder;
 import org.eclipse.mylyn.wikitext.parser.markup.MarkupLanguage;
 import org.eclipse.mylyn.wikitext.ui.WikiText;
 
+import java.util.Map;
 import java.util.Objects;
 
 /**
@@ -36,7 +37,7 @@ public final class MylynChatRenderer extends ChatRenderer
   }
 
   @Override
-  public void renderHTML(String markup, StringBuilder html)
+  public void renderHTML(String markup, StringBuilder html, Map<String, Object> properties)
   {
     StringBuilderWriter out = new StringBuilderWriter(html);
     HtmlDocumentBuilder builder = new HtmlDocumentBuilder(out, false);

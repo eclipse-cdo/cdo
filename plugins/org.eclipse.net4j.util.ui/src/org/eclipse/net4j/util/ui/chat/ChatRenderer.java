@@ -27,6 +27,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.function.Consumer;
 
 /**
@@ -55,12 +56,12 @@ public class ChatRenderer
   {
   }
 
-  public String renderHTML(Iterable<Renderable> renderables)
+  public String renderHTML(Iterable<Renderable> renderables, Map<String, Object> properties)
   {
-    return build(html -> renderHTML(renderables, html));
+    return build(html -> renderHTML(renderables, html, properties));
   }
 
-  public void renderHTML(Iterable<Renderable> renderables, StringBuilder html)
+  public void renderHTML(Iterable<Renderable> renderables, StringBuilder html, Map<String, Object> properties)
   {
     Pair<String, String> htmlEnclosure = getHTMLEnclosure();
     html.append(htmlEnclosure.getElement1());
@@ -69,7 +70,7 @@ public class ChatRenderer
     for (Renderable renderable : renderables)
     {
       html.append("<tr><td>");
-      renderable.renderHTML(this, html);
+      renderable.renderHTML(this, html, properties);
       html.append("</td></tr>");
     }
 
@@ -77,7 +78,7 @@ public class ChatRenderer
     html.append(htmlEnclosure.getElement2());
   }
 
-  public void renderHTML(DateLine dateLine, StringBuilder html)
+  public void renderHTML(DateLine dateLine, StringBuilder html, Map<String, Object> properties)
   {
     String dateString = getDateString(dateLine.getDate());
 
@@ -86,7 +87,7 @@ public class ChatRenderer
     html.append("&nbsp;</td><td><hr></td></tr></table>\n");
   }
 
-  public void renderHTML(BubbleGroup bubbleGroup, StringBuilder html)
+  public void renderHTML(BubbleGroup bubbleGroup, StringBuilder html, Map<String, Object> properties)
   {
     Author author = bubbleGroup.getAuthor();
     boolean own = bubbleGroup.isOwn();
@@ -143,14 +144,14 @@ public class ChatRenderer
     for (Bubble bubbleRenderable : bubbles)
     {
       html.append("<tr><td class=\"pl\">");
-      bubbleRenderable.renderHTML(this, html);
+      bubbleRenderable.renderHTML(this, html, properties);
       html.append("</td></tr>");
     }
 
     html.append("</table>\n");
   }
 
-  public void renderHTML(Bubble bubble, StringBuilder html)
+  public void renderHTML(Bubble bubble, StringBuilder html, Map<String, Object> properties)
   {
     BubbleGroup group = bubble.getGroup();
     boolean own = group.isOwn();
@@ -171,25 +172,25 @@ public class ChatRenderer
     }
 
     html.append("\">");
-    renderHTML(bubble.getText(), html);
+    renderHTML(bubble.getText(), html, properties);
     html.append("</div>");
   }
 
-  public void renderHTML(String markup, StringBuilder html)
+  public void renderHTML(String markup, StringBuilder html, Map<String, Object> properties)
   {
     html.append("<p>");
     html.append(markup);
     html.append("</p>");
   }
 
-  public String renderHTML(String markup)
+  public String renderHTML(String markup, Map<String, Object> properties)
   {
-    return build(html -> renderHTML(markup, html));
+    return build(html -> renderHTML(markup, html, properties));
   }
 
   public String stripMarkup(String markup)
   {
-    String html = renderHTML(markup);
+    String html = renderHTML(markup, null);
     return StringUtil.stripHTML(html);
   }
 
@@ -253,7 +254,7 @@ public class ChatRenderer
     {
     }
 
-    protected abstract void renderHTML(ChatRenderer renderer, StringBuilder html);
+    protected abstract void renderHTML(ChatRenderer renderer, StringBuilder html, Map<String, Object> properties);
   }
 
   /**
@@ -274,9 +275,9 @@ public class ChatRenderer
     }
 
     @Override
-    protected void renderHTML(ChatRenderer renderer, StringBuilder html)
+    protected void renderHTML(ChatRenderer renderer, StringBuilder html, Map<String, Object> properties)
     {
-      renderer.renderHTML(this, html);
+      renderer.renderHTML(this, html, properties);
     }
   }
 
@@ -347,9 +348,9 @@ public class ChatRenderer
     }
 
     @Override
-    protected void renderHTML(ChatRenderer renderer, StringBuilder html)
+    protected void renderHTML(ChatRenderer renderer, StringBuilder html, Map<String, Object> properties)
     {
-      renderer.renderHTML(this, html);
+      renderer.renderHTML(this, html, properties);
     }
   }
 
@@ -397,9 +398,9 @@ public class ChatRenderer
     }
 
     @Override
-    protected void renderHTML(ChatRenderer renderer, StringBuilder html)
+    protected void renderHTML(ChatRenderer renderer, StringBuilder html, Map<String, Object> properties)
     {
-      renderer.renderHTML(this, html);
+      renderer.renderHTML(this, html, properties);
     }
   }
 

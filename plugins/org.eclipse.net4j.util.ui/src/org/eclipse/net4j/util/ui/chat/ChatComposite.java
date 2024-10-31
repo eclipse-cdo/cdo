@@ -126,7 +126,7 @@ public final class ChatComposite extends Composite
     List<Renderable> renderables = getRenderables();
     ChatRenderer renderer = config.getChatRenderer();
 
-    String html = renderer.renderHTML(renderables);
+    String html = renderer.renderHTML(renderables, null);
     messageBrowser.setText(html, true);
   }
 
@@ -153,7 +153,7 @@ public final class ChatComposite extends Composite
     controlConfig.setModifyHandler(control -> handleEntryModify());
     controlConfig.setOkHandler(control -> sendEntry());
 
-    UnaryOperator<String> previewProvider = markup -> config.getChatRenderer().renderHTML(markup);
+    UnaryOperator<String> previewProvider = markup -> config.getChatRenderer().renderHTML(markup, null);
 
     boolean[] lastScrolledToBottom = { isMessageBrowserScrolledToBottom() };
     display.timerExec(500, new Runnable()

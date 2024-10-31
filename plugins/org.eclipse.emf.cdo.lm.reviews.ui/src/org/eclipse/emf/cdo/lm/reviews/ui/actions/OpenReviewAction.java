@@ -274,7 +274,7 @@ public class OpenReviewAction extends AbstractReviewAction
         }
       });
 
-      UnaryOperator<String> previewProvider = markup -> renderer.renderHTML(markup);
+      UnaryOperator<String> previewProvider = markup -> renderer.renderHTML(markup, null);
 
       return new RoundedEntryField(parent, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, true);
     }

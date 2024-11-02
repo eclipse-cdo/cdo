@@ -113,9 +113,9 @@ public class OpenReviewAction extends AbstractReviewAction
     super(page, //
         "Open" + INTERACTIVE, //
         "Open the review", //
-        OM.getImageDescriptor("icons/Submit.png"), //
+        OM.getImageDescriptor("icons/Open.gif"), //
         "Open the review.", //
-        "icons/wizban/SubmitReview.png", //
+        null, //
         review);
     this.initialTopic = initialTopic;
   }
@@ -317,6 +317,8 @@ public class OpenReviewAction extends AbstractReviewAction
     @Override
     public void activate(Input input)
     {
+      input.setTitle(review.getTypeAndName());
+
       IRegistry<String, Object> properties = input.properties();
       properties.put(KEY_REVIEW, review);
       properties.put(KEY_REVIEW_EDITOR_HANDLER, this);

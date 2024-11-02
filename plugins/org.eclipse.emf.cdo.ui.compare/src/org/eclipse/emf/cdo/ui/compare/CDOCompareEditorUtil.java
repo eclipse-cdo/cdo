@@ -653,8 +653,7 @@ public final class CDOCompareEditorUtil
     configuration.setRightLabel(rightLabel);
     configuration.setRightEditable(rightEditable);
 
-    Input input = new Input(leftView, rightView, configuration, comparison, editingDomain, adapterFactory);
-    input.setTitle(title);
+    Input input = new Input(leftView, rightView, configuration, comparison, editingDomain, adapterFactory, title);
 
     workaroundEMFCompareBug(leftView, leftLabel);
     workaroundEMFCompareBug(rightView, rightLabel);
@@ -943,12 +942,13 @@ public final class CDOCompareEditorUtil
     private CompareViewerPane structureInputPane;
 
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
-        AdapterFactory adapterFactory)
+        AdapterFactory adapterFactory, String title)
     {
       super(createEMFCompareConfiguration(configuration, adapterFactory), comparison, editingDomain, adapterFactory);
       this.sourceView = sourceView;
       this.targetView = targetView;
       this.comparison = comparison;
+      setTitle(title);
 
       suppressCommit = isSuppressCommit();
       SUPPRESS_COMMIT.remove();

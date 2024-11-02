@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.reviews.ui;
 
 import org.eclipse.emf.cdo.lm.reviews.Review;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.OpenReviewAction;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -37,7 +38,17 @@ public class ReviewsOpenHandler implements OpenHandler
 
       if (OpenReviewAction.ENABLED)
       {
-        new OpenReviewAction(page, review).run();
+        new OpenReviewAction(page, review, null).run();
+        return true;
+      }
+    }
+    else if (selectedElement instanceof Topic)
+    {
+      Topic topic = (Topic)selectedElement;
+
+      if (OpenReviewAction.ENABLED)
+      {
+        new OpenReviewAction(page, topic).run();
         return true;
       }
     }

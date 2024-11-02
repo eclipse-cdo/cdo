@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.Stream;
+import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
@@ -22,6 +23,7 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.AbandonReviewAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.DeleteAuthorableAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.DeleteReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.MergeFromSourceAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewCommentAction;
@@ -93,7 +95,7 @@ public class ReviewsMenuFiller implements MenuFiller
 
       if (OpenReviewAction.ENABLED)
       {
-        menu.add(new OpenReviewAction(page, review));
+        menu.add(new OpenReviewAction(page, review, null));
       }
 
       menu.add(new CheckoutAction(page, ReviewsEditPlugin.INSTANCE, null, review));
@@ -144,6 +146,16 @@ public class ReviewsMenuFiller implements MenuFiller
       Review review = container.getReview();
       if (review == null || review.getStatus().isOpen())
       {
+        if (container instanceof Topic)
+        {
+          Topic topic = (Topic)container;
+
+          if (OpenReviewAction.ENABLED)
+          {
+            menu.add(new OpenReviewAction(page, review, topic));
+          }
+        }
+
         menu.add(new Separator());
         menu.add(new NewTopicAction(page, viewer, container));
         menu.add(new NewCommentAction(page, viewer, container));
@@ -165,6 +177,14 @@ public class ReviewsMenuFiller implements MenuFiller
           }
         }
       }
+    }
+
+    if (selectedElement instanceof Authorable)
+    {
+      Authorable authorable = (Authorable)selectedElement;
+
+      menu.add(new Separator());
+      menu.add(new DeleteAuthorableAction(page, authorable));
     }
 
     return menu.getItems().length > oldSize;

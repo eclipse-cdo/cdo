@@ -64,7 +64,7 @@ public class NewModuleAction extends LMAction.NewElement<System>
         "Add a new module to system '" + system.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Module")), //
         "Add a new module to system '" + system.getName() + "'.", //
-        "icons/NewModule.png", //
+        "icons/wizban/NewModule.png", //
         system);
   }
 

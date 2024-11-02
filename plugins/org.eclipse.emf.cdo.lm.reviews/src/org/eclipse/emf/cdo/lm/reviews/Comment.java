@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.lm.reviews;
 
-import org.eclipse.emf.cdo.lm.SystemElement;
-
 /**
  * <!-- begin-user-doc -->
  * A representation of the model object '<em><b>Comment</b></em>'.
@@ -32,7 +30,7 @@ import org.eclipse.emf.cdo.lm.SystemElement;
  * @model
  * @generated
  */
-public interface Comment extends SystemElement, Authorable
+public interface Comment extends Authorable
 {
   /**
    * Returns the value of the '<em><b>Container</b></em>' container reference.

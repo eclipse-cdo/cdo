@@ -66,7 +66,7 @@ public class NewStreamAction extends LMAction.NewElement<Module>
         "Add a new stream to module '" + module.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Stream")), //
         "Add a new stream to module '" + module.getName() + "'.", //
-        "icons/NewStream.png", //
+        "icons/wizban/NewStream.png", //
         module);
     this.adapterFactory = adapterFactory;
   }

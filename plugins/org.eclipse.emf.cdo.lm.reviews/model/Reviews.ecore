@@ -2,7 +2,8 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="reviews" nsURI="http://www.eclipse.org/emf/CDO/lm/reviews/1.0.0"
     nsPrefix="reviews">
-  <eClassifiers xsi:type="ecore:EClass" name="Authorable" abstract="true" interface="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Authorable" abstract="true" interface="true"
+      eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -40,7 +41,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="parentIndex" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"
         changeable="false" volatile="true" transient="true" derived="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement #//Authorable">
+  <eClassifiers xsi:type="ecore:EClass" name="Comment" eSuperTypes="#//Authorable">
     <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
         eType="#//TopicContainer" resolveProxies="false" eOpposite="#//TopicContainer/comments"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="review" eType="#//Review"

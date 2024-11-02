@@ -72,7 +72,7 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
         "Add a new change to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Change")), //
         "Add a new change to stream '" + stream.getName() + "'.", //
-        "icons/NewChange.png", //
+        "icons/wizban/NewChange.png", //
         stream);
     this.base = base;
   }

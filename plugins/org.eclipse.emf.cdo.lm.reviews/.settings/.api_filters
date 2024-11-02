@@ -48,6 +48,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Authorable.java" type="org.eclipse.emf.cdo.lm.reviews.Authorable">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="SystemElement"/>
+                <message_argument value="Authorable"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/Comment.java" type="org.eclipse.emf.cdo.lm.reviews.Comment">
         <filter id="404791350">
             <message_arguments>
@@ -194,6 +202,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="DELIVERY_REVIEW_FEATURE_COUNT"/>
                 <message_argument value="21"/>
             </message_arguments>
@@ -320,6 +335,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="DROP_REVIEW_FEATURE_COUNT"/>
                 <message_argument value="18"/>
             </message_arguments>
@@ -425,6 +447,13 @@
         <filter id="388194388">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="REVIEW_FEATURE_COUNT"/>
                 <message_argument value="12"/>
             </message_arguments>
@@ -434,6 +463,13 @@
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="REVIEW_STATUS"/>
                 <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE"/>
+                <message_argument value="3"/>
             </message_arguments>
         </filter>
         <filter id="388194388">
@@ -801,6 +837,12 @@
         <filter id="405901410">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Author()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="getComment_Commentable()"/>
             </message_arguments>
         </filter>
@@ -814,6 +856,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="getComment_Status()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Text()"/>
             </message_arguments>
         </filter>
         <filter id="405901410">
@@ -880,6 +928,11 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
                 <message_argument value="getHeading_PreviousHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="AUTHORABLE"/>
             </message_arguments>
         </filter>
         <filter id="1211105284">
@@ -1294,6 +1347,12 @@
         <filter id="405864542">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__AUTHOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
                 <message_argument value="COMMENT__COMMENTABLE"/>
             </message_arguments>
         </filter>
@@ -1307,6 +1366,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
                 <message_argument value="COMMENT__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__TEXT"/>
             </message_arguments>
         </filter>
         <filter id="405864542">
@@ -1644,6 +1709,12 @@
         <filter id="338792546">
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Author()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
                 <message_argument value="getComment_Commentable()"/>
             </message_arguments>
         </filter>
@@ -1657,6 +1728,12 @@
             <message_arguments>
                 <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
                 <message_argument value="getComment_Status()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Text()"/>
             </message_arguments>
         </filter>
         <filter id="338792546">

@@ -32,7 +32,7 @@ public class DeleteReviewAction extends AbstractReviewAction
         "Delete the review", //
         OM.getImageDescriptor("icons/Delete.gif"), //
         "Delete the review.", //
-        "icons/wizban/DeleteReview.gif", //
+        "icons/wizban/Delete.png", //
         review);
   }
 

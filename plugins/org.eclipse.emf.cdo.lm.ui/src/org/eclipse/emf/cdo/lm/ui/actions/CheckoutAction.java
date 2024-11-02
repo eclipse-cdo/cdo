@@ -41,7 +41,7 @@ public class CheckoutAction extends LMAction<Baseline>
         "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase(), //
         OM.getImageDescriptor("icons/checkout.gif"), //
         "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase() + ".", //
-        "icons/Checkout.png", //
+        "icons/wizban/Checkout.png", //
         baseline);
   }
 

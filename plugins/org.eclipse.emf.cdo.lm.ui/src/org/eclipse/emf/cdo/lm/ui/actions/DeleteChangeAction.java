@@ -39,7 +39,7 @@ public class DeleteChangeAction extends LMAction<Change>
         "Delete the change '" + change.getLabel() + "'", //
         OM.getImageDescriptor("icons/Delete.gif"), //
         "Delete the change '" + change.getLabel() + "'.", //
-        "icons/DeleteChange.gif", //
+        "icons/wizban/Delete.png", //
         change);
   }
 

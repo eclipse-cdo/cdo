@@ -49,7 +49,7 @@ public class RenameChangeAction extends LMAction<Change>
         "Rename the change '" + change.getLabel() + "'", //
         OM.getImageDescriptor("icons/Rename.gif"), //
         "Rename the change '" + change.getLabel() + "'.", //
-        "icons/RenameChange.gif", //
+        "icons/wizban/RenameChange.png", //
         change);
   }
 

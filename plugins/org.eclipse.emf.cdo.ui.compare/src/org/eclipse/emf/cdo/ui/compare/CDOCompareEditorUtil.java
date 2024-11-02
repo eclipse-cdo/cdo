@@ -38,12 +38,15 @@ import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.Comparison;
@@ -51,6 +54,7 @@ import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
+import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.EMFCompareStructureMergeViewer;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -58,16 +62,23 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.tree.TreeNode;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.compare.CompareViewerPane;
+import org.eclipse.compare.CompareViewerSwitchingPane;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
@@ -89,6 +100,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -902,8 +914,10 @@ public final class CDOCompareEditorUtil
    * @since 4.4
    */
   @SuppressWarnings("restriction")
-  public static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput
+  public static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput implements IPropertiesContainer
   {
+    private final IRegistry<String, Object> properties = new HashMapRegistry<>();
+
     private final CDOView sourceView;
 
     private final CDOView targetView;
@@ -925,6 +939,8 @@ public final class CDOCompareEditorUtil
     private boolean ok;
 
     private IEditorPart editor;
+
+    private CompareViewerPane structureInputPane;
 
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
         AdapterFactory adapterFactory)
@@ -1039,6 +1055,86 @@ public final class CDOCompareEditorUtil
       }
 
       return super.createContents(parent);
+    }
+
+    @Override
+    protected CompareViewerPane createStructureInputPane(Composite parent)
+    {
+      structureInputPane = super.createStructureInputPane(parent);
+      return structureInputPane;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public CompareViewerPane getStructureInputPane()
+    {
+      return structureInputPane;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public StructuredViewer getViewerWrapper()
+    {
+      if (structureInputPane instanceof CompareViewerSwitchingPane)
+      {
+        Viewer viewer = ((CompareViewerSwitchingPane)structureInputPane).getViewer();
+        if (viewer instanceof StructuredViewer)
+        {
+          return (StructuredViewer)viewer;
+        }
+      }
+
+      return null;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public TreeViewer getTreeViewer()
+    {
+      StructuredViewer viewerWrapper = getViewerWrapper();
+      if (viewerWrapper instanceof EMFCompareStructureMergeViewer)
+      {
+        return ((EMFCompareStructureMergeViewer)viewerWrapper).getTreeViewer();
+      }
+
+      return null;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public boolean forEachDiffElement(Predicate<Object> consumer)
+    {
+      TreeViewer treeViewer = getTreeViewer();
+      if (treeViewer != null)
+      {
+        ITreeContentProvider contentProvider = (ITreeContentProvider)treeViewer.getContentProvider();
+        return forEachDiffElement(consumer, contentProvider, treeViewer.getInput());
+      }
+
+      return false;
+    }
+
+    private boolean forEachDiffElement(Predicate<Object> consumer, ITreeContentProvider contentProvider, Object obj)
+    {
+      if (consumer.test(obj))
+      {
+        return true;
+      }
+
+      Object[] children = contentProvider.getChildren(obj);
+      for (Object child : children)
+      {
+        if (forEachDiffElement(consumer, contentProvider, child))
+        {
+          return true;
+        }
+      }
+
+      return false;
     }
 
     /**
@@ -1186,6 +1282,29 @@ public final class CDOCompareEditorUtil
       {
         dispose();
       }
+    }
+
+    @Override
+    public IRegistry<String, Object> properties()
+    {
+      return properties;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public static TreeNode getTreeNode(Object diffElement)
+    {
+      if (diffElement instanceof Adapter)
+      {
+        Notifier target = ((Adapter)diffElement).getTarget();
+        if (target instanceof TreeNode)
+        {
+          return (TreeNode)target;
+        }
+      }
+
+      return null;
     }
   }
 

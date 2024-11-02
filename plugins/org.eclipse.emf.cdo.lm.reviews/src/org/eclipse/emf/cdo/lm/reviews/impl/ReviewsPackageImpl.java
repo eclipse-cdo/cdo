@@ -876,10 +876,10 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     // Set bounds for type parameters
 
     // Add supertypes to classes
+    authorableEClass.getESuperTypes().add(theLMPackage.getSystemElement());
     topicContainerEClass.getESuperTypes().add(theLMPackage.getSystemElement());
     topicEClass.getESuperTypes().add(getTopicContainer());
     topicEClass.getESuperTypes().add(getAuthorable());
-    commentEClass.getESuperTypes().add(theLMPackage.getSystemElement());
     commentEClass.getESuperTypes().add(getAuthorable());
     reviewTemplateEClass.getESuperTypes().add(getTopicContainer());
     reviewEClass.getESuperTypes().add(theLMPackage.getBaseline());

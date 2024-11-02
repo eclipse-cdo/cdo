@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.System;
-import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
@@ -439,60 +438,6 @@ public class CommentImpl extends ModelElementImpl implements Comment
       return basicGetReplyTo() != null;
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Authorable.class)
-    {
-      switch (derivedFeatureID)
-      {
-      case ReviewsPackage.COMMENT__TEXT:
-        return ReviewsPackage.AUTHORABLE__TEXT;
-      case ReviewsPackage.COMMENT__AUTHOR:
-        return ReviewsPackage.AUTHORABLE__AUTHOR;
-      case ReviewsPackage.COMMENT__CREATION_TIME:
-        return ReviewsPackage.AUTHORABLE__CREATION_TIME;
-      case ReviewsPackage.COMMENT__EDIT_TIME:
-        return ReviewsPackage.AUTHORABLE__EDIT_TIME;
-      default:
-        return -1;
-      }
-    }
-    return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
-  {
-    if (baseClass == Authorable.class)
-    {
-      switch (baseFeatureID)
-      {
-      case ReviewsPackage.AUTHORABLE__TEXT:
-        return ReviewsPackage.COMMENT__TEXT;
-      case ReviewsPackage.AUTHORABLE__AUTHOR:
-        return ReviewsPackage.COMMENT__AUTHOR;
-      case ReviewsPackage.AUTHORABLE__CREATION_TIME:
-        return ReviewsPackage.COMMENT__CREATION_TIME;
-      case ReviewsPackage.AUTHORABLE__EDIT_TIME:
-        return ReviewsPackage.COMMENT__EDIT_TIME;
-      default:
-        return -1;
-      }
-    }
-    return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);
   }
 
   /**

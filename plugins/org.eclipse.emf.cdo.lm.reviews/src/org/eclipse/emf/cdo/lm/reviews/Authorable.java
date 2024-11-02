@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.reviews;
 
-import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.lm.SystemElement;
 
 /**
  * <!-- begin-user-doc -->
@@ -30,10 +30,9 @@ import org.eclipse.emf.cdo.CDOObject;
  *
  * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getAuthorable()
  * @model interface="true" abstract="true"
- * @extends CDOObject
  * @generated
  */
-public interface Authorable extends CDOObject
+public interface Authorable extends SystemElement
 {
   /**
    * Returns the value of the '<em><b>Text</b></em>' attribute.

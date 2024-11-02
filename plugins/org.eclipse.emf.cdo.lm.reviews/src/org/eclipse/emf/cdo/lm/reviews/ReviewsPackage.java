@@ -85,58 +85,94 @@ public interface ReviewsPackage extends EPackage
   int AUTHORABLE = 0;
 
   /**
-   * The feature id for the '<em><b>Text</b></em>' attribute.
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE__TEXT = 0;
+  int AUTHORABLE__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Text</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__TEXT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE__AUTHOR = 1;
+  int AUTHORABLE__AUTHOR = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Creation Time</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE__CREATION_TIME = 2;
+  int AUTHORABLE__CREATION_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Edit Time</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE__EDIT_TIME = 3;
+  int AUTHORABLE__EDIT_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
 
   /**
    * The number of structural features of the '<em>Authorable</em>' class.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE_FEATURE_COUNT = 4;
+  int AUTHORABLE_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE___GET_ANNOTATION__STRING = LMPackage.SYSTEM_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get System</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE___GET_SYSTEM = LMPackage.SYSTEM_ELEMENT___GET_SYSTEM;
 
   /**
    * The number of operations of the '<em>Authorable</em>' class.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int AUTHORABLE_OPERATION_COUNT = 0;
+  int AUTHORABLE_OPERATION_COUNT = LMPackage.SYSTEM_ELEMENT_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl <em>Topic Container</em>}' class.
@@ -361,6 +397,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
@@ -370,6 +407,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Creation Time</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
@@ -379,6 +417,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * The feature id for the '<em><b>Edit Time</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
@@ -509,7 +548,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
+  int COMMENT__ANNOTATIONS = AUTHORABLE__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -518,7 +557,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__TEXT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
+  int COMMENT__TEXT = AUTHORABLE__TEXT;
 
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -527,7 +566,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__AUTHOR = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
+  int COMMENT__AUTHOR = AUTHORABLE__AUTHOR;
 
   /**
    * The feature id for the '<em><b>Creation Time</b></em>' attribute.
@@ -536,7 +575,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__CREATION_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
+  int COMMENT__CREATION_TIME = AUTHORABLE__CREATION_TIME;
 
   /**
    * The feature id for the '<em><b>Edit Time</b></em>' attribute.
@@ -545,7 +584,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__EDIT_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
+  int COMMENT__EDIT_TIME = AUTHORABLE__EDIT_TIME;
 
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference.
@@ -554,7 +593,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__CONTAINER = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
+  int COMMENT__CONTAINER = AUTHORABLE_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Review</b></em>' reference.
@@ -563,7 +602,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__REVIEW = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 5;
+  int COMMENT__REVIEW = AUTHORABLE_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Reply To</b></em>' reference.
@@ -572,7 +611,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__REPLY_TO = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 6;
+  int COMMENT__REPLY_TO = AUTHORABLE_FEATURE_COUNT + 2;
 
   /**
    * The number of structural features of the '<em>Comment</em>' class.
@@ -581,7 +620,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 7;
+  int COMMENT_FEATURE_COUNT = AUTHORABLE_FEATURE_COUNT + 3;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -590,7 +629,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT___GET_ANNOTATION__STRING = LMPackage.SYSTEM_ELEMENT___GET_ANNOTATION__STRING;
+  int COMMENT___GET_ANNOTATION__STRING = AUTHORABLE___GET_ANNOTATION__STRING;
 
   /**
    * The operation id for the '<em>Get System</em>' operation.
@@ -599,7 +638,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT___GET_SYSTEM = LMPackage.SYSTEM_ELEMENT___GET_SYSTEM;
+  int COMMENT___GET_SYSTEM = AUTHORABLE___GET_SYSTEM;
 
   /**
    * The number of operations of the '<em>Comment</em>' class.
@@ -608,7 +647,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT_OPERATION_COUNT = LMPackage.SYSTEM_ELEMENT_OPERATION_COUNT + 0;
+  int COMMENT_OPERATION_COUNT = AUTHORABLE_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl <em>Review Template</em>}' class.
@@ -1556,6 +1595,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @return the meta object for class '<em>Authorable</em>'.
    * @see org.eclipse.emf.cdo.lm.reviews.Authorable
@@ -1566,6 +1606,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getText <em>Text</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Text</em>'.
    * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getText()
@@ -1577,6 +1618,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getAuthor <em>Author</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Author</em>'.
    * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getAuthor()
@@ -1588,6 +1630,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getCreationTime <em>Creation Time</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Creation Time</em>'.
    * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getCreationTime()
@@ -1599,6 +1642,7 @@ public interface ReviewsPackage extends EPackage
   /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getEditTime <em>Edit Time</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Edit Time</em>'.
    * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getEditTime()
@@ -2122,6 +2166,7 @@ public interface ReviewsPackage extends EPackage
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}' class.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @see org.eclipse.emf.cdo.lm.reviews.Authorable
      * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getAuthorable()
@@ -2132,6 +2177,7 @@ public interface ReviewsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @generated
      */
@@ -2140,6 +2186,7 @@ public interface ReviewsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @generated
      */
@@ -2148,6 +2195,7 @@ public interface ReviewsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Creation Time</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @generated
      */
@@ -2156,6 +2204,7 @@ public interface ReviewsPackage extends EPackage
     /**
      * The meta object literal for the '<em><b>Edit Time</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @generated
      */

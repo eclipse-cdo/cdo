@@ -100,6 +100,14 @@ public class ReviewsSwitch<T> extends Switch<T>
       T result = caseAuthorable(authorable);
       if (result == null)
       {
+        result = caseSystemElement(authorable);
+      }
+      if (result == null)
+      {
+        result = caseModelElement(authorable);
+      }
+      if (result == null)
+      {
         result = defaultCase(theEObject);
       }
       return result;
@@ -154,11 +162,11 @@ public class ReviewsSwitch<T> extends Switch<T>
       T result = caseComment(comment);
       if (result == null)
       {
-        result = caseSystemElement(comment);
+        result = caseAuthorable(comment);
       }
       if (result == null)
       {
-        result = caseAuthorable(comment);
+        result = caseSystemElement(comment);
       }
       if (result == null)
       {
@@ -320,6 +328,7 @@ public class ReviewsSwitch<T> extends Switch<T>
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
+   * @since 1.2
    * <!-- end-user-doc -->
    * @param object the target of the switch.
    * @return the result of interpreting the object as an instance of '<em>Authorable</em>'.

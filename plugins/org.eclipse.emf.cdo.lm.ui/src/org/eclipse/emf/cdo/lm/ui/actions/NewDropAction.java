@@ -75,7 +75,7 @@ public class NewDropAction extends LMAction.NewElement<Stream>
         "Add a new " + dropType.getName().toLowerCase() + " to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage(dropType.isRelease() ? "full/obj16/Release" : "full/obj16/Drop")), //
         "Add a new " + dropType.getName().toLowerCase() + " to stream '" + stream.getName() + "'.", //
-        dropType.isRelease() ? "icons/NewRelease.png" : "icons/NewDrop.png", //
+        dropType.isRelease() ? "icons/wizban/NewRelease.png" : "icons/wizban/NewDrop.png", //
         stream);
     this.dropType = dropType;
   }

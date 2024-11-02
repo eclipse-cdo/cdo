@@ -68,7 +68,7 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
         "Add a new delivery to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage("full/obj16/Delivery")), //
         "Add a new delivery to stream '" + stream.getName() + "'.", //
-        "icons/NewDelivery.png", //
+        "icons/wizban/NewDelivery.png", //
         stream);
     this.change = change;
     changeWasNull = change == null;

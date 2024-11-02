@@ -405,9 +405,7 @@ public class OpenReviewAction extends AbstractReviewAction
             TreeNode node = Input.getTreeNode(element);
             if (node != null)
             {
-              ModelReference m1 = modelReference;
-              ModelReference m2 = createModelReference(node);
-              if (m1.equals(m2))
+              if (modelReference.equals(createModelReference(node)))
               {
                 result[0] = element;
                 return true;

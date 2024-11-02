@@ -24,11 +24,13 @@ import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
+import org.eclipse.jface.layout.LayoutConstants;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -69,7 +71,7 @@ public final class ChatComposite extends Composite
     super(parent, style);
     this.config = new Config(config);
 
-    setLayout(GridLayoutFactory.fillDefaults().numColumns(2).create());
+    setLayout(GridLayoutFactory.fillDefaults().numColumns(2).spacing(0, LayoutConstants.getSpacing().y).create());
     setBackground(getDisplay().getSystemColor(SWT.COLOR_WHITE));
 
     messageBrowser = createMessageBrowser();
@@ -81,7 +83,7 @@ public final class ChatComposite extends Composite
       entryField.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
 
       sendButton = createSendButton();
-      sendButton.setLayoutData(GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.END).create());
+      sendButton.setLayoutData(GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.END).indent(LayoutConstants.getSpacing().x, 0).exclude(true).create());
     }
     else
     {
@@ -200,8 +202,18 @@ public final class ChatComposite extends Composite
 
   private void handleEntryModify()
   {
+    GridData gridData = (GridData)sendButton.getLayoutData();
+    boolean oldExcluded = gridData.exclude;
+
     String entry = entryField.getEntry();
-    sendButton.setVisible(entry.length() != 0);
+    boolean newExcluded = entry.length() == 0;
+
+    if (newExcluded != oldExcluded)
+    {
+      sendButton.setVisible(!newExcluded);
+      gridData.exclude = newExcluded;
+      layout(true);
+    }
   }
 
   private void sendEntry()

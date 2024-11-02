@@ -314,59 +314,14 @@ public class OpenReviewAction extends AbstractReviewAction
         @Override
         protected Control createControl1(Composite parent)
         {
-          Control defaultContents = defaultContentsCreator.apply(parent);
-
-          if (NAVIGATABLE_FIELD != null)
+          try
           {
-            EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
-            EMFCompareStructureMergeViewerContentProvider contentProvider = viewerWrapper.getContentProvider();
-            WrappableTreeViewer treeViewer = viewerWrapper.getNavigatable().getViewer();
-
-            Navigatable navigatable = new Navigatable(treeViewer, contentProvider)
-            {
-              @Override
-              public boolean hasChange(int flag)
-              {
-                if (flag == INavigatable.FIRST_CHANGE)
-                {
-                  // The initial topic.
-                  return true;
-                }
-
-                return super.hasChange(flag);
-              }
-
-              @Override
-              public boolean selectChange(int flag)
-              {
-                if (flag == INavigatable.FIRST_CHANGE && firstTopic != null)
-                {
-                  // The initial topic.
-                  contentProvider.runWhenReady(uiSyncCallbackType, new Runnable()
-                  {
-                    @Override
-                    public void run()
-                    {
-                      Object newSelection = getDiffElement(firstTopic);
-                      if (newSelection != null)
-                      {
-                        fireOpen(newSelection);
-                      }
-                    }
-                  });
-
-                  return false;
-                }
-
-                return super.selectChange(flag);
-              }
-            };
-
-            ReflectUtil.setValue(NAVIGATABLE_FIELD, viewerWrapper, navigatable);
-            viewerWrapper.getControl().setData(INavigatable.NAVIGATOR_PROPERTY, navigatable);
+            return defaultContentsCreator.apply(parent);
           }
-
-          return defaultContents;
+          finally
+          {
+            replaceDiffViewerNavigatable();
+          }
         }
 
         @Override
@@ -615,6 +570,59 @@ public class OpenReviewAction extends AbstractReviewAction
       catch (Exception ex)
       {
         throw WrappedException.wrap(ex);
+      }
+    }
+
+    private void replaceDiffViewerNavigatable()
+    {
+      if (NAVIGATABLE_FIELD != null)
+      {
+        EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
+        EMFCompareStructureMergeViewerContentProvider contentProvider = viewerWrapper.getContentProvider();
+        WrappableTreeViewer treeViewer = viewerWrapper.getNavigatable().getViewer();
+
+        Navigatable navigatable = new Navigatable(treeViewer, contentProvider)
+        {
+          @Override
+          public boolean hasChange(int flag)
+          {
+            if (flag == INavigatable.FIRST_CHANGE)
+            {
+              // The initial topic.
+              return true;
+            }
+
+            return super.hasChange(flag);
+          }
+
+          @Override
+          public boolean selectChange(int flag)
+          {
+            if (flag == INavigatable.FIRST_CHANGE && firstTopic != null)
+            {
+              // The initial topic.
+              contentProvider.runWhenReady(uiSyncCallbackType, new Runnable()
+              {
+                @Override
+                public void run()
+                {
+                  Object newSelection = getDiffElement(firstTopic);
+                  if (newSelection != null)
+                  {
+                    fireOpen(newSelection);
+                  }
+                }
+              });
+
+              return false;
+            }
+
+            return super.selectChange(flag);
+          }
+        };
+
+        ReflectUtil.setValue(NAVIGATABLE_FIELD, viewerWrapper, navigatable);
+        viewerWrapper.getControl().setData(INavigatable.NAVIGATOR_PROPERTY, navigatable);
       }
     }
 

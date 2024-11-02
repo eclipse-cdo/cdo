@@ -100,6 +100,8 @@ public class MylynEntryControlAdvisor extends EntryControlAdvisor
   {
     IDocument document = getDocument(control);
     document.set(entry);
+
+    ((StyledText)control).setSelection(entry.length());
   }
 
   @Override

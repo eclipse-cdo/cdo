@@ -152,10 +152,10 @@ public final class ChatComposite extends Composite
     EntryControlAdvisor entryControlAdvisor = config.getEntryControlAdvisor();
 
     ControlConfig controlConfig = new ControlConfig();
-    controlConfig.setModifyHandler(control -> handleEntryModify());
+    // controlConfig.setModifyHandler(control -> handleEntryModify());
     controlConfig.setOkHandler(control -> sendEntry());
 
-    UnaryOperator<String> previewProvider = markup -> config.getChatRenderer().renderHTML(markup, null);
+    UnaryOperator<String> previewProvider = config.getChatRenderer();
 
     boolean[] lastScrolledToBottom = { isMessageBrowserScrolledToBottom() };
     display.timerExec(500, new Runnable()
@@ -172,6 +172,7 @@ public final class ChatComposite extends Composite
     });
 
     RoundedEntryField entryField = new RoundedEntryField(this, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, false);
+    entryField.setDirtyHandler(f -> dirtyStateChanged());
 
     int[] lastEntryFieldHeight = { SWT.DEFAULT };
     entryField.addControlListener(ControlListener.controlResizedAdapter(e -> {
@@ -200,20 +201,14 @@ public final class ChatComposite extends Composite
     return button;
   }
 
-  private void handleEntryModify()
+  private void dirtyStateChanged()
   {
+    boolean dirty = entryField.isDirty();
+    sendButton.setVisible(dirty);
+
     GridData gridData = (GridData)sendButton.getLayoutData();
-    boolean oldExcluded = gridData.exclude;
-
-    String entry = entryField.getEntry();
-    boolean newExcluded = entry.length() == 0;
-
-    if (newExcluded != oldExcluded)
-    {
-      sendButton.setVisible(!newExcluded);
-      gridData.exclude = newExcluded;
-      layout(true);
-    }
+    gridData.exclude = !dirty;
+    layout(true);
   }
 
   private void sendEntry()

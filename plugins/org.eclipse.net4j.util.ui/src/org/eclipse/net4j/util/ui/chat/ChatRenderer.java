@@ -29,12 +29,13 @@ import java.time.format.FormatStyle;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.function.Consumer;
+import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
  * @since 3.19
  */
-public class ChatRenderer
+public class ChatRenderer implements UnaryOperator<String>
 {
   public static final DateTimeFormatter WEEKDAY_FORMATTER = DateTimeFormatter.ofPattern("EEEE");
 
@@ -186,6 +187,16 @@ public class ChatRenderer
   public String renderHTML(String markup, Map<String, Object> properties)
   {
     return build(html -> renderHTML(markup, html, properties));
+  }
+
+  @Override
+  public String apply(String markup)
+  {
+    return build(html -> {
+      html.append("<html><head><style>* { padding: 0; margin: 0; border: 0; }</style></html><body>\n");
+      renderHTML(markup, html, null);
+      html.append("\n</body></html>");
+    });
   }
 
   public String stripMarkup(String markup)

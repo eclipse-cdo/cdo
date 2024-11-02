@@ -85,7 +85,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import java.util.function.Function;
-import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
@@ -227,6 +226,57 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final DeliveryReview review;
 
+    private final EContentAdapter reviewContentAdapter = new EContentAdapter()
+    {
+      @Override
+      public void notifyChanged(Notification notification)
+      {
+        super.notifyChanged(notification);
+
+        if (!notification.isTouch())
+        {
+          Object notifier = notification.getNotifier();
+
+          Review notifyingReview = getReview(notifier);
+          if (notifyingReview == review)
+          {
+            Topic topic = getTopic(notifier);
+            handleReviewContentChange(topic);
+          }
+        }
+      }
+
+      private Review getReview(Object object)
+      {
+        if (object instanceof Review)
+        {
+          return (Review)object;
+        }
+
+        if (object instanceof EObject)
+        {
+          return getReview(((EObject)object).eContainer());
+        }
+
+        return null;
+      }
+
+      private Topic getTopic(Object object)
+      {
+        if (object instanceof Topic)
+        {
+          return (Topic)object;
+        }
+
+        if (object instanceof EObject)
+        {
+          return getTopic(((EObject)object).eContainer());
+        }
+
+        return null;
+      }
+    };
+
     private final ISystemDescriptor systemDescriptor;
 
     private final Map<ModelReference, Topic> topics = new HashMap<>();
@@ -289,11 +339,14 @@ public class OpenReviewAction extends AbstractReviewAction
           }
         }
       });
+
+      review.eAdapters().add(reviewContentAdapter);
     }
 
     @Override
     public Exception deactivate()
     {
+      review.eAdapters().remove(reviewContentAdapter);
       return null;
     }
 
@@ -392,6 +445,14 @@ public class OpenReviewAction extends AbstractReviewAction
       };
     }
 
+    private void handleReviewContentChange(Topic topic)
+    {
+      if (topic != null && topic == currentTopic)
+      {
+        UIUtil.asyncExec(chatComposite::refreshMessageBrowser);
+      }
+    }
+
     private Object getDiffElement(Topic topic)
     {
       Object[] result = { null };
@@ -447,9 +508,7 @@ public class OpenReviewAction extends AbstractReviewAction
         }
       });
 
-      UnaryOperator<String> previewProvider = markup -> renderer.renderHTML(markup, null);
-
-      return new RoundedEntryField(parent, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, true);
+      return new RoundedEntryField(parent, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, renderer, true);
     }
 
     private void selectTopic(ModelReference modelReference)
@@ -524,25 +583,7 @@ public class OpenReviewAction extends AbstractReviewAction
       config.setEntryControlAdvisor(entryControlAdvisor);
       config.setSendHandler(ReviewEditorHandler.this::sendMessage);
 
-      ChatComposite chatComposite = new ChatComposite(parent, SWT.NONE, config);
-
-      EContentAdapter adapter = new EContentAdapter()
-      {
-        @Override
-        public void notifyChanged(Notification notification)
-        {
-          super.notifyChanged(notification);
-
-          if (!notification.isTouch())
-          {
-            UIUtil.asyncExec(parent.getDisplay(), chatComposite::refreshMessageBrowser);
-          }
-        }
-      };
-
-      review.eAdapters().add(adapter);
-      chatComposite.addDisposeListener(e -> review.eAdapters().remove(adapter));
-      return chatComposite;
+      return new ChatComposite(parent, SWT.NONE, config);
     }
 
     private ChatMessage[] computeMessages()

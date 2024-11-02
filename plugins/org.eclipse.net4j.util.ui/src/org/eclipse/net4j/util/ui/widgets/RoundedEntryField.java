@@ -66,13 +66,23 @@ public class RoundedEntryField extends Composite
 
   private final ImageButton modeButton;
 
+  private Consumer<RoundedEntryField> emptyHandler;
+
+  private Consumer<RoundedEntryField> dirtyHandler;
+
+  private Consumer<RoundedEntryField> previewModeHandler;
+
   private Control control;
 
   private Mode mode = new EditMode();
 
+  private String initialEntry;
+
   private String entry;
 
-  private String initialEntry;
+  private boolean empty;
+
+  private boolean dirty;
 
   private int lastControlHeight;
 
@@ -103,6 +113,10 @@ public class RoundedEntryField extends Composite
     mode.updateModeButton();
 
     control = createControl(mode);
+
+    empty = StringUtil.isEmpty(getEntry());
+    initialEntry = entry;
+    modeButton.setVisible(!empty);
   }
 
   public final Color getEntryBackground()
@@ -118,6 +132,36 @@ public class RoundedEntryField extends Composite
   public final UnaryOperator<String> getPreviewProvider()
   {
     return previewProvider;
+  }
+
+  public Consumer<RoundedEntryField> getEmptyHandler()
+  {
+    return emptyHandler;
+  }
+
+  public void setEmptyHandler(Consumer<RoundedEntryField> emptyHandler)
+  {
+    this.emptyHandler = emptyHandler;
+  }
+
+  public Consumer<RoundedEntryField> getDirtyHandler()
+  {
+    return dirtyHandler;
+  }
+
+  public void setDirtyHandler(Consumer<RoundedEntryField> dirtyHandler)
+  {
+    this.dirtyHandler = dirtyHandler;
+  }
+
+  public Consumer<RoundedEntryField> getPreviewModeHandler()
+  {
+    return previewModeHandler;
+  }
+
+  public void setPreviewModeHandler(Consumer<RoundedEntryField> previewModeHandler)
+  {
+    this.previewModeHandler = previewModeHandler;
   }
 
   public final String getEntry()
@@ -140,11 +184,19 @@ public class RoundedEntryField extends Composite
       mode.setEntryToControl(entry);
       this.entry = entry;
     }
+
+    setEmpty(StringUtil.isEmpty(entry));
+    setDirty(false);
   }
 
-  public boolean isModified()
+  public boolean isEmpty()
   {
-    return !Objects.equals(getEntry(), initialEntry);
+    return empty;
+  }
+
+  public boolean isDirty()
+  {
+    return dirty;
   }
 
   public final boolean isPreviewMode()
@@ -167,6 +219,11 @@ public class RoundedEntryField extends Composite
 
     layoutParent();
     redraw();
+
+    if (previewModeHandler != null)
+    {
+      previewModeHandler.accept(this);
+    }
   }
 
   @Override
@@ -231,10 +288,40 @@ public class RoundedEntryField extends Composite
         {
           originalModifyHandler.accept(control);
         }
+
+        setEmpty(StringUtil.isEmpty(newEntry));
+        setDirty(!Objects.equals(newEntry, initialEntry));
       }
     });
 
     return config;
+  }
+
+  private void setEmpty(boolean empty)
+  {
+    if (empty != this.empty)
+    {
+      this.empty = empty;
+      modeButton.setVisible(!empty);
+
+      if (emptyHandler != null)
+      {
+        emptyHandler.accept(this);
+      }
+    }
+  }
+
+  private void setDirty(boolean dirty)
+  {
+    if (dirty != this.dirty)
+    {
+      this.dirty = dirty;
+
+      if (dirtyHandler != null)
+      {
+        dirtyHandler.accept(this);
+      }
+    }
   }
 
   private void updateControlVerticalBar(int controlHeight)
@@ -437,6 +524,7 @@ public class RoundedEntryField extends Composite
       EditMode editMode = new EditMode();
       control = createControl(editMode);
       editMode.setEntryToControl(entry);
+
       return editMode;
     }
   }

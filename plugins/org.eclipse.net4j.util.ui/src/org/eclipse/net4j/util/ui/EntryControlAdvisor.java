@@ -46,7 +46,7 @@ public class EntryControlAdvisor
     text.addModifyListener(e -> processModifyEvent(text, config));
     text.addKeyListener(KeyListener.keyPressedAdapter(e -> processKeyEvent(text, config, e)));
     return text;
-  
+
   }
 
   public String getEntry(Control control)
@@ -56,7 +56,9 @@ public class EntryControlAdvisor
 
   public void setEntry(Control control, String entry)
   {
-    ((Text)control).setText(entry);
+    Text text = (Text)control;
+    text.setText(entry);
+    text.setSelection(entry.length());
   }
 
   public void renderHTML(Control control, StringBuilder html)

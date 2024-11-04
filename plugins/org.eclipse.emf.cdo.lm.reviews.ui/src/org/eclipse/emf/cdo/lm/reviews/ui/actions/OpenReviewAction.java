@@ -82,6 +82,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
@@ -604,6 +605,7 @@ public class OpenReviewAction extends AbstractReviewAction
       topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
       topicStatus = null;
       updateDirtyness();
+      setChatCompositeVisible(true);
     }
 
     private Object getDiffElement(Topic topic)
@@ -643,7 +645,7 @@ public class OpenReviewAction extends AbstractReviewAction
       fieldConfig.setEntryBackground(entryBackgroundColor);
       fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
       fieldConfig.setEntryControlConfig(controlConfig);
-      fieldConfig.setEmptyHint("Type a review topic");
+      fieldConfig.setEmptyHint("Create a review topic");
       fieldConfig.setPreviewProvider(renderer);
       fieldConfig.setInitialPreviewMode(true);
       fieldConfig.setDirtyHandler(entryField -> handleTopicDirtyChanged(entryField.isDirty()));
@@ -677,6 +679,8 @@ public class OpenReviewAction extends AbstractReviewAction
     private void selectTopic(ModelReference modelReference)
     {
       Topic topic = review.getTopic(modelReference);
+      setChatCompositeVisible(topic != null);
+
       if (topic == null)
       {
         topic = ReviewsFactory.eINSTANCE.createTopic();
@@ -688,19 +692,11 @@ public class OpenReviewAction extends AbstractReviewAction
         currentTopic = topic;
         topicStatus = null;
 
-        topicEntryField.setEntry(topic.getText());
+        String entry = topic.getText();
+        topicEntryField.setEntry(entry);
 
         boolean previewMode = !topicEntryField.isEmpty();
         topicEntryField.setPreviewMode(previewMode);
-
-        if (previewMode)
-        {
-          chatComposite.setFocus();
-        }
-        else
-        {
-          topicEntryField.setFocus();
-        }
 
         refreshTopicUI();
         chatComposite.refreshMessageBrowser();
@@ -770,6 +766,18 @@ public class OpenReviewAction extends AbstractReviewAction
       config.setSendHandler(ReviewEditorHandler.this::sendMessage);
 
       return new ChatComposite(parent, SWT.NONE, config);
+    }
+
+    private void setChatCompositeVisible(boolean visible)
+    {
+      GridData gridData = (GridData)chatComposite.getLayoutData();
+      if (gridData.exclude == visible)
+      {
+        chatComposite.setVisible(visible);
+
+        gridData.exclude = !visible;
+        chatComposite.getParent().layout(true);
+      }
     }
 
     private ChatMessage[] computeMessages()

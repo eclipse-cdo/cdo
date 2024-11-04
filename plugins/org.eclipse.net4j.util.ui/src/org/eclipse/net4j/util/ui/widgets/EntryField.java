@@ -661,7 +661,7 @@ public final class EntryField extends Composite
         browser.setSize(width, 10);
 
         controlHeight = ((Double)browser.evaluate("return document.body.scrollHeight;")).intValue();
-        getParent().layout(true);
+        layoutParent();
       }));
 
       return browser;

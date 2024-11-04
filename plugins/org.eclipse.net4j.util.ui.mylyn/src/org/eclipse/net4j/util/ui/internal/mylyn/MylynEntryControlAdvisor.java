@@ -12,7 +12,7 @@ package org.eclipse.net4j.util.ui.internal.mylyn;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.StringBuilderWriter;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
 
 import org.eclipse.jface.text.Document;
 import org.eclipse.jface.text.DocumentEvent;

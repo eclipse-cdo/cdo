@@ -10,10 +10,10 @@
  */
 package org.eclipse.net4j.util.ui.widgets;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
 
 import org.eclipse.jface.layout.GridDataFactory;
@@ -23,13 +23,16 @@ import org.eclipse.swt.browser.Browser;
 import org.eclipse.swt.browser.ProgressListener;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.GC;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
+import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ScrollBar;
 import org.eclipse.swt.widgets.Scrollable;
 
+import java.util.Arrays;
 import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -38,7 +41,7 @@ import java.util.function.UnaryOperator;
  * @author Eike Stepper
  * @since 3.19
  */
-public class RoundedEntryField extends Composite
+public final class EntryField extends Composite
 {
   private static final int MIN_CONTROL_HEIGHT = 15;
 
@@ -54,23 +57,13 @@ public class RoundedEntryField extends Composite
 
   private static final String TOOLTIP_EDIT = OM.BUNDLE.getTranslationSupport().getString("entry.field.edit");
 
-  private final Color entryBackground;
-
-  private final EntryControlAdvisor entryControlAdvisor;
-
-  private final ControlConfig entryControlConfig;
-
-  private final UnaryOperator<String> previewProvider;
+  private final FieldConfig config;
 
   private final Color whiteColor;
 
+  private final ImageButton[] extraButtons;
+
   private final ImageButton modeButton;
-
-  private Consumer<RoundedEntryField> emptyHandler;
-
-  private Consumer<RoundedEntryField> dirtyHandler;
-
-  private Consumer<RoundedEntryField> previewModeHandler;
 
   private Control control;
 
@@ -86,16 +79,15 @@ public class RoundedEntryField extends Composite
 
   private int lastControlHeight;
 
-  public RoundedEntryField(Composite parent, int style, Color entryBackground, EntryControlAdvisor entryControlAdvisor, ControlConfig entryControlConfig,
-      UnaryOperator<String> previewProvider, boolean previewMode)
+  public EntryField(Composite parent, int style, FieldConfig config)
   {
     super(parent, style | SWT.DOUBLE_BUFFERED);
-    this.entryBackground = entryBackground;
-    this.entryControlAdvisor = entryControlAdvisor;
-    this.entryControlConfig = interceptModifyHandler(entryControlConfig);
-    this.previewProvider = previewProvider;
 
-    mode = previewMode ? new PreviewMode() : new EditMode();
+    config = new FieldConfig(config);
+    config.setEntryControlConfig(interceptModifyHandler(config.getEntryControlConfig()));
+    this.config = config;
+
+    mode = config.isInitialPreviewMode() ? new PreviewMode() : new EditMode();
     whiteColor = getDisplay().getSystemColor(SWT.COLOR_WHITE);
 
     addPaintListener(e -> {
@@ -104,80 +96,50 @@ public class RoundedEntryField extends Composite
       mode.paintRoundBackground(e.gc, box);
     });
 
-    setLayout(GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).numColumns(2).create());
+    ButtonAdvisor[] buttonAdvisors = config.getExtraButtonAdvisors();
+    extraButtons = new ImageButton[ObjectUtil.size(buttonAdvisors)];
+
+    setLayout(GridLayoutFactory.fillDefaults().margins(MARGIN, MARGIN).numColumns(2 + extraButtons.length).create());
+
+    for (int i = 0; i < extraButtons.length; i++)
+    {
+      ButtonAdvisor buttonAdvisor = buttonAdvisors[i];
+      extraButtons[i] = new ImageButton(this, buttonAdvisor.getHoverImage(), buttonAdvisor.getGrayImage());
+      extraButtons[i].setLayoutData(GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.END).create());
+      extraButtons[i].setSelectionMode(SelectionMode.MouseDown);
+      extraButtons[i].setSelectionRunnable(buttonAdvisor);
+      extraButtons[i].setToolTipText(buttonAdvisor.getToolTipText());
+      buttonAdvisor.customize(extraButtons[i]);
+    }
 
     modeButton = new ImageButton(this, OM.getImage("icons/preview_entry.png"));
     modeButton.setLayoutData(GridDataFactory.fillDefaults().align(SWT.BEGINNING, SWT.END).create());
     modeButton.setSelectionMode(SelectionMode.MouseDown);
     modeButton.setSelectionRunnable(() -> setPreviewMode(!isPreviewMode()));
-    mode.updateModeButton();
+    mode.updateButtons();
 
     control = createControl(mode);
 
-    empty = StringUtil.isEmpty(getEntry());
+    entry = StringUtil.safe(mode.getEntryFromControl());
     initialEntry = entry;
-    modeButton.setVisible(!empty);
+
+    empty = StringUtil.isEmpty(entry);
+    mode.updateModeButtonVisibility();
   }
 
-  public final Color getEntryBackground()
-  {
-    return entryBackground;
-  }
-
-  public final Control getControl()
+  public Control getControl()
   {
     return control;
   }
 
-  public final UnaryOperator<String> getPreviewProvider()
+  public String getEntry()
   {
-    return previewProvider;
-  }
-
-  public Consumer<RoundedEntryField> getEmptyHandler()
-  {
-    return emptyHandler;
-  }
-
-  public void setEmptyHandler(Consumer<RoundedEntryField> emptyHandler)
-  {
-    this.emptyHandler = emptyHandler;
-  }
-
-  public Consumer<RoundedEntryField> getDirtyHandler()
-  {
-    return dirtyHandler;
-  }
-
-  public void setDirtyHandler(Consumer<RoundedEntryField> dirtyHandler)
-  {
-    this.dirtyHandler = dirtyHandler;
-  }
-
-  public Consumer<RoundedEntryField> getPreviewModeHandler()
-  {
-    return previewModeHandler;
-  }
-
-  public void setPreviewModeHandler(Consumer<RoundedEntryField> previewModeHandler)
-  {
-    this.previewModeHandler = previewModeHandler;
-  }
-
-  public final String getEntry()
-  {
-    if (entry == null)
-    {
-      entry = StringUtil.safe(mode.getEntryFromControl());
-    }
-
     return entry;
   }
 
-  public final void setEntry(String entry)
+  public void setEntry(String entry)
   {
     entry = StringUtil.safe(entry);
-    initialEntry = entry;
 
     if (!Objects.equals(entry, this.entry))
     {
@@ -186,7 +148,7 @@ public class RoundedEntryField extends Composite
     }
 
     setEmpty(StringUtil.isEmpty(entry));
-    setDirty(false);
+    resetDirty();
   }
 
   public boolean isEmpty()
@@ -199,20 +161,26 @@ public class RoundedEntryField extends Composite
     return dirty;
   }
 
-  public final boolean isPreviewMode()
+  public void resetDirty()
+  {
+    initialEntry = entry;
+    setDirty(false);
+  }
+
+  public boolean isPreviewMode()
   {
     return mode instanceof PreviewMode;
   }
 
-  public final void setPreviewMode(boolean previewMode)
+  public void setPreviewMode(boolean previewMode)
   {
-    if (previewProvider == null || previewMode == isPreviewMode())
+    if (config.getPreviewProvider() == null || previewMode == isPreviewMode())
     {
       return;
     }
 
     mode = mode.toggleMode();
-    mode.updateModeButton();
+    mode.updateButtons();
 
     control.setFocus();
     updateControlVerticalBar(lastControlHeight);
@@ -220,9 +188,27 @@ public class RoundedEntryField extends Composite
     layoutParent();
     redraw();
 
+    Consumer<EntryField> previewModeHandler = config.getPreviewModeHandler();
     if (previewModeHandler != null)
     {
       previewModeHandler.accept(this);
+    }
+  }
+
+  public boolean isExtraButtonVisible(int index)
+  {
+    return extraButtons[index].isVisible();
+  }
+
+  public void setExtraButtonVisible(int index, boolean visible)
+  {
+    if (visible != isExtraButtonVisible(index))
+    {
+      GridData gridData = (GridData)extraButtons[index].getLayoutData();
+      gridData.exclude = !visible;
+
+      extraButtons[index].setVisible(visible);
+      layout(true);
     }
   }
 
@@ -259,8 +245,15 @@ public class RoundedEntryField extends Composite
 
     Control control = mode.doCreateControl();
     control.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
-    control.setBackground(entryBackground);
-    control.moveAbove(modeButton);
+    control.setBackground(config.getEntryBackground());
+
+    ImageButton firstButton = modeButton;
+    if (extraButtons.length != 0)
+    {
+      firstButton = extraButtons[0];
+    }
+
+    control.moveAbove(firstButton);
     return control;
   }
 
@@ -302,8 +295,9 @@ public class RoundedEntryField extends Composite
     if (empty != this.empty)
     {
       this.empty = empty;
-      modeButton.setVisible(!empty);
+      mode.updateModeButtonVisibility();
 
+      Consumer<EntryField> emptyHandler = config.getEmptyHandler();
       if (emptyHandler != null)
       {
         emptyHandler.accept(this);
@@ -317,6 +311,7 @@ public class RoundedEntryField extends Composite
     {
       this.dirty = dirty;
 
+      Consumer<EntryField> dirtyHandler = config.getDirtyHandler();
       if (dirtyHandler != null)
       {
         dirtyHandler.accept(this);
@@ -345,6 +340,156 @@ public class RoundedEntryField extends Composite
   /**
    * @author Eike Stepper
    */
+  public interface ButtonAdvisor extends Runnable
+  {
+    public String getToolTipText();
+
+    public Image getHoverImage();
+
+    public default Image getGrayImage()
+    {
+      return null;
+    }
+
+    public default void customize(ImageButton button)
+    {
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class FieldConfig
+  {
+    private Color entryBackground;
+
+    private EntryControlAdvisor entryControlAdvisor;
+
+    private ControlConfig entryControlConfig;
+
+    private UnaryOperator<String> previewProvider;
+
+    private boolean initialPreviewMode;
+
+    private ButtonAdvisor[] extraButtonAdvisors;
+
+    private Consumer<EntryField> emptyHandler;
+
+    private Consumer<EntryField> dirtyHandler;
+
+    private Consumer<EntryField> previewModeHandler;
+
+    public FieldConfig()
+    {
+    }
+
+    public FieldConfig(FieldConfig source)
+    {
+      entryBackground = source.entryBackground;
+      entryControlAdvisor = source.entryControlAdvisor;
+      entryControlConfig = new ControlConfig(source.entryControlConfig);
+      previewProvider = source.previewProvider;
+      initialPreviewMode = source.initialPreviewMode;
+      extraButtonAdvisors = source.extraButtonAdvisors == null ? null : Arrays.copyOf(source.extraButtonAdvisors, source.extraButtonAdvisors.length);
+      emptyHandler = source.emptyHandler;
+      dirtyHandler = source.dirtyHandler;
+      previewModeHandler = source.previewModeHandler;
+    }
+
+    public Color getEntryBackground()
+    {
+      return entryBackground;
+    }
+
+    public void setEntryBackground(Color entryBackground)
+    {
+      this.entryBackground = entryBackground;
+    }
+
+    public EntryControlAdvisor getEntryControlAdvisor()
+    {
+      return entryControlAdvisor;
+    }
+
+    public void setEntryControlAdvisor(EntryControlAdvisor entryControlAdvisor)
+    {
+      this.entryControlAdvisor = entryControlAdvisor;
+    }
+
+    public ControlConfig getEntryControlConfig()
+    {
+      return entryControlConfig;
+    }
+
+    public void setEntryControlConfig(ControlConfig entryControlConfig)
+    {
+      this.entryControlConfig = entryControlConfig;
+    }
+
+    public UnaryOperator<String> getPreviewProvider()
+    {
+      return previewProvider;
+    }
+
+    public void setPreviewProvider(UnaryOperator<String> previewProvider)
+    {
+      this.previewProvider = previewProvider;
+    }
+
+    public boolean isInitialPreviewMode()
+    {
+      return initialPreviewMode;
+    }
+
+    public void setInitialPreviewMode(boolean initialPreviewMode)
+    {
+      this.initialPreviewMode = initialPreviewMode;
+    }
+
+    public ButtonAdvisor[] getExtraButtonAdvisors()
+    {
+      return extraButtonAdvisors;
+    }
+
+    public void setExtraButtonAdvisors(ButtonAdvisor... extraButtonAdvisors)
+    {
+      this.extraButtonAdvisors = extraButtonAdvisors;
+    }
+
+    public Consumer<EntryField> getEmptyHandler()
+    {
+      return emptyHandler;
+    }
+
+    public void setEmptyHandler(Consumer<EntryField> emptyHandler)
+    {
+      this.emptyHandler = emptyHandler;
+    }
+
+    public Consumer<EntryField> getDirtyHandler()
+    {
+      return dirtyHandler;
+    }
+
+    public void setDirtyHandler(Consumer<EntryField> dirtyHandler)
+    {
+      this.dirtyHandler = dirtyHandler;
+    }
+
+    public Consumer<EntryField> getPreviewModeHandler()
+    {
+      return previewModeHandler;
+    }
+
+    public void setPreviewModeHandler(Consumer<EntryField> previewModeHandler)
+    {
+      this.previewModeHandler = previewModeHandler;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
   private interface Mode
   {
     public void paintRoundBackground(GC gc, Rectangle box);
@@ -360,7 +505,9 @@ public class RoundedEntryField extends Composite
 
     public void setEntryToControl(String entry);
 
-    public void updateModeButton();
+    public void updateModeButtonVisibility();
+
+    public void updateButtons();
 
     public Mode toggleMode();
   }
@@ -377,14 +524,14 @@ public class RoundedEntryField extends Composite
     @Override
     public void paintRoundBackground(GC gc, Rectangle box)
     {
-      gc.setBackground(entryBackground);
+      gc.setBackground(config.getEntryBackground());
       gc.fillRoundRectangle(box.x, box.y, box.width - 1, box.height - 1, RADIUS, RADIUS);
     }
 
     @Override
     public Control doCreateControl()
     {
-      Control control = entryControlAdvisor.createControl(RoundedEntryField.this, entryControlConfig);
+      Control control = config.getEntryControlAdvisor().createControl(EntryField.this, config.getEntryControlConfig());
       if (control instanceof Scrollable)
       {
         ScrollBar verticalBar = ((Scrollable)control).getVerticalBar();
@@ -406,21 +553,34 @@ public class RoundedEntryField extends Composite
     @Override
     public String getEntryFromControl()
     {
-      return entryControlAdvisor.getEntry(control);
+      return config.getEntryControlAdvisor().getEntry(control);
     }
 
     @Override
     public void setEntryToControl(String entry)
     {
-      entryControlAdvisor.setEntry(control, entry);
+      config.getEntryControlAdvisor().setEntry(control, entry);
     }
 
     @Override
-    public void updateModeButton()
+    public void updateModeButtonVisibility()
     {
+      modeButton.setVisible(!empty);
+    }
+
+    @Override
+    public void updateButtons()
+    {
+      Color background = config.getEntryBackground();
+
+      for (int i = 0; i < extraButtons.length; i++)
+      {
+        extraButtons[i].setBackground(background);
+      }
+
       modeButton.setHoverImage(OM.getImage("icons/preview_entry.png"));
       modeButton.setToolTipText(TOOLTIP_PREVIEW);
-      modeButton.setBackground(entryBackground);
+      modeButton.setBackground(background);
     }
 
     /**
@@ -457,14 +617,14 @@ public class RoundedEntryField extends Composite
     public void paintRoundBackground(GC gc, Rectangle box)
     {
       gc.setBackground(whiteColor);
-      gc.setForeground(entryBackground);
+      gc.setForeground(config.getEntryBackground());
       gc.drawRoundRectangle(box.x, box.y, box.width - 1, box.height - 1, RADIUS, RADIUS);
     }
 
     @Override
     public Control doCreateControl()
     {
-      Browser browser = new Browser(RoundedEntryField.this, SWT.EDGE);
+      Browser browser = new Browser(EntryField.this, SWT.EDGE);
       browser.addProgressListener(ProgressListener.completedAdapter(event -> {
         if (mode != this)
         {
@@ -498,7 +658,7 @@ public class RoundedEntryField extends Composite
     public void setEntryToControl(String entry)
     {
       controlEntry = entry;
-      String html = previewProvider.apply(entry);
+      String html = config.getPreviewProvider().apply(entry);
 
       Browser browser = (Browser)control;
       browser.setText(html, true);
@@ -506,8 +666,19 @@ public class RoundedEntryField extends Composite
     }
 
     @Override
-    public void updateModeButton()
+    public void updateModeButtonVisibility()
     {
+      modeButton.setVisible(true);
+    }
+
+    @Override
+    public void updateButtons()
+    {
+      for (int i = 0; i < extraButtons.length; i++)
+      {
+        extraButtons[i].setBackground(whiteColor);
+      }
+
       modeButton.setHoverImage(OM.getImage("icons/edit_entry.png"));
       modeButton.setToolTipText(TOOLTIP_EDIT);
       modeButton.setBackground(whiteColor);

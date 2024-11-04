@@ -28,9 +28,9 @@ import java.util.List;
  */
 public class TopicItemProvider extends TopicContainerItemProvider
 {
-  private static final Style STYLE_UNRESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/220/40/40")).toStyle();
+  public static final Style STYLE_UNRESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/220/40/40")).toStyle();
 
-  private static final Style STYLE_RESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/20/180/20")).toStyle();
+  public static final Style STYLE_RESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/20/180/20")).toStyle();
 
   private ItemPropertyDescriptor statusPropertyDescriptor;
 

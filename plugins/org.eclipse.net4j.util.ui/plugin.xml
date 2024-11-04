@@ -40,7 +40,7 @@
       <factory
             productGroup="org.eclipse.net4j.util.ui.entryControlAdvisors"
             type="default"
-            class="org.eclipse.net4j.util.ui.EntryControlAdvisor$Factory"/>
+            class="org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor$Factory"/>
       <factory
             productGroup="org.eclipse.net4j.util.ui.chatRenderers"
             type="default"

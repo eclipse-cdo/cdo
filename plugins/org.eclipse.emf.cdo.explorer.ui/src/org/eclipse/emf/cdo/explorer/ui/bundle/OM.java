@@ -23,7 +23,6 @@ import org.eclipse.net4j.util.om.trace.OMTracer;
 import org.eclipse.net4j.util.ui.UIActivator;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.edit.provider.ComposedImage;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.core.runtime.IAdaptable;
@@ -67,8 +66,7 @@ public abstract class OM
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {
-    ComposedImage composedImage = new OverlayImage(image, overlayImage, x, y);
-    return ExtendedImageRegistry.INSTANCE.getImage(composedImage);
+    return new OverlayImage(image, overlayImage, x, y).compose();
   }
 
   public static Image getImage(String imagePath)

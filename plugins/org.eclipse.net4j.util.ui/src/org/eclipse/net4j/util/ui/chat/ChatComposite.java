@@ -11,16 +11,17 @@
 package org.eclipse.net4j.util.ui.chat;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Provider;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.BubbleGroup;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.DateLine;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.Renderable;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
+import org.eclipse.net4j.util.ui.widgets.EntryField;
+import org.eclipse.net4j.util.ui.widgets.EntryField.FieldConfig;
 import org.eclipse.net4j.util.ui.widgets.ImageButton;
 import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
-import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -46,7 +47,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.TimeZone;
 import java.util.function.Consumer;
-import java.util.function.UnaryOperator;
 
 /**
  * @author Eike Stepper
@@ -62,7 +62,7 @@ public final class ChatComposite extends Composite
 
   private final Browser messageBrowser;
 
-  private final RoundedEntryField entryField;
+  private final EntryField entryField;
 
   private final Control sendButton;
 
@@ -107,7 +107,7 @@ public final class ChatComposite extends Composite
     return messageBrowser;
   }
 
-  public RoundedEntryField getEntryField()
+  public EntryField getEntryField()
   {
     return entryField;
   }
@@ -144,7 +144,7 @@ public final class ChatComposite extends Composite
     return browser;
   }
 
-  private RoundedEntryField createEntryField()
+  private EntryField createEntryField()
   {
     Display display = getDisplay();
 
@@ -152,10 +152,7 @@ public final class ChatComposite extends Composite
     EntryControlAdvisor entryControlAdvisor = config.getEntryControlAdvisor();
 
     ControlConfig controlConfig = new ControlConfig();
-    // controlConfig.setModifyHandler(control -> handleEntryModify());
     controlConfig.setOkHandler(control -> sendEntry());
-
-    UnaryOperator<String> previewProvider = config.getChatRenderer();
 
     boolean[] lastScrolledToBottom = { isMessageBrowserScrolledToBottom() };
     display.timerExec(500, new Runnable()
@@ -171,8 +168,15 @@ public final class ChatComposite extends Composite
       }
     });
 
-    RoundedEntryField entryField = new RoundedEntryField(this, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, previewProvider, false);
-    entryField.setDirtyHandler(f -> dirtyStateChanged());
+    FieldConfig fieldConfig = new EntryField.FieldConfig();
+    fieldConfig.setEntryBackground(entryBackgroundColor);
+    fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
+    fieldConfig.setEntryControlConfig(controlConfig);
+    fieldConfig.setPreviewProvider(config.getChatRenderer());
+    fieldConfig.setInitialPreviewMode(false);
+    fieldConfig.setDirtyHandler(entryField -> dirtyStateChanged());
+
+    EntryField entryField = new EntryField(this, SWT.NONE, fieldConfig);
 
     int[] lastEntryFieldHeight = { SWT.DEFAULT };
     entryField.addControlListener(ControlListener.controlResizedAdapter(e -> {

@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
@@ -913,7 +914,9 @@ public final class CDOCompareEditorUtil
    * @since 4.4
    */
   @SuppressWarnings("restriction")
-  public static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput implements IPropertiesContainer
+  public static final class Input //
+      extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput //
+      implements IPropertiesContainer
   {
     private final IRegistry<String, Object> properties = new HashMapRegistry<>();
 
@@ -932,6 +935,8 @@ public final class CDOCompareEditorUtil
     private boolean modal;
 
     private boolean editionSelectionDialog;
+
+    private Consumer<IProgressMonitor> saveHandler = this::defaultSave;
 
     private CDOCommitInfo commitInfo;
 
@@ -1159,10 +1164,42 @@ public final class CDOCompareEditorUtil
       this.disposeRunnables = disposeRunnables;
     }
 
+    /**
+     * @since 4.9
+     */
+    public Consumer<IProgressMonitor> getSaveHandler()
+    {
+      return saveHandler;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void setSaveHandler(Consumer<IProgressMonitor> saveHandler)
+    {
+      this.saveHandler = saveHandler;
+    }
+
     @Override
     public void saveChanges(IProgressMonitor monitor) throws CoreException
     {
-      super.saveChanges(monitor);
+      if (saveHandler != null)
+      {
+        try
+        {
+          saveHandler.accept(monitor);
+        }
+        catch (Exception ex)
+        {
+          Exception unwrapped = WrappedException.unwrap(ex);
+          OM.BUNDLE.coreException(unwrapped);
+        }
+      }
+    }
+
+    private void defaultSave(IProgressMonitor monitor)
+    {
+      flushViewers(monitor);
 
       if (!modal)
       {
@@ -1172,7 +1209,7 @@ public final class CDOCompareEditorUtil
         }
         catch (Exception ex)
         {
-          OM.BUNDLE.coreException(ex);
+          throw WrappedException.wrap(ex);
         }
       }
     }

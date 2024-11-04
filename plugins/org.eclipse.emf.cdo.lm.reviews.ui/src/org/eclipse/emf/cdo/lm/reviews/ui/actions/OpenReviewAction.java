@@ -25,10 +25,12 @@ import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
+import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.InputHolder;
+import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -36,17 +38,21 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.registry.IRegistry;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor;
-import org.eclipse.net4j.util.ui.EntryControlAdvisor.ControlConfig;
+import org.eclipse.net4j.util.ui.ColorStyler;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatComposite;
 import org.eclipse.net4j.util.ui.chat.ChatMessage;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer;
-import org.eclipse.net4j.util.ui.widgets.RoundedEntryField;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
+import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
+import org.eclipse.net4j.util.ui.widgets.EntryField;
+import org.eclipse.net4j.util.ui.widgets.EntryField.ButtonAdvisor;
+import org.eclipse.net4j.util.ui.widgets.EntryField.FieldConfig;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.AttributeChange;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.ReferenceChange;
@@ -61,16 +67,25 @@ import org.eclipse.emf.edit.tree.TreeNode;
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.INavigatable;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.NullProgressMonitor;
+import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
-import org.eclipse.jface.viewers.IStructuredSelection;
+import org.eclipse.jface.layout.LayoutConstants;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
+import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
+import org.eclipse.jface.viewers.StyledString;
+import org.eclipse.jface.viewers.StyledString.Styler;
+import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionListener;
 import org.eclipse.swt.graphics.Color;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -80,9 +95,8 @@ import org.eclipse.ui.IWorkbenchPage;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 import java.util.function.Function;
 
@@ -224,6 +238,18 @@ public class OpenReviewAction extends AbstractReviewAction
   {
     private static final Field NAVIGATABLE_FIELD;
 
+    private static final String UNRESOLVE_ACTION = "unresolve";
+
+    private static final String UNRESOLVE_LABEL = "Needs resolution";
+
+    private static final Styler UNRESOLVED_STYLER = new ColorStyler(new Color(UIUtil.getDisplay(), 220, 40, 40));
+
+    private static final String RESOLVE_ACTION = "resolve";
+
+    private static final String RESOLVE_LABEL = "Resolve";
+
+    private static final Styler RESOLVED_STYLER = new ColorStyler(new Color(UIUtil.getDisplay(), 20, 180, 20));
+
     private final DeliveryReview review;
 
     private final EContentAdapter reviewContentAdapter = new EContentAdapter()
@@ -279,15 +305,27 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final ISystemDescriptor systemDescriptor;
 
-    private final Map<ModelReference, Topic> topics = new HashMap<>();
+    private final Image topicImage = OM.getImage("icons/editor/Topic.png");
+
+    private final Image topicImageUnresolved = OM.getOverlayImage("icons/editor/Topic.png", "icons/editor/Unresolved.png", 18, 2);
+
+    private final Image topicImageResolved = OM.getOverlayImage("icons/editor/Topic.png", "icons/editor/Resolved.png", 14, 2);
 
     private Topic firstTopic;
 
     private Topic currentTopic;
 
+    private Object lastDiffSelection;
+
     private ChatRenderer renderer;
 
-    private RoundedEntryField topicEntryField;
+    private Label topicIcon;
+
+    private EntryField topicEntryField;
+
+    private Link topicActionLine;
+
+    private TopicStatus topicStatus;
 
     private ChatComposite chatComposite;
 
@@ -318,26 +356,27 @@ public class OpenReviewAction extends AbstractReviewAction
     public void activate(Input input)
     {
       input.setTitle(review.getTypeAndName());
+      input.setSaveHandler(this::handleSave);
 
       IRegistry<String, Object> properties = input.properties();
       properties.put(KEY_REVIEW, review);
       properties.put(KEY_REVIEW_EDITOR_HANDLER, this);
 
       input.setEditionSelectionDialog(true); // Enable selection propagation.
-
       input.addPropertyChangeListener(event -> {
         if (CompareEditorInput.PROP_SELECTED_EDITION.equals(event.getProperty()))
         {
-          Object value = event.getNewValue();
-
-          TreeNode node = Input.getTreeNode(value);
-          if (node != null)
+          Object diffSelection = event.getNewValue();
+          if (diffSelection != lastDiffSelection)
           {
-            ModelReference modelReference = createModelReference(node);
-            if (modelReference != null)
+            if (!handleDiffSelection(lastDiffSelection, diffSelection))
             {
-              selectTopic(modelReference);
+              TreeViewer treeViewer = input.getTreeViewer();
+              treeViewer.setSelection(new StructuredSelection(lastDiffSelection));
+              return;
             }
+
+            lastDiffSelection = diffSelection;
           }
         }
       });
@@ -350,15 +389,6 @@ public class OpenReviewAction extends AbstractReviewAction
     {
       review.eAdapters().remove(reviewContentAdapter);
       return null;
-    }
-
-    public void selectFirstDiffElement(Topic firstTopic)
-    {
-      this.firstTopic = firstTopic;
-
-      EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
-      Navigatable navigatable = viewerWrapper.getNavigatable();
-      navigatable.selectChange(INavigatable.FIRST_CHANGE);
     }
 
     @Override
@@ -375,7 +405,7 @@ public class OpenReviewAction extends AbstractReviewAction
           }
           finally
           {
-            replaceDiffViewerNavigatable();
+            customizeDiffViewer();
           }
         }
 
@@ -389,62 +419,140 @@ public class OpenReviewAction extends AbstractReviewAction
           renderer = IPluginContainer.INSTANCE.getElementOrNull(ChatRenderer.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
           EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull(EntryControlAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
 
-          Composite composite = new Composite(parent, SWT.NONE);
-          composite.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).create());
-          composite.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+          Composite topicContainer = new Composite(parent, SWT.NONE);
+          topicContainer.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).spacing(LayoutConstants.getSpacing().x, 2).numColumns(2).create());
+          topicContainer.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
 
-          topicEntryField = createTopicEntryField(composite, entryBackgroundColor, entryControlAdvisor);
-          topicEntryField.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
+          topicIcon = new Label(topicContainer, SWT.NONE);
+          topicIcon.setLayoutData(GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.TOP).create());
+          topicIcon.setImage(topicImage);
 
-          Composite topicActionLine = new Composite(composite, SWT.NONE);
-          topicActionLine.setLayout(GridLayoutFactory.fillDefaults().create());
-          topicActionLine.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
+          topicEntryField = createTopicEntryField(topicContainer, entryBackgroundColor, entryControlAdvisor);
+          topicEntryField.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).align(SWT.FILL, SWT.TOP).create());
 
-          Link link = new Link(topicActionLine, SWT.NONE);
-          link.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).create());
-          link.setText("<a href=\"a1\">Model References</a>  " + "<a href=\"a2\">Select L5</a>");
-          link.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> {
-            if ("a1".equals(e.text))
-            {
-              getInput().forEachDiffElement(element -> {
-                TreeNode node = Input.getTreeNode(element);
-                ModelReference modelReference = createModelReference(node);
-                if (modelReference != null)
-                {
-                  System.out.println(modelReference);
-                }
-                return false;
-              });
-            }
-            else if ("a2".equals(e.text))
-            {
-              ModelReference modelReference = new ModelReference("L5");
+          Label spacer = new Label(topicContainer, SWT.NONE);
+          spacer.setLayoutData(GridDataFactory.swtDefaults().align(SWT.BEGINNING, SWT.TOP).create());
 
-              getInput().forEachDiffElement(element -> {
-                TreeNode node = Input.getTreeNode(element);
-                if (node != null)
-                {
-                  ModelReference m1 = modelReference;
-                  ModelReference m2 = createModelReference(node);
-                  if (m1.equals(m2))
-                  {
-                    getInput().getTreeViewer().setSelection(new StructuredSelection(element));
-                    // input.getStructureInputPane().setSelection(new StructuredSelection(node));
-                    return true;
-                  }
-                }
+          topicActionLine = new Link(topicContainer, SWT.NONE);
+          topicActionLine.setLayoutData(GridDataFactory.fillDefaults().grab(true, false).indent(10, 0).create());
+          topicActionLine.addSelectionListener(SelectionListener.widgetSelectedAdapter(e -> handleTopicAction(e.text)));
 
-                return false;
-              });
-            }
-          }));
+          chatComposite = createChatComposite(topicContainer, entryBackgroundColor, entryControlAdvisor);
+          chatComposite.setLayoutData(GridDataFactory.fillDefaults().span(2, 1).grab(true, true).create());
 
-          chatComposite = createChatComposite(composite, entryBackgroundColor, entryControlAdvisor);
-          chatComposite.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).create());
-
-          return composite;
+          refreshTopicUI();
+          return topicContainer;
         }
       };
+    }
+
+    public void selectFirstDiffElement(Topic firstTopic)
+    {
+      this.firstTopic = firstTopic;
+
+      EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
+      Navigatable navigatable = viewerWrapper.getNavigatable();
+      navigatable.selectChange(INavigatable.FIRST_CHANGE);
+    }
+
+    private boolean handleDiffSelection(Object oldDiffSelection, Object newDiffSelection)
+    {
+      boolean cancel = false;
+
+      if (oldDiffSelection != null && topicNeedsSave())
+      {
+        int result = MessageDialog.open(MessageDialog.QUESTION_WITH_CANCEL, topicEntryField.getShell(), "Topic Change",
+            "Do you want to save the changes to the current topic?", SWT.SHEET, "Save", "Don't Save", "Cancel");
+        if (result == 2 || result == -1)
+        {
+          // Cancel.
+          return false;
+        }
+
+        if (result == 0)
+        {
+          // Save.
+          handleSave(new NullProgressMonitor());
+        }
+        else
+        {
+          // Don't save.
+          cancel = true;
+        }
+      }
+
+      TreeNode node = Input.getTreeNode(newDiffSelection);
+      if (node != null)
+      {
+        ModelReference modelReference = createModelReference(node);
+        if (modelReference != null)
+        {
+          selectTopic(modelReference);
+        }
+      }
+
+      if (cancel)
+      {
+        updateDiffSelectionLabel(oldDiffSelection);
+      }
+
+      return true;
+    }
+
+    private void handleTopicAction(String action)
+    {
+      TopicStatus oldStatus = topicStatus;
+      TopicStatus newStatus = oldStatus;
+
+      if (UNRESOLVE_ACTION.equals(action))
+      {
+        newStatus = TopicStatus.UNRESOLVED;
+      }
+      else if (RESOLVE_ACTION.equals(action))
+      {
+        newStatus = TopicStatus.RESOLVED;
+      }
+
+      if (newStatus != oldStatus)
+      {
+        topicStatus = newStatus;
+
+        Object diffSelection = getDiffElement(currentTopic);
+        updateDiffSelectionLabel(diffSelection);
+
+        refreshTopicUI();
+        updateDirtyness();
+      }
+    }
+
+    private void updateDiffSelectionLabel(Object diffSelection)
+    {
+      if (diffSelection != null)
+      {
+        getInput().getTreeViewer().update(diffSelection, null);
+      }
+    }
+
+    private void updateDirtyness()
+    {
+      boolean dirty = isCurrentTopicDirty();
+      getInput().setDirty(dirty);
+      topicEntryField.setExtraButtonVisible(0, dirty);
+    }
+
+    private boolean isCurrentTopicDirty()
+    {
+      if (currentTopic == null)
+      {
+        return false;
+      }
+
+      return topicEntryField.isDirty() || topicStatus != null;
+    }
+
+    private void handleTopicDirtyChanged(boolean dirty)
+    {
+      updateDirtyness();
     }
 
     private void handleReviewContentChange(Topic topic)
@@ -453,6 +561,49 @@ public class OpenReviewAction extends AbstractReviewAction
       {
         UIUtil.asyncExec(chatComposite::refreshMessageBrowser);
       }
+    }
+
+    private void handleSave(IProgressMonitor monitor)
+    {
+      if (currentTopic != null)
+      {
+        try
+        {
+          if (currentTopic.cdoState() == CDOState.TRANSIENT)
+          {
+            systemDescriptor.modify(review, r -> {
+              currentTopic.setText(topicEntryField.getEntry());
+              currentTopic.setStatus(topicStatus == null ? TopicStatus.NONE : topicStatus);
+              r.getTopics().add(currentTopic);
+              return true;
+            }, monitor);
+
+            EList<Topic> topics = review.getTopics();
+            currentTopic = topics.get(topics.size() - 1);
+          }
+          else
+          {
+            systemDescriptor.modify(currentTopic, t -> {
+              t.setText(topicEntryField.getEntry());
+
+              if (topicStatus != null)
+              {
+                t.setStatus(topicStatus);
+              }
+              return true;
+            }, monitor);
+          }
+        }
+        catch (Exception ex)
+        {
+          throw WrappedException.wrap(ex);
+        }
+      }
+
+      topicEntryField.resetDirty();
+      topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
+      topicStatus = null;
+      updateDirtyness();
     }
 
     private Object getDiffElement(Topic topic)
@@ -483,96 +634,128 @@ public class OpenReviewAction extends AbstractReviewAction
       return result[0];
     }
 
-    private IStructuredSelection createDiffSelection(Topic topic)
-    {
-      Object diffElement = getDiffElement(topic);
-      return diffElement == null ? StructuredSelection.EMPTY : new StructuredSelection(diffElement);
-    }
-
-    private RoundedEntryField createTopicEntryField(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
+    private EntryField createTopicEntryField(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
     {
       ControlConfig controlConfig = new ControlConfig();
-      controlConfig.setOkHandler(control -> {
-        if (currentTopic != null)
+      controlConfig.setOkDetector(null);
+
+      FieldConfig fieldConfig = new EntryField.FieldConfig();
+      fieldConfig.setEntryBackground(entryBackgroundColor);
+      fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
+      fieldConfig.setEntryControlConfig(controlConfig);
+      fieldConfig.setPreviewProvider(renderer);
+      fieldConfig.setInitialPreviewMode(true);
+      fieldConfig.setDirtyHandler(entryField -> handleTopicDirtyChanged(entryField.isDirty()));
+      fieldConfig.setExtraButtonAdvisors(new ButtonAdvisor()
+      {
+        @Override
+        public String getToolTipText()
         {
-          try
-          {
-            systemDescriptor.modify(currentTopic, t -> {
-              String entry = entryControlAdvisor.getEntry(control);
-              t.setText(entry);
-              return true;
-            }, null);
-          }
-          catch (Exception ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
+          return "Save changes";
+        }
+
+        @Override
+        public Image getHoverImage()
+        {
+          return SharedIcons.getImage(SharedIcons.ETOOL_SAVE);
+        }
+
+        @Override
+        public void run()
+        {
+          getInput().getEditor().doSave(new NullProgressMonitor());
         }
       });
 
-      return new RoundedEntryField(parent, SWT.NONE, entryBackgroundColor, entryControlAdvisor, controlConfig, renderer, true);
+      EntryField entryField = new EntryField(parent, SWT.NONE, fieldConfig);
+      entryField.setExtraButtonVisible(0, false);
+
+      return entryField;
     }
 
     private void selectTopic(ModelReference modelReference)
     {
-      Topic topic = topics.computeIfAbsent(modelReference, k -> {
-        Topic t = review.getTopic(modelReference);
-        if (t == null)
-        {
-          t = ReviewsFactory.eINSTANCE.createTopic();
-          t.setModelReference(modelReference);
-          saveTopicChanges(t);
-        }
-
-        return t;
-      });
+      Topic topic = review.getTopic(modelReference);
+      if (topic == null)
+      {
+        topic = ReviewsFactory.eINSTANCE.createTopic();
+        topic.setModelReference(modelReference);
+      }
 
       if (topic != currentTopic)
       {
         currentTopic = topic;
-        topicEntryField.setEntry(topic == null ? null : topic.getText());
-        topicEntryField.setPreviewMode(true);
+        topicStatus = null;
+
+        topicEntryField.setEntry(topic.getText());
+
+        boolean previewMode = !topicEntryField.isEmpty();
+        topicEntryField.setPreviewMode(previewMode);
+
+        if (previewMode)
+        {
+          chatComposite.setFocus();
+        }
+        else
+        {
+          topicEntryField.setFocus();
+        }
+
+        refreshTopicUI();
         chatComposite.refreshMessageBrowser();
       }
-
-      if (false)
-      {
-        Input input = getInput();
-        input.setDirty(true);
-      }
     }
 
-    private boolean topicNeedsSave(Topic topic)
+    private Topic getTopic(Object diffSelection)
     {
-      return false;
-    }
-
-    private void saveTopicChanges(Topic topic)
-    {
-      try
+      TreeNode node = Input.getTreeNode(diffSelection);
+      if (node != null)
       {
-        if (topic.cdoState() == CDOState.TRANSIENT)
+        ModelReference modelReference = createModelReference(node);
+        if (modelReference != null)
         {
-          systemDescriptor.modify(review, r -> {
-            r.getTopics().add(topic);
-            return true;
-          }, null);
+          if (currentTopic != null && modelReference.equals(currentTopic.getModelReference()))
+          {
+            return currentTopic;
+          }
+
+          return review.getTopic(modelReference);
         }
-        // else
-        // {
-        // systemDescriptor.modify(topic, r -> {
-        // Topic newTopic = ReviewsFactory.eINSTANCE.createTopic();
-        // newTopic.setModelReference(modelReference);
-        //
-        // r.getTopics().add(newTopic);
-        // return newTopic;
-        // }, null);
-        // }
       }
-      catch (Exception ex)
+
+      return null;
+    }
+
+    private void refreshTopicUI()
+    {
+      TopicStatus status = topicStatus;
+      if (status == null && currentTopic != null)
       {
-        throw WrappedException.wrap(ex);
+        status = currentTopic.getStatus();
       }
+
+      switch (Objects.requireNonNullElse(status, TopicStatus.NONE))
+      {
+      case NONE:
+        topicIcon.setImage(topicImage);
+        topicActionLine.setText(createTopicActionText(UNRESOLVE_ACTION, UNRESOLVE_LABEL));
+        break;
+
+      case UNRESOLVED:
+        topicIcon.setImage(topicImageUnresolved);
+        topicActionLine.setText(createTopicActionText(RESOLVE_ACTION, RESOLVE_LABEL));
+        break;
+
+      case RESOLVED:
+        topicIcon.setImage(topicImageResolved);
+        topicActionLine.setText(createTopicActionText(UNRESOLVE_ACTION, UNRESOLVE_LABEL));
+        break;
+      }
+    }
+
+    private boolean topicNeedsSave()
+    {
+      return currentTopic != null && (topicStatus != null || topicEntryField.isDirty());
     }
 
     private ChatComposite createChatComposite(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
@@ -614,11 +797,41 @@ public class OpenReviewAction extends AbstractReviewAction
       }
     }
 
-    private void replaceDiffViewerNavigatable()
+    private void customizeDiffViewer()
     {
       if (NAVIGATABLE_FIELD != null)
       {
         EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
+
+        // Customize the label provider with topic status decorations.
+        IStyledLabelProvider delegate = viewerWrapper.getLabelProvider().getStyledStringProvider();
+        viewerWrapper.setLabelProvider(new DelegatingStyledCellLabelProvider(delegate)
+        {
+          @Override
+          protected StyledString getStyledText(Object element)
+          {
+            StyledString styledText = super.getStyledText(element);
+
+            Topic topic = getTopic(element);
+            if (topic != null)
+            {
+              TopicStatus status = topic == currentTopic ? topicStatus : topic.getStatus();
+              if (status == TopicStatus.UNRESOLVED)
+              {
+                styledText.append("  ").append("[Unresolved]", UNRESOLVED_STYLER);
+
+              }
+              else if (status == TopicStatus.RESOLVED)
+              {
+                styledText.append("  ").append("[Resolved]", RESOLVED_STYLER);
+              }
+            }
+
+            return styledText;
+          }
+        });
+
+        // Customize the navigatable to select the initial topic as the first diff.
         EMFCompareStructureMergeViewerContentProvider contentProvider = viewerWrapper.getContentProvider();
         WrappableTreeViewer treeViewer = viewerWrapper.getNavigatable().getViewer();
 
@@ -742,6 +955,11 @@ public class OpenReviewAction extends AbstractReviewAction
           }
         });
       }
+    }
+
+    private static String createTopicActionText(String action, String label)
+    {
+      return "<a href=\"" + action + "\">" + label + "</a>";
     }
 
     private static ModelReference createModelReference(TreeNode node)

@@ -122,6 +122,38 @@ public final class ObjectUtil
   }
 
   /**
+   * @since 3.26
+   */
+  public static <T> int size(T[] array)
+  {
+    return array == null ? 0 : array.length;
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static <T extends Map<?, ?>> int size(Map<?, ?> map)
+  {
+    return map == null ? 0 : map.size();
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static <T extends Collection<?>> int size(Collection<?> collection)
+  {
+    return collection == null ? 0 : collection.size();
+  }
+
+  /**
+   * @since 3.26
+   */
+  public static int size(String string)
+  {
+    return string == null ? 0 : string.length();
+  }
+
+  /**
    * @since 3.3
    */
   public static Exception close(Object object)

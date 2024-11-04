@@ -170,7 +170,7 @@ public class ReviewsMenuFiller implements MenuFiller
             menu.add(new Separator());
             menu.add(new ResolveAction(page, topic));
           }
-          else if (status == null || status == TopicStatus.RESOLVED)
+          else
           {
             menu.add(new Separator());
             menu.add(new UnresolveAction(page, topic));

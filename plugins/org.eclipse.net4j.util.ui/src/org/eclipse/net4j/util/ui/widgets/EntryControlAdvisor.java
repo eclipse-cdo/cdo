@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.net4j.util.ui;
+package org.eclipse.net4j.util.ui.widgets;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
@@ -20,6 +20,7 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Text;
 
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 /**
  * @author Eike Stepper
@@ -85,7 +86,8 @@ public class EntryControlAdvisor
     Consumer<Control> okHandler = config.getOkHandler();
     if (okHandler != null)
     {
-      if ((e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) && (e.stateMask & SWT.MODIFIER_MASK) == 0)
+      Predicate<KeyEvent> okDetector = config.getOkDetector();
+      if (okDetector != null && okDetector.test(e))
       {
         okHandler.accept(control);
         e.doit = false;
@@ -103,9 +105,14 @@ public class EntryControlAdvisor
    */
   public static final class ControlConfig
   {
-    private Consumer<Control> modifyHandler;
+    public static final Predicate<KeyEvent> DEFAULT_OK_DETECTOR = e -> //
+    (e.keyCode == SWT.CR || e.keyCode == SWT.KEYPAD_CR) && (e.stateMask & SWT.MODIFIER_MASK) == 0;
+
+    private Predicate<KeyEvent> okDetector = DEFAULT_OK_DETECTOR;
 
     private Consumer<Control> okHandler;
+
+    private Consumer<Control> modifyHandler;
 
     public ControlConfig()
     {
@@ -113,18 +120,19 @@ public class EntryControlAdvisor
 
     public ControlConfig(ControlConfig source)
     {
-      modifyHandler = source.modifyHandler;
+      okDetector = source.okDetector;
       okHandler = source.okHandler;
+      modifyHandler = source.modifyHandler;
     }
 
-    public Consumer<Control> getModifyHandler()
+    public Predicate<KeyEvent> getOkDetector()
     {
-      return modifyHandler;
+      return okDetector;
     }
 
-    public void setModifyHandler(Consumer<Control> modifyHandler)
+    public void setOkDetector(Predicate<KeyEvent> okDetector)
     {
-      this.modifyHandler = modifyHandler;
+      this.okDetector = okDetector;
     }
 
     public Consumer<Control> getOkHandler()
@@ -135,6 +143,16 @@ public class EntryControlAdvisor
     public void setOkHandler(Consumer<Control> okHandler)
     {
       this.okHandler = okHandler;
+    }
+
+    public Consumer<Control> getModifyHandler()
+    {
+      return modifyHandler;
+    }
+
+    public void setModifyHandler(Consumer<Control> modifyHandler)
+    {
+      this.modifyHandler = modifyHandler;
     }
   }
 

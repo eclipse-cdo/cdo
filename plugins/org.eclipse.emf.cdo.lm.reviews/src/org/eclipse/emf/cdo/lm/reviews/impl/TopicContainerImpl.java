@@ -335,17 +335,17 @@ public abstract class TopicContainerImpl extends ModelElementImpl implements Top
       Topic topic = (Topic)container;
 
       TopicStatus status = topic.getStatus();
-      if (status == null || status == TopicStatus.NONE)
-      {
-        statistics.incNoneCount();
-      }
-      else if (status == TopicStatus.UNRESOLVED)
+      if (status == TopicStatus.UNRESOLVED)
       {
         statistics.incUnresolvedCount();
       }
       else if (status == TopicStatus.RESOLVED)
       {
         statistics.incResolvedCount();
+      }
+      else
+      {
+        statistics.incNoneCount();
       }
     }
 

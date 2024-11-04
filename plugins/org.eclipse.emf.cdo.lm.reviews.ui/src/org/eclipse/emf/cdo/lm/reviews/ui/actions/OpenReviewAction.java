@@ -776,7 +776,7 @@ public class OpenReviewAction extends AbstractReviewAction
         chatComposite.setVisible(visible);
 
         gridData.exclude = !visible;
-        chatComposite.getParent().layout(true);
+        chatComposite.getParent().requestLayout();
       }
     }
 

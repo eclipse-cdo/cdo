@@ -186,7 +186,7 @@ public final class EntryField extends Composite
     updateControlVerticalBar(lastControlHeight);
 
     layoutParent();
-    redraw();
+    // redraw();
 
     Consumer<EntryField> previewModeHandler = config.getPreviewModeHandler();
     if (previewModeHandler != null)
@@ -333,8 +333,11 @@ public final class EntryField extends Composite
 
   private void layoutParent()
   {
-    layout(true);
-    getParent().layout(true);
+    requestLayout();
+    getParent().requestLayout();
+
+    // layout(true);
+    // getParent().layout(true);
   }
 
   /**

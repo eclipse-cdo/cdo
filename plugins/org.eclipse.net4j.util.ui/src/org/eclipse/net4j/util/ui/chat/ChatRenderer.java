@@ -64,7 +64,7 @@ public class ChatRenderer implements UnaryOperator<String>
 
   public void renderHTML(Iterable<Renderable> renderables, StringBuilder html, Map<String, Object> properties)
   {
-    Pair<String, String> htmlEnclosure = getHTMLEnclosure();
+    Pair<String, String> htmlEnclosure = getHTMLEnclosure(properties);
     html.append(htmlEnclosure.getElement1());
     html.append("\n<table width=\"100%\">\n");
 
@@ -222,7 +222,7 @@ public class ChatRenderer implements UnaryOperator<String>
     return str.replace(" ", "&nbsp;");
   }
 
-  protected Pair<String, String> getHTMLEnclosure()
+  protected Pair<String, String> getHTMLEnclosure(Map<String, Object> properties)
   {
     if (htmlEnclosure == null)
     {

@@ -643,6 +643,7 @@ public class OpenReviewAction extends AbstractReviewAction
       fieldConfig.setEntryBackground(entryBackgroundColor);
       fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
       fieldConfig.setEntryControlConfig(controlConfig);
+      fieldConfig.setEmptyHint("Type a review topic");
       fieldConfig.setPreviewProvider(renderer);
       fieldConfig.setInitialPreviewMode(true);
       fieldConfig.setDirtyHandler(entryField -> handleTopicDirtyChanged(entryField.isDirty()));

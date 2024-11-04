@@ -172,6 +172,7 @@ public final class ChatComposite extends Composite
     fieldConfig.setEntryBackground(entryBackgroundColor);
     fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
     fieldConfig.setEntryControlConfig(controlConfig);
+    fieldConfig.setEmptyHint("Type a message");
     fieldConfig.setPreviewProvider(config.getChatRenderer());
     fieldConfig.setInitialPreviewMode(false);
     fieldConfig.setDirtyHandler(entryField -> dirtyStateChanged());

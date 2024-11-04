@@ -367,6 +367,8 @@ public final class EntryField extends Composite
 
     private ControlConfig entryControlConfig;
 
+    private String emptyHint;
+
     private UnaryOperator<String> previewProvider;
 
     private boolean initialPreviewMode;
@@ -388,6 +390,7 @@ public final class EntryField extends Composite
       entryBackground = source.entryBackground;
       entryControlAdvisor = source.entryControlAdvisor;
       entryControlConfig = new ControlConfig(source.entryControlConfig);
+      emptyHint = source.emptyHint;
       previewProvider = source.previewProvider;
       initialPreviewMode = source.initialPreviewMode;
       extraButtonAdvisors = source.extraButtonAdvisors == null ? null : Arrays.copyOf(source.extraButtonAdvisors, source.extraButtonAdvisors.length);
@@ -424,6 +427,16 @@ public final class EntryField extends Composite
     public void setEntryControlConfig(ControlConfig entryControlConfig)
     {
       this.entryControlConfig = entryControlConfig;
+    }
+
+    public String getEmptyHint()
+    {
+      return emptyHint;
+    }
+
+    public void setEmptyHint(String emptyHint)
+    {
+      this.emptyHint = emptyHint;
     }
 
     public UnaryOperator<String> getPreviewProvider()
@@ -540,6 +553,19 @@ public final class EntryField extends Composite
           verticalBar.setVisible(false);
         }
       }
+
+      String emptyHint = config.getEmptyHint();
+      if (!StringUtil.isEmpty(emptyHint))
+      {
+        control.addPaintListener(e -> {
+          if (StringUtil.isEmpty(entry))
+          {
+            e.gc.setForeground(getDisplay().getSystemColor(SWT.COLOR_DARK_GRAY));
+            e.gc.drawText(emptyHint, 3, 0);
+          }
+        });
+      }
+
       return control;
     }
 

@@ -20,7 +20,7 @@ import java.util.Objects;
  */
 public interface ChatMessage extends Comparable<ChatMessage>
 {
-  public Object getID();
+  public int getID();
 
   public Author getAuthor();
 

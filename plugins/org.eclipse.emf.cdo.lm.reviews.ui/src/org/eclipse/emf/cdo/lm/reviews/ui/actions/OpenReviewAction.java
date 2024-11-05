@@ -621,7 +621,6 @@ public class OpenReviewAction extends AbstractReviewAction
 
       EntryField entryField = new EntryField(parent, SWT.NONE, fieldConfig);
       entryField.setExtraButtonVisible(0, false);
-
       return entryField;
     }
 
@@ -708,11 +707,11 @@ public class OpenReviewAction extends AbstractReviewAction
     {
       ChatComposite.Config config = new ChatComposite.Config();
       config.setOwnUserID("estepper");
-      config.setMessageProvider(ReviewEditorHandler.this::computeMessages);
+      config.setMessageProvider(this::computeMessages);
       config.setChatRenderer(renderer);
       config.setEntryBackgroundColor(entryBackgroundColor);
       config.setEntryControlAdvisor(entryControlAdvisor);
-      config.setSendHandler(ReviewEditorHandler.this::sendMessage);
+      config.setSendHandler(this::sendMessage);
 
       return new ChatComposite(parent, SWT.NONE, config);
     }
@@ -877,9 +876,9 @@ public class OpenReviewAction extends AbstractReviewAction
         messages.add(new ChatMessage()
         {
           @Override
-          public Object getID()
+          public int getID()
           {
-            return comment;
+            return comment.getId();
           }
 
           @Override

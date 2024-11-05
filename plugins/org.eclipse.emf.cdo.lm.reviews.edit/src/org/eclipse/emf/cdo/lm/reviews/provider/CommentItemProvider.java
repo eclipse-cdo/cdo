@@ -57,6 +57,7 @@ public class CommentItemProvider extends ModelElementItemProvider
     {
       super.getPropertyDescriptors(object);
 
+      addIdPropertyDescriptor(object);
       addTextPropertyDescriptor(object);
       addAuthorPropertyDescriptor(object);
       addCreationTimePropertyDescriptor(object);
@@ -65,6 +66,20 @@ public class CommentItemProvider extends ModelElementItemProvider
       addReplyToPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Id feature.
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIdPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Authorable_id_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_id_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__ID, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -77,7 +92,7 @@ public class CommentItemProvider extends ModelElementItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_author_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_author_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__AUTHOR, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__AUTHOR, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -92,7 +107,7 @@ public class CommentItemProvider extends ModelElementItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_creationTime_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Authorable_creationTime_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -106,7 +121,7 @@ public class CommentItemProvider extends ModelElementItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_editTime_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_editTime_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -193,17 +208,8 @@ public class CommentItemProvider extends ModelElementItemProvider
   @Override
   public Object getStyledText(Object object)
   {
-    String label = ((Comment)object).getText();
-    StyledString styledLabel = new StyledString();
-    if (label == null || label.length() == 0)
-    {
-      styledLabel.append(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER);
-    }
-    else
-    {
-      styledLabel.append(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" " + label);
-    }
-    return styledLabel;
+    Comment comment = (Comment)object;
+    return new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Integer.toString(comment.getId()));
   }
 
   /**
@@ -220,6 +226,7 @@ public class CommentItemProvider extends ModelElementItemProvider
 
     switch (notification.getFeatureID(Comment.class))
     {
+    case ReviewsPackage.COMMENT__ID:
     case ReviewsPackage.COMMENT__TEXT:
     case ReviewsPackage.COMMENT__AUTHOR:
     case ReviewsPackage.COMMENT__CREATION_TIME:

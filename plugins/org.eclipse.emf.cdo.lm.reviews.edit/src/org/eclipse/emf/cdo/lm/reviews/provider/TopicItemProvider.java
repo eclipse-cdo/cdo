@@ -58,6 +58,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
     {
       super.getPropertyDescriptors(object);
 
+      addIdPropertyDescriptor(object);
       addTextPropertyDescriptor(object);
       addAuthorPropertyDescriptor(object);
       addCreationTimePropertyDescriptor(object);
@@ -72,6 +73,19 @@ public class TopicItemProvider extends TopicContainerItemProvider
       addParentIndexPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
+  }
+
+  /**
+   * This adds a property descriptor for the Id feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addIdPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Authorable_id_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_id_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__ID, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -138,7 +152,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_author_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_author_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__AUTHOR, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__AUTHOR, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -152,7 +166,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_creationTime_feature"),
         getString("_UI_PropertyDescriptor_description", "_UI_Authorable_creationTime_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -165,7 +179,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Authorable_editTime_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_editTime_feature", "_UI_Authorable_type"),
-        ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, true, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -337,6 +351,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
 
     switch (notification.getFeatureID(Topic.class))
     {
+    case ReviewsPackage.TOPIC__ID:
     case ReviewsPackage.TOPIC__TEXT:
     case ReviewsPackage.TOPIC__AUTHOR:
     case ReviewsPackage.TOPIC__CREATION_TIME:

@@ -33,6 +33,7 @@ import java.lang.reflect.InvocationTargetException;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getText <em>Text</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl#getCreationTime <em>Creation Time</em>}</li>
@@ -46,6 +47,16 @@ import java.lang.reflect.InvocationTargetException;
  */
 public class CommentImpl extends ModelElementImpl implements Comment
 {
+  /**
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected static final int ID_EDEFAULT = 0;
+
   /**
    * The default value of the '{@link #getText() <em>Text</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -107,6 +118,28 @@ public class CommentImpl extends ModelElementImpl implements Comment
   protected EClass eStaticClass()
   {
     return ReviewsPackage.Literals.COMMENT;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int getId()
+  {
+    return (Integer)eDynamicGet(ReviewsPackage.COMMENT__ID, ReviewsPackage.Literals.AUTHORABLE__ID, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setId(int newId)
+  {
+    eDynamicSet(ReviewsPackage.COMMENT__ID, ReviewsPackage.Literals.AUTHORABLE__ID, newId);
   }
 
   /**
@@ -326,6 +359,8 @@ public class CommentImpl extends ModelElementImpl implements Comment
   {
     switch (featureID)
     {
+    case ReviewsPackage.COMMENT__ID:
+      return getId();
     case ReviewsPackage.COMMENT__TEXT:
       return getText();
     case ReviewsPackage.COMMENT__AUTHOR:
@@ -358,6 +393,9 @@ public class CommentImpl extends ModelElementImpl implements Comment
   {
     switch (featureID)
     {
+    case ReviewsPackage.COMMENT__ID:
+      setId((Integer)newValue);
+      return;
     case ReviewsPackage.COMMENT__TEXT:
       setText((String)newValue);
       return;
@@ -390,6 +428,9 @@ public class CommentImpl extends ModelElementImpl implements Comment
   {
     switch (featureID)
     {
+    case ReviewsPackage.COMMENT__ID:
+      setId(ID_EDEFAULT);
+      return;
     case ReviewsPackage.COMMENT__TEXT:
       setText(TEXT_EDEFAULT);
       return;
@@ -422,6 +463,8 @@ public class CommentImpl extends ModelElementImpl implements Comment
   {
     switch (featureID)
     {
+    case ReviewsPackage.COMMENT__ID:
+      return getId() != ID_EDEFAULT;
     case ReviewsPackage.COMMENT__TEXT:
       return TEXT_EDEFAULT == null ? getText() != null : !TEXT_EDEFAULT.equals(getText());
     case ReviewsPackage.COMMENT__AUTHOR:

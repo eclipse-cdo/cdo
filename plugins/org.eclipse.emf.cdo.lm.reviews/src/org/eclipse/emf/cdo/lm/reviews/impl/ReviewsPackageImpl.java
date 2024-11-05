@@ -210,7 +210,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getAuthorable_Text()
+  public EAttribute getAuthorable_Id()
   {
     return (EAttribute)authorableEClass.getEStructuralFeatures().get(0);
   }
@@ -221,7 +221,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getAuthorable_Author()
+  public EAttribute getAuthorable_Text()
   {
     return (EAttribute)authorableEClass.getEStructuralFeatures().get(1);
   }
@@ -232,7 +232,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getAuthorable_CreationTime()
+  public EAttribute getAuthorable_Author()
   {
     return (EAttribute)authorableEClass.getEStructuralFeatures().get(2);
   }
@@ -243,9 +243,20 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
-  public EAttribute getAuthorable_EditTime()
+  public EAttribute getAuthorable_CreationTime()
   {
     return (EAttribute)authorableEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAuthorable_EditTime()
+  {
+    return (EAttribute)authorableEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -778,6 +789,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
 
     // Create classes and their features
     authorableEClass = createEClass(AUTHORABLE);
+    createEAttribute(authorableEClass, AUTHORABLE__ID);
     createEAttribute(authorableEClass, AUTHORABLE__TEXT);
     createEAttribute(authorableEClass, AUTHORABLE__AUTHOR);
     createEAttribute(authorableEClass, AUTHORABLE__CREATION_TIME);
@@ -891,6 +903,8 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
 
     // Initialize classes, features, and operations; add parameters
     initEClass(authorableEClass, Authorable.class, "Authorable", IS_ABSTRACT, IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAuthorable_Id(), ecorePackage.getEInt(), "id", null, 1, 1, Authorable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
+        !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAuthorable_Text(), ecorePackage.getEString(), "text", null, 1, 1, Authorable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getAuthorable_Author(), ecorePackage.getEString(), "author", null, 1, 1, Authorable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,

@@ -4,6 +4,7 @@
     nsPrefix="reviews">
   <eClassifiers xsi:type="ecore:EClass" name="Authorable" abstract="true" interface="true"
       eSuperTypes="../../org.eclipse.emf.cdo.lm/model/LM.ecore#//SystemElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="author" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

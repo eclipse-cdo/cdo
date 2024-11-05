@@ -29,10 +29,11 @@
     </genEnums>
     <genDataTypes ecoreDataType="Reviews.ecore#//ModelReference"/>
     <genClasses image="false" ecoreClass="Reviews.ecore#//Authorable">
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/text"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/author"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/creationTime"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/editTime"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/author"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/creationTime"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/editTime"/>
     </genClasses>
     <genClasses image="false" ecoreClass="Reviews.ecore#//TopicContainer">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference Reviews.ecore#//TopicContainer/review"/>

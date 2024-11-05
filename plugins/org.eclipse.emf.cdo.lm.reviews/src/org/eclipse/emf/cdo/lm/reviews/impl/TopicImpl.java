@@ -38,6 +38,7 @@ import java.util.function.Predicate;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl#getId <em>Id</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl#getText <em>Text</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl#getAuthor <em>Author</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl#getCreationTime <em>Creation Time</em>}</li>
@@ -57,6 +58,16 @@ import java.util.function.Predicate;
  */
 public class TopicImpl extends TopicContainerImpl implements Topic
 {
+  /**
+   * The default value of the '{@link #getId() <em>Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getId()
+   * @generated
+   * @ordered
+   */
+  protected static final int ID_EDEFAULT = 0;
+
   /**
    * The default value of the '{@link #getText() <em>Text</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -166,6 +177,28 @@ public class TopicImpl extends TopicContainerImpl implements Topic
   protected EClass eStaticClass()
   {
     return ReviewsPackage.Literals.TOPIC;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public int getId()
+  {
+    return (Integer)eDynamicGet(ReviewsPackage.TOPIC__ID, ReviewsPackage.Literals.AUTHORABLE__ID, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setId(int newId)
+  {
+    eDynamicSet(ReviewsPackage.TOPIC__ID, ReviewsPackage.Literals.AUTHORABLE__ID, newId);
   }
 
   /**
@@ -562,6 +595,8 @@ public class TopicImpl extends TopicContainerImpl implements Topic
   {
     switch (featureID)
     {
+    case ReviewsPackage.TOPIC__ID:
+      return getId();
     case ReviewsPackage.TOPIC__TEXT:
       return getText();
     case ReviewsPackage.TOPIC__AUTHOR:
@@ -602,6 +637,9 @@ public class TopicImpl extends TopicContainerImpl implements Topic
   {
     switch (featureID)
     {
+    case ReviewsPackage.TOPIC__ID:
+      setId((Integer)newValue);
+      return;
     case ReviewsPackage.TOPIC__TEXT:
       setText((String)newValue);
       return;
@@ -640,6 +678,9 @@ public class TopicImpl extends TopicContainerImpl implements Topic
   {
     switch (featureID)
     {
+    case ReviewsPackage.TOPIC__ID:
+      setId(ID_EDEFAULT);
+      return;
     case ReviewsPackage.TOPIC__TEXT:
       setText(TEXT_EDEFAULT);
       return;
@@ -678,6 +719,8 @@ public class TopicImpl extends TopicContainerImpl implements Topic
   {
     switch (featureID)
     {
+    case ReviewsPackage.TOPIC__ID:
+      return getId() != ID_EDEFAULT;
     case ReviewsPackage.TOPIC__TEXT:
       return TEXT_EDEFAULT == null ? getText() != null : !TEXT_EDEFAULT.equals(getText());
     case ReviewsPackage.TOPIC__AUTHOR:
@@ -720,6 +763,8 @@ public class TopicImpl extends TopicContainerImpl implements Topic
     {
       switch (derivedFeatureID)
       {
+      case ReviewsPackage.TOPIC__ID:
+        return ReviewsPackage.AUTHORABLE__ID;
       case ReviewsPackage.TOPIC__TEXT:
         return ReviewsPackage.AUTHORABLE__TEXT;
       case ReviewsPackage.TOPIC__AUTHOR:
@@ -747,6 +792,8 @@ public class TopicImpl extends TopicContainerImpl implements Topic
     {
       switch (baseFeatureID)
       {
+      case ReviewsPackage.AUTHORABLE__ID:
+        return ReviewsPackage.TOPIC__ID;
       case ReviewsPackage.AUTHORABLE__TEXT:
         return ReviewsPackage.TOPIC__TEXT;
       case ReviewsPackage.AUTHORABLE__AUTHOR:

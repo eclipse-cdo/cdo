@@ -95,6 +95,16 @@ public interface ReviewsPackage extends EPackage
   int AUTHORABLE__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
 
   /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__ID = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
    * <!-- begin-user-doc -->
    * @since 1.2
@@ -102,7 +112,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTHORABLE__TEXT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
+  int AUTHORABLE__TEXT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -112,7 +122,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTHORABLE__AUTHOR = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
+  int AUTHORABLE__AUTHOR = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Creation Time</b></em>' attribute.
@@ -122,7 +132,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTHORABLE__CREATION_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
+  int AUTHORABLE__CREATION_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Edit Time</b></em>' attribute.
@@ -132,7 +142,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTHORABLE__EDIT_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
+  int AUTHORABLE__EDIT_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
 
   /**
    * The number of structural features of the '<em>Authorable</em>' class.
@@ -142,7 +152,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int AUTHORABLE_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
+  int AUTHORABLE_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 5;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -386,13 +396,23 @@ public interface ReviewsPackage extends EPackage
   int TOPIC__RESOLVED_COUNT = TOPIC_CONTAINER__RESOLVED_COUNT;
 
   /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__ID = TOPIC_CONTAINER_FEATURE_COUNT + 0;
+
+  /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TOPIC__TEXT = TOPIC_CONTAINER_FEATURE_COUNT + 0;
+  int TOPIC__TEXT = TOPIC_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -402,7 +422,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__AUTHOR = TOPIC_CONTAINER_FEATURE_COUNT + 1;
+  int TOPIC__AUTHOR = TOPIC_CONTAINER_FEATURE_COUNT + 2;
 
   /**
    * The feature id for the '<em><b>Creation Time</b></em>' attribute.
@@ -412,7 +432,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__CREATION_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 2;
+  int TOPIC__CREATION_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Edit Time</b></em>' attribute.
@@ -422,7 +442,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__EDIT_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 3;
+  int TOPIC__EDIT_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Heading</b></em>' attribute.
@@ -431,7 +451,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 4;
+  int TOPIC__HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Model Reference</b></em>' attribute.
@@ -440,7 +460,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__MODEL_REFERENCE = TOPIC_CONTAINER_FEATURE_COUNT + 5;
+  int TOPIC__MODEL_REFERENCE = TOPIC_CONTAINER_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -449,7 +469,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__STATUS = TOPIC_CONTAINER_FEATURE_COUNT + 6;
+  int TOPIC__STATUS = TOPIC_CONTAINER_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Container</b></em>' container reference.
@@ -458,7 +478,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__CONTAINER = TOPIC_CONTAINER_FEATURE_COUNT + 7;
+  int TOPIC__CONTAINER = TOPIC_CONTAINER_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Parent Heading</b></em>' reference.
@@ -467,7 +487,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__PARENT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 8;
+  int TOPIC__PARENT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 9;
 
   /**
    * The feature id for the '<em><b>Previous Heading</b></em>' reference.
@@ -476,7 +496,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__PREVIOUS_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 9;
+  int TOPIC__PREVIOUS_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>Next Heading</b></em>' reference.
@@ -485,7 +505,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__NEXT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 10;
+  int TOPIC__NEXT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 11;
 
   /**
    * The feature id for the '<em><b>Outline Number</b></em>' attribute.
@@ -494,7 +514,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__OUTLINE_NUMBER = TOPIC_CONTAINER_FEATURE_COUNT + 11;
+  int TOPIC__OUTLINE_NUMBER = TOPIC_CONTAINER_FEATURE_COUNT + 12;
 
   /**
    * The feature id for the '<em><b>Parent Index</b></em>' attribute.
@@ -503,7 +523,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC__PARENT_INDEX = TOPIC_CONTAINER_FEATURE_COUNT + 12;
+  int TOPIC__PARENT_INDEX = TOPIC_CONTAINER_FEATURE_COUNT + 13;
 
   /**
    * The number of structural features of the '<em>Topic</em>' class.
@@ -512,7 +532,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TOPIC_FEATURE_COUNT = TOPIC_CONTAINER_FEATURE_COUNT + 13;
+  int TOPIC_FEATURE_COUNT = TOPIC_CONTAINER_FEATURE_COUNT + 14;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -549,6 +569,16 @@ public interface ReviewsPackage extends EPackage
    * @ordered
    */
   int COMMENT__ANNOTATIONS = AUTHORABLE__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__ID = AUTHORABLE__ID;
 
   /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -1604,6 +1634,18 @@ public interface ReviewsPackage extends EPackage
   EClass getAuthorable();
 
   /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getId()
+   * @see #getAuthorable()
+   * @generated
+   */
+  EAttribute getAuthorable_Id();
+
+  /**
    * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getText <em>Text</em>}'.
    * <!-- begin-user-doc -->
    * @since 1.2
@@ -2173,6 +2215,15 @@ public interface ReviewsPackage extends EPackage
      * @generated
      */
     EClass AUTHORABLE = eINSTANCE.getAuthorable();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 1.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORABLE__ID = eINSTANCE.getAuthorable_Id();
 
     /**
      * The meta object literal for the '<em><b>Text</b></em>' attribute feature.

@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
+import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
@@ -61,6 +62,7 @@ import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.EMFCompareSt
 import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.Navigatable;
 import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.WrappableTreeViewer;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.edit.tree.TreeNode;
 
@@ -237,6 +239,10 @@ public class OpenReviewAction extends AbstractReviewAction
    */
   private static final class ReviewEditorHandler extends InputHolder
   {
+    private static final String IMAGE_FOLDER = "icons/editor/";
+
+    private static final String TOPIC_IMAGE = IMAGE_FOLDER + "Topic.png";
+
     private static final Field NAVIGATABLE_FIELD;
 
     private static final String UNRESOLVE_ACTION = "unresolve";
@@ -253,70 +259,21 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final DeliveryReview review;
 
-    private final EContentAdapter reviewContentAdapter = new EContentAdapter()
-    {
-      @Override
-      public void notifyChanged(Notification notification)
-      {
-        super.notifyChanged(notification);
-
-        if (!notification.isTouch())
-        {
-          Object notifier = notification.getNotifier();
-
-          Review notifyingReview = getReview(notifier);
-          if (notifyingReview == review)
-          {
-            Topic topic = getTopic(notifier);
-            handleReviewContentChange(topic);
-          }
-        }
-      }
-
-      private Review getReview(Object object)
-      {
-        if (object instanceof Review)
-        {
-          return (Review)object;
-        }
-
-        if (object instanceof EObject)
-        {
-          return getReview(((EObject)object).eContainer());
-        }
-
-        return null;
-      }
-
-      private Topic getTopic(Object object)
-      {
-        if (object instanceof Topic)
-        {
-          return (Topic)object;
-        }
-
-        if (object instanceof EObject)
-        {
-          return getTopic(((EObject)object).eContainer());
-        }
-
-        return null;
-      }
-    };
+    private final EContentAdapter reviewContentAdapter = new ReviewContentAdapter();
 
     private final ISystemDescriptor systemDescriptor;
 
-    private final Image topicImage = OM.getImage("icons/editor/Topic.png");
+    private final Image topicImage = OM.getImage(TOPIC_IMAGE);
 
-    private final Image topicImageUnresolved = OM.getOverlayImage("icons/editor/Topic.png", "icons/editor/Unresolved.png", 18, 2);
+    private final Image topicImageUnresolved = OM.getOverlayImage(TOPIC_IMAGE, IMAGE_FOLDER + "Unresolved.png", 18, 2);
 
-    private final Image topicImageResolved = OM.getOverlayImage("icons/editor/Topic.png", "icons/editor/Resolved.png", 14, 2);
+    private final Image topicImageResolved = OM.getOverlayImage(TOPIC_IMAGE, IMAGE_FOLDER + "Resolved.png", 14, 2);
 
     private Topic firstTopic;
 
     private Topic currentTopic;
 
-    private Object lastDiffSelection;
+    private Object lastDiffElement;
 
     private ChatRenderer renderer;
 
@@ -367,17 +324,17 @@ public class OpenReviewAction extends AbstractReviewAction
       input.addPropertyChangeListener(event -> {
         if (CompareEditorInput.PROP_SELECTED_EDITION.equals(event.getProperty()))
         {
-          Object diffSelection = event.getNewValue();
-          if (diffSelection != lastDiffSelection)
+          Object diffElement = event.getNewValue();
+          if (diffElement != lastDiffElement)
           {
-            if (!handleDiffSelection(lastDiffSelection, diffSelection))
+            if (!handleDiffElementSelection(lastDiffElement, diffElement))
             {
               TreeViewer treeViewer = input.getTreeViewer();
-              treeViewer.setSelection(new StructuredSelection(lastDiffSelection));
+              treeViewer.setSelection(new StructuredSelection(lastDiffElement));
               return;
             }
 
-            lastDiffSelection = diffSelection;
+            lastDiffElement = diffElement;
           }
         }
       });
@@ -456,11 +413,19 @@ public class OpenReviewAction extends AbstractReviewAction
       navigatable.selectChange(INavigatable.FIRST_CHANGE);
     }
 
-    private boolean handleDiffSelection(Object oldDiffSelection, Object newDiffSelection)
+    private void updateDiffElementLabel(Object diffElement)
+    {
+      if (diffElement != null)
+      {
+        getInput().getTreeViewer().update(diffElement, null);
+      }
+    }
+
+    private boolean handleDiffElementSelection(Object oldDiffElement, Object newDiffElement)
     {
       boolean cancel = false;
 
-      if (oldDiffSelection != null && topicNeedsSave())
+      if (oldDiffElement != null && topicNeedsSave())
       {
         int result = MessageDialog.open(MessageDialog.QUESTION_WITH_CANCEL, topicEntryField.getShell(), "Topic Change",
             "Do you want to save the changes to the current topic?", SWT.SHEET, "Save", "Don't Save", "Cancel");
@@ -482,7 +447,7 @@ public class OpenReviewAction extends AbstractReviewAction
         }
       }
 
-      TreeNode node = Input.getTreeNode(newDiffSelection);
+      TreeNode node = Input.getTreeNode(newDiffElement);
       if (node != null)
       {
         ModelReference modelReference = createModelReference(node);
@@ -494,7 +459,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
       if (cancel)
       {
-        updateDiffSelectionLabel(oldDiffSelection);
+        updateDiffElementLabel(oldDiffElement);
       }
 
       return true;
@@ -518,50 +483,17 @@ public class OpenReviewAction extends AbstractReviewAction
       {
         topicStatus = newStatus;
 
-        Object diffSelection = getDiffElement(currentTopic);
-        updateDiffSelectionLabel(diffSelection);
+        Object diffElement = getDiffElement(currentTopic);
+        updateDiffElementLabel(diffElement);
 
         refreshTopicUI();
         updateDirtyness();
       }
     }
 
-    private void updateDiffSelectionLabel(Object diffSelection)
-    {
-      if (diffSelection != null)
-      {
-        getInput().getTreeViewer().update(diffSelection, null);
-      }
-    }
-
-    private void updateDirtyness()
-    {
-      boolean dirty = isCurrentTopicDirty();
-      getInput().setDirty(dirty);
-      topicEntryField.setExtraButtonVisible(0, dirty);
-    }
-
-    private boolean isCurrentTopicDirty()
-    {
-      if (currentTopic == null)
-      {
-        return false;
-      }
-
-      return topicEntryField.isDirty() || topicStatus != null;
-    }
-
     private void handleTopicDirtyChanged(boolean dirty)
     {
       updateDirtyness();
-    }
-
-    private void handleReviewContentChange(Topic topic)
-    {
-      if (topic != null && topic == currentTopic)
-      {
-        UIUtil.asyncExec(chatComposite::refreshMessageBrowser);
-      }
     }
 
     private void handleSave(IProgressMonitor monitor)
@@ -606,6 +538,23 @@ public class OpenReviewAction extends AbstractReviewAction
       topicStatus = null;
       updateDirtyness();
       setChatCompositeVisible(true);
+    }
+
+    private void updateDirtyness()
+    {
+      boolean dirty = isCurrentTopicDirty();
+      getInput().setDirty(dirty);
+      topicEntryField.setExtraButtonVisible(0, dirty);
+    }
+
+    private boolean isCurrentTopicDirty()
+    {
+      if (currentTopic == null)
+      {
+        return false;
+      }
+
+      return topicEntryField.isDirty() || topicStatus != null;
     }
 
     private Object getDiffElement(Topic topic)
@@ -703,9 +652,9 @@ public class OpenReviewAction extends AbstractReviewAction
       }
     }
 
-    private Topic getTopic(Object diffSelection)
+    private Topic getTopic(Object diffElement)
     {
-      TreeNode node = Input.getTreeNode(diffSelection);
+      TreeNode node = Input.getTreeNode(diffElement);
       if (node != null)
       {
         ModelReference modelReference = createModelReference(node);
@@ -824,7 +773,7 @@ public class OpenReviewAction extends AbstractReviewAction
             Topic topic = getTopic(element);
             if (topic != null)
             {
-              TopicStatus status = topic == currentTopic ? topicStatus : topic.getStatus();
+              TopicStatus status = topic == currentTopic && topicStatus != null ? topicStatus : topic.getStatus();
               if (status == TopicStatus.UNRESOLVED)
               {
                 styledText.append("  ").append("[Unresolved]", UNRESOLVED_STYLER);
@@ -1022,6 +971,124 @@ public class OpenReviewAction extends AbstractReviewAction
       }
 
       return match.getOrigin();
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ReviewContentAdapter extends EContentAdapter
+    {
+      public ReviewContentAdapter()
+      {
+      }
+
+      @Override
+      public void notifyChanged(Notification notification)
+      {
+        super.notifyChanged(notification);
+
+        if (!notification.isTouch())
+        {
+          UIRefresh refresh = new UIRefresh(notification);
+          if (refresh.isNeeded())
+          {
+            UIUtil.asyncExec(refresh);
+          }
+        }
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      private final class UIRefresh implements Runnable
+      {
+        private Object diffElementToUpdate;
+
+        private boolean topicUIUpdate;
+
+        private String newTopicEntry;
+
+        private boolean chatUpdate;
+
+        public UIRefresh(Notification notification)
+        {
+          EObject notifier = (EObject)notification.getNotifier();
+          EStructuralFeature feature = (EStructuralFeature)notification.getFeature();
+
+          if (feature == ReviewsPackage.Literals.TOPIC__STATUS)
+          {
+            // Diff element update.
+            diffElementToUpdate = getDiffElement((Topic)notifier);
+
+            // Current topic update.
+            if (notifier == currentTopic)
+            {
+              topicUIUpdate = true;
+            }
+          }
+          else if (feature == ReviewsPackage.Literals.AUTHORABLE__TEXT)
+          {
+            // Current topic update.
+            if (notifier == currentTopic && !topicEntryField.isDirty())
+            {
+              newTopicEntry = notification.getNewStringValue();
+            }
+          }
+          else if (feature == ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS)
+          {
+            checkChatUpdate((TopicContainer)notifier);
+          }
+          else if (notifier instanceof Comment)
+          {
+            TopicContainer container = ((Comment)notifier).getContainer();
+            checkChatUpdate(container);
+          }
+        }
+
+        public boolean isNeeded()
+        {
+          return diffElementToUpdate != null || topicUIUpdate || newTopicEntry != null || chatUpdate;
+        }
+
+        @Override
+        public void run()
+        {
+          updateDiffElementLabel(diffElementToUpdate);
+
+          if (topicUIUpdate)
+          {
+            refreshTopicUI();
+          }
+
+          if (newTopicEntry != null)
+          {
+            topicEntryField.setEntry(newTopicEntry);
+          }
+
+          if (chatUpdate)
+          {
+            chatComposite.refreshMessageBrowser();
+          }
+        }
+
+        private void checkChatUpdate(TopicContainer container)
+        {
+          if (currentTopic == null)
+          {
+            if (container == review)
+            {
+              chatUpdate = true;
+            }
+          }
+          else
+          {
+            if (container == currentTopic)
+            {
+              chatUpdate = true;
+            }
+          }
+        }
+      }
     }
   }
 }

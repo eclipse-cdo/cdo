@@ -81,7 +81,9 @@ public class ChatRenderer implements UnaryOperator<String>
 
   public void renderHTML(DateLine dateLine, StringBuilder html, Map<String, Object> properties)
   {
-    String dateString = getDateString(dateLine.getDate());
+    LocalDate date = dateLine.getDate();
+    String dateString = getDateString(date);
+    dateString = getNonBreakableString(dateString);
 
     html.append("<table class=\"date-line\"><tr><td><hr></td><td class=\"date\">&nbsp;");
     html.append(dateString);
@@ -121,7 +123,19 @@ public class ChatRenderer implements UnaryOperator<String>
     }
     else
     {
-      html.append("<img class=\"avatar\" src=\"" + avatar + "\">");
+      html.append("<img class=\"avatar\" src=\"");
+      html.append(avatar);
+      html.append("\"");
+
+      String fullName = author.getFullName();
+      if (!StringUtil.isEmpty(fullName))
+      {
+        html.append(" title=\"");
+        html.append(fullName);
+        html.append("\"");
+      }
+
+      html.append(">");
     }
 
     html.append("</td><td><div class=\"info\">");
@@ -205,7 +219,7 @@ public class ChatRenderer implements UnaryOperator<String>
     return StringUtil.stripHTML(html);
   }
 
-  protected String getDateString(LocalDate date)
+  public String getDateString(LocalDate date)
   {
     LocalDate today = LocalDate.now();
     if (today.equals(date))
@@ -218,7 +232,11 @@ public class ChatRenderer implements UnaryOperator<String>
       return YESTERDAY;
     }
 
-    String str = date.format(WEEKDAY_FORMATTER) + ", " + date.format(DATE_FORMATTER);
+    return date.format(WEEKDAY_FORMATTER) + ", " + date.format(DATE_FORMATTER);
+  }
+
+  public String getNonBreakableString(String str)
+  {
     return str.replace(" ", "&nbsp;");
   }
 

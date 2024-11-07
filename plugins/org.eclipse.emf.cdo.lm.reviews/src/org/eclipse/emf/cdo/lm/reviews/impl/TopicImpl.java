@@ -12,7 +12,6 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 
 import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.reviews.Authorable;
-import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.Topic;
@@ -126,7 +125,7 @@ public class TopicImpl extends TopicContainerImpl implements Topic
    * @generated
    * @ordered
    */
-  protected static final ModelReference MODEL_REFERENCE_EDEFAULT = null;
+  protected static final String MODEL_REFERENCE_EDEFAULT = null;
 
   /**
    * The default value of the '{@link #getStatus() <em>Status</em>}' attribute.
@@ -251,9 +250,9 @@ public class TopicImpl extends TopicContainerImpl implements Topic
    * @generated
    */
   @Override
-  public ModelReference getModelReference()
+  public String getModelReference()
   {
-    return (ModelReference)eDynamicGet(ReviewsPackage.TOPIC__MODEL_REFERENCE, ReviewsPackage.Literals.TOPIC__MODEL_REFERENCE, true, true);
+    return (String)eDynamicGet(ReviewsPackage.TOPIC__MODEL_REFERENCE, ReviewsPackage.Literals.TOPIC__MODEL_REFERENCE, true, true);
   }
 
   /**
@@ -262,7 +261,7 @@ public class TopicImpl extends TopicContainerImpl implements Topic
    * @generated
    */
   @Override
-  public void setModelReference(ModelReference newModelReference)
+  public void setModelReference(String newModelReference)
   {
     eDynamicSet(ReviewsPackage.TOPIC__MODEL_REFERENCE, ReviewsPackage.Literals.TOPIC__MODEL_REFERENCE, newModelReference);
   }
@@ -656,7 +655,7 @@ public class TopicImpl extends TopicContainerImpl implements Topic
       setHeading((Boolean)newValue);
       return;
     case ReviewsPackage.TOPIC__MODEL_REFERENCE:
-      setModelReference((ModelReference)newValue);
+      setModelReference((String)newValue);
       return;
     case ReviewsPackage.TOPIC__STATUS:
       setStatus((TopicStatus)newValue);

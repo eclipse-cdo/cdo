@@ -50,6 +50,7 @@ public class CommentImpl extends ModelElementImpl implements Comment
   /**
    * The default value of the '{@link #getId() <em>Id</em>}' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @see #getId()
    * @generated

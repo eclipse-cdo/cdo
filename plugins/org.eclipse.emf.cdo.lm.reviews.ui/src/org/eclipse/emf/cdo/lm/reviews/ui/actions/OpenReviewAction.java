@@ -21,7 +21,6 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
-import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
@@ -499,7 +498,7 @@ public class OpenReviewAction extends AbstractReviewAction
       TreeNode node = Input.getTreeNode(newDiffElement);
       if (node != null)
       {
-        ModelReference modelReference = createModelReference(node);
+        String modelReference = createModelReference(node);
         if (modelReference != null)
         {
           selectTopic(modelReference);
@@ -612,7 +611,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
       if (topic != null)
       {
-        ModelReference modelReference = topic.getModelReference();
+        String modelReference = topic.getModelReference();
         if (modelReference != null)
         {
           getInput().forEachDiffElement(element -> {
@@ -673,7 +672,7 @@ public class OpenReviewAction extends AbstractReviewAction
       return entryField;
     }
 
-    private void selectTopic(ModelReference modelReference)
+    private void selectTopic(String modelReference)
     {
       Topic topic = review.getTopic(modelReference);
       setChatCompositeVisible(topic != null);
@@ -705,7 +704,7 @@ public class OpenReviewAction extends AbstractReviewAction
       TreeNode node = Input.getTreeNode(diffElement);
       if (node != null)
       {
-        ModelReference modelReference = createModelReference(node);
+        String modelReference = createModelReference(node);
         if (modelReference != null)
         {
           if (currentTopic != null && modelReference.equals(currentTopic.getModelReference()))
@@ -968,7 +967,7 @@ public class OpenReviewAction extends AbstractReviewAction
       return "<a href=\"" + action + "\">" + label + "</a>";
     }
 
-    private static ModelReference createModelReference(TreeNode node)
+    private static String createModelReference(TreeNode node)
     {
       EObject data = node.getData();
       if (data instanceof Match)
@@ -976,7 +975,7 @@ public class OpenReviewAction extends AbstractReviewAction
         Match match = (Match)data;
 
         CDOID id = getMatchObjectID(match);
-        return new ModelReference(id);
+        return createModelReference(id, null);
       }
 
       if (data instanceof AttributeChange)
@@ -984,7 +983,7 @@ public class OpenReviewAction extends AbstractReviewAction
         AttributeChange diff = (AttributeChange)data;
 
         CDOID id = getMatchObjectID(diff.getMatch());
-        return new ModelReference(id, diff.getAttribute().getName());
+        return createModelReference(id, diff.getAttribute().getName());
       }
 
       if (data instanceof ReferenceChange)
@@ -992,10 +991,26 @@ public class OpenReviewAction extends AbstractReviewAction
         ReferenceChange diff = (ReferenceChange)data;
 
         CDOID id = getMatchObjectID(diff.getMatch());
-        return new ModelReference(id, diff.getReference().getName());
+        return createModelReference(id, diff.getReference().getName());
       }
 
       return null;
+    }
+
+    private static final char SEPARATOR = '.';
+
+    private static String createModelReference(CDOID objectID, String featureName)
+    {
+      StringBuilder builder = new StringBuilder();
+
+      if (featureName != null)
+      {
+        builder.append(featureName);
+        builder.append(SEPARATOR);
+      }
+
+      CDOIDUtil.write(builder, objectID);
+      return builder.toString();
     }
 
     private static CDOID getMatchObjectID(Match match)

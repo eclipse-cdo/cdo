@@ -13,7 +13,6 @@ package org.eclipse.emf.cdo.lm.reviews.impl;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
-import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
@@ -110,8 +109,6 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
       return createReviewStatusFromString(eDataType, initialValue);
     case ReviewsPackage.TOPIC_STATUS:
       return createTopicStatusFromString(eDataType, initialValue);
-    case ReviewsPackage.MODEL_REFERENCE:
-      return createModelReferenceFromString(eDataType, initialValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -131,8 +128,6 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
       return convertReviewStatusToString(eDataType, instanceValue);
     case ReviewsPackage.TOPIC_STATUS:
       return convertTopicStatusToString(eDataType, instanceValue);
-    case ReviewsPackage.MODEL_REFERENCE:
-      return convertModelReferenceToString(eDataType, instanceValue);
     default:
       throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -248,28 +243,6 @@ public class ReviewsFactoryImpl extends EFactoryImpl implements ReviewsFactory
   public String convertReviewStatusToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * @since 1.2
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public ModelReference createModelReferenceFromString(EDataType eDataType, String initialValue)
-  {
-    return (ModelReference)super.createFromString(eDataType, initialValue);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * @since 1.2
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  public String convertModelReferenceToString(EDataType eDataType, Object instanceValue)
-  {
-    return super.convertToString(eDataType, instanceValue);
   }
 
   /**

@@ -116,7 +116,7 @@ public interface TopicContainer extends SystemElement
    */
   EList<Topic> getTopics();
 
-  public default EList<Topic> getTopics(ModelReference modelReference)
+  public default EList<Topic> getTopics(String modelReference)
   {
     EList<Topic> result = new BasicEList<>();
     forEachTopic(topic -> {
@@ -131,7 +131,7 @@ public interface TopicContainer extends SystemElement
     return result;
   }
 
-  public default Topic getTopic(ModelReference modelReference)
+  public default Topic getTopic(String modelReference)
   {
     Topic[] result = { null };
     forEachTopic(topic -> {

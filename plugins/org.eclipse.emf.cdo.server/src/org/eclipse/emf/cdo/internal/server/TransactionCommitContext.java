@@ -121,6 +121,8 @@ public class TransactionCommitContext implements InternalCommitContext
 
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
 
+  private static final Map<String, String> NO_COMMIT_PROPERTIES = Collections.emptyMap();
+
   private final InternalTransaction transaction;
 
   private final CDOBranch branch;
@@ -289,7 +291,7 @@ public class TransactionCommitContext implements InternalCommitContext
   @Override
   public Map<String, String> getCommitProperties()
   {
-    return commitProperties;
+    return commitProperties == null ? NO_COMMIT_PROPERTIES : commitProperties;
   }
 
   @Override

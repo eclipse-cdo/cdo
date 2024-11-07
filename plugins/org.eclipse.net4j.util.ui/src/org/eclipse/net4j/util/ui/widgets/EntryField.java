@@ -186,7 +186,7 @@ public final class EntryField extends Composite
     updateControlVerticalBar(lastControlHeight);
 
     layoutParent();
-    // redraw();
+    redraw();
 
     Consumer<EntryField> previewModeHandler = config.getPreviewModeHandler();
     if (previewModeHandler != null)

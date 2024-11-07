@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.ui.actions;
 
+import org.eclipse.emf.cdo.CDODeltaNotification;
 import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
@@ -68,7 +69,9 @@ import org.eclipse.emf.edit.tree.TreeNode;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.INavigatable;
+import org.eclipse.compare.internal.CompareEditorSelectionProvider;
 import org.eclipse.core.runtime.IProgressMonitor;
+import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.layout.GridDataFactory;
@@ -76,6 +79,8 @@ import org.eclipse.jface.layout.GridLayoutFactory;
 import org.eclipse.jface.layout.LayoutConstants;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider;
 import org.eclipse.jface.viewers.DelegatingStyledCellLabelProvider.IStyledLabelProvider;
+import org.eclipse.jface.viewers.ISelectionChangedListener;
+import org.eclipse.jface.viewers.ISelectionProvider;
 import org.eclipse.jface.viewers.StructuredSelection;
 import org.eclipse.jface.viewers.StyledString;
 import org.eclipse.jface.viewers.StyledString.Styler;
@@ -93,6 +98,7 @@ import org.eclipse.swt.widgets.Link;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IEditorReference;
+import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 
 import java.io.File;
@@ -245,6 +251,8 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private static final Field NAVIGATABLE_FIELD;
 
+    private static final Field SELECTION_LISTENERS_FIELD;
+
     private static final String UNRESOLVE_ACTION = "unresolve";
 
     private static final String UNRESOLVE_LABEL = "Needs resolution";
@@ -289,18 +297,31 @@ public class OpenReviewAction extends AbstractReviewAction
 
     static
     {
-      Field field = null;
+      Field navigableField = null;
 
       try
       {
-        field = ReflectUtil.getField(EMFCompareStructureMergeViewer.class, "navigatable");
+        navigableField = ReflectUtil.getField(EMFCompareStructureMergeViewer.class, "navigatable");
       }
       catch (Throwable ex)
       {
         OM.LOG.error(ex);
       }
 
-      NAVIGATABLE_FIELD = field;
+      NAVIGATABLE_FIELD = navigableField;
+
+      Field selectionListenersField = null;
+
+      try
+      {
+        selectionListenersField = ReflectUtil.getField(CompareEditorSelectionProvider.class, "fSelectionChangedListeners");
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.error(ex);
+      }
+
+      SELECTION_LISTENERS_FIELD = selectionListenersField;
     }
 
     public ReviewEditorHandler(DeliveryReview review, Topic firstTopic, ISystemDescriptor systemDescriptor)
@@ -402,6 +423,34 @@ public class OpenReviewAction extends AbstractReviewAction
           return topicContainer;
         }
       };
+    }
+
+    @Override
+    public void editorOpened(IEditorPart editor)
+    {
+      // Replace the editor site's selection provider.
+      try
+      {
+        TreeViewer treeViewer = getInput().getTreeViewer();
+
+        IEditorSite site = editor.getEditorSite();
+        ISelectionProvider oldProvider = site.getSelectionProvider();
+
+        @SuppressWarnings("unchecked")
+        ListenerList<ISelectionChangedListener> listeners = (ListenerList<ISelectionChangedListener>) //
+        ReflectUtil.getValue(SELECTION_LISTENERS_FIELD, oldProvider);
+
+        for (ISelectionChangedListener listener : listeners)
+        {
+          treeViewer.addSelectionChangedListener(listener);
+        }
+
+        site.setSelectionProvider(treeViewer);
+      }
+      catch (Throwable ex)
+      {
+        OM.LOG.warn(ex);
+      }
     }
 
     public void selectFirstDiffElement(Topic firstTopic)
@@ -756,38 +805,38 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private void customizeDiffViewer()
     {
+      EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
+
+      // Customize the label provider with topic status decorations.
+      IStyledLabelProvider delegate = viewerWrapper.getLabelProvider().getStyledStringProvider();
+      viewerWrapper.setLabelProvider(new DelegatingStyledCellLabelProvider(delegate)
+      {
+        @Override
+        protected StyledString getStyledText(Object element)
+        {
+          StyledString styledText = super.getStyledText(element);
+
+          Topic topic = getTopic(element);
+          if (topic != null)
+          {
+            TopicStatus status = topic == currentTopic && topicStatus != null ? topicStatus : topic.getStatus();
+            if (status == TopicStatus.UNRESOLVED)
+            {
+              styledText.append("  ").append("[Unresolved]", UNRESOLVED_STYLER);
+
+            }
+            else if (status == TopicStatus.RESOLVED)
+            {
+              styledText.append("  ").append("[Resolved]", RESOLVED_STYLER);
+            }
+          }
+
+          return styledText;
+        }
+      });
+
       if (NAVIGATABLE_FIELD != null)
       {
-        EMFCompareStructureMergeViewer viewerWrapper = (EMFCompareStructureMergeViewer)getInput().getViewerWrapper();
-
-        // Customize the label provider with topic status decorations.
-        IStyledLabelProvider delegate = viewerWrapper.getLabelProvider().getStyledStringProvider();
-        viewerWrapper.setLabelProvider(new DelegatingStyledCellLabelProvider(delegate)
-        {
-          @Override
-          protected StyledString getStyledText(Object element)
-          {
-            StyledString styledText = super.getStyledText(element);
-
-            Topic topic = getTopic(element);
-            if (topic != null)
-            {
-              TopicStatus status = topic == currentTopic && topicStatus != null ? topicStatus : topic.getStatus();
-              if (status == TopicStatus.UNRESOLVED)
-              {
-                styledText.append("  ").append("[Unresolved]", UNRESOLVED_STYLER);
-
-              }
-              else if (status == TopicStatus.RESOLVED)
-              {
-                styledText.append("  ").append("[Resolved]", RESOLVED_STYLER);
-              }
-            }
-
-            return styledText;
-          }
-        });
-
         // Customize the navigatable to select the initial topic as the first diff.
         EMFCompareStructureMergeViewerContentProvider contentProvider = viewerWrapper.getContentProvider();
         WrappableTreeViewer treeViewer = viewerWrapper.getNavigatable().getViewer();
@@ -986,7 +1035,7 @@ public class OpenReviewAction extends AbstractReviewAction
       {
         super.notifyChanged(notification);
 
-        if (!notification.isTouch())
+        if (!notification.isTouch() && notification instanceof CDODeltaNotification)
         {
           UIRefresh refresh = new UIRefresh(notification);
           if (refresh.isNeeded())
@@ -1001,6 +1050,8 @@ public class OpenReviewAction extends AbstractReviewAction
        */
       private final class UIRefresh implements Runnable
       {
+        private boolean diffTreeUpdate;
+
         private Object diffElementToUpdate;
 
         private boolean topicUIUpdate;
@@ -1014,7 +1065,40 @@ public class OpenReviewAction extends AbstractReviewAction
           EObject notifier = (EObject)notification.getNotifier();
           EStructuralFeature feature = (EStructuralFeature)notification.getFeature();
 
-          if (feature == ReviewsPackage.Literals.TOPIC__STATUS)
+          if (feature == ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS)
+          {
+            int eventType = notification.getEventType();
+            if (eventType == Notification.ADD)
+            {
+              Topic newTopic = (Topic)notification.getNewValue();
+              diffElementToUpdate = getDiffElement(newTopic);
+
+              if (!topicNeedsSave() && Objects.equals(currentTopic.getModelReference(), newTopic.getModelReference()))
+              {
+                currentTopic = newTopic;
+                topicUIUpdate = true;
+                newTopicEntry = newTopic.getText();
+                chatUpdate = true;
+              }
+            }
+            else if (eventType == Notification.REMOVE)
+            {
+              diffTreeUpdate = true;
+
+              if (notifier == firstTopic)
+              {
+                firstTopic = null;
+              }
+
+              if (notifier == currentTopic)
+              {
+                currentTopic = firstTopic;
+                topicUIUpdate = true;
+                chatUpdate = true;
+              }
+            }
+          }
+          else if (feature == ReviewsPackage.Literals.TOPIC__STATUS)
           {
             // Diff element update.
             diffElementToUpdate = getDiffElement((Topic)notifier);
@@ -1046,13 +1130,20 @@ public class OpenReviewAction extends AbstractReviewAction
 
         public boolean isNeeded()
         {
-          return diffElementToUpdate != null || topicUIUpdate || newTopicEntry != null || chatUpdate;
+          return diffTreeUpdate || diffElementToUpdate != null || topicUIUpdate || newTopicEntry != null || chatUpdate;
         }
 
         @Override
         public void run()
         {
-          updateDiffElementLabel(diffElementToUpdate);
+          if (diffTreeUpdate)
+          {
+            getInput().getTreeViewer().refresh(true);
+          }
+          else
+          {
+            updateDiffElementLabel(diffElementToUpdate);
+          }
 
           if (topicUIUpdate)
           {
@@ -1062,6 +1153,7 @@ public class OpenReviewAction extends AbstractReviewAction
           if (newTopicEntry != null)
           {
             topicEntryField.setEntry(newTopicEntry);
+            topicEntryField.setPreviewMode(true);
           }
 
           if (chatUpdate)

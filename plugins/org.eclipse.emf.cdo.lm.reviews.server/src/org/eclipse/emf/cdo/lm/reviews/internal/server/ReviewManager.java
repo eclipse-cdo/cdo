@@ -456,7 +456,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
 
     if (containsUnknownID(properties.values()))
     {
-      OM.LOG.info("Restoring ID counters after crash...");
+      OM.LOG.info("Restoring ID counters...");
       lifecycleManager.getSystem().forEachBaseline(baseline -> {
         if (baseline instanceof Review)
         {

@@ -15,6 +15,7 @@
         <setEntry value="org.eclipse.emf.ecore.editor:2.19.0.v20240604-0832:default:true:default:default"/>
         <setEntry value="org.eclipse.emf.edit:2.22.0.v20240604-0832:default:true:default:default"/>
         <setEntry value="org.eclipse.gmf.runtime.notation.edit:1.8.0.202211151334:default:true:default:default"/>
+        <setEntry value="org.eclipse.net4j.util.ui.mylyn:1.0.0.qualifier:default:true:default:default"/>
     </setAttribute>
     <booleanAttribute key="append.args" value="true"/>
     <booleanAttribute key="askclear" value="true"/>
@@ -46,7 +47,7 @@
     <stringAttribute key="org.eclipse.jdt.launching.JRE_CONTAINER" value="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17"/>
     <stringAttribute key="org.eclipse.jdt.launching.PROGRAM_ARGUMENTS" value="-os ${target.os} -ws ${target.ws} -arch ${target.arch} -nl ${target.nl} -consoleLog -nosplash&#13;&#10;-clean"/>
     <stringAttribute key="org.eclipse.jdt.launching.SOURCE_PATH_PROVIDER" value="org.eclipse.pde.ui.workbenchClasspathProvider"/>
-    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Declipse.e4.inject.javax.warning=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserName=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
+    <stringAttribute key="org.eclipse.jdt.launching.VM_ARGUMENTS" value="-Xms40m&#13;&#10;-Xmx4g&#13;&#10;-Dosgi.console.enable.builtin=true&#13;&#10;-Dosgi.checkConfiguration=false&#13;&#10;-Declipse.e4.inject.javax.warning=false&#13;&#10;-Dorg.eclipse.emf.cdo.ui.team.history.test=false&#13;&#10;-Dcdo.explorer.setUserNameRemote=true&#13;&#10;-Dorg.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS=true"/>
     <stringAttribute key="pde.version" value="3.3"/>
     <stringAttribute key="product" value="org.eclipse.platform.ide"/>
     <booleanAttribute key="restart" value="true"/>
@@ -56,6 +57,7 @@
         <setEntry value="org.eclipse.ecf.core.ssl.feature:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer.feature:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer.httpclient5.feature:default"/>
+        <setEntry value="org.eclipse.ecf.filetransfer.httpclientjava.feature:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer.ssl.feature:default"/>
         <setEntry value="org.eclipse.emf.cdo.compare:default"/>
         <setEntry value="org.eclipse.emf.cdo.doc:default"/>
@@ -63,6 +65,7 @@
         <setEntry value="org.eclipse.emf.cdo.examples.installer:default"/>
         <setEntry value="org.eclipse.emf.cdo.examples:default"/>
         <setEntry value="org.eclipse.emf.cdo.license:default"/>
+        <setEntry value="org.eclipse.emf.cdo.lm.reviews:default"/>
         <setEntry value="org.eclipse.emf.cdo.lm:default"/>
         <setEntry value="org.eclipse.emf.cdo.migrator:default"/>
         <setEntry value="org.eclipse.emf.cdo.server.db:default"/>
@@ -86,6 +89,7 @@
         <setEntry value="org.eclipse.emf.ecp.view.validation.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.view.vertical.feature:default"/>
         <setEntry value="org.eclipse.emf.ecp.viewmodel.feature:default"/>
+        <setEntry value="org.eclipse.emfforms.core.bazaar.feature:default"/>
         <setEntry value="org.eclipse.equinox.executable:default"/>
         <setEntry value="org.eclipse.equinox.p2.core.feature:default"/>
         <setEntry value="org.eclipse.equinox.p2.extras.feature:default"/>
@@ -93,6 +97,7 @@
         <setEntry value="org.eclipse.equinox.p2.user.ui:default"/>
         <setEntry value="org.eclipse.help:default"/>
         <setEntry value="org.eclipse.jdt:default"/>
+        <setEntry value="org.eclipse.mylyn.wikitext.feature:default"/>
         <setEntry value="org.eclipse.net4j.db.doc:default"/>
         <setEntry value="org.eclipse.net4j.db.h2:default"/>
         <setEntry value="org.eclipse.net4j.db:default"/>

@@ -1026,6 +1026,8 @@ public class OpenReviewAction extends AbstractReviewAction
               if (!topicNeedsSave() && Objects.equals(currentTopic.getModelReference(), newTopic.getModelReference()))
               {
                 currentTopic = newTopic;
+                topicStatus = null;
+
                 topicUIUpdate = true;
                 newTopicEntry = newTopic.getText();
                 chatUpdate = true;
@@ -1035,15 +1037,19 @@ public class OpenReviewAction extends AbstractReviewAction
             {
               diffTreeUpdate = true;
 
-              if (notifier == firstTopic)
+              Topic oldTopic = (Topic)notification.getOldValue();
+              if (oldTopic == firstTopic)
               {
                 firstTopic = null;
               }
 
-              if (notifier == currentTopic)
+              if (oldTopic == currentTopic)
               {
                 currentTopic = firstTopic;
+                topicStatus = null;
+
                 topicUIUpdate = true;
+                newTopicEntry = "";
                 chatUpdate = true;
               }
             }

@@ -17,9 +17,11 @@ import org.eclipse.emf.cdo.lm.reviews.ModelReference.Builder;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
 
 import org.eclipse.emf.compare.AttributeChange;
+import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.ReferenceChange;
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.edit.tree.TreeNode;
 
 /**
@@ -58,20 +60,23 @@ public class CompareModelReferenceExtractor implements ModelReference.Extractor
     if (data instanceof AttributeChange)
     {
       AttributeChange diff = (AttributeChange)data;
-      Match match = diff.getMatch();
-      String feature = diff.getAttribute().getName();
-      return addMatch(ModelReference.builder("diff"), match).property(feature).build();
+      return addDiff(diff, diff.getAttribute()).property(diff.getValue()).build();
     }
 
     if (data instanceof ReferenceChange)
     {
       ReferenceChange diff = (ReferenceChange)data;
-      Match match = diff.getMatch();
-      String feature = diff.getReference().getName();
-      return addMatch(ModelReference.builder("diff"), match).property(feature).build();
+      return addDiff(diff, diff.getReference()).property(diff.getValue()).build();
     }
 
     return null;
+  }
+
+  private static Builder addDiff(Diff diff, EStructuralFeature feature)
+  {
+    return addMatch(ModelReference.builder("diff"), diff.getMatch()) //
+        .property(feature.getName()) //
+        .property(diff.getKind());
   }
 
   private static Builder addMatch(Builder builder, Match match)

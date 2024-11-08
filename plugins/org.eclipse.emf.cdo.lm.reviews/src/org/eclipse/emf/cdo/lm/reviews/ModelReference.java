@@ -171,9 +171,13 @@ public final class ModelReference
       return type;
     }
 
-    public Builder property(String property)
+    public Builder property(Object property)
     {
-      add(property);
+      if (property != null)
+      {
+        add(property.toString());
+      }
+
       return this;
     }
 

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.LMPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -1602,6 +1603,16 @@ public interface ReviewsPackage extends EPackage
   int TOPIC_STATUS = 9;
 
   /**
+   * The meta object id for the '<em>Model Reference</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getModelReference()
+   * @generated
+   */
+  int MODEL_REFERENCE = 10;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2148,6 +2159,17 @@ public interface ReviewsPackage extends EPackage
   EEnum getTopicStatus();
 
   /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.lm.reviews.ModelReference <em>Model Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Model Reference</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+   * @model instanceClass="org.eclipse.emf.cdo.lm.reviews.ModelReference"
+   * @generated
+   */
+  EDataType getModelReference();
+
+  /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2598,6 +2620,16 @@ public interface ReviewsPackage extends EPackage
      * @generated
      */
     EEnum TOPIC_STATUS = eINSTANCE.getTopicStatus();
+
+    /**
+     * The meta object literal for the '<em>Model Reference</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getModelReference()
+     * @generated
+     */
+    EDataType MODEL_REFERENCE = eINSTANCE.getModelReference();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}' enum.

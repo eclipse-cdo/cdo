@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
+import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
@@ -28,6 +29,7 @@ import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -104,6 +106,13 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   private EEnum topicStatusEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EDataType modelReferenceEDataType = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -729,6 +738,17 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
    * @generated
    */
   @Override
+  public EDataType getModelReference()
+  {
+    return modelReferenceEDataType;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EEnum getReviewStatus()
   {
     return reviewStatusEEnum;
@@ -827,6 +847,9 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     // Create enums
     reviewStatusEEnum = createEEnum(REVIEW_STATUS);
     topicStatusEEnum = createEEnum(TOPIC_STATUS);
+
+    // Create data types
+    modelReferenceEDataType = createEDataType(MODEL_REFERENCE);
   }
 
   /**
@@ -908,7 +931,7 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     initEClass(topicEClass, Topic.class, "Topic", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getTopic_Heading(), ecorePackage.getEBoolean(), "heading", null, 0, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTopic_ModelReference(), ecorePackage.getEString(), "modelReference", null, 0, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+    initEAttribute(getTopic_ModelReference(), getModelReference(), "modelReference", null, 0, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
         !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getTopic_Status(), getTopicStatus(), "status", null, 0, 1, Topic.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID,
         IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -990,6 +1013,9 @@ public class ReviewsPackageImpl extends EPackageImpl implements ReviewsPackage
     addEEnumLiteral(topicStatusEEnum, TopicStatus.NONE);
     addEEnumLiteral(topicStatusEEnum, TopicStatus.UNRESOLVED);
     addEEnumLiteral(topicStatusEEnum, TopicStatus.RESOLVED);
+
+    // Initialize data types
+    initEDataType(modelReferenceEDataType, ModelReference.class, "ModelReference", IS_SERIALIZABLE, !IS_GENERATED_INSTANCE_CLASS);
 
     // Create resource
     createResource(eNS_URI);

@@ -66,12 +66,12 @@ public interface Topic extends TopicContainer, Authorable
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Model Reference</em>' attribute.
-   * @see #setModelReference(String)
+   * @see #setModelReference(ModelReference)
    * @see org.eclipse.emf.cdo.lm.reviews.ReviewsPackage#getTopic_ModelReference()
-   * @model
+   * @model dataType="org.eclipse.emf.cdo.lm.reviews.ModelReference"
    * @generated
    */
-  String getModelReference();
+  ModelReference getModelReference();
 
   /**
    * Sets the value of the '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getModelReference <em>Model Reference</em>}' attribute.
@@ -81,7 +81,7 @@ public interface Topic extends TopicContainer, Authorable
    * @see #getModelReference()
    * @generated
    */
-  void setModelReference(String value);
+  void setModelReference(ModelReference value);
 
   /**
    * Returns the value of the '<em><b>Status</b></em>' attribute.

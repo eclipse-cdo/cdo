@@ -27,7 +27,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Topic" eSuperTypes="#//TopicContainer #//Authorable">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="heading" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelReference" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="modelReference" eType="#//ModelReference"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="status" eType="#//TopicStatus"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="container" lowerBound="1"
         eType="#//TopicContainer" eOpposite="#//TopicContainer/topics"/>
@@ -93,6 +93,7 @@
         resolveProxies="false"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="dropLabel" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EDataType" name="ModelReference" instanceClassName="org.eclipse.emf.cdo.lm.reviews.ModelReference"/>
   <eClassifiers xsi:type="ecore:EEnum" name="ReviewStatus">
     <eLiterals name="New" literal="New"/>
     <eLiterals name="SourceOutdated" value="1" literal="SourceOutdated"/>

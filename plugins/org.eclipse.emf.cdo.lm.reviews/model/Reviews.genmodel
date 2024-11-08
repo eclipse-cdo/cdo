@@ -27,6 +27,7 @@
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//TopicStatus/Unresolved"/>
       <genEnumLiterals ecoreEnumLiteral="Reviews.ecore#//TopicStatus/Resolved"/>
     </genEnums>
+    <genDataTypes ecoreDataType="Reviews.ecore#//ModelReference"/>
     <genClasses image="false" ecoreClass="Reviews.ecore#//Authorable">
       <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/id"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Authorable/text"/>
@@ -44,7 +45,7 @@
     </genClasses>
     <genClasses ecoreClass="Reviews.ecore#//Topic">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/heading"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/modelReference"/>
+      <genFeatures property="Readonly" createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/modelReference"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute Reviews.ecore#//Topic/status"/>
       <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/container"/>
       <genFeatures property="Readonly" notify="false" createChild="false" ecoreFeature="ecore:EReference Reviews.ecore#//Topic/parentHeading"/>

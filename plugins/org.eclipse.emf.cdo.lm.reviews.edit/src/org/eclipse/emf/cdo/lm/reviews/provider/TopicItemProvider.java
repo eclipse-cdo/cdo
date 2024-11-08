@@ -124,7 +124,7 @@ public class TopicItemProvider extends TopicContainerItemProvider
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
         getString("_UI_Topic_modelReference_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Topic_modelReference_feature", "_UI_Topic_type"),
-        ReviewsPackage.Literals.TOPIC__MODEL_REFERENCE, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        ReviewsPackage.Literals.TOPIC__MODEL_REFERENCE, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**

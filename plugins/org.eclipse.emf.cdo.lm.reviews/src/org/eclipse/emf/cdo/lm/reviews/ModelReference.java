@@ -157,6 +157,8 @@ public final class ModelReference
    */
   public static final class Builder extends ArrayList<String>
   {
+    public static final int NO_MAX_LENGTH = -1;
+
     private static final long serialVersionUID = 1L;
 
     private final String type;
@@ -171,14 +173,25 @@ public final class ModelReference
       return type;
     }
 
-    public Builder property(Object property)
+    public Builder property(Object property, int maxLength)
     {
       if (property != null)
       {
-        add(property.toString());
+        String str = property.toString();
+        if (maxLength > 0 && str.length() > maxLength)
+        {
+          str = str.substring(0, maxLength);
+        }
+
+        add(str);
       }
 
       return this;
+    }
+
+    public Builder property(Object property)
+    {
+      return property(property, NO_MAX_LENGTH);
     }
 
     public Builder property(CDOID objectID)

@@ -16,8 +16,11 @@ import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference.Builder;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
 
+import org.eclipse.net4j.util.om.OMPlatform;
+
 import org.eclipse.emf.compare.AttributeChange;
 import org.eclipse.emf.compare.Diff;
+import org.eclipse.emf.compare.DifferenceKind;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.ReferenceChange;
 import org.eclipse.emf.ecore.EObject;
@@ -31,8 +34,19 @@ public class CompareModelReferenceExtractor implements ModelReference.Extractor
 {
   public static final int PRIORITY = 1000;
 
+  private static final int ATTRIBUTE_VALUE_MAX_LENGTH = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.lm.reviews.ui.CompareModelReferenceExtractor.ATTRIBUTE_VALUE_MAX_LENGTH", ModelReference.Builder.NO_MAX_LENGTH);
+
+  private final int attributeValueMaxLength;
+
+  public CompareModelReferenceExtractor(int attributeValueMaxLength)
+  {
+    this.attributeValueMaxLength = attributeValueMaxLength;
+  }
+
   public CompareModelReferenceExtractor()
   {
+    this(ATTRIBUTE_VALUE_MAX_LENGTH);
   }
 
   @Override
@@ -60,7 +74,7 @@ public class CompareModelReferenceExtractor implements ModelReference.Extractor
     if (data instanceof AttributeChange)
     {
       AttributeChange diff = (AttributeChange)data;
-      return addDiff(diff, diff.getAttribute()).property(diff.getValue()).build();
+      return addDiff(diff, diff.getAttribute()).property(diff.getValue(), attributeValueMaxLength).build();
     }
 
     if (data instanceof ReferenceChange)
@@ -74,9 +88,11 @@ public class CompareModelReferenceExtractor implements ModelReference.Extractor
 
   private static Builder addDiff(Diff diff, EStructuralFeature feature)
   {
-    return addMatch(ModelReference.builder("diff"), diff.getMatch()) //
-        .property(feature.getName()) //
-        .property(diff.getKind());
+    DifferenceKind kind = diff.getKind();
+    String type = kind == null ? "diff" : kind.getName().toLowerCase();
+    Match match = diff.getMatch();
+    String featureName = feature.getName();
+    return addMatch(ModelReference.builder(type), match).property(featureName);
   }
 
   private static Builder addMatch(Builder builder, Match match)

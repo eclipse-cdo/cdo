@@ -13,10 +13,12 @@ package org.eclipse.emf.cdo.lm.reviews;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.lm.reviews.util.ModelReferenceExtractorRegistry;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.PrioritizingElementList.Prioritized;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -197,6 +199,26 @@ public final class ModelReference
     public ModelReference build()
     {
       return new ModelReference(type, this);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface Extractor extends Prioritized
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors";
+
+    public ModelReference extractModelReference(Object object);
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface Registry extends Extractor
+    {
+      public static final Registry INSTANCE = ModelReferenceExtractorRegistry.INSTANCE;
+
+      public Extractor[] getExtractors();
     }
   }
 }

@@ -22,6 +22,11 @@
              productGroup="org.eclipse.net4j.util.ui.openHandlers"
              type="lm.reviews"
              class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory"/>
+       <simpleFactory
+             productClass="org.eclipse.emf.cdo.lm.reviews.ui.CompareModelReferenceExtractor"
+             productGroup="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors"
+             type="compare">
+       </simpleFactory>
     </extension>
 
 </plugin>

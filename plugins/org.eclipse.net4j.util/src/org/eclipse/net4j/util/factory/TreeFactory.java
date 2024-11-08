@@ -144,6 +144,11 @@ public abstract class TreeFactory extends Factory implements ITreeFactory
       documentBuilderFactory.setValidating(false);
 
       DocumentBuilder documentBuilder = documentBuilderFactory.newDocumentBuilder();
+      if (description == null)
+      {
+        return documentBuilder.newDocument();
+      }
+
       return documentBuilder.parse(new InputSource(new StringReader(description)));
     }
     catch (Exception ex)

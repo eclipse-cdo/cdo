@@ -15,14 +15,11 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
-import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference;
-import org.eclipse.emf.cdo.lm.reviews.ModelReference.Builder;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
@@ -56,9 +53,6 @@ import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.util.EList;
-import org.eclipse.emf.compare.AttributeChange;
-import org.eclipse.emf.compare.Match;
-import org.eclipse.emf.compare.ReferenceChange;
 import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.EMFCompareStructureMergeViewer;
 import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.EMFCompareStructureMergeViewerContentProvider;
 import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.Navigatable;
@@ -66,7 +60,6 @@ import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.WrappableTre
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
-import org.eclipse.emf.edit.tree.TreeNode;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.INavigatable;
@@ -497,14 +490,10 @@ public class OpenReviewAction extends AbstractReviewAction
         }
       }
 
-      TreeNode node = Input.getTreeNode(newDiffElement);
-      if (node != null)
+      ModelReference modelReference = createModelReference(newDiffElement);
+      if (modelReference != null)
       {
-        ModelReference modelReference = createModelReference(node);
-        if (modelReference != null)
-        {
-          selectTopic(modelReference);
-        }
+        selectTopic(modelReference);
       }
 
       if (cancel)
@@ -616,15 +605,11 @@ public class OpenReviewAction extends AbstractReviewAction
         ModelReference modelReference = topic.getModelReference();
         if (modelReference != null)
         {
-          getInput().forEachDiffElement(element -> {
-            TreeNode node = Input.getTreeNode(element);
-            if (node != null)
+          getInput().forEachDiffElement(diffElement -> {
+            if (modelReference.equals(createModelReference(diffElement)))
             {
-              if (modelReference.equals(createModelReference(node)))
-              {
-                result[0] = element;
-                return true;
-              }
+              result[0] = diffElement;
+              return true;
             }
 
             return false;
@@ -703,19 +688,15 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private Topic getTopic(Object diffElement)
     {
-      TreeNode node = Input.getTreeNode(diffElement);
-      if (node != null)
+      ModelReference modelReference = createModelReference(diffElement);
+      if (modelReference != null)
       {
-        ModelReference modelReference = createModelReference(node);
-        if (modelReference != null)
+        if (currentTopic != null && modelReference.equals(currentTopic.getModelReference()))
         {
-          if (currentTopic != null && modelReference.equals(currentTopic.getModelReference()))
-          {
-            return currentTopic;
-          }
-
-          return review.getTopic(modelReference);
+          return currentTopic;
         }
+
+        return review.getTopic(modelReference);
       }
 
       return null;
@@ -969,53 +950,9 @@ public class OpenReviewAction extends AbstractReviewAction
       return "<a href=\"" + action + "\">" + label + "</a>";
     }
 
-    private static ModelReference createModelReference(TreeNode node)
+    private static ModelReference createModelReference(Object diffElement)
     {
-      EObject data = node.getData();
-      if (data instanceof Match)
-      {
-        Match match = (Match)data;
-        return addMatch(ModelReference.builder("match"), match).build();
-      }
-
-      if (data instanceof AttributeChange)
-      {
-        AttributeChange diff = (AttributeChange)data;
-        return addMatch(ModelReference.builder("diff"), diff.getMatch()).property(diff.getAttribute().getName()).build();
-      }
-
-      if (data instanceof ReferenceChange)
-      {
-        ReferenceChange diff = (ReferenceChange)data;
-        return addMatch(ModelReference.builder("diff"), diff.getMatch()).property(diff.getReference().getName()).build();
-      }
-
-      return null;
-    }
-
-    private static Builder addMatch(Builder builder, Match match)
-    {
-      EObject matchObject = getMatchObject(match);
-      CDOID objectID = CDOIDUtil.getCDOID(matchObject);
-      builder.property(objectID);
-      return builder;
-    }
-
-    private static EObject getMatchObject(Match match)
-    {
-      EObject left = match.getLeft();
-      if (left != null)
-      {
-        return left;
-      }
-
-      EObject right = match.getRight();
-      if (right != null)
-      {
-        return right;
-      }
-
-      return match.getOrigin();
+      return ModelReference.Extractor.Registry.INSTANCE.extractModelReference(diffElement);
     }
 
     /**

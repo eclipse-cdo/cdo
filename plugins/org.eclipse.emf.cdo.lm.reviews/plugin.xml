@@ -13,6 +13,10 @@
 
 <plugin>
 
+   <extension point="org.eclipse.net4j.util.productGroups">
+      <productGroup id="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors" name="%productGroup.name"/>
+   </extension>
+
    <extension point="org.eclipse.emf.ecore.generated_package">
       <!-- @generated Reviews -->
       <package

@@ -100,10 +100,15 @@ public abstract class PrioritizingElementList<ELEMENT extends Prioritized> exten
   }
 
   /**
+   * Smaller {@link #getPriority() priority} values are ranked higher.
+   *
    * @author Eike Stepper
    */
   public interface Prioritized extends Comparable<Prioritized>
   {
+    /**
+     * Smaller values are ranked higher.
+     */
     public int getPriority();
 
     @Override

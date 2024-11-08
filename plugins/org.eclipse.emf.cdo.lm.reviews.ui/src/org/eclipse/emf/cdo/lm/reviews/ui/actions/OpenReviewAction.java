@@ -37,6 +37,7 @@ import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.ColorStyler;
 import org.eclipse.net4j.util.ui.UIUtil;
@@ -259,6 +260,14 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private static final Styler RESOLVED_STYLER = new ColorStyler(new Color(UIUtil.getDisplay(), 20, 180, 20));
 
+    private static final String CHAT_RENDERER_TYPE = OMPlatform.INSTANCE.getProperty("CHAT_RENDERER_TYPE", "mylyn");
+
+    private static final String CHAT_RENDERER_DESCRIPTION = OMPlatform.INSTANCE.getProperty("CHAT_RENDERER_DESCRIPTION", "Markdown");
+
+    private static final String ENTRY_CONTROL_ADVISOR_TYPE = OMPlatform.INSTANCE.getProperty("ENTRY_CONTROL_ADVISOR_TYPE", "mylyn");
+
+    private static final String ENTRY_CONTROL_ADVISOR_DESCRIPTION = OMPlatform.INSTANCE.getProperty("ENTRY_CONTROL_ADVISOR_DESCRIPTION", "Markdown");
+
     private final DeliveryReview review;
 
     private final EContentAdapter reviewContentAdapter = new ReviewContentAdapter();
@@ -389,8 +398,15 @@ public class OpenReviewAction extends AbstractReviewAction
           Color entryBackgroundColor = new Color(display, 241, 241, 241);
           addDisposeListener(e -> entryBackgroundColor.dispose());
 
-          renderer = IPluginContainer.INSTANCE.getElementOrNull(ChatRenderer.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
-          EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull(EntryControlAdvisor.Factory.PRODUCT_GROUP, "mylyn", "Markdown");
+          renderer = IPluginContainer.INSTANCE.getElementOrNull( //
+              ChatRenderer.Factory.PRODUCT_GROUP, //
+              CHAT_RENDERER_TYPE, //
+              CHAT_RENDERER_DESCRIPTION);
+
+          EntryControlAdvisor entryControlAdvisor = IPluginContainer.INSTANCE.getElementOrNull( //
+              EntryControlAdvisor.Factory.PRODUCT_GROUP, //
+              ENTRY_CONTROL_ADVISOR_TYPE, //
+              ENTRY_CONTROL_ADVISOR_DESCRIPTION);
 
           Composite topicContainer = new Composite(parent, SWT.NONE);
           topicContainer.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).spacing(LayoutConstants.getSpacing().x, 2).numColumns(2).create());

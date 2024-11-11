@@ -133,6 +133,11 @@ public final class SharedIcons
    */
   public static final String ETOOL_CLEAR_LOG = ETOOL + "clear_log.png"; //$NON-NLS-1$
 
+  /**
+   * @since 4.9
+   */
+  public static final String ETOOL_COPY = ETOOL + "copy.png"; //$NON-NLS-1$
+
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
   public static final String VIEW_CONTAINER = VIEW + "container"; //$NON-NLS-1$

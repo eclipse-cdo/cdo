@@ -27,8 +27,10 @@ import org.eclipse.net4j.util.ui.views.RowIntrospectionProvider;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IAction;
+import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
+import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.IColorProvider;
 import org.eclipse.jface.viewers.ISelection;
@@ -48,14 +50,17 @@ import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
+import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.ISharedImages;
+import org.eclipse.ui.IWorkbenchCommandConstants;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.PlatformUI;
+import org.eclipse.ui.actions.ActionFactory;
 import org.eclipse.ui.part.ViewPart;
 
 import java.lang.reflect.Array;
@@ -193,6 +198,8 @@ public class Net4jIntrospectorView extends ViewPart
 
   private final Map<IntrospectionProvider, TableViewer> viewers = new HashMap<>();
 
+  private final Map<IntrospectionProvider, MenuManager> menuManagers = new HashMap<>();
+
   private final List<IntrospectionProvider> providers = new ArrayList<>();
 
   private IntrospectionProvider currentProvider;
@@ -206,6 +213,8 @@ public class Net4jIntrospectorView extends ViewPart
   private Text identityLabel;
 
   private Text objectLabel;
+
+  private final IAction copyAction = new CopyAction();
 
   private final IAction backwardAction = new BackwardAction();
 
@@ -294,8 +303,9 @@ public class Net4jIntrospectorView extends ViewPart
   @Override
   public void createPartControl(Composite parent)
   {
-    Color bg = parent.getDisplay().getSystemColor(SWT.COLOR_LIST_BACKGROUND);
-    Color gray = parent.getDisplay().getSystemColor(SWT.COLOR_DARK_BLUE);
+    Display display = parent.getDisplay();
+    Color bg = display.getSystemColor(SWT.COLOR_LIST_BACKGROUND);
+    Color gray = display.getSystemColor(SWT.COLOR_DARK_BLUE);
 
     Composite composite = new Composite(parent, SWT.NONE);
     composite.setLayout(UIUtil.createGridLayout(1));
@@ -372,11 +382,14 @@ public class Net4jIntrospectorView extends ViewPart
       }
 
       viewers.put(provider, viewer);
+      menuManagers.put(provider, hookContextMenu(viewer));
     }
 
     linkSelectionAction.setEnabled(!activePartAction.isChecked());
 
     IActionBars bars = getViewSite().getActionBars();
+    bars.setGlobalActionHandler(ActionFactory.COPY.getId(), copyAction);
+
     fillLocalPullDown(bars.getMenuManager());
     fillLocalToolBar(bars.getToolBarManager());
 
@@ -506,7 +519,12 @@ public class Net4jIntrospectorView extends ViewPart
       boolean hadFocus = currentViewer == null ? false : currentViewer.getControl().isFocusControl();
 
       currentProvider = provider;
-      stackLayout.topControl = getCurrentViewer().getControl();
+      currentViewer = getCurrentViewer();
+
+      MenuManager menuManager = menuManagers.get(currentProvider);
+      getSite().registerContextMenu(menuManager, currentViewer);
+
+      stackLayout.topControl = currentViewer.getControl();
       stacked.layout();
 
       if (hadFocus)
@@ -568,6 +586,30 @@ public class Net4jIntrospectorView extends ViewPart
     }
   }
 
+  private MenuManager hookContextMenu(TableViewer viewer)
+  {
+    MenuManager menuManager = new MenuManager("#PopupMenu");
+    menuManager.setRemoveAllWhenShown(true);
+    menuManager.addMenuListener(new IMenuListener()
+    {
+      @Override
+      public void menuAboutToShow(IMenuManager manager)
+      {
+        fillContextMenu(manager);
+      }
+    });
+
+    Control control = viewer.getControl();
+    Menu menu = menuManager.createContextMenu(control);
+    control.setMenu(menu);
+    return menuManager;
+  }
+
+  private void fillContextMenu(IMenuManager manager)
+  {
+    manager.add(copyAction);
+  }
+
   private void fillLocalPullDown(IMenuManager manager)
   {
     manager.add(containerAction);
@@ -605,6 +647,45 @@ public class Net4jIntrospectorView extends ViewPart
     }
 
     return instance;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class CopyAction extends Action
+  {
+    public CopyAction()
+    {
+      super(Messages.getString("Net4jIntrospectorView_32")); //$NON-NLS-1$
+      setImageDescriptor(SharedIcons.getDescriptor(SharedIcons.ETOOL_COPY));
+      setActionDefinitionId(IWorkbenchCommandConstants.EDIT_COPY);
+    }
+
+    @Override
+    public void run()
+    {
+      TableViewer viewer = getCurrentViewer();
+      StringBuilder builder = new StringBuilder();
+      for (Object element : viewer.getStructuredSelection())
+      {
+        try
+        {
+          NameAndValue nameAndValue = currentProvider.getNameAndValue(element);
+          if (nameAndValue != null)
+          {
+            StringUtil.appendSeparator(builder, StringUtil.NL);
+            builder.append(nameAndValue);
+          }
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error(ex);
+        }
+      }
+
+      Display display = viewer.getControl().getDisplay();
+      UIUtil.copyToClipboard(display, builder.toString());
+    }
   }
 
   /**

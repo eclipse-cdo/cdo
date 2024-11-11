@@ -17,9 +17,11 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -34,9 +36,25 @@ import java.util.function.Consumer;
  */
 public abstract class LMManager<EE extends CDOExplorerElement, EM extends CDOExplorerManager<EE>, D> extends Container<D>
 {
-  public static final String STATE_FOLDER_NAME = "lm";
+  public static final String REPOSITORY_TYPE_SYSTEM = "System";
 
-  protected static final String STATE_FILE_NAME = "lm.properties";
+  public static final String REPOSITORY_TYPE_MODULE = "Module";
+
+  public static final String PROP_REPOSITORY_TYPE = "repositoryType";
+
+  public static final String PROP_SYSTEM_NAME = "systemName";
+
+  public static final String PROP_MODULE_NAME = "moduleName";
+
+  public static final String PROP_MODULE_TYPE = "moduleType";
+
+  public static final String PROP_BASELINE_ID = "baselineID";
+
+  private static final String STATE_FOLDER_NAME = "lm";
+
+  private static final String STATE_FILE_NAME = "lm.properties";
+
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.lm.internal.client.LMManager.DEBUG");
 
   private final IListener explorerManagerListener = new ContainerEventAdapter<EE>()
   {
@@ -135,6 +153,11 @@ public abstract class LMManager<EE extends CDOExplorerElement, EM extends CDOExp
       forEachExplorerElement(explorerElement -> explorerElementAdded(explorerElement));
       explorerManager.addListener(explorerManagerListener);
     }
+
+    if (DEBUG)
+    {
+      IPluginContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
+    }
   }
 
   @Override
@@ -178,24 +201,32 @@ public abstract class LMManager<EE extends CDOExplorerElement, EM extends CDOExp
     }
   }
 
-  protected void deleteStateFolder(EE explorerElement)
+  protected final void deleteStateFolder(EE explorerElement)
   {
-    File stateFolder = explorerElement.getStateFolder(STATE_FOLDER_NAME);
-    IOUtil.delete(stateFolder); // TODO That CAN mean delete on exit ;-(
+    File stateFolder = getLMStateFolder(explorerElement, false);
+    if (stateFolder != null)
+    {
+      IOUtil.delete(stateFolder); // TODO That CAN mean delete on exit ;-(
+    }
   }
 
   @SuppressWarnings("restriction")
-  protected void saveProperties(EE explorerElement, Properties properties)
+  protected final void saveLMProperties(EE explorerElement, Properties properties)
   {
-    File stateFolder = explorerElement.getStateFolder(STATE_FOLDER_NAME);
+    File stateFolder = getLMStateFolder(explorerElement, true);
     org.eclipse.emf.cdo.internal.explorer.AbstractManager.saveProperties(stateFolder, STATE_FILE_NAME, properties,
         getClass().getSimpleName() + " " + STATE_FILE_NAME);
   }
 
   @SuppressWarnings("restriction")
-  public static <EE extends CDOExplorerElement> Properties loadProperties(EE explorerElement)
+  public static <EE extends CDOExplorerElement> Properties loadLMProperties(EE explorerElement)
   {
     File stateFolder = explorerElement.getStateFolder(STATE_FOLDER_NAME);
     return org.eclipse.emf.cdo.internal.explorer.AbstractManager.loadProperties(stateFolder, STATE_FILE_NAME);
+  }
+
+  public static File getLMStateFolder(CDOExplorerElement element, boolean createFolderOnDemand)
+  {
+    return element.getStateFolder(STATE_FOLDER_NAME, createFolderOnDemand);
   }
 }

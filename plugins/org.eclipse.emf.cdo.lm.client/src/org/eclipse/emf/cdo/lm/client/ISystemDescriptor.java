@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.client;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
+import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
@@ -109,6 +110,16 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
    * @since 1.4
    */
   public ResourceSet createModuleResourceSet(Baseline baseline) throws ResolutionException;
+
+  /**
+   * @since 1.5
+   */
+  public ResourceSet createModuleResourceSet(CDOSession moduleSession, CDOBranchPoint branchPoint) throws ResolutionException;
+
+  /**
+   * @since 1.5
+   */
+  public ResourceSet createModuleResourceSet(CDOSession moduleSession, CDOBranchPoint branchPoint, boolean readOnly) throws ResolutionException;
 
   /**
    * @since 1.3

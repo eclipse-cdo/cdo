@@ -83,14 +83,6 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public abstract class CDORepositoryImpl extends AbstractElement implements CDORepository
 {
-  public static final String PROP_NAME = "name";
-
-  public static final String PROP_VERSIONING_MODE = "versioningMode";
-
-  public static final String PROP_ID_GENERATION = "idGeneration";
-
-  public static final String PROP_REALM = "realm";
-
   public static final String REPOSITORY_KEY = CDORepository.class.getName();
 
   private static final boolean READABLE_IDS = OMPlatform.INSTANCE.isProperty("cdo.explorer.readableIDs");

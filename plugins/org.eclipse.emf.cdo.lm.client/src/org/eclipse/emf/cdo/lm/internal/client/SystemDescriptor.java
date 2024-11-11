@@ -34,6 +34,7 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.EtypesFactory;
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.explorer.CDOExplorerElement;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.lm.Baseline;
@@ -60,6 +61,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason.Conflicting;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason.Missing;
+import org.eclipse.emf.cdo.lm.internal.client.SystemManager.RepositoryType;
 import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
@@ -153,9 +155,9 @@ public final class SystemDescriptor implements ISystemDescriptor
 {
   public static final SystemDescriptor NO_SYSTEM = new SystemDescriptor();
 
-  public static final String KEY_SYSTEM_DESCRIPTOR = ISystemDescriptor.class.getName();
+  private static final String KEY_SYSTEM_DESCRIPTOR = ISystemDescriptor.class.getName();
 
-  public static final String KEY_MODULE_NAME = "org.eclipse.emf.cdo.lm.client.ModuleName";
+  private static final String KEY_MODULE_NAME = "org.eclipse.emf.cdo.lm.client.ModuleName";
 
   private static final String PROP_BASELINE_INDEX = "baseline.index";
 
@@ -321,9 +323,7 @@ public final class SystemDescriptor implements ISystemDescriptor
           newSystem = system;
           state = State.Open;
         }
-        catch (RuntimeException |
-
-            Error ex)
+        catch (RuntimeException | Error ex)
         {
           state = State.Closed;
           LifecycleUtil.deactivate(systemView);
@@ -510,27 +510,26 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     moduleRepository.connect();
-
-    CDOSession moduleSession = moduleRepository.getSession();
-    if (moduleSession != null)
-    {
-      IRegistry<String, Object> properties = moduleSession.properties();
-      properties.put(KEY_SYSTEM_DESCRIPTOR, this);
-      properties.put(KEY_MODULE_NAME, moduleName);
-    }
-
     return moduleRepository;
   }
 
   private CDORepository createModuleRepository(String moduleName, String label)
   {
     Properties properties = initModuleRepositoryProperties();
-    properties.setProperty("label", label);
-    properties.setProperty("name", moduleName);
-    properties.setProperty("keywords", "org.eclipse.emf.cdo.lm.Module");
+    properties.setProperty(CDORepository.PROP_NAME, moduleName);
+    properties.setProperty(CDOExplorerElement.PROP_LABEL, label);
+    properties.setProperty(CDOExplorerElement.PROP_KEYWORDS, RepositoryType.MODULE.getKeyword());
 
     IPasswordCredentials credentials = systemRepository.getCredentials();
-    return CDOExplorerUtil.getRepositoryManager().addRepository(properties, credentials);
+    CDORepository repository = CDOExplorerUtil.getRepositoryManager().addRepository(properties, credentials);
+
+    Properties lmProperties = new Properties();
+    lmProperties.setProperty(LMManager.PROP_REPOSITORY_TYPE, LMManager.REPOSITORY_TYPE_MODULE);
+    lmProperties.setProperty(LMManager.PROP_SYSTEM_NAME, systemName);
+    lmProperties.setProperty(LMManager.PROP_MODULE_NAME, moduleName);
+    SystemManager.INSTANCE.saveLMProperties(repository, lmProperties);
+
+    return repository;
   }
 
   private Properties initModuleRepositoryProperties()
@@ -745,16 +744,10 @@ public final class SystemDescriptor implements ISystemDescriptor
     CDOBranchPointRef branchPointRef = baseline.getBranchPoint();
     CDOBranchPoint branchPoint = branchPointRef.resolve(moduleSession.getBranchManager());
 
-    CDOView primaryView;
-    if (baseline.isFloating())
-    {
-      primaryView = moduleSession.openTransaction(branchPoint);
-    }
-    else
-    {
-      primaryView = moduleSession.openView(branchPoint);
-    }
+    boolean readOnly = !baseline.isFloating();
+    ResourceSet resourceSet = createModuleResourceSet(moduleSession, branchPoint, readOnly);
 
+    CDOView primaryView = CDOUtil.getView(resourceSet);
     primaryView.addListener(new LifecycleEventAdapter()
     {
       @Override
@@ -763,6 +756,28 @@ public final class SystemDescriptor implements ISystemDescriptor
         moduleRepository.releaseSession();
       }
     });
+
+    return resourceSet;
+  }
+
+  @Override
+  public ResourceSet createModuleResourceSet(CDOSession moduleSession, CDOBranchPoint branchPoint) throws ResolutionException
+  {
+    return createModuleResourceSet(moduleSession, branchPoint, branchPoint.getTimeStamp() != CDOBranchPoint.UNSPECIFIED_DATE);
+  }
+
+  @Override
+  public ResourceSet createModuleResourceSet(CDOSession moduleSession, CDOBranchPoint branchPoint, boolean readOnly) throws ResolutionException
+  {
+    CDOView primaryView;
+    if (readOnly)
+    {
+      primaryView = moduleSession.openView(branchPoint);
+    }
+    else
+    {
+      primaryView = moduleSession.openTransaction(branchPoint);
+    }
 
     configureModuleResourceSet(primaryView);
     return primaryView.getResourceSet();
@@ -800,7 +815,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     Map<String, CDOView> moduleViews = new HashMap<>();
 
     assembly.forEachDependency(module -> {
-      CDOView view = LMResourceSetConfiguration.openView(this, module, resourceSet);
+      CDOView view = LMResourceSetConfigurer.Result.openView(this, module, resourceSet);
       if (view != null)
       {
         primaryView.addListener(new LifecycleEventAdapter()
@@ -1429,6 +1444,13 @@ public final class SystemDescriptor implements ISystemDescriptor
     {
       annotation.getContents().addAll(EcoreUtil.copyAll(definition.getDependencies()));
     }
+  }
+
+  public static void setSessionProperties(CDOSession session, ISystemDescriptor systemDescriptor, String moduleName)
+  {
+    IRegistry<String, Object> properties = session.properties();
+    properties.put(KEY_SYSTEM_DESCRIPTOR, systemDescriptor);
+    properties.put(KEY_MODULE_NAME, moduleName);
   }
 
   public static ISystemDescriptor getSystemDescriptor(CDOSession session)

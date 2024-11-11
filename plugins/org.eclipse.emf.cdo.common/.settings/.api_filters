@@ -407,6 +407,15 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/util/ResourceSetConfigurer.java" type="org.eclipse.emf.cdo.common.util.ResourceSetConfigurer$Registry">
+        <filter id="337809484">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry"/>
+                <message_argument value="4"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/common/CDORawReplicationContext.java" type="org.eclipse.emf.cdo.spi.common.CDORawReplicationContext">
         <filter id="576778288">
             <message_arguments>

@@ -14,19 +14,19 @@ import org.eclipse.emf.cdo.lm.reviews.ModelReference;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference.Extractor;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference.Extractor.Registry;
 
-import org.eclipse.net4j.util.container.PrioritizingElementList;
+import org.eclipse.net4j.util.container.ContainerElementList;
 
 /**
  * @author Eike Stepper
  * @since 1.2
  */
-public class ModelReferenceExtractorRegistry extends PrioritizingElementList<Extractor> implements Registry
+public final class ModelReferenceExtractorRegistry extends ContainerElementList<Extractor> implements Registry
 {
   public static final ModelReferenceExtractorRegistry INSTANCE = new ModelReferenceExtractorRegistry();
 
   private ModelReferenceExtractorRegistry()
   {
-    super(PRODUCT_GROUP, Extractor.class);
+    super(Extractor.class);
     activate();
   }
 
@@ -55,11 +55,5 @@ public class ModelReferenceExtractorRegistry extends PrioritizingElementList<Ext
     }
 
     return null;
-  }
-
-  @Override
-  protected Extractor[] createElementArray(int length)
-  {
-    return new Extractor[length];
   }
 }

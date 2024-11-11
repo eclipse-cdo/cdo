@@ -19,10 +19,12 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.container.SetContainer;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -46,6 +48,8 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 {
   private static final Pattern LABEL_PATTERN = Pattern.compile("(.+?) *\\([0-9]+\\)");
 
+  private static final boolean DEBUG = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.explorer.AbstractManager.DEBUG");
+
   private final File folder;
 
   private final Map<String, T> elementMap = new HashMap<>();
@@ -64,7 +68,14 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
       {
         if (child.isDirectory())
         {
-          readElement(child);
+          try
+          {
+            readElement(child);
+          }
+          catch (Exception ex)
+          {
+            OM.LOG.error(ex);
+          }
         }
       }
     }
@@ -180,6 +191,17 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     addElement(element);
     elementMap.put(element.getID(), element);
     return element;
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    super.doActivate();
+
+    if (DEBUG)
+    {
+      IPluginContainer.INSTANCE.putElement("___" + getClass().getSimpleName(), "debug", null, this);
+    }
   }
 
   protected abstract T createElement(String type);

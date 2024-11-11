@@ -15,7 +15,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 import org.eclipse.emf.cdo.eresource.CDOResourceNode;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
-import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration;
+import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.ui.AbstractResourceSelectionDialog;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -31,31 +31,31 @@ import java.util.function.Predicate;
 /**
  * @author Eike Stepper
  */
-public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog<LMResourceSetConfiguration>
+public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog<LMResourceSetConfigurer.CheckoutResult>
 {
-  private final LMResourceSetConfiguration configuration;
+  private final LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult;
 
   private final Map<AssemblyModule, CDOView> views = new LinkedHashMap<>();
 
-  public SelectModuleResourcesDialog(Shell shell, boolean multi, LMResourceSetConfiguration configuration)
+  public SelectModuleResourcesDialog(Shell shell, boolean multi, LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult)
   {
     super(shell, multi, "Select Module Resources", "Select resources from the current module and its dependencies.",
         OM.Activator.INSTANCE.loadImageDescriptor("icons/NewModule.png"));
-    this.configuration = configuration;
+    this.lmResourceSetConfigurerResult = lmResourceSetConfigurerResult;
 
-    if (configuration != null)
+    if (lmResourceSetConfigurerResult != null)
     {
-      Assembly assembly = configuration.getAssembly();
+      Assembly assembly = lmResourceSetConfigurerResult.getAssembly();
       AssemblyModule rootModule = assembly.getRootModule();
-      views.put(rootModule, CDOUtil.getViewSet(configuration.getResourceSet()).getViews()[0]);
-      assembly.forEachDependency(module -> views.put(module, configuration.getView(module)));
+      views.put(rootModule, CDOUtil.getViewSet(lmResourceSetConfigurerResult.getResourceSet()).getViews()[0]);
+      assembly.forEachDependency(module -> views.put(module, lmResourceSetConfigurerResult.getView(module)));
     }
   }
 
   @Override
-  protected LMResourceSetConfiguration getInput()
+  protected LMResourceSetConfigurer.CheckoutResult getInput()
   {
-    return configuration;
+    return lmResourceSetConfigurerResult;
   }
 
   @Override
@@ -72,7 +72,7 @@ public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog
   @Override
   protected Object[] elementGetChildren(Object object, Function<Object, Object[]> defaultGetChildren)
   {
-    if (object == configuration)
+    if (object == lmResourceSetConfigurerResult)
     {
       // Return the assembly modules.
       return views.keySet().toArray();
@@ -117,7 +117,7 @@ public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog
 
     if (object instanceof AssemblyModule)
     {
-      return configuration;
+      return lmResourceSetConfigurerResult;
     }
 
     return super.elementGetParent(object, defaultGetParent);

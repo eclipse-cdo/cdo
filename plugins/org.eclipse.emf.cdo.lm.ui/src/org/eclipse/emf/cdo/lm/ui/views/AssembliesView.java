@@ -18,6 +18,8 @@ import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider.ShowInProjectExplorerAction;
+import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider.ShowInSystemExplorerAction;
 import org.eclipse.emf.cdo.lm.Baseline;
 import org.eclipse.emf.cdo.lm.Dependency;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
@@ -217,7 +219,7 @@ public class AssembliesView extends ContainerView
         {
           if (!checkout.isOpen())
           {
-            Properties properties = LMManager.loadProperties(checkout);
+            Properties properties = LMManager.loadLMProperties(checkout);
             if (properties != null)
             {
               String systemName = properties.getProperty(AssemblyManager.PROP_SYSTEM_NAME);
@@ -235,8 +237,7 @@ public class AssembliesView extends ContainerView
 
         if (!checkouts.isEmpty())
         {
-          showInMenu.add(new org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider.ShowInProjectExplorerAction(page,
-              checkouts.toArray(new CDOCheckout[checkouts.size()])));
+          showInMenu.add(new ShowInProjectExplorerAction(page, checkouts.toArray(new CDOCheckout[checkouts.size()])));
           showInFilled[0] |= true;
         }
       }
@@ -244,10 +245,8 @@ public class AssembliesView extends ContainerView
     else if (selectedElement instanceof IAssemblyDescriptor)
     {
       IAssemblyDescriptor descriptor = (IAssemblyDescriptor)selectedElement;
-      showInMenu.add(new org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider.ShowInProjectExplorerAction(page,
-          new CDOCheckout[] { descriptor.getCheckout() }));
-      showInMenu.add(new org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider.ShowInSystemExplorerAction(
-          descriptor.getCheckout().getStateFolder(LMManager.STATE_FOLDER_NAME)));
+      showInMenu.add(new ShowInProjectExplorerAction(page, new CDOCheckout[] { descriptor.getCheckout() }));
+      showInMenu.add(new ShowInSystemExplorerAction(LMManager.getLMStateFolder(descriptor.getCheckout(), true)));
       showInFilled[0] |= true;
     }
 

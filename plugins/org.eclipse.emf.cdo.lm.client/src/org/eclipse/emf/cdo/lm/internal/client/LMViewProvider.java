@@ -31,7 +31,6 @@ import org.eclipse.emf.cdo.view.CDOViewSet;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -85,9 +84,8 @@ public class LMViewProvider extends AbstractCDOViewProvider
   public URI getResourceURI(CDOView view, String path)
   {
     CDOSession session = view.getSession();
-    IRegistry<String, Object> properties = session.properties();
-    ISystemDescriptor systemDescriptor = (ISystemDescriptor)properties.get(SystemDescriptor.KEY_SYSTEM_DESCRIPTOR);
-    String moduleName = (String)properties.get(SystemDescriptor.KEY_MODULE_NAME);
+    ISystemDescriptor systemDescriptor = SystemDescriptor.getSystemDescriptor(session);
+    String moduleName = SystemDescriptor.getModuleName(session);
     String systemName = systemDescriptor.getSystemName();
     String authority = createAuthority(systemName, moduleName);
 

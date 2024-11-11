@@ -44,6 +44,26 @@ public interface CDORepository extends CDOExplorerElement, //
     CDOViewOpener, //
     CDOTransactionOpener
 {
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_NAME = "name";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_VERSIONING_MODE = "versioningMode";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_ID_GENERATION = "idGeneration";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_REALM = "realm";
+
   public static final String TYPE_REMOTE = "remote";
 
   public static final String TYPE_CLONE = "clone";

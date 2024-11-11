@@ -10,7 +10,7 @@
  */
 package org.eclipse.emf.cdo.lm.ui;
 
-import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration;
+import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.dialogs.SelectModuleResourcesDialog;
 import org.eclipse.emf.cdo.ui.CDOLoadResourceProvider;
@@ -52,19 +52,23 @@ public class LMLoadResourceProvider implements CDOLoadResourceProvider, ImagePro
   @Override
   public boolean canHandle(ResourceSet resourceSet)
   {
-    LMResourceSetConfiguration configuration = LMResourceSetConfiguration.of(resourceSet);
-    return configuration != null;
+    LMResourceSetConfigurer.Result result = LMResourceSetConfigurer.Result.of(resourceSet);
+    return result instanceof LMResourceSetConfigurer.CheckoutResult;
   }
 
   @Override
   public List<URI> browseResources(ResourceSet resourceSet, Shell shell, boolean multi)
   {
-    LMResourceSetConfiguration configuration = LMResourceSetConfiguration.of(resourceSet);
-
-    SelectModuleResourcesDialog dialog = new SelectModuleResourcesDialog(shell, multi, configuration);
-    if (dialog.open() == SelectModuleResourcesDialog.OK)
+    LMResourceSetConfigurer.Result result = LMResourceSetConfigurer.Result.of(resourceSet);
+    if (result instanceof LMResourceSetConfigurer.CheckoutResult)
     {
-      return new ArrayList<>(dialog.getURIs());
+      LMResourceSetConfigurer.CheckoutResult checkoutResult = (LMResourceSetConfigurer.CheckoutResult)result;
+
+      SelectModuleResourcesDialog dialog = new SelectModuleResourcesDialog(shell, multi, checkoutResult);
+      if (dialog.open() == SelectModuleResourcesDialog.OK)
+      {
+        return new ArrayList<>(dialog.getURIs());
+      }
     }
 
     return null;

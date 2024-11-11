@@ -1201,7 +1201,7 @@ public final class LMImporter
         {
           CDOView view = views[i];
 
-          Object moduleName = view.getSession().properties().get(SystemDescriptor.KEY_MODULE_NAME);
+          String moduleName = SystemDescriptor.getModuleName(view.getSession());
           if (name.equals(moduleName))
           {
             return view;

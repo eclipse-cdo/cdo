@@ -65,8 +65,6 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
 {
   public static final SystemManager INSTANCE = new SystemManager();
 
-  private static final String PROP_SYSTEM_NAME = "name";
-
   private static final String PROP_OPEN = "open";
 
   private final Map<String, ISystemDescriptor> descriptorsBySystemName = new HashMap<>();
@@ -190,12 +188,12 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
 
   public void fireDescriptorStateEvent(ISystemDescriptor systemDescriptor, System system, boolean open)
   {
-    CDORepository repository = systemDescriptor.getSystemRepository();
-    Properties properties = loadProperties(repository);
+    CDORepository systemRepository = systemDescriptor.getSystemRepository();
+    Properties properties = loadLMProperties(systemRepository);
     if (Boolean.parseBoolean(properties.getProperty(PROP_OPEN, "false")) != open)
     {
       properties.put(PROP_OPEN, Boolean.toString(open));
-      saveProperties(repository, properties);
+      saveLMProperties(systemRepository, properties);
     }
 
     fireEvent(new DescriptorStateEventImpl(this, systemDescriptor, system, open));
@@ -261,6 +259,23 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
 
   protected void repositoryConnected(CDORepository repository)
   {
+    RepositoryType repositoryType = RepositoryType.of(repository);
+    if (repositoryType == RepositoryType.MODULE)
+    {
+      Properties lmProperties = loadLMProperties(repository);
+      String systemName = lmProperties.getProperty(PROP_SYSTEM_NAME);
+      String moduleName = lmProperties.getProperty(PROP_MODULE_NAME);
+
+      ISystemDescriptor systemDescriptor = getDescriptor(systemName);
+      if (systemDescriptor != null)
+      {
+        CDOSession moduleSession = repository.getSession();
+        SystemDescriptor.setSessionProperties(moduleSession, systemDescriptor, moduleName);
+      }
+
+      return;
+    }
+
     ISystemDescriptor descriptor = getDescriptor(repository);
     if (descriptor == null)
     {
@@ -296,46 +311,38 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
 
   private void addDescriptor(CDORepository repository)
   {
-    Properties properties = loadProperties(repository);
-    if (properties == null)
+    RepositoryType repositoryType = RepositoryType.of(repository);
+    if (repositoryType == null)
     {
       scheduleAnalyzeRepository(repository);
       return;
     }
 
-    ISystemDescriptor descriptor;
-    boolean open;
-
-    String systemName = properties.getProperty(PROP_SYSTEM_NAME);
-    if (systemName == null)
+    if (repositoryType != RepositoryType.SYSTEM)
     {
-      descriptor = SystemDescriptor.NO_SYSTEM;
-      open = false;
-    }
-    else
-    {
-      descriptor = new SystemDescriptor(repository, systemName);
-      open = Boolean.parseBoolean(properties.getProperty(PROP_OPEN, "false"));
+      synchronized (this)
+      {
+        descriptors.put(repository, SystemDescriptor.NO_SYSTEM);
+      }
 
-      repository.addKeyword("org.eclipse.emf.cdo.lm.System");
+      return;
     }
+
+    Properties lmProperties = loadLMProperties(repository);
+    String systemName = lmProperties.getProperty(PROP_SYSTEM_NAME);
+
+    ISystemDescriptor descriptor = new SystemDescriptor(repository, systemName);
+    boolean open = Boolean.parseBoolean(lmProperties.getProperty(PROP_OPEN, "false"));
 
     synchronized (this)
     {
       descriptors.put(repository, descriptor);
-
-      if (filterDescriptor(descriptor))
-      {
-        ++count;
-        descriptorsBySystemName.put(systemName, descriptor);
-        notifyAll();
-      }
+      descriptorsBySystemName.put(systemName, descriptor);
+      ++count;
+      notifyAll();
     }
 
-    if (filterDescriptor(descriptor))
-    {
-      fireElementAddedEvent(descriptor);
-    }
+    fireElementAddedEvent(descriptor);
 
     if (open)
     {
@@ -418,6 +425,8 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
   {
     if (analyzingRepositories.add(repository))
     {
+      repository.connect();
+
       schedule(new OMJob("Analyze " + repository.getName())
       {
         @Override
@@ -435,17 +444,23 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
               ConcurrencyUtil.sleep(100);
             }
 
-            Properties properties = new Properties();
+            Properties lmProperties = new Properties();
 
             String systemName = querySystemName(repository);
             if (systemName != null)
             {
-              properties.put(PROP_SYSTEM_NAME, systemName);
-              properties.put(PROP_OPEN, StringUtil.FALSE);
-            }
+              lmProperties.put(PROP_REPOSITORY_TYPE, REPOSITORY_TYPE_SYSTEM);
+              lmProperties.put(PROP_SYSTEM_NAME, systemName);
+              lmProperties.put(PROP_OPEN, StringUtil.TRUE);
+              saveLMProperties(repository, lmProperties);
 
-            saveProperties(repository, properties);
-            addDescriptor(repository);
+              RepositoryType.SYSTEM.addKeywordTo(repository);
+              addDescriptor(repository);
+            }
+            else
+            {
+              RepositoryType.UNRELATED.addKeywordTo(repository);
+            }
           }
           catch (RepositoryConnectionException ex)
           {
@@ -487,6 +502,48 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
     }
 
     return null;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public enum RepositoryType
+  {
+    SYSTEM("org.eclipse.emf.cdo.lm.System"), //
+
+    MODULE("org.eclipse.emf.cdo.lm.Module"), //
+
+    UNRELATED("org.eclipse.emf.cdo.lm.Unrelated");
+
+    private final String keyword;
+
+    private RepositoryType(String keyword)
+    {
+      this.keyword = keyword;
+    }
+
+    public String getKeyword()
+    {
+      return keyword;
+    }
+
+    public void addKeywordTo(CDORepository repository)
+    {
+      repository.addKeyword(keyword);
+    }
+
+    public static RepositoryType of(CDORepository repository)
+    {
+      for (RepositoryType repositoryType : RepositoryType.values())
+      {
+        if (repository.hasKeyword(repositoryType.keyword))
+        {
+          return repositoryType;
+        }
+      }
+
+      return null;
+    }
   }
 
   /**

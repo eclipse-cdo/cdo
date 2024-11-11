@@ -873,18 +873,14 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
 
   private CDOView configureViewAndResourceSet(CDOView view, ResourceSet resourceSet)
   {
-    AtomicReference<ResourceSetConfiguration> resourceSetConfiguration = new AtomicReference<>();
-    view = configureView(view, () -> unconfigureResourceSet(resourceSetConfiguration.get()));
+    AtomicReference<ResourceSetConfiguration> configurationHolder = new AtomicReference<>();
+    view = configureView(view, () -> unconfigureResourceSet(configurationHolder.get()));
 
-    resourceSetConfiguration.set(configureResourceSet(resourceSet));
+    IManagedContainer container = getContainer();
+    ResourceSetConfiguration configuration = ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, view, container);
+    configurationHolder.set(configuration);
 
     return view;
-  }
-
-  private ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet)
-  {
-    IManagedContainer container = getContainer();
-    return ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, this, container);
   }
 
   private void unconfigureResourceSet(ResourceSetConfiguration resourceSetConfiguration)

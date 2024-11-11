@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.explorer;singleton:=true
-Bundle-Version: 4.14.3.qualifier
+Bundle-Version: 4.15.0.qualifier
 Bundle-Activator: org.eclipse.emf.cdo.internal.explorer.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-ClassPath: .
@@ -25,13 +25,13 @@ Import-Package: org.h2.jdbc;version="[2.0.0,3.0.0)";resolution:=optional,
  org.h2.jdbcx;version="[2.0.0,3.0.0)";resolution:=optional,
  org.h2.util;version="[2.0.0,3.0.0)";resolution:=optional,
  org.h2.value;version="[2.0.0,3.0.0)";resolution:=optional
-Export-Package: org.eclipse.emf.cdo.explorer;version="4.14.3",
- org.eclipse.emf.cdo.explorer.checkouts;version="4.14.3",
- org.eclipse.emf.cdo.explorer.repositories;version="4.14.3",
- org.eclipse.emf.cdo.internal.explorer;version="4.14.3";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.bundle;version="4.14.3";x-internal:=true,
- org.eclipse.emf.cdo.internal.explorer.checkouts;version="4.14.3";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.repositories;version="4.14.3";x-friends:="org.eclipse.emf.cdo.explorer.ui",
- org.eclipse.emf.cdo.internal.explorer.resources;version="4.14.3";x-friends:="org.eclipse.emf.cdo.explorer.ui"
+Export-Package: org.eclipse.emf.cdo.explorer;version="4.15.0",
+ org.eclipse.emf.cdo.explorer.checkouts;version="4.15.0",
+ org.eclipse.emf.cdo.explorer.repositories;version="4.15.0",
+ org.eclipse.emf.cdo.internal.explorer;version="4.15.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.bundle;version="4.15.0";x-internal:=true,
+ org.eclipse.emf.cdo.internal.explorer.checkouts;version="4.15.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.repositories;version="4.15.0";x-friends:="org.eclipse.emf.cdo.explorer.ui",
+ org.eclipse.emf.cdo.internal.explorer.resources;version="4.15.0";x-friends:="org.eclipse.emf.cdo.explorer.ui"
 Eclipse-BuddyPolicy: registered
 Automatic-Module-Name: org.eclipse.emf.cdo.explorer

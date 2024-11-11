@@ -47,14 +47,6 @@ public abstract class AbstractElement extends Notifier implements CDOExplorerEle
 {
   public static final String ILLEGAL_LABEL_CHARACTERS = "/\\:;,";
 
-  public static final String PROP_TYPE = "type";
-
-  public static final String PROP_LABEL = "label";
-
-  public static final String PROP_DESCRIPTION = "description";
-
-  public static final String PROP_KEYWORDS = "keywords";
-
   public static final String PROP_SERVER_BROWSER_PORT = "serverBrowserPort";
 
   private static final String KEYWORD_DELIMITER = " ";

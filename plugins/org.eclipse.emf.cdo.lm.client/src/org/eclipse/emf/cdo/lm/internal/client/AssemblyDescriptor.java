@@ -26,7 +26,7 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
-import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfiguration.BranchPointDelta;
+import org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer.CheckoutResult.BranchPointDelta;
 import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesPackage;
@@ -86,7 +86,7 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
 
   private final CDOCheckout checkout;
 
-  private final Set<LMResourceSetConfiguration> lmResourceSetConfigurations = new LinkedHashSet<>();
+  private final Set<LMResourceSetConfigurer.CheckoutResult> lmResourceSetConfigurerResults = new LinkedHashSet<>();
 
   private final ISystemDescriptor systemDescriptor;
 
@@ -249,31 +249,31 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     return modules.isEmpty();
   }
 
-  public LMResourceSetConfiguration addResourceSet(ResourceSet resourceSet)
+  public LMResourceSetConfigurer.CheckoutResult addResourceSet(ResourceSet resourceSet)
   {
-    LMResourceSetConfiguration lmResourceSetConfiguration = new LMResourceSetConfiguration(this, resourceSet);
+    LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult = new LMResourceSetConfigurer.CheckoutResult(resourceSet, this);
 
-    synchronized (lmResourceSetConfigurations)
+    synchronized (lmResourceSetConfigurerResults)
     {
-      lmResourceSetConfigurations.add(lmResourceSetConfiguration);
+      lmResourceSetConfigurerResults.add(lmResourceSetConfigurerResult);
     }
 
-    return lmResourceSetConfiguration;
+    return lmResourceSetConfigurerResult;
   }
 
-  public void removeResourceSet(LMResourceSetConfiguration lmResourceSetConfiguration)
+  public void removeResourceSet(LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult)
   {
-    synchronized (lmResourceSetConfigurations)
+    synchronized (lmResourceSetConfigurerResults)
     {
-      lmResourceSetConfigurations.remove(lmResourceSetConfiguration);
+      lmResourceSetConfigurerResults.remove(lmResourceSetConfigurerResult);
     }
   }
 
-  public LMResourceSetConfiguration[] getLMResourceSetConfigurations()
+  public LMResourceSetConfigurer.CheckoutResult[] getLMResourceSetConfigurations()
   {
-    synchronized (lmResourceSetConfigurations)
+    synchronized (lmResourceSetConfigurerResults)
     {
-      return lmResourceSetConfigurations.toArray(new LMResourceSetConfiguration[lmResourceSetConfigurations.size()]);
+      return lmResourceSetConfigurerResults.toArray(new LMResourceSetConfigurer.CheckoutResult[lmResourceSetConfigurerResults.size()]);
     }
   }
 
@@ -496,11 +496,11 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     fireEvent(new AvailableUpdatesChangedEventImpl(this, oldAvailableUpdates, null));
     fireEvent(containerEvent);
 
-    for (LMResourceSetConfiguration lmResourceSetConfiguration : lmResourceSetConfigurations)
+    for (LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult : lmResourceSetConfigurerResults)
     {
       try
       {
-        lmResourceSetConfiguration.reconfigure(branchPointDeltas);
+        lmResourceSetConfigurerResult.reconfigure(branchPointDeltas);
       }
       catch (Exception ex)
       {

@@ -18,7 +18,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.container.PrioritizingElementList.Prioritized;
+import org.eclipse.net4j.util.container.ContainerElementList.Prioritized;
+import org.eclipse.net4j.util.container.IContainer;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.FSMUtil;
@@ -231,7 +232,7 @@ public final class ModelReference
     /**
      * @author Eike Stepper
      */
-    public interface Registry extends Extractor
+    public interface Registry extends Extractor, IContainer<Extractor>
     {
       public static final Registry INSTANCE = ModelReferenceExtractorRegistry.INSTANCE;
 

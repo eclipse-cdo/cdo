@@ -74,12 +74,6 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
 {
   public static final AssemblyManager INSTANCE = new AssemblyManager();
 
-  public static final String PROP_SYSTEM_NAME = "systemName";
-
-  public static final String PROP_BASELINE_ID = "baselineID";
-
-  public static final String PROP_MODULE_TYPE = "moduleType";
-
   private static final String ASSEMBLY_FILE_NAME = "module.assembly";
 
   private static final String ASSEMBLY_UPDATE_FILE_NAME = "update.assembly";
@@ -255,13 +249,14 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
 
       Properties properties = new Properties();
       properties.setProperty(PROP_SYSTEM_NAME, system.getName());
+      properties.setProperty(PROP_MODULE_NAME, moduleName);
       properties.setProperty(PROP_BASELINE_ID, CDOExplorerUtil.getCDOIDString(baseline.cdoID()));
       if (moduleType != null)
       {
         properties.setProperty(PROP_MODULE_TYPE, moduleType.getName());
       }
 
-      saveProperties(checkout, properties);
+      saveLMProperties(checkout, properties);
 
       if (assembly != null)
       {
@@ -292,7 +287,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
   @Override
   public String getModuleTypeProperty(CDOCheckout checkout)
   {
-    Properties properties = loadProperties(checkout);
+    Properties properties = loadLMProperties(checkout);
     if (properties != null)
     {
       Object property = properties.get(PROP_MODULE_TYPE);
@@ -427,7 +422,7 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
 
   private void initializeDescriptor(CDOCheckout checkout)
   {
-    Properties properties = loadProperties(checkout);
+    Properties properties = loadLMProperties(checkout);
     if (properties != null)
     {
       String systemName = properties.getProperty(PROP_SYSTEM_NAME);
@@ -495,20 +490,15 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     }
   }
 
-  private static File getStateFolder(CDOCheckout checkout, boolean createFolderOnDemand)
-  {
-    return checkout.getStateFolder(STATE_FOLDER_NAME, createFolderOnDemand);
-  }
-
   private static File getAssemblyFile(CDOCheckout checkout, boolean createFolderOnDemand, boolean update)
   {
-    File stateFolder = getStateFolder(checkout, createFolderOnDemand);
+    File stateFolder = getLMStateFolder(checkout, createFolderOnDemand);
     return new File(stateFolder, update ? ASSEMBLY_UPDATE_FILE_NAME : ASSEMBLY_FILE_NAME);
   }
 
   private static File getErrorsFile(CDOCheckout checkout, boolean createFolderOnDemand)
   {
-    File stateFolder = getStateFolder(checkout, createFolderOnDemand);
+    File stateFolder = getLMStateFolder(checkout, createFolderOnDemand);
     return new File(stateFolder, ERRORS_FILE_NAME);
   }
 

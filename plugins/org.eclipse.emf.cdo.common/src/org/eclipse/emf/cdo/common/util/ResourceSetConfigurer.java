@@ -10,21 +10,14 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
-import org.eclipse.emf.cdo.internal.common.bundle.OM;
+import org.eclipse.emf.cdo.internal.common.util.ResourceSetConfigurerRegistry;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
-import org.eclipse.net4j.util.container.IManagedContainerProvider;
-import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
-import org.eclipse.net4j.util.lifecycle.IDeactivateable;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
-import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -54,162 +47,31 @@ public interface ResourceSetConfigurer
   /**
    * @author Eike Stepper
    */
-  public static final class Registry
+  public interface Registry
   {
-    public static final Registry INSTANCE = new Registry();
+    public static final Registry INSTANCE = ResourceSetConfigurerRegistry.INSTANCE;
 
-    private Registry()
-    {
-    }
+    public ResourceSetConfigurer getConfigurer(IManagedContainer container, String type);
 
-    public ResourceSetConfigurer getConfigurer(IManagedContainer container, String type)
-    {
-      return (ResourceSetConfigurer)container.getElement(Factory.PRODUCT_GROUP, type, null);
-    }
-
-    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container)
-    {
-      ResourceSetConfiguration configuration = new ResourceSetConfiguration(resourceSet, context, container);
-
-      for (String type : container.getFactoryTypes(Factory.PRODUCT_GROUP))
-      {
-        configureResourceSet(resourceSet, context, container, type, configuration);
-      }
-
-      return configuration;
-    }
+    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container);
 
     /**
      * @since 4.15
      */
-    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type)
-    {
-      ResourceSetConfiguration configuration = ResourceSetConfiguration.of(resourceSet);
-      if (configuration == null)
-      {
-        configuration = new ResourceSetConfiguration(resourceSet, context, container);
-      }
+    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type);
 
-      configureResourceSet(resourceSet, context, container, type, configuration);
-      return configuration;
-    }
-
-    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context)
-    {
-      return configureResourceSet(resourceSet, context, IPluginContainer.INSTANCE);
-    }
-
-    private void configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type, ResourceSetConfiguration configuration)
-    {
-      ResourceSetConfigurer configurer = getConfigurer(container, type);
-
-      Object configurerResult = configurer.configureResourceSet(resourceSet, context, container);
-      if (configurerResult != null)
-      {
-        configuration.configurerResults.put(type, configurerResult);
-      }
-    }
+    public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context);
 
     /**
      * @author Eike Stepper
      */
-    public static final class ResourceSetConfiguration extends AdapterImpl implements IDeactivateable, IManagedContainerProvider
+    public interface ResourceSetConfiguration
     {
-      private final ResourceSet resourceSet;
+      public ResourceSet getResourceSet();
 
-      private final Object context;
+      public Map<String, Object> getConfigurerResults();
 
-      private final IManagedContainer container;
-
-      private final Map<String, Object> configurerResults = new HashMap<>();
-
-      private boolean active = true;
-
-      private ResourceSetConfiguration(ResourceSet resourceSet, Object context, IManagedContainer container)
-      {
-        this.resourceSet = resourceSet;
-        this.context = context;
-        this.container = container;
-
-        resourceSet.eAdapters().add(this);
-      }
-
-      public ResourceSet getResourceSet()
-      {
-        return resourceSet;
-      }
-
-      public Object getContext()
-      {
-        return context;
-      }
-
-      @Override
-      public IManagedContainer getContainer()
-      {
-        return container;
-      }
-
-      public Map<String, Object> getConfigurerResults()
-      {
-        return Collections.unmodifiableMap(configurerResults);
-      }
-
-      public boolean isActive()
-      {
-        return active;
-      }
-
-      @Override
-      public Exception deactivate()
-      {
-        Exception exception = null;
-
-        if (active)
-        {
-          active = false;
-
-          try
-          {
-            resourceSet.eAdapters().remove(this);
-
-            for (Object configurerResult : configurerResults.values())
-            {
-              Exception ex = LifecycleUtil.deactivate(configurerResult);
-              if (ex != null)
-              {
-                OM.LOG.error(ex);
-
-                if (exception == null)
-                {
-                  exception = ex;
-                }
-              }
-            }
-          }
-          catch (Exception ex)
-          {
-            OM.LOG.error(ex);
-
-            if (exception == null)
-            {
-              exception = ex;
-            }
-          }
-          finally
-          {
-            configurerResults.clear();
-          }
-        }
-
-        return exception;
-      }
-
-      @Override
-      public boolean isAdapterForType(Object type)
-      {
-        return type == ResourceSetConfiguration.class;
-      }
+      public boolean isActive();
 
       public static ResourceSetConfiguration of(ResourceSet resourceSet)
       {

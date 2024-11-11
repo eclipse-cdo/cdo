@@ -32,6 +32,26 @@ import java.util.Set;
  */
 public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comparable<CDOExplorerElement>
 {
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_TYPE = "type";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_LABEL = "label";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_DESCRIPTION = "description";
+
+  /**
+   * @since 4.15
+   */
+  public static final String PROP_KEYWORDS = "keywords";
+
   public String getID();
 
   public String getType();

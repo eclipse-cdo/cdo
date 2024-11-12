@@ -779,7 +779,6 @@ public final class SystemDescriptor implements ISystemDescriptor
       primaryView = moduleSession.openTransaction(branchPoint);
     }
 
-    configureModuleResourceSet(primaryView);
     return primaryView.getResourceSet();
   }
 

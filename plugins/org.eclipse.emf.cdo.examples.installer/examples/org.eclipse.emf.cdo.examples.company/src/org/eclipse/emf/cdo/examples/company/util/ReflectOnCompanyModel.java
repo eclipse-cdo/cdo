@@ -64,6 +64,7 @@ public class ReflectOnCompanyModel
 
   private static void reflectReference(EReference eReference)
   {
+    // Find uni-directional cross references.
     if (eReference.getEOpposite() == null && !eReference.isContainer() && !eReference.isContainment())
     {
       EClass eClass = eReference.getEContainingClass();

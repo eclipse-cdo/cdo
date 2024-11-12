@@ -23,8 +23,8 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
-import org.eclipse.emf.cdo.view.CDOViewProviderRegistry;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -45,6 +45,8 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
 {
   public static final String TYPE = "lm";
 
+  private static final ThreadLocal<Boolean> OPENING_SECONDRAY_VIEWS = new ThreadLocal<>();
+
   public LMResourceSetConfigurer()
   {
   }
@@ -52,32 +54,56 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
   @Override
   protected Result configureViewResourceSet(ResourceSet resourceSet, CDOView view)
   {
+    if (OPENING_SECONDRAY_VIEWS.get() == Boolean.TRUE)
+    {
+      return null;
+    }
+
     CDOSession session = view.getSession();
     ISystemDescriptor systemDescriptor = SystemDescriptor.getSystemDescriptor(session);
-    String moduleName = SystemDescriptor.getModuleName(session);
-
-    if (systemDescriptor != null && moduleName != null)
+    if (systemDescriptor == null)
     {
-      CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
-      if (checkout != null)
+      return null;
+    }
+
+    String moduleName = SystemDescriptor.getModuleName(session);
+    if (moduleName == null)
+    {
+      return null;
+    }
+
+    try
+    {
+      OPENING_SECONDRAY_VIEWS.set(Boolean.TRUE);
+      return configureViewResourceSet(resourceSet, view, systemDescriptor);
+    }
+    finally
+    {
+      OPENING_SECONDRAY_VIEWS.remove();
+    }
+  }
+
+  private Result configureViewResourceSet(ResourceSet resourceSet, CDOView view, ISystemDescriptor systemDescriptor)
+  {
+    CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
+    if (checkout != null)
+    {
+      IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(checkout);
+      if (descriptor != null)
       {
-        IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(checkout);
-        if (descriptor != null)
-        {
-          return ((AssemblyDescriptor)descriptor).addResourceSet(resourceSet);
-        }
+        return ((AssemblyDescriptor)descriptor).addResourceSet(resourceSet);
       }
-      else
+    }
+    else
+    {
+      try
       {
-        try
-        {
-          Map<String, CDOView> moduleViews = systemDescriptor.configureModuleResourceSet(view);
-          return new StandaloneResult(resourceSet, systemDescriptor, moduleViews);
-        }
-        catch (ResolutionException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
+        Map<String, CDOView> moduleViews = systemDescriptor.configureModuleResourceSet(view);
+        return new StandaloneResult(resourceSet, systemDescriptor, moduleViews);
+      }
+      catch (ResolutionException ex)
+      {
+        throw WrappedException.wrap(ex);
       }
     }
 
@@ -182,7 +208,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
     public static CDOView openView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
     {
       URI viewURI = LMViewProvider.createViewURI(module);
-      return CDOViewProviderRegistry.INSTANCE.provideView(viewURI, resourceSet);
+      return CDOUtil.getView(resourceSet, viewURI);
     }
   }
 

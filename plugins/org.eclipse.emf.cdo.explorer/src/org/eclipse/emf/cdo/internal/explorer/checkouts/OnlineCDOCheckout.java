@@ -23,6 +23,8 @@ import org.eclipse.emf.cdo.view.CDOViewTargetChangedEvent;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 
+import org.eclipse.emf.ecore.resource.ResourceSet;
+
 /**
  * @author Eike Stepper
  */
@@ -79,7 +81,7 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
-  protected CDOView openView(CDOSession session)
+  protected CDOView openView(CDOSession session, ResourceSet resourceSet)
   {
     CDOBranchManager branchManager = session.getBranchManager();
     CDOBranch branch = branchManager.getBranch(getBranchID());
@@ -90,7 +92,7 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
 
     setBranchPath(branch.getPathName());
 
-    CDOView view = openView(session, branch);
+    CDOView view = openView(session, branch, resourceSet);
     view.addListener(new IListener()
     {
       @Override
@@ -110,10 +112,10 @@ public class OnlineCDOCheckout extends CDOCheckoutImpl
     return view;
   }
 
-  private CDOView openView(CDOSession session, CDOBranch branch)
+  private CDOView openView(CDOSession session, CDOBranch branch, ResourceSet resourceSet)
   {
     long timeStamp = getTimeStamp();
-    return session.openView(branch, timeStamp);
+    return session.openView(branch, timeStamp, resourceSet);
   }
 
   @Override

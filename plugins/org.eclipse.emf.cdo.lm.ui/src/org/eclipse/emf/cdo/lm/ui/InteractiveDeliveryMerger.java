@@ -151,25 +151,19 @@ public class InteractiveDeliveryMerger implements LMMerger2
   protected CDOView openOriginView(ISystemDescriptor systemDescriptor, LMMergeInfos infos, CDOBranchPoint branchPoint, ResourceSet resourceSet) throws Exception
   {
     CDOSession session = infos.getSession();
-    CDOView primaryView = session.openView(branchPoint, resourceSet);
-    systemDescriptor.configureModuleResourceSet(primaryView);
-    return primaryView;
+    return session.openView(branchPoint, resourceSet);
   }
 
   protected CDOView openSourceView(ISystemDescriptor systemDescriptor, LMMergeInfos infos, CDOBranchPoint branchPoint, ResourceSet resourceSet) throws Exception
   {
     CDOSession session = infos.getSession();
-    CDOView primaryView = session.openView(branchPoint, resourceSet);
-    systemDescriptor.configureModuleResourceSet(primaryView);
-    return primaryView;
+    return session.openView(branchPoint, resourceSet);
   }
 
   protected CDOTransaction openTargetTransaction(ISystemDescriptor systemDescriptor, LMMergeInfos infos, CDOBranchPoint branchPoint, ResourceSet resourceSet)
       throws Exception
   {
     CDOSession session = infos.getSession();
-    CDOTransaction primaryTransaction = session.openTransaction(branchPoint, resourceSet);
-    systemDescriptor.configureModuleResourceSet(primaryTransaction);
-    return primaryTransaction;
+    return session.openTransaction(branchPoint, resourceSet);
   }
 }

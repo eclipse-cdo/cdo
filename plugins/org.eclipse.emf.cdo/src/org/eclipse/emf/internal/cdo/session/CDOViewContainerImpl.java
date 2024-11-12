@@ -17,6 +17,7 @@ package org.eclipse.emf.internal.cdo.session;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
@@ -289,6 +290,9 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     try
     {
       view.activate();
+
+      ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, view);
+
       fireElementAddedEvent(view);
     }
     catch (RuntimeException ex)

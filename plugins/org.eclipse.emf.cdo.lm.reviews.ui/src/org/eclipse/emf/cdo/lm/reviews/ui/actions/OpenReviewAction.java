@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
-import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.ModelReference;
@@ -188,16 +187,6 @@ public class OpenReviewAction extends AbstractReviewAction
 
         CDOView leftView = moduleSession.openView(headPoint);
         CDOView rightView = moduleSession.openView(basePoint);
-
-        try
-        {
-          systemDescriptor.configureModuleResourceSet(leftView);
-          systemDescriptor.configureModuleResourceSet(rightView);
-        }
-        catch (ResolutionException ex)
-        {
-          throw WrappedException.wrap(ex);
-        }
 
         CDOView[] originView = { null };
         CDOCompareEditorUtil.setInputConsumer(new ReviewEditorHandler(deliveryReview, initialTopic, systemDescriptor));

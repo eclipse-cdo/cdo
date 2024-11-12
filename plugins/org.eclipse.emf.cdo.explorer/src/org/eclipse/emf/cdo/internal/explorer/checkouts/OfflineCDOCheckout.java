@@ -217,7 +217,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
   }
 
   @Override
-  protected CDOView openView(CDOSession session)
+  protected CDOView openView(CDOSession session, ResourceSet resourceSet)
   {
     CDOSessionConfigurationFactory remote = new CDOSessionConfigurationFactory()
     {
@@ -274,7 +274,7 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     setDirty(workspace.isDirty());
 
     workspace.addListener(workspaceListener);
-    return workspace.openView();
+    return workspace.openView(resourceSet);
   }
 
   @Override

@@ -75,16 +75,21 @@ public final class CDOExplorerUtil
       return null;
     }
 
+    CDOCheckout checkout = CDOCheckoutImpl.VIEW_CHECKOUT.get();
+    if (checkout != null)
+    {
+      return checkout;
+    }
+
     if (object instanceof CDOView)
     {
       CDOView view = (CDOView)object;
-      if (view.isClosed())
-      {
-        return CDOCheckoutImpl.VIEW_CHECKOUT.get();
-      }
 
-      IRegistry<String, Object> properties = view.properties();
-      return (CDOCheckout)properties.get(CDOCheckoutImpl.CHECKOUT_KEY);
+      if (!view.isClosed())
+      {
+        IRegistry<String, Object> properties = view.properties();
+        return (CDOCheckout)properties.get(CDOCheckoutImpl.CHECKOUT_KEY);
+      }
     }
 
     if (object instanceof URI)
@@ -99,7 +104,7 @@ public final class CDOExplorerUtil
       return checkoutManager.getCheckout(id);
     }
 
-    CDOCheckout checkout = walkUp(object, null);
+    checkout = walkUp(object, null);
     if (checkout != null)
     {
       return checkout;

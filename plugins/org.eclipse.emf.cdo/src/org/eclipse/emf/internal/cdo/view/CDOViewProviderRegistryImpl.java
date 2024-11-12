@@ -87,8 +87,9 @@ public class CDOViewProviderRegistryImpl extends Container<CDOViewProvider> impl
     }
 
     CDOViewSet viewSet = null;
+    CDOViewProvider[] viewProviders = getViewProviders(uri);
 
-    for (CDOViewProvider viewProvider : getViewProviders(uri))
+    for (CDOViewProvider viewProvider : viewProviders)
     {
       if (viewSet == null)
       {

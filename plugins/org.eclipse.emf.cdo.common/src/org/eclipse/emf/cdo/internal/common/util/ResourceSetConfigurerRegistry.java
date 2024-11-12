@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.internal.common.util;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
 import org.eclipse.emf.cdo.internal.common.bundle.OM;
 
+import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
@@ -39,17 +40,37 @@ public final class ResourceSetConfigurerRegistry implements ResourceSetConfigure
   @Override
   public ResourceSetConfigurer getConfigurer(IManagedContainer container, String type)
   {
-    return (ResourceSetConfigurer)container.getElement(ResourceSetConfigurer.Factory.PRODUCT_GROUP, type, null);
+    return container.getElementOrNull(ResourceSetConfigurer.Factory.PRODUCT_GROUP, type);
+  }
+
+  @Override
+  public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context)
+  {
+    return configureResourceSet(resourceSet, context, null);
   }
 
   @Override
   public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container)
   {
-    ResourceSetConfigurationImpl configuration = new ResourceSetConfigurationImpl(resourceSet);
+    ResourceSetConfiguration configuration = null;
+
+    if (container == null)
+    {
+      container = ContainerUtil.getContainer(context);
+    }
+
+    if (container == null)
+    {
+      container = IPluginContainer.INSTANCE;
+    }
 
     for (String type : container.getFactoryTypes(ResourceSetConfigurer.Factory.PRODUCT_GROUP))
     {
-      configureResourceSet(resourceSet, context, container, type, configuration);
+      ResourceSetConfiguration c = configureResourceSet(resourceSet, context, container, type);
+      if (c != null)
+      {
+        configuration = c;
+      }
     }
 
     return configuration;
@@ -61,32 +82,24 @@ public final class ResourceSetConfigurerRegistry implements ResourceSetConfigure
   @Override
   public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type)
   {
-    ResourceSetConfigurationImpl configuration = (ResourceSetConfigurationImpl)ResourceSetConfiguration.of(resourceSet);
-    if (configuration == null)
-    {
-      configuration = new ResourceSetConfigurationImpl(resourceSet);
-    }
-
-    configureResourceSet(resourceSet, context, container, type, configuration);
-    return configuration;
-  }
-
-  @Override
-  public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context)
-  {
-    return configureResourceSet(resourceSet, context, IPluginContainer.INSTANCE);
-  }
-
-  private void configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container, String type,
-      ResourceSetConfigurationImpl configuration)
-  {
     ResourceSetConfigurer configurer = getConfigurer(container, type);
-
-    Object configurerResult = configurer.configureResourceSet(resourceSet, context, container);
-    if (configurerResult != null)
+    if (configurer != null)
     {
-      configuration.configurerResults.put(type, configurerResult);
+      Object configurerResult = configurer.configureResourceSet(resourceSet, context, container);
+      if (configurerResult != null)
+      {
+        ResourceSetConfigurationImpl configuration = (ResourceSetConfigurationImpl)ResourceSetConfiguration.of(resourceSet);
+        if (configuration == null)
+        {
+          configuration = new ResourceSetConfigurationImpl(resourceSet);
+        }
+
+        configuration.configurerResults.put(type, configurerResult);
+        return configuration;
+      }
     }
+
+    return null;
   }
 
   /**

@@ -94,6 +94,9 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.concurrent.SerializingExecutor;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -152,7 +155,7 @@ import java.util.function.Predicate;
 /**
  * @author Eike Stepper
  */
-public class CDOViewImpl extends AbstractCDOView
+public class CDOViewImpl extends AbstractCDOView implements IManagedContainerProvider
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_VIEW, CDOViewImpl.class);
 
@@ -235,6 +238,12 @@ public class CDOViewImpl extends AbstractCDOView
   public ExecutorService getExecutorService()
   {
     return ConcurrencyUtil.getExecutorService(session);
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return ContainerUtil.getContainer(session);
   }
 
   /**

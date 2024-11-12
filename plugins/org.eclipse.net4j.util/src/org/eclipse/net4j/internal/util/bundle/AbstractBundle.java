@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2012, 2015, 2016, 2019-2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2012, 2015, 2016, 2019-2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -47,6 +47,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectStreamClass;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -67,6 +68,8 @@ import java.util.concurrent.ConcurrentHashMap;
 public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport, OMBundle.TranslationSupport
 {
   private static final String CLASS_EXTENSION = ".class";
+
+  private static final String STACK_TRACE_ELEMENT = StackTraceElement[].class.getName();
 
   private static final String EXT_POINT_FACTORIES = OM.BUNDLE_ID + '.' + PluginFactoryRegistry.EXT_POINT;
 
@@ -132,6 +135,27 @@ public abstract class AbstractBundle implements OMBundle, OMBundle.DebugSupport,
   public void setAccessor(Class<?> accessor)
   {
     this.accessor = accessor;
+  }
+
+  @Override
+  public Class<?> resolveClass(ObjectStreamClass v) throws ClassNotFoundException
+  {
+    String className = v.getName();
+
+    try
+    {
+      ClassLoader classLoader = accessor.getClassLoader();
+      return classLoader.loadClass(className);
+    }
+    catch (ClassNotFoundException ex)
+    {
+      if (!STACK_TRACE_ELEMENT.equals(className))
+      {
+        throw WrappedException.wrap(ex);
+      }
+
+      return null;
+    }
   }
 
   public Object getBundleContext()

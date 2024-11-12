@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,17 +10,20 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.impl;
 
+import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.lm.impl.BaselineImpl;
 import org.eclipse.emf.cdo.lm.impl.ExtendedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -37,8 +40,9 @@ import java.util.Collection;
  * </p>
  * <ul>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getReview <em>Review</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getTopics <em>Topics</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getComments <em>Comments</em>}</li>
- *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getCommentCount <em>Comment Count</em>}</li>
+ *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getTopicCount <em>Topic Count</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getUnresolvedCount <em>Unresolved Count</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getResolvedCount <em>Resolved Count</em>}</li>
  *   <li>{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl#getId <em>Id</em>}</li>
@@ -52,14 +56,15 @@ import java.util.Collection;
 public abstract class ReviewImpl extends BaselineImpl implements Review, ExtendedBaseline
 {
   /**
-   * The default value of the '{@link #getCommentCount() <em>Comment Count</em>}' attribute.
+   * The default value of the '{@link #getTopicCount() <em>Topic Count</em>}' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
-   * @see #getCommentCount()
+   * @see #getTopicCount()
    * @generated
    * @ordered
    */
-  protected static final int COMMENT_COUNT_EDEFAULT = 0;
+  protected static final int TOPIC_COUNT_EDEFAULT = 0;
 
   /**
    * The default value of the '{@link #getUnresolvedCount() <em>Unresolved Count</em>}' attribute.
@@ -132,6 +137,24 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
     return ReviewsPackage.Literals.REVIEW;
   }
 
+  @Override
+  public Stream getStream()
+  {
+    EObject container = eContainer();
+
+    while (container != null)
+    {
+      if (container instanceof Stream)
+      {
+        return (Stream)container;
+      }
+
+      container = container.eContainer();
+    }
+
+    return null;
+  }
+
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -152,7 +175,7 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   @Override
   public EList<Comment> getComments()
   {
-    return (EList<Comment>)eDynamicGet(ReviewsPackage.REVIEW__COMMENTS, ReviewsPackage.Literals.COMMENTABLE__COMMENTS, true, true);
+    return (EList<Comment>)eDynamicGet(ReviewsPackage.REVIEW__COMMENTS, ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS, true, true);
   }
 
   /**
@@ -161,9 +184,9 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
    * @generated NOT
    */
   @Override
-  public int getCommentCount()
+  public int getTopicCount()
   {
-    return CommentableImpl.getCommentCount(this);
+    return TopicContainerImpl.getTopicCount(this);
   }
 
   /**
@@ -174,7 +197,7 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   @Override
   public int getUnresolvedCount()
   {
-    return CommentableImpl.getUnresolvedCount(this);
+    return TopicContainerImpl.getUnresolvedCount(this);
   }
 
   /**
@@ -185,7 +208,7 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   @Override
   public int getResolvedCount()
   {
-    return CommentableImpl.getResolvedCount(this);
+    return TopicContainerImpl.getResolvedCount(this);
   }
 
   /**
@@ -273,10 +296,24 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
    */
   @SuppressWarnings("unchecked")
   @Override
+  public EList<Topic> getTopics()
+  {
+    return (EList<Topic>)eDynamicGet(ReviewsPackage.REVIEW__TOPICS, ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS, true, true);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @SuppressWarnings("unchecked")
+  @Override
   public NotificationChain eInverseAdd(InternalEObject otherEnd, int featureID, NotificationChain msgs)
   {
     switch (featureID)
     {
+    case ReviewsPackage.REVIEW__TOPICS:
+      return ((InternalEList<InternalEObject>)(InternalEList<?>)getTopics()).basicAdd(otherEnd, msgs);
     case ReviewsPackage.REVIEW__COMMENTS:
       return ((InternalEList<InternalEObject>)(InternalEList<?>)getComments()).basicAdd(otherEnd, msgs);
     }
@@ -293,6 +330,8 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   {
     switch (featureID)
     {
+    case ReviewsPackage.REVIEW__TOPICS:
+      return ((InternalEList<?>)getTopics()).basicRemove(otherEnd, msgs);
     case ReviewsPackage.REVIEW__COMMENTS:
       return ((InternalEList<?>)getComments()).basicRemove(otherEnd, msgs);
     }
@@ -311,10 +350,12 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
     {
     case ReviewsPackage.REVIEW__REVIEW:
       return getReview();
+    case ReviewsPackage.REVIEW__TOPICS:
+      return getTopics();
     case ReviewsPackage.REVIEW__COMMENTS:
       return getComments();
-    case ReviewsPackage.REVIEW__COMMENT_COUNT:
-      return getCommentCount();
+    case ReviewsPackage.REVIEW__TOPIC_COUNT:
+      return getTopicCount();
     case ReviewsPackage.REVIEW__UNRESOLVED_COUNT:
       return getUnresolvedCount();
     case ReviewsPackage.REVIEW__RESOLVED_COUNT:
@@ -342,6 +383,10 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   {
     switch (featureID)
     {
+    case ReviewsPackage.REVIEW__TOPICS:
+      getTopics().clear();
+      getTopics().addAll((Collection<? extends Topic>)newValue);
+      return;
     case ReviewsPackage.REVIEW__COMMENTS:
       getComments().clear();
       getComments().addAll((Collection<? extends Comment>)newValue);
@@ -373,6 +418,9 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   {
     switch (featureID)
     {
+    case ReviewsPackage.REVIEW__TOPICS:
+      getTopics().clear();
+      return;
     case ReviewsPackage.REVIEW__COMMENTS:
       getComments().clear();
       return;
@@ -404,10 +452,12 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
     {
     case ReviewsPackage.REVIEW__REVIEW:
       return getReview() != null;
+    case ReviewsPackage.REVIEW__TOPICS:
+      return !getTopics().isEmpty();
     case ReviewsPackage.REVIEW__COMMENTS:
       return !getComments().isEmpty();
-    case ReviewsPackage.REVIEW__COMMENT_COUNT:
-      return getCommentCount() != COMMENT_COUNT_EDEFAULT;
+    case ReviewsPackage.REVIEW__TOPIC_COUNT:
+      return getTopicCount() != TOPIC_COUNT_EDEFAULT;
     case ReviewsPackage.REVIEW__UNRESOLVED_COUNT:
       return getUnresolvedCount() != UNRESOLVED_COUNT_EDEFAULT;
     case ReviewsPackage.REVIEW__RESOLVED_COUNT:
@@ -432,20 +482,22 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   @Override
   public int eBaseStructuralFeatureID(int derivedFeatureID, Class<?> baseClass)
   {
-    if (baseClass == Commentable.class)
+    if (baseClass == TopicContainer.class)
     {
       switch (derivedFeatureID)
       {
       case ReviewsPackage.REVIEW__REVIEW:
-        return ReviewsPackage.COMMENTABLE__REVIEW;
+        return ReviewsPackage.TOPIC_CONTAINER__REVIEW;
+      case ReviewsPackage.REVIEW__TOPICS:
+        return ReviewsPackage.TOPIC_CONTAINER__TOPICS;
       case ReviewsPackage.REVIEW__COMMENTS:
-        return ReviewsPackage.COMMENTABLE__COMMENTS;
-      case ReviewsPackage.REVIEW__COMMENT_COUNT:
-        return ReviewsPackage.COMMENTABLE__COMMENT_COUNT;
+        return ReviewsPackage.TOPIC_CONTAINER__COMMENTS;
+      case ReviewsPackage.REVIEW__TOPIC_COUNT:
+        return ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT;
       case ReviewsPackage.REVIEW__UNRESOLVED_COUNT:
-        return ReviewsPackage.COMMENTABLE__UNRESOLVED_COUNT;
+        return ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT;
       case ReviewsPackage.REVIEW__RESOLVED_COUNT:
-        return ReviewsPackage.COMMENTABLE__RESOLVED_COUNT;
+        return ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT;
       default:
         return -1;
       }
@@ -461,19 +513,21 @@ public abstract class ReviewImpl extends BaselineImpl implements Review, Extende
   @Override
   public int eDerivedStructuralFeatureID(int baseFeatureID, Class<?> baseClass)
   {
-    if (baseClass == Commentable.class)
+    if (baseClass == TopicContainer.class)
     {
       switch (baseFeatureID)
       {
-      case ReviewsPackage.COMMENTABLE__REVIEW:
+      case ReviewsPackage.TOPIC_CONTAINER__REVIEW:
         return ReviewsPackage.REVIEW__REVIEW;
-      case ReviewsPackage.COMMENTABLE__COMMENTS:
+      case ReviewsPackage.TOPIC_CONTAINER__TOPICS:
+        return ReviewsPackage.REVIEW__TOPICS;
+      case ReviewsPackage.TOPIC_CONTAINER__COMMENTS:
         return ReviewsPackage.REVIEW__COMMENTS;
-      case ReviewsPackage.COMMENTABLE__COMMENT_COUNT:
-        return ReviewsPackage.REVIEW__COMMENT_COUNT;
-      case ReviewsPackage.COMMENTABLE__UNRESOLVED_COUNT:
+      case ReviewsPackage.TOPIC_CONTAINER__TOPIC_COUNT:
+        return ReviewsPackage.REVIEW__TOPIC_COUNT;
+      case ReviewsPackage.TOPIC_CONTAINER__UNRESOLVED_COUNT:
         return ReviewsPackage.REVIEW__UNRESOLVED_COUNT;
-      case ReviewsPackage.COMMENTABLE__RESOLVED_COUNT:
+      case ReviewsPackage.TOPIC_CONTAINER__RESOLVED_COUNT:
         return ReviewsPackage.REVIEW__RESOLVED_COUNT;
       default:
         return -1;

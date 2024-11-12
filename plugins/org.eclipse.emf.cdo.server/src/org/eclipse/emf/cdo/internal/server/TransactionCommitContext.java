@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016, 2019-2021, 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2019-2021, 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -120,6 +120,8 @@ public class TransactionCommitContext implements InternalCommitContext
   private static final InternalCDORevision DETACHED = new StubCDORevision(null);
 
   private static final LockType[] ALL_LOCK_TYPES = LockType.values();
+
+  private static final Map<String, String> NO_COMMIT_PROPERTIES = Collections.emptyMap();
 
   private final InternalTransaction transaction;
 
@@ -289,7 +291,7 @@ public class TransactionCommitContext implements InternalCommitContext
   @Override
   public Map<String, String> getCommitProperties()
   {
-    return commitProperties;
+    return commitProperties == null ? NO_COMMIT_PROPERTIES : commitProperties;
   }
 
   @Override

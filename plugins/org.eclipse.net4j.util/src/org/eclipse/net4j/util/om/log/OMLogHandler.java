@@ -25,6 +25,7 @@ import org.eclipse.net4j.util.om.log.OMLogger.Level;
  * @see OSGiLoggingBridge#INSTANCE
  * @see FileLogHandler
  */
+@FunctionalInterface
 public interface OMLogHandler
 {
   public void logged(OMLogger logger, Level level, String msg, Throwable t);

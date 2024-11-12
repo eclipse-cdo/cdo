@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2008-2013, 2015-2022 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2008-2013, 2015-2022, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -377,7 +377,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
   protected IManagedContainer createServerContainer()
   {
-    ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "DISABLE_FEATURE_MAP_CHECKS"), null, true, true);
+    ReflectUtil.setValue(ReflectUtil.getField(Repository.class, "disableFeatureMapChecks"), null, true, true);
 
     IManagedContainer container = ContainerUtil.createContainer();
     container.setName("server");

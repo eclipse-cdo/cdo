@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2007-2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2007-2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -192,10 +192,9 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final String PROP_DISABLE_FEATURE_MAP_CHECKS = "org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS";
 
-  private static final boolean DISABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_FEATURE_MAP_CHECKS);
+  private static boolean disableFeatureMapChecks = OMPlatform.INSTANCE.isProperty(PROP_DISABLE_FEATURE_MAP_CHECKS);
 
-  private static final boolean ENABLE_FEATURE_MAP_CHECKS = OMPlatform.INSTANCE
-      .isProperty("org.eclipse.emf.cdo.internal.server.Repository.ENABLE_FEATURE_MAP_CHECKS");
+  private static boolean enableFeatureMapChecks = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.server.Repository.ENABLE_FEATURE_MAP_CHECKS");
 
   private static boolean featureMapsChecked;
 
@@ -1497,7 +1496,7 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public void commit(InternalCommitContext commitContext, OMMonitor monitor)
   {
-    if (!DISABLE_FEATURE_MAP_CHECKS)
+    if (!disableFeatureMapChecks)
     {
       InternalCDORevision[] newObjects = commitContext.getNewObjects();
       if (newObjects != null && newObjects.length != 0)
@@ -1516,7 +1515,7 @@ public class Repository extends Container<Object> implements InternalRepository
       {
         featureMapsChecked = true;
 
-        if (!ENABLE_FEATURE_MAP_CHECKS)
+        if (!enableFeatureMapChecks)
         {
           OM.LOG.info("If no model contains feature maps commit performance can be slightly increased by specifying -D" //
               + PROP_DISABLE_FEATURE_MAP_CHECKS + "=true");

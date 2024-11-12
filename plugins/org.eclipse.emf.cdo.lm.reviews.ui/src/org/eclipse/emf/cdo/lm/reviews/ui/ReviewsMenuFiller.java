@@ -14,24 +14,28 @@ import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.Stream;
-import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
+import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
+import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.AbandonReviewAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.DeleteAuthorableAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.DeleteReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.MergeFromSourceAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewCommentAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewDeliveryReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewDropReviewAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.NewTopicAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.OpenReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.RebaseToTargetAction;
-import org.eclipse.emf.cdo.lm.reviews.ui.actions.ResolveCommentAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.ResolveAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.RestoreReviewAction;
 import org.eclipse.emf.cdo.lm.reviews.ui.actions.SubmitReviewAction;
-import org.eclipse.emf.cdo.lm.reviews.ui.actions.UnresolveCommentAction;
+import org.eclipse.emf.cdo.lm.reviews.ui.actions.UnresolveAction;
 import org.eclipse.emf.cdo.lm.ui.actions.CheckoutAction;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
@@ -56,6 +60,8 @@ public class ReviewsMenuFiller implements MenuFiller
   @Override
   public boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
   {
+    int oldSize = menu.getItems().length;
+
     if (selectedElement instanceof Stream)
     {
       Stream stream = (Stream)selectedElement;
@@ -86,6 +92,11 @@ public class ReviewsMenuFiller implements MenuFiller
     else if (selectedElement instanceof Review)
     {
       Review review = (Review)selectedElement;
+
+      if (OpenReviewAction.ENABLED)
+      {
+        menu.add(new OpenReviewAction(page, review, null));
+      }
 
       menu.add(new CheckoutAction(page, ReviewsEditPlugin.INSTANCE, null, review));
       menu.add(new Separator());
@@ -128,37 +139,55 @@ public class ReviewsMenuFiller implements MenuFiller
       }
     }
 
-    if (selectedElement instanceof Commentable)
+    if (selectedElement instanceof TopicContainer)
     {
-      Commentable commentable = (Commentable)selectedElement;
+      TopicContainer container = (TopicContainer)selectedElement;
 
-      Review review = commentable.getReview();
+      Review review = container.getReview();
       if (review == null || review.getStatus().isOpen())
       {
-        menu.add(new Separator());
-        menu.add(new NewCommentAction(page, viewer, commentable, true));
-        menu.add(new NewCommentAction(page, viewer, commentable, false));
-
-        if (commentable instanceof Comment)
+        if (container instanceof Topic)
         {
-          Comment comment = (Comment)commentable;
+          Topic topic = (Topic)container;
 
-          CommentStatus status = comment.getStatus();
-          if (status == CommentStatus.UNRESOLVED)
+          if (OpenReviewAction.ENABLED)
           {
-            menu.add(new Separator());
-            menu.add(new ResolveCommentAction(page, comment));
+            menu.add(new OpenReviewAction(page, review, topic));
           }
-          else if (status == CommentStatus.NONE || status == CommentStatus.RESOLVED)
+        }
+
+        menu.add(new Separator());
+        menu.add(new NewTopicAction(page, viewer, container));
+        menu.add(new NewCommentAction(page, viewer, container));
+
+        if (container instanceof Topic)
+        {
+          Topic topic = (Topic)container;
+
+          TopicStatus status = topic.getStatus();
+          if (status == TopicStatus.UNRESOLVED)
           {
             menu.add(new Separator());
-            menu.add(new UnresolveCommentAction(page, comment));
+            menu.add(new ResolveAction(page, topic));
+          }
+          else
+          {
+            menu.add(new Separator());
+            menu.add(new UnresolveAction(page, topic));
           }
         }
       }
     }
 
-    return false;
+    if (selectedElement instanceof Authorable)
+    {
+      Authorable authorable = (Authorable)selectedElement;
+
+      menu.add(new Separator());
+      menu.add(new DeleteAuthorableAction(page, authorable));
+    }
+
+    return menu.getItems().length > oldSize;
   }
 
   private void addSubmitAction(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Review review)

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -10,18 +10,16 @@
  */
 package org.eclipse.emf.cdo.lm.reviews.provider;
 
+import org.eclipse.emf.cdo.etypes.provider.ModelElementItemProvider;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
 import org.eclipse.emf.edit.provider.IItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.ItemPropertyDescriptor;
 import org.eclipse.emf.edit.provider.StyledString;
-import org.eclipse.emf.edit.provider.StyledString.Style;
 import org.eclipse.emf.edit.provider.ViewerNotification;
 
 import java.util.Collection;
@@ -33,14 +31,8 @@ import java.util.List;
  * <!-- end-user-doc -->
  * @generated
  */
-public class CommentItemProvider extends CommentableItemProvider
+public class CommentItemProvider extends ModelElementItemProvider
 {
-  private static final Style STYLE_UNRESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/220/40/40")).toStyle();
-
-  private static final Style STYLE_RESOLVED = Style.newBuilder().setForegroundColor(URI.createURI("color://rgb/20/180/20")).toStyle();
-
-  private ItemPropertyDescriptor statusPropertyDescriptor;
-
   /**
    * This constructs an instance from a factory and a notifier.
    * <!-- begin-user-doc -->
@@ -65,26 +57,29 @@ public class CommentItemProvider extends CommentableItemProvider
     {
       super.getPropertyDescriptors(object);
 
-      addParentHeadingPropertyDescriptor(object);
-      addAuthorPropertyDescriptor(object);
+      addIdPropertyDescriptor(object);
       addTextPropertyDescriptor(object);
-      addStatusPropertyDescriptor(object);
+      addAuthorPropertyDescriptor(object);
+      addCreationTimePropertyDescriptor(object);
+      addEditTimePropertyDescriptor(object);
+      addReviewPropertyDescriptor(object);
+      addReplyToPropertyDescriptor(object);
     }
     return itemPropertyDescriptors;
   }
 
   /**
-   * This adds a property descriptor for the Parent Heading feature.
+   * This adds a property descriptor for the Id feature.
    * <!-- begin-user-doc -->
+   * @since 1.1
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addParentHeadingPropertyDescriptor(Object object)
+  protected void addIdPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Comment_parentHeading_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Comment_parentHeading_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__PARENT_HEADING, false, false, false, null, null, null));
+        getString("_UI_Authorable_id_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_id_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__ID, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -96,8 +91,64 @@ public class CommentItemProvider extends CommentableItemProvider
   protected void addAuthorPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Comment_author_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_author_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__AUTHOR, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+        getString("_UI_Authorable_author_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_author_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__AUTHOR, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Creation Time feature.
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addCreationTimePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Authorable_creationTime_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_Authorable_creationTime_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__CREATION_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Edit Time feature.
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addEditTimePropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Authorable_editTime_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_editTime_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__EDIT_TIME, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Reply To feature.
+   * <!-- begin-user-doc -->
+   * @since 1.1
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addReplyToPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Comment_replyTo_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_replyTo_feature", "_UI_Comment_type"),
+        ReviewsPackage.Literals.COMMENT__REPLY_TO, true, false, true, null, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Review feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addReviewPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_Comment_review_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_review_feature", "_UI_Comment_type"),
+        ReviewsPackage.Literals.COMMENT__REVIEW, true, false, true, null, null, null));
   }
 
   /**
@@ -109,23 +160,8 @@ public class CommentItemProvider extends CommentableItemProvider
   protected void addTextPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Comment_text_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_text_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__TEXT, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Status feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated NOT
-   */
-  protected void addStatusPropertyDescriptor(Object object)
-  {
-    // Remember the statusPropertyDescriptor for appendStatus() below.
-    statusPropertyDescriptor = createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Comment_status_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Comment_status_feature", "_UI_Comment_type"),
-        ReviewsPackage.Literals.COMMENT__STATUS, false, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null);
-    itemPropertyDescriptors.add(statusPropertyDescriptor);
+        getString("_UI_Authorable_text_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Authorable_text_feature", "_UI_Authorable_type"),
+        ReviewsPackage.Literals.AUTHORABLE__TEXT, true, false, false, ItemPropertyDescriptor.GENERIC_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -138,13 +174,6 @@ public class CommentItemProvider extends CommentableItemProvider
   public Object getImage(Object object)
   {
     return overlayImage(object, getResourceLocator().getImage("full/obj16/Comment"));
-  }
-
-  @Override
-  protected Object overlayImage(Object object, Object image)
-  {
-    image = super.overlayImage(object, image);
-    return CommentableItemProvider.overlayCommentableImage((Comment)object, image);
   }
 
   /**
@@ -174,46 +203,13 @@ public class CommentItemProvider extends CommentableItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public Object getStyledText(Object object)
   {
     Comment comment = (Comment)object;
-    StyledString styledString = new StyledString(getTypeString(), StyledString.Style.QUALIFIER_STYLER) //
-        .append(" ").append(getTextString(comment));
-
-    Style style = null;
-    CommentStatus status = comment.getStatus();
-
-    if (status == CommentStatus.UNRESOLVED)
-    {
-      style = STYLE_UNRESOLVED;
-    }
-    else if (status == CommentStatus.RESOLVED)
-    {
-      style = STYLE_RESOLVED;
-    }
-
-    if (style != null)
-    {
-      getPropertyDescriptors(comment); // Ensure that the descriptors are initialized.
-
-      String statusLabel = statusPropertyDescriptor.getLabelProvider(comment).getText(status);
-      styledString.append("  ").append("[" + statusLabel + "]", style);
-    }
-
-    return styledString;
-  }
-
-  protected String getTypeString()
-  {
-    return getString("_UI_Comment_type");
-  }
-
-  protected String getTextString(Comment comment)
-  {
-    return comment.getText();
+    return new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Integer.toString(comment.getId()));
   }
 
   /**
@@ -221,26 +217,23 @@ public class CommentItemProvider extends CommentableItemProvider
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
   @Override
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
 
-    Object notifier = notification.getNotifier();
     switch (notification.getFeatureID(Comment.class))
     {
+    case ReviewsPackage.COMMENT__ID:
     case ReviewsPackage.COMMENT__TEXT:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
-      return;
-
-    case ReviewsPackage.COMMENT__STATUS:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
-      CommentableItemProvider.propagateNotification(this, notification, notifier);
+    case ReviewsPackage.COMMENT__AUTHOR:
+    case ReviewsPackage.COMMENT__CREATION_TIME:
+    case ReviewsPackage.COMMENT__EDIT_TIME:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
     }
-
     super.notifyChanged(notification);
   }
 

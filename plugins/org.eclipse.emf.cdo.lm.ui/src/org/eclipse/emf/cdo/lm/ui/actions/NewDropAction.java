@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2022, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -75,7 +75,7 @@ public class NewDropAction extends LMAction.NewElement<Stream>
         "Add a new " + dropType.getName().toLowerCase() + " to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(LMEditPlugin.INSTANCE.getImage(dropType.isRelease() ? "full/obj16/Release" : "full/obj16/Drop")), //
         "Add a new " + dropType.getName().toLowerCase() + " to stream '" + stream.getName() + "'.", //
-        dropType.isRelease() ? "icons/NewRelease.png" : "icons/NewDrop.png", //
+        dropType.isRelease() ? "icons/wizban/NewRelease.png" : "icons/wizban/NewDrop.png", //
         stream);
     this.dropType = dropType;
   }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -9,6 +9,8 @@
  *    Eike Stepper - initial API and implementation
  */
 package org.eclipse.emf.cdo.lm.reviews.ui.bundle;
+
+import org.eclipse.emf.cdo.ui.OverlayImage;
 
 import org.eclipse.net4j.util.om.OMBundle;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -21,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.graphics.Image;
 
 /**
  * The <em>Operations & Maintenance</em> class of this bundle.
@@ -42,6 +45,18 @@ public abstract class OM
   public static ImageDescriptor getImageDescriptor(String imagePath)
   {
     return ExtendedImageRegistry.INSTANCE.getImageDescriptor(getBundleURI(imagePath));
+  }
+
+  public static Image getImage(String imagePath)
+  {
+    return ExtendedImageRegistry.INSTANCE.getImage(getBundleURI(imagePath));
+  }
+
+  public static Image getOverlayImage(String imagePath, String overlayImagePath, int x, int y)
+  {
+    URI image = getBundleURI(imagePath);
+    URI overlayImage = getBundleURI(overlayImagePath);
+    return new OverlayImage(image, overlayImage, x, y).compose();
   }
 
   private static URI getBundleURI(String path)

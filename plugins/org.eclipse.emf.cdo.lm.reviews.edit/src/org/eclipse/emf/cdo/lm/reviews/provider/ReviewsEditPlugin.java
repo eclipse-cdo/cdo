@@ -49,7 +49,13 @@ public final class ReviewsEditPlugin extends EMFPlugin
    */
   public ReviewsEditPlugin()
   {
-    super(new ResourceLocator[] { CDOEditPlugin.INSTANCE, LMEditPlugin.INSTANCE, ModulesEditPlugin.INSTANCE, });
+    super
+      (new ResourceLocator [] 
+       {
+         CDOEditPlugin.INSTANCE,
+         LMEditPlugin.INSTANCE,
+         ModulesEditPlugin.INSTANCE,
+       });
   }
 
   /**

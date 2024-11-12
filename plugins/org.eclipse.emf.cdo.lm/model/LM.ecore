@@ -25,15 +25,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="process" lowerBound="1"
         eType="#//Process" containment="true" eOpposite="#//Process/system"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="modules" upperBound="-1"
-        eType="#//Module" containment="true" eOpposite="#//Module/system"/>
+        eType="#//Module" containment="true" resolveProxies="false" eOpposite="#//Module/system"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Process" eSuperTypes="#//SystemElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="system" lowerBound="1"
         eType="#//System" eOpposite="#//System/process"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="moduleTypes" upperBound="-1"
-        eType="#//ModuleType" containment="true" eOpposite="#//ModuleType/process"/>
+        eType="#//ModuleType" containment="true" resolveProxies="false" eOpposite="#//ModuleType/process"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dropTypes" upperBound="-1"
-        eType="#//DropType" containment="true" eOpposite="#//DropType/process"/>
+        eType="#//DropType" containment="true" resolveProxies="false" eOpposite="#//DropType/process"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="moduleDefinitionPath" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="initialModuleVersion" lowerBound="1"
@@ -58,7 +58,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//ModuleType"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="streams" upperBound="-1"
-        eType="#//Stream" containment="true" eOpposite="#//Stream/module"/>
+        eType="#//Stream" containment="true" resolveProxies="false" eOpposite="#//Stream/module"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Baseline" abstract="true" eSuperTypes="#//StreamElement">
     <eOperations name="getName" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -80,7 +80,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="version" lowerBound="1"
         eType="ecore:EDataType ../../org.eclipse.emf.cdo.lm.modules/model/Modules.ecore#//Version"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="dependencies" upperBound="-1"
-        eType="#//Dependency" containment="true"/>
+        eType="#//Dependency" containment="true" resolveProxies="false"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Stream" eSuperTypes="#//FloatingBaseline">
     <eOperations name="insertContent" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt">
@@ -111,7 +111,7 @@
         eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maintenanceBranch" eType="ecore:EDataType ../../org.eclipse.emf.cdo/model/etypes.ecore#//BranchRef"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="contents" upperBound="-1"
-        eType="#//Baseline" containment="true" eOpposite="#//Baseline/stream"/>
+        eType="#//Baseline" containment="true" resolveProxies="false" eOpposite="#//Baseline/stream"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="maintenanceTimeStamp" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//ELong"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Change" eSuperTypes="#//FloatingBaseline">

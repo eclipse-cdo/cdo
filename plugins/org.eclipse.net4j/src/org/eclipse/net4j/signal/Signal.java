@@ -12,14 +12,17 @@ package org.eclipse.net4j.signal;
 
 import org.eclipse.net4j.buffer.BufferInputStream;
 import org.eclipse.net4j.buffer.BufferOutputStream;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.container.ContainerUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IOTimeoutException;
 import org.eclipse.net4j.util.io.IOUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -35,7 +38,7 @@ import java.text.MessageFormat;
  *
  * @author Eike Stepper
  */
-public abstract class Signal implements Runnable
+public abstract class Signal implements Runnable, IManagedContainerProvider
 {
   /**
    * @since 2.0
@@ -48,9 +51,9 @@ public abstract class Signal implements Runnable
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SIGNAL, Signal.class);
 
-  private SignalProtocol<?> protocol;
+  private final SignalProtocol<?> protocol;
 
-  private short id;
+  private final short id;
 
   private String name;
 
@@ -101,7 +104,6 @@ public abstract class Signal implements Runnable
 
   public SignalProtocol<?> getProtocol()
   {
-    LifecycleUtil.checkActive(protocol);
     return protocol;
   }
 
@@ -136,6 +138,12 @@ public abstract class Signal implements Runnable
   public final int getCorrelationID()
   {
     return correlationID;
+  }
+
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return ContainerUtil.getContainer(protocol);
   }
 
   /**
@@ -330,7 +338,7 @@ public abstract class Signal implements Runnable
    */
   protected void handleRunException(Throwable ex) throws Throwable
   {
-    OM.LOG.error(ex);
+    ExceptionHandler.Factory.handle(this, ex, "run() failed", OM.LOG);
   }
 
   protected abstract void execute(BufferInputStream in, BufferOutputStream out) throws Exception;

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -332,24 +332,24 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
-      return isClosed();
-    case ReviewsPackage.DELIVERY_REVIEW__BASE:
-      return getBase();
-    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
-      return getImpact();
-    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
-      return getBranch();
-    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
-      return getDeliveries();
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      return getSourceChange();
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
-      return getSourceCommit();
-    case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
-      return getTargetCommit();
-    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
-      return getRebaseCount();
+      case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
+        return isClosed();
+      case ReviewsPackage.DELIVERY_REVIEW__BASE:
+        return getBase();
+      case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+        return getImpact();
+      case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+        return getBranch();
+      case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+        return getDeliveries();
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
+        return getSourceChange();
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
+        return getSourceCommit();
+      case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
+        return getTargetCommit();
+      case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+        return getRebaseCount();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -365,34 +365,34 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
-      setClosed((Boolean)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__BASE:
-      setBase((FixedBaseline)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
-      setImpact((Impact)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
-      setBranch((CDOBranchRef)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
-      getDeliveries().clear();
-      getDeliveries().addAll((Collection<? extends Delivery>)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      setSourceChange((Change)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
-      setSourceCommit((Long)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
-      setTargetCommit((Long)newValue);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
-      setRebaseCount((Integer)newValue);
-      return;
+      case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
+        setClosed((Boolean)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__BASE:
+        setBase((FixedBaseline)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+        setImpact((Impact)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+        setBranch((CDOBranchRef)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+        getDeliveries().clear();
+        getDeliveries().addAll((Collection<? extends Delivery>)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
+        setSourceChange((Change)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
+        setSourceCommit((Long)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
+        setTargetCommit((Long)newValue);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+        setRebaseCount((Integer)newValue);
+        return;
     }
     super.eSet(featureID, newValue);
   }
@@ -407,33 +407,33 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
-      setClosed(CLOSED_EDEFAULT);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__BASE:
-      setBase((FixedBaseline)null);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
-      setImpact(IMPACT_EDEFAULT);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
-      setBranch(BRANCH_EDEFAULT);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
-      getDeliveries().clear();
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      setSourceChange((Change)null);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
-      setSourceCommit(SOURCE_COMMIT_EDEFAULT);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
-      setTargetCommit(TARGET_COMMIT_EDEFAULT);
-      return;
-    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
-      setRebaseCount(REBASE_COUNT_EDEFAULT);
-      return;
+      case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
+        setClosed(CLOSED_EDEFAULT);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__BASE:
+        setBase((FixedBaseline)null);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+        setImpact(IMPACT_EDEFAULT);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+        setBranch(BRANCH_EDEFAULT);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+        getDeliveries().clear();
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
+        setSourceChange((Change)null);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
+        setSourceCommit(SOURCE_COMMIT_EDEFAULT);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
+        setTargetCommit(TARGET_COMMIT_EDEFAULT);
+        return;
+      case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+        setRebaseCount(REBASE_COUNT_EDEFAULT);
+        return;
     }
     super.eUnset(featureID);
   }
@@ -448,24 +448,24 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
   {
     switch (featureID)
     {
-    case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
-      return isClosed() != CLOSED_EDEFAULT;
-    case ReviewsPackage.DELIVERY_REVIEW__BASE:
-      return getBase() != null;
-    case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
-      return getImpact() != IMPACT_EDEFAULT;
-    case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
-      return BRANCH_EDEFAULT == null ? getBranch() != null : !BRANCH_EDEFAULT.equals(getBranch());
-    case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
-      return !getDeliveries().isEmpty();
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
-      return getSourceChange() != null;
-    case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
-      return getSourceCommit() != SOURCE_COMMIT_EDEFAULT;
-    case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
-      return getTargetCommit() != TARGET_COMMIT_EDEFAULT;
-    case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
-      return getRebaseCount() != REBASE_COUNT_EDEFAULT;
+      case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
+        return isClosed() != CLOSED_EDEFAULT;
+      case ReviewsPackage.DELIVERY_REVIEW__BASE:
+        return getBase() != null;
+      case ReviewsPackage.DELIVERY_REVIEW__IMPACT:
+        return getImpact() != IMPACT_EDEFAULT;
+      case ReviewsPackage.DELIVERY_REVIEW__BRANCH:
+        return BRANCH_EDEFAULT == null ? getBranch() != null : !BRANCH_EDEFAULT.equals(getBranch());
+      case ReviewsPackage.DELIVERY_REVIEW__DELIVERIES:
+        return !getDeliveries().isEmpty();
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_CHANGE:
+        return getSourceChange() != null;
+      case ReviewsPackage.DELIVERY_REVIEW__SOURCE_COMMIT:
+        return getSourceCommit() != SOURCE_COMMIT_EDEFAULT;
+      case ReviewsPackage.DELIVERY_REVIEW__TARGET_COMMIT:
+        return getTargetCommit() != TARGET_COMMIT_EDEFAULT;
+      case ReviewsPackage.DELIVERY_REVIEW__REBASE_COUNT:
+        return getRebaseCount() != REBASE_COUNT_EDEFAULT;
     }
     return super.eIsSet(featureID);
   }
@@ -482,10 +482,8 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     {
       switch (derivedFeatureID)
       {
-      case ReviewsPackage.DELIVERY_REVIEW__CLOSED:
-        return LMPackage.FLOATING_BASELINE__CLOSED;
-      default:
-        return -1;
+        case ReviewsPackage.DELIVERY_REVIEW__CLOSED: return LMPackage.FLOATING_BASELINE__CLOSED;
+        default: return -1;
       }
     }
     return super.eBaseStructuralFeatureID(derivedFeatureID, baseClass);
@@ -503,10 +501,8 @@ public class DeliveryReviewImpl extends ReviewImpl implements DeliveryReview
     {
       switch (baseFeatureID)
       {
-      case LMPackage.FLOATING_BASELINE__CLOSED:
-        return ReviewsPackage.DELIVERY_REVIEW__CLOSED;
-      default:
-        return -1;
+        case LMPackage.FLOATING_BASELINE__CLOSED: return ReviewsPackage.DELIVERY_REVIEW__CLOSED;
+        default: return -1;
       }
     }
     return super.eDerivedStructuralFeatureID(baseFeatureID, baseClass);

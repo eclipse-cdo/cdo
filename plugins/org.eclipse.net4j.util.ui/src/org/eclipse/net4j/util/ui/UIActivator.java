@@ -19,6 +19,8 @@ import org.eclipse.net4j.util.om.OSGiActivator.StateHandler;
 import org.eclipse.jface.dialogs.DialogSettings;
 import org.eclipse.jface.dialogs.IDialogSettings;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.jface.resource.ImageRegistry;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 
 import org.osgi.framework.BundleContext;
@@ -43,6 +45,41 @@ public class UIActivator extends AbstractUIPlugin
   public final OMBundle getOMBundle()
   {
     return omBundle;
+  }
+
+  /**
+   * @since 3.19
+   */
+  public Image getImage(String path)
+  {
+    ImageRegistry registry = getImageRegistry();
+
+    Image image = registry.get(path);
+    if (image == null)
+    {
+      ImageDescriptor descriptor = loadImageDescriptor(path);
+      registry.put(path, descriptor);
+      image = registry.get(path);
+    }
+
+    return image;
+  }
+
+  /**
+   * @since 3.19
+   */
+  public ImageDescriptor getImageDescriptor(String path)
+  {
+    ImageRegistry registry = getImageRegistry();
+
+    ImageDescriptor descriptor = registry.getDescriptor(path);
+    if (descriptor == null)
+    {
+      descriptor = loadImageDescriptor(path);
+      registry.put(path, descriptor);
+    }
+
+    return descriptor;
   }
 
   /**

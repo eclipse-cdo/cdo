@@ -22,6 +22,7 @@ import org.eclipse.net4j.protocol.IProtocol3;
 import org.eclipse.net4j.protocol.IProtocolProvider;
 import org.eclipse.net4j.protocol.ProtocolVersionException;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
@@ -468,7 +469,7 @@ public abstract class ChannelMultiplexer extends Container<IChannel> implements 
     }
     catch (RuntimeException ex)
     {
-      OM.LOG.error(ex);
+      ExceptionHandler.Factory.handle(channel, ex, "MonitorProgressRequest failed", OM.LOG);
       throw ex;
     }
   }

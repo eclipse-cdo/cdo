@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,14 +17,15 @@ import org.eclipse.emf.cdo.lm.FloatingBaseline;
 import org.eclipse.emf.cdo.lm.ModuleElement;
 import org.eclipse.emf.cdo.lm.StreamElement;
 import org.eclipse.emf.cdo.lm.SystemElement;
+import org.eclipse.emf.cdo.lm.reviews.Authorable;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
-import org.eclipse.emf.cdo.lm.reviews.Heading;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewTemplate;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -94,21 +95,27 @@ public class ReviewsAdapterFactory extends AdapterFactoryImpl
   protected ReviewsSwitch<Adapter> modelSwitch = new ReviewsSwitch<>()
   {
     @Override
-    public Adapter caseCommentable(Commentable object)
+    public Adapter caseAuthorable(Authorable object)
     {
-      return createCommentableAdapter();
+      return createAuthorableAdapter();
+    }
+
+    @Override
+    public Adapter caseTopicContainer(TopicContainer object)
+    {
+      return createTopicContainerAdapter();
+    }
+
+    @Override
+    public Adapter caseTopic(Topic object)
+    {
+      return createTopicAdapter();
     }
 
     @Override
     public Adapter caseComment(Comment object)
     {
       return createCommentAdapter();
-    }
-
-    @Override
-    public Adapter caseHeading(Heading object)
-    {
-      return createHeadingAdapter();
     }
 
     @Override
@@ -199,16 +206,32 @@ public class ReviewsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.Commentable <em>Commentable</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable
+   * @generated
+   */
+  public Adapter createAuthorableAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer <em>Topic Container</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer
    * @generated
    */
-  public Adapter createCommentableAdapter()
+  public Adapter createTopicContainerAdapter()
   {
     return null;
   }
@@ -229,16 +252,16 @@ public class ReviewsAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.Heading <em>Heading</em>}'.
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.lm.reviews.Topic <em>Topic</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic
    * @generated
    */
-  public Adapter createHeadingAdapter()
+  public Adapter createTopicAdapter()
   {
     return null;
   }

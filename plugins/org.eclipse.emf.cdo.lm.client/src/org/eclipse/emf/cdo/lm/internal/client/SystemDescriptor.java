@@ -658,7 +658,8 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public ModuleDefinition extractModuleDefinition(Baseline baseline)
   {
-    String moduleName = baseline.getModule().getName();
+    Module module = baseline.getModule();
+    String moduleName = module.getName();
 
     if (baseline instanceof FixedBaseline)
     {

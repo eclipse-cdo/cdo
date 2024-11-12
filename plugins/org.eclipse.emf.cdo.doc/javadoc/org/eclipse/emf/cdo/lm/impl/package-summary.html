@@ -16,7 +16,11 @@
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var pathtoroot = "../../../../../../";
+<script type="text/javascript">var evenRowColor = "even-row-color";
+var oddRowColor = "odd-row-color";
+var tableTab = "table-tab";
+var activeTableTab = "active-table-tab";
+var pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
 <div>JavaScript is disabled on your browser.</div>
@@ -81,8 +85,9 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="caption"><span>Classes</span></div>
-<div class="summary-table two-column-summary">
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
+<div id="class-summary.tabpanel" role="tabpanel">
+<div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="BaselineImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">BaselineImpl</a></div>
@@ -115,52 +120,55 @@ loadScripts(document, 'script');</script>
 <div class="block">An implementation of the model object '<em><b>Drop
  Type</b></em>'.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FixedBaselineImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">FixedBaselineImpl</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="ExtendedBaseline.html" title="interface in org.eclipse.emf.cdo.lm.impl">ExtendedBaseline</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FixedBaselineImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">FixedBaselineImpl</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object '<em><b>Fixed
  Baseline</b></em>'.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="FloatingBaselineImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">FloatingBaselineImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FloatingBaselineImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">FloatingBaselineImpl</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object
  '<em><b>Floating Baseline</b></em>'.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LMFactoryImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">LMFactoryImpl</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LMFactoryImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">LMFactoryImpl</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model <b>Factory</b>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LMPackageImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">LMPackageImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="LMPackageImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">LMPackageImpl</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model <b>Package</b>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ModuleImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ModuleImpl</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ModuleImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ModuleImpl</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object
  '<em><b>Module</b></em>'.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ModuleTypeImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ModuleTypeImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ModuleTypeImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ModuleTypeImpl</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object '<em><b>Module
  Type</b></em>'.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ProcessElementImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ProcessElementImpl</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ProcessElementImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ProcessElementImpl</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object '<em><b>Process Element</b></em>'.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ProcessImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ProcessImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ProcessImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">ProcessImpl</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object
  '<em><b>Process</b></em>'.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="StreamImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">StreamImpl</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="StreamImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">StreamImpl</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object
  '<em><b>Stream</b></em>'.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="SystemImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">SystemImpl</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="SystemImpl.html" title="class in org.eclipse.emf.cdo.lm.impl">SystemImpl</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An implementation of the model object
  '<em><b>System</b></em>'.</div>
+</div>
 </div>
 </div>
 </div>

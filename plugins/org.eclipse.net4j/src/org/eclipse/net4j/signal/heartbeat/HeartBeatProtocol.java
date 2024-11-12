@@ -17,6 +17,7 @@ import org.eclipse.net4j.signal.Indication;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.concurrent.Timeouter;
 import org.eclipse.net4j.util.concurrent.TimerLifecycle;
@@ -298,7 +299,7 @@ public class HeartBeatProtocol extends SignalProtocol<Object>
           }
           catch (Exception ex)
           {
-            OM.LOG.error("HeartBeatProtocolTask failed", ex);
+            ExceptionHandler.Factory.handle(Server.this, ex, "HeartBeatProtocolTask failed", OM.LOG);
           }
         }
       };

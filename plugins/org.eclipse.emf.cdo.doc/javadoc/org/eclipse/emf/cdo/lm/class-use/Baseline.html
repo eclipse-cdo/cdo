@@ -68,8 +68,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">The generated EMF implementation of the CDO Lifecycle Management model.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.util">org.eclipse.emf.cdo.lm.util</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews">org.eclipse.emf.cdo.lm.reviews</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews.impl">org.eclipse.emf.cdo.lm.reviews.impl</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.lm.reviews.util">org.eclipse.emf.cdo.lm.reviews.util</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.lm.util">org.eclipse.emf.cdo.lm.util</a></div>
+<div class="col-last even-row-color">
 <div class="block">The generated EMF utilities of the CDO Lifecycle Management model.</div>
 </div>
 </div>
@@ -163,12 +169,21 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">Module.</span><code><a href="../Module.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Stream.</span><code><a href="../Stream.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Module.</span><code><a href="../Module.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Stream.</span><code><a href="../Stream.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Stream.</span><code><a href="../Stream.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">System.</span><code><a href="../System.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">System.</span><code><a href="../System.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -200,23 +215,35 @@ loadScripts(document, 'script');</script>
  <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline,
  <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../modules/ModuleDefinition.html" title="interface in org.eclipse.emf.cdo.lm.modules">ModuleDefinition</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISystemDescriptor.</span><code><a href="../client/ISystemDescriptor.html#extractModuleDefinition(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">extractModuleDefinition</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
+<div class="col-first odd-row-color"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISystemDescriptor.</span><code><a href="../client/ISystemDescriptor.html#createModuleResourceSet(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">createModuleResourceSet</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../client/IAssemblyDescriptor.html" title="interface in org.eclipse.emf.cdo.lm.client">IAssemblyDescriptor</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IAssemblyManager.</span><code><a href="../client/IAssemblyManager.html#getDescriptors(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">getDescriptors</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
+<div class="col-first even-row-color"><code><a href="../modules/ModuleDefinition.html" title="interface in org.eclipse.emf.cdo.lm.modules">ModuleDefinition</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISystemDescriptor.</span><code><a href="../client/ISystemDescriptor.html#extractModuleDefinition(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">extractModuleDefinition</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../assembly/Assembly.html" title="interface in org.eclipse.emf.cdo.lm.assembly">Assembly</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISystemDescriptor.</span><code><a href="../client/ISystemDescriptor.html#resolve(org.eclipse.emf.cdo.lm.modules.ModuleDefinition,org.eclipse.emf.cdo.lm.Baseline,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">resolve</a><wbr>(<a href="../modules/ModuleDefinition.html" title="interface in org.eclipse.emf.cdo.lm.modules">ModuleDefinition</a>&nbsp;rootDefinition,
+<div class="col-first odd-row-color"><code><a href="../client/IAssemblyDescriptor.html" title="interface in org.eclipse.emf.cdo.lm.client">IAssemblyDescriptor</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IAssemblyManager.</span><code><a href="../client/IAssemblyManager.html#getDescriptors(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">getDescriptors</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../assembly/Assembly.html" title="interface in org.eclipse.emf.cdo.lm.assembly">Assembly</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISystemDescriptor.</span><code><a href="../client/ISystemDescriptor.html#resolve(org.eclipse.emf.cdo.lm.modules.ModuleDefinition,org.eclipse.emf.cdo.lm.Baseline,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">resolve</a><wbr>(<a href="../modules/ModuleDefinition.html" title="interface in org.eclipse.emf.cdo.lm.modules">ModuleDefinition</a>&nbsp;rootDefinition,
  <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline,
  <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
 <li>
 <section class="detail" id="org.eclipse.emf.cdo.lm.impl">
 <h2>Uses of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.lm.impl</a></h2>
+<div class="caption"><span>Subinterfaces of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.lm.impl</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../impl/ExtendedBaseline.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.impl">ExtendedBaseline</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Classes in <a href="../impl/package-summary.html">org.eclipse.emf.cdo.lm.impl</a> that implement <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -306,12 +333,89 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ModuleImpl.</span><code><a href="../impl/ModuleImpl.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">StreamImpl.</span><code><a href="../impl/StreamImpl.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ModuleImpl.</span><code><a href="../impl/ModuleImpl.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">StreamImpl.</span><code><a href="../impl/StreamImpl.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StreamImpl.</span><code><a href="../impl/StreamImpl.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">SystemImpl.</span><code><a href="../impl/SystemImpl.html#forEachBaseline(java.util.function.Consumer)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">SystemImpl.</span><code><a href="../impl/SystemImpl.html#forEachBaseline(java.util.function.Predicate)" class="member-name-link">forEachBaseline</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link">Predicate</a>&lt;<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews">
+<h2>Uses of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a></h2>
+<div class="caption"><span>Subinterfaces of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../reviews/package-summary.html">org.eclipse.emf.cdo.lm.reviews</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Interface</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/DeliveryReview.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.reviews">DeliveryReview</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A representation of the model object '<em><b>Delivery Review</b></em>'.</div>
+</div>
+<div class="col-first odd-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../reviews/DropReview.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.reviews">DropReview</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">A representation of the model object '<em><b>Drop Review</b></em>'.</div>
+</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/Review.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.lm.reviews">Review</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">A representation of the model object '<em><b>Review</b></em>'.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews.impl">
+<h2>Uses of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a></h2>
+<div class="caption"><span>Classes in <a href="../reviews/impl/package-summary.html">org.eclipse.emf.cdo.lm.reviews.impl</a> that implement <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Class</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/impl/DeliveryReviewImpl.html" class="type-name-link" title="class in org.eclipse.emf.cdo.lm.reviews.impl">DeliveryReviewImpl</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">An implementation of the model object '<em><b>Delivery Review</b></em>'.</div>
+</div>
+<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../reviews/impl/DropReviewImpl.html" class="type-name-link" title="class in org.eclipse.emf.cdo.lm.reviews.impl">DropReviewImpl</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">An implementation of the model object '<em><b>Drop Review</b></em>'.</div>
+</div>
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../reviews/impl/ReviewImpl.html" class="type-name-link" title="class in org.eclipse.emf.cdo.lm.reviews.impl">ReviewImpl</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">An implementation of the model object '<em><b>Review</b></em>'.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.lm.reviews.util">
+<h2>Uses of <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a> in <a href="../reviews/util/package-summary.html">org.eclipse.emf.cdo.lm.reviews.util</a></h2>
+<div class="caption"><span>Methods in <a href="../reviews/util/package-summary.html">org.eclipse.emf.cdo.lm.reviews.util</a> with parameters of type <a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code><a href="../reviews/util/ReviewsSwitch.html" title="type parameter in ReviewsSwitch">T</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ReviewsSwitch.</span><code><a href="../reviews/util/ReviewsSwitch.html#caseBaseline(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">caseBaseline</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;object)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the result of interpreting the object as an instance of '<em>Baseline</em>'.</div>
+</div>
 </div>
 </section>
 </li>

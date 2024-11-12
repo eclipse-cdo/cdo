@@ -34,15 +34,20 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewOpener;
 
+import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.UIUtil;
 
 import org.eclipse.emf.common.CommonPlugin;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.AdapterFactory;
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.compare.Comparison;
@@ -50,6 +55,7 @@ import org.eclipse.emf.compare.Diff;
 import org.eclipse.emf.compare.Match;
 import org.eclipse.emf.compare.domain.ICompareEditingDomain;
 import org.eclipse.emf.compare.domain.impl.EMFCompareEditingDomain;
+import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.EMFCompareStructureMergeViewer;
 import org.eclipse.emf.compare.scope.IComparisonScope;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.Resource;
@@ -57,22 +63,34 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.edit.EMFEditPlugin;
 import org.eclipse.emf.edit.provider.ComposedAdapterFactory;
+import org.eclipse.emf.edit.tree.TreeNode;
 import org.eclipse.emf.spi.cdo.InternalCDOTransaction;
 import org.eclipse.emf.spi.cdo.InternalCDOView;
 
 import org.eclipse.compare.CompareConfiguration;
 import org.eclipse.compare.CompareUI;
+import org.eclipse.compare.CompareViewerPane;
+import org.eclipse.compare.CompareViewerSwitchingPane;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.util.IPropertyChangeListener;
+import org.eclipse.jface.viewers.ITreeContentProvider;
+import org.eclipse.jface.viewers.StructuredViewer;
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
+import org.eclipse.ui.IPartListener2;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
+import org.eclipse.ui.IWorkbenchPartReference;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -82,6 +100,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Static methods to open an EMF Compare dialog.
@@ -448,14 +468,9 @@ public final class CDOCompareEditorUtil
   {
     if (input == null)
     {
-      UIUtil.getDisplay().syncExec(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          Shell shell = UIUtil.getShell();
-          MessageDialog.openInformation(shell, "Compare", "There are no differences between the selected inputs.");
-        }
+      UIUtil.getDisplay().syncExec(() -> {
+        Shell shell = UIUtil.getShell();
+        MessageDialog.openInformation(shell, "Compare", "There are no differences between the selected inputs.");
       });
 
       return false;
@@ -467,13 +482,28 @@ public final class CDOCompareEditorUtil
       List<Runnable> disposeRunnables = removeDisposeRunnables();
       input.setDisposeRunnables(disposeRunnables);
 
-      UIUtil.getDisplay().asyncExec(new Runnable()
-      {
-        @Override
-        public void run()
+      UIUtil.getDisplay().asyncExec(() -> {
+        IWorkbenchPage page = UIUtil.getActiveWorkbenchPage();
+        page.addPartListener(new IPartListener2()
         {
-          CompareUI.openCompareEditor(input, activateEditor);
-        }
+          @Override
+          public void partOpened(IWorkbenchPartReference partRef)
+          {
+            IWorkbenchPart part = partRef.getPart(false);
+            if (part instanceof IEditorPart)
+            {
+              IEditorPart editor = (IEditorPart)part;
+              IEditorInput editorInput = editor.getEditorInput();
+              if (editorInput == input)
+              {
+                input.editorOpened(editor);
+                page.removePartListener(this);
+              }
+            }
+          }
+        });
+
+        CompareUI.openCompareEditor(input, activateEditor);
       });
 
       return true;
@@ -482,18 +512,13 @@ public final class CDOCompareEditorUtil
     input.setModal(true);
     EList<Diff> differences = new BasicEList<>();
 
-    UIUtil.getDisplay().syncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        CompareUI.openCompareDialog(input);
+    UIUtil.getDisplay().syncExec(() -> {
+      CompareUI.openCompareDialog(input);
 
-        if (rightView instanceof InternalCDOTransaction)
-        {
-          Comparison comparison = input.getComparison();
-          differences.addAll(comparison.getDifferences());
-        }
+      if (rightView instanceof InternalCDOTransaction)
+      {
+        Comparison comparison = input.getComparison();
+        differences.addAll(comparison.getDifferences());
       }
     });
 
@@ -629,8 +654,7 @@ public final class CDOCompareEditorUtil
     configuration.setRightLabel(rightLabel);
     configuration.setRightEditable(rightEditable);
 
-    Input input = new Input(leftView, rightView, configuration, comparison, editingDomain, adapterFactory);
-    input.setTitle(title);
+    Input input = new Input(leftView, rightView, configuration, comparison, editingDomain, adapterFactory, title);
 
     workaroundEMFCompareBug(leftView, leftLabel);
     workaroundEMFCompareBug(rightView, rightLabel);
@@ -818,44 +842,128 @@ public final class CDOCompareEditorUtil
 
   /**
    * @author Eike Stepper
+   * @since 4.9
+   */
+  @FunctionalInterface
+  public interface EditorConsumer
+  {
+    public void editorOpened(IEditorPart editor);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.9
+   */
+  @FunctionalInterface
+  public interface ContentsCreator
+  {
+    public Control createContents(Composite parent, Function<Composite, Control> defaultContentsCreator);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.6
+   */
+  public static class InputHolder implements Consumer<Input>, EditorConsumer, ContentsCreator, IDeactivateable
+  {
+    private Input input;
+
+    public InputHolder()
+    {
+    }
+
+    public Input getInput()
+    {
+      return input;
+    }
+
+    @Override
+    public void accept(Input input)
+    {
+      this.input = input;
+      activate(input);
+    }
+
+    @Override
+    public void editorOpened(IEditorPart editor)
+    {
+    }
+
+    @Override
+    public Control createContents(Composite parent, Function<Composite, Control> defaultContentsCreator)
+    {
+      return defaultContentsCreator.apply(parent);
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void activate(Input input)
+    {
+    }
+
+    @Override
+    public Exception deactivate()
+    {
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    * @since 4.4
    */
   @SuppressWarnings("restriction")
-  public static final class Input extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput
+  public static final class Input //
+      extends org.eclipse.emf.compare.ide.ui.internal.editor.ComparisonEditorInput //
+      implements IPropertiesContainer
   {
+    private final IRegistry<String, Object> properties = new HashMapRegistry<>();
+
     private final CDOView sourceView;
 
     private final CDOView targetView;
 
     private final Comparison comparison;
 
+    private final boolean suppressCommit;
+
+    private final Consumer<Input> inputConsumer;
+
     private List<Runnable> disposeRunnables;
 
-    private boolean suppressCommit;
-
     private boolean modal;
+
+    private boolean editionSelectionDialog;
+
+    private Consumer<IProgressMonitor> saveHandler = this::defaultSave;
 
     private CDOCommitInfo commitInfo;
 
     private boolean ok;
 
+    private IEditorPart editor;
+
+    private CompareViewerPane structureInputPane;
+
     private Input(CDOView sourceView, CDOView targetView, CompareConfiguration configuration, Comparison comparison, ICompareEditingDomain editingDomain,
-        AdapterFactory adapterFactory)
+        AdapterFactory adapterFactory, String title)
     {
       super(createEMFCompareConfiguration(configuration, adapterFactory), comparison, editingDomain, adapterFactory);
       this.sourceView = sourceView;
       this.targetView = targetView;
       this.comparison = comparison;
+      setTitle(title);
 
       suppressCommit = isSuppressCommit();
       SUPPRESS_COMMIT.remove();
 
-      Consumer<Input> consumer = INPUT_CONSUMER.get();
+      inputConsumer = INPUT_CONSUMER.get();
       INPUT_CONSUMER.remove();
 
-      if (consumer != null)
+      if (inputConsumer != null)
       {
-        consumer.accept(this);
+        inputConsumer.accept(this);
       }
     }
 
@@ -871,6 +979,25 @@ public final class CDOCompareEditorUtil
 
     private void dispose()
     {
+      if (inputConsumer instanceof IDeactivateable)
+      {
+        Throwable exception;
+
+        try
+        {
+          exception = ((IDeactivateable)inputConsumer).deactivate();
+        }
+        catch (Throwable ex)
+        {
+          exception = ex;
+        }
+
+        if (exception != null)
+        {
+          OM.LOG.warn(exception);
+        }
+      }
+
       AdapterFactory adapterFactory = getAdapterFactory();
       if (adapterFactory instanceof ComposedAdapterFactory)
       {
@@ -909,15 +1036,170 @@ public final class CDOCompareEditorUtil
       this.modal = modal;
     }
 
+    @Override
+    public boolean isEditionSelectionDialog()
+    {
+      return editionSelectionDialog;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void setEditionSelectionDialog(boolean editionSelectionDialog)
+    {
+      this.editionSelectionDialog = editionSelectionDialog;
+    }
+
+    @Override
+    public Control createContents(Composite parent)
+    {
+      if (inputConsumer instanceof ContentsCreator)
+      {
+        ContentsCreator contentsCreator = (ContentsCreator)inputConsumer;
+        return contentsCreator.createContents(parent, super::createContents);
+      }
+
+      return super.createContents(parent);
+    }
+
+    @Override
+    protected CompareViewerPane createStructureInputPane(Composite parent)
+    {
+      structureInputPane = super.createStructureInputPane(parent);
+      return structureInputPane;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public CompareViewerPane getStructureInputPane()
+    {
+      return structureInputPane;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public StructuredViewer getViewerWrapper()
+    {
+      if (structureInputPane instanceof CompareViewerSwitchingPane)
+      {
+        Viewer viewer = ((CompareViewerSwitchingPane)structureInputPane).getViewer();
+        if (viewer instanceof StructuredViewer)
+        {
+          return (StructuredViewer)viewer;
+        }
+      }
+
+      return null;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public TreeViewer getTreeViewer()
+    {
+      StructuredViewer viewerWrapper = getViewerWrapper();
+      if (viewerWrapper instanceof EMFCompareStructureMergeViewer)
+      {
+        return ((EMFCompareStructureMergeViewer)viewerWrapper).getTreeViewer();
+      }
+
+      return null;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public boolean forEachDiffElement(Predicate<Object> consumer)
+    {
+      TreeViewer treeViewer = getTreeViewer();
+      if (treeViewer != null)
+      {
+        ITreeContentProvider contentProvider = (ITreeContentProvider)treeViewer.getContentProvider();
+        return forEachDiffElement(consumer, contentProvider, treeViewer.getInput());
+      }
+
+      return false;
+    }
+
+    private boolean forEachDiffElement(Predicate<Object> consumer, ITreeContentProvider contentProvider, Object obj)
+    {
+      if (consumer.test(obj))
+      {
+        return true;
+      }
+
+      Object[] children = contentProvider.getChildren(obj);
+      for (Object child : children)
+      {
+        if (forEachDiffElement(consumer, contentProvider, child))
+        {
+          return true;
+        }
+      }
+
+      return false;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public IEditorPart getEditor()
+    {
+      return editor;
+    }
+
+    private void editorOpened(IEditorPart editor)
+    {
+      this.editor = editor;
+      if (inputConsumer instanceof EditorConsumer)
+      {
+        ((EditorConsumer)inputConsumer).editorOpened(editor);
+      }
+    }
+
     public void setDisposeRunnables(List<Runnable> disposeRunnables)
     {
       this.disposeRunnables = disposeRunnables;
     }
 
+    /**
+     * @since 4.9
+     */
+    public Consumer<IProgressMonitor> getSaveHandler()
+    {
+      return saveHandler;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public void setSaveHandler(Consumer<IProgressMonitor> saveHandler)
+    {
+      this.saveHandler = saveHandler;
+    }
+
     @Override
     public void saveChanges(IProgressMonitor monitor) throws CoreException
     {
-      super.saveChanges(monitor);
+      if (saveHandler != null)
+      {
+        try
+        {
+          saveHandler.accept(monitor);
+        }
+        catch (Exception ex)
+        {
+          Exception unwrapped = WrappedException.unwrap(ex);
+          OM.BUNDLE.coreException(unwrapped);
+        }
+      }
+    }
+
+    private void defaultSave(IProgressMonitor monitor)
+    {
+      flushViewers(monitor);
 
       if (!modal)
       {
@@ -927,7 +1209,7 @@ public final class CDOCompareEditorUtil
         }
         catch (Exception ex)
         {
-          OM.BUNDLE.coreException(ex);
+          throw WrappedException.wrap(ex);
         }
       }
     }
@@ -1038,29 +1320,28 @@ public final class CDOCompareEditorUtil
         dispose();
       }
     }
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 4.6
-   */
-  public static class InputHolder implements Consumer<Input>
-  {
-    private Input input;
-
-    public InputHolder()
-    {
-    }
-
-    public Input getInput()
-    {
-      return input;
-    }
 
     @Override
-    public void accept(Input input)
+    public IRegistry<String, Object> properties()
     {
-      this.input = input;
+      return properties;
+    }
+
+    /**
+     * @since 4.9
+     */
+    public static TreeNode getTreeNode(Object diffElement)
+    {
+      if (diffElement instanceof Adapter)
+      {
+        Notifier target = ((Adapter)diffElement).getTarget();
+        if (target instanceof TreeNode)
+        {
+          return (TreeNode)target;
+        }
+      }
+
+      return null;
     }
   }
 

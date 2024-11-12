@@ -36,7 +36,7 @@ public class DeleteModuleAction extends LMAction<Module>
         "Delete the Module '" + module.getName() + "'", //$NON-NLS-1$ //$NON-NLS-2$
         OM.getImageDescriptor("icons/Delete.gif"), //$NON-NLS-1$
         "Delete the Module '" + module.getName() + "'.", //$NON-NLS-1$ //$NON-NLS-2$
-        "icons/DeleteModule.gif", //$NON-NLS-1$
+        "icons/wizban/Delete.png", //$NON-NLS-1$
         module);
   }
 

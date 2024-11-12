@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.lm.reviews.server" label="CDO Model Repository Lifecycle Management Reviews Server">
+	<productGroup id="org.eclipse.emf.cdo.lm.reviews.server.reviewManagers" name="CDO Review Managers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.lm.reviews.internal.server.ReviewManager" contributor="org.eclipse.emf.cdo.lm.reviews.server"/>
+	</productGroup>
+</plugin>

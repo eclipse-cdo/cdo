@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2022 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2022, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -41,7 +41,7 @@ public class CheckoutAction extends LMAction<Baseline>
         "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase(), //
         OM.getImageDescriptor("icons/checkout.gif"), //
         "Create a checkout for the selected " + resourceLocator.getString("_UI_" + baseline.eClass().getName() + "_type").toLowerCase() + ".", //
-        "icons/Checkout.png", //
+        "icons/wizban/Checkout.png", //
         baseline);
   }
 

@@ -64,7 +64,7 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
         "Add a new delivery review to stream '" + stream.getName() + "'", //
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/DeliveryReview")), //
         "Add a new delivery review to stream '" + stream.getName() + "'.", //
-        "icons/NewDelivery.png", //
+        "icons/wizban/NewDelivery.png", //
         stream);
     this.change = change;
     changeWasNull = change == null;

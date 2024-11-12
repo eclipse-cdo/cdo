@@ -1,14 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <component id="org.eclipse.emf.cdo.lm.reviews" version="2">
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Commentable.java" type="org.eclipse.emf.cdo.lm.reviews.Commentable">
+    <resource path="META-INF/MANIFEST.MF">
+        <filter id="923795461">
+            <message_arguments>
+                <message_argument value="1.2.0"/>
+                <message_argument value="1.1.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.CommentStatus">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.CommentStatus"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Commentable">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.Heading">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Heading"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl">
+        <filter id="305324134">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews_1.2.0"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Authorable.java" type="org.eclipse.emf.cdo.lm.reviews.Authorable">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="SystemElement"/>
-                <message_argument value="Commentable"/>
+                <message_argument value="Authorable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Comment.java" type="org.eclipse.emf.cdo.lm.reviews.Comment">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="getCommentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="getParentHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="getStatus()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="setCommentable(Commentable)"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Comment"/>
+                <message_argument value="setStatus(CommentStatus)"/>
+            </message_arguments>
+        </filter>
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="SystemElement"/>
+                <message_argument value="Comment"/>
             </message_arguments>
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/DeliveryReview.java" type="org.eclipse.emf.cdo.lm.reviews.DeliveryReview">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.DeliveryReview"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="FloatingBaseline"/>
@@ -17,6 +115,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/DropReview.java" type="org.eclipse.emf.cdo.lm.reviews.DropReview">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.DropReview"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="FixedBaseline"/>
@@ -24,15 +128,13 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Heading.java" type="org.eclipse.emf.cdo.lm.reviews.Heading">
-        <filter id="576782386">
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Review.java" type="org.eclipse.emf.cdo.lm.reviews.Review">
+        <filter id="404791350">
             <message_arguments>
-                <message_argument value="Comment"/>
-                <message_argument value="Heading"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Review"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
             </message_arguments>
         </filter>
-    </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/Review.java" type="org.eclipse.emf.cdo.lm.reviews.Review">
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="Baseline"/>
@@ -40,7 +142,1457 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/ReviewTemplate.java" type="org.eclipse.emf.cdo.lm.reviews.ReviewTemplate">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewTemplate"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/ReviewsFactory.java" type="org.eclipse.emf.cdo.lm.reviews.ReviewsFactory">
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsFactory"/>
+                <message_argument value="createHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="createTopic()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/ReviewsPackage.java" type="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage">
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT_FEATURE_COUNT"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__AUTHOR"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__REVIEW"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__TEXT"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW_FEATURE_COUNT"/>
+                <message_argument value="21"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__AUTHOR"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__BASE"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__BRANCH"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__CLOSED"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__COMMENTS"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__DELIVERIES"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__ID"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__IMPACT"/>
+                <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__REBASE_COUNT"/>
+                <message_argument value="20"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__RESOLVED_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__REVIEW"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__REVIEWERS"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__SOURCE_CHANGE"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__SOURCE_COMMIT"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__STATUS"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__TARGET_COMMIT"/>
+                <message_argument value="19"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__UNRESOLVED_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW_FEATURE_COUNT"/>
+                <message_argument value="18"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__AUTHOR"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__COMMENTS"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__DELIVERY"/>
+                <message_argument value="14"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__DEPENDENCIES"/>
+                <message_argument value="13"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__DROP_LABEL"/>
+                <message_argument value="17"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__DROP_TYPE"/>
+                <message_argument value="16"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__ID"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__RESOLVED_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__REVIEW"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__REVIEWERS"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__STATUS"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__TARGET_TIME_STAMP"/>
+                <message_argument value="15"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__UNRESOLVED_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__VERSION"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_FEATURE_COUNT"/>
+                <message_argument value="12"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_STATUS"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE_FEATURE_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__COMMENTS"/>
+                <message_argument value="2"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__RESOLVED_COUNT"/>
+                <message_argument value="5"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__REVIEW"/>
+                <message_argument value="1"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__REVIEWERS"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__UNRESOLVED_COUNT"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__AUTHOR"/>
+                <message_argument value="9"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__COMMENTS"/>
+                <message_argument value="4"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__ID"/>
+                <message_argument value="8"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__RESOLVED_COUNT"/>
+                <message_argument value="7"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__REVIEW"/>
+                <message_argument value="3"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__REVIEWERS"/>
+                <message_argument value="10"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__STATUS"/>
+                <message_argument value="11"/>
+            </message_arguments>
+        </filter>
+        <filter id="388194388">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__UNRESOLVED_COUNT"/>
+                <message_argument value="6"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__ANNOTATIONS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE___GET_ANNOTATION__STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENTABLE___GET_SYSTEM"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT_STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__COMMENTABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__PARENT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="COMMENT__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DELIVERY_REVIEW__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="DROP_REVIEW__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__ANNOTATIONS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__AUTHOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__COMMENTABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__NEXT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__OUTLINE_NUMBER"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__PARENT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__PARENT_INDEX"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__PREVIOUS_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__TEXT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING___GET_ANNOTATION__STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="HEADING___GET_SYSTEM"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW_TEMPLATE__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="REVIEW__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentStatus()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Author()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Commentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_ParentHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Status()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getComment_Text()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable_CommentCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable_Comments()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable_ResolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable_Review()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getCommentable_UnresolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getHeading_NextHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getHeading_OutlineNumber()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getHeading_ParentIndex()"/>
+            </message_arguments>
+        </filter>
+        <filter id="405901410">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage"/>
+                <message_argument value="getHeading_PreviousHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="AUTHORABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__CREATION_TIME"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__EDIT_TIME"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__REPLY_TO"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="DELIVERY_REVIEW__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="DELIVERY_REVIEW__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="DROP_REVIEW__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="DROP_REVIEW__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REVIEW_TEMPLATE__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REVIEW_TEMPLATE__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REVIEW__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="REVIEW__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__ANNOTATIONS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER___GET_ANNOTATION__STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER___GET_SYSTEM"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_FEATURE_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_OPERATION_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__ANNOTATIONS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__NEXT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__OUTLINE_NUMBER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PARENT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PARENT_INDEX"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PREVIOUS_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__TEXT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC___GET_ANNOTATION__STRING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC___GET_SYSTEM"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComment_Container()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComment_CreationTime()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComment_EditTime()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComment_ReplyTo()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getComment_Review()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getModelReference()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_Comments()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_ResolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_Review()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_TopicCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_Topics()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicContainer_UnresolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopicStatus()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_Container()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_Heading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_ModelReference()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_NextHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_OutlineNumber()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_ParentHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_ParentIndex()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_PreviousHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_Status()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="getTopic_Text()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/ReviewsPackage.java" type="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage$Literals">
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE__COMMENT_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENTABLE__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT_STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__AUTHOR"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__COMMENTABLE"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__PARENT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="COMMENT__TEXT"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="HEADING__NEXT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="HEADING__OUTLINE_NUMBER"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="HEADING__PARENT_INDEX"/>
+            </message_arguments>
+        </filter>
+        <filter id="405864542">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.ReviewsPackage.Literals"/>
+                <message_argument value="HEADING__PREVIOUS_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__CREATION_TIME"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__EDIT_TIME"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__REPLY_TO"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="COMMENT__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__COMMENTS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__RESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__REVIEW"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__TOPICS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__TOPIC_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_CONTAINER__UNRESOLVED_COUNT"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC_STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__CONTAINER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__MODEL_REFERENCE"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__NEXT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__OUTLINE_NUMBER"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PARENT_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PARENT_INDEX"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__PREVIOUS_HEADING"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__STATUS"/>
+            </message_arguments>
+        </filter>
+        <filter id="1211105284">
+            <message_arguments>
+                <message_argument value="TOPIC__TEXT"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/TopicContainer.java" type="org.eclipse.emf.cdo.lm.reviews.TopicContainer">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="SystemElement"/>
+                <message_argument value="TopicContainer"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/CommentImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="basicSetCommentable(Commentable, NotificationChain)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="getCommentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="getParentHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="getStatus()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="setCommentable(Commentable)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+                <message_argument value="setStatus(CommentStatus)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
+            </message_arguments>
+        </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="Comment"/>
+                <message_argument value="CommentImpl"/>
+                <message_argument value="SystemElement"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="Comment"/>
@@ -48,22 +1600,13 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/CommentableImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl">
-        <filter id="574668824">
-            <message_arguments>
-                <message_argument value="Commentable"/>
-                <message_argument value="CommentableImpl"/>
-                <message_argument value="SystemElement"/>
-            </message_arguments>
-        </filter>
-        <filter id="576725006">
-            <message_arguments>
-                <message_argument value="Commentable"/>
-                <message_argument value="CommentableImpl"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/DeliveryReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.DeliveryReviewImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="DeliveryReview"/>
@@ -72,6 +1615,12 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/DropReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.DropReviewImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="DropReview"/>
@@ -80,6 +1629,18 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl"/>
+                <message_argument value="getCommentCount()"/>
+            </message_arguments>
+        </filter>
         <filter id="571473929">
             <message_arguments>
                 <message_argument value="BaselineImpl"/>
@@ -94,6 +1655,17 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewTemplateImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl">
+        <filter id="337682486">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl"/>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.Commentable"/>
+            </message_arguments>
+        </filter>
+        <filter id="338849923">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="ReviewTemplate"/>
@@ -102,6 +1674,24 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewsFactoryImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl"/>
+                <message_argument value="convertCommentStatusToString(EDataType, Object)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl"/>
+                <message_argument value="createCommentStatusFromString(EDataType, String)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsFactoryImpl"/>
+                <message_argument value="createHeading()"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="ReviewsFactory"/>
@@ -110,10 +1700,169 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/ReviewsPackageImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentStatus()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Author()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Commentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_ParentHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Status()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getComment_Text()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable_CommentCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable_Comments()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable_ResolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable_Review()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getCommentable_UnresolvedCount()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getHeading_NextHeading()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getHeading_OutlineNumber()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getHeading_ParentIndex()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl"/>
+                <message_argument value="getHeading_PreviousHeading()"/>
+            </message_arguments>
+        </filter>
         <filter id="576725006">
             <message_arguments>
                 <message_argument value="ReviewsPackage"/>
                 <message_argument value="ReviewsPackageImpl"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/impl/TopicContainerImpl.java" type="org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl">
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="TopicContainer"/>
+                <message_argument value="TopicContainerImpl"/>
+                <message_argument value="SystemElement"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/util/ReviewsAdapterFactory.java" type="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory"/>
+                <message_argument value="createCommentableAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsAdapterFactory"/>
+                <message_argument value="createHeadingAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createTopicAdapter()"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="createTopicContainerAdapter()"/>
+            </message_arguments>
+        </filter>
+    </resource>
+    <resource path="src/org/eclipse/emf/cdo/lm/reviews/util/ReviewsSwitch.java" type="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch">
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch"/>
+                <message_argument value="caseCommentable(Commentable)"/>
+            </message_arguments>
+        </filter>
+        <filter id="338792546">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.lm.reviews.util.ReviewsSwitch"/>
+                <message_argument value="caseHeading(Heading)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseTopic(Topic)"/>
+            </message_arguments>
+        </filter>
+        <filter id="1143996420">
+            <message_arguments>
+                <message_argument value="caseTopicContainer(TopicContainer)"/>
             </message_arguments>
         </filter>
     </resource>

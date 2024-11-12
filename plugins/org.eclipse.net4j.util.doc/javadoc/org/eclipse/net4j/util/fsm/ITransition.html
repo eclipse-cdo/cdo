@@ -77,9 +77,14 @@ loadScripts(document, 'script');</script>
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="../security/ChallengeResponseNegotiator.Transition.html" title="class in org.eclipse.net4j.util.security">ChallengeResponseNegotiator.Transition</a></code>, <code><a href="FiniteStateMachine.ChangeStateTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.ChangeStateTransition</a></code>, <code><a href="FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</a></code>, <code><a href="FiniteStateMachine.IgnoreTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.IgnoreTransition</a></code></dd>
 </dl>
+<dl class="notes">
+<dt>Functional Interface:</dt>
+<dd>This is a functional interface and can therefore be used as the assignment target for a lambda expression or method reference.</dd>
+</dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ITransition&lt;STATE extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;?&gt;,<wbr>EVENT extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;?&gt;,<wbr>SUBJECT,<wbr>DATA&gt;</span></div>
-<div class="block">Encpsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.</div>
+<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/FunctionalInterface.html" title="class or interface in java.lang" class="external-link">@FunctionalInterface</a>
+</span><span class="modifiers">public interface </span><span class="element-name type-name-label">ITransition&lt;STATE extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;?&gt;,<wbr>EVENT extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="class or interface in java.lang" class="external-link">Enum</a>&lt;?&gt;,<wbr>SUBJECT,<wbr>DATA&gt;</span></div>
+<div class="block">Encapsulates the logic to be executed when an <i>event</i> arrives for a <i>subject</i> in a particular <i>state</i>.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>

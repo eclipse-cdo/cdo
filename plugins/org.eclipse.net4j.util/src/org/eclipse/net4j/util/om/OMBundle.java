@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.om;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.io.ExtendedIOUtil.ClassResolver;
 import org.eclipse.net4j.util.om.log.OMLogger;
 import org.eclipse.net4j.util.om.pref.OMPreferences;
 import org.eclipse.net4j.util.om.trace.OMTracer;
@@ -36,7 +37,7 @@ import java.util.ResourceBundle;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface OMBundle
+public interface OMBundle extends ClassResolver
 {
   public OMPlatform getPlatform();
 

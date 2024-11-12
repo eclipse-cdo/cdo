@@ -803,6 +803,11 @@ public final class Tree implements Comparable<Tree>
 
     public static Tree convertElementToTree(Element element, Map<String, String> parameters)
     {
+      if (element == null)
+      {
+        return builder().build();
+      }
+
       Builder builder = builder().setName(element.getTagName());
 
       NamedNodeMap attributes = element.getAttributes();

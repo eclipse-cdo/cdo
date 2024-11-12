@@ -13,7 +13,7 @@
 <feature
       id="org.eclipse.emf.cdo.all"
       label="%featureName"
-      version="5.0.0.qualifier"
+      version="4.28.0.qualifier"
       provider-name="%providerName"
       license-feature="org.eclipse.emf.cdo.license"
       license-feature-version="0.0.0">
@@ -93,6 +93,10 @@
 
    <includes
          id="org.eclipse.net4j.sdk"
+         version="0.0.0"/>
+
+   <includes
+         id="org.eclipse.net4j.util.ui.mylyn"
          version="0.0.0"/>
 
    <includes

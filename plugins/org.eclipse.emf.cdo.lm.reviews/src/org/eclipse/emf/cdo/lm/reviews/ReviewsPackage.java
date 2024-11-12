@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.LMPackage;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EDataType;
 import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -73,6 +74,225 @@ public interface ReviewsPackage extends EPackage
    */
   ReviewsPackage eINSTANCE = org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl.init();
 
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getAuthorable()
+   * @generated
+   */
+  int AUTHORABLE = 0;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__ID = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Text</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__TEXT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__AUTHOR = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Creation Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__CREATION_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Edit Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE__EDIT_TIME = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
+   * The number of structural features of the '<em>Authorable</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 5;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE___GET_ANNOTATION__STRING = LMPackage.SYSTEM_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get System</em>' operation.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE___GET_SYSTEM = LMPackage.SYSTEM_ELEMENT___GET_SYSTEM;
+
+  /**
+   * The number of operations of the '<em>Authorable</em>' class.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AUTHORABLE_OPERATION_COUNT = LMPackage.SYSTEM_ELEMENT_OPERATION_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl <em>Topic Container</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopicContainer()
+   * @generated
+   */
+  int TOPIC_CONTAINER = 1;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Review</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__REVIEW = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__TOPICS = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Comments</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__COMMENTS = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__TOPIC_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__UNRESOLVED_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER__RESOLVED_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 5;
+
+  /**
+   * The number of structural features of the '<em>Topic Container</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 6;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER___GET_ANNOTATION__STRING = LMPackage.SYSTEM_ELEMENT___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get System</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER___GET_SYSTEM = LMPackage.SYSTEM_ELEMENT___GET_SYSTEM;
+
+  /**
+   * The number of operations of the '<em>Topic Container</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_CONTAINER_OPERATION_COUNT = LMPackage.SYSTEM_ELEMENT_OPERATION_COUNT + 0;
+
   public static final String ANNOTATION_SOURCE = "http://www.eclipse.org/CDO/LM/Reviews";
 
   public static Annotation getAnnotation(ModelElement modelElement, boolean createOnDemand)
@@ -93,106 +313,6 @@ public interface ReviewsPackage extends EPackage
   }
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl <em>Commentable</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl
-   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getCommentable()
-   * @generated
-   */
-  int COMMENTABLE = 0;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__ANNOTATIONS = LMPackage.SYSTEM_ELEMENT__ANNOTATIONS;
-
-  /**
-   * The feature id for the '<em><b>Review</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__REVIEW = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__COMMENTS = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__COMMENT_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 2;
-
-  /**
-   * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__UNRESOLVED_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 3;
-
-  /**
-   * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE__RESOLVED_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 4;
-
-  /**
-   * The number of structural features of the '<em>Commentable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE_FEATURE_COUNT = LMPackage.SYSTEM_ELEMENT_FEATURE_COUNT + 5;
-
-  /**
-   * The operation id for the '<em>Get Annotation</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE___GET_ANNOTATION__STRING = LMPackage.SYSTEM_ELEMENT___GET_ANNOTATION__STRING;
-
-  /**
-   * The operation id for the '<em>Get System</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE___GET_SYSTEM = LMPackage.SYSTEM_ELEMENT___GET_SYSTEM;
-
-  /**
-   * The number of operations of the '<em>Commentable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENTABLE_OPERATION_COUNT = LMPackage.SYSTEM_ELEMENT_OPERATION_COUNT + 0;
-
-  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl <em>Comment</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -200,7 +320,17 @@ public interface ReviewsPackage extends EPackage
    * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getComment()
    * @generated
    */
-  int COMMENT = 1;
+  int COMMENT = 3;
+
+  /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl <em>Topic</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopic()
+   * @generated
+   */
+  int TOPIC = 2;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -209,7 +339,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__ANNOTATIONS = COMMENTABLE__ANNOTATIONS;
+  int TOPIC__ANNOTATIONS = TOPIC_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Review</b></em>' reference.
@@ -218,7 +348,16 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__REVIEW = COMMENTABLE__REVIEW;
+  int TOPIC__REVIEW = TOPIC_CONTAINER__REVIEW;
+
+  /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__TOPICS = TOPIC_CONTAINER__TOPICS;
 
   /**
    * The feature id for the '<em><b>Comments</b></em>' containment reference list.
@@ -227,16 +366,16 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENTS = COMMENTABLE__COMMENTS;
+  int TOPIC__COMMENTS = TOPIC_CONTAINER__COMMENTS;
 
   /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENT_COUNT = COMMENTABLE__COMMENT_COUNT;
+  int TOPIC__TOPIC_COUNT = TOPIC_CONTAINER__TOPIC_COUNT;
 
   /**
    * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
@@ -245,7 +384,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__UNRESOLVED_COUNT = COMMENTABLE__UNRESOLVED_COUNT;
+  int TOPIC__UNRESOLVED_COUNT = TOPIC_CONTAINER__UNRESOLVED_COUNT;
 
   /**
    * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
@@ -254,34 +393,17 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__RESOLVED_COUNT = COMMENTABLE__RESOLVED_COUNT;
+  int TOPIC__RESOLVED_COUNT = TOPIC_CONTAINER__RESOLVED_COUNT;
 
   /**
-   * The feature id for the '<em><b>Commentable</b></em>' container reference.
+   * The feature id for the '<em><b>Id</b></em>' attribute.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMENT__COMMENTABLE = COMMENTABLE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Parent Heading</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT__PARENT_HEADING = COMMENTABLE_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Author</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT__AUTHOR = COMMENTABLE_FEATURE_COUNT + 2;
+  int TOPIC__ID = TOPIC_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Text</b></em>' attribute.
@@ -290,7 +412,55 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__TEXT = COMMENTABLE_FEATURE_COUNT + 3;
+  int TOPIC__TEXT = TOPIC_CONTAINER_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__AUTHOR = TOPIC_CONTAINER_FEATURE_COUNT + 2;
+
+  /**
+   * The feature id for the '<em><b>Creation Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__CREATION_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 3;
+
+  /**
+   * The feature id for the '<em><b>Edit Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__EDIT_TIME = TOPIC_CONTAINER_FEATURE_COUNT + 4;
+
+  /**
+   * The feature id for the '<em><b>Heading</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 5;
+
+  /**
+   * The feature id for the '<em><b>Model Reference</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC__MODEL_REFERENCE = TOPIC_CONTAINER_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -299,116 +469,16 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int COMMENT__STATUS = COMMENTABLE_FEATURE_COUNT + 4;
+  int TOPIC__STATUS = TOPIC_CONTAINER_FEATURE_COUNT + 7;
 
   /**
-   * The number of structural features of the '<em>Comment</em>' class.
+   * The feature id for the '<em><b>Container</b></em>' container reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int COMMENT_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 5;
-
-  /**
-   * The operation id for the '<em>Get Annotation</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT___GET_ANNOTATION__STRING = COMMENTABLE___GET_ANNOTATION__STRING;
-
-  /**
-   * The operation id for the '<em>Get System</em>' operation.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT___GET_SYSTEM = COMMENTABLE___GET_SYSTEM;
-
-  /**
-   * The number of operations of the '<em>Comment</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int COMMENT_OPERATION_COUNT = COMMENTABLE_OPERATION_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl <em>Heading</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl
-   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getHeading()
-   * @generated
-   */
-  int HEADING = 2;
-
-  /**
-   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__ANNOTATIONS = COMMENT__ANNOTATIONS;
-
-  /**
-   * The feature id for the '<em><b>Review</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__REVIEW = COMMENT__REVIEW;
-
-  /**
-   * The feature id for the '<em><b>Comments</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__COMMENTS = COMMENT__COMMENTS;
-
-  /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__COMMENT_COUNT = COMMENT__COMMENT_COUNT;
-
-  /**
-   * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__UNRESOLVED_COUNT = COMMENT__UNRESOLVED_COUNT;
-
-  /**
-   * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__RESOLVED_COUNT = COMMENT__RESOLVED_COUNT;
-
-  /**
-   * The feature id for the '<em><b>Commentable</b></em>' container reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__COMMENTABLE = COMMENT__COMMENTABLE;
+  int TOPIC__CONTAINER = TOPIC_CONTAINER_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Parent Heading</b></em>' reference.
@@ -417,34 +487,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING__PARENT_HEADING = COMMENT__PARENT_HEADING;
-
-  /**
-   * The feature id for the '<em><b>Author</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__AUTHOR = COMMENT__AUTHOR;
-
-  /**
-   * The feature id for the '<em><b>Text</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__TEXT = COMMENT__TEXT;
-
-  /**
-   * The feature id for the '<em><b>Status</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__STATUS = COMMENT__STATUS;
+  int TOPIC__PARENT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 9;
 
   /**
    * The feature id for the '<em><b>Previous Heading</b></em>' reference.
@@ -453,7 +496,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING__PREVIOUS_HEADING = COMMENT_FEATURE_COUNT + 0;
+  int TOPIC__PREVIOUS_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 10;
 
   /**
    * The feature id for the '<em><b>Next Heading</b></em>' reference.
@@ -462,16 +505,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING__NEXT_HEADING = COMMENT_FEATURE_COUNT + 1;
-
-  /**
-   * The feature id for the '<em><b>Parent Index</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int HEADING__PARENT_INDEX = COMMENT_FEATURE_COUNT + 2;
+  int TOPIC__NEXT_HEADING = TOPIC_CONTAINER_FEATURE_COUNT + 11;
 
   /**
    * The feature id for the '<em><b>Outline Number</b></em>' attribute.
@@ -480,16 +514,25 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING__OUTLINE_NUMBER = COMMENT_FEATURE_COUNT + 3;
+  int TOPIC__OUTLINE_NUMBER = TOPIC_CONTAINER_FEATURE_COUNT + 12;
 
   /**
-   * The number of structural features of the '<em>Heading</em>' class.
+   * The feature id for the '<em><b>Parent Index</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HEADING_FEATURE_COUNT = COMMENT_FEATURE_COUNT + 4;
+  int TOPIC__PARENT_INDEX = TOPIC_CONTAINER_FEATURE_COUNT + 13;
+
+  /**
+   * The number of structural features of the '<em>Topic</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int TOPIC_FEATURE_COUNT = TOPIC_CONTAINER_FEATURE_COUNT + 14;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -498,7 +541,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING___GET_ANNOTATION__STRING = COMMENT___GET_ANNOTATION__STRING;
+  int TOPIC___GET_ANNOTATION__STRING = TOPIC_CONTAINER___GET_ANNOTATION__STRING;
 
   /**
    * The operation id for the '<em>Get System</em>' operation.
@@ -507,16 +550,134 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int HEADING___GET_SYSTEM = COMMENT___GET_SYSTEM;
+  int TOPIC___GET_SYSTEM = TOPIC_CONTAINER___GET_SYSTEM;
 
   /**
-   * The number of operations of the '<em>Heading</em>' class.
+   * The number of operations of the '<em>Topic</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int HEADING_OPERATION_COUNT = COMMENT_OPERATION_COUNT + 0;
+  int TOPIC_OPERATION_COUNT = TOPIC_CONTAINER_OPERATION_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__ANNOTATIONS = AUTHORABLE__ANNOTATIONS;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__ID = AUTHORABLE__ID;
+
+  /**
+   * The feature id for the '<em><b>Text</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__TEXT = AUTHORABLE__TEXT;
+
+  /**
+   * The feature id for the '<em><b>Author</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__AUTHOR = AUTHORABLE__AUTHOR;
+
+  /**
+   * The feature id for the '<em><b>Creation Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__CREATION_TIME = AUTHORABLE__CREATION_TIME;
+
+  /**
+   * The feature id for the '<em><b>Edit Time</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__EDIT_TIME = AUTHORABLE__EDIT_TIME;
+
+  /**
+   * The feature id for the '<em><b>Container</b></em>' container reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__CONTAINER = AUTHORABLE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Review</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__REVIEW = AUTHORABLE_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Reply To</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT__REPLY_TO = AUTHORABLE_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Comment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_FEATURE_COUNT = AUTHORABLE_FEATURE_COUNT + 3;
+
+  /**
+   * The operation id for the '<em>Get Annotation</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT___GET_ANNOTATION__STRING = AUTHORABLE___GET_ANNOTATION__STRING;
+
+  /**
+   * The operation id for the '<em>Get System</em>' operation.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT___GET_SYSTEM = AUTHORABLE___GET_SYSTEM;
+
+  /**
+   * The number of operations of the '<em>Comment</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMMENT_OPERATION_COUNT = AUTHORABLE_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl <em>Review Template</em>}' class.
@@ -526,7 +687,7 @@ public interface ReviewsPackage extends EPackage
    * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getReviewTemplate()
    * @generated
    */
-  int REVIEW_TEMPLATE = 3;
+  int REVIEW_TEMPLATE = 4;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -535,7 +696,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__ANNOTATIONS = COMMENTABLE__ANNOTATIONS;
+  int REVIEW_TEMPLATE__ANNOTATIONS = TOPIC_CONTAINER__ANNOTATIONS;
 
   /**
    * The feature id for the '<em><b>Review</b></em>' reference.
@@ -544,7 +705,16 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__REVIEW = COMMENTABLE__REVIEW;
+  int REVIEW_TEMPLATE__REVIEW = TOPIC_CONTAINER__REVIEW;
+
+  /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REVIEW_TEMPLATE__TOPICS = TOPIC_CONTAINER__TOPICS;
 
   /**
    * The feature id for the '<em><b>Comments</b></em>' containment reference list.
@@ -553,16 +723,16 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__COMMENTS = COMMENTABLE__COMMENTS;
+  int REVIEW_TEMPLATE__COMMENTS = TOPIC_CONTAINER__COMMENTS;
 
   /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__COMMENT_COUNT = COMMENTABLE__COMMENT_COUNT;
+  int REVIEW_TEMPLATE__TOPIC_COUNT = TOPIC_CONTAINER__TOPIC_COUNT;
 
   /**
    * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
@@ -571,7 +741,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__UNRESOLVED_COUNT = COMMENTABLE__UNRESOLVED_COUNT;
+  int REVIEW_TEMPLATE__UNRESOLVED_COUNT = TOPIC_CONTAINER__UNRESOLVED_COUNT;
 
   /**
    * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
@@ -580,7 +750,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__RESOLVED_COUNT = COMMENTABLE__RESOLVED_COUNT;
+  int REVIEW_TEMPLATE__RESOLVED_COUNT = TOPIC_CONTAINER__RESOLVED_COUNT;
 
   /**
    * The feature id for the '<em><b>Reviewers</b></em>' attribute list.
@@ -589,7 +759,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE__REVIEWERS = COMMENTABLE_FEATURE_COUNT + 0;
+  int REVIEW_TEMPLATE__REVIEWERS = TOPIC_CONTAINER_FEATURE_COUNT + 0;
 
   /**
    * The number of structural features of the '<em>Review Template</em>' class.
@@ -598,7 +768,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE_FEATURE_COUNT = COMMENTABLE_FEATURE_COUNT + 1;
+  int REVIEW_TEMPLATE_FEATURE_COUNT = TOPIC_CONTAINER_FEATURE_COUNT + 1;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -607,7 +777,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE___GET_ANNOTATION__STRING = COMMENTABLE___GET_ANNOTATION__STRING;
+  int REVIEW_TEMPLATE___GET_ANNOTATION__STRING = TOPIC_CONTAINER___GET_ANNOTATION__STRING;
 
   /**
    * The operation id for the '<em>Get System</em>' operation.
@@ -616,7 +786,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE___GET_SYSTEM = COMMENTABLE___GET_SYSTEM;
+  int REVIEW_TEMPLATE___GET_SYSTEM = TOPIC_CONTAINER___GET_SYSTEM;
 
   /**
    * The number of operations of the '<em>Review Template</em>' class.
@@ -625,7 +795,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_TEMPLATE_OPERATION_COUNT = COMMENTABLE_OPERATION_COUNT + 0;
+  int REVIEW_TEMPLATE_OPERATION_COUNT = TOPIC_CONTAINER_OPERATION_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewImpl <em>Review</em>}' class.
@@ -635,7 +805,7 @@ public interface ReviewsPackage extends EPackage
    * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getReview()
    * @generated
    */
-  int REVIEW = 4;
+  int REVIEW = 5;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -674,22 +844,31 @@ public interface ReviewsPackage extends EPackage
   int REVIEW__REVIEW = LMPackage.BASELINE_FEATURE_COUNT + 0;
 
   /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REVIEW__TOPICS = LMPackage.BASELINE_FEATURE_COUNT + 1;
+
+  /**
    * The feature id for the '<em><b>Comments</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REVIEW__COMMENTS = LMPackage.BASELINE_FEATURE_COUNT + 1;
+  int REVIEW__COMMENTS = LMPackage.BASELINE_FEATURE_COUNT + 2;
 
   /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int REVIEW__COMMENT_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 2;
+  int REVIEW__TOPIC_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 3;
 
   /**
    * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
@@ -698,7 +877,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__UNRESOLVED_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 3;
+  int REVIEW__UNRESOLVED_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 4;
 
   /**
    * The feature id for the '<em><b>Resolved Count</b></em>' attribute.
@@ -707,7 +886,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__RESOLVED_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 4;
+  int REVIEW__RESOLVED_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 5;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -716,7 +895,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__ID = LMPackage.BASELINE_FEATURE_COUNT + 5;
+  int REVIEW__ID = LMPackage.BASELINE_FEATURE_COUNT + 6;
 
   /**
    * The feature id for the '<em><b>Author</b></em>' attribute.
@@ -725,7 +904,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__AUTHOR = LMPackage.BASELINE_FEATURE_COUNT + 6;
+  int REVIEW__AUTHOR = LMPackage.BASELINE_FEATURE_COUNT + 7;
 
   /**
    * The feature id for the '<em><b>Reviewers</b></em>' attribute list.
@@ -734,7 +913,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__REVIEWERS = LMPackage.BASELINE_FEATURE_COUNT + 7;
+  int REVIEW__REVIEWERS = LMPackage.BASELINE_FEATURE_COUNT + 8;
 
   /**
    * The feature id for the '<em><b>Status</b></em>' attribute.
@@ -743,7 +922,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW__STATUS = LMPackage.BASELINE_FEATURE_COUNT + 8;
+  int REVIEW__STATUS = LMPackage.BASELINE_FEATURE_COUNT + 9;
 
   /**
    * The number of structural features of the '<em>Review</em>' class.
@@ -752,7 +931,7 @@ public interface ReviewsPackage extends EPackage
    * @generated
    * @ordered
    */
-  int REVIEW_FEATURE_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 9;
+  int REVIEW_FEATURE_COUNT = LMPackage.BASELINE_FEATURE_COUNT + 10;
 
   /**
    * The operation id for the '<em>Get Annotation</em>' operation.
@@ -834,7 +1013,7 @@ public interface ReviewsPackage extends EPackage
    * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getDeliveryReview()
    * @generated
    */
-  int DELIVERY_REVIEW = 5;
+  int DELIVERY_REVIEW = 6;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -873,6 +1052,15 @@ public interface ReviewsPackage extends EPackage
   int DELIVERY_REVIEW__REVIEW = REVIEW__REVIEW;
 
   /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DELIVERY_REVIEW__TOPICS = REVIEW__TOPICS;
+
+  /**
    * The feature id for the '<em><b>Comments</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -882,13 +1070,13 @@ public interface ReviewsPackage extends EPackage
   int DELIVERY_REVIEW__COMMENTS = REVIEW__COMMENTS;
 
   /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DELIVERY_REVIEW__COMMENT_COUNT = REVIEW__COMMENT_COUNT;
+  int DELIVERY_REVIEW__TOPIC_COUNT = REVIEW__TOPIC_COUNT;
 
   /**
    * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
@@ -1141,7 +1329,7 @@ public interface ReviewsPackage extends EPackage
    * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getDropReview()
    * @generated
    */
-  int DROP_REVIEW = 6;
+  int DROP_REVIEW = 7;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' containment reference list.
@@ -1180,6 +1368,15 @@ public interface ReviewsPackage extends EPackage
   int DROP_REVIEW__REVIEW = REVIEW__REVIEW;
 
   /**
+   * The feature id for the '<em><b>Topics</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DROP_REVIEW__TOPICS = REVIEW__TOPICS;
+
+  /**
    * The feature id for the '<em><b>Comments</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1189,13 +1386,13 @@ public interface ReviewsPackage extends EPackage
   int DROP_REVIEW__COMMENTS = REVIEW__COMMENTS;
 
   /**
-   * The feature id for the '<em><b>Comment Count</b></em>' attribute.
+   * The feature id for the '<em><b>Topic Count</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int DROP_REVIEW__COMMENT_COUNT = REVIEW__COMMENT_COUNT;
+  int DROP_REVIEW__TOPIC_COUNT = REVIEW__TOPIC_COUNT;
 
   /**
    * The feature id for the '<em><b>Unresolved Count</b></em>' attribute.
@@ -1396,14 +1593,24 @@ public interface ReviewsPackage extends EPackage
   int DROP_REVIEW_OPERATION_COUNT = REVIEW_OPERATION_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.CommentStatus <em>Comment Status</em>}' enum.
+   * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.TopicStatus <em>Topic Status</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.eclipse.emf.cdo.lm.reviews.CommentStatus
-   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getCommentStatus()
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicStatus
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopicStatus()
    * @generated
    */
-  int COMMENT_STATUS = 7;
+  int TOPIC_STATUS = 9;
+
+  /**
+   * The meta object id for the '<em>Model Reference</em>' data type.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+   * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getModelReference()
+   * @generated
+   */
+  int MODEL_REFERENCE = 10;
 
   /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}' enum.
@@ -1416,69 +1623,151 @@ public interface ReviewsPackage extends EPackage
   int REVIEW_STATUS = 8;
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Commentable <em>Commentable</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Commentable</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable
+   * @return the meta object for class '<em>Authorable</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable
    * @generated
    */
-  EClass getCommentable();
+  EClass getAuthorable();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Commentable#getReview <em>Review</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getId <em>Id</em>}'.
    * <!-- begin-user-doc -->
+   * @since 1.2
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Review</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getReview()
-   * @see #getCommentable()
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getId()
+   * @see #getAuthorable()
    * @generated
    */
-  EReference getCommentable_Review();
+  EAttribute getAuthorable_Id();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.lm.reviews.Commentable#getComments <em>Comments</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getText <em>Text</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Text</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getText()
+   * @see #getAuthorable()
+   * @generated
+   */
+  EAttribute getAuthorable_Text();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getAuthor <em>Author</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Author</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getAuthor()
+   * @see #getAuthorable()
+   * @generated
+   */
+  EAttribute getAuthorable_Author();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getCreationTime <em>Creation Time</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Creation Time</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getCreationTime()
+   * @see #getAuthorable()
+   * @generated
+   */
+  EAttribute getAuthorable_CreationTime();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Authorable#getEditTime <em>Edit Time</em>}'.
+   * <!-- begin-user-doc -->
+   * @since 1.2
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Edit Time</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Authorable#getEditTime()
+   * @see #getAuthorable()
+   * @generated
+   */
+  EAttribute getAuthorable_EditTime();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer <em>Topic Container</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Topic Container</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer
+   * @generated
+   */
+  EClass getTopicContainer();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getComments <em>Comments</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Comments</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getComments()
-   * @see #getCommentable()
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getComments()
+   * @see #getTopicContainer()
    * @generated
    */
-  EReference getCommentable_Comments();
+  EReference getTopicContainer_Comments();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Commentable#getCommentCount <em>Comment Count</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getTopicCount <em>Topic Count</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Comment Count</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getCommentCount()
-   * @see #getCommentable()
+   * @return the meta object for the attribute '<em>Topic Count</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getTopicCount()
+   * @see #getTopicContainer()
    * @generated
    */
-  EAttribute getCommentable_CommentCount();
+  EAttribute getTopicContainer_TopicCount();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Commentable#getUnresolvedCount <em>Unresolved Count</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getUnresolvedCount <em>Unresolved Count</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Unresolved Count</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getUnresolvedCount()
-   * @see #getCommentable()
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getUnresolvedCount()
+   * @see #getTopicContainer()
    * @generated
    */
-  EAttribute getCommentable_UnresolvedCount();
+  EAttribute getTopicContainer_UnresolvedCount();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Commentable#getResolvedCount <em>Resolved Count</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getResolvedCount <em>Resolved Count</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Resolved Count</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Commentable#getResolvedCount()
-   * @see #getCommentable()
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getResolvedCount()
+   * @see #getTopicContainer()
    * @generated
    */
-  EAttribute getCommentable_ResolvedCount();
+  EAttribute getTopicContainer_ResolvedCount();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getTopics <em>Topics</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Topics</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getTopics()
+   * @see #getTopicContainer()
+   * @generated
+   */
+  EReference getTopicContainer_Topics();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.TopicContainer#getReview <em>Review</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Review</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicContainer#getReview()
+   * @see #getTopicContainer()
+   * @generated
+   */
+  EReference getTopicContainer_Review();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Comment <em>Comment</em>}'.
@@ -1491,113 +1780,146 @@ public interface ReviewsPackage extends EPackage
   EClass getComment();
 
   /**
-   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getCommentable <em>Commentable</em>}'.
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getContainer <em>Container</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the container reference '<em>Commentable</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getCommentable()
+   * @return the meta object for the container reference '<em>Container</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getContainer()
    * @see #getComment()
    * @generated
    */
-  EReference getComment_Commentable();
+  EReference getComment_Container();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getParentHeading <em>Parent Heading</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getReplyTo <em>Reply To</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the reference '<em>Parent Heading</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getParentHeading()
+   * @return the meta object for the reference '<em>Reply To</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getReplyTo()
    * @see #getComment()
    * @generated
    */
-  EReference getComment_ParentHeading();
+  EReference getComment_ReplyTo();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor <em>Author</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getReview <em>Review</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Author</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getAuthor()
+   * @return the meta object for the reference '<em>Review</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getReview()
    * @see #getComment()
    * @generated
    */
-  EAttribute getComment_Author();
+  EReference getComment_Review();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getText <em>Text</em>}'.
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Topic <em>Topic</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Text</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getText()
-   * @see #getComment()
+   * @return the meta object for class '<em>Topic</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic
    * @generated
    */
-  EAttribute getComment_Text();
+  EClass getTopic();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Comment#getStatus <em>Status</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Topic#isHeading <em>Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Heading</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#isHeading()
+   * @see #getTopic()
+   * @generated
+   */
+  EAttribute getTopic_Heading();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getModelReference <em>Model Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Model Reference</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getModelReference()
+   * @see #getTopic()
+   * @generated
+   */
+  EAttribute getTopic_ModelReference();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getStatus <em>Status</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Status</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Comment#getStatus()
-   * @see #getComment()
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getStatus()
+   * @see #getTopic()
    * @generated
    */
-  EAttribute getComment_Status();
+  EAttribute getTopic_Status();
 
   /**
-   * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.Heading <em>Heading</em>}'.
+   * Returns the meta object for the container reference '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getContainer <em>Container</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Heading</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading
+   * @return the meta object for the container reference '<em>Container</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getContainer()
+   * @see #getTopic()
    * @generated
    */
-  EClass getHeading();
+  EReference getTopic_Container();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getPreviousHeading <em>Previous Heading</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getParentHeading <em>Parent Heading</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parent Heading</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getParentHeading()
+   * @see #getTopic()
+   * @generated
+   */
+  EReference getTopic_ParentHeading();
+
+  /**
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getPreviousHeading <em>Previous Heading</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Previous Heading</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getPreviousHeading()
-   * @see #getHeading()
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getPreviousHeading()
+   * @see #getTopic()
    * @generated
    */
-  EReference getHeading_PreviousHeading();
+  EReference getTopic_PreviousHeading();
 
   /**
-   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getNextHeading <em>Next Heading</em>}'.
+   * Returns the meta object for the reference '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getNextHeading <em>Next Heading</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the reference '<em>Next Heading</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getNextHeading()
-   * @see #getHeading()
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getNextHeading()
+   * @see #getTopic()
    * @generated
    */
-  EReference getHeading_NextHeading();
+  EReference getTopic_NextHeading();
 
   /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getParentIndex <em>Parent Index</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Parent Index</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getParentIndex()
-   * @see #getHeading()
-   * @generated
-   */
-  EAttribute getHeading_ParentIndex();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Heading#getOutlineNumber <em>Outline Number</em>}'.
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getOutlineNumber <em>Outline Number</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Outline Number</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.Heading#getOutlineNumber()
-   * @see #getHeading()
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getOutlineNumber()
+   * @see #getTopic()
    * @generated
    */
-  EAttribute getHeading_OutlineNumber();
+  EAttribute getTopic_OutlineNumber();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.lm.reviews.Topic#getParentIndex <em>Parent Index</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Parent Index</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.Topic#getParentIndex()
+   * @see #getTopic()
+   * @generated
+   */
+  EAttribute getTopic_ParentIndex();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.lm.reviews.ReviewTemplate <em>Review Template</em>}'.
@@ -1827,14 +2149,25 @@ public interface ReviewsPackage extends EPackage
   EAttribute getDropReview_DropLabel();
 
   /**
-   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.lm.reviews.CommentStatus <em>Comment Status</em>}'.
+   * Returns the meta object for enum '{@link org.eclipse.emf.cdo.lm.reviews.TopicStatus <em>Topic Status</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Comment Status</em>'.
-   * @see org.eclipse.emf.cdo.lm.reviews.CommentStatus
+   * @return the meta object for enum '<em>Topic Status</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.TopicStatus
    * @generated
    */
-  EEnum getCommentStatus();
+  EEnum getTopicStatus();
+
+  /**
+   * Returns the meta object for data type '{@link org.eclipse.emf.cdo.lm.reviews.ModelReference <em>Model Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for data type '<em>Model Reference</em>'.
+   * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+   * @model instanceClass="org.eclipse.emf.cdo.lm.reviews.ModelReference"
+   * @generated
+   */
+  EDataType getModelReference();
 
   /**
    * Returns the meta object for enum '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}'.
@@ -1865,28 +2198,78 @@ public interface ReviewsPackage extends EPackage
    *   <li>each enum,</li>
    *   <li>and each data type</li>
    * </ul>
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    * <!-- end-user-doc -->
    * @generated
    */
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl <em>Commentable</em>}' class.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.Authorable <em>Authorable</em>}' class.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.lm.reviews.impl.CommentableImpl
-     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getCommentable()
+     * @see org.eclipse.emf.cdo.lm.reviews.Authorable
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getAuthorable()
      * @generated
      */
-    EClass COMMENTABLE = eINSTANCE.getCommentable();
+    EClass AUTHORABLE = eINSTANCE.getAuthorable();
 
     /**
-     * The meta object literal for the '<em><b>Review</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
      * <!-- begin-user-doc -->
+     * @since 1.2
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference COMMENTABLE__REVIEW = eINSTANCE.getCommentable_Review();
+    EAttribute AUTHORABLE__ID = eINSTANCE.getAuthorable_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 1.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORABLE__TEXT = eINSTANCE.getAuthorable_Text();
+
+    /**
+     * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 1.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORABLE__AUTHOR = eINSTANCE.getAuthorable_Author();
+
+    /**
+     * The meta object literal for the '<em><b>Creation Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 1.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORABLE__CREATION_TIME = eINSTANCE.getAuthorable_CreationTime();
+
+    /**
+     * The meta object literal for the '<em><b>Edit Time</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * @since 1.2
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AUTHORABLE__EDIT_TIME = eINSTANCE.getAuthorable_EditTime();
+
+    /**
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl <em>Topic Container</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.TopicContainerImpl
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopicContainer()
+     * @generated
+     */
+    EClass TOPIC_CONTAINER = eINSTANCE.getTopicContainer();
 
     /**
      * The meta object literal for the '<em><b>Comments</b></em>' containment reference list feature.
@@ -1894,15 +2277,15 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference COMMENTABLE__COMMENTS = eINSTANCE.getCommentable_Comments();
+    EReference TOPIC_CONTAINER__COMMENTS = eINSTANCE.getTopicContainer_Comments();
 
     /**
-     * The meta object literal for the '<em><b>Comment Count</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Topic Count</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENTABLE__COMMENT_COUNT = eINSTANCE.getCommentable_CommentCount();
+    EAttribute TOPIC_CONTAINER__TOPIC_COUNT = eINSTANCE.getTopicContainer_TopicCount();
 
     /**
      * The meta object literal for the '<em><b>Unresolved Count</b></em>' attribute feature.
@@ -1910,7 +2293,7 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENTABLE__UNRESOLVED_COUNT = eINSTANCE.getCommentable_UnresolvedCount();
+    EAttribute TOPIC_CONTAINER__UNRESOLVED_COUNT = eINSTANCE.getTopicContainer_UnresolvedCount();
 
     /**
      * The meta object literal for the '<em><b>Resolved Count</b></em>' attribute feature.
@@ -1918,7 +2301,23 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENTABLE__RESOLVED_COUNT = eINSTANCE.getCommentable_ResolvedCount();
+    EAttribute TOPIC_CONTAINER__RESOLVED_COUNT = eINSTANCE.getTopicContainer_ResolvedCount();
+
+    /**
+     * The meta object literal for the '<em><b>Topics</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOPIC_CONTAINER__TOPICS = eINSTANCE.getTopicContainer_Topics();
+
+    /**
+     * The meta object literal for the '<em><b>Review</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOPIC_CONTAINER__REVIEW = eINSTANCE.getTopicContainer_Review();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl <em>Comment</em>}' class.
@@ -1931,36 +2330,54 @@ public interface ReviewsPackage extends EPackage
     EClass COMMENT = eINSTANCE.getComment();
 
     /**
-     * The meta object literal for the '<em><b>Commentable</b></em>' container reference feature.
+     * The meta object literal for the '<em><b>Container</b></em>' container reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference COMMENT__COMMENTABLE = eINSTANCE.getComment_Commentable();
+    EReference COMMENT__CONTAINER = eINSTANCE.getComment_Container();
 
     /**
-     * The meta object literal for the '<em><b>Parent Heading</b></em>' reference feature.
+     * The meta object literal for the '<em><b>Reply To</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference COMMENT__PARENT_HEADING = eINSTANCE.getComment_ParentHeading();
+    EReference COMMENT__REPLY_TO = eINSTANCE.getComment_ReplyTo();
 
     /**
-     * The meta object literal for the '<em><b>Author</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Review</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENT__AUTHOR = eINSTANCE.getComment_Author();
+    EReference COMMENT__REVIEW = eINSTANCE.getComment_Review();
 
     /**
-     * The meta object literal for the '<em><b>Text</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl <em>Topic</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.TopicImpl
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopic()
+     * @generated
+     */
+    EClass TOPIC = eINSTANCE.getTopic();
+
+    /**
+     * The meta object literal for the '<em><b>Heading</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENT__TEXT = eINSTANCE.getComment_Text();
+    EAttribute TOPIC__HEADING = eINSTANCE.getTopic_Heading();
+
+    /**
+     * The meta object literal for the '<em><b>Model Reference</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TOPIC__MODEL_REFERENCE = eINSTANCE.getTopic_ModelReference();
 
     /**
      * The meta object literal for the '<em><b>Status</b></em>' attribute feature.
@@ -1968,17 +2385,23 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute COMMENT__STATUS = eINSTANCE.getComment_Status();
+    EAttribute TOPIC__STATUS = eINSTANCE.getTopic_Status();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl <em>Heading</em>}' class.
+     * The meta object literal for the '<em><b>Container</b></em>' container reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.lm.reviews.impl.HeadingImpl
-     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getHeading()
      * @generated
      */
-    EClass HEADING = eINSTANCE.getHeading();
+    EReference TOPIC__CONTAINER = eINSTANCE.getTopic_Container();
+
+    /**
+     * The meta object literal for the '<em><b>Parent Heading</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference TOPIC__PARENT_HEADING = eINSTANCE.getTopic_ParentHeading();
 
     /**
      * The meta object literal for the '<em><b>Previous Heading</b></em>' reference feature.
@@ -1986,7 +2409,7 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference HEADING__PREVIOUS_HEADING = eINSTANCE.getHeading_PreviousHeading();
+    EReference TOPIC__PREVIOUS_HEADING = eINSTANCE.getTopic_PreviousHeading();
 
     /**
      * The meta object literal for the '<em><b>Next Heading</b></em>' reference feature.
@@ -1994,15 +2417,7 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference HEADING__NEXT_HEADING = eINSTANCE.getHeading_NextHeading();
-
-    /**
-     * The meta object literal for the '<em><b>Parent Index</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute HEADING__PARENT_INDEX = eINSTANCE.getHeading_ParentIndex();
+    EReference TOPIC__NEXT_HEADING = eINSTANCE.getTopic_NextHeading();
 
     /**
      * The meta object literal for the '<em><b>Outline Number</b></em>' attribute feature.
@@ -2010,7 +2425,15 @@ public interface ReviewsPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute HEADING__OUTLINE_NUMBER = eINSTANCE.getHeading_OutlineNumber();
+    EAttribute TOPIC__OUTLINE_NUMBER = eINSTANCE.getTopic_OutlineNumber();
+
+    /**
+     * The meta object literal for the '<em><b>Parent Index</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute TOPIC__PARENT_INDEX = eINSTANCE.getTopic_ParentIndex();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.impl.ReviewTemplateImpl <em>Review Template</em>}' class.
@@ -2189,14 +2612,24 @@ public interface ReviewsPackage extends EPackage
     EAttribute DROP_REVIEW__DROP_LABEL = eINSTANCE.getDropReview_DropLabel();
 
     /**
-     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.CommentStatus <em>Comment Status</em>}' enum.
+     * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.TopicStatus <em>Topic Status</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.eclipse.emf.cdo.lm.reviews.CommentStatus
-     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getCommentStatus()
+     * @see org.eclipse.emf.cdo.lm.reviews.TopicStatus
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getTopicStatus()
      * @generated
      */
-    EEnum COMMENT_STATUS = eINSTANCE.getCommentStatus();
+    EEnum TOPIC_STATUS = eINSTANCE.getTopicStatus();
+
+    /**
+     * The meta object literal for the '<em>Model Reference</em>' data type.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.eclipse.emf.cdo.lm.reviews.ModelReference
+     * @see org.eclipse.emf.cdo.lm.reviews.impl.ReviewsPackageImpl#getModelReference()
+     * @generated
+     */
+    EDataType MODEL_REFERENCE = eINSTANCE.getModelReference();
 
     /**
      * The meta object literal for the '{@link org.eclipse.emf.cdo.lm.reviews.ReviewStatus <em>Review Status</em>}' enum.

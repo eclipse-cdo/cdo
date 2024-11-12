@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -129,28 +129,29 @@ public class ReviewsItemProviderAdapterFactory extends ReviewsAdapterFactory
   }
 
   /**
-   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.lm.reviews.Heading} instances.
+   * This keeps track of the one adapter used for all {@link org.eclipse.emf.cdo.lm.reviews.Topic} instances.
    * <!-- begin-user-doc -->
+   * @since 1.1
    * <!-- end-user-doc -->
    * @generated
    */
-  protected HeadingItemProvider headingItemProvider;
+  protected TopicItemProvider topicItemProvider;
 
   /**
-   * This creates an adapter for a {@link org.eclipse.emf.cdo.lm.reviews.Heading}.
+   * This creates an adapter for a {@link org.eclipse.emf.cdo.lm.reviews.Topic}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
   @Override
-  public Adapter createHeadingAdapter()
+  public Adapter createTopicAdapter()
   {
-    if (headingItemProvider == null)
+    if (topicItemProvider == null)
     {
-      headingItemProvider = new HeadingItemProvider(this);
+      topicItemProvider = new TopicItemProvider(this);
     }
 
-    return headingItemProvider;
+    return topicItemProvider;
   }
 
   /**
@@ -377,13 +378,13 @@ public class ReviewsItemProviderAdapterFactory extends ReviewsAdapterFactory
   @Override
   public void dispose()
   {
+    if (topicItemProvider != null)
+    {
+      topicItemProvider.dispose();
+    }
     if (commentItemProvider != null)
     {
       commentItemProvider.dispose();
-    }
-    if (headingItemProvider != null)
-    {
-      headingItemProvider.dispose();
     }
     if (reviewTemplateItemProvider != null)
     {

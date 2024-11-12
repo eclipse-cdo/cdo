@@ -572,8 +572,8 @@ public class AssembliesView extends ContainerView
       List<String> resolutionErrors = descriptor.getResolutionErrors();
       if (!ObjectUtil.isEmpty(resolutionErrors))
       {
-        return ExtendedImageRegistry.INSTANCE.getImage(
-            new OverlayImage(imageKey, org.eclipse.emf.cdo.ui.shared.SharedIcons.getImage(org.eclipse.emf.cdo.ui.shared.SharedIcons.OVR_ERROR), 8, 8));
+        return new OverlayImage(imageKey, org.eclipse.emf.cdo.ui.shared.SharedIcons.getImage(org.eclipse.emf.cdo.ui.shared.SharedIcons.OVR_ERROR), 8, 8)
+            .compose();
       }
 
       return ExtendedImageRegistry.INSTANCE.getImage(imageKey);

@@ -17,6 +17,7 @@ import org.eclipse.net4j.buffer.IBufferProvider;
 import org.eclipse.net4j.channel.ChannelOutputStream;
 import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
+import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
@@ -627,7 +628,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       try
       {
-        timeoutSent = new SetTimeoutRequest(this, this.timeout).send();
+        timeoutSent = new SetTimeoutRequest(this, timeout).send();
       }
       catch (Exception ex)
       {
@@ -652,7 +653,7 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
         }
         catch (Exception ex)
         {
-          OM.LOG.error(ex);
+          ExceptionHandler.Factory.handle(this, ex, "AcknowledgeCompressedStringsRequest failed", OM.LOG);
         }
       }
     }

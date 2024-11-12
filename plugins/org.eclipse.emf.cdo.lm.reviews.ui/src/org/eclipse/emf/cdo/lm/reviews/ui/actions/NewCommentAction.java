@@ -14,9 +14,8 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
-import org.eclipse.emf.cdo.lm.reviews.CommentStatus;
-import org.eclipse.emf.cdo.lm.reviews.Commentable;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
@@ -30,9 +29,6 @@ import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
@@ -41,24 +37,19 @@ import org.eclipse.ui.IWorkbenchPage;
 /**
  * @author Eike Stepper
  */
-public class NewCommentAction extends LMAction.NewElement<Commentable>
+public class NewCommentAction extends LMAction.NewElement<TopicContainer>
 {
-  private final boolean heading;
-
   private String text;
 
-  private CommentStatus status = CommentStatus.NONE;
-
-  public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, Commentable commentable, boolean heading)
+  public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, TopicContainer container)
   {
     super(page, viewer, //
-        "New " + getTypeString(heading) + INTERACTIVE, //
-        "Add a new " + getTypeString(heading).toLowerCase(), //
-        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/" + getTypeString(heading))), //
-        "Add a new " + getTypeString(heading).toLowerCase() + ".", //
-        "icons/wizban/New" + getTypeString(heading) + ".png", //
-        commentable);
-    this.heading = heading;
+        "New Comment" + INTERACTIVE, //
+        "Add a new comment", //
+        ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/Comment")), //
+        "Add a new comment.", //
+        "icons/wizban/NewComment.png", //
+        container);
   }
 
   @Override
@@ -72,33 +63,14 @@ public class NewCommentAction extends LMAction.NewElement<Commentable>
   {
     {
       Label label = new Label(parent, SWT.NONE);
-      label.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.CENTER).create());
+      label.setLayoutData(GridDataFactory.fillDefaults().align(SWT.END, SWT.BEGINNING).create());
       label.setText("Text:");
 
-      int style = SWT.BORDER;
-      if (!heading)
-      {
-        style |= SWT.MULTI;
-      }
-
-      Text textArea = new Text(parent, style);
-      textArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, !heading).align(SWT.FILL, SWT.FILL).create());
+      Text textArea = new Text(parent, SWT.BORDER | SWT.MULTI);
+      textArea.setLayoutData(GridDataFactory.fillDefaults().grab(true, true).align(SWT.FILL, SWT.FILL).create());
       textArea.addModifyListener(event -> {
         text = textArea.getText();
         validateDialog();
-      });
-    }
-
-    {
-      Button button = newCheckBox(parent, "Needs Resolution");
-      button.addSelectionListener(new SelectionAdapter()
-      {
-        @Override
-        public void widgetSelected(SelectionEvent e)
-        {
-          status = button.getSelection() ? CommentStatus.UNRESOLVED : CommentStatus.NONE;
-          validateDialog();
-        }
       });
     }
   }
@@ -115,34 +87,15 @@ public class NewCommentAction extends LMAction.NewElement<Commentable>
   }
 
   @Override
-  protected CDOObject newElement(Commentable commentable, IProgressMonitor monitor) throws Exception
+  protected CDOObject newElement(TopicContainer container, IProgressMonitor monitor) throws Exception
   {
-    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(commentable);
-    String author = systemDescriptor.getSystemRepository().getCredentials().getUserID();
-
-    Comment comment = createComment();
-    comment.setAuthor(author);
+    Comment comment = ReviewsFactory.eINSTANCE.createComment();
     comment.setText(text);
-    comment.setStatus(status);
 
-    return systemDescriptor.modify(commentable, c -> {
-      c.getComments().add(comment);
+    ISystemDescriptor systemDescriptor = ISystemManager.INSTANCE.getDescriptor(container);
+    return systemDescriptor.modify(container, tc -> {
+      tc.getComments().add(comment);
       return comment;
     }, monitor);
-  }
-
-  private Comment createComment()
-  {
-    if (heading)
-    {
-      return ReviewsFactory.eINSTANCE.createHeading();
-    }
-
-    return ReviewsFactory.eINSTANCE.createComment();
-  }
-
-  private static String getTypeString(boolean heading)
-  {
-    return heading ? "Heading" : "Comment";
   }
 }

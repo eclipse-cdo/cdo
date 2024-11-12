@@ -28,6 +28,38 @@ public class StackComposite extends Composite
     setLayout(layout);
   }
 
+  /**
+   * @since 3.19
+   */
+  public int getMarginWidth()
+  {
+    return layout.marginWidth;
+  }
+
+  /**
+   * @since 3.19
+   */
+  public void setMarginWidth(int marginWidth)
+  {
+    layout.marginWidth = marginWidth;
+  }
+
+  /**
+   * @since 3.19
+   */
+  public int getMarginHeight()
+  {
+    return layout.marginHeight;
+  }
+
+  /**
+   * @since 3.19
+   */
+  public void setMarginHeight(int marginHeight)
+  {
+    layout.marginHeight = marginHeight;
+  }
+
   public Control getTopControl()
   {
     return layout.topControl;

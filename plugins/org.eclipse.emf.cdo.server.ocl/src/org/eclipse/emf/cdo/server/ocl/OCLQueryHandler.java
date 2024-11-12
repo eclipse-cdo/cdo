@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2016, 2019-2021 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2016, 2019-2021, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionInterner;
 import org.eclipse.emf.cdo.common.revision.CDORevisionProvider;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IQueryContext;
@@ -44,6 +45,7 @@ import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
 import org.eclipse.ocl.Environment;
+import org.eclipse.ocl.EnvironmentFactory;
 import org.eclipse.ocl.EvaluationEnvironment;
 import org.eclipse.ocl.OCL;
 import org.eclipse.ocl.ParserException;
@@ -64,6 +66,7 @@ import org.eclipse.ocl.types.OCLStandardLibrary;
 import org.eclipse.ocl.util.ProblemAware;
 import org.eclipse.ocl.util.Tuple;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -97,6 +100,10 @@ public class OCLQueryHandler implements IQueryHandler
       .unmodifiableSet(new java.util.HashSet<>(Arrays.asList(LAZY_EXTENTS_PARAMETER, IMPLICIT_ROOT_CLASS_PARAMETER)));
 
   private static final EcoreFactory FACTORY = EcoreFactory.eINSTANCE;
+
+  private static final Method OLD_OCL_NEW_INSTANCE_METHOD = getOCLMethod("newInstance");
+
+  private static final Method NEW_OCL_NEW_INSTANCE_METHOD = getOCLMethod("newInstanceAbstract");
 
   private boolean lazyExtents = true;
 
@@ -206,7 +213,7 @@ public class OCLQueryHandler implements IQueryHandler
   {
     EcoreEnvironmentFactory envFactory = new CDOEnvironmentFactory(view.getSession().getPackageRegistry());
 
-    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = OCL.newInstance(envFactory);
+    OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = createOCL(envFactory);
     CDOAdditionalOperation.registerOperations((CDOEnvironment)ocl.getEnvironment());
     ocl.setExtentMap(extentMap);
     return ocl;
@@ -488,6 +495,48 @@ public class OCLQueryHandler implements IQueryHandler
     return result;
   }
 
+  private static Method getOCLMethod(String methodName)
+  {
+    try
+    {
+      return OCL.class.getDeclaredMethod(methodName, EnvironmentFactory.class);
+    }
+    catch (Throwable ex)
+    {
+      //$FALL-THROUGH$
+    }
+
+    return null;
+  }
+
+  private static OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> createOCL(EcoreEnvironmentFactory envFactory)
+  {
+    try
+    {
+      if (OLD_OCL_NEW_INSTANCE_METHOD != null)
+      {
+        @SuppressWarnings("unchecked")
+        OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = //
+            (OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject>)OLD_OCL_NEW_INSTANCE_METHOD.invoke(null, envFactory);
+        return ocl;
+      }
+
+      if (NEW_OCL_NEW_INSTANCE_METHOD != null)
+      {
+        @SuppressWarnings("unchecked")
+        OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject> ocl = //
+            (OCL<?, EClassifier, ?, ?, ?, ?, ?, ?, ?, Constraint, EClass, EObject>)NEW_OCL_NEW_INSTANCE_METHOD.invoke(null, envFactory);
+        return ocl;
+      }
+    }
+    catch (ReflectiveOperationException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+
+    throw new CDOException("OCL is missing");
+  }
+
   public static void prepareContainer(IManagedContainer container)
   {
     container.registerFactory(new Factory());
@@ -513,7 +562,7 @@ public class OCLQueryHandler implements IQueryHandler
   }
 
   /**
-   * An abstraction of the {@link EClassifier classifier} and/or {@link EObject obejct} of an OCL query context parameter.
+   * An abstraction of the {@link EClassifier classifier} and/or {@link EObject object} of an OCL query context parameter.
    *
    * @author Eike Stepper
    * @since 4.2

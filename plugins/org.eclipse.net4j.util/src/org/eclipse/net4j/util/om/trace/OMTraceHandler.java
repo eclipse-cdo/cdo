@@ -18,6 +18,7 @@ package org.eclipse.net4j.util.om.trace;
  * @see PrintTraceHandler#CONSOLE
  * @see RemoteTraceHandler
  */
+@FunctionalInterface
 public interface OMTraceHandler
 {
   public void traced(OMTraceHandlerEvent event);

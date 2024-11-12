@@ -97,6 +97,8 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
   private static final boolean SET_USER_NAME = OMPlatform.INSTANCE.isProperty("cdo.explorer.setUserName");
 
+  private static final boolean SET_USER_NAME_REMOTE = OMPlatform.INSTANCE.isProperty("cdo.explorer.setUserNameRemote");
+
   private static final String VIEW_CONFIGURATOR_TYPE = OMPlatform.INSTANCE.getProperty("cdo.explorer.viewConfiguratorType", "checkout");
 
   private final Set<CDOCheckout> checkouts = new HashSet<>();
@@ -795,11 +797,20 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
     sessionConfiguration.setPassiveUpdateMode(PassiveUpdateMode.CHANGES);
     sessionConfiguration.setCredentialsProvider(this);
 
+    if (SET_USER_NAME_REMOTE)
+    {
+      String userName = System.getProperty("user.name");
+      if (!StringUtil.isEmpty(userName))
+      {
+        sessionConfiguration.setUserID(userName);
+      }
+    }
+
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
     session.options().setLobCache(new CDOLobStoreImpl(new File(getFolder(), "lobs")));
 
-    if (SET_USER_NAME && StringUtil.isEmpty(session.getUserID()))
+    if (!SET_USER_NAME_REMOTE && SET_USER_NAME && StringUtil.isEmpty(session.getUserID()))
     {
       String userName = System.getProperty("user.name");
       if (!StringUtil.isEmpty(userName))

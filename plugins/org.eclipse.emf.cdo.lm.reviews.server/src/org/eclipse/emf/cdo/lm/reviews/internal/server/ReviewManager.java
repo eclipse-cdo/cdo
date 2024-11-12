@@ -27,13 +27,17 @@ import org.eclipse.emf.cdo.lm.Change;
 import org.eclipse.emf.cdo.lm.FloatingBaseline;
 import org.eclipse.emf.cdo.lm.LMPackage;
 import org.eclipse.emf.cdo.lm.Stream;
+import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.DropReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
+import org.eclipse.emf.cdo.lm.reviews.Topic;
+import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
+import org.eclipse.emf.cdo.lm.reviews.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.lm.reviews.server.IReviewManager;
 import org.eclipse.emf.cdo.lm.reviews.server.IReviewManagerEvent;
 import org.eclipse.emf.cdo.lm.reviews.server.IReviewManagerEvent.Type;
@@ -67,9 +71,11 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
@@ -86,17 +92,13 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
 
   public static final String DEFAULT_TYPE = "default"; //$NON-NLS-1$
 
-  private static final String PROP_LAST_REVIEW_ID = "org.eclipse.emf.cdo.lm.reviews.lastReviewID";
-
-  private static final String UNKNOWN = "unknown";
-
   private final ServerReviewStatemachine<DeliveryReview> deliveriesReviewStatemachine = new ServerReviewStatemachine<>(this, false);
 
   private final ServerReviewStatemachine<DropReview> dropsReviewStatemachine = new ServerReviewStatemachine<>(this, true);
 
   private AbstractLifecycleManager lifecycleManager;
 
-  private IListener lifecycleManagerListener = new IListener()
+  private final IListener lifecycleManagerListener = new IListener()
   {
     @Override
     public void notifyEvent(IEvent event)
@@ -104,24 +106,28 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
       if (event instanceof SystemCommitEvent)
       {
         SystemCommitEvent e = (SystemCommitEvent)event;
-        handleSystemCommit(e);
+        handleSystemCommitEvent(e);
       }
       else if (event instanceof ModuleCommitEvent)
       {
         ModuleCommitEvent e = (ModuleCommitEvent)event;
-        handleModuleCommit(e);
+        handleModuleCommitEvent(e);
       }
       else if (event instanceof NewBaselineEvent)
       {
         NewBaselineEvent e = (NewBaselineEvent)event;
-        handleNewBaseline(e);
+        handleNewBaselineEvent(e);
       }
     }
   };
 
-  private ExecutorService executorService;
+  private final IDCounter reviewIDCounter = new IDCounter("org.eclipse.emf.cdo.lm.reviews.lastReviewID");
 
-  private int lastReviewID;
+  private final IDCounter topicIDCounter = new IDCounter("org.eclipse.emf.cdo.lm.reviews.lastTopicID");
+
+  private final IDCounter commentIDCounter = new IDCounter("org.eclipse.emf.cdo.lm.reviews.lastCommentID");
+
+  private ExecutorService executorService;
 
   public ReviewManager()
   {
@@ -170,6 +176,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     executorService = ConcurrencyUtil.getExecutorService(lifecycleManager.getContainer());
     loadLastReviewID();
 
+    lifecycleManager.addSystemCommitHandler(this::handleSystemCommit);
     lifecycleManager.addListener(lifecycleManagerListener);
   }
 
@@ -177,13 +184,42 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
   protected void doDeactivate() throws Exception
   {
     lifecycleManager.removeListener(lifecycleManagerListener);
+    lifecycleManager.removeSystemCommitHandler(this::handleSystemCommit);
 
     saveLastReviewID();
     executorService = null;
     super.doDeactivate();
   }
 
-  protected void handleSystemCommit(SystemCommitEvent systemCommitEvent)
+  protected void handleSystemCommit(CommitContext commitContext)
+  {
+    String author = commitContext.getUserID();
+    long timeStamp = commitContext.getBranchPoint().getTimeStamp();
+
+    InternalCDORevision[] newObjects = commitContext.getNewObjects();
+    for (int i = 0; i < newObjects.length; i++)
+    {
+      InternalCDORevision revision = newObjects[i];
+      EClass eClass = revision.getEClass();
+
+      if (isAuthorableClass(eClass))
+      {
+        int index = i;
+        int id = (eClass == TOPIC ? topicIDCounter : commentIDCounter).getNextID();
+
+        commitContext.modify(modificationContext -> {
+          List<CDOIDAndVersion> list = modificationContext.getChangeSetData().getNewObjects();
+          InternalCDORevision element = (InternalCDORevision)list.get(index);
+          element.setValue(AUTHORABLE__ID, id);
+          element.setValue(AUTHORABLE__AUTHOR, author);
+          element.setValue(AUTHORABLE__CREATION_TIME, timeStamp);
+          element.setValue(AUTHORABLE__EDIT_TIME, null);
+        });
+      }
+    }
+  }
+
+  protected void handleSystemCommitEvent(SystemCommitEvent systemCommitEvent)
   {
     CommitContext commitContext = systemCommitEvent.getCommitContext();
     long timeStamp = commitContext.getBranchPoint().getTimeStamp();
@@ -199,8 +235,10 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
 
     if (events != null)
     {
-      for (InternalCDORevision newObject : commitContext.getNewObjects())
+      InternalCDORevision[] newObjects = commitContext.getNewObjects();
+      for (int i = 0; i < newObjects.length; i++)
       {
+        InternalCDORevision newObject = newObjects[i];
         EClass eClass = newObject.getEClass();
 
         if (isReviewClass(eClass))
@@ -243,11 +281,11 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
           });
         }
       }
-      else if (events != null && isCommentClass(eClass))
+      else if (events != null && isAuthorableClass(eClass))
       {
-        CDOID commentID = dirtyObjectDelta.getID();
+        CDOID authorableID = dirtyObjectDelta.getID();
 
-        InternalCDORevision reviewRevision = getReviewRevision(commentID, commitContext);
+        InternalCDORevision reviewRevision = getReviewRevision(authorableID, commitContext);
         if (reviewRevision != null)
         {
           CDOID reviewID = reviewRevision.getID();
@@ -271,7 +309,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     }
   }
 
-  protected void handleModuleCommit(ModuleCommitEvent event)
+  protected void handleModuleCommitEvent(ModuleCommitEvent event)
   {
     Map<String, String> commitProperties = event.getCommitContext().getCommitProperties();
     String value = commitProperties.get(ReviewStatemachine.PROP_SUBMITTING);
@@ -315,19 +353,14 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     }
   }
 
-  protected void handleNewBaseline(NewBaselineEvent event)
+  protected void handleNewBaselineEvent(NewBaselineEvent event)
   {
     CDORevision baseline = event.getNewBaseline();
     EClass eClass = baseline.getEClass();
 
     if (isReviewClass(eClass))
     {
-      int reviewID;
-      synchronized (this)
-      {
-        reviewID = ++lastReviewID;
-      }
-
+      int reviewID = reviewIDCounter.getNextID();
       CDOID cdoid = baseline.getID();
       CommitContext commitContext = event.getCommitContext();
 
@@ -384,38 +417,80 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     }
   }
 
-  private void loadLastReviewID()
+  private boolean containsUnknownID(Collection<String> values)
   {
-    InternalStore store = lifecycleManager.getSystemRepository().getStore();
-    Map<String, String> properties = store.getPersistentProperties(Collections.singleton(PROP_LAST_REVIEW_ID));
-
-    String property = properties.get(PROP_LAST_REVIEW_ID);
-    if (property != null)
+    for (String value : values)
     {
-      if (property.equals(UNKNOWN))
+      if (IDCounter.UNKNOWN.equals(value))
       {
-        lifecycleManager.getSystem().forEachBaseline(baseline -> {
-          if (baseline instanceof Review)
-          {
-            Review review = (Review)baseline;
-            lastReviewID = Math.max(lastReviewID, review.getId());
-          }
-        });
-      }
-      else
-      {
-        lastReviewID = Integer.parseInt(property);
+        return true;
       }
     }
 
-    properties.put(PROP_LAST_REVIEW_ID, UNKNOWN);
+    return false;
+  }
+
+  private void initTopicAndCommentIDs(TopicContainer container)
+  {
+    for (Comment comment : container.getComments())
+    {
+      commentIDCounter.initID(comment.getId());
+    }
+
+    for (Topic topic : container.getTopics())
+    {
+      topicIDCounter.initID(topic.getId());
+      initTopicAndCommentIDs(topic);
+    }
+  }
+
+  private void loadLastReviewID()
+  {
+    Set<String> keys = new HashSet<>();
+    keys.add(reviewIDCounter.propertyKey);
+    keys.add(topicIDCounter.propertyKey);
+    keys.add(commentIDCounter.propertyKey);
+
+    InternalStore store = lifecycleManager.getSystemRepository().getStore();
+    Map<String, String> properties = store.getPersistentProperties(keys);
+
+    if (containsUnknownID(properties.values()))
+    {
+      OM.LOG.info("Restoring ID counters...");
+      lifecycleManager.getSystem().forEachBaseline(baseline -> {
+        if (baseline instanceof Review)
+        {
+          Review review = (Review)baseline;
+          reviewIDCounter.initID(review.getId());
+          initTopicAndCommentIDs(review);
+        }
+      });
+    }
+    else
+    {
+      reviewIDCounter.initID(properties);
+      topicIDCounter.initID(properties);
+      commentIDCounter.initID(properties);
+    }
+
+    for (String key : keys)
+    {
+      properties.put(key, IDCounter.UNKNOWN);
+    }
+
     store.setPersistentProperties(properties);
+
+    OM.LOG.info(reviewIDCounter.toString());
+    OM.LOG.info(topicIDCounter.toString());
+    OM.LOG.info(commentIDCounter.toString());
   }
 
   private void saveLastReviewID()
   {
     Map<String, String> properties = new HashMap<>();
-    properties.put(PROP_LAST_REVIEW_ID, Integer.toString(lastReviewID));
+    reviewIDCounter.addToMap(properties);
+    topicIDCounter.addToMap(properties);
+    commentIDCounter.addToMap(properties);
 
     InternalStore store = lifecycleManager.getSystemRepository().getStore();
     store.setPersistentProperties(properties);
@@ -476,7 +551,7 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
       return revision;
     }
 
-    if (isCommentClass(eClass))
+    if (isAuthorableClass(eClass))
     {
       CDOID containerID = (CDOID)revision.getContainerID();
       if (!CDOIDUtil.isNull(containerID))
@@ -497,9 +572,9 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
     return eClass == DELIVERY_REVIEW || eClass == DROP_REVIEW;
   }
 
-  private static boolean isCommentClass(EClass eClass)
+  private static boolean isAuthorableClass(EClass eClass)
   {
-    return eClass == COMMENT || eClass == HEADING;
+    return eClass == TOPIC || eClass == COMMENT;
   }
 
   private static <T extends EObject> void forEachAnnotationObject(ModelElement modelElement, boolean referenced, Class<T> type, Consumer<T> consumer)
@@ -516,6 +591,53 @@ public class ReviewManager extends Lifecycle implements IReviewManager, LMPackag
           consumer.accept(type.cast(object));
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class IDCounter
+  {
+    private static final String UNKNOWN = "unknown";
+
+    private final String propertyKey;
+
+    private int lastID;
+
+    public IDCounter(String propertyKey)
+    {
+      this.propertyKey = propertyKey;
+    }
+
+    public synchronized int getNextID()
+    {
+      return ++lastID;
+    }
+
+    public void addToMap(Map<String, String> properties)
+    {
+      properties.put(propertyKey, Integer.toString(lastID));
+    }
+
+    public void initID(int id)
+    {
+      lastID = Math.max(lastID, id);
+    }
+
+    public void initID(Map<String, String> properties)
+    {
+      String property = properties.get(propertyKey);
+      if (property != null)
+      {
+        lastID = Integer.parseInt(property);
+      }
+    }
+
+    @Override
+    public String toString()
+    {
+      return propertyKey + " = " + lastID;
     }
   }
 

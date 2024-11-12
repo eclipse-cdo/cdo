@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2023, 2024 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.reviews.provider;
 
 import org.eclipse.emf.cdo.lm.provider.BaselineItemProvider;
 import org.eclipse.emf.cdo.lm.reviews.Review;
+import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
@@ -61,7 +62,7 @@ public class ReviewItemProvider extends BaselineItemProvider
       super.getPropertyDescriptors(object);
 
       addReviewPropertyDescriptor(object);
-      addCommentCountPropertyDescriptor(object);
+      addTopicCountPropertyDescriptor(object);
       addUnresolvedCountPropertyDescriptor(object);
       addResolvedCountPropertyDescriptor(object);
       addIdPropertyDescriptor(object);
@@ -73,30 +74,18 @@ public class ReviewItemProvider extends BaselineItemProvider
   }
 
   /**
-   * This adds a property descriptor for the Review feature.
+   * This adds a property descriptor for the Topic Count feature.
    * <!-- begin-user-doc -->
+   * @since 1.1
    * <!-- end-user-doc -->
    * @generated
    */
-  protected void addReviewPropertyDescriptor(Object object)
+  protected void addTopicCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_review_feature"), getString("_UI_PropertyDescriptor_description", "_UI_Commentable_review_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__REVIEW, false, false, false, null, null, null));
-  }
-
-  /**
-   * This adds a property descriptor for the Comment Count feature.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  protected void addCommentCountPropertyDescriptor(Object object)
-  {
-    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_commentCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_commentCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__COMMENT_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_topicCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_topicCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__TOPIC_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -108,9 +97,9 @@ public class ReviewItemProvider extends BaselineItemProvider
   protected void addUnresolvedCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_unresolvedCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_unresolvedCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__UNRESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_unresolvedCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_unresolvedCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__UNRESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
   }
 
   /**
@@ -122,9 +111,23 @@ public class ReviewItemProvider extends BaselineItemProvider
   protected void addResolvedCountPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
-        getString("_UI_Commentable_resolvedCount_feature"),
-        getString("_UI_PropertyDescriptor_description", "_UI_Commentable_resolvedCount_feature", "_UI_Commentable_type"),
-        ReviewsPackage.Literals.COMMENTABLE__RESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+        getString("_UI_TopicContainer_resolvedCount_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_resolvedCount_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__RESOLVED_COUNT, false, false, false, ItemPropertyDescriptor.INTEGRAL_VALUE_IMAGE, null, null));
+  }
+
+  /**
+   * This adds a property descriptor for the Review feature.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  protected void addReviewPropertyDescriptor(Object object)
+  {
+    itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
+        getString("_UI_TopicContainer_review_feature"),
+        getString("_UI_PropertyDescriptor_description", "_UI_TopicContainer_review_feature", "_UI_TopicContainer_type"),
+        ReviewsPackage.Literals.TOPIC_CONTAINER__REVIEW, true, false, true, null, null, null));
   }
 
   /**
@@ -195,7 +198,8 @@ public class ReviewItemProvider extends BaselineItemProvider
     if (childrenFeatures == null)
     {
       super.getChildrenFeatures(object);
-      childrenFeatures.add(ReviewsPackage.Literals.COMMENTABLE__COMMENTS);
+      childrenFeatures.add(ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS);
+      childrenFeatures.add(ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS);
     }
     return childrenFeatures;
   }
@@ -254,30 +258,61 @@ public class ReviewItemProvider extends BaselineItemProvider
    * This handles model notifications by calling {@link #updateChildren} to update any cached
    * children and by creating a viewer notification, which it passes to {@link #fireNotifyChanged}.
    * <!-- begin-user-doc -->
+   * @since 1.1
+   * @deprecated Only here to show the unmodified code created by the generator in contrast to the
+   * hand-modified {@link #notifyChanged(Notification)}. <b>Do not attempt to call notifyChangedGen()
+   * from notifyChanged() as that would lead to StackOverflowError between TopicContainerItemProvider
+   * and TopicItemProvider!</b>
    * <!-- end-user-doc -->
-   * @generated NOT
+   * @generated
    */
+  @Deprecated
+  public void notifyChangedGen(Notification notification)
+  {
+    updateChildren(notification);
+
+    switch (notification.getFeatureID(Review.class))
+    {
+    case ReviewsPackage.REVIEW__TOPIC_COUNT:
+    case ReviewsPackage.REVIEW__UNRESOLVED_COUNT:
+    case ReviewsPackage.REVIEW__RESOLVED_COUNT:
+    case ReviewsPackage.REVIEW__ID:
+    case ReviewsPackage.REVIEW__AUTHOR:
+    case ReviewsPackage.REVIEW__REVIEWERS:
+    case ReviewsPackage.REVIEW__STATUS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
+      return;
+    case ReviewsPackage.REVIEW__TOPICS:
+    case ReviewsPackage.REVIEW__COMMENTS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
+    }
+    super.notifyChanged(notification);
+  }
+
   @Override
   public void notifyChanged(Notification notification)
   {
     updateChildren(notification);
 
-    Object notifier = notification.getNotifier();
     switch (notification.getFeatureID(Review.class))
     {
+    case ReviewsPackage.REVIEW__TOPIC_COUNT:
+    case ReviewsPackage.REVIEW__UNRESOLVED_COUNT:
+    case ReviewsPackage.REVIEW__RESOLVED_COUNT:
     case ReviewsPackage.REVIEW__ID:
     case ReviewsPackage.REVIEW__AUTHOR:
     case ReviewsPackage.REVIEW__REVIEWERS:
     case ReviewsPackage.REVIEW__STATUS:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, false, true));
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));
       return;
-
     case ReviewsPackage.REVIEW__COMMENTS:
-      fireNotifyChanged(new ViewerNotification(notification, notifier, true, true));
-      CommentableItemProvider.propagateNotification(this, notification, notifier);
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, false));
+      return;
+    case ReviewsPackage.REVIEW__TOPICS:
+      fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), true, true));
       return;
     }
-
     super.notifyChanged(notification);
   }
 
@@ -292,6 +327,10 @@ public class ReviewItemProvider extends BaselineItemProvider
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
     super.collectNewChildDescriptors(newChildDescriptors, object);
+
+    newChildDescriptors.add(createChildParameter(ReviewsPackage.Literals.TOPIC_CONTAINER__TOPICS, ReviewsFactory.eINSTANCE.createTopic()));
+
+    newChildDescriptors.add(createChildParameter(ReviewsPackage.Literals.TOPIC_CONTAINER__COMMENTS, ReviewsFactory.eINSTANCE.createComment()));
   }
 
   protected final StyledString appendStatus(StyledString styledString, Review review)

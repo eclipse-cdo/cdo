@@ -48,7 +48,7 @@ public class SelectModuleResourcesDialog extends AbstractResourceSelectionDialog
       Assembly assembly = lmResourceSetConfigurerResult.getAssembly();
       AssemblyModule rootModule = assembly.getRootModule();
       views.put(rootModule, CDOUtil.getViewSet(lmResourceSetConfigurerResult.getResourceSet()).getViews()[0]);
-      assembly.forEachDependency(module -> views.put(module, lmResourceSetConfigurerResult.getView(module)));
+      assembly.forEachDependency(module -> views.put(module, lmResourceSetConfigurerResult.getDependencyView(module)));
     }
   }
 

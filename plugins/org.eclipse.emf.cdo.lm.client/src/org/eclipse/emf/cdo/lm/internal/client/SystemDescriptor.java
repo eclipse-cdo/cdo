@@ -818,7 +818,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     Map<String, CDOView> moduleViews = new HashMap<>();
 
     assembly.forEachDependency(module -> {
-      CDOView view = LMResourceSetConfigurer.Result.openView(this, module, resourceSet);
+      CDOView view = LMResourceSetConfigurer.Result.openDependencyView(this, module, resourceSet);
       if (view != null)
       {
         primaryView.addListener(new LifecycleEventAdapter()

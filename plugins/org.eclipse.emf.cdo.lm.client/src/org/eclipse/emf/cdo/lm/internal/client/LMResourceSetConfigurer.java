@@ -157,7 +157,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
 
     private final ISystemDescriptor systemDescriptor;
 
-    private final Map<String, CDOView> moduleViews = new HashMap<>();
+    private final Map<String, CDOView> dependencyViews = new HashMap<>();
 
     public Result(ResourceSet resourceSet, ISystemDescriptor systemDescriptor)
     {
@@ -170,47 +170,47 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       return resourceSet;
     }
 
-    public CDOView getView(AssemblyModule assemblyModule)
+    public CDOView getDependencyView(AssemblyModule assemblyModule)
     {
-      return getView(assemblyModule.getName());
+      return getDependencyView(assemblyModule.getName());
     }
 
-    public CDOView getView(String moduleName)
+    public CDOView getDependencyView(String moduleName)
     {
-      return moduleViews.get(moduleName);
+      return dependencyViews.get(moduleName);
     }
 
     @Override
     public Exception deactivate()
     {
-      for (CDOView view : moduleViews.values())
+      for (CDOView view : dependencyViews.values())
       {
         view.close();
       }
 
-      moduleViews.clear();
+      dependencyViews.clear();
       return null;
     }
 
-    protected final void registerModuleView(String moduleName, CDOView view)
+    protected final void registerDependencyView(String moduleName, CDOView view)
     {
-      moduleViews.put(moduleName, view);
+      dependencyViews.put(moduleName, view);
     }
 
-    protected final CDOView addView(AssemblyModule module)
+    protected final CDOView addDependencyView(AssemblyModule module)
     {
-      CDOView view = openView(systemDescriptor, module, resourceSet);
+      CDOView view = openDependencyView(systemDescriptor, module, resourceSet);
       if (view != null)
       {
-        registerModuleView(module.getName(), view);
+        registerDependencyView(module.getName(), view);
       }
 
       return view;
     }
 
-    protected final CDOView removeView(AssemblyModule module)
+    protected final CDOView removeDependencyView(AssemblyModule module)
     {
-      CDOView view = moduleViews.remove(module.getName());
+      CDOView view = dependencyViews.remove(module.getName());
       if (view != null)
       {
         view.close();
@@ -219,9 +219,9 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       return view;
     }
 
-    protected final CDOView modifyView(AssemblyModule module, CDOBranchPointRef branchPointRef)
+    protected final CDOView modifyDependencyView(AssemblyModule module, CDOBranchPointRef branchPointRef)
     {
-      CDOView view = getView(module.getName());
+      CDOView view = getDependencyView(module.getName());
       if (view != null)
       {
         CDOBranchPoint branchPoint = branchPointRef.resolve(view.getSession().getBranchManager());
@@ -240,10 +240,10 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       }
 
       Map<String, Object> configurerResults = resourceSetConfiguration.getConfigurerResults();
-      return (Result)configurerResults.get(LMResourceSetConfigurer.TYPE);
+      return (Result)configurerResults.get(TYPE);
     }
 
-    public static CDOView openView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
+    public static CDOView openDependencyView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
     {
       URI viewURI = LMViewProvider.createViewURI(module);
       return CDOUtil.getView(resourceSet, viewURI);
@@ -258,7 +258,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
     public StandaloneResult(ResourceSet resourceSet, ISystemDescriptor systemDescriptor, Map<String, CDOView> moduleViews)
     {
       super(resourceSet, systemDescriptor);
-      moduleViews.forEach(this::registerModuleView);
+      moduleViews.forEach(this::registerDependencyView);
     }
   }
 
@@ -280,7 +280,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       ((AssemblyDescriptor)assemblyDescriptor).addResourceSet(this);
 
       Assembly assembly = getAssembly();
-      assembly.forEachDependency(this::addView);
+      assembly.forEachDependency(this::addDependencyView);
 
       CDOCheckout checkout = getCheckout();
       checkout.waitUntilPrefetched();
@@ -296,6 +296,34 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       return assemblyDescriptor.getCheckout();
     }
 
+    public void reconfigure(List<BranchPointDelta> deltas)
+    {
+      for (BranchPointDelta delta : deltas)
+      {
+        AssemblyModule module = delta.getModule();
+        if (!module.isRoot())
+        {
+          switch (delta.getKind())
+          {
+          case ADDITION:
+            addDependencyView(module);
+            break;
+
+          case REMOVAL:
+            removeDependencyView(module);
+            break;
+
+          case MODIFICATION:
+            modifyDependencyView(module, delta.getNewBranchPoint());
+            break;
+          }
+        }
+      }
+
+      CDOCheckout checkout = getCheckout();
+      checkout.waitUntilPrefetched();
+    }
+
     @Override
     public Exception deactivate()
     {
@@ -307,36 +335,8 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       {
         ((AssemblyDescriptor)assemblyDescriptor).removeResourceSet(this);
       }
-
+    
       return null;
-    }
-
-    public void reconfigure(List<BranchPointDelta> deltas)
-    {
-      for (BranchPointDelta delta : deltas)
-      {
-        AssemblyModule module = delta.getModule();
-        if (!module.isRoot())
-        {
-          switch (delta.getKind())
-          {
-          case ADDITION:
-            addView(module);
-            break;
-
-          case REMOVAL:
-            removeView(module);
-            break;
-
-          case MODIFICATION:
-            modifyView(module, delta.getNewBranchPoint());
-            break;
-          }
-        }
-      }
-
-      CDOCheckout checkout = getCheckout();
-      checkout.waitUntilPrefetched();
     }
 
     /**

@@ -47,7 +47,6 @@ import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EContentAdapter;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
@@ -249,16 +248,12 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
     return modules.isEmpty();
   }
 
-  public LMResourceSetConfigurer.CheckoutResult addResourceSet(ResourceSet resourceSet)
+  public void addResourceSet(LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult)
   {
-    LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult = new LMResourceSetConfigurer.CheckoutResult(resourceSet, this);
-
     synchronized (lmResourceSetConfigurerResults)
     {
       lmResourceSetConfigurerResults.add(lmResourceSetConfigurerResult);
     }
-
-    return lmResourceSetConfigurerResult;
   }
 
   public void removeResourceSet(LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult)

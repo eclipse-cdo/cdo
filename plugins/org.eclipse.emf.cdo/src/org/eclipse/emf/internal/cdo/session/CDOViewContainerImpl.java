@@ -18,6 +18,7 @@ package org.eclipse.emf.internal.cdo.session;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer;
+import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry.ResourceSetConfiguration;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewContainer;
@@ -28,6 +29,8 @@ import org.eclipse.emf.internal.cdo.view.CDOViewImpl;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.Container;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -291,7 +294,22 @@ public abstract class CDOViewContainerImpl extends Container<CDOView> implements
     {
       view.activate();
 
-      ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, view);
+      ResourceSetConfiguration configuration = ResourceSetConfigurer.Registry.INSTANCE.configureResourceSet(resourceSet, view);
+      if (configuration != null)
+      {
+        CDOView primaryView = viewSet.getViews()[0];
+        if (primaryView == view)
+        {
+          primaryView.addListener(new LifecycleEventAdapter()
+          {
+            @Override
+            protected void onDeactivated(ILifecycle lifecycle)
+            {
+              LifecycleUtil.deactivate(configuration);
+            }
+          });
+        }
+      }
 
       fireElementAddedEvent(view);
     }

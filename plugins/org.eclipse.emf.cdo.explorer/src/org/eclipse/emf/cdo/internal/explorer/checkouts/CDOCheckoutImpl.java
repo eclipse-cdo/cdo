@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPointRef;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
-import org.eclipse.emf.cdo.common.util.ResourceSetConfigurer.Registry.ResourceSetConfiguration;
 import org.eclipse.emf.cdo.explorer.CDOExplorerManager.ElementsChangedEvent;
 import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
@@ -45,7 +44,6 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent;
 import org.eclipse.net4j.util.lifecycle.ILifecycleEvent.Kind;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
-import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -914,11 +912,6 @@ public abstract class CDOCheckoutImpl extends AbstractElement implements CDOChec
     });
 
     addView(view);
-  }
-
-  private void unconfigureResourceSet(ResourceSetConfiguration resourceSetConfiguration)
-  {
-    LifecycleUtil.deactivate(resourceSetConfiguration);
   }
 
   protected CDOView doOpenView(boolean readOnly, ResourceSet resourceSet)

@@ -699,6 +699,8 @@ public final class SystemDescriptor implements ISystemDescriptor
 
       try
       {
+        LMResourceSetConfigurer.bypassConfigure(true);
+
         CDOBranchRef branchRef = baseline.getBranch();
         CDOBranch branch = branchRef.resolve(session.getBranchManager());
 
@@ -707,6 +709,8 @@ public final class SystemDescriptor implements ISystemDescriptor
       }
       finally
       {
+        LMResourceSetConfigurer.bypassConfigure(false);
+
         if (view != null)
         {
           view.close();

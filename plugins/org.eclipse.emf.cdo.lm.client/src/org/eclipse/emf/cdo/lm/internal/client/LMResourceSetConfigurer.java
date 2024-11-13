@@ -27,6 +27,8 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.container.ContainerEventAdapter;
+import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.IDeactivateable;
 
@@ -45,7 +47,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
 {
   public static final String TYPE = "lm";
 
-  private static final ThreadLocal<Boolean> OPENING_SECONDRAY_VIEWS = new ThreadLocal<>();
+  private static final ThreadLocal<Boolean> BYPASS_CONFIGURE = new ThreadLocal<>();
 
   public LMResourceSetConfigurer()
   {
@@ -54,7 +56,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
   @Override
   protected Result configureViewResourceSet(ResourceSet resourceSet, CDOView view)
   {
-    if (OPENING_SECONDRAY_VIEWS.get() == Boolean.TRUE)
+    if (BYPASS_CONFIGURE.get() == Boolean.TRUE)
     {
       return null;
     }
@@ -74,12 +76,12 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
 
     try
     {
-      OPENING_SECONDRAY_VIEWS.set(Boolean.TRUE);
+      bypassConfigure(true);
       return configureViewResourceSet(resourceSet, view, systemDescriptor);
     }
     finally
     {
-      OPENING_SECONDRAY_VIEWS.remove();
+      bypassConfigure(false);
     }
   }
 
@@ -88,26 +90,62 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
     CDOCheckout checkout = CDOExplorerUtil.getCheckout(view);
     if (checkout != null)
     {
-      IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(checkout);
-      if (descriptor != null)
+      CheckoutResult result = new CheckoutResult(resourceSet, systemDescriptor);
+
+      IAssemblyDescriptor assemblyDescriptor = IAssemblyManager.INSTANCE.getDescriptor(checkout);
+      if (assemblyDescriptor != null)
       {
-        return ((AssemblyDescriptor)descriptor).addResourceSet(resourceSet);
+        result.setAssemblyDescriptor(assemblyDescriptor);
       }
+      else
+      {
+        // The checkout is probably just opening.
+        IAssemblyManager.INSTANCE.addListener(new ContainerEventAdapter<IAssemblyDescriptor>()
+        {
+          @Override
+          protected void onAdded(IContainer<IAssemblyDescriptor> container, IAssemblyDescriptor assemblyDescriptor)
+          {
+            if (assemblyDescriptor.getCheckout() == checkout)
+            {
+              try
+              {
+                bypassConfigure(true);
+                result.setAssemblyDescriptor(assemblyDescriptor);
+              }
+              finally
+              {
+                bypassConfigure(false);
+                IAssemblyManager.INSTANCE.removeListener(this);
+              }
+            }
+          }
+        });
+      }
+
+      return result;
+    }
+
+    try
+    {
+      Map<String, CDOView> moduleViews = systemDescriptor.configureModuleResourceSet(view);
+      return new StandaloneResult(resourceSet, systemDescriptor, moduleViews);
+    }
+    catch (ResolutionException ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
+  }
+
+  public static void bypassConfigure(boolean on)
+  {
+    if (on)
+    {
+      BYPASS_CONFIGURE.set(Boolean.TRUE);
     }
     else
     {
-      try
-      {
-        Map<String, CDOView> moduleViews = systemDescriptor.configureModuleResourceSet(view);
-        return new StandaloneResult(resourceSet, systemDescriptor, moduleViews);
-      }
-      catch (ResolutionException ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
+      BYPASS_CONFIGURE.remove();
     }
-
-    return null;
   }
 
   /**
@@ -229,12 +267,17 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
    */
   public static final class CheckoutResult extends Result
   {
-    private final IAssemblyDescriptor assemblyDescriptor;
+    private IAssemblyDescriptor assemblyDescriptor;
 
-    public CheckoutResult(ResourceSet resourceSet, IAssemblyDescriptor assemblyDescriptor)
+    public CheckoutResult(ResourceSet resourceSet, ISystemDescriptor systemDescriptor)
     {
-      super(resourceSet, assemblyDescriptor.getSystemDescriptor());
+      super(resourceSet, systemDescriptor);
+    }
+
+    public void setAssemblyDescriptor(IAssemblyDescriptor assemblyDescriptor)
+    {
       this.assemblyDescriptor = assemblyDescriptor;
+      ((AssemblyDescriptor)assemblyDescriptor).addResourceSet(this);
 
       Assembly assembly = getAssembly();
       assembly.forEachDependency(this::addView);

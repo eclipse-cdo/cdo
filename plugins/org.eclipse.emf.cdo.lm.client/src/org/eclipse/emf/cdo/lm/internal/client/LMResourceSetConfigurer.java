@@ -183,13 +183,25 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
     @Override
     public Exception deactivate()
     {
+      Exception exception = null;
+
       for (CDOView view : dependencyViews.values())
       {
-        view.close();
+        try
+        {
+          view.close();
+        }
+        catch (Exception ex)
+        {
+          if (exception == null)
+          {
+            exception = ex;
+          }
+        }
       }
 
       dependencyViews.clear();
-      return null;
+      return exception;
     }
 
     protected final void registerDependencyView(String moduleName, CDOView view)
@@ -335,7 +347,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       {
         ((AssemblyDescriptor)assemblyDescriptor).removeResourceSet(this);
       }
-    
+
       return null;
     }
 

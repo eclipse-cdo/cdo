@@ -2219,6 +2219,20 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   protected Topic createTopic()
   {
+    if (viewerInput instanceof CDOResource)
+    {
+      return createTopic((CDOResource)viewerInput);
+    }
+
+    if (viewerInput instanceof EObject)
+    {
+      CDOObject cdoObject = CDOUtil.getCDOObject((EObject)viewerInput);
+      if (cdoObject != null)
+      {
+        return createTopic(cdoObject.cdoResource());
+      }
+    }
+
     if (view != null)
     {
       EList<Resource> resources = view.getResourceSet().getResources();
@@ -2228,23 +2242,26 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
         if (resource instanceof CDOResource)
         {
-          CDOResource cdoResource = (CDOResource)resource;
-          String path = cdoResource.getPath();
-
-          CDOBranch branch = view.getBranch();
-          long timeStamp = view.getTimeStamp();
-
-          String id = "org.eclipse.emf.cdo.resource" + path + "/" + branch.getID() + "/" + timeStamp;
-          Image image = getTitleImage();
-          String text = path + "  [" + branch.getName() + "/" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
-          String description = text;
-
-          return new Topic(view.getSession(), id, image, text, description);
+          return createTopic((CDOResource)resource);
         }
       }
     }
 
     return null;
+  }
+
+  protected Topic createTopic(CDOResource resource)
+  {
+    String path = resource.getPath();
+    CDOBranch branch = view.getBranch();
+    long timeStamp = view.getTimeStamp();
+
+    String id = "org.eclipse.emf.cdo.resource" + path + "/" + branch.getID() + "/" + timeStamp;
+    Image image = getTitleImage();
+    String text = path + "  [" + branch.getName() + "/" + CDOCommonUtil.formatTimeStamp(timeStamp) + "]";
+    String description = text;
+
+    return new Topic(view.getSession(), id, image, text, description);
   }
 
   @Override

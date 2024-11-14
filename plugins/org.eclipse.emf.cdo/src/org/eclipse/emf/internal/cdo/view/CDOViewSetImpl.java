@@ -588,9 +588,4 @@ public class CDOViewSetImpl extends NotifierImpl implements InternalCDOViewSet
 
     return PluginContainerViewProvider.INSTANCE.getViewURI(view);
   }
-
-  public static CDOViewSetImpl[] getViewSets()
-  {
-    return null;
-  }
 }

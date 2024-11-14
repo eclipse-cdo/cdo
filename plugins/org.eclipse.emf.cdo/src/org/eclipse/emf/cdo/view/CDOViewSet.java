@@ -80,7 +80,7 @@ public interface CDOViewSet extends Notifier, IContainer<CDOView>
    */
   public static CDOViewSet[] getViewSets()
   {
-    return CDOViewSetImpl.getViewSets();
+    return CDOViewSetImpl.REGISTRY.getElements();
   }
 
   /**

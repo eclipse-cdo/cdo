@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
 
+import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -193,6 +194,11 @@ public interface ChatMessage extends Comparable<ChatMessage>
       {
         this.avatar = avatar;
         return this;
+      }
+
+      public Builder avatar(File avatar)
+      {
+        return avatar(avatar.toURI());
       }
 
       public Builder gravatar(String email)

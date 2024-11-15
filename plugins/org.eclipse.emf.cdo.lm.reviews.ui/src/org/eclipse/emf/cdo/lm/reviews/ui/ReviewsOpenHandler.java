@@ -34,23 +34,14 @@ public class ReviewsOpenHandler implements OpenHandler
   {
     if (selectedElement instanceof Review)
     {
-      Review review = (Review)selectedElement;
-
-      if (OpenReviewAction.ENABLED)
-      {
-        new OpenReviewAction(page, review, null).run();
-        return true;
-      }
+      new OpenReviewAction(page, (Review)selectedElement, null).run();
+      return true;
     }
-    else if (selectedElement instanceof Topic)
-    {
-      Topic topic = (Topic)selectedElement;
 
-      if (OpenReviewAction.ENABLED)
-      {
-        new OpenReviewAction(page, topic).run();
-        return true;
-      }
+    if (selectedElement instanceof Topic)
+    {
+      new OpenReviewAction(page, (Topic)selectedElement).run();
+      return true;
     }
 
     return false;

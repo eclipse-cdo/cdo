@@ -35,7 +35,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.IPluginContainer;
-import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.ColorStyler;
@@ -95,7 +94,6 @@ import org.eclipse.ui.IEditorReference;
 import org.eclipse.ui.IEditorSite;
 import org.eclipse.ui.IWorkbenchPage;
 
-import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -109,9 +107,6 @@ import java.util.function.Function;
 @SuppressWarnings("restriction")
 public class OpenReviewAction extends AbstractReviewAction
 {
-  @SuppressWarnings("restriction")
-  public static final boolean ENABLED = new File("/develop/authors.bin").isFile();
-
   private static final String COMPARE_EDITOR_ID = "org.eclipse.compare.CompareEditor";
 
   private static final String KEY_REVIEW = "cdo.review";
@@ -875,17 +870,12 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private static void addMessages(List<ChatMessage> messages, TopicContainer container)
     {
-      Author[] authors;
-
-      try
-      {
-        List<Author> authorsList = IOUtil.readObject(new File("/develop/authors.bin"), Author.class.getClassLoader());
-        authors = authorsList.toArray(new Author[authorsList.size()]);
-      }
-      catch (Exception ex)
-      {
-        throw WrappedException.wrap(ex);
-      }
+      Author[] authors = { //
+          Author.builder("estepper").firstName("Eike").lastName("Stepper").gravatar("stepper@esc-net.de").build(), //
+          Author.builder("emerks").firstName("Ed").lastName("Merks").gravatar("ed.merks@gmail.com").build(), //
+          Author.builder("srevol").firstName("Sébastien").lastName("Revol").build(), //
+          Author.builder("fnoyrit").firstName("Florian").lastName("Noyrit").build(), //
+      };
 
       int a = 0;
       Author author = null;
@@ -920,7 +910,12 @@ public class OpenReviewAction extends AbstractReviewAction
           @Override
           public Author getAuthor()
           {
-            return finalAuthor;
+            if (Boolean.getBoolean("DEMO_RANDOM_AUTHORS"))
+            {
+              return finalAuthor;
+            }
+
+            return Author.builder(comment.getAuthor()).build();
           }
 
           @Override

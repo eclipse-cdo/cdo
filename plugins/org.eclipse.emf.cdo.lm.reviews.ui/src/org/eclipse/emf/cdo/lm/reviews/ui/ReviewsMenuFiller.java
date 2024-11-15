@@ -93,11 +93,7 @@ public class ReviewsMenuFiller implements MenuFiller
     {
       Review review = (Review)selectedElement;
 
-      if (OpenReviewAction.ENABLED)
-      {
-        menu.add(new OpenReviewAction(page, review, null));
-      }
-
+      menu.add(new OpenReviewAction(page, review, null));
       menu.add(new CheckoutAction(page, ReviewsEditPlugin.INSTANCE, null, review));
       menu.add(new Separator());
 
@@ -148,12 +144,7 @@ public class ReviewsMenuFiller implements MenuFiller
       {
         if (container instanceof Topic)
         {
-          Topic topic = (Topic)container;
-
-          if (OpenReviewAction.ENABLED)
-          {
-            menu.add(new OpenReviewAction(page, review, topic));
-          }
+          menu.add(new OpenReviewAction(page, review, (Topic)container));
         }
 
         menu.add(new Separator());

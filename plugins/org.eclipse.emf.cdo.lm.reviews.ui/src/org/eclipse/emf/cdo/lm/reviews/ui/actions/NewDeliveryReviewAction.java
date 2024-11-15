@@ -160,7 +160,7 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
 
       DeliveryReview r = ReviewsFactory.eINSTANCE.createDeliveryReview();
       r.setAuthor(author);
-      r.setSourceChange(change);
+      r.setSourceChange(c);
       s.insertContent(r);
 
       Annotation annotation = ReviewsPackage.getAnnotation(c, true);

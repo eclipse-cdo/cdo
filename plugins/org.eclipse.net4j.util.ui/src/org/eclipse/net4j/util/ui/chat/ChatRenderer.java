@@ -12,10 +12,12 @@ package org.eclipse.net4j.util.ui.chat;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 
 import java.io.IOException;
@@ -47,9 +49,16 @@ public class ChatRenderer implements UnaryOperator<String>
 
   private static final String TODAY = OM.BUNDLE.getTranslationSupport().getString("chat.today");
 
+  private static final String AVATAR_GENERATOR = "generator";
+
+  private static final String NBSP = "&nbsp;";
+
   private static final String MESSAGES = "${MESSAGES}";
 
   private static final int MESSAGES_LENGTH = MESSAGES.length();
+
+  private static final boolean ALWAYS_LOAD_HTML_TEMPLATE = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.net4j.util.ui.chat.ChatRenderer.ALWAYS_LOAD_HTML_TEMPLATE");
 
   private Pair<String, String> htmlEnclosure;
 
@@ -82,7 +91,7 @@ public class ChatRenderer implements UnaryOperator<String>
   public void renderHTML(DateLine dateLine, StringBuilder html, Map<String, Object> properties)
   {
     LocalDate date = dateLine.getDate();
-    String dateString = getDateString(date);
+    String dateString = getDateString(date, properties);
     dateString = getNonBreakableString(dateString);
 
     html.append("<table class=\"date-line\"><tr><td><hr></td><td class=\"date\">&nbsp;");
@@ -90,9 +99,49 @@ public class ChatRenderer implements UnaryOperator<String>
     html.append("&nbsp;</td><td><hr></td></tr></table>\n");
   }
 
+  public void renderHTML(Author author, StringBuilder html, Map<String, Object> properties)
+  {
+    URI avatar = author.getAvatar();
+    if (avatar == null)
+    {
+      avatar = getAvatar(author, properties);
+    }
+
+    if (avatar != null)
+    {
+      String scheme = avatar.getScheme();
+      if (AVATAR_GENERATOR.equals(scheme))
+      {
+        String type = avatar.getAuthority();
+        String description = StringUtil.safe(avatar.getPath());
+        if (description.length() > 0 && description.charAt(0) == '/')
+        {
+          description = description.substring(1);
+        }
+
+        AvatarGenerator generator = IPluginContainer.INSTANCE.getElementOrNull(AvatarGenerator.PRODUCT_GROUP, type, description);
+        if (generator != null)
+        {
+          generator.generateAvatar(author, html, properties);
+          return;
+        }
+      }
+      else
+      {
+        html.append("<img class=\"avatar\" src=\"");
+        html.append(avatar);
+        html.append("\"");
+        appendToolTip(author, html);
+        html.append(">");
+        return;
+      }
+    }
+
+    html.append(NBSP);
+  }
+
   public void renderHTML(BubbleGroup bubbleGroup, StringBuilder html, Map<String, Object> properties)
   {
-    Author author = bubbleGroup.getAuthor();
     boolean own = bubbleGroup.isOwn();
     LinkedList<Bubble> bubbles = bubbleGroup.getBubbles();
 
@@ -116,32 +165,21 @@ public class ChatRenderer implements UnaryOperator<String>
     html.append(1 + bubbles.size());
     html.append("\">");
 
-    URI avatar = author.getAvatar();
-    if (own || avatar == null)
+    if (own)
     {
-      html.append("&nbsp;");
+      html.append(NBSP);
     }
     else
     {
-      html.append("<img class=\"avatar\" src=\"");
-      html.append(avatar);
-      html.append("\"");
-
-      String fullName = author.getFullName();
-      if (!StringUtil.isEmpty(fullName))
-      {
-        html.append(" title=\"");
-        html.append(fullName);
-        html.append("\"");
-      }
-
-      html.append(">");
+      Author author = bubbleGroup.getAuthor();
+      renderHTML(author, html, properties);
     }
 
     html.append("</td><td><div class=\"info\">");
 
     if (!own)
     {
+      Author author = bubbleGroup.getAuthor();
       String name = author.getShortName();
       if (StringUtil.isEmpty(name))
       {
@@ -219,7 +257,7 @@ public class ChatRenderer implements UnaryOperator<String>
     return StringUtil.stripHTML(html);
   }
 
-  public String getDateString(LocalDate date)
+  public String getDateString(LocalDate date, Map<String, Object> properties)
   {
     LocalDate today = LocalDate.now();
     if (today.equals(date))
@@ -237,12 +275,18 @@ public class ChatRenderer implements UnaryOperator<String>
 
   public String getNonBreakableString(String str)
   {
-    return str.replace(" ", "&nbsp;");
+    return str.replace(" ", NBSP);
+  }
+
+  public URI getAvatar(Author author, Map<String, Object> properties)
+  {
+    int colorClassID = Math.abs(author.getUserID().hashCode()) % 4 + 1;
+    return URI.create(AVATAR_GENERATOR + "://default/gen" + colorClassID);
   }
 
   protected Pair<String, String> getHTMLEnclosure(Map<String, Object> properties)
   {
-    if (htmlEnclosure == null)
+    if (htmlEnclosure == null || ALWAYS_LOAD_HTML_TEMPLATE)
     {
       String htmlTemplate = loadHTMLTemplate();
       int htmlMessagesPos = htmlTemplate.indexOf(MESSAGES);
@@ -272,6 +316,77 @@ public class ChatRenderer implements UnaryOperator<String>
     StringBuilder html = new StringBuilder();
     htmlConsumer.accept(html);
     return html.toString();
+  }
+
+  private static void appendToolTip(Author author, StringBuilder html)
+  {
+    String fullName = author.getFullName();
+    if (!StringUtil.isEmpty(fullName))
+    {
+      html.append(" title=\"");
+      html.append(fullName);
+      html.append("\"");
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface AvatarGenerator
+  {
+    public static final String PRODUCT_GROUP = "org.eclipse.net4j.util.ui.avatarGenerators";
+
+    public void generateAvatar(Author author, StringBuilder html, Map<String, Object> properties);
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Default implements AvatarGenerator
+    {
+      private final String colorClass;
+
+      public Default(String colorClass)
+      {
+        this.colorClass = colorClass;
+      }
+
+      @Override
+      public void generateAvatar(Author author, StringBuilder html, Map<String, Object> properties)
+      {
+        html.append("<div class=\"avatar ");
+        html.append(colorClass);
+        html.append("\"");
+        appendToolTip(author, html);
+        html.append("><p>");
+        html.append(author.getInitials());
+        html.append("</p></div>");
+      }
+
+      @Override
+      public String toString()
+      {
+        return "AvatarGenerator[default, " + colorClass + "]";
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static class Factory extends org.eclipse.net4j.util.factory.Factory
+      {
+        public static final String TYPE = "default";
+
+        public Factory()
+        {
+          super(PRODUCT_GROUP, TYPE);
+        }
+
+        @Override
+        public AvatarGenerator create(String description) throws ProductCreationException
+        {
+          return new AvatarGenerator.Default(description);
+        }
+      }
+    }
   }
 
   /**

@@ -22,6 +22,7 @@
      <productGroup id="org.eclipse.net4j.util.ui.openHandlers" name="%productGroup.name.3"/>
      <productGroup id="org.eclipse.net4j.util.ui.entryControlAdvisors" name="%productGroup.name.4"/>
      <productGroup id="org.eclipse.net4j.util.ui.chatRenderers" name="%productGroup.name.5"/>
+     <productGroup id="org.eclipse.net4j.util.ui.avatarGenerators" name="%productGroup.name.6"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">
@@ -45,6 +46,10 @@
             productGroup="org.eclipse.net4j.util.ui.chatRenderers"
             type="default"
             class="org.eclipse.net4j.util.ui.chat.ChatRenderer$Factory"/>
+      <factory
+            productGroup="org.eclipse.net4j.util.ui.avatarGenerators"
+            type="default"
+            class="org.eclipse.net4j.util.ui.chat.ChatRenderer$AvatarGenerator$Default$Factory"/>
       <simpleFactory
             productGroup="org.eclipse.net4j.util.ui.introspectionProviders"
             type="java.lang.Iterable"

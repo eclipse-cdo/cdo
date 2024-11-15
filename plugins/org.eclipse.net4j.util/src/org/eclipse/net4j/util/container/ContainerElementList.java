@@ -41,7 +41,7 @@ public class ContainerElementList<ELEMENT> extends Container<ELEMENT>
 
     private void modify(Object object, Predicate<ELEMENT> listModifier, Consumer<ELEMENT> notifier)
     {
-      if (elementType.isInstance(object))
+      if (testElement(object))
       {
         ELEMENT element = elementType.cast(object);
         boolean modified;
@@ -61,7 +61,6 @@ public class ContainerElementList<ELEMENT> extends Container<ELEMENT>
         }
       }
     }
-
   };
 
   private final IManagedContainer container;
@@ -137,6 +136,31 @@ public class ContainerElementList<ELEMENT> extends Container<ELEMENT>
     return false;
   }
 
+  protected final void initContainerElements(String productGroup, String type, String description)
+  {
+    if (type == null)
+    {
+      for (String factoryType : container.getFactoryTypes(productGroup))
+      {
+        container.getElementOrNull(productGroup, factoryType, description);
+      }
+    }
+    else
+    {
+      container.getElementOrNull(productGroup, type, description);
+    }
+  }
+
+  protected final void initContainerElements(String productGroup, String type)
+  {
+    initContainerElements(productGroup, type, null);
+  }
+
+  protected final void initContainerElements(String productGroup)
+  {
+    initContainerElements(productGroup, null);
+  }
+
   protected ELEMENT[] postProcessElementArray(ELEMENT[] elements)
   {
     if (Comparable.class.isAssignableFrom(elementType))
@@ -147,14 +171,24 @@ public class ContainerElementList<ELEMENT> extends Container<ELEMENT>
     return elements;
   }
 
+  protected Object[] getInitialElements(IManagedContainer container)
+  {
+    return container.getElements();
+  }
+
+  protected boolean testElement(Object object)
+  {
+    return elementType.isInstance(object);
+  }
+
   @Override
   protected void doActivate() throws Exception
   {
     super.doActivate();
 
-    for (Object object : container.getElements())
+    for (Object object : getInitialElements(container))
     {
-      if (elementType.isInstance(object))
+      if (testElement(object))
       {
         ELEMENT element = elementType.cast(object);
         elementList.add(element);

@@ -27,6 +27,7 @@ public final class ModelReferenceExtractorRegistry extends ContainerElementList<
   private ModelReferenceExtractorRegistry()
   {
     super(Extractor.class);
+    initContainerElements(ModelReference.Extractor.PRODUCT_GROUP);
     activate();
   }
 
@@ -45,7 +46,8 @@ public final class ModelReferenceExtractorRegistry extends ContainerElementList<
   @Override
   public ModelReference extractModelReference(Object object)
   {
-    for (Extractor extractor : getExtractors())
+    Extractor[] extractors = getExtractors();
+    for (Extractor extractor : extractors)
     {
       ModelReference modelReference = extractor.extractModelReference(object);
       if (modelReference != null)

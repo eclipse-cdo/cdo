@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.net4j.util.concurrent.Worker.Terminate;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -93,27 +94,43 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
       boolean branching = session.getRepositoryInfo().isSupportingBranches();
       rememberedRevisions = new HashMap<>();
 
-      try
+      int maxRevisionKeys = session.options().getPrefetchSendMaxRevisionKeys();
+      if (maxRevisionKeys != 0)
       {
-        cache.forEachValidRevision(branchPoint, branching, r -> {
-          try
-          {
-            CDORevisionKey key = CDORevisionUtil.copyRevisionKey(r);
+        try
+        {
+          int[] revisionKeys = { 0 };
 
-            // Remember a strong reference prevents garbage collection.
-            rememberedRevisions.put(key, r);
+          cache.forEachValidRevision(branchPoint, branching, r -> {
+            if (++revisionKeys[0] > maxRevisionKeys)
+            {
+              throw new Terminate();
+            }
 
-            out.writeCDORevisionKey(key);
-          }
-          catch (IOException ex)
-          {
-            throw new IORuntimeException(ex);
-          }
-        });
-      }
-      catch (IORuntimeException ex)
-      {
-        ex.rethrow();
+            try
+            {
+              CDORevisionKey key = CDORevisionUtil.copyRevisionKey(r);
+
+              // Remember a strong reference prevents garbage collection.
+              rememberedRevisions.put(key, r);
+
+              out.writeCDORevisionKey(key);
+            }
+            catch (IOException ex)
+            {
+              throw new IORuntimeException(ex);
+            }
+          });
+        }
+        catch (Terminate ex)
+        {
+          // Just go on.
+          // $FALL-THROUGH$
+        }
+        catch (IORuntimeException ex)
+        {
+          ex.rethrow();
+        }
       }
 
       out.writeCDORevisionKey(null);

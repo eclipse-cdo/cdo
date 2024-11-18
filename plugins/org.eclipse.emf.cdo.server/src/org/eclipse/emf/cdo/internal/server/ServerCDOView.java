@@ -1569,6 +1569,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public int getPrefetchSendMaxRevisionKeys()
+    {
+      return 0;
+    }
+
+    @Override
+    public void setPrefetchSendMaxRevisionKeys(int prefetchSendMaxRevisionKeys)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
     public CDOClob newClob(Reader contents) throws IOException
     {
       throw new UnsupportedOperationException();

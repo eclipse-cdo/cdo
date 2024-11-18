@@ -349,6 +349,16 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
     public void setDelegableViewLockEnabled(boolean delegableViewLockEnabled);
 
     /**
+     * @since 4.26
+     */
+    public int getPrefetchSendMaxRevisionKeys();
+
+    /**
+     * @since 4.26
+     */
+    public void setPrefetchSendMaxRevisionKeys(int prefetchSendMaxRevisionKeys);
+
+    /**
      * An {@link IOptionsEvent options event} fired when the
      * {@link Options#setGeneratedPackageEmulationEnabled(boolean) generated package emulation enabled} option of a
      * {@link CDOSession session} has changed.
@@ -410,6 +420,19 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
      * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface DelegableViewLockEvent extends IOptionsEvent
+    {
+    }
+
+    /**
+     * An {@link IOptionsEvent options event} fired when the {@link Options#setPrefetchSendMaxRevisionKeys(int) prefetch send max revision keys}
+     * option of a {@link CDOSession session} has changed.
+     *
+     * @author Eike Stepper
+     * @since 4.26
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
+     */
+    public interface PrefetchSendMaxRevisionKeysEvent extends IOptionsEvent
     {
     }
   }

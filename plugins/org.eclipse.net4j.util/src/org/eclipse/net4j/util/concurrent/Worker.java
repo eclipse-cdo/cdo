@@ -312,8 +312,9 @@ public abstract class Worker extends Lifecycle
 
   /**
    * @author Eike Stepper
+   * @since 3.26
    */
-  private static final class Terminate extends RuntimeException
+  public static final class Terminate extends RuntimeException
   {
     private static final long serialVersionUID = 1L;
 

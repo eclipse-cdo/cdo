@@ -1812,6 +1812,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
     private boolean delegableViewLockEnabled;
 
+    private int prefetchSendMaxRevisionKeys = OMPlatform.INSTANCE.getProperty("PREFETCH_SEND_MAX_REVISION_KEYS", 100);
+
     public OptionsImpl()
     {
       setCollectionLoadingPolicy(null); // Init default
@@ -2157,6 +2159,34 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       fireEvent(event, listeners);
     }
 
+    @Override
+    public int getPrefetchSendMaxRevisionKeys()
+    {
+      return prefetchSendMaxRevisionKeys;
+    }
+
+    @Override
+    public void setPrefetchSendMaxRevisionKeys(int prefetchSendMaxRevisionKeys)
+    {
+      IEvent event = null;
+      IListener[] listeners = getListeners();
+
+      synchronized (this)
+      {
+        if (this.prefetchSendMaxRevisionKeys != prefetchSendMaxRevisionKeys)
+        {
+          this.prefetchSendMaxRevisionKeys = prefetchSendMaxRevisionKeys;
+
+          if (listeners.length != 0)
+          {
+            event = new PrefetchSendMaxRevisionKeysEventImpl();
+          }
+        }
+      }
+
+      fireEvent(event, listeners);
+    }
+
     /**
      * @author Eike Stepper
      */
@@ -2315,6 +2345,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       private static final long serialVersionUID = 1L;
 
       public DelegableViewLockEventImpl()
+      {
+        super(OptionsImpl.this);
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class PrefetchSendMaxRevisionKeysEventImpl extends OptionsEvent implements PrefetchSendMaxRevisionKeysEvent
+    {
+      private static final long serialVersionUID = 1L;
+
+      public PrefetchSendMaxRevisionKeysEventImpl()
       {
         super(OptionsImpl.this);
       }

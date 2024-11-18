@@ -737,7 +737,7 @@ public class OpenReviewAction extends AbstractReviewAction
     private ChatComposite createChatComposite(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
     {
       ChatComposite.Config config = new ChatComposite.Config();
-      config.setOwnUserID("estepper");
+      config.setOwnUserID("fnoyrit");
       config.setMessageProvider(this::computeMessages);
       config.setChatRenderer(renderer);
       config.setEntryBackgroundColor(entryBackgroundColor);

@@ -374,10 +374,13 @@ public class TopicItemProvider extends TopicContainerItemProvider
 
     switch (notification.getFeatureID(Topic.class))
     {
+    case ReviewsPackage.TOPIC__ID:
     case ReviewsPackage.TOPIC__TEXT:
+    case ReviewsPackage.TOPIC__AUTHOR:
+    case ReviewsPackage.TOPIC__CREATION_TIME:
+    case ReviewsPackage.TOPIC__EDIT_TIME:
     case ReviewsPackage.TOPIC__HEADING:
     case ReviewsPackage.TOPIC__MODEL_REFERENCE:
-    case ReviewsPackage.TOPIC__AUTHOR:
     case ReviewsPackage.TOPIC__OUTLINE_NUMBER:
     case ReviewsPackage.TOPIC__PARENT_INDEX:
       fireNotifyChanged(new ViewerNotification(notification, notification.getNotifier(), false, true));

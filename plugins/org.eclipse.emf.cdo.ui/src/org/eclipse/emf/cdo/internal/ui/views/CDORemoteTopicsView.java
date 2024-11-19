@@ -77,6 +77,8 @@ import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.ToolBar;
 import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.IEditorInput;
+import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.IWorkbenchPartReference;
@@ -649,7 +651,14 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
   private static CDOTopicProvider getTopicProvider(IWorkbenchPartReference partRef)
   {
     IWorkbenchPart part = partRef.getPart(true);
-    return AdapterUtil.adapt(part, CDOTopicProvider.class);
+    CDOTopicProvider topicProvider = AdapterUtil.adapt(part, CDOTopicProvider.class);
+    if (topicProvider == null && part instanceof IEditorPart)
+    {
+      IEditorInput editorInput = ((IEditorPart)part).getEditorInput();
+      topicProvider = AdapterUtil.adapt(editorInput, CDOTopicProvider.class);
+    }
+
+    return topicProvider;
   }
 
   private static boolean activatePart(Topic selectedTopic, IWorkbenchPartReference[] partRefs)

@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.ui.CDOLabelProvider;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.CDOTreeExpansionAgent;
 import org.eclipse.emf.cdo.ui.DecoratingStyledLabelProvider;
+import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.util.CDOURIUtil;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -56,7 +57,6 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -199,7 +199,6 @@ import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -538,16 +537,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   protected final AtomicBoolean pagesCreated = new AtomicBoolean();
 
-  protected final ConcurrentArray<Listener> topicListeners = new ConcurrentArray<>()
-  {
-    @Override
-    protected Listener[] newArray(int length)
-    {
-      return new Listener[length];
-    }
-  };
-
-  protected Topic currentTopic;
+  protected final DefaultTopicProvider topicProvider = new DefaultTopicProvider();
 
   /**
    * Handles activation of the editor or it's associated views.
@@ -2195,26 +2185,7 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
 
   protected void setCurrentTopic(Topic topic)
   {
-    if (!Objects.equals(currentTopic, topic))
-    {
-      if (currentTopic != null)
-      {
-        for (Listener listener : topicListeners.get())
-        {
-          listener.topicRemoved(this, currentTopic);
-        }
-      }
-
-      currentTopic = topic;
-
-      if (currentTopic != null)
-      {
-        for (Listener listener : topicListeners.get())
-        {
-          listener.topicAdded(this, currentTopic);
-        }
-      }
-    }
+    topicProvider.setTopics(topic);
   }
 
   protected Topic createTopic()
@@ -2267,24 +2238,19 @@ public class CDOEditor extends MultiPageEditorPart implements IEditingDomainProv
   @Override
   public Topic[] getTopics()
   {
-    if (currentTopic != null)
-    {
-      return new Topic[] { currentTopic };
-    }
-
-    return new Topic[0];
+    return topicProvider.getTopics();
   }
 
   @Override
   public void addTopicListener(Listener listener)
   {
-    topicListeners.add(listener);
+    topicProvider.addTopicListener(listener);
   }
 
   @Override
   public void removeTopicListener(Listener listener)
   {
-    topicListeners.remove(listener);
+    topicProvider.removeTopicListener(listener);
   }
 
   /**

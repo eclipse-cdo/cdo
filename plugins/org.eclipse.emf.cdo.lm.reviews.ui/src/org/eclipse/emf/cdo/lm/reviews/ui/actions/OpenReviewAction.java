@@ -25,7 +25,10 @@ import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.Topic;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
+import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.ui.CDOTopicProvider;
+import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.InputHolder;
@@ -59,10 +62,12 @@ import org.eclipse.emf.compare.ide.ui.internal.structuremergeviewer.WrappableTre
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.util.EContentAdapter;
+import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
 import org.eclipse.compare.CompareEditorInput;
 import org.eclipse.compare.INavigatable;
 import org.eclipse.compare.internal.CompareEditorSelectionProvider;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.ListenerList;
 import org.eclipse.core.runtime.NullProgressMonitor;
@@ -222,7 +227,7 @@ public class OpenReviewAction extends AbstractReviewAction
   /**
    * @author Eike Stepper
    */
-  private static final class ReviewEditorHandler extends InputHolder
+  private static final class ReviewEditorHandler extends InputHolder implements IAdaptable
   {
     private static final String IMAGE_FOLDER = "icons/editor/";
 
@@ -251,6 +256,10 @@ public class OpenReviewAction extends AbstractReviewAction
     private static final String ENTRY_CONTROL_ADVISOR_TYPE = OMPlatform.INSTANCE.getProperty("ENTRY_CONTROL_ADVISOR_TYPE", "mylyn");
 
     private static final String ENTRY_CONTROL_ADVISOR_DESCRIPTION = OMPlatform.INSTANCE.getProperty("ENTRY_CONTROL_ADVISOR_DESCRIPTION", "Markdown");
+
+    private final DefaultTopicProvider remoteTopicProvider = new DefaultTopicProvider();
+
+    private final CDOTopicProvider.Topic remoteReviewTopic;
 
     private final DeliveryReview review;
 
@@ -316,6 +325,8 @@ public class OpenReviewAction extends AbstractReviewAction
       this.review = review;
       this.systemDescriptor = systemDescriptor;
       this.firstTopic = firstTopic;
+
+      remoteReviewTopic = createRemoteTopic(review);
     }
 
     @Override
@@ -354,6 +365,17 @@ public class OpenReviewAction extends AbstractReviewAction
     public Exception deactivate()
     {
       review.eAdapters().remove(reviewContentAdapter);
+      return null;
+    }
+
+    @Override
+    public <T> T getAdapter(Class<T> type)
+    {
+      if (type == CDOTopicProvider.class)
+      {
+        return type.cast(remoteTopicProvider);
+      }
+
       return null;
     }
 
@@ -683,6 +705,15 @@ public class OpenReviewAction extends AbstractReviewAction
 
         refreshTopicUI();
         chatComposite.refreshMessageBrowser();
+
+        if (currentTopic == null || currentTopic.cdoState() == CDOState.TRANSIENT)
+        {
+          remoteTopicProvider.setTopics(remoteReviewTopic);
+        }
+        else
+        {
+          remoteTopicProvider.setTopics(remoteReviewTopic, createRemoteTopic(currentTopic));
+        }
       }
     }
 
@@ -953,6 +984,37 @@ public class OpenReviewAction extends AbstractReviewAction
     private static ModelReference createModelReference(Object diffElement)
     {
       return ModelReference.Extractor.Registry.INSTANCE.extractModelReference(diffElement);
+    }
+
+    private static CDOTopicProvider.Topic createRemoteTopic(Review review)
+    {
+      int reviewID = review.getId();
+      String imageKey;
+      String text;
+
+      if (review instanceof DeliveryReview)
+      {
+        imageKey = "DeliveryReview";
+        text = "Delivery review " + reviewID;
+      }
+      else
+      {
+        imageKey = "DropReview";
+        text = "Drop review " + reviewID;
+      }
+
+      String id = "org.eclipse.emf.cdo.lm.review/" + reviewID;
+      Image image = ExtendedImageRegistry.INSTANCE.getImage(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/" + imageKey));
+      return new CDOTopicProvider.Topic(review.cdoView().getSession(), id, image, text, text);
+    }
+
+    private static CDOTopicProvider.Topic createRemoteTopic(Topic topic)
+    {
+      int topicID = topic.getId();
+      String id = "org.eclipse.emf.cdo.lm.review.topic/" + topicID;
+      Image image = ExtendedImageRegistry.INSTANCE.getImage(ReviewsEditPlugin.INSTANCE.getImage("full/obj16/Topic"));
+      String text = "Review topic " + topicID;
+      return new CDOTopicProvider.Topic(topic.cdoView().getSession(), id, image, text, text);
     }
 
     /**

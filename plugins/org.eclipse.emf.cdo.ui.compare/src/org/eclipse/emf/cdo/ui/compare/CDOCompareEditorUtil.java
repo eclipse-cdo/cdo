@@ -72,6 +72,7 @@ import org.eclipse.compare.CompareUI;
 import org.eclipse.compare.CompareViewerPane;
 import org.eclipse.compare.CompareViewerSwitchingPane;
 import org.eclipse.core.runtime.CoreException;
+import org.eclipse.core.runtime.IAdaptable;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
@@ -1009,7 +1010,7 @@ public final class CDOCompareEditorUtil
       disposeRunnables = null;
     }
 
-    public final Comparison getComparison()
+    public Comparison getComparison()
     {
       return comparison;
     }
@@ -1140,6 +1141,21 @@ public final class CDOCompareEditorUtil
       }
 
       return false;
+    }
+
+    @Override
+    public <T> T getAdapter(Class<T> type)
+    {
+      if (inputConsumer instanceof IAdaptable)
+      {
+        T adapter = ((IAdaptable)inputConsumer).getAdapter(type);
+        if (adapter != null)
+        {
+          return adapter;
+        }
+      }
+
+      return super.getAdapter(type);
     }
 
     /**

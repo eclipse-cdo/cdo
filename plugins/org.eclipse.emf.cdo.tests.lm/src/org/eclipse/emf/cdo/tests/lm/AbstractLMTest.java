@@ -287,28 +287,6 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
 
   }
 
-  protected void setModuleVersion(Stream stream1_0, String moduleName, int major, int minor, int micro) throws Exception
-  {
-    IAssemblyDescriptor stream1_0Descriptor = IAssemblyManager.INSTANCE.createDescriptor("Checkout - Stream 1.0", stream1_0, monitor());
-
-    editStream(stream1_0Descriptor, transaction -> {
-      CDOResource moduleDefinitionResource = transaction.getResource(MODULE_DEFINITION_PATH);
-
-      EObject rootObject = moduleDefinitionResource.getContents().get(0);
-      assertThat(rootObject, notNullValue());
-      assertThat(rootObject, instanceOf(ModuleDefinition.class));
-
-      if (rootObject instanceof ModuleDefinition)
-      {
-        ModuleDefinition moduleDefinition = (ModuleDefinition)rootObject;
-        assertThat(moduleDefinition.getName(), is(moduleName));
-        moduleDefinition.setVersion(Version.createOSGi(major, minor, micro));
-
-      }
-
-    });
-  }
-
   protected Change createChange(ISystemDescriptor systemDescriptor, Stream stream, String changeLabel, String changeDescriptorLabel,
       Consumer<CDOTransaction> editFunction) throws Exception
   {
@@ -329,10 +307,45 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
 
   protected void editStream(IAssemblyDescriptor streamDescriptor, Consumer<CDOTransaction> editFunction) throws Exception
   {
-    CDOTransaction transaction = streamDescriptor.getCheckout().openTransaction();
-    editFunction.accept(transaction);
-    transaction.commit();
-    transaction.close();
+    CDOTransaction transaction = null;
+
+    try
+    {
+      transaction = streamDescriptor.getCheckout().openTransaction();
+      editFunction.accept(transaction);
+      transaction.commit();
+    }
+    finally
+    {
+      LifecycleUtil.deactivate(transaction);
+    }
+  }
+
+  protected void editModuleDefinition(IAssemblyDescriptor streamDescriptor, Consumer<ModuleDefinition> editFunction) throws Exception
+  {
+    editStream(streamDescriptor, transaction -> {
+      CDOResource moduleDefinitionResource = transaction.getResource(MODULE_DEFINITION_PATH);
+
+      EObject rootObject = moduleDefinitionResource.getContents().get(0);
+      assertThat(rootObject, notNullValue());
+      assertThat(rootObject, instanceOf(ModuleDefinition.class));
+
+      if (rootObject instanceof ModuleDefinition)
+      {
+        ModuleDefinition moduleDefinition = (ModuleDefinition)rootObject;
+        editFunction.accept(moduleDefinition);
+      }
+    });
+  }
+
+  protected void setModuleVersion(Stream stream1_0, String moduleName, int major, int minor, int micro) throws Exception
+  {
+    IAssemblyDescriptor stream1_0Descriptor = IAssemblyManager.INSTANCE.createDescriptor("Checkout - Stream 1.0", stream1_0, monitor());
+
+    editModuleDefinition(stream1_0Descriptor, moduleDefinition -> {
+      assertThat(moduleDefinition.getName(), is(moduleName));
+      moduleDefinition.setVersion(Version.createOSGi(major, minor, micro));
+    });
   }
 
   protected Delivery deliverChange(ISystemDescriptor systemDescriptor, Stream stream, Change change) throws Exception
@@ -431,19 +444,13 @@ public abstract class AbstractLMTest extends junit.framework.TestCase
 
   protected void updateDependency(IAssemblyDescriptor clientStreamDescriptor, String supplierName, VersionRange newVersionRange) throws Exception
   {
-    CDOCheckout checkout = clientStreamDescriptor.getCheckout();
+    editModuleDefinition(clientStreamDescriptor, moduleDefinition -> {
+      List<DependencyDefinition> dependencies = moduleDefinition.getDependencies().stream()
+          .filter(dependencyDefinition -> dependencyDefinition.getTargetName().equals(supplierName)).collect(Collectors.toList());
+      assertThat(dependencies.size(), is(1));
 
-    CDOTransaction transaction = checkout.openTransaction();
-    CDOResource resource = transaction.getResource(MODULE_DEFINITION_PATH);
-    ModuleDefinition moduleDefinition = (ModuleDefinition)resource.getContents().get(0);
-
-    List<DependencyDefinition> dependencies = moduleDefinition.getDependencies().stream()
-        .filter(dependencyDefinition -> dependencyDefinition.getTargetName().equals(supplierName)).collect(Collectors.toList());
-    assertThat(dependencies.size(), is(1));
-
-    dependencies.get(0).setVersionRange(newVersionRange);
-
-    transaction.commit();
+      dependencies.get(0).setVersionRange(newVersionRange);
+    });
   }
 
   protected void createDependency(IAssemblyDescriptor clientStreamDescriptor, String supplierName, VersionRange versionRange) throws Exception

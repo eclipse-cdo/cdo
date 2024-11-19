@@ -74,15 +74,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       return null;
     }
 
-    try
-    {
-      bypassConfigure(true);
-      return configureViewResourceSet(resourceSet, view, systemDescriptor);
-    }
-    finally
-    {
-      bypassConfigure(false);
-    }
+    return configureViewResourceSet(resourceSet, view, systemDescriptor);
   }
 
   private Result configureViewResourceSet(ResourceSet resourceSet, CDOView view, ISystemDescriptor systemDescriptor)
@@ -107,16 +99,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
           {
             if (assemblyDescriptor.getCheckout() == checkout)
             {
-              try
-              {
-                bypassConfigure(true);
-                result.setAssemblyDescriptor(assemblyDescriptor);
-              }
-              finally
-              {
-                bypassConfigure(false);
-                IAssemblyManager.INSTANCE.removeListener(this);
-              }
+              result.setAssemblyDescriptor(assemblyDescriptor);
             }
           }
         });
@@ -257,8 +240,17 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
 
     public static CDOView openDependencyView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
     {
-      URI viewURI = LMViewProvider.createViewURI(module);
-      return CDOUtil.getView(resourceSet, viewURI);
+      bypassConfigure(true);
+      
+      try
+      {
+        URI viewURI = LMViewProvider.createViewURI(module);
+        return CDOUtil.getView(resourceSet, viewURI);
+      }
+      finally
+      {
+        bypassConfigure(false);
+      }
     }
   }
 

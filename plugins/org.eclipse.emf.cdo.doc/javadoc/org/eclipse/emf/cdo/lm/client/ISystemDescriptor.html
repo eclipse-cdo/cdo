@@ -169,6 +169,15 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createModuleResourceSet(org.eclipse.emf.cdo.lm.Baseline)" class="member-name-link">createModuleResourceSet</a><wbr>(<a href="../Baseline.html" title="interface in org.eclipse.emf.cdo.lm">Baseline</a>&nbsp;baseline)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createModuleResourceSet(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">createModuleResourceSet</a><wbr>(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;moduleSession,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createModuleResourceSet(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">createModuleResourceSet</a><wbr>(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;moduleSession,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;readOnly)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../Stream.html" title="interface in org.eclipse.emf.cdo.lm">Stream</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createStream(org.eclipse.emf.cdo.lm.Module,org.eclipse.emf.cdo.lm.Drop,org.eclipse.emf.cdo.lm.StreamSpec,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">createStream</a><wbr>(<a href="../Module.html" title="interface in org.eclipse.emf.cdo.lm">Module</a>&nbsp;module,
  <a href="../Drop.html" title="interface in org.eclipse.emf.cdo.lm">Drop</a>&nbsp;base,
@@ -419,6 +428,35 @@ R&gt;</span>&nbsp;<span class="return-type">R</span>&nbsp;<span class="element-n
 <dd><code><a href="ISystemDescriptor.ResolutionException.html" title="class in org.eclipse.emf.cdo.lm.client">ISystemDescriptor.ResolutionException</a></code></dd>
 <dt>Since:</dt>
 <dd>1.4</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createModuleResourceSet(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)">
+<h3>createModuleResourceSet</h3>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></span>&nbsp;<span class="element-name">createModuleResourceSet</span><wbr><span class="parameters">(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;moduleSession,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</span>
+                             throws <span class="exceptions"><a href="ISystemDescriptor.ResolutionException.html" title="class in org.eclipse.emf.cdo.lm.client">ISystemDescriptor.ResolutionException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="ISystemDescriptor.ResolutionException.html" title="class in org.eclipse.emf.cdo.lm.client">ISystemDescriptor.ResolutionException</a></code></dd>
+<dt>Since:</dt>
+<dd>1.5</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createModuleResourceSet(org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)">
+<h3>createModuleResourceSet</h3>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></span>&nbsp;<span class="element-name">createModuleResourceSet</span><wbr><span class="parameters">(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;moduleSession,
+ <a href="../../common/branch/CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ boolean&nbsp;readOnly)</span>
+                             throws <span class="exceptions"><a href="ISystemDescriptor.ResolutionException.html" title="class in org.eclipse.emf.cdo.lm.client">ISystemDescriptor.ResolutionException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="ISystemDescriptor.ResolutionException.html" title="class in org.eclipse.emf.cdo.lm.client">ISystemDescriptor.ResolutionException</a></code></dd>
+<dt>Since:</dt>
+<dd>1.5</dd>
 </dl>
 </section>
 </li>

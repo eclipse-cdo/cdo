@@ -34,6 +34,7 @@
     <productGroups id="org.eclipse.net4j.util.confirmationProviders" name="Confirmation Providers" description=""/>
     <productGroups id="org.eclipse.net4j.util.security.credentialsProviders" name="Credentials Providers" description=""/>
     <productGroups id="org.eclipse.net4j.util.security.crypters" name="Crypters" description=""/>
+    <productGroups id="org.eclipse.net4j.util.exceptionHandlers" name="Exception Handlers" description=""/>
     <productGroups id="org.eclipse.net4j.executorServices" name="Executor Services" description=""/>
     <productGroups id="org.eclipse.net4j.util.metaFactories" name="Meta Factories" description=""/>
     <productGroups id="org.eclipse.net4j.Negotiators" name="Negotiators" description=""/>
@@ -49,6 +50,7 @@
   <article:Plugin name="org.eclipse.net4j.util.ui" label="Net4j Utilities UI">
     <packages name="org.eclipse.net4j.util.ui"/>
     <packages name="org.eclipse.net4j.util.ui.actions"/>
+    <packages name="org.eclipse.net4j.util.ui.chat"/>
     <packages name="org.eclipse.net4j.util.ui.confirmation"/>
     <packages name="org.eclipse.net4j.util.ui.container"/>
     <packages name="org.eclipse.net4j.util.ui.dnd"/>
@@ -58,9 +60,14 @@
     <packages name="org.eclipse.net4j.util.ui.security"/>
     <packages name="org.eclipse.net4j.util.ui.views"/>
     <packages name="org.eclipse.net4j.util.ui.widgets"/>
+    <productGroups id="org.eclipse.net4j.util.ui.avatarGenerators" name="Avatar Generators" description=""/>
+    <productGroups id="org.eclipse.net4j.util.ui.chatRenderers" name="Chat Renderers" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.elementWizards" name="Element Wizards" description=""/>
+    <productGroups id="org.eclipse.net4j.util.ui.entryControlAdvisors" name="Entry Control Advisors" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.introspectionProviders" name="Introspection Providers" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers" description=""/>
+    <productGroups id="org.eclipse.net4j.util.ui.openHandlers" name="Open Handlers" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description=""/>
   </article:Plugin>
+  <article:Plugin name="org.eclipse.net4j.util.ui.mylyn" label="Net4j Utilities UI Mylyn Support"/>
 </xmi:XMI>

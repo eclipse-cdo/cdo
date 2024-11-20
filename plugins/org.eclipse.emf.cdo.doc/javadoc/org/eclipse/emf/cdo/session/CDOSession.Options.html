@@ -149,6 +149,12 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <div class="block">An <code>options event</code> fired when the <a href="#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)"><code>permission updater</code></a>
  option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
 </div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="CDOSession.Options.PrefetchSendMaxRevisionKeysEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.session">CDOSession.Options.PrefetchSendMaxRevisionKeysEvent</a></code></div>
+<div class="col-last odd-row-color">
+<div class="block">An <code>options event</code> fired when the <a href="#setPrefetchSendMaxRevisionKeys(int)"><code>prefetch send max revision keys</code></a>
+ option of a <a href="CDOSession.html" title="interface in org.eclipse.emf.cdo.session"><code>session</code></a> has changed.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.common.CDOCommonSession.Options">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.cdo.common.<a href="../common/CDOCommonSession.Options.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonSession.Options</a></h2>
@@ -190,35 +196,41 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo"><code>permission updater</code></a> currently being used by this session.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDelegableViewLockEnabled()" class="member-name-link">isDelegableViewLockEnabled</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getPrefetchSendMaxRevisionKeys()" class="member-name-link">getPrefetchSendMaxRevisionKeys</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isGeneratedPackageEmulationEnabled()" class="member-name-link">isGeneratedPackageEmulationEnabled</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isDelegableViewLockEnabled()" class="member-name-link">isDelegableViewLockEnabled</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" class="member-name-link">setCollectionLoadingPolicy</a><wbr>(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets the <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDelegableViewLockEnabled(boolean)" class="member-name-link">setDelegableViewLockEnabled</a><wbr>(boolean&nbsp;delegableViewLockEnabled)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">This method is useful, for example, if EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setGeneratedPackageEmulationEnabled(boolean)" class="member-name-link">setGeneratedPackageEmulationEnabled</a><wbr>(boolean&nbsp;generatedPackageEmulationEnabled)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isGeneratedPackageEmulationEnabled()" class="member-name-link">isGeneratedPackageEmulationEnabled</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">setLobCache</a><wbr>(<a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobCache)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" class="member-name-link">setCollectionLoadingPolicy</a><wbr>(<a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a>&nbsp;policy)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Sets the <a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob"><code>large object cache</code></a> to be used by this session.</div>
+<div class="block">Sets the <a href="CDOCollectionLoadingPolicy.html" title="interface in org.eclipse.emf.cdo.session"><code>collection loading</code></a> to be used by this session.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)" class="member-name-link">setPermissionUpdater</a><wbr>(<a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a>&nbsp;permissionUpdater)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDelegableViewLockEnabled(boolean)" class="member-name-link">setDelegableViewLockEnabled</a><wbr>(boolean&nbsp;delegableViewLockEnabled)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">This method is useful, for example, if EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>adapters</code></a> call <code>Display.syncExec()</code> in response to CDO notifications.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setGeneratedPackageEmulationEnabled(boolean)" class="member-name-link">setGeneratedPackageEmulationEnabled</a><wbr>(boolean&nbsp;generatedPackageEmulationEnabled)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">setLobCache</a><wbr>(<a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobCache)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Sets the <a href="../common/lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob"><code>large object cache</code></a> to be used by this session.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)" class="member-name-link">setPermissionUpdater</a><wbr>(<a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo">CDOPermissionUpdater</a>&nbsp;permissionUpdater)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets the <a href="../../spi/cdo/CDOPermissionUpdater.html" title="interface in org.eclipse.emf.spi.cdo"><code>permission updater</code></a> to be used by this session.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPrefetchSendMaxRevisionKeys(int)" class="member-name-link">setPrefetchSendMaxRevisionKeys</a><wbr>(int&nbsp;prefetchSendMaxRevisionKeys)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -364,6 +376,26 @@ extends <a href="../common/CDOCommonSession.Options.html" title="interface in or
 <li><a href="../util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)"><code>CDOUtil.setNextViewLock(Lock)</code></a></li>
 </ul>
 </dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getPrefetchSendMaxRevisionKeys()">
+<h3>getPrefetchSendMaxRevisionKeys</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getPrefetchSendMaxRevisionKeys</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.26</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setPrefetchSendMaxRevisionKeys(int)">
+<h3>setPrefetchSendMaxRevisionKeys</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPrefetchSendMaxRevisionKeys</span><wbr><span class="parameters">(int&nbsp;prefetchSendMaxRevisionKeys)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.26</dd>
 </dl>
 </section>
 </li>

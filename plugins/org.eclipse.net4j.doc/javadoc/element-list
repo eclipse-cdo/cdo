@@ -15,4 +15,5 @@ org.eclipse.net4j.tcp.ssl
 org.eclipse.net4j.ui
 org.eclipse.net4j.ws
 org.eclipse.net4j.ws.jetty
+org.eclipse.net4j.wss
 org.eclipse.spi.net4j

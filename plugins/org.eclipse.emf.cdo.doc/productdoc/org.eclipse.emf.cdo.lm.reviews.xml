@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin id="org.eclipse.emf.cdo.lm.reviews" label="CDO Model Repository Lifecycle Management Reviews">
+	<productGroup id="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors" name="Model Reference Extractors" description="" deprecated="false">
+		<factory type="compare" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.lm.reviews.ui.CompareModelReferenceExtractor" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+	</productGroup>
+</plugin>

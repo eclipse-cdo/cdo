@@ -269,7 +269,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#configure(java.io.File)" class="member-name-link">configure(File)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html#configure(org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory)" class="member-name-link">configure(JettyWebSocketServletFactory)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocketServlet</a></dt>
+<dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html#configure(org.eclipse.jetty.ee8.websocket.server.JettyWebSocketServletFactory)" class="member-name-link">configure(JettyWebSocketServletFactory)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocketServlet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#configureAcceptor(org.w3c.dom.Element)" class="member-name-link">configureAcceptor(Element)</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
@@ -631,6 +631,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/WSUtil.html#FACTORY_TYPE" class="member-name-link">FACTORY_TYPE</a> - Static variable in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#FACTORY_TYPE" class="member-name-link">FACTORY_TYPE</a> - Static variable in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ui/FactoryTypeContentProvider.html" class="type-name-link" title="class in org.eclipse.net4j.ui">FactoryTypeContentProvider</a> - Class in <a href="org/eclipse/net4j/ui/package-summary.html">org.eclipse.net4j.ui</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
@@ -699,6 +701,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/tcp/TCPUtil.html#getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getAcceptor(IManagedContainer, String)</a> - Static method in class org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/WSUtil.html#getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getAcceptor(IManagedContainer, String)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getAcceptor(IManagedContainer, String)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html#getAcceptor(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)" class="member-name-link">getAcceptor(IManagedContainer, String, String)</a> - Static method in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -813,23 +817,35 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getConnector(IManagedContainer, String)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">getConnector(IManagedContainer, String)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String)" class="member-name-link">getConnector(IManagedContainer, String, String)</a> - Static method in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/Net4jUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,long)" class="member-name-link">getConnector(IManagedContainer, String, String, long)</a> - Static method in class org.eclipse.net4j.<a href="org/eclipse/net4j/Net4jUtil.html" title="class in org.eclipse.net4j">Net4jUtil</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.net.URI,java.lang.String)" class="member-name-link">getConnector(IManagedContainer, URI, String)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.net.URI,java.lang.String,java.lang.String...)" class="member-name-link">getConnector(IManagedContainer, URI, String, String...)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnectorDescription(java.lang.String,java.lang.String)" class="member-name-link">getConnectorDescription(String, String)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#getConnector(org.eclipse.net4j.util.container.IManagedContainer,java.net.URI,java.lang.String,java.lang.String...)" class="member-name-link">getConnector(IManagedContainer, URI, String, String...)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnectorDescription(java.net.URI,java.lang.String)" class="member-name-link">getConnectorDescription(URI, String)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnectorDescription(java.lang.String,java.lang.String,java.lang.String...)" class="member-name-link">getConnectorDescription(String, String, String...)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#getConnectorDescription(java.lang.String,java.lang.String,java.lang.String...)" class="member-name-link">getConnectorDescription(String, String, String...)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/ws/WSUtil.html#getConnectorDescription(java.net.URI,java.lang.String,java.lang.String...)" class="member-name-link">getConnectorDescription(URI, String, String...)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#getConnectorDescription(java.net.URI,java.lang.String,java.lang.String...)" class="member-name-link">getConnectorDescription(URI, String, String...)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Acceptor.html#getConnectorPreparer()" class="member-name-link">getConnectorPreparer()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Acceptor.html" title="class in org.eclipse.spi.net4j">Acceptor</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ContainerProtocolProvider.html#getContainer()" class="member-name-link">getContainer()</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/ContainerProtocolProvider.html" title="class in org.eclipse.net4j">ContainerProtocolProvider</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/Signal.html#getContainer()" class="member-name-link">getContainer()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/TransportConfigurator.html#getContainer()" class="member-name-link">getContainer()</a> - Method in class org.eclipse.net4j.<a href="org/eclipse/net4j/TransportConfigurator.html" title="class in org.eclipse.net4j">TransportConfigurator</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/Channel.html#getContainer()" class="member-name-link">getContainer()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Channel.html" title="class in org.eclipse.spi.net4j">Channel</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/spi/net4j/Protocol.html#getContainer()" class="member-name-link">getContainer()</a> - Method in class org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/Signal.html#getCorrelationID()" class="member-name-link">getCorrelationID()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></dt>
 <dd>&nbsp;</dd>
@@ -1828,7 +1844,7 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#onWebSocketClose(int,java.lang.String)" class="member-name-link">onWebSocketClose(int, String)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
 <dd>&nbsp;</dd>
-<dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#onWebSocketConnect(org.eclipse.jetty.websocket.api.Session)" class="member-name-link">onWebSocketConnect(Session)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
+<dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#onWebSocketConnect(org.eclipse.jetty.ee8.websocket.api.Session)" class="member-name-link">onWebSocketConnect(Session)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#onWebSocketError(java.lang.Throwable)" class="member-name-link">onWebSocketError(Throwable)</a> - Method in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
 <dd>&nbsp;</dd>
@@ -1942,6 +1958,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Jetty-specific classes with support for Websocket connections.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/wss/package-summary.html">org.eclipse.net4j.wss</a> - package org.eclipse.net4j.wss</dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/package-summary.html">org.eclipse.spi.net4j</a> - package org.eclipse.spi.net4j</dt>
 <dd>
 <div class="block">Server service provider interfaces and useful base implementations for the Net4j transport layer.</div>
@@ -1970,6 +1988,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/tcp/TCPUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer(IManagedContainer)</a> - Static method in class org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/TCPUtil.html" title="class in org.eclipse.net4j.tcp">TCPUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/WSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer(IManagedContainer)</a> - Static method in class org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/WSUtil.html" title="class in org.eclipse.net4j.ws">WSUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer(IManagedContainer)</a> - Static method in class org.eclipse.net4j.wss.<a href="org/eclipse/net4j/wss/WSSUtil.html" title="class in org.eclipse.net4j.wss">WSSUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.TimerInjector.html#process(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)" class="member-name-link">process(IManagedContainer, String, String, String, Object)</a> - Method in class org.eclipse.net4j.signal.heartbeat.<a href="org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.TimerInjector.html" title="class in org.eclipse.net4j.signal.heartbeat">HeartBeatProtocol.Server.TimerInjector</a></dt>
 <dd>&nbsp;</dd>
@@ -2613,6 +2633,10 @@ the order they are declared.</div>
 <dt><a href="org/eclipse/net4j/buffer/BufferState.html#WRITING" class="member-name-link">WRITING</a> - Enum constant in enum class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferState.html" title="enum class in org.eclipse.net4j.buffer">BufferState</a></dt>
 <dd>
 <div class="block">Indicates that the <a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer"><code>IBuffer</code></a> is currently writing its data to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/wss/WSSUtil.html" class="type-name-link" title="class in org.eclipse.net4j.wss">WSSUtil</a> - Class in <a href="org/eclipse/net4j/wss/package-summary.html">org.eclipse.net4j.wss</a></dt>
+<dd>
+<div class="block">A utility class with static convenience methods.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/ws/WSUtil.html" class="type-name-link" title="class in org.eclipse.net4j.ws">WSUtil</a> - Class in <a href="org/eclipse/net4j/ws/package-summary.html">org.eclipse.net4j.ws</a></dt>
 <dd>

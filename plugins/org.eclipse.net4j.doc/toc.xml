@@ -31,6 +31,7 @@
     <topic label="Net4j Signalling Platform Websocket Transport" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.wss" href="javadoc/org/eclipse/net4j/wss/package-summary.html" icon="package" />
     </topic>
   </topic>
   <topic label="Product Group Reference" href="html/product/index.html">

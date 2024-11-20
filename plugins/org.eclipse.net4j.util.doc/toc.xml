@@ -34,6 +34,7 @@
     <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui.chat" href="javadoc/org/eclipse/net4j/util/ui/chat/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
       <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
@@ -59,6 +60,7 @@
       <topic label="Confirmation Providers" href="productdoc/org.eclipse.net4j.util.confirmationProviders.html" icon="productgroup" />
       <topic label="Credentials Providers" href="productdoc/org.eclipse.net4j.util.security.credentialsProviders.html" icon="productgroup" />
       <topic label="Crypters" href="productdoc/org.eclipse.net4j.util.security.crypters.html" icon="productgroup" />
+      <topic label="Exception Handlers" href="productdoc/org.eclipse.net4j.util.exceptionHandlers.html" icon="productgroup" />
       <topic label="Executor Services" href="productdoc/org.eclipse.net4j.executorServices.html" icon="productgroup" />
       <topic label="Meta Factories" href="productdoc/org.eclipse.net4j.util.metaFactories.html" icon="productgroup" />
       <topic label="Negotiators" href="productdoc/org.eclipse.net4j.Negotiators.html" icon="productgroup" />
@@ -71,10 +73,14 @@
       <topic label="Timers" href="productdoc/org.eclipse.net4j.util.timers.html" icon="productgroup" />
       <topic label="User Managers" href="productdoc/org.eclipse.net4j.userManagers.html" icon="productgroup" />
     </topic>
-    <topic label="Net4j Utilities UI" href="productdoc/org.eclipse.net4j.util.ui.elementWizards.html" icon="plugin">
+    <topic label="Net4j Utilities UI" href="productdoc/org.eclipse.net4j.util.ui.avatarGenerators.html" icon="plugin">
+      <topic label="Avatar Generators" href="productdoc/org.eclipse.net4j.util.ui.avatarGenerators.html" icon="productgroup" />
+      <topic label="Chat Renderers" href="productdoc/org.eclipse.net4j.util.ui.chatRenderers.html" icon="productgroup" />
       <topic label="Element Wizards" href="productdoc/org.eclipse.net4j.util.ui.elementWizards.html" icon="productgroup" />
+      <topic label="Entry Control Advisors" href="productdoc/org.eclipse.net4j.util.ui.entryControlAdvisors.html" icon="productgroup" />
       <topic label="Introspection Providers" href="productdoc/org.eclipse.net4j.util.ui.introspectionProviders.html" icon="productgroup" />
       <topic label="Menu Fillers" href="productdoc/org.eclipse.net4j.util.ui.menuFillers.html" icon="productgroup" />
+      <topic label="Open Handlers" href="productdoc/org.eclipse.net4j.util.ui.openHandlers.html" icon="productgroup" />
       <topic label="Value Formatters" href="productdoc/org.eclipse.net4j.util.ui.valueFormatters.html" icon="productgroup" />
     </topic>
   </topic>

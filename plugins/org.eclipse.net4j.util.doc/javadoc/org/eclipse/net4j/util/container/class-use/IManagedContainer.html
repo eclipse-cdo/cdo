@@ -118,6 +118,17 @@ loadScripts(document, 'script');</script>
  <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a>&nbsp;pattern)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../../ExceptionHandler.html" title="interface in org.eclipse.net4j.util">ExceptionHandler</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ExceptionHandler.Factory.</span><code><a href="../../ExceptionHandler.Factory.html#get(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">get</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;type)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ExceptionHandler.Factory.</span><code><a href="../../ExceptionHandler.Factory.html#handle(java.lang.Object,java.lang.Throwable,java.lang.String,org.eclipse.net4j.util.om.log.OMLogger,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">handle</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;catcher,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;ex,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message,
+ <a href="../../om/log/OMLogger.html" title="interface in org.eclipse.net4j.util.om.log">OMLogger</a>&nbsp;logger,
+ <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static &lt;T&gt;&nbsp;T</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">StringUtil.</span><code><a href="../../StringUtil.html#parse(java.lang.String,org.eclipse.net4j.util.container.IManagedContainer,java.lang.Class)" class="member-name-link">parse</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;str,
  <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
@@ -211,47 +222,63 @@ loadScripts(document, 'script');</script>
 <div class="block">Creates a new managed container that discovers factory and element processor
  registrations in plug-in extensions.</div>
 </div>
-<div class="col-first even-row-color"><code>static <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ContainerUtil.</span><code><a href="../ContainerUtil.html#getContainer(java.lang.Object)" class="member-name-link">getContainer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
+<div class="col-first even-row-color"><code>final <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ContainerElementList.</span><code><a href="../ContainerElementList.html#getContainer()" class="member-name-link">getContainer</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IManagedContainerProvider.</span><code><a href="../IManagedContainerProvider.html#getContainer()" class="member-name-link">getContainer</a>()</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ContainerUtil.</span><code><a href="../ContainerUtil.html#getContainer(java.lang.Object)" class="member-name-link">getContainer</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;object)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IManagedContainerFactory.</span><code><a href="../IManagedContainerFactory.html#getManagedContainer()" class="member-name-link">getManagedContainer</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><span class="type-name-label">IManagedContainerProvider.</span><code><a href="../IManagedContainerProvider.html#getContainer()" class="member-name-link">getContainer</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IManagedContainerFactory.</span><code><a href="../IManagedContainerFactory.html#getManagedContainer()" class="member-name-link">getManagedContainer</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Obtains the container that I should use to get my dependencies.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IManagedContainer.</span><code><a href="../IManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">registerFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IManagedContainer.</span><code><a href="../IManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IManagedContainer.</span><code><a href="../IManagedContainer.html#registerFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">registerFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ManagedContainer.</span><code><a href="../ManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IManagedContainer.</span><code><a href="../IManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ManagedContainer.</span><code><a href="../ManagedContainer.html#unregisterFactory(org.eclipse.net4j.util.factory.IFactory)" class="member-name-link">unregisterFactory</a><wbr>(<a href="../../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory">IFactory</a>&nbsp;factory)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.net4j.util.container</a> with parameters of type <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ContainerUtil.</span><code><a href="../ContainerUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ContainerElementList.</span><code><a href="../ContainerElementList.html#getInitialElements(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">getInitialElements</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IElementProcessor.</span><code><a href="../IElementProcessor.html#process(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)" class="member-name-link">process</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ContainerUtil.</span><code><a href="../ContainerUtil.html#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IElementProcessor.</span><code><a href="../IElementProcessor.html#process(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String,java.lang.String,java.lang.String,java.lang.Object)" class="member-name-link">process</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;productGroup,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryType,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;description,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;element)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IManagedContainer.ContainerAware.</span><code><a href="../IManagedContainer.ContainerAware.html#setManagedContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">setManagedContainer</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IManagedContainer.ContainerAware.</span><code><a href="../IManagedContainer.ContainerAware.html#setManagedContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">setManagedContainer</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Assigns the container that I should use to get my dependencies.</div>
 </div>
+</div>
+<div class="caption"><span>Constructors in <a href="../package-summary.html">org.eclipse.net4j.util.container</a> with parameters of type <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier</div>
+<div class="table-header col-second">Constructor</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../ContainerElementList.html#%3Cinit%3E(java.lang.Class,org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">ContainerElementList</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="class or interface in java.lang" class="external-link">Class</a>&lt;<a href="../ContainerElementList.html" title="type parameter in ContainerElementList">ELEMENT</a>&gt;&nbsp;elementType,
+ <a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -357,6 +384,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>protected void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">FactoryTypeContentProvider.</span><code><a href="../../ui/FactoryTypeContentProvider.html#disconnectInput(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">disconnectInput</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;input)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">OpenHandler.Factory.</span><code><a href="../../ui/OpenHandler.Factory.html#handleOpen(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.ui.IWorkbenchPage,org.eclipse.jface.viewers.StructuredViewer,java.lang.Object)" class="member-name-link">handleOpen</a><wbr>(<a href="../IManagedContainer.html" title="interface in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container,
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html" title="class or interface in org.eclipse.ui" class="external-link">IWorkbenchPage</a>&nbsp;page,
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link">StructuredViewer</a>&nbsp;viewer,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;selectedElement)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

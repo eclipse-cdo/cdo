@@ -5,12 +5,14 @@
 		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptor$DescriptionParserFactory" contributor="org.eclipse.net4j.ws"/>
+		<factory type="wss" class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory$DescriptionParserFactory" contributor="org.eclipse.net4j.ws"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.acceptors" name="Net4j Acceptors" description="" deprecated="false">
 		<factory type="jvm" class="org.eclipse.net4j.internal.jvm.JVMAcceptorFactory" contributor="org.eclipse.net4j.jvm"/>
 		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLAcceptorFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPAcceptorFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSAcceptorFactory" contributor="org.eclipse.net4j.ws"/>
+		<factory type="wss" class="org.eclipse.net4j.internal.wss.WSSAcceptorFactory" contributor="org.eclipse.net4j.ws"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.bufferProviders" name="Net4j Buffer Providers" description="" deprecated="false">
 		<factory type="default" class="org.eclipse.internal.net4j.buffer.BufferPoolFactory" contributor="org.eclipse.net4j"/>
@@ -23,6 +25,7 @@
 		<factory type="ssl" class="org.eclipse.net4j.internal.tcp.ssl.SSLConnectorFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPConnectorFactory" contributor="org.eclipse.net4j.tcp"/>
 		<factory type="ws" class="org.eclipse.net4j.internal.ws.WSConnectorFactory" contributor="org.eclipse.net4j.ws"/>
+		<factory type="wss" class="org.eclipse.net4j.internal.wss.WSSConnectorFactory" contributor="org.eclipse.net4j.ws"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.selectors" name="Net4j Selectors" description="" deprecated="false">
 		<factory type="tcp" class="org.eclipse.net4j.internal.tcp.TCPSelectorFactory" contributor="org.eclipse.net4j.tcp"/>

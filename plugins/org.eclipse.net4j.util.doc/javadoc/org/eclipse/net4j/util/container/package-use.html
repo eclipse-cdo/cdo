@@ -120,6 +120,8 @@ loadScripts(document, 'script');</script>
 <div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
  <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/IManagedContainerProvider.html#org.eclipse.net4j.util">IManagedContainerProvider</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -149,79 +151,83 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">An abstract base implementation of a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with a <a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle"><code>lifecycle</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ContainerEvent.html#org.eclipse.net4j.util.container">ContainerEvent</a></div>
+<div class="col-first odd-row-color"><a href="class-use/ContainerElementList.Prioritized.html#org.eclipse.net4j.util.container">ContainerElementList.Prioritized</a></div>
 <div class="col-last odd-row-color">
+<div class="block">Smaller <a href="ContainerElementList.Prioritized.html#getPriority()"><code>priority</code></a> values are ranked higher.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/ContainerEvent.html#org.eclipse.net4j.util.container">ContainerEvent</a></div>
+<div class="col-last even-row-color">
 <div class="block">A default <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> implementation.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ContainerPersistence.html#org.eclipse.net4j.util.container">ContainerPersistence</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/FactoryNotFoundException.html#org.eclipse.net4j.util.container">FactoryNotFoundException</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ContainerPersistence.html#org.eclipse.net4j.util.container">ContainerPersistence</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/FactoryNotFoundException.html#org.eclipse.net4j.util.container">FactoryNotFoundException</a></div>
+<div class="col-last even-row-color">
 <div class="block">An unchecked exception that indicates the absence of a <a href="../factory/IFactory.html" title="interface in org.eclipse.net4j.util.factory"><code>factory</code></a> identified by
  <a href="../factory/IFactoryKey.html#getProductGroup()"><code>product group</code></a> and <a href="../factory/IFactoryKey.html#getType()"><code>type</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IContainer.html#org.eclipse.net4j.util.container">IContainer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IContainer.html#org.eclipse.net4j.util.container">IContainer</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Contains a number of elements and notifies about element addition and removal.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IContainer.Modifiable.html#org.eclipse.net4j.util.container">IContainer.Modifiable</a></div>
+<div class="col-first even-row-color"><a href="class-use/IContainer.Modifiable.html#org.eclipse.net4j.util.container">IContainer.Modifiable</a></div>
+<div class="col-last even-row-color">
+<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IContainer.Persistable.html#org.eclipse.net4j.util.container">IContainer.Persistable</a></div>
 <div class="col-last odd-row-color">
 <div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IContainer.Persistable.html#org.eclipse.net4j.util.container">IContainer.Persistable</a></div>
-<div class="col-last even-row-color">
-<div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> with additional methods to add or remove elements.</div>
-</div>
-<div class="col-first odd-row-color"><a href="class-use/IContainer.Persistence.html#org.eclipse.net4j.util.container">IContainer.Persistence</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IContainerDelta.html#org.eclipse.net4j.util.container">IContainerDelta</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IContainer.Persistence.html#org.eclipse.net4j.util.container">IContainer.Persistence</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IContainerDelta.html#org.eclipse.net4j.util.container">IContainerDelta</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Describes the addition or removal of a single element from a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container">IContainerDelta.Kind</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IContainerDelta.Kind.html#org.eclipse.net4j.util.container">IContainerDelta.Kind</a></div>
+<div class="col-last even-row-color">
 <div class="block">Enumerates the possible <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container delta</code></a> kinds <a href="IContainerDelta.Kind.html#ADDED"><code>IContainerDelta.Kind.ADDED</code></a> or <a href="IContainerDelta.Kind.html#REMOVED"><code>IContainerDelta.Kind.REMOVED</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IContainerEvent.html#org.eclipse.net4j.util.container">IContainerEvent</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IContainerEvent.html#org.eclipse.net4j.util.container">IContainerEvent</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An <a href="../event/IEvent.html" title="interface in org.eclipse.net4j.util.event"><code>event</code></a> fired from a <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> when its elements have changed.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IContainerEventVisitor.html#org.eclipse.net4j.util.container">IContainerEventVisitor</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IContainerEventVisitor.html#org.eclipse.net4j.util.container">IContainerEventVisitor</a></div>
+<div class="col-last even-row-color">
 <div class="block">A callback interface for visiting <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>container deltas</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IElementProcessor.html#org.eclipse.net4j.util.container">IElementProcessor</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IElementProcessor.html#org.eclipse.net4j.util.container">IElementProcessor</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Processes elements of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> when they're added to the container.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.container">IManagedContainer</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IManagedContainer.html#org.eclipse.net4j.util.container">IManagedContainer</a></div>
+<div class="col-last even-row-color">
 <div class="block">A <a href="IContainer.html" title="interface in org.eclipse.net4j.util.container"><code>container</code></a> that populates itself by means of element <a href="IManagedContainer.html#getFactoryRegistry()"><code>factories</code></a> and
  <a href="IManagedContainer.html#getPostProcessors()"><code>post processors</code></a> .</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IManagedContainer.ContainerAware.html#org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/IPluginContainer.html#org.eclipse.net4j.util.container">IPluginContainer</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IManagedContainer.ContainerAware.html#org.eclipse.net4j.util.container">IManagedContainer.ContainerAware</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="class-use/IPluginContainer.html#org.eclipse.net4j.util.container">IPluginContainer</a></div>
+<div class="col-last even-row-color">
 <div class="block">A <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a> that is configured by the <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IExtensionRegistry.html" title="class or interface in org.eclipse.core.runtime" class="external-link"><code>extension registry</code></a>
  .</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ManagedContainer.html#org.eclipse.net4j.util.container">ManagedContainer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ManagedContainer.html#org.eclipse.net4j.util.container">ManagedContainer</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A default implementation of a <a href="IManagedContainer.html" title="interface in org.eclipse.net4j.util.container"><code>managed container</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ModifiableContainer.html#org.eclipse.net4j.util.container">ModifiableContainer</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ModifiableContainer.html#org.eclipse.net4j.util.container">ModifiableContainer</a></div>
+<div class="col-last even-row-color">
 <div class="block">An abstract implementation of a <a href="IContainer.Modifiable.html" title="interface in org.eclipse.net4j.util.container"><code>modifiable container</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/PersistableContainer.html#org.eclipse.net4j.util.container">PersistableContainer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/PersistableContainer.html#org.eclipse.net4j.util.container">PersistableContainer</a></div>
+<div class="col-last odd-row-color">
 <div class="block">An abstract implementation of a <a href="Container.html" title="class in org.eclipse.net4j.util.container"><code>container</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/SelfAttachingContainerListener.html#org.eclipse.net4j.util.container">SelfAttachingContainerListener</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/SingleDeltaContainerEvent.html#org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/SelfAttachingContainerListener.html#org.eclipse.net4j.util.container">SelfAttachingContainerListener</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/SingleDeltaContainerEvent.html#org.eclipse.net4j.util.container">SingleDeltaContainerEvent</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A <a href="IContainerEvent.html" title="interface in org.eclipse.net4j.util.container"><code>container event</code></a> with a single element <a href="IContainerDelta.html" title="interface in org.eclipse.net4j.util.container"><code>delta</code></a>.</div>
 </div>
 </div>

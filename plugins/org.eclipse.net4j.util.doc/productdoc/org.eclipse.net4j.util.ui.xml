@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="org.eclipse.net4j.util.ui" label="Net4j Utilities UI">
+	<productGroup id="org.eclipse.net4j.util.ui.avatarGenerators" name="Avatar Generators" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.ui.chat.ChatRenderer$AvatarGenerator$Default$Factory" contributor="org.eclipse.net4j.util.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.ui.chatRenderers" name="Chat Renderers" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.ui.chat.ChatRenderer$Factory" contributor="org.eclipse.net4j.util.ui"/>
+		<factory type="mylyn" class="org.eclipse.net4j.util.ui.internal.mylyn.MylynChatRenderer$Factory" contributor="org.eclipse.net4j.util.ui.mylyn"/>
+	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.elementWizards" name="Element Wizards" description="" deprecated="false">
 		<factory type="org.eclipse.net4j.acceptors:jvm" class="org.eclipse.net4j.internal.ui.container.JVMAcceptorWizard$Factory" contributor="org.eclipse.net4j.ui"/>
 		<factory type="org.eclipse.net4j.acceptors:tcp" class="org.eclipse.net4j.internal.ui.container.TCPAcceptorWizard$Factory" contributor="org.eclipse.net4j.ui"/>
 		<factory type="org.eclipse.net4j.connectors:jvm" class="org.eclipse.net4j.internal.ui.container.JVMConnectorWizard$Factory" contributor="org.eclipse.net4j.ui"/>
 		<factory type="org.eclipse.net4j.connectors:tcp" class="org.eclipse.net4j.internal.ui.container.TCPConnectorWizard$Factory" contributor="org.eclipse.net4j.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.ui.entryControlAdvisors" name="Entry Control Advisors" description="" deprecated="false">
+		<factory type="default" class="org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor$Factory" contributor="org.eclipse.net4j.util.ui"/>
+		<factory type="mylyn" class="org.eclipse.net4j.util.ui.internal.mylyn.MylynEntryControlAdvisor$Factory" contributor="org.eclipse.net4j.util.ui.mylyn"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.introspectionProviders" name="Introspection Providers" description="" deprecated="false">
 		<factory type="java.lang.Iterable" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.net4j.util.internal.ui.views.IterableIntrospectionProvider" contributor="org.eclipse.net4j.util.ui"/>
@@ -15,6 +26,9 @@
 	<productGroup id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers" description="" deprecated="false">
 		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
 		<factory type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsMenuFiller$Factory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.ui.openHandlers" name="Open Handlers" description="" deprecated="false">
+		<factory type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description="" deprecated="false">
 		<factory type="org.eclipse.emf.ecore.ENamedElement" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.ui.EMFValueFormatter" contributor="org.eclipse.emf.cdo.ui"/>

@@ -131,6 +131,7 @@
     <packages name="org.eclipse.emf.cdo.lm.reviews"/>
     <packages name="org.eclipse.emf.cdo.lm.reviews.impl"/>
     <packages name="org.eclipse.emf.cdo.lm.reviews.util"/>
+    <productGroups id="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors" name="Model Reference Extractors" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.lm.reviews.edit" label="CDO Model Repository Lifecycle Management Reviews Edit Support">
     <packages name="org.eclipse.emf.cdo.lm.reviews.provider"/>

@@ -120,7 +120,10 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;overlayImage,
  int&nbsp;x,
  int&nbsp;y)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Overlays the given <code>image</code> with the given <code>overlayImage</code>
+ at the given position (relative to the top-left corner of the image).</div>
+</div>
 </div>
 </section>
 </li>
@@ -135,9 +138,18 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Point.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Point</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDrawPoints(org.eclipse.emf.edit.provider.ComposedImage.Size)" class="member-name-link">getDrawPoints</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Size.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Size</a>&nbsp;size)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Image</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#compose()" class="member-name-link">compose</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Point.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Point</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getDrawPoints(org.eclipse.emf.edit.provider.ComposedImage.Size)" class="member-name-link">getDrawPoints</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Size.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Size</a>&nbsp;size)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getX()" class="member-name-link">getX</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getY()" class="member-name-link">getY</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -165,6 +177,8 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;overlayImage,
  int&nbsp;x,
  int&nbsp;y)</span></div>
+<div class="block">Overlays the given <code>image</code> with the given <code>overlayImage</code>
+ at the given position (relative to the top-left corner of the image).</div>
 </section>
 </li>
 </ul>
@@ -176,12 +190,42 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="getX()">
+<h3>getX</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getX</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.17</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getY()">
+<h3>getY</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getY</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.17</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getDrawPoints(org.eclipse.emf.edit.provider.ComposedImage.Size)">
 <h3>getDrawPoints</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Point.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Point</a>&gt;</span>&nbsp;<span class="element-name">getDrawPoints</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.Size.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage.Size</a>&nbsp;size)</span></div>
 <dl class="notes">
 <dt>Overrides:</dt>
 <dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.html#getDrawPoints(org.eclipse.emf.edit.provider.ComposedImage.Size)" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">getDrawPoints</a></code>&nbsp;in class&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/provider/ComposedImage.html" title="class or interface in org.eclipse.emf.edit.provider" class="external-link">ComposedImage</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="compose()">
+<h3>compose</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/graphics/Image.html" title="class or interface in org.eclipse.swt.graphics" class="external-link">Image</a></span>&nbsp;<span class="element-name">compose</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.17</dd>
 </dl>
 </section>
 </li>

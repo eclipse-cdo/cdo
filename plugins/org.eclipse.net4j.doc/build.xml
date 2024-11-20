@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright (c) 2011-2021, 2023, 2024 Eike Stepper (Loehne, Germany) and others.
+  Copyright (c) 2023 Eike Stepper (Loehne, Germany) and others.
   All rights reserved. This program and the accompanying materials
   are made available under the terms of the Eclipse Public License v1.0
   which accompanies this distribution, and is available at
@@ -105,6 +105,7 @@
 				<include name="org.eclipse.net4j.ui/src/org/eclipse/net4j/ui/*.java" />
 				<include name="org.eclipse.net4j.ws/src/org/eclipse/net4j/ws/*.java" />
 				<include name="org.eclipse.net4j.ws/src/org/eclipse/net4j/ws/jetty/*.java" />
+				<include name="org.eclipse.net4j.ws/src/org/eclipse/net4j/wss/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/acceptor/*.java" />
 				<include name="org.eclipse.net4j/src/org/eclipse/net4j/buffer/*.java" />
@@ -146,6 +147,7 @@
 			<group title="Net4j Signalling Platform Websocket Transport">
 				<package name="org.eclipse.net4j.ws" />
 				<package name="org.eclipse.net4j.ws.jetty" />
+				<package name="org.eclipse.net4j.wss" />
 			</group>
 
       <link href="${jdk.link}" />

@@ -281,7 +281,7 @@ public class Doc01_ConfiguringRepositories
     /**
      * Property createSchemaIfNeeded
      * <p>
-     * Specifies, if the store is a DBStore, whether to create the schema with the specified {@link #Property_schemaName name}
+     * Specifies, if the store is a DBStore, whether to create the schema with the specified {@link Property_schemaName name}
      * at startup time, if it does not exist.
      */
     public class Property_createSchemaIfNeeded

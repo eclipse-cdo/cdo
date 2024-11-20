@@ -78,12 +78,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code>org.eclipse.jetty.websocket.api.WebSocketConnectionListener</code>, <code>org.eclipse.jetty.websocket.api.WebSocketListener</code></dd>
+<dd><code>org.eclipse.jetty.ee8.websocket.api.WebSocketConnectionListener</code>, <code>org.eclipse.jetty.ee8.websocket.api.WebSocketListener</code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">Net4jWebSocket</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
+implements org.eclipse.jetty.ee8.websocket.api.WebSocketListener</span></div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -157,7 +157,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../IWSConnector.html" title="interface in org.eclipse.net4j.ws">IWSConnector</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getConnector()" class="member-name-link">getConnector</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.jetty.websocket.api.Session</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.jetty.ee8.websocket.api.Session</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSession()" class="member-name-link">getSession</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
@@ -173,7 +173,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;reason)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onWebSocketConnect(org.eclipse.jetty.websocket.api.Session)" class="member-name-link">onWebSocketConnect</a><wbr>(org.eclipse.jetty.websocket.api.Session&nbsp;session)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onWebSocketConnect(org.eclipse.jetty.ee8.websocket.api.Session)" class="member-name-link">onWebSocketConnect</a><wbr>(org.eclipse.jetty.ee8.websocket.api.Session&nbsp;session)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onWebSocketError(java.lang.Throwable)" class="member-name-link">onWebSocketError</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
@@ -315,10 +315,10 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
 <li>
 <section class="detail" id="getSession()">
 <h3>getSession</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.jetty.websocket.api.Session</span>&nbsp;<span class="element-name">getSession</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.jetty.ee8.websocket.api.Session</span>&nbsp;<span class="element-name">getSession</span>()</div>
 <dl class="notes">
 <dt>Since:</dt>
-<dd>1.1</dd>
+<dd>1.3</dd>
 </dl>
 </section>
 </li>
@@ -329,12 +329,14 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="onWebSocketConnect(org.eclipse.jetty.websocket.api.Session)">
+<section class="detail" id="onWebSocketConnect(org.eclipse.jetty.ee8.websocket.api.Session)">
 <h3>onWebSocketConnect</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onWebSocketConnect</span><wbr><span class="parameters">(org.eclipse.jetty.websocket.api.Session&nbsp;session)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onWebSocketConnect</span><wbr><span class="parameters">(org.eclipse.jetty.ee8.websocket.api.Session&nbsp;session)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>onWebSocketConnect</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.websocket.api.WebSocketConnectionListener</code></dd>
+<dd><code>onWebSocketConnect</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.ee8.websocket.api.WebSocketConnectionListener</code></dd>
+<dt>Since:</dt>
+<dd>1.3</dd>
 </dl>
 </section>
 </li>
@@ -351,7 +353,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;reason)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>onWebSocketClose</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.websocket.api.WebSocketConnectionListener</code></dd>
+<dd><code>onWebSocketClose</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.ee8.websocket.api.WebSocketConnectionListener</code></dd>
 </dl>
 </section>
 </li>
@@ -393,7 +395,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
  int&nbsp;len)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>onWebSocketBinary</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.websocket.api.WebSocketListener</code></dd>
+<dd><code>onWebSocketBinary</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.ee8.websocket.api.WebSocketListener</code></dd>
 </dl>
 </section>
 </li>
@@ -403,7 +405,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onWebSocketText</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;message)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>onWebSocketText</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.websocket.api.WebSocketListener</code></dd>
+<dd><code>onWebSocketText</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.ee8.websocket.api.WebSocketListener</code></dd>
 </dl>
 </section>
 </li>
@@ -413,7 +415,7 @@ implements org.eclipse.jetty.websocket.api.WebSocketListener</span></div>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onWebSocketError</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</span></div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code>onWebSocketError</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.websocket.api.WebSocketConnectionListener</code></dd>
+<dd><code>onWebSocketError</code>&nbsp;in interface&nbsp;<code>org.eclipse.jetty.ee8.websocket.api.WebSocketConnectionListener</code></dd>
 </dl>
 </section>
 </li>

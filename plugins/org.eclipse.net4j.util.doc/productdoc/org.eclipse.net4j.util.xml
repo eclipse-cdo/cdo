@@ -15,6 +15,7 @@
 		<factory type="interactive" class="org.eclipse.net4j.util.internal.ui.InteractiveCredentialsProviderFactory" contributor="org.eclipse.net4j.util.ui"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.security.crypters" name="Crypters" description="" deprecated="false"/>
+	<productGroup id="org.eclipse.net4j.util.exceptionHandlers" name="Exception Handlers" description="" deprecated="false"/>
 	<productGroup id="org.eclipse.net4j.executorServices" name="Executor Services" description="" deprecated="false">
 		<factory type="default" class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory" contributor="org.eclipse.net4j.util"/>
 	</productGroup>

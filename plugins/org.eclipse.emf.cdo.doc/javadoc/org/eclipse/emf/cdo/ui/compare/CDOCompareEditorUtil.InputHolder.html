@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;</code>, <code><a href="CDOCompareEditorUtil.ContentsCreator.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a></code>, <code><a href="CDOCompareEditorUtil.EditorConsumer.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a></code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code></dd>
 </dl>
 <dl class="notes">
 <dt>Enclosing class:</dt>
@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">CDOCompareEditorUtil.InputHolder</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;</span></div>
+implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;, <a href="CDOCompareEditorUtil.EditorConsumer.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a>, <a href="CDOCompareEditorUtil.ContentsCreator.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a>, org.eclipse.net4j.util.lifecycle.IDeactivateable</span></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.6</dd>
@@ -123,6 +123,19 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#accept(org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input)" class="member-name-link">accept</a><wbr>(<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#activate(org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input)" class="member-name-link">activate</a><wbr>(<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createContents(org.eclipse.swt.widgets.Composite,java.util.function.Function)" class="member-name-link">createContents</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>,<wbr><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;defaultContentsCreator)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deactivate()" class="member-name-link">deactivate</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#editorOpened(org.eclipse.ui.IEditorPart)" class="member-name-link">editorOpened</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link">IEditorPart</a>&nbsp;editor)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInput()" class="member-name-link">getInput</a>()</code></div>
@@ -174,6 +187,47 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html#accept(T)" title="class or interface in java.util.function" class="external-link">accept</a></code>&nbsp;in interface&nbsp;<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="editorOpened(org.eclipse.ui.IEditorPart)">
+<h3>editorOpened</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">editorOpened</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link">IEditorPart</a>&nbsp;editor)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="CDOCompareEditorUtil.EditorConsumer.html#editorOpened(org.eclipse.ui.IEditorPart)">editorOpened</a></code>&nbsp;in interface&nbsp;<code><a href="CDOCompareEditorUtil.EditorConsumer.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createContents(org.eclipse.swt.widgets.Composite,java.util.function.Function)">
+<h3>createContents</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a></span>&nbsp;<span class="element-name">createContents</span><wbr><span class="parameters">(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Composite</a>,<wbr><a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Control.html" title="class or interface in org.eclipse.swt.widgets" class="external-link">Control</a>&gt;&nbsp;defaultContentsCreator)</span></div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="CDOCompareEditorUtil.ContentsCreator.html#createContents(org.eclipse.swt.widgets.Composite,java.util.function.Function)">createContents</a></code>&nbsp;in interface&nbsp;<code><a href="CDOCompareEditorUtil.ContentsCreator.html" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="activate(org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input)">
+<h3>activate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">activate</span><wbr><span class="parameters">(<a href="CDOCompareEditorUtil.Input.html" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a>&nbsp;input)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.9</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="deactivate()">
+<h3>deactivate</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></span>&nbsp;<span class="element-name">deactivate</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>deactivate</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code></dd>
 </dl>
 </section>
 </li>

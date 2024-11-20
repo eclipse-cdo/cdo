@@ -25,6 +25,7 @@ org.eclipse.net4j.util.security.operations
 org.eclipse.net4j.util.transaction
 org.eclipse.net4j.util.ui
 org.eclipse.net4j.util.ui.actions
+org.eclipse.net4j.util.ui.chat
 org.eclipse.net4j.util.ui.confirmation
 org.eclipse.net4j.util.ui.container
 org.eclipse.net4j.util.ui.dnd

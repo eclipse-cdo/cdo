@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code>, <code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../../net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../../net4j/protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.security.IUserAware</code></dd>
+<dd><code><a href="../../net4j/buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code>, <code><a href="../../net4j/ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../../net4j/protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../../net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../../net4j/protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.security.IUserAware</code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Protocol&lt;INFRA_STRUCTURE&gt;</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
-implements <a href="../../net4j/protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</span></div>
+implements <a href="../../net4j/protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;, org.eclipse.net4j.util.concurrent.IExecutorServiceProvider, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -174,51 +174,54 @@ implements <a href="../../net4j/protocol/IProtocol3.html" title="interface in or
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getChannel()" class="member-name-link">getChannel</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExecutorService()" class="member-name-link">getExecutorService</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.container.IManagedContainer</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInfraStructure()" class="member-name-link">getInfraStructure</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getExecutorService()" class="member-name-link">getExecutorService</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocation()" class="member-name-link">getLocation</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getInfraStructure()" class="member-name-link">getInfraStructure</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j">ILocationAware.Location</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocation()" class="member-name-link">getLocation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the location of this object in a <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="../../net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUserID()" class="member-name-link">getUserID</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVersion()" class="member-name-link">getVersion</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getUserID()" class="member-name-link">getUserID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleChannelDeactivation()" class="member-name-link">handleChannelDeactivation</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVersion()" class="member-name-link">getVersion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClient()" class="member-name-link">isClient</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleChannelDeactivation()" class="member-name-link">handleChannelDeactivation</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isClient()" class="member-name-link">isClient</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#CLIENT"><code>ILocationAware.Location.CLIENT</code></a></code>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isServer()" class="member-name-link">isServer</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isServer()" class="member-name-link">isServer</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Same as <code><a href="../../net4j/ILocationAware.html#getLocation()"><code>ILocationAware.getLocation()</code></a> == <a href="../../net4j/ILocationAware.Location.html#SERVER"><code>ILocationAware.Location.SERVER</code></a></code>.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setChannel(org.eclipse.net4j.channel.IChannel)" class="member-name-link">setChannel</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;newChannel)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setChannel(org.eclipse.net4j.channel.IChannel)" class="member-name-link">setChannel</a><wbr>(<a href="../../net4j/channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a>&nbsp;newChannel)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setExecutorService(java.util.concurrent.ExecutorService)" class="member-name-link">setExecutorService</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a>&nbsp;executorService)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setExecutorService(java.util.concurrent.ExecutorService)" class="member-name-link">setExecutorService</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/ExecutorService.html" title="class or interface in java.util.concurrent" class="external-link">ExecutorService</a>&nbsp;executorService)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInfraStructure(INFRA_STRUCTURE)" class="member-name-link">setInfraStructure</a><wbr>(<a href="Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a>&nbsp;infraStructure)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setInfraStructure(INFRA_STRUCTURE)" class="member-name-link">setInfraStructure</a><wbr>(<a href="Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a>&nbsp;infraStructure)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUserID(java.lang.String)" class="member-name-link">setUserID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setUserID(java.lang.String)" class="member-name-link">setUserID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -284,6 +287,16 @@ implements <a href="../../net4j/protocol/IProtocol3.html" title="interface in or
 <dd><code><a href="../../net4j/protocol/IProtocol2.html#getVersion()">getVersion</a></code>&nbsp;in interface&nbsp;<code><a href="../../net4j/protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;<a href="Protocol.html" title="type parameter in Protocol">INFRA_STRUCTURE</a>&gt;</code></dd>
 <dt>Since:</dt>
 <dd>4.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContainer()">
+<h3>getContainer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.container.IManagedContainer</span>&nbsp;<span class="element-name">getContainer</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getContainer</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.container.IManagedContainerProvider</code></dd>
 </dl>
 </section>
 </li>

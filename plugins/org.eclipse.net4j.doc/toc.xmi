@@ -34,5 +34,6 @@
   <article:Plugin name="org.eclipse.net4j.ws" label="Net4j Signalling Platform Websocket Transport">
     <packages name="org.eclipse.net4j.ws"/>
     <packages name="org.eclipse.net4j.ws.jetty"/>
+    <packages name="org.eclipse.net4j.wss"/>
   </article:Plugin>
 </xmi:XMI>

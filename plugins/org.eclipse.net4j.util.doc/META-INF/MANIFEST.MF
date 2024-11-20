@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.util.doc; singleton:=true
-Bundle-Version: 4.2.10.qualifier
+Bundle-Version: 4.2.11.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
@@ -10,10 +10,10 @@ Bundle-ClassPath: .
 Require-Bundle: org.eclipse.help;bundle-version="[3.3.0,4.0.0)";resolution:=optional,
  org.eclipse.net4j.util;bundle-version="[3.0.0,4.0.0)";resolution:=optional;visibility:=reexport,
  org.eclipse.net4j.util.ui;bundle-version="[3.0.0,4.0.0)";resolution:=optional;visibility:=reexport
-Export-Package: org.eclipse.net4j.util.doc;version="4.2.10",
- org.eclipse.net4j.util.doc.online;version="4.2.10",
- org.eclipse.net4j.util.doc.reference;version="4.2.10",
- org.eclipse.net4j.util.doc.reference.api;version="4.2.10",
- org.eclipse.net4j.util.doc.reference.product;version="4.2.10",
- org.eclipse.net4j.util.doc.reference.schema;version="4.2.10"
+Export-Package: org.eclipse.net4j.util.doc;version="4.2.11",
+ org.eclipse.net4j.util.doc.online;version="4.2.11",
+ org.eclipse.net4j.util.doc.reference;version="4.2.11",
+ org.eclipse.net4j.util.doc.reference.api;version="4.2.11",
+ org.eclipse.net4j.util.doc.reference.product;version="4.2.11",
+ org.eclipse.net4j.util.doc.reference.schema;version="4.2.11"
 Automatic-Module-Name: org.eclipse.net4j.util.doc

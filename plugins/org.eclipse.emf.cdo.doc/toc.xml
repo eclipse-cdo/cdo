@@ -265,6 +265,9 @@
       <topic label="CDO Model Repository Lifecycle Management Modules Edit Support" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="plugin">
         <topic label="CDO Dependency Target Name Providers" href="productdoc/org.eclipse.emf.cdo.lm.modules.targetNameProviders.html" icon="productgroup" />
       </topic>
+      <topic label="CDO Model Repository Lifecycle Management Reviews" href="productdoc/org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors.html" icon="plugin">
+        <topic label="Model Reference Extractors" href="productdoc/org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors.html" icon="productgroup" />
+      </topic>
       <topic label="CDO Model Repository Lifecycle Management Reviews Server" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="plugin">
         <topic label="CDO Review Managers" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="productgroup" />
       </topic>

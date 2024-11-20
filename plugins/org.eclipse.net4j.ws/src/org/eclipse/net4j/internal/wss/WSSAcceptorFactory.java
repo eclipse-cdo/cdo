@@ -44,6 +44,9 @@ public class WSSAcceptorFactory extends WSAcceptorFactory
     return wsAcceptor;
   }
 
+  /**
+   * @author mporhel
+   */
   public static class DescriptionParserFactory extends AcceptorDescriptionParser.Factory implements AcceptorDescriptionParser
   {
     public DescriptionParserFactory()

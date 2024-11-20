@@ -31,6 +31,9 @@ import java.text.MessageFormat;
  */
 public class WSSClientConnector extends WSClientConnector
 {
+  public WSSClientConnector()
+  {
+  }
 
   @Override
   public String toString()
@@ -41,34 +44,30 @@ public class WSSClientConnector extends WSClientConnector
   @Override
   protected void doBeforeActivate() throws Exception
   {
-
-    if (getServiceURI().getScheme().equals(WSSUtil.FACTORY_TYPE))
-    {
-      SslContextFactory.Client sslContextFactory = createSslContextFactory();
-
-      ClientConnector clientConnector = new ClientConnector();
-      clientConnector.setSslContextFactory(sslContextFactory);
-
-      HttpClient httpClient = new HttpClient(new HttpClientTransportDynamic(clientConnector));
-
-      WebSocketClient securedClient = new WebSocketClient(httpClient);
-      configureProxy(securedClient, IProxyData.HTTPS_PROXY_TYPE);
-      configureBasicAuthentication(securedClient);
-      setClient(securedClient);
-
-      // Let WSClientConnector manage the WebSocketClient, see WSClientConnector::doActivate/doDeactivate
-      ownedClient = true;
-
-      super.doBeforeActivate();
-    }
-    else
+    if (!getServiceURI().getScheme().equals(WSSUtil.FACTORY_TYPE))
     {
       throw new IllegalArgumentException("Service Uri should have wss:// scheme");
     }
 
+    SslContextFactory.Client sslContextFactory = createSslContextFactory();
+
+    ClientConnector clientConnector = new ClientConnector();
+    clientConnector.setSslContextFactory(sslContextFactory);
+
+    HttpClient httpClient = new HttpClient(new HttpClientTransportDynamic(clientConnector));
+
+    WebSocketClient securedClient = new WebSocketClient(httpClient);
+    configureProxy(securedClient, IProxyData.HTTPS_PROXY_TYPE);
+    configureBasicAuthentication(securedClient);
+    setClient(securedClient);
+
+    // Let WSClientConnector manage the WebSocketClient, see WSClientConnector::doActivate/doDeactivate
+    ownedClient = true;
+
+    super.doBeforeActivate();
   }
 
-  private SslContextFactory.Client createSslContextFactory()
+  private static SslContextFactory.Client createSslContextFactory()
   {
     // initialize SSL Context
     SslContextFactory.Client sslContextFactory = new SslContextFactory.Client();
@@ -77,7 +76,7 @@ public class WSSClientConnector extends WSClientConnector
     String eia = System.getProperty("org.eclipse.net4j.internal.wss.ssl.endpointIdentificationAlgorithm");
 
     String passphrase = System.getProperty("org.eclipse.net4j.internal.wss.ssl.passphrase");
-    String trusturi = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust");
+    String trustURI = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust");
     String trustType = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.type");
     String trustAlg = System.getProperty("org.eclipse.net4j.internal.wss.ssl.trust.manager.factory.algorithm");
 
@@ -92,14 +91,15 @@ public class WSSClientConnector extends WSClientConnector
       sslContextFactory.setEndpointIdentificationAlgorithm(eia);
     }
 
-    if (trusturi != null)
+    if (trustURI != null)
     {
-      URI uri = URI.create(trusturi);
+      URI uri = URI.create(trustURI);
       File file = new File(uri);
       if (file.exists())
       {
         sslContextFactory.setTrustStoreResource(new PathResourceFactory().newResource(uri));
         sslContextFactory.setTrustStorePassword(passphrase);
+
         if (!StringUtil.isEmpty(trustType))
         {
           sslContextFactory.setTrustStoreType(trustType);
@@ -111,7 +111,7 @@ public class WSSClientConnector extends WSClientConnector
         }
       }
     }
+
     return sslContextFactory;
   }
-
 }

@@ -18,6 +18,7 @@ import org.eclipse.net4j.tcp.ITCPPassiveSelectorListener;
 import org.eclipse.net4j.tcp.ITCPSelector;
 import org.eclipse.net4j.tcp.TCPUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -329,7 +330,7 @@ public class TCPAcceptor extends Acceptor implements ITCPAcceptor, ITCPPassiveSe
     {
       String listenAddr = acceptorConfig.getAttribute("listenAddr"); //$NON-NLS-1$
       String port = acceptorConfig.getAttribute("port"); //$NON-NLS-1$
-      return (listenAddr == null ? "" : listenAddr) + (port == null ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+      return (listenAddr == null ? "" : listenAddr) + (StringUtil.isEmpty(port) ? "" : ":" + port); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
     }
   }
 }

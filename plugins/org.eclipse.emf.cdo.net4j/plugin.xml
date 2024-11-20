@@ -45,6 +45,10 @@
       <parser
             class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
             protocolName="cdo.net4j.ws"/>
+      <parser
+            class="org.eclipse.emf.cdo.eresource.impl.CDOResourceFactoryImpl"
+            protocolName="cdo.net4j.wss">
+      </parser>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.viewProviders">
@@ -64,6 +68,11 @@
             class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$WS"
             priority="500"
             regex="cdo\.net4j\.ws://.*"/>
+      <viewProvider
+            class="org.eclipse.emf.cdo.net4j.CDONet4jViewProvider$WSS"
+            priority="500"
+            regex="cdo\.net4j\.wss://.*">
+      </viewProvider>
    </extension>
 
 </plugin>

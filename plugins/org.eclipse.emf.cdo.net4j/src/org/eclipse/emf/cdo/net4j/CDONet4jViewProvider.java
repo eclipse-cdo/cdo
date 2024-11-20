@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010-2012, 2015, 2016, 2019, 2020 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2010-2012, 2015, 2016, 2019, 2020, 2022 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - WSS Support
  */
 package org.eclipse.emf.cdo.net4j;
 
@@ -164,7 +165,22 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
       CDOURIUtil.appendQueryParameter(query, CDOURIData.TRANSACTIONAL_PARAMETER, "true");
     }
 
-    URI uri = URI.createHierarchicalURI("cdo.net4j." + transport, authority, null, query.toString(), null).appendSegment(repositoryName);
+    String[] servicePathSegments = null;
+    if (authority.contains(CDOURIUtil.SEGMENT_SEPARATOR))
+    {
+      URI uri = URI.createURI(transport + "://" + authority);
+      authority = uri.authority();
+      servicePathSegments = uri.segments();
+    }
+
+    URI uri = URI.createHierarchicalURI("cdo.net4j." + transport, authority, null, query.toString(), null);
+
+    if (servicePathSegments != null && servicePathSegments.length > 0)
+    {
+      uri = uri.appendSegments(servicePathSegments);
+    }
+
+    uri = uri.appendSegment(repositoryName);
     return CDOURIUtil.appendResourcePath(uri, resourcePath);
   }
 
@@ -337,6 +353,14 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
   {
     public static final String ACCEPTOR_NAME_PREFIX = "@";
 
+    /**
+     * @since 4.7
+     */
+    protected WS(String transport, int priority)
+    {
+      super(transport, priority);
+    }
+
     public WS(int priority)
     {
       super("ws", priority);
@@ -410,6 +434,25 @@ public abstract class CDONet4jViewProvider extends AbstractCDOViewProvider
       }
 
       return -1;
+    }
+  }
+
+  /**
+   * A WSS-based {@link CDONet4jViewProvider view provider}.
+   *
+   * @author Maxime Porhel (Obeo)
+   * @since 4.7
+   */
+  public static class WSS extends WS
+  {
+    public WSS(int priority)
+    {
+      super("wss", priority);
+    }
+
+    public WSS()
+    {
+      this(DEFAULT_PRIORITY);
     }
   }
 }

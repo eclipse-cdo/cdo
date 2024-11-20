@@ -23,9 +23,8 @@
     <relativePath>../../releng/org.eclipse.emf.cdo.releng.parent/plugins</relativePath>
   </parent>
 
-  <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.eclipse.emf.cdo.net4j</artifactId>
-  <version>4.6.5-SNAPSHOT</version>
+  <version>4.7.0-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

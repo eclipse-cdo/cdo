@@ -156,6 +156,7 @@ public class DB2Adapter extends DBAdapter
     }
   }
 
+  @Override
   public String[] getReservedWords()
   {
     return RESERVED_WORDS;

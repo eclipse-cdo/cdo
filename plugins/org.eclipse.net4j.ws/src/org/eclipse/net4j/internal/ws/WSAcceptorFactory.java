@@ -10,6 +10,7 @@
  */
 package org.eclipse.net4j.internal.ws;
 
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.ws.IWSAcceptor;
 import org.eclipse.net4j.ws.WSUtil;
 
@@ -20,6 +21,12 @@ import org.eclipse.spi.net4j.AcceptorFactory;
  */
 public class WSAcceptorFactory extends AcceptorFactory
 {
+
+  /**
+   * Default acceptor name when acceptor tag in cdo-server.xml does not declare a listen address.
+   */
+  public static final String DEFAULT_ACCEPTOR_NAME = "default"; //$NON-NLS-1$
+
   public WSAcceptorFactory()
   {
     super(WSUtil.FACTORY_TYPE);
@@ -37,7 +44,14 @@ public class WSAcceptorFactory extends AcceptorFactory
   public WSAcceptor create(String description)
   {
     WSAcceptor acceptor = createAcceptor();
-    acceptor.setName(description);
+    if (StringUtil.isEmpty(description))
+    {
+      acceptor.setName(DEFAULT_ACCEPTOR_NAME);
+    }
+    else
+    {
+      acceptor.setName(description);
+    }
     return acceptor;
   }
 

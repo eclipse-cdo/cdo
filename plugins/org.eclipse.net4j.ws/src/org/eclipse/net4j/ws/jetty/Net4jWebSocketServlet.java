@@ -10,8 +10,8 @@
  */
 package org.eclipse.net4j.ws.jetty;
 
-import org.eclipse.jetty.websocket.server.JettyWebSocketServlet;
-import org.eclipse.jetty.websocket.server.JettyWebSocketServletFactory;
+import org.eclipse.jetty.ee8.websocket.server.JettyWebSocketServlet;
+import org.eclipse.jetty.ee8.websocket.server.JettyWebSocketServletFactory;
 
 /**
  * @author Eike Stepper

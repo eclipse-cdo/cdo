@@ -1,11 +1,12 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
+Automatic-Module-Name: org.eclipse.net4j.db.db2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.db2;singleton:=true
 Bundle-Version: 4.1.100.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
-Bundle-RequiredExecutionEnvironment: J2SE-1.5
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Bundle-ActivationPolicy: lazy
 Bundle-Activator: org.eclipse.net4j.db.internal.db2.bundle.OM$Activator

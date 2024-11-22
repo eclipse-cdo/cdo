@@ -11,6 +11,7 @@
  */
 package org.eclipse.net4j.tests;
 
+import org.eclipse.net4j.signal.EntityRequest;
 import org.eclipse.net4j.tests.config.AbstractConfigTest;
 import org.eclipse.net4j.tests.data.TinyData;
 import org.eclipse.net4j.tests.signal.ArrayRequest;
@@ -18,10 +19,12 @@ import org.eclipse.net4j.tests.signal.AsyncRequest;
 import org.eclipse.net4j.tests.signal.IntRequest;
 import org.eclipse.net4j.tests.signal.StringRequest;
 import org.eclipse.net4j.tests.signal.TestSignalProtocol;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 
 /**
  * @author Eike Stepper
@@ -109,6 +112,28 @@ public class SignalTest extends AbstractConfigTest
 
       config.closeUnderlyingConnection(getServerConnector());
       assertNoTimeout(() -> !lifecycle.isActive());
+    }
+    finally
+    {
+      if (protocol != null)
+      {
+        protocol.close();
+      }
+    }
+  }
+
+  public void testEntities() throws Exception
+  {
+    TestSignalProtocol protocol = null;
+
+    try
+    {
+      startTransport();
+      protocol = new TestSignalProtocol(getConnector());
+      BiConsumer<String, Entity> entityHandler = (name, entity) -> System.out.println(name + " --> " + entity);
+
+      int result = new EntityRequest(protocol, entityHandler, "users", "eike", "rene", "ed").send();
+      assertEquals(2, result);
     }
     finally
     {

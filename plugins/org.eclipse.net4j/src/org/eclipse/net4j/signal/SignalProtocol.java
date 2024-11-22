@@ -88,6 +88,11 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
   public static final short SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS = -5;
 
   /**
+   * @since 4.20
+   */
+  public static final short SIGNAL_ENTITY = -6;
+
+  /**
    * Begin Of Signal.
    */
   private static final int BOS_BIT = 1;
@@ -459,6 +464,12 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
    */
   protected SignalReactor createSignalReactor(short signalID)
   {
+    if (signalID == SIGNAL_ENTITY)
+    {
+      // Can be avoided or customized in subclasses.
+      return new EntityIndication(this);
+    }
+
     return null;
   }
 

@@ -90,6 +90,18 @@
                 <message_argument value="SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS"/>
             </message_arguments>
         </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.SignalProtocol"/>
+                <message_argument value="SIGNAL_ENTITY"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.signal.SignalProtocol"/>
+                <message_argument value="SIGNAL_ENTITY_NOTIFICATION"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/spi/net4j/Acceptor.java" type="org.eclipse.spi.net4j.Acceptor">
         <filter id="574668824">

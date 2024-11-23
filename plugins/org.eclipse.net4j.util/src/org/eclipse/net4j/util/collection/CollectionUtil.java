@@ -11,18 +11,26 @@
 package org.eclipse.net4j.util.collection;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.function.BiFunction;
 import java.util.function.BiPredicate;
+import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Various static helper methods.
@@ -224,6 +232,218 @@ public final class CollectionUtil
     catch (KeepMappedValue ex)
     {
       return ex.mappedValue();
+    }
+  }
+
+  /**
+   * @since 3.26
+   */
+  @SafeVarargs
+  public static <T> Stream<T> concat(Stream<T>... streams)
+  {
+    return concat(Arrays.asList(streams));
+  }
+
+  /**
+   * @since 3.26
+   */
+  @SuppressWarnings("unchecked")
+  public static <T> Stream<T> concat(Collection<Stream<T>> streams)
+  {
+    Spliterator<T>[] splits = (Spliterator<T>[])new Spliterator<?>[streams.size()];
+    boolean parallel = false;
+    int i = 0;
+
+    for (Stream<T> stream : streams)
+    {
+      splits[i++] = stream.spliterator();
+      parallel |= stream.isParallel();
+    }
+
+    return StreamSupport.stream(new ConcatSplit<>(splits), parallel).onClose(() -> {
+      RuntimeException exception = null;
+
+      for (Stream<T> stream : streams)
+      {
+        try
+        {
+          stream.close();
+        }
+        catch (RuntimeException ex)
+        {
+          if (exception == null)
+          {
+            exception = ex;
+          }
+          else
+          {
+            exception.addSuppressed(ex);
+          }
+        }
+      }
+
+      if (exception != null)
+      {
+        throw exception;
+      }
+    });
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class ConcatSplit<T> implements Spliterator<T>
+  {
+    private static final int EMPTY_CHARACTERISTICS = Spliterators.emptySpliterator().characteristics();
+
+    private final Spliterator<T>[] splits;
+
+    private final int high;
+
+    private int low;
+
+    private int index;
+
+    private ConcatSplit(Spliterator<T>[] splits, int from, int to)
+    {
+      this.splits = splits;
+      high = to;
+      low = from;
+      index = from;
+    }
+
+    public ConcatSplit(Spliterator<T>[] splits)
+    {
+      this(splits, 0, splits.length);
+    }
+
+    @Override
+    public int characteristics()
+    {
+      int i = low;
+      if (i >= high)
+      {
+        return EMPTY_CHARACTERISTICS;
+      }
+
+      if (i == high - 1)
+      {
+        return splits[i].characteristics();
+      }
+
+      long size = 0;
+      int characteristics = ORDERED | SIZED | SUBSIZED | NONNULL | IMMUTABLE | CONCURRENT;
+
+      do
+      {
+        Spliterator<T> split = splits[i];
+        characteristics &= split.characteristics();
+
+        if ((characteristics & SIZED) == SIZED)
+        {
+          size += split.estimateSize();
+          if (size < 0)
+          {
+            characteristics &= ~(SIZED | SUBSIZED);
+          }
+        }
+      } while (++i < high);
+
+      return characteristics;
+    }
+
+    @Override
+    public long estimateSize()
+    {
+      long size = 0;
+
+      for (int i = index; i < high; i++)
+      {
+        size += splits[i].estimateSize();
+        if (size < 0)
+        {
+          return Long.MAX_VALUE;
+        }
+      }
+
+      return size;
+    }
+
+    @Override
+    public void forEachRemaining(Consumer<? super T> action)
+    {
+      Objects.requireNonNull(action);
+
+      int i = index;
+      if (i < high)
+      {
+        do
+        {
+          splits[i].forEachRemaining(action);
+        } while (++i < high);
+
+        index = high;
+      }
+    }
+
+    @Override
+    public Comparator<? super T> getComparator()
+    {
+      int i = low;
+      if (i == high - 1)
+      {
+        return splits[i].getComparator();
+      }
+
+      throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean tryAdvance(Consumer<? super T> action)
+    {
+      Objects.requireNonNull(action);
+
+      int i = index;
+      if (i < high)
+      {
+        do
+        {
+          if (splits[i].tryAdvance(action))
+          {
+            index = i;
+            return true;
+          }
+        } while (++i < high);
+
+        index = high;
+      }
+
+      return false;
+    }
+
+    @Override
+    public Spliterator<T> trySplit()
+    {
+      int i = index;
+      if (i >= high)
+      {
+        return null;
+      }
+
+      if (i == high - 1)
+      {
+        return splits[i].trySplit();
+      }
+
+      int mid = i + high >>> 1;
+      low = index = mid;
+
+      if (mid == i + 1)
+      {
+        return splits[i];
+      }
+
+      return new ConcatSplit<>(splits, i, mid);
     }
   }
 

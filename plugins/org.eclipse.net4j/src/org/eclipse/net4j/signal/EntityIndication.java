@@ -71,7 +71,7 @@ public class EntityIndication extends IndicationWithResponse
 
       for (String name : names)
       {
-        Entity entity = entityProvider.getEntity(namespace, name);
+        Entity entity = entityProvider.entity(namespace, name);
         if (entity != null)
         {
           out.writeBoolean(true);

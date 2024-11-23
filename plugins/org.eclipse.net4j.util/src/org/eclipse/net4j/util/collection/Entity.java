@@ -11,19 +11,22 @@
 package org.eclipse.net4j.util.collection;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 import org.eclipse.net4j.util.io.StringCompressor;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.function.Predicate;
+import java.util.concurrent.Callable;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 /**
  * @author Eike Stepper
@@ -353,70 +356,303 @@ public final class Entity implements Comparable<Entity>
    */
   public interface Provider
   {
-    public default Entity getEntity(String namespace, String name)
+    public default Stream<String> namespaces()
+    {
+      return entities().map(Entity::namespace).distinct();
+    }
+
+    public default Stream<String> names(String namespace)
+    {
+      requireValidNamespace(namespace);
+      return entities(namespace).map(Entity::name).distinct();
+    }
+
+    public Stream<Entity> entities();
+
+    public default Stream<Entity> entities(String namespace)
+    {
+      requireValidNamespace(namespace);
+      return entities().filter(entity -> entity.namespace().equals(namespace));
+    }
+
+    public default Entity entity(String namespace, String name)
+    {
+      requireValidNamespace(namespace);
+      requireValidName(name);
+      return entities(namespace).filter(entity -> entity.name().equals(name)).findFirst().orElse(null);
+    }
+
+    public default Entity entity(String id)
+    {
+      Pair<String, String> pair = parseID(id);
+      return entity(pair.getElement1(), pair.getElement2());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class NamespaceProvider implements Provider
+  {
+    private final String namespace;
+
+    private final Map<String, Entity> entities = new HashMap<>();
+
+    public NamespaceProvider(String namespace)
+    {
+      this.namespace = requireValidNamespace(namespace);
+    }
+
+    public Entity addEntity(Entity entity)
+    {
+      if (!entity.namespace.equals(namespace))
+      {
+        throw new IllegalArgumentException("Namespace mismatch");
+      }
+
+      return entities.put(entity.name(), entity);
+    }
+
+    public Entity removeEntity(String name)
+    {
+      return entities.remove(name);
+    }
+
+    public String namespace()
+    {
+      return namespace;
+    }
+
+    @Override
+    public Stream<String> namespaces()
+    {
+      return Stream.of(namespace);
+    }
+
+    @Override
+    public Stream<String> names(String namespace)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return Stream.empty();
+      }
+
+      return entities.keySet().stream();
+    }
+
+    @Override
+    public Stream<Entity> entities()
+    {
+      return entities.values().stream();
+    }
+
+    @Override
+    public Stream<Entity> entities(String namespace)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return Stream.empty();
+      }
+
+      return entities();
+    }
+
+    @Override
+    public Entity entity(String namespace, String name)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return null;
+      }
+
+      return entities.get(name);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ComposedProvider implements Provider
+  {
+    private final List<Provider> providers = new ArrayList<>();
+
+    private final Map<String, List<Provider>> providersByNamespace = new HashMap<>();
+
+    public ComposedProvider()
+    {
+    }
+
+    public void addProvider(Provider provider)
+    {
+      if (providers.add(provider))
+      {
+        provider.namespaces().forEach(namespace -> {
+          providersByNamespace.computeIfAbsent(namespace, k -> new ArrayList<>()).add(provider);
+        });
+      }
+    }
+
+    public void removeProvider(Provider provider)
+    {
+      if (providers.add(provider))
+      {
+        provider.namespaces().forEach(namespace -> {
+          List<Provider> providers = providersByNamespace.get(namespace);
+          if (providers != null)
+          {
+            providers.remove(provider);
+          }
+        });
+      }
+    }
+
+    @Override
+    public Stream<String> namespaces()
+    {
+      return providersByNamespace.keySet().stream();
+    }
+
+    @Override
+    public Stream<String> names(String namespace)
+    {
+      requireValidNamespace(namespace);
+
+      List<Provider> providers = providersByNamespace.get(namespace);
+      if (ObjectUtil.isEmpty(providers))
+      {
+        return Stream.empty();
+      }
+
+      List<Stream<String>> streams = new ArrayList<>(providers.size());
+      for (Provider provider : providers)
+      {
+        streams.add(provider.names(namespace));
+      }
+
+      return CollectionUtil.concat(streams).distinct();
+    }
+
+    @Override
+    public Stream<Entity> entities()
+    {
+      if (ObjectUtil.isEmpty(providers))
+      {
+        return Stream.empty();
+      }
+
+      List<Stream<Entity>> streams = new ArrayList<>(providers.size());
+      for (Provider provider : providers)
+      {
+        streams.add(provider.entities());
+      }
+
+      return CollectionUtil.concat(streams).distinct();
+    }
+
+    @Override
+    public Stream<Entity> entities(String namespace)
+    {
+      requireValidNamespace(namespace);
+
+      List<Provider> providers = providersByNamespace.get(namespace);
+      if (ObjectUtil.isEmpty(providers))
+      {
+        return Stream.empty();
+      }
+
+      List<Stream<Entity>> streams = new ArrayList<>(providers.size());
+      for (Provider provider : providers)
+      {
+        streams.add(provider.entities(namespace));
+      }
+
+      return CollectionUtil.concat(streams).distinct();
+    }
+
+    @Override
+    public Entity entity(String namespace, String name)
     {
       requireValidNamespace(namespace);
       requireValidName(name);
 
-      Entity[] result = { null };
+      return entities(namespace).filter(entity -> entity.name().equals(name)).findFirst().orElse(null);
+    }
+  }
 
-      forEachEntity(namespace, entity -> {
-        if (entity.name().equals(name))
-        {
-          result[0] = entity;
-          return false;
-        }
+  /**
+   * @author Eike Stepper
+   */
+  public static final class ConcurrentProvider implements Provider
+  {
+    private final Provider delegate;
 
-        return true;
-      });
+    private final RWLock lock;
 
-      return result[0];
+    public ConcurrentProvider(Provider delegate)
+    {
+      this(delegate, 1000L);
     }
 
-    public default Entity getEntity(String id)
+    public ConcurrentProvider(Provider delegate, long timeoutMillis)
     {
-      Pair<String, String> pair = parseID(id);
-      return getEntity(pair.getElement1(), pair.getElement2());
+      this.delegate = delegate;
+      lock = new RWLock(timeoutMillis);
     }
 
-    public default Set<String> getNamespaces()
+    @Override
+    public Stream<String> namespaces()
     {
-      Set<String> namespaces = new HashSet<>();
-
-      forEachEntity(entity -> {
-        namespaces.add(entity.namespace());
-        return true;
-      });
-
-      return namespaces;
+      return read(() -> delegate.namespaces());
     }
 
-    public default Set<String> getEntityNames(String namespace)
+    @Override
+    public Stream<String> names(String namespace)
     {
-      Set<String> names = new HashSet<>();
-
-      forEachEntity(namespace, entity -> {
-        names.add(entity.name());
-        return true;
-      });
-
-      return names;
+      return read(() -> delegate.names(namespace));
     }
 
-    public boolean forEachEntity(Predicate<Entity> handler);
-
-    public default boolean forEachEntity(String namespace, Predicate<Entity> handler)
+    @Override
+    public Stream<Entity> entities()
     {
-      requireValidNamespace(namespace);
+      return read(() -> delegate.entities());
+    }
 
-      return forEachEntity(entity -> {
-        if (entity.namespace().equals(namespace))
-        {
-          return handler.test(entity);
-        }
+    @Override
+    public Stream<Entity> entities(String namespace)
+    {
+      return read(() -> delegate.entities(namespace));
+    }
 
-        return true;
-      });
+    @Override
+    public Entity entity(String namespace, String name)
+    {
+      return read(() -> delegate.entity(namespace, name));
+    }
+
+    @Override
+    public Entity entity(String id)
+    {
+      return read(() -> delegate.entity(id));
+    }
+
+    public <V> V read(Callable<V> callable)
+    {
+      return lock.read(callable);
+    }
+
+    public void read(Runnable runnable)
+    {
+      lock.read(runnable);
+    }
+
+    public <V> V write(Callable<V> callable)
+    {
+      return lock.write(callable);
+    }
+
+    public void write(Runnable runnable)
+    {
+      lock.write(runnable);
     }
   }
 }

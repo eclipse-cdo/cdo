@@ -21,7 +21,7 @@ import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
-import java.util.function.Predicate;
+import java.util.stream.Stream;
 
 /**
  * @author Eike Stepper
@@ -159,20 +159,10 @@ public class TestSignalProtocol extends SignalProtocol<Object>
 
         private final Entity ED = Entity.builder().namespace("users").name("ed").property("phone", "555-78546384").build();
 
-        private final Entity[] ENTITIES = { EIKE, ED };
-
         @Override
-        public boolean forEachEntity(Predicate<Entity> handler)
+        public Stream<Entity> entities()
         {
-          for (Entity entity : ENTITIES)
-          {
-            if (!handler.test(entity))
-            {
-              return false;
-            }
-          }
-
-          return true;
+          return Stream.of(EIKE, ED);
         }
       });
 

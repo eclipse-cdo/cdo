@@ -95,9 +95,9 @@ public class EntityIndication extends IndicationWithResponse
   protected Entity.Provider getEntityProvider()
   {
     Object infraStructure = getProtocol().getInfraStructure();
-    if (infraStructure instanceof Entity.Provider)
+    if (infraStructure instanceof Entity.Provider.Supplier)
     {
-      return (Entity.Provider)infraStructure;
+      return ((Entity.Provider.Supplier)infraStructure).getEntityProvider();
     }
 
     return null;

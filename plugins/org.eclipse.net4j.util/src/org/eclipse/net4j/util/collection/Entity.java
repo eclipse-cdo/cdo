@@ -387,6 +387,14 @@ public final class Entity implements Comparable<Entity>
       Pair<String, String> pair = parseID(id);
       return entity(pair.getElement1(), pair.getElement2());
     }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface Supplier
+    {
+      public Provider getEntityProvider();
+    }
   }
 
   /**

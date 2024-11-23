@@ -11,7 +11,6 @@
 package org.eclipse.net4j.util.collection;
 
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -19,6 +18,7 @@ import org.eclipse.net4j.util.io.StringCompressor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -429,6 +429,11 @@ public final class Entity implements Comparable<Entity>
       return Stream.of(namespace);
     }
 
+    public Stream<String> names()
+    {
+      return names(namespace);
+    }
+
     @Override
     public Stream<String> names(String namespace)
     {
@@ -467,6 +472,73 @@ public final class Entity implements Comparable<Entity>
 
       return entities.get(name);
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static abstract class NamespaceComputer implements Provider
+  {
+    private final String namespace;
+
+    public NamespaceComputer(String namespace)
+    {
+      this.namespace = requireValidNamespace(namespace);
+    }
+
+    public final String namespace()
+    {
+      return namespace;
+    }
+
+    @Override
+    public final Stream<String> namespaces()
+    {
+      return Stream.of(namespace);
+    }
+
+    public Stream<String> names()
+    {
+      return names(namespace);
+    }
+
+    @Override
+    public Stream<String> names(String namespace)
+    {
+      return computeNames().stream();
+    }
+
+    @Override
+    public Stream<Entity> entities()
+    {
+      return names().map(this::computeEntity);
+    }
+
+    @Override
+    public Stream<Entity> entities(String namespace)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return Stream.empty();
+      }
+
+      return entities();
+    }
+
+    @Override
+    public Entity entity(String namespace, String name)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return null;
+      }
+
+      return computeEntity(requireValidName(name));
+    }
+
+    protected abstract Collection<String> computeNames();
+
+    protected abstract Entity computeEntity(String name);
   }
 
   /**
@@ -518,12 +590,18 @@ public final class Entity implements Comparable<Entity>
       requireValidNamespace(namespace);
 
       List<Provider> providers = providersByNamespace.get(namespace);
-      if (ObjectUtil.isEmpty(providers))
+      int size = providers == null ? 0 : providers.size();
+      if (size == 0)
       {
         return Stream.empty();
       }
 
-      List<Stream<String>> streams = new ArrayList<>(providers.size());
+      if (size == 1)
+      {
+        return providers.get(0).names(namespace);
+      }
+
+      List<Stream<String>> streams = new ArrayList<>(size);
       for (Provider provider : providers)
       {
         streams.add(provider.names(namespace));
@@ -535,12 +613,18 @@ public final class Entity implements Comparable<Entity>
     @Override
     public Stream<Entity> entities()
     {
-      if (ObjectUtil.isEmpty(providers))
+      int size = providers.size();
+      if (size == 0)
       {
         return Stream.empty();
       }
 
-      List<Stream<Entity>> streams = new ArrayList<>(providers.size());
+      if (size == 1)
+      {
+        return providers.get(0).entities();
+      }
+
+      List<Stream<Entity>> streams = new ArrayList<>(size);
       for (Provider provider : providers)
       {
         streams.add(provider.entities());
@@ -555,12 +639,18 @@ public final class Entity implements Comparable<Entity>
       requireValidNamespace(namespace);
 
       List<Provider> providers = providersByNamespace.get(namespace);
-      if (ObjectUtil.isEmpty(providers))
+      int size = providers.size();
+      if (size == 0)
       {
         return Stream.empty();
       }
 
-      List<Stream<Entity>> streams = new ArrayList<>(providers.size());
+      if (size == 1)
+      {
+        return providers.get(0).entities(namespace);
+      }
+
+      List<Stream<Entity>> streams = new ArrayList<>(size);
       for (Provider provider : providers)
       {
         streams.add(provider.entities(namespace));

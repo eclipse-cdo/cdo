@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.collection;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -250,7 +252,18 @@ public final class CollectionUtil
   @SuppressWarnings("unchecked")
   public static <T> Stream<T> concat(Collection<Stream<T>> streams)
   {
-    Spliterator<T>[] splits = (Spliterator<T>[])new Spliterator<?>[streams.size()];
+    if (ObjectUtil.isEmpty(streams))
+    {
+      return Stream.empty();
+    }
+
+    int size = streams.size();
+    if (size == 1)
+    {
+      return streams.iterator().next();
+    }
+
+    Spliterator<T>[] splits = (Spliterator<T>[])new Spliterator<?>[size];
     boolean parallel = false;
     int i = 0;
 

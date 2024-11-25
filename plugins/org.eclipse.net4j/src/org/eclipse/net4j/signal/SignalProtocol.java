@@ -19,6 +19,8 @@ import org.eclipse.net4j.channel.IChannel;
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.util.ExceptionHandler;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
+import org.eclipse.net4j.util.collection.Entity.Store;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
@@ -54,7 +56,8 @@ import java.util.concurrent.atomic.AtomicLong;
  *
  * @author Eike Stepper
  */
-public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> implements ISignalProtocol.WithSignalCounters<INFRA_STRUCTURE>
+public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE>
+    implements ISignalProtocol.WithSignalCounters<INFRA_STRUCTURE>, Entity.Store.Provider
 {
   /**
    * @since 4.7
@@ -209,6 +212,13 @@ public class SignalProtocol<INFRA_STRUCTURE> extends Protocol<INFRA_STRUCTURE> i
     {
       this.streamWrapper = new StreamWrapperChain(streamWrapper, this.streamWrapper);
     }
+  }
+
+  @Override
+  public Store getEntityStore()
+  {
+    INFRA_STRUCTURE infraStructure = getInfraStructure();
+    return Entity.Store.of(infraStructure);
   }
 
   /**

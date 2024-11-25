@@ -14,14 +14,13 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.protocol.IProtocol2;
 import org.eclipse.net4j.signal.SignalProtocol;
 import org.eclipse.net4j.signal.SignalReactor;
-import org.eclipse.net4j.util.collection.Entity;
+import org.eclipse.net4j.util.collection.Entity.SingleNamespaceStore;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.spi.net4j.ServerProtocolFactory;
 
 import java.io.IOException;
 import java.rmi.AlreadyBoundException;
-import java.util.stream.Stream;
 
 /**
  * @author Eike Stepper
@@ -151,21 +150,13 @@ public class TestSignalProtocol extends SignalProtocol<Object>
     @Override
     public TestSignalProtocol create(String description) throws ProductCreationException
     {
+      SingleNamespaceStore store = new SingleNamespaceStore("users");
+      store.addEntity("eike").property("phone", "555-2765746").build();
+      store.addEntity("ed").property("phone", "555-78546384").build();
+
       TestSignalProtocol protocol = new TestSignalProtocol();
       protocol.setVersion(version);
-      protocol.setInfraStructure(new Entity.Provider()
-      {
-        private final Entity EIKE = Entity.builder().namespace("users").name("eike").property("phone", "555-2765746").build();
-
-        private final Entity ED = Entity.builder().namespace("users").name("ed").property("phone", "555-78546384").build();
-
-        @Override
-        public Stream<Entity> entities()
-        {
-          return Stream.of(EIKE, ED);
-        }
-      });
-
+      protocol.setInfraStructure(store);
       return protocol;
     }
   }

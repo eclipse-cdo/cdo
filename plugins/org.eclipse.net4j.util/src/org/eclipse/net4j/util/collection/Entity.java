@@ -18,13 +18,17 @@ import org.eclipse.net4j.util.io.StringCompressor;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Callable;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
@@ -84,6 +88,21 @@ public final class Entity implements Comparable<Entity>
   public String property(String name)
   {
     return properties.get(requireValidName(name));
+  }
+
+  public Entity filter(String... propertyNames)
+  {
+    return filter(Arrays.asList(propertyNames));
+  }
+
+  public Entity filter(Collection<String> propertyNames)
+  {
+    return filter(propertyName -> propertyNames.contains(propertyName));
+  }
+
+  public Entity filter(Predicate<String> propertyNameFilter)
+  {
+    return builder(this).retain(propertyNameFilter).build();
   }
 
   @Override
@@ -220,6 +239,16 @@ public final class Entity implements Comparable<Entity>
     return new Builder();
   }
 
+  public static Builder builder(String namespace)
+  {
+    return builder().namespace(namespace);
+  }
+
+  public static Builder builder(String namespace, String name)
+  {
+    return builder(namespace).name(name);
+  }
+
   public static Builder builder(Builder source)
   {
     return builder(source.build());
@@ -275,6 +304,10 @@ public final class Entity implements Comparable<Entity>
 
     private final Map<String, String> properties = new HashMap<>();
 
+    private Consumer<Builder> preBuildHandler;
+
+    private Consumer<Entity> postBuildHandler;
+
     private Builder()
     {
     }
@@ -320,7 +353,11 @@ public final class Entity implements Comparable<Entity>
 
     public Builder properties(Map<String, String> properties)
     {
-      this.properties.putAll(properties);
+      if (properties != null)
+      {
+        this.properties.putAll(properties);
+      }
+
       return this;
     }
 
@@ -345,17 +382,75 @@ public final class Entity implements Comparable<Entity>
       return this;
     }
 
+    public Builder remove(Predicate<String> namePredicate)
+    {
+      for (Iterator<String> it = properties.keySet().iterator(); it.hasNext();)
+      {
+        String name = it.next();
+        if (namePredicate.test(name))
+        {
+          it.remove();
+        }
+      }
+
+      return this;
+    }
+
+    public Builder retain(Predicate<String> namePredicate)
+    {
+      for (Iterator<String> it = properties.keySet().iterator(); it.hasNext();)
+      {
+        String name = it.next();
+        if (!namePredicate.test(name))
+        {
+          it.remove();
+        }
+      }
+
+      return this;
+    }
+
+    public Builder preBuild(Consumer<Builder> handler)
+    {
+      preBuildHandler = handler;
+      return this;
+    }
+
+    public Builder postBuild(Consumer<Entity> handler)
+    {
+      postBuildHandler = handler;
+      return this;
+    }
+
     public Entity build()
     {
-      return new Entity(namespace, name, version, properties);
+      if (preBuildHandler != null)
+      {
+        preBuildHandler.accept(this);
+      }
+
+      Entity entity = new Entity(namespace, name, version, properties);
+
+      if (postBuildHandler != null)
+      {
+        postBuildHandler.accept(entity);
+      }
+
+      return entity;
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public interface Provider
+  public interface Store
   {
+    public default boolean namespace(String namespace)
+    {
+      requireValidNamespace(namespace);
+      return namespaces().anyMatch(n -> n.equals(namespace));
+    }
+
     public default Stream<String> namespaces()
     {
       return entities().map(Entity::namespace).distinct();
@@ -388,32 +483,181 @@ public final class Entity implements Comparable<Entity>
       return entity(pair.getElement1(), pair.getElement2());
     }
 
+    public default Store store(String namespace)
+    {
+      requireValidNamespace(namespace);
+
+      return new Store()
+      {
+        @Override
+        public boolean namespace(String n)
+        {
+          return namespace.equals(n);
+        }
+
+        @Override
+        public Stream<String> namespaces()
+        {
+          return Stream.of(namespace);
+        }
+
+        @Override
+        public Stream<String> names(String n)
+        {
+          if (!namespace.equals(n))
+          {
+            return Stream.empty();
+          }
+
+          return Store.super.names(n);
+        }
+
+        @Override
+        public Stream<Entity> entities()
+        {
+          return entities(namespace);
+        }
+
+        @Override
+        public Entity entity(String n, String name)
+        {
+          if (!namespace.equals(n))
+          {
+            return null;
+          }
+
+          return Store.super.entity(n, name);
+        }
+
+        @Override
+        public Store store(String n)
+        {
+          if (!namespace.equals(n))
+          {
+            return null;
+          }
+
+          return this;
+        }
+      };
+    }
+
+    public static Store of(Object object)
+    {
+      if (object instanceof Store)
+      {
+        return (Store)object;
+      }
+
+      if (object instanceof Store.Provider)
+      {
+        return ((Store.Provider)object).getEntityStore();
+      }
+
+      return null;
+    }
+
     /**
      * @author Eike Stepper
      */
-    public interface Supplier
+    public interface Provider
     {
-      public Provider getEntityProvider();
+      public Store getEntityStore();
     }
   }
 
   /**
    * @author Eike Stepper
    */
-  public static final class NamespaceProvider implements Provider
+  public static abstract class SingleNamespace implements Store
   {
     private final String namespace;
 
-    private final Map<String, Entity> entities = new HashMap<>();
-
-    public NamespaceProvider(String namespace)
+    public SingleNamespace(String namespace)
     {
       this.namespace = requireValidNamespace(namespace);
     }
 
+    public final String namespace()
+    {
+      return namespace;
+    }
+
+    @Override
+    public final boolean namespace(String namespace)
+    {
+      return this.namespace.equals(namespace);
+    }
+
+    @Override
+    public final Stream<String> namespaces()
+    {
+      return Stream.of(namespace);
+    }
+
+    public final Stream<String> names()
+    {
+      return names(namespace);
+    }
+
+    @Override
+    public final Stream<Entity> entities(String namespace)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return Stream.empty();
+      }
+
+      return entities();
+    }
+
+    public final Builder entityBuilder()
+    {
+      return builder(namespace);
+    }
+
+    public final Builder entityBuilder(String name)
+    {
+      return builder().name(name);
+    }
+
+    @Override
+    public final Store store(String namespace)
+    {
+      if (!this.namespace.equals(namespace))
+      {
+        return null;
+      }
+
+      return this;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class SingleNamespaceStore extends SingleNamespace
+  {
+    private final Map<String, Entity> entities = new HashMap<>();
+
+    public SingleNamespaceStore(String namespace)
+    {
+      super(namespace);
+    }
+
+    public Builder addEntity()
+    {
+      return entityBuilder().postBuild(this::addEntity);
+    }
+
+    public Builder addEntity(String name)
+    {
+      return addEntity().name(name);
+    }
+
     public Entity addEntity(Entity entity)
     {
-      if (!entity.namespace.equals(namespace))
+      if (!namespace().equals(entity.namespace))
       {
         throw new IllegalArgumentException("Namespace mismatch");
       }
@@ -426,26 +670,10 @@ public final class Entity implements Comparable<Entity>
       return entities.remove(name);
     }
 
-    public String namespace()
-    {
-      return namespace;
-    }
-
-    @Override
-    public Stream<String> namespaces()
-    {
-      return Stream.of(namespace);
-    }
-
-    public Stream<String> names()
-    {
-      return names(namespace);
-    }
-
     @Override
     public Stream<String> names(String namespace)
     {
-      if (!this.namespace.equals(namespace))
+      if (!namespace().equals(namespace))
       {
         return Stream.empty();
       }
@@ -460,20 +688,9 @@ public final class Entity implements Comparable<Entity>
     }
 
     @Override
-    public Stream<Entity> entities(String namespace)
-    {
-      if (!this.namespace.equals(namespace))
-      {
-        return Stream.empty();
-      }
-
-      return entities();
-    }
-
-    @Override
     public Entity entity(String namespace, String name)
     {
-      if (!this.namespace.equals(namespace))
+      if (!namespace().equals(namespace))
       {
         return null;
       }
@@ -485,58 +702,29 @@ public final class Entity implements Comparable<Entity>
   /**
    * @author Eike Stepper
    */
-  public static abstract class NamespaceComputer implements Provider
+  public static abstract class SingleNamespaceComputer extends SingleNamespace
   {
-    private final String namespace;
-
-    public NamespaceComputer(String namespace)
+    public SingleNamespaceComputer(String namespace)
     {
-      this.namespace = requireValidNamespace(namespace);
-    }
-
-    public final String namespace()
-    {
-      return namespace;
+      super(namespace);
     }
 
     @Override
-    public final Stream<String> namespaces()
-    {
-      return Stream.of(namespace);
-    }
-
-    public Stream<String> names()
-    {
-      return names(namespace);
-    }
-
-    @Override
-    public Stream<String> names(String namespace)
+    public final Stream<String> names(String namespace)
     {
       return computeNames().stream();
     }
 
     @Override
-    public Stream<Entity> entities()
+    public final Stream<Entity> entities()
     {
       return names().map(this::computeEntity);
     }
 
     @Override
-    public Stream<Entity> entities(String namespace)
+    public final Entity entity(String namespace, String name)
     {
-      if (!this.namespace.equals(namespace))
-      {
-        return Stream.empty();
-      }
-
-      return entities();
-    }
-
-    @Override
-    public Entity entity(String namespace, String name)
-    {
-      if (!this.namespace.equals(namespace))
+      if (!namespace().equals(namespace))
       {
         return null;
       }
@@ -552,44 +740,54 @@ public final class Entity implements Comparable<Entity>
   /**
    * @author Eike Stepper
    */
-  public static final class ComposedProvider implements Provider
+  public static final class ComposedStore implements Store
   {
-    private final List<Provider> providers = new ArrayList<>();
+    private final List<Store> stores = new ArrayList<>();
 
-    private final Map<String, List<Provider>> providersByNamespace = new HashMap<>();
+    private final Map<String, List<Store>> storesByNamespace = new HashMap<>();
 
-    public ComposedProvider()
+    public ComposedStore()
     {
     }
 
-    public void addProvider(Provider provider)
+    public ComposedStore addStore(Store store)
     {
-      if (providers.add(provider))
+      if (store != null)
       {
-        provider.namespaces().forEach(namespace -> {
-          providersByNamespace.computeIfAbsent(namespace, k -> new ArrayList<>()).add(provider);
-        });
+        if (stores.add(store))
+        {
+          store.namespaces().forEach(namespace -> {
+            storesByNamespace.computeIfAbsent(namespace, k -> new ArrayList<>()).add(store);
+          });
+        }
       }
+
+      return this;
     }
 
-    public void removeProvider(Provider provider)
+    public ComposedStore removeStore(Store store)
     {
-      if (providers.add(provider))
+      if (store != null)
       {
-        provider.namespaces().forEach(namespace -> {
-          List<Provider> providers = providersByNamespace.get(namespace);
-          if (providers != null)
-          {
-            providers.remove(provider);
-          }
-        });
+        if (stores.remove(store))
+        {
+          store.namespaces().forEach(namespace -> {
+            List<Store> namespaceStores = storesByNamespace.get(namespace);
+            if (namespaceStores != null)
+            {
+              namespaceStores.remove(store);
+            }
+          });
+        }
       }
+
+      return this;
     }
 
     @Override
     public Stream<String> namespaces()
     {
-      return providersByNamespace.keySet().stream();
+      return storesByNamespace.keySet().stream();
     }
 
     @Override
@@ -597,8 +795,8 @@ public final class Entity implements Comparable<Entity>
     {
       requireValidNamespace(namespace);
 
-      List<Provider> providers = providersByNamespace.get(namespace);
-      int size = providers == null ? 0 : providers.size();
+      List<Store> namespaceStores = storesByNamespace.get(namespace);
+      int size = namespaceStores == null ? 0 : namespaceStores.size();
       if (size == 0)
       {
         return Stream.empty();
@@ -606,13 +804,13 @@ public final class Entity implements Comparable<Entity>
 
       if (size == 1)
       {
-        return providers.get(0).names(namespace);
+        return namespaceStores.get(0).names(namespace);
       }
 
       List<Stream<String>> streams = new ArrayList<>(size);
-      for (Provider provider : providers)
+      for (Store store : namespaceStores)
       {
-        streams.add(provider.names(namespace));
+        streams.add(store.names(namespace));
       }
 
       return CollectionUtil.concat(streams).distinct();
@@ -621,7 +819,7 @@ public final class Entity implements Comparable<Entity>
     @Override
     public Stream<Entity> entities()
     {
-      int size = providers.size();
+      int size = stores.size();
       if (size == 0)
       {
         return Stream.empty();
@@ -629,13 +827,13 @@ public final class Entity implements Comparable<Entity>
 
       if (size == 1)
       {
-        return providers.get(0).entities();
+        return stores.get(0).entities();
       }
 
       List<Stream<Entity>> streams = new ArrayList<>(size);
-      for (Provider provider : providers)
+      for (Store store : stores)
       {
-        streams.add(provider.entities());
+        streams.add(store.entities());
       }
 
       return CollectionUtil.concat(streams).distinct();
@@ -646,8 +844,8 @@ public final class Entity implements Comparable<Entity>
     {
       requireValidNamespace(namespace);
 
-      List<Provider> providers = providersByNamespace.get(namespace);
-      int size = providers.size();
+      List<Store> namespaceStores = storesByNamespace.get(namespace);
+      int size = namespaceStores == null ? 0 : namespaceStores.size();
       if (size == 0)
       {
         return Stream.empty();
@@ -655,13 +853,13 @@ public final class Entity implements Comparable<Entity>
 
       if (size == 1)
       {
-        return providers.get(0).entities(namespace);
+        return namespaceStores.get(0).entities(namespace);
       }
 
       List<Stream<Entity>> streams = new ArrayList<>(size);
-      for (Provider provider : providers)
+      for (Store store : namespaceStores)
       {
-        streams.add(provider.entities(namespace));
+        streams.add(store.entities(namespace));
       }
 
       return CollectionUtil.concat(streams).distinct();
@@ -680,18 +878,18 @@ public final class Entity implements Comparable<Entity>
   /**
    * @author Eike Stepper
    */
-  public static final class ConcurrentProvider implements Provider
+  public static final class ConcurrentStore implements Store
   {
-    private final Provider delegate;
+    private final Store delegate;
 
     private final RWLock lock;
 
-    public ConcurrentProvider(Provider delegate)
+    public ConcurrentStore(Store delegate)
     {
       this(delegate, 1000L);
     }
 
-    public ConcurrentProvider(Provider delegate, long timeoutMillis)
+    public ConcurrentStore(Store delegate, long timeoutMillis)
     {
       this.delegate = delegate;
       lock = new RWLock(timeoutMillis);

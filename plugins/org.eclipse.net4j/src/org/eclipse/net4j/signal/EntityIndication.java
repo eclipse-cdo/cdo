@@ -54,7 +54,7 @@ public class EntityIndication extends IndicationWithResponse
   @Override
   protected void responding(ExtendedDataOutputStream out) throws Exception
   {
-    Entity.Provider entityProvider = getEntityProvider();
+    Entity.Store entityProvider = getEntityStore();
     if (entityProvider == null)
     {
       out.writeBoolean(false);
@@ -92,15 +92,9 @@ public class EntityIndication extends IndicationWithResponse
     }
   }
 
-  protected Entity.Provider getEntityProvider()
+  protected Entity.Store getEntityStore()
   {
-    Object infraStructure = getProtocol().getInfraStructure();
-    if (infraStructure instanceof Entity.Provider.Supplier)
-    {
-      return ((Entity.Provider.Supplier)infraStructure).getEntityProvider();
-    }
-
-    return null;
+    return getProtocol().getEntityStore();
   }
 
   protected StringCompressor getStringCompressor()

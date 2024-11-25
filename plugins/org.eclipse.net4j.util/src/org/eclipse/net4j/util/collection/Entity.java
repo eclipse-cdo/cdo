@@ -618,7 +618,7 @@ public final class Entity implements Comparable<Entity>
 
     public final Builder entityBuilder(String name)
     {
-      return builder().name(name);
+      return entityBuilder().name(name);
     }
 
     @Override

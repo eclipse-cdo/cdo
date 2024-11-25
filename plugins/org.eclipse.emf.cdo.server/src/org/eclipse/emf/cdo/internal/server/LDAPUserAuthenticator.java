@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
@@ -17,6 +18,7 @@ import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.ref.Interner;
@@ -52,7 +54,7 @@ import java.util.WeakHashMap;
  * @author Eike Stepper
  * @since 4.20
  */
-public class LDAPUserAuthenticator extends UserAuthenticator
+public class LDAPUserAuthenticator extends UserAuthenticator implements Entity.Store.Provider
 {
   public static final String SCOPE_OBJECT = "object";
 
@@ -77,6 +79,48 @@ public class LDAPUserAuthenticator extends UserAuthenticator
   public Class<? extends UserInfo> getUserInfoClass()
   {
     return LDAPUserInfo.class;
+  }
+
+  @Override
+  public Entity.Store getEntityStore()
+  {
+    return new Entity.SingleNamespaceComputer(CDOProtocolConstants.USER_INFO_NAMESPACE)
+    {
+      @Override
+      protected Collection<String> computeNames()
+      {
+        // Don't expose the full set of user IDs!
+        return Collections.emptySet();
+      }
+
+      @Override
+      protected Entity computeEntity(String name)
+      {
+        LDAPUserInfo userInfo = (LDAPUserInfo)getRepositoryProtector().getUserInfo(name);
+        if (userInfo != null)
+        {
+          LDAPEntry entry = ldapEntry(userInfo.userDN());
+          if (entry != null)
+          {
+            Attributes attributes = entry.attributes();
+            Entity.Builder builder = entityBuilder(name);
+
+            for (String propertyName : CDOProtocolConstants.USER_INFO_PROPERTIES)
+            {
+              Attribute attribute = attributes.get(propertyName);
+              if (attribute != null)
+              {
+                builder.property(propertyName, attribute.toString());
+              }
+            }
+
+            return builder.build();
+          }
+        }
+
+        return null;
+      }
+    };
   }
 
   @Override

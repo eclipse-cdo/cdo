@@ -603,6 +603,24 @@
         </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/spi/server/Store.java" type="org.eclipse.emf.cdo.spi.server.Store">
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+                <message_argument value="ENTITY_NAMESPACE"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+                <message_argument value="ENTITY_NAME_PERSISTENT_PROPERTIES"/>
+            </message_arguments>
+        </filter>
+        <filter id="336658481">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+                <message_argument value="ENTITY_NAME_PROPERTIES"/>
+            </message_arguments>
+        </filter>
         <filter id="574660632">
             <message_arguments>
                 <message_argument value="ExactMatch"/>

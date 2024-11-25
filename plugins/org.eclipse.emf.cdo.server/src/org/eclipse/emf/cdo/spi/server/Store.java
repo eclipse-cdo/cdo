@@ -28,6 +28,8 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Entity;
+import org.eclipse.net4j.util.collection.Entity.Builder;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -36,9 +38,12 @@ import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.emf.ecore.EClass;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -46,7 +51,7 @@ import java.util.Set;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Store extends Lifecycle implements InternalStore
+public abstract class Store extends Lifecycle implements InternalStore, Entity.Store.Provider
 {
   /**
    * @since 3.0
@@ -54,6 +59,10 @@ public abstract class Store extends Lifecycle implements InternalStore
    */
   @Deprecated
   public static final long UNSPECIFIED_DATE = CDOBranchPoint.UNSPECIFIED_DATE;
+
+  private static final String ENTITY_NAMESPACE = "cdo/store";
+
+  private static final String ENTITY_NAME_PERSISTENT_PROPERTIES = "persistent-properties";
 
   private String type;
 
@@ -113,6 +122,23 @@ public abstract class Store extends Lifecycle implements InternalStore
       }
 
       return result;
+    }
+  };
+
+  private final Entity.Store entityStore = new Entity.SingleNamespaceComputer(ENTITY_NAMESPACE)
+  {
+    @Override
+    protected Collection<String> computeNames()
+    {
+      Set<String> entityNames = new HashSet<>();
+      computeEntityNames(entityNames::add);
+      return entityNames;
+    }
+
+    @Override
+    protected Entity computeEntity(String name)
+    {
+      return Store.this.computeEntity(name);
     }
   };
 
@@ -431,6 +457,42 @@ public abstract class Store extends Lifecycle implements InternalStore
     }
 
     return revision;
+  }
+
+  @Override
+  public Entity.Store getEntityStore()
+  {
+    return entityStore;
+  }
+
+  /**
+   * @since 4.22
+   */
+  protected void computeEntityNames(Consumer<String> consumer)
+  {
+    consumer.accept(ENTITY_NAME_PERSISTENT_PROPERTIES);
+  }
+
+  /**
+   * @since 4.22
+   */
+  protected Entity computeEntity(String name)
+  {
+    if (ENTITY_NAME_PERSISTENT_PROPERTIES.equals(name))
+    {
+      Map<String, String> persistentProperties = getPersistentProperties(null);
+      return entityBuilder().name(ENTITY_NAME_PERSISTENT_PROPERTIES).properties(persistentProperties).build();
+    }
+  
+    return null;
+  }
+
+  /**
+   * @since 4.22
+   */
+  protected final Builder entityBuilder()
+  {
+    return Entity.builder().namespace(ENTITY_NAMESPACE);
   }
 
   /**

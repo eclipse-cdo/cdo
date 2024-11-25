@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
@@ -1174,6 +1175,23 @@ public class DelegatingSessionProtocol extends Lifecycle implements CDOSessionPr
       try
       {
         return delegate.requestUnit(viewID, rootID, opcode, prefetchLockStates, revisionHandler, monitor);
+      }
+      catch (Exception ex)
+      {
+        handleException(++attempt, ex);
+      }
+    }
+  }
+
+  @Override
+  public Map<String, Entity> requestEntities(String namespace, String... names)
+  {
+    int attempt = 0;
+    for (;;)
+    {
+      try
+      {
+        return delegate.requestEntities(namespace, names);
       }
       catch (Exception ex)
       {

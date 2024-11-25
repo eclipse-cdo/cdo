@@ -53,6 +53,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionCache;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.signal.EntityRequest;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.Request;
 import org.eclipse.net4j.signal.RequestWithConfirmation;
@@ -61,6 +62,7 @@ import org.eclipse.net4j.signal.SignalReactor;
 import org.eclipse.net4j.signal.security.AuthenticatingSignalProtocol;
 import org.eclipse.net4j.signal.security.AuthenticationIndication;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.io.StringCompressor;
@@ -85,6 +87,7 @@ import org.eclipse.emf.spi.cdo.InternalCDOXATransaction.InternalCDOXACommitConte
 
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -594,6 +597,19 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler, OMMonitor monitor)
   {
     return send(new UnitRequest(this, viewID, rootID, opcode, prefetchLockStates, revisionHandler), monitor);
+  }
+
+  @Override
+  public Map<String, Entity> requestEntities(String namespace, String... names)
+  {
+    Map<String, Entity> entities = new HashMap<>();
+    send(new EntityRequest(this, (name, entity) -> {
+      if (entity != null)
+      {
+        entities.put(name, entity);
+      }
+    }, namespace, names));
+    return entities;
   }
 
   @Override

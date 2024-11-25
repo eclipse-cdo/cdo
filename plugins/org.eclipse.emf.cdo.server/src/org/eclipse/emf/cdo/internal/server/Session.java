@@ -60,6 +60,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.IndexedList;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.EventUtil;
@@ -383,6 +384,12 @@ public class Session extends Container<IView> implements InternalSession
   {
     openOnClientSide = true;
     manager.openedOnClientSide(this);
+  }
+
+  @Override
+  public Entity.Store getEntityStore()
+  {
+    return manager.getRepository().getEntityStore();
   }
 
   @Override

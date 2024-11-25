@@ -523,6 +523,19 @@ public interface CDOProtocolConstants
   public static final byte REVISION_DOES_NOT_EXIST = -1;
 
   // //////////////////////////////////////////////////////////////////////
+  // Entities
+
+  /**
+   * @since 4.24
+   */
+  public static final String USER_INFO_NAMESPACE = "cdo/user/info";
+
+  /**
+   * @since 4.24
+   */
+  public static final String[] USER_INFO_PROPERTIES = { "givenName", "sn", "cn" };
+
+  // //////////////////////////////////////////////////////////////////////
   // Units
 
   /**

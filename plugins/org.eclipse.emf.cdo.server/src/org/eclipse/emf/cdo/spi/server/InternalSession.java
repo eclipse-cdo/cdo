@@ -43,7 +43,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalSession
-    extends ISession, CDOIDProvider, CDOPermissionProvider, CDOCommonSession.Options, IExecutorServiceProvider, Entity.Provider.Supplier
+    extends ISession, CDOIDProvider, CDOPermissionProvider, CDOCommonSession.Options, IExecutorServiceProvider, Entity.Store.Provider
 {
   public static final int TEMP_VIEW_ID = 0;
 

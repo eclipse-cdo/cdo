@@ -55,6 +55,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.UnionSet;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -329,6 +330,11 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
    * @since 4.23
    */
   public boolean requestUnit(int viewID, CDOID rootID, UnitOpcode opcode, boolean prefetchLockStates, CDORevisionHandler revisionHandler, OMMonitor safe);
+
+  /**
+   * @since 4.26
+   */
+  public Map<String, Entity> requestEntities(String namespace, String... names);
 
   /**
    * If the meaning of this type isn't clear, there really should be more of a description here...

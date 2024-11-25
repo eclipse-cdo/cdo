@@ -57,6 +57,7 @@ import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -76,6 +77,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -89,6 +91,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   // public static final int SCHEMA_VERSION = 3; // Bug 404047: Indexed columns must be NOT NULL.
   // public static final int SCHEMA_VERSION = 2; // Bug 344232: Rename cdo_lobs.size to cdo_lobs.lsize.
   // public static final int SCHEMA_VERSION = 1; // Bug 351068: Delete detached objects from non-auditing stores.
+
+  private static final String ENTITY_NAME_PROPERTIES = "properties";
 
   private static final int FIRST_START = -1;
 
@@ -222,6 +226,25 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
 
     return defaultValue;
+  }
+
+  @Override
+  protected void computeEntityNames(Consumer<String> consumer)
+  {
+    super.computeEntityNames(consumer);
+    consumer.accept(ENTITY_NAME_PROPERTIES);
+  }
+
+  @Override
+  protected Entity computeEntity(String name)
+  {
+    if (ENTITY_NAME_PROPERTIES.equals(name))
+    {
+      Map<String, String> properties = getProperties();
+      return entityBuilder().name(ENTITY_NAME_PROPERTIES).properties(properties).build();
+    }
+
+    return super.computeEntity(name);
   }
 
   @Override

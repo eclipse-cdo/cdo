@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.ISessionConfig;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Model1Factory;
 import org.eclipse.emf.cdo.tests.model1.PurchaseOrder;
@@ -26,6 +27,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.jdbc.DelegatingConnection;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.security.IUserAware;
 
 import org.eclipse.emf.ecore.EAttribute;
@@ -36,10 +38,13 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EcoreFactory;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
+import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import java.sql.Connection;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import oracle.jdbc.pool.OracleDataSource;
 
@@ -134,6 +139,24 @@ public class DBStoreTest extends AbstractCDOTest
   public void testStoreStringContainingTwoSingleQuote()
   {
     storeRetrieve("foo''bar");
+  }
+
+  @Requires(ISessionConfig.CAPABILITY_NET4J)
+  public void testStoreEntities() throws Exception
+  {
+    CDOSessionProtocol protocol = ((InternalCDOSession)openSession()).getSessionProtocol();
+    dumpEntities(protocol.requestEntities("cdo/repo", "properties"));
+    dumpEntities(protocol.requestEntities("cdo/store", "properties"));
+    dumpEntities(protocol.requestEntities("cdo/store", "persistent-properties"));
+  }
+
+  private static void dumpEntities(Map<String, Entity> entities)
+  {
+    for (Entity entity : entities.values())
+    {
+      System.out.println(entity);
+      entity.properties().forEach((k, v) -> System.out.println(" " + k + " = " + v));
+    }
   }
 
   // Bug 217255

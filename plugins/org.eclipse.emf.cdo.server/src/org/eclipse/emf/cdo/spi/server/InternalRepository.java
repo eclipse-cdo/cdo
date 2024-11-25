@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager.RevisionLoader3;
 
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.IExecutorServiceProvider;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IContainer;
@@ -83,7 +84,8 @@ public interface InternalRepository extends IRepository, //
     CDORevisionUnchunker, //
     OperationAuthorizer<ISession>, //
     IExecutorServiceProvider, //
-    IManagedContainerProvider
+    IManagedContainerProvider, //
+    Entity.Store.Provider
 {
   public void setName(String name);
 
@@ -102,6 +104,11 @@ public interface InternalRepository extends IRepository, //
   public InternalCDOBranchManager getBranchManager();
 
   public void setBranchManager(InternalCDOBranchManager branchManager);
+
+  /**
+   * @since 4.22
+   */
+  public void setEntityStore(Entity.Store entityStore);
 
   /**
    * @since 4.6

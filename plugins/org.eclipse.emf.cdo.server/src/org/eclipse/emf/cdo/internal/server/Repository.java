@@ -118,6 +118,9 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CollectionUtil;
+import org.eclipse.net4j.util.collection.Entity;
+import org.eclipse.net4j.util.collection.Entity.ComposedStore;
+import org.eclipse.net4j.util.collection.Entity.Store;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
@@ -188,6 +191,10 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final Map<String, Repository> REPOSITORIES = new HashMap<>();
 
+  private static final String ENTITY_NAMESPACE = "cdo/repo";
+
+  private static final String ENTITY_NAME_PROPERTIES = "properties";
+
   private static final boolean DISABLE_LOGIN_PEEKS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_LOGIN_PEEKS");
 
   private static final String PROP_DISABLE_FEATURE_MAP_CHECKS = "org.eclipse.emf.cdo.internal.server.Repository.DISABLE_FEATURE_MAP_CHECKS";
@@ -231,6 +238,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private CommitInfoStorage commitInfoStorage;
 
   private long optimisticLockingTimeout = 10000L;
+
+  private Entity.Store entityStore;
 
   private CDOTimeProvider timeProvider;
 
@@ -1233,6 +1242,19 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return accessor;
+  }
+
+  @Override
+  public Entity.Store getEntityStore()
+  {
+    return entityStore;
+  }
+
+  @Override
+  public void setEntityStore(Entity.Store entityStore)
+  {
+    checkInactive();
+    this.entityStore = entityStore;
   }
 
   @Override
@@ -2919,6 +2941,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     LifecycleUtil.activate(lockingManager); // Needs an initialized main branch / branch manager
     LifecycleUtil.activate(protector);
+    LifecycleUtil.activate(entityStore);
 
     setPostActivateState();
 
@@ -2983,6 +3006,8 @@ public class Repository extends Container<Object> implements InternalRepository
       REPOSITORIES.remove(uuid);
     }
 
+    LifecycleUtil.deactivate(entityStore);
+    LifecycleUtil.deactivate(protector);
     LifecycleUtil.deactivate(unitManager);
     LifecycleUtil.deactivate(lockingManager);
     LifecycleUtil.deactivate(queryHandlerProvider);
@@ -3042,6 +3067,11 @@ public class Repository extends Container<Object> implements InternalRepository
     @Override
     protected void doBeforeActivate() throws Exception
     {
+      if (getEntityStore() == null)
+      {
+        setEntityStore(createEntityStore());
+      }
+
       if (getTimeProvider() == null)
       {
         setTimeProvider(createTimeProvider());
@@ -3093,6 +3123,55 @@ public class Repository extends Container<Object> implements InternalRepository
       }
 
       super.doBeforeActivate();
+    }
+
+    protected Entity.Store createEntityStore()
+    {
+      ComposedStore composedStore = new Entity.ComposedStore();
+      composedStore.addStore(new Entity.SingleNamespaceComputer(ENTITY_NAMESPACE)
+      {
+        @Override
+        protected Collection<String> computeNames()
+        {
+          return Set.of(ENTITY_NAME_PROPERTIES);
+        }
+
+        @Override
+        protected Entity computeEntity(String name)
+        {
+          if (ENTITY_NAME_PROPERTIES.equals(name))
+          {
+            Map<String, String> properties = getProperties();
+            return entityBuilder(ENTITY_NAME_PROPERTIES).properties(properties).build();
+          }
+
+          return null;
+        }
+      });
+
+      Store storeStore = Entity.Store.of(getStore());
+      if (storeStore != null)
+      {
+        composedStore.addStore(storeStore);
+      }
+
+      IRepositoryProtector protector = getProtector();
+      if (protector != null)
+      {
+        Entity.Store entityStore = Entity.Store.of(protector);
+        if (entityStore != null)
+        {
+          composedStore.addStore(entityStore);
+        }
+
+        entityStore = Entity.Store.of(protector.getUserAuthenticator());
+        if (entityStore != null)
+        {
+          composedStore.addStore(entityStore);
+        }
+      }
+
+      return composedStore;
     }
 
     protected CDOTimeProvider createTimeProvider()

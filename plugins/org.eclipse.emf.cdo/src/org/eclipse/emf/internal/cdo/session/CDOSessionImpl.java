@@ -70,6 +70,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionInvalidationEvent;
 import org.eclipse.emf.cdo.session.CDOSessionLocksChangedEvent;
 import org.eclipse.emf.cdo.session.CDOSessionPermissionsChangedEvent;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -195,6 +196,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private InternalCDORevisionManager revisionManager;
 
   private InternalCDOCommitInfoManager commitInfoManager;
+
+  private CDOUserInfoManager userInfoManager;
 
   private CDOLockStateCache lockStateCache;
 
@@ -391,6 +394,19 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     checkInactive();
     this.commitInfoManager = commitInfoManager;
+  }
+
+  @Override
+  public CDOUserInfoManager getUserInfoManager()
+  {
+    return userInfoManager;
+  }
+
+  @Override
+  public void setUserInfoManager(CDOUserInfoManager userInfoManager)
+  {
+    checkInactive();
+    this.userInfoManager = userInfoManager;
   }
 
   @Override

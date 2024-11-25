@@ -149,6 +149,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public CDOCommitInfoManager getCommitInfoManager();
 
   /**
+   * @since 4.26
+   */
+  public CDOUserInfoManager getUserInfoManager();
+
+  /**
    * Returns the {@link ExceptionHandler exception handler} of this session.
    */
   public ExceptionHandler getExceptionHandler();

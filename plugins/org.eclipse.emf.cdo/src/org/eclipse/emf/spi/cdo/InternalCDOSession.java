@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDORevisionAvailabilityInfo;
@@ -138,6 +139,11 @@ public interface InternalCDOSession
    * @since 4.0
    */
   public void setCommitInfoManager(InternalCDOCommitInfoManager commitInfoManager);
+
+  /**
+   * @since 4.26
+   */
+  public void setUserInfoManager(CDOUserInfoManager userInfoManager);
 
   /**
    * @since 3.0

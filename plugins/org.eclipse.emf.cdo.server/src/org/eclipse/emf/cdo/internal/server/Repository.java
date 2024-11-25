@@ -3133,7 +3133,7 @@ public class Repository extends Container<Object> implements InternalRepository
         @Override
         protected Collection<String> computeNames()
         {
-          return Set.of(ENTITY_NAME_PROPERTIES);
+          return Collections.singleton(ENTITY_NAME_PROPERTIES);
         }
 
         @Override

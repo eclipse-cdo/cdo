@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -39,6 +40,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
@@ -64,6 +66,7 @@ import org.eclipse.emf.internal.cdo.session.SessionUtil;
 import org.eclipse.emf.internal.cdo.view.AbstractCDOView;
 
 import org.eclipse.net4j.util.RunnableWithException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -101,6 +104,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -650,6 +654,35 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     private final InternalRepository repository;
 
+    private final CDOUserInfoManager userInfoManager = new CDOUserInfoManager()
+    {
+      @Override
+      public CDOSession getSession()
+      {
+        return ServerCDOSession.this;
+      }
+
+      @Override
+      public Map<String, Entity> getUserInfos(Iterable<String> userIDs)
+      {
+        Map<String, Entity> userInfos = new HashMap<>();
+        Entity.Store entityStore = internalSession.getRepository().getEntityStore();
+        if (entityStore != null)
+        {
+          for (String userID : userIDs)
+          {
+            Entity userInfo = entityStore.entity(CDOProtocolConstants.USER_INFO_NAMESPACE, userID);
+            if (userInfo != null)
+            {
+              userInfos.put(userID, userInfo);
+            }
+          }
+        }
+
+        return userInfos;
+      }
+    };
+
     private final long openingTime;
 
     private boolean generatedPackageEmulationEnabled;
@@ -805,6 +838,18 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public InternalCDOCommitInfoManager getCommitInfoManager()
     {
       return repository.getCommitInfoManager();
+    }
+
+    @Override
+    public CDOUserInfoManager getUserInfoManager()
+    {
+      return userInfoManager;
+    }
+
+    @Override
+    public void setUserInfoManager(CDOUserInfoManager userInfoManager)
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override

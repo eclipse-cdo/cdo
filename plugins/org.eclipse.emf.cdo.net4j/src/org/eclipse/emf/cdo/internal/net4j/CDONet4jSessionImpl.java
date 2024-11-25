@@ -19,6 +19,7 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
@@ -27,6 +28,8 @@ import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
+import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.CDOCommitInfoUtil;
@@ -42,6 +45,7 @@ import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.signal.ISignalProtocol;
 import org.eclipse.net4j.signal.RemoteException;
 import org.eclipse.net4j.signal.SignalProtocol;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.io.IStreamWrapper;
@@ -52,9 +56,12 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol.OpenSessionResult;
 import org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -324,6 +331,13 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       commitInfoManager.activate();
     }
 
+    CDOUserInfoManager userInfoManager = getUserInfoManager();
+    if (userInfoManager == null)
+    {
+      userInfoManager = new UserInfoManager();
+      setUserInfoManager(userInfoManager);
+    }
+
     for (InternalCDOPackageUnit packageUnit : result.getPackageUnits())
     {
       getPackageRegistry().putPackageUnit(packageUnit);
@@ -391,6 +405,59 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     }
 
     return clientProtocol;
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class UserInfoManager implements CDOUserInfoManager
+  {
+    private final Map<String, Entity> userInfos = new ConcurrentHashMap<>();
+
+    public UserInfoManager()
+    {
+    }
+
+    @Override
+    public CDOSession getSession()
+    {
+      return CDONet4jSessionImpl.this;
+    }
+
+    @Override
+    public Map<String, Entity> getUserInfos(Iterable<String> userIDs)
+    {
+      Map<String, Entity> result = new HashMap<>();
+      List<String> userIDsToRequest = null;
+
+      for (String userID : userIDs)
+      {
+        Entity userInfo = userInfos.get(userID);
+        if (userInfo != null)
+        {
+          result.put(userID, userInfo);
+        }
+        else
+        {
+          if (userIDsToRequest == null)
+          {
+            userIDsToRequest = new ArrayList<>();
+          }
+
+          userIDsToRequest.add(userID);
+        }
+      }
+
+      if (userIDsToRequest != null)
+      {
+        String[] names = userIDsToRequest.toArray(new String[userIDsToRequest.size()]);
+        Map<String, Entity> entities = getClientProtocol().requestEntities(CDOProtocolConstants.USER_INFO_NAMESPACE, names);
+        userInfos.putAll(entities);
+        result.putAll(entities);
+      }
+
+      return result;
+    }
   }
 
   /**

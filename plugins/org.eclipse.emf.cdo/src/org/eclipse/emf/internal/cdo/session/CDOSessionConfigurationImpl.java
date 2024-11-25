@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSessionConfiguration;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.spi.common.commit.InternalCDOCommitInfoManager;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -64,6 +65,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   private InternalCDORevisionManager revisionManager;
 
   private InternalCDOCommitInfoManager commitInfoManager;
+
+  private CDOUserInfoManager userInfoManager;
 
   private boolean loginPeek;
 
@@ -336,6 +339,17 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     checkNotOpen();
     this.commitInfoManager = (InternalCDOCommitInfoManager)commitInfoManager;
+  }
+
+  public CDOUserInfoManager getUserInfoManager()
+  {
+    return userInfoManager;
+  }
+
+  public void setUserInfoManager(CDOUserInfoManager userInfoManager)
+  {
+    checkNotOpen();
+    this.userInfoManager = userInfoManager;
   }
 
   @Override

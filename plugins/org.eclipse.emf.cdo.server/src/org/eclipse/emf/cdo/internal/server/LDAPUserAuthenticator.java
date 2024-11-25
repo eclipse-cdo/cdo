@@ -70,9 +70,14 @@ public class LDAPUserAuthenticator extends UserAuthenticator implements Entity.S
 
   private final Map<LDAPDN, LDAPEntry> entries = new WeakHashMap<>();
 
+  private final Entity.Store entityStore;
+
   public LDAPUserAuthenticator(Tree config)
   {
     this.config = config;
+
+    Tree tree = config.child("entityStore");
+    entityStore = tree == null ? null : new LDAPEntityStore(tree);
   }
 
   @Override
@@ -84,43 +89,7 @@ public class LDAPUserAuthenticator extends UserAuthenticator implements Entity.S
   @Override
   public Entity.Store getEntityStore()
   {
-    return new Entity.SingleNamespaceComputer(CDOProtocolConstants.USER_INFO_NAMESPACE)
-    {
-      @Override
-      protected Collection<String> computeNames()
-      {
-        // Don't expose the full set of user IDs!
-        return Collections.emptySet();
-      }
-
-      @Override
-      protected Entity computeEntity(String name)
-      {
-        LDAPUserInfo userInfo = (LDAPUserInfo)getRepositoryProtector().getUserInfo(name);
-        if (userInfo != null)
-        {
-          LDAPEntry entry = ldapEntry(userInfo.userDN());
-          if (entry != null)
-          {
-            Attributes attributes = entry.attributes();
-            Entity.Builder builder = entityBuilder(name);
-
-            for (String propertyName : CDOProtocolConstants.USER_INFO_PROPERTIES)
-            {
-              Attribute attribute = attributes.get(propertyName);
-              if (attribute != null)
-              {
-                builder.property(propertyName, attribute.toString());
-              }
-            }
-
-            return builder.build();
-          }
-        }
-
-        return null;
-      }
-    };
+    return entityStore;
   }
 
   @Override
@@ -846,6 +815,59 @@ public class LDAPUserAuthenticator extends UserAuthenticator implements Entity.S
     {
       LDAPUserInfo other = (LDAPUserInfo)userInfo;
       return userDN == other.userDN && groupDNs.equals(other.groupDNs());
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class LDAPEntityStore extends Entity.SingleNamespaceComputer
+  {
+    private final boolean exposeUserIDs;
+
+    public LDAPEntityStore(Tree config)
+    {
+      super(CDOProtocolConstants.USER_INFO_NAMESPACE);
+      exposeUserIDs = config.attribute("exposeUserIDs", false);
+    }
+
+    @Override
+    protected Collection<String> computeNames()
+    {
+      if (exposeUserIDs)
+      {
+        // TODO Query LDAP for user IDs.
+      }
+
+      return Collections.emptySet();
+    }
+
+    @Override
+    protected Entity computeEntity(String name)
+    {
+      LDAPUserInfo userInfo = (LDAPUserInfo)getRepositoryProtector().getUserInfo(name);
+      if (userInfo != null)
+      {
+        LDAPEntry entry = ldapEntry(userInfo.userDN());
+        if (entry != null)
+        {
+          Attributes attributes = entry.attributes();
+          Entity.Builder builder = entityBuilder(name);
+
+          for (String propertyName : CDOProtocolConstants.USER_INFO_PROPERTIES)
+          {
+            Attribute attribute = attributes.get(propertyName);
+            if (attribute != null)
+            {
+              builder.property(propertyName, attribute.toString());
+            }
+          }
+
+          return builder.build();
+        }
+      }
+
+      return null;
     }
   }
 }

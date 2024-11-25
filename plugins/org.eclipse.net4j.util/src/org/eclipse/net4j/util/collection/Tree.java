@@ -88,6 +88,78 @@ public final class Tree implements Comparable<Tree>
     return attributes.get(name);
   }
 
+  /**
+   * @since 3.26
+   */
+  public String attribute(String name, String defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : value;
+  }
+
+  /**
+   * @since 3.26
+   */
+  public boolean attribute(String name, boolean defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Boolean.parseBoolean(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public byte attribute(String name, byte defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Byte.parseByte(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public short attribute(String name, short defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Short.parseShort(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public int attribute(String name, int defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Integer.parseInt(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public long attribute(String name, long defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Long.parseLong(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public float attribute(String name, float defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Float.parseFloat(value);
+  }
+
+  /**
+   * @since 3.26
+   */
+  public double attribute(String name, double defaultValue)
+  {
+    String value = attribute(name);
+    return value == null ? defaultValue : Double.parseDouble(value);
+  }
+
   public Tree parent()
   {
     return parent;

@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.collection;
 
 import org.eclipse.net4j.util.CheckUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.concurrent.RWLock;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
@@ -271,7 +272,7 @@ public final class Entity implements Comparable<Entity>
   public static Pair<String, String> parseID(String id)
   {
     int lastSep = id.lastIndexOf(NAME_SEPARATOR);
-    CheckUtil.checkArg(lastSep != -1, "id");
+    CheckUtil.checkArg(lastSep != -1, "Illegal id");
     return Pair.create(id.substring(0, lastSep), id.substring(lastSep + 1));
   }
 
@@ -285,9 +286,18 @@ public final class Entity implements Comparable<Entity>
     return requireValidString(name, NAME_PATTERN, "name");
   }
 
-  private static String requireValidString(String string, Pattern pattern, String name)
+  private static String requireValidString(String string, Pattern pattern, String arg)
   {
-    CheckUtil.checkArg(string != null && pattern.matcher(string).matches(), name);
+    if (StringUtil.isEmpty(string))
+    {
+      throw new IllegalArgumentException("Missing " + arg);
+    }
+
+    if (!pattern.matcher(string).matches())
+    {
+      throw new IllegalArgumentException("Illegal " + arg + ": " + string);
+    }
+
     return string;
   }
 
@@ -341,7 +351,7 @@ public final class Entity implements Comparable<Entity>
 
     public Builder version(int version)
     {
-      CheckUtil.checkArg(version >= 1, "version");
+      CheckUtil.checkArg(version >= 1, "Illegal version");
       this.version = version;
       return this;
     }

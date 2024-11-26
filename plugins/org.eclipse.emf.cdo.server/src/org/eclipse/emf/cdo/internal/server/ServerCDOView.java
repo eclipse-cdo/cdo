@@ -666,6 +666,7 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       public Map<String, Entity> getUserInfos(Iterable<String> userIDs)
       {
         Map<String, Entity> userInfos = new HashMap<>();
+
         Entity.Store entityStore = internalSession.getRepository().getEntityStore();
         if (entityStore != null)
         {

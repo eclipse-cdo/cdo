@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.StringCompressor;
 
 import java.io.IOException;
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.function.BiConsumer;
 
 /**
@@ -114,6 +116,12 @@ public class EntityRequest extends RequestWithConfirmation<Integer>
     {
       out.writeString(string);
     }
+  }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return MessageFormat.format("opcode={0}, namespace={1}, names={2}", opcode, namespace, Arrays.asList(names));
   }
 
   private static void writeStrings(ExtendedDataOutputStream out, String... strings) throws IOException

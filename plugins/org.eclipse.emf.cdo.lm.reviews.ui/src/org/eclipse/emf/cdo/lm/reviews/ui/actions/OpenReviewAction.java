@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
@@ -36,7 +37,9 @@ import org.eclipse.emf.cdo.ui.shared.SharedIcons;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -101,9 +104,13 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
-import java.util.Random;
+import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
@@ -291,6 +298,8 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private ChatComposite chatComposite;
 
+    private final Author.Cache authorCache;
+
     static
     {
       Field navigableField = null;
@@ -326,6 +335,7 @@ public class OpenReviewAction extends AbstractReviewAction
       this.systemDescriptor = systemDescriptor;
       this.firstTopic = firstTopic;
 
+      authorCache = initializeAuthorCache(review);
       remoteReviewTopic = createRemoteTopic(review);
     }
 
@@ -899,37 +909,73 @@ public class OpenReviewAction extends AbstractReviewAction
       }
     }
 
-    private static void addMessages(List<ChatMessage> messages, TopicContainer container)
+    private Author.Cache initializeAuthorCache(DeliveryReview review)
     {
-      Author[] authors = { //
-          Author.builder("estepper").firstName("Eike").lastName("Stepper").gravatar("stepper@esc-net.de").build(), //
-          Author.builder("emerks").firstName("Ed").lastName("Merks").gravatar("ed.merks@gmail.com").build(), //
-          Author.builder("srevol").firstName("Sébastien").lastName("Revol").build(), //
-          Author.builder("fnoyrit").firstName("Florian").lastName("Noyrit").build(), //
+      Author.Cache cache = Author.Cache.of(review.cdoView().getSession(), this::loadAuthors);
+      Set<String> userIDs = collectUserIDs(review);
+      cache.getAuthors(userIDs);
+      return cache;
+    }
+
+    private Set<String> collectUserIDs(DeliveryReview review)
+    {
+      Set<String> userIDs = new HashSet<>();
+      Consumer<String> collector = userID -> {
+        if (!StringUtil.isEmpty(userID))
+        {
+          userIDs.add(userID);
+        }
       };
 
-      int a = 0;
-      Author author = null;
-      Random random = new Random(4711L);
+      collector.accept(review.getAuthor());
+      review.getReviewers().forEach(collector);
 
+      collectUserIDs(review, collector);
+      return userIDs;
+    }
+
+    private void collectUserIDs(TopicContainer container, Consumer<String> collector)
+    {
       for (Comment comment : container.getComments())
       {
-        if (--a <= 0)
+        collector.accept(comment.getAuthor());
+      }
+
+      for (Topic topic : container.getTopics())
+      {
+        collector.accept(topic.getAuthor());
+        collectUserIDs(topic, collector);
+      }
+    }
+
+    private Map<String, Author> loadAuthors(Iterable<String> userIDs)
+    {
+      Map<String, Author> authors = new HashMap<>();
+
+      CDOUserInfoManager userInfoManager = review.cdoView().getSession().getUserInfoManager();
+      Map<String, Entity> userInfos = userInfoManager.getUserInfos(userIDs);
+
+      for (String userID : userIDs)
+      {
+        Author.Builder builder = Author.builder(userID);
+
+        Entity entity = userInfos.get(userID);
+        if (entity != null)
         {
-          for (;;)
-          {
-            Author newAuthor = authors[random.nextInt(authors.length)];
-            if (newAuthor != author)
-            {
-              author = newAuthor;
-              a = 1 + random.nextInt(4);
-              break;
-            }
-          }
+          builder.firstName(entity.property("givenName"));
+          builder.lastName(entity.property("sn"));
         }
 
-        Author finalAuthor = author;
+        authors.put(userID, builder.build());
+      }
 
+      return authors;
+    }
+
+    private void addMessages(List<ChatMessage> messages, TopicContainer container)
+    {
+      for (Comment comment : container.getComments())
+      {
         messages.add(new ChatMessage()
         {
           @Override
@@ -941,12 +987,7 @@ public class OpenReviewAction extends AbstractReviewAction
           @Override
           public Author getAuthor()
           {
-            if (Boolean.getBoolean("DEMO_RANDOM_AUTHORS"))
-            {
-              return finalAuthor;
-            }
-
-            return Author.builder(comment.getAuthor()).build();
+            return authorCache.getAuthor(comment.getAuthor());
           }
 
           @Override

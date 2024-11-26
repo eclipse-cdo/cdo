@@ -23,10 +23,16 @@ public interface CDOUserInfoManager
 {
   public CDOSession getSession();
 
-  public Map<String, Entity> getUserInfos(Iterable<String> userIDs);
+  public default Entity getUserInfo(String userID)
+  {
+    Map<String, Entity> userInfos = getUserInfos(userID);
+    return userInfos.get(userID);
+  }
 
   public default Map<String, Entity> getUserInfos(String... userIDs)
   {
     return getUserInfos(Arrays.asList(userIDs));
   }
+
+  public Map<String, Entity> getUserInfos(Iterable<String> userIDs);
 }

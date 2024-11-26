@@ -14,13 +14,24 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.lifecycle.ILifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 
 import java.io.File;
 import java.io.Serializable;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
+import java.util.WeakHashMap;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * @author Eike Stepper
@@ -252,6 +263,108 @@ public interface ChatMessage extends Comparable<ChatMessage>
         }
 
         SHA_256 = digest;
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class Cache
+    {
+      private static final Map<Object, Cache> CACHES = new WeakHashMap<>();
+
+      private final Map<String, Author> authors = new ConcurrentHashMap<>();
+
+      private final Function<Iterable<String>, Map<String, Author>> authorsLoader;
+
+      public Cache(Function<Iterable<String>, Map<String, Author>> authorsLoader)
+      {
+        this.authorsLoader = authorsLoader;
+      }
+
+      public Author getAuthor(String userID)
+      {
+        Author author = authors.get(userID);
+        if (author == null)
+        {
+          Map<String, Author> loadedAuthors = authorsLoader.apply(Collections.singleton(userID));
+
+          author = loadedAuthors.get(userID);
+          if (author != null)
+          {
+            authors.put(userID, author);
+          }
+        }
+
+        return author;
+      }
+
+      public Map<String, Author> getAuthors(Iterable<String> userIDs)
+      {
+        Map<String, Author> result = new HashMap<>();
+        List<String> userIDsToLoad = null;
+
+        for (String userID : userIDs)
+        {
+          Author author = authors.get(userID);
+          if (author != null)
+          {
+            result.put(userID, author);
+          }
+          else
+          {
+            if (userIDsToLoad == null)
+            {
+              userIDsToLoad = new ArrayList<>();
+            }
+
+            userIDsToLoad.add(userID);
+          }
+        }
+
+        if (userIDsToLoad != null)
+        {
+          Map<String, Author> loadedAuthors = authorsLoader.apply(userIDsToLoad);
+          if (loadedAuthors != null)
+          {
+            authors.putAll(loadedAuthors);
+            result.putAll(loadedAuthors);
+          }
+        }
+
+        return result;
+      }
+
+      public static Cache of(Object object, Function<Iterable<String>, Map<String, Author>> authorsLoader)
+      {
+        return of(object, () -> authorsLoader);
+      }
+
+      public static Cache of(Object object, Supplier<Function<Iterable<String>, Map<String, Author>>> authorsLoaderSupplier)
+      {
+        synchronized (CACHES)
+        {
+          return CACHES.computeIfAbsent(object, k -> {
+            Cache cache = new Cache(authorsLoaderSupplier.get());
+
+            if (object instanceof ILifecycle)
+            {
+              ((ILifecycle)object).addListener(new LifecycleEventAdapter()
+              {
+                @Override
+                protected void onDeactivated(ILifecycle lifecycle)
+                {
+                  synchronized (CACHES)
+                  {
+                    CACHES.remove(lifecycle);
+                  }
+                }
+              });
+            }
+
+            return cache;
+          });
+        }
       }
     }
   }

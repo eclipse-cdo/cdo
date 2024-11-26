@@ -314,9 +314,9 @@ public final class Entity implements Comparable<Entity>
 
     private final Map<String, String> properties = new HashMap<>();
 
-    private Consumer<Builder> preBuildHandler;
+    private List<Consumer<Builder>> preBuildHandlers;
 
-    private Consumer<Entity> postBuildHandler;
+    private List<Consumer<Entity>> postBuildHandlers;
 
     private Builder()
     {
@@ -422,28 +422,44 @@ public final class Entity implements Comparable<Entity>
 
     public Builder preBuild(Consumer<Builder> handler)
     {
-      preBuildHandler = handler;
+      if (preBuildHandlers == null)
+      {
+        preBuildHandlers = new ArrayList<>(1);
+      }
+
+      preBuildHandlers.add(handler);
       return this;
     }
 
     public Builder postBuild(Consumer<Entity> handler)
     {
-      postBuildHandler = handler;
+      if (postBuildHandlers == null)
+      {
+        postBuildHandlers = new ArrayList<>(1);
+      }
+
+      postBuildHandlers.add(handler);
       return this;
     }
 
     public Entity build()
     {
-      if (preBuildHandler != null)
+      if (preBuildHandlers != null)
       {
-        preBuildHandler.accept(this);
+        for (Consumer<Builder> handler : preBuildHandlers)
+        {
+          handler.accept(this);
+        }
       }
 
       Entity entity = new Entity(namespace, name, version, properties);
 
-      if (postBuildHandler != null)
+      if (postBuildHandlers != null)
       {
-        postBuildHandler.accept(entity);
+        for (Consumer<Entity> handler : postBuildHandlers)
+        {
+          handler.accept(entity);
+        }
       }
 
       return entity;

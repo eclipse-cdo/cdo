@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 
 import java.io.IOException;
+import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -64,5 +65,11 @@ public class RemoteTopicRequest extends CDOClientRequest<Set<Integer>>
 
     in.readBoolean();
     return null;
+  }
+
+  @Override
+  protected String getAdditionalInfo()
+  {
+    return MessageFormat.format("id={0}, subscribe={1}", id, subscribe);
   }
 }

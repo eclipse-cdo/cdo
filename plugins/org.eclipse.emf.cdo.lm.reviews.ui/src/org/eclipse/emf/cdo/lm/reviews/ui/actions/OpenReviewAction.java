@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.container.IPluginContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.ui.ColorStyler;
@@ -197,6 +198,11 @@ public class OpenReviewAction extends AbstractReviewAction
         CDOView rightView = moduleSession.openView(basePoint);
 
         CDOView[] originView = { null };
+        CDOCompareEditorUtil.addDisposeRunnables(() -> {
+          LifecycleUtil.deactivateSilent(leftView);
+          LifecycleUtil.deactivateSilent(rightView);
+        });
+
         CDOCompareEditorUtil.setInputConsumer(new ReviewEditorHandler(deliveryReview, initialTopic, systemDescriptor));
         CDOCompareEditorUtil.openEditor(leftView, rightView, originView, true);
       });

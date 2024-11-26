@@ -275,6 +275,21 @@ public final class LifecycleUtil
     }
   }
 
+  /**
+   * @since 3.26
+   */
+  public static Exception deactivateSilent(Object object)
+  {
+    try
+    {
+      return deactivate(object, false);
+    }
+    catch (Exception ex)
+    {
+      return ex;
+    }
+  }
+
   public static void deactivateNoisy(Object object) throws LifecycleException
   {
     deactivateNoisy(object, false);

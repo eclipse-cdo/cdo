@@ -241,6 +241,8 @@ public final class SystemDescriptor implements ISystemDescriptor
 
   private State state = State.Closed;
 
+  private String moduleDefinitionPath;
+
   private final Map<String, CDORepository> moduleRepositories = new HashMap<>();
 
   private SystemDescriptor()
@@ -320,6 +322,8 @@ public final class SystemDescriptor implements ISystemDescriptor
           CDOResource resource = systemView.getResource(System.RESOURCE_PATH);
           system = (System)resource.getContents().get(0);
 
+          moduleDefinitionPath = system.getProcess().getModuleDefinitionPath();
+
           newSystem = system;
           state = State.Open;
         }
@@ -379,6 +383,7 @@ public final class SystemDescriptor implements ISystemDescriptor
         }
         finally
         {
+          moduleDefinitionPath = null;
           system = null;
           systemView = null;
           state = State.Closed;
@@ -724,11 +729,11 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public ModuleDefinition extractModuleDefinition(CDOView view)
   {
-    String moduleDefinitionPath = system.getProcess().getModuleDefinitionPath();
-
     try
     {
       CDOResource moduleDefinitionResource = view.getResource(moduleDefinitionPath);
+      moduleDefinitionResource.cdoPrefetch(CDORevision.DEPTH_INFINITE);
+
       ModuleDefinition moduleDefinition = (ModuleDefinition)moduleDefinitionResource.getContents().get(0);
       return EcoreUtil.copy(moduleDefinition);
     }

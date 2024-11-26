@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
@@ -334,6 +335,8 @@ public class OpenReviewAction extends AbstractReviewAction
       this.review = review;
       this.systemDescriptor = systemDescriptor;
       this.firstTopic = firstTopic;
+
+      review.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
       authorCache = initializeAuthorCache(review);
       remoteReviewTopic = createRemoteTopic(review);
@@ -778,7 +781,7 @@ public class OpenReviewAction extends AbstractReviewAction
     private ChatComposite createChatComposite(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
     {
       ChatComposite.Config config = new ChatComposite.Config();
-      config.setOwnUserID("fnoyrit");
+      config.setOwnUserID(review.cdoView().getSession().getUserID());
       config.setMessageProvider(this::computeMessages);
       config.setChatRenderer(renderer);
       config.setEntryBackgroundColor(entryBackgroundColor);

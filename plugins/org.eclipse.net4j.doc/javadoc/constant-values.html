@@ -198,6 +198,23 @@ loadScripts(document, 'script');</script>
 </ul>
 <ul class="block-list">
 <li>
+<div class="caption"><span>org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Constant Field</div>
+<div class="table-header col-last">Value</div>
+<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.EntityRequest.ERROR_ILLEGAL_OPCODE">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/EntityRequest.html#ERROR_ILLEGAL_OPCODE">ERROR_ILLEGAL_OPCODE</a></code></div>
+<div class="col-last even-row-color"><code>-2</code></div>
+<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.EntityRequest.ERROR_NO_PROVIDER">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/EntityRequest.html#ERROR_NO_PROVIDER">ERROR_NO_PROVIDER</a></code></div>
+<div class="col-last odd-row-color"><code>-1</code></div>
+<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.EntityRequest.OPCODE_QUERY_ENTITIES_BY_NAMES">public&nbsp;static&nbsp;final&nbsp;int</code></div>
+<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/EntityRequest.html#OPCODE_QUERY_ENTITIES_BY_NAMES">OPCODE_QUERY_ENTITIES_BY_NAMES</a></code></div>
+<div class="col-last even-row-color"><code>1</code></div>
+</div>
+</li>
+<li>
 <div class="caption"><span>org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;<a href="org/eclipse/net4j/signal/ISignalProtocol.html" title="type parameter in ISignalProtocol">INFRA_STRUCTURE</a>&gt;</span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
@@ -248,18 +265,21 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS">public&nbsp;static&nbsp;final&nbsp;short</code></div>
 <div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS">SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</a></code></div>
 <div class="col-last even-row-color"><code>-5</code></div>
-<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_MONITOR_CANCELED">public&nbsp;static&nbsp;final&nbsp;short</code></div>
-<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_CANCELED">SIGNAL_MONITOR_CANCELED</a></code></div>
-<div class="col-last odd-row-color"><code>-2</code></div>
-<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_MONITOR_PROGRESS">public&nbsp;static&nbsp;final&nbsp;short</code></div>
-<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_PROGRESS">SIGNAL_MONITOR_PROGRESS</a></code></div>
-<div class="col-last even-row-color"><code>-3</code></div>
-<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_REMOTE_EXCEPTION">public&nbsp;static&nbsp;final&nbsp;short</code></div>
-<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_REMOTE_EXCEPTION">SIGNAL_REMOTE_EXCEPTION</a></code></div>
-<div class="col-last odd-row-color"><code>-1</code></div>
-<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_SET_TIMEOUT">public&nbsp;static&nbsp;final&nbsp;short</code></div>
-<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_SET_TIMEOUT">SIGNAL_SET_TIMEOUT</a></code></div>
-<div class="col-last even-row-color"><code>-4</code></div>
+<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_ENTITY">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_ENTITY">SIGNAL_ENTITY</a></code></div>
+<div class="col-last odd-row-color"><code>-6</code></div>
+<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_MONITOR_CANCELED">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_CANCELED">SIGNAL_MONITOR_CANCELED</a></code></div>
+<div class="col-last even-row-color"><code>-2</code></div>
+<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_MONITOR_PROGRESS">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_PROGRESS">SIGNAL_MONITOR_PROGRESS</a></code></div>
+<div class="col-last odd-row-color"><code>-3</code></div>
+<div class="col-first even-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_REMOTE_EXCEPTION">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second even-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_REMOTE_EXCEPTION">SIGNAL_REMOTE_EXCEPTION</a></code></div>
+<div class="col-last even-row-color"><code>-1</code></div>
+<div class="col-first odd-row-color"><code id="org.eclipse.net4j.signal.SignalProtocol.SIGNAL_SET_TIMEOUT">public&nbsp;static&nbsp;final&nbsp;short</code></div>
+<div class="col-second odd-row-color"><code><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_SET_TIMEOUT">SIGNAL_SET_TIMEOUT</a></code></div>
+<div class="col-last odd-row-color"><code>-4</code></div>
 </div>
 </li>
 </ul>

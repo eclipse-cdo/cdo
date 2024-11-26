@@ -84,7 +84,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code>, <code><a href="../ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.WithSignalCounters.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol.WithSignalCounters</a>&lt;INFRA_STRUCTURE&gt;</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.security.IUserAware</code></dd>
+<dd><code><a href="../buffer/IBufferHandler.html" title="interface in org.eclipse.net4j.buffer">IBufferHandler</a></code>, <code><a href="../ILocationAware.html" title="interface in org.eclipse.net4j">ILocationAware</a></code>, <code><a href="../protocol/IProtocol.html" title="interface in org.eclipse.net4j.protocol">IProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol2.html" title="interface in org.eclipse.net4j.protocol">IProtocol2</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="../protocol/IProtocol3.html" title="interface in org.eclipse.net4j.protocol">IProtocol3</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;INFRA_STRUCTURE&gt;</code>, <code><a href="ISignalProtocol.WithSignalCounters.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol.WithSignalCounters</a>&lt;INFRA_STRUCTURE&gt;</code>, <code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code>, <code>org.eclipse.net4j.util.concurrent.IExecutorServiceProvider</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code>, <code>org.eclipse.net4j.util.security.IUserAware</code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -93,7 +93,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">SignalProtocol&lt;INFRA_STRUCTURE&gt;</span>
 <span class="extends-implements">extends <a href="../../spi/net4j/Protocol.html" title="class in org.eclipse.spi.net4j">Protocol</a>&lt;INFRA_STRUCTURE&gt;
-implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol.WithSignalCounters</a>&lt;INFRA_STRUCTURE&gt;</span></div>
+implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol.WithSignalCounters</a>&lt;INFRA_STRUCTURE&gt;, org.eclipse.net4j.util.collection.Entity.Store.Provider</span></div>
 <div class="block">The default implementation of a <a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal"><code>signal protocol</code></a>.
  <p>
  On the <a href="../ILocationAware.Location.html#SERVER"><code>receiver side(s)</code></a> of protocol the
@@ -158,17 +158,20 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <div class="col-second odd-row-color"><code><a href="#SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS" class="member-name-link">SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_MONITOR_CANCELED" class="member-name-link">SIGNAL_MONITOR_CANCELED</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_ENTITY" class="member-name-link">SIGNAL_ENTITY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_MONITOR_PROGRESS" class="member-name-link">SIGNAL_MONITOR_PROGRESS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_MONITOR_CANCELED" class="member-name-link">SIGNAL_MONITOR_CANCELED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REMOTE_EXCEPTION" class="member-name-link">SIGNAL_REMOTE_EXCEPTION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_MONITOR_PROGRESS" class="member-name-link">SIGNAL_MONITOR_PROGRESS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_SET_TIMEOUT" class="member-name-link">SIGNAL_SET_TIMEOUT</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REMOTE_EXCEPTION" class="member-name-link">SIGNAL_REMOTE_EXCEPTION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final short</code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_SET_TIMEOUT" class="member-name-link">SIGNAL_SET_TIMEOUT</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
 <h3 id="fields-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.Lifecycle</h3>
@@ -223,60 +226,63 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReceivedSignals()" class="member-name-link">getReceivedSignals</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSentSignals()" class="member-name-link">getSentSignals</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.io.IStreamWrapper</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamWrapper()" class="member-name-link">getStreamWrapper</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.io.StringCompressor</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStringCompressor()" class="member-name-link">getStringCompressor</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReceivedSignals()" class="member-name-link">getReceivedSignals</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeout()" class="member-name-link">getTimeout</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSentSignals()" class="member-name-link">getSentSignals</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBuffer</a><wbr>(<a href="../buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Handles a given (incoming) buffer.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleChannelDeactivation()" class="member-name-link">handleChannelDeactivation</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.io.IStreamWrapper</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStreamWrapper()" class="member-name-link">getStreamWrapper</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.io.StringCompressor</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStringCompressor()" class="member-name-link">getStringCompressor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSendingTimeoutChanges()" class="member-name-link">isSendingTimeoutChanges</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns <code>true</code> by default, override to change this behavior.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(org.eclipse.net4j.connector.IConnector)" class="member-name-link">open</a><wbr>(<a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#provideSignalReactor(short)" class="member-name-link">provideSignalReactor</a><wbr>(short&nbsp;signalID)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTimeout()" class="member-name-link">getTimeout</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" class="member-name-link">setStreamWrapper</a><wbr>(org.eclipse.net4j.util.io.IStreamWrapper&nbsp;streamWrapper)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleBuffer(org.eclipse.net4j.buffer.IBuffer)" class="member-name-link">handleBuffer</a><wbr>(<a href="../buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a>&nbsp;buffer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Handles a given (incoming) buffer.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleChannelDeactivation()" class="member-name-link">handleChannelDeactivation</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSendingTimeoutChanges()" class="member-name-link">isSendingTimeoutChanges</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns <code>true</code> by default, override to change this behavior.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel">IChannel</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#open(org.eclipse.net4j.connector.IConnector)" class="member-name-link">open</a><wbr>(<a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector">IConnector</a>&nbsp;connector)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final <a href="SignalReactor.html" title="class in org.eclipse.net4j.signal">SignalReactor</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#provideSignalReactor(short)" class="member-name-link">provideSignalReactor</a><wbr>(short&nbsp;signalID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)" class="member-name-link">setStreamWrapper</a><wbr>(org.eclipse.net4j.util.io.IStreamWrapper&nbsp;streamWrapper)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Equivalent to calling SignalProtocol.setTimeout(timeout, false).</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long,boolean)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setTimeout(long,boolean)" class="member-name-link">setTimeout</a><wbr>(long&nbsp;timeout,
  boolean&nbsp;useOldTimeoutToSendNewOne)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Update the timeout used for signal end of stream waiting time.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForSignals(long)" class="member-name-link">waitForSignals</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForSignals(long)" class="member-name-link">waitForSignals</a><wbr>(long&nbsp;timeout)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -408,6 +414,22 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 </dl>
 </section>
 </li>
+<li>
+<section class="detail" id="SIGNAL_ENTITY">
+<h3>SIGNAL_ENTITY</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_ENTITY</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.20</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.signal.SignalProtocol.SIGNAL_ENTITY">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 </ul>
 </section>
 </li>
@@ -505,6 +527,16 @@ implements <a href="ISignalProtocol.WithSignalCounters.html" title="interface in
 <dl class="notes">
 <dt>Specified by:</dt>
 <dd><code><a href="ISignalProtocol.html#addStreamWrapper(org.eclipse.net4j.util.io.IStreamWrapper)">addStreamWrapper</a></code>&nbsp;in interface&nbsp;<code><a href="ISignalProtocol.html" title="interface in org.eclipse.net4j.signal">ISignalProtocol</a>&lt;<a href="SignalProtocol.html" title="type parameter in SignalProtocol">INFRA_STRUCTURE</a>&gt;</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEntityStore()">
+<h3>getEntityStore</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.collection.Entity.Store</span>&nbsp;<span class="element-name">getEntityStore</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getEntityStore</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code></dd>
 </dl>
 </section>
 </li>

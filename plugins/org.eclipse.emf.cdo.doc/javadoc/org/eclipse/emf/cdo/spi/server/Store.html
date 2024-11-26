@@ -82,7 +82,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code>, <code><a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a></code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
+<dd><code><a href="../../server/IStore.html" title="interface in org.eclipse.emf.cdo.server">IStore</a></code>, <code><a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a></code>, <code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
 </dl>
 <dl class="notes">
 <dt>Direct Known Subclasses:</dt>
@@ -91,7 +91,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Store</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
-implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a></span></div>
+implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalStore</a>, org.eclipse.net4j.util.collection.Entity.Store.Provider</span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -172,6 +172,12 @@ implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.collection.Entity</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#computeEntity(java.lang.String)" class="member-name-link">computeEntity</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#computeEntityNames(java.util.function.Consumer)" class="member-name-link">computeEntityNames</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../server/IStoreAccessor.QueryResourcesContext.ExactMatch.html" title="interface in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext.ExactMatch</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createExactMatchContext(org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">createExactMatchContext</a><wbr>(<a href="../../common/id/CDOID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name,
@@ -191,6 +197,12 @@ implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Creates and returns a <b>new</b> <a href="../../server/IStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> instance.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final org.eclipse.net4j.util.collection.Entity.Builder</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#entityBuilder()" class="member-name-link">entityBuilder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.om.monitor.ProgressDistributor</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIndicatingCommitDistributor()" class="member-name-link">getIndicatingCommitDistributor</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -744,6 +756,46 @@ implements <a href="InternalStore.html" title="interface in org.eclipse.emf.cdo.
 <dl class="notes">
 <dt>Since:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getEntityStore()">
+<h3>getEntityStore</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.collection.Entity.Store</span>&nbsp;<span class="element-name">getEntityStore</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code>getEntityStore</code>&nbsp;in interface&nbsp;<code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="computeEntityNames(java.util.function.Consumer)">
+<h3>computeEntityNames</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">computeEntityNames</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;consumer)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.22</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="computeEntity(java.lang.String)">
+<h3>computeEntity</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.collection.Entity</span>&nbsp;<span class="element-name">computeEntity</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.22</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="entityBuilder()">
+<h3>entityBuilder</h3>
+<div class="member-signature"><span class="modifiers">protected final</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.collection.Entity.Builder</span>&nbsp;<span class="element-name">entityBuilder</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.22</dd>
 </dl>
 </section>
 </li>

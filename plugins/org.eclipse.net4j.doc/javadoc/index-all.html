@@ -299,6 +299,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/confirmation/ConfirmationRequest.html#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,java.lang.Enum,org.eclipse.net4j.signal.confirmation.ConfirmationPrompt)" class="member-name-link">ConfirmationRequest(SignalProtocol&lt;?&gt;, Enum&lt;?&gt;, ConfirmationPrompt)</a> - Constructor for class org.eclipse.net4j.signal.confirmation.<a href="org/eclipse/net4j/signal/confirmation/ConfirmationRequest.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#confirming(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">confirming(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/RequestWithConfirmation.html#confirming(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">confirming(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithConfirmation.html" title="class in org.eclipse.net4j.signal">RequestWithConfirmation</a></dt>
 <dd>
 <div class="block"><b>Important Note:</b> The confirmation must not be empty, i.e.</div>
@@ -585,11 +587,23 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Ensures that this BufferOutputStream has a buffer.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html" class="type-name-link" title="class in org.eclipse.net4j.signal">EntityIndication</a> - Class in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol)" class="member-name-link">EntityIndication(SignalProtocol&lt;?&gt;)</a> - Constructor for class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html" class="type-name-link" title="class in org.eclipse.net4j.signal">EntityRequest</a> - Class in <a href="org/eclipse/net4j/signal/package-summary.html">org.eclipse.net4j.signal</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,java.util.function.BiConsumer,java.lang.String,java.lang.String...)" class="member-name-link">EntityRequest(SignalProtocol&lt;?&gt;, BiConsumer&lt;String, Entity&gt;, String, String...)</a> - Constructor for class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class org.eclipse.net4j.signal.wrapping.<a href="org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html" title="class in org.eclipse.net4j.signal.wrapping">StreamWrapperInjector</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.AcceptorData</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html#equals(java.lang.Object)" class="member-name-link">equals(Object)</a> - Method in class org.eclipse.net4j.tcp.<a href="org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" title="class in org.eclipse.net4j.tcp">TCPUtil.ConnectorData</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#ERROR_ILLEGAL_OPCODE" class="member-name-link">ERROR_ILLEGAL_OPCODE</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#ERROR_NO_PROVIDER" class="member-name-link">ERROR_NO_PROVIDER</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBufferPool.html#evict(int)" class="member-name-link">evict(int)</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBufferPool.html" title="interface in org.eclipse.net4j.buffer">IBufferPool</a></dt>
 <dd>
@@ -713,6 +727,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/jvm/IJVMAcceptorManager.html#getAcceptorRegistry()" class="member-name-link">getAcceptorRegistry()</a> - Method in interface org.eclipse.net4j.jvm.<a href="org/eclipse/net4j/jvm/IJVMAcceptorManager.html" title="interface in org.eclipse.net4j.jvm">IJVMAcceptorManager</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/IWSAcceptorManager.html#getAcceptorRegistry()" class="member-name-link">getAcceptorRegistry()</a> - Method in interface org.eclipse.net4j.ws.<a href="org/eclipse/net4j/ws/IWSAcceptorManager.html" title="interface in org.eclipse.net4j.ws">IWSAcceptorManager</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#getAdditionalInfo()" class="member-name-link">getAdditionalInfo()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/Signal.html#getAdditionalInfo()" class="member-name-link">getAdditionalInfo()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></dt>
 <dd>&nbsp;</dd>
@@ -888,6 +904,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/ui/AcceptorContentProvider.html#getElements(java.lang.Object)" class="member-name-link">getElements(Object)</a> - Method in class org.eclipse.net4j.ui.<a href="org/eclipse/net4j/ui/AcceptorContentProvider.html" title="class in org.eclipse.net4j.ui">AcceptorContentProvider</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ui/ConnectorContentProvider.html#getElements(java.lang.Object)" class="member-name-link">getElements(Object)</a> - Method in class org.eclipse.net4j.ui.<a href="org/eclipse/net4j/ui/ConnectorContentProvider.html" title="class in org.eclipse.net4j.ui">ConnectorContentProvider</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html#getEntityStore()" class="member-name-link">getEntityStore()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#getEntityStore()" class="member-name-link">getEntityStore()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/BufferOutputStream.html#getError()" class="member-name-link">getError()</a> - Method in class org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/BufferOutputStream.html" title="class in org.eclipse.net4j.buffer">BufferOutputStream</a></dt>
 <dd>&nbsp;</dd>
@@ -1235,6 +1255,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/buffer/IBuffer.html#getString()" class="member-name-link">getString()</a> - Method in interface org.eclipse.net4j.buffer.<a href="org/eclipse/net4j/buffer/IBuffer.html" title="interface in org.eclipse.net4j.buffer">IBuffer</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html#getStringCompressor()" class="member-name-link">getStringCompressor()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#getStringCompressor()" class="member-name-link">getStringCompressor()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#getStringCompressor()" class="member-name-link">getStringCompressor()</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html#getSubject()" class="member-name-link">getSubject()</a> - Method in class org.eclipse.net4j.signal.confirmation.<a href="org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html" title="class in org.eclipse.net4j.signal.confirmation">ConfirmationPrompt</a></dt>
@@ -1454,6 +1478,8 @@ loadScripts(document, 'script');</script>
 <div class="block">A <a href="org/eclipse/net4j/ILocationAware.Location.html" title="enum class in org.eclipse.net4j"><code>location</code></a> in a <a href="org/eclipse/net4j/ILocationAware.Location.html#CLIENT"><code>client</code></a>/<a href="org/eclipse/net4j/ILocationAware.Location.html#SERVER"><code>server</code></a> scenario.</div>
 </dd>
 <dt><a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsIndication.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">indicating(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsIndication.html" title="class in org.eclipse.net4j.signal">AcknowledgeCompressedStringsIndication</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">indicating(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/Indication.html#indicating(org.eclipse.net4j.util.io.ExtendedDataInputStream)" class="member-name-link">indicating(ExtendedDataInputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/Indication.html" title="class in org.eclipse.net4j.signal">Indication</a></dt>
 <dd>&nbsp;</dd>
@@ -1854,6 +1880,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#OPCODE_NEGOTIATION" class="member-name-link">OPCODE_NEGOTIATION</a> - Static variable in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#OPCODE_QUERY_ENTITIES_BY_NAMES" class="member-name-link">OPCODE_QUERY_ENTITIES_BY_NAMES</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#OPCODE_REGISTRATION" class="member-name-link">OPCODE_REGISTRATION</a> - Static variable in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html#OPCODE_REGISTRATION_ACK" class="member-name-link">OPCODE_REGISTRATION_ACK</a> - Static variable in class org.eclipse.net4j.ws.jetty.<a href="org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" title="class in org.eclipse.net4j.ws.jetty">Net4jWebSocket</a></dt>
@@ -2128,6 +2156,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsRequest.html#requesting(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">requesting(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/AcknowledgeCompressedStringsRequest.html" title="class in org.eclipse.net4j.signal">AcknowledgeCompressedStringsRequest</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityRequest.html#requesting(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">requesting(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityRequest.html" title="class in org.eclipse.net4j.signal">EntityRequest</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/MonitorCanceledRequest.html#requesting(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">requesting(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/MonitorCanceledRequest.html" title="class in org.eclipse.net4j.signal">MonitorCanceledRequest</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/MonitorProgressRequest.html#requesting(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">requesting(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/MonitorProgressRequest.html" title="class in org.eclipse.net4j.signal">MonitorProgressRequest</a></dt>
@@ -2167,6 +2197,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/signal/RequestWithMonitoring.html#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,java.lang.Enum)" class="member-name-link">RequestWithMonitoring(SignalProtocol&lt;?&gt;, Enum&lt;?&gt;)</a> - Constructor for class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/RequestWithMonitoring.html" title="class in org.eclipse.net4j.signal">RequestWithMonitoring</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.html#RESERVED_CHANNEL" class="member-name-link">RESERVED_CHANNEL</a> - Static variable in interface org.eclipse.spi.net4j.<a href="org/eclipse/spi/net4j/InternalChannelMultiplexer.html" title="interface in org.eclipse.spi.net4j">InternalChannelMultiplexer</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/EntityIndication.html#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">responding(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/EntityIndication.html" title="class in org.eclipse.net4j.signal">EntityIndication</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html#responding(org.eclipse.net4j.util.io.ExtendedDataOutputStream)" class="member-name-link">responding(ExtendedDataOutputStream)</a> - Method in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/IndicationWithMonitoring.html" title="class in org.eclipse.net4j.signal">IndicationWithMonitoring</a></dt>
 <dd>&nbsp;</dd>
@@ -2412,6 +2444,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/signal/Signal.html#%3Cinit%3E(org.eclipse.net4j.signal.SignalProtocol,java.lang.Enum)" class="member-name-link">Signal(SignalProtocol&lt;?&gt;, Enum&lt;?&gt;)</a> - Constructor for class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/Signal.html" title="class in org.eclipse.net4j.signal">Signal</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS" class="member-name-link">SIGNAL_ACKNOWLEDGE_COMPRESSED_STRINGS</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_ENTITY" class="member-name-link">SIGNAL_ENTITY</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/signal/SignalProtocol.html#SIGNAL_MONITOR_CANCELED" class="member-name-link">SIGNAL_MONITOR_CANCELED</a> - Static variable in class org.eclipse.net4j.signal.<a href="org/eclipse/net4j/signal/SignalProtocol.html" title="class in org.eclipse.net4j.signal">SignalProtocol</a></dt>
 <dd>&nbsp;</dd>

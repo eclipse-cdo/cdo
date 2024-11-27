@@ -1442,6 +1442,18 @@
             <message_argument value="STRIP_HTML"/>
         </message_arguments>
     </delta>
+    <delta compatible="false" componentId="org.eclipse.pde.core(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="TOPIC_TARGET_DELETED" kind="ADDED" message="The field org.eclipse.pde.core.target.TargetEvents.TOPIC_TARGET_DELETED has been added to a class" newModifiers="25" oldModifiers="0" restrictions="0" type_name="org.eclipse.pde.core.target.TargetEvents">
+        <message_arguments>
+            <message_argument value="org.eclipse.pde.core.target.TargetEvents"/>
+            <message_argument value="TOPIC_TARGET_DELETED"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.pde.core(3.20.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="TOPIC_TARGET_SAVED" kind="ADDED" message="The field org.eclipse.pde.core.target.TargetEvents.TOPIC_TARGET_SAVED has been added to a class" newModifiers="25" oldModifiers="0" restrictions="0" type_name="org.eclipse.pde.core.target.TargetEvents">
+        <message_arguments>
+            <message_argument value="org.eclipse.pde.core.target.TargetEvents"/>
+            <message_argument value="TOPIC_TARGET_SAVED"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.22.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant" kind="ADDED" message="The interface org.eclipse.net4j.util.collection.Entity$Store$Provider adds method getEntityStore() to org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalFailoverParticipant"/>
@@ -2672,6 +2684,13 @@
             <message_argument value="1.3.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.pde.core(3.20.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.pde.core" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.pde.core (from version 3.19.0 to 3.20.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.pde.core"/>
+            <message_argument value="3.19.0"/>
+            <message_argument value="3.20.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.reviews(1.2.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="basicGetReplyTo()Lorg/eclipse/emf/cdo/lm/reviews/Comment;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl.basicGetReplyTo() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.reviews.impl.CommentImpl"/>
@@ -3060,6 +3079,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.ui.UIActivator"/>
             <message_argument value="getImageDescriptor(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createBrowser(Lorg/eclipse/swt/widgets/Composite;)Lorg/eclipse/net4j/util/ui/widgets/SafeBrowser;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.UIUtil.createBrowser(Composite) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ui.UIUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.UIUtil"/>
+            <message_argument value="createBrowser(Composite)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.19.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="generateGrayImage(Lorg/eclipse/swt/graphics/Image;)Lorg/eclipse/swt/graphics/Image;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ui.widgets.ImageButton.generateGrayImage(Image) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.ImageButton">
@@ -4148,6 +4173,30 @@
             <message_argument value="org.eclipse.net4j.ui_4.4.5"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer.ui(4.5.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.widgets.SafeBrowser" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.widgets.SafeBrowser has been added to org.eclipse.emf.cdo.transfer.ui_4.5.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.widgets.SafeBrowser"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer.ui_4.5.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.16.2)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.widgets.SafeBrowser" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.widgets.SafeBrowser has been added to org.eclipse.emf.cdo.ui_4.16.2" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.widgets.SafeBrowser"/>
+            <message_argument value="org.eclipse.emf.cdo.ui_4.16.2"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.debug(3.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.widgets.SafeBrowser" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.widgets.SafeBrowser has been added to org.eclipse.net4j.debug_3.2.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.widgets.SafeBrowser"/>
+            <message_argument value="org.eclipse.net4j.debug_3.2.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.ui.widgets.SafeBrowser" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.ui.widgets.SafeBrowser has been added to org.eclipse.net4j.ui_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.widgets.SafeBrowser"/>
+            <message_argument value="org.eclipse.net4j.ui_4.4.5"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.7.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="PROTOCOL_WSS" kind="ADDED" message="The static field org.eclipse.emf.cdo.net4j.CDONet4jUtil.PROTOCOL_WSS has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.net4j.CDONet4jUtil">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.net4j.CDONet4jUtil"/>
@@ -4687,6 +4736,12 @@
     <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.widgets.EntryField" kind="ADDED" message="The type org.eclipse.net4j.util.ui.widgets.EntryField has been added to org.eclipse.net4j.util.ui_3.19.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.EntryField">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.ui.widgets.EntryField"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.19.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.19.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.ui.widgets.SafeBrowser" kind="ADDED" message="The type org.eclipse.net4j.util.ui.widgets.SafeBrowser has been added to org.eclipse.net4j.util.ui_3.19.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ui.widgets.SafeBrowser"/>
             <message_argument value="org.eclipse.net4j.util.ui_3.19.0"/>
         </message_arguments>
     </delta>

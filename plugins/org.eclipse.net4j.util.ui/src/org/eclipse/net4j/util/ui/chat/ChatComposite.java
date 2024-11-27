@@ -11,6 +11,7 @@
 package org.eclipse.net4j.util.ui.chat;
 
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatMessage.Provider;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer.BubbleGroup;
@@ -22,6 +23,7 @@ import org.eclipse.net4j.util.ui.widgets.EntryField;
 import org.eclipse.net4j.util.ui.widgets.EntryField.FieldConfig;
 import org.eclipse.net4j.util.ui.widgets.ImageButton;
 import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
+import org.eclipse.net4j.util.ui.widgets.SafeBrowser;
 
 import org.eclipse.jface.layout.GridDataFactory;
 import org.eclipse.jface.layout.GridLayoutFactory;
@@ -60,7 +62,7 @@ public final class ChatComposite extends Composite
 
   private final Config config;
 
-  private final Browser messageBrowser;
+  private final SafeBrowser messageBrowser;
 
   private final EntryField entryField;
 
@@ -96,10 +98,15 @@ public final class ChatComposite extends Composite
 
   private boolean isMessageBrowserScrolledToBottom()
   {
-    int scrollTop = ((Double)messageBrowser.evaluate("return document.body.scrollTop;")).intValue();
-    int scrollHeight = ((Double)messageBrowser.evaluate("return document.body.scrollHeight;")).intValue();
-    int height = messageBrowser.getSize().y;
-    return scrollTop + height == scrollHeight;
+    if (messageBrowser.isDocumentAvailable())
+    {
+      int scrollTop = ((Double)messageBrowser.evaluate("return document.body.scrollTop;")).intValue();
+      int scrollHeight = ((Double)messageBrowser.evaluate("return document.body.scrollHeight;")).intValue();
+      int height = messageBrowser.getSize().y;
+      return scrollTop + height == scrollHeight;
+    }
+
+    return false;
   }
 
   public Browser getMessageBrowser()
@@ -134,12 +141,12 @@ public final class ChatComposite extends Composite
 
   public boolean revealLastMessage()
   {
-    return messageBrowser.execute("window.scrollTo(0, document.body.scrollHeight)");
+    return messageBrowser.executeSafe("window.scrollTo(0, document.body.scrollHeight)");
   }
 
-  private Browser createMessageBrowser()
+  private SafeBrowser createMessageBrowser()
   {
-    Browser browser = new Browser(this, SWT.EDGE);
+    SafeBrowser browser = UIUtil.createBrowser(this);
     browser.addLocationListener(LocationListener.changedAdapter(e -> revealLastMessage()));
     return browser;
   }

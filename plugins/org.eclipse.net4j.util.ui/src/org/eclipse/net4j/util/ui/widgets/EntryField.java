@@ -13,6 +13,7 @@ package org.eclipse.net4j.util.ui.widgets;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
+import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
 
@@ -335,9 +336,6 @@ public final class EntryField extends Composite
   {
     requestLayout();
     getParent().requestLayout();
-
-    // layout(true);
-    // getParent().layout(true);
   }
 
   /**
@@ -653,7 +651,7 @@ public final class EntryField extends Composite
     @Override
     public Control doCreateControl()
     {
-      Browser browser = new Browser(EntryField.this, SWT.EDGE);
+      Browser browser = UIUtil.createBrowser(EntryField.this);
       browser.addProgressListener(ProgressListener.completedAdapter(event -> {
         if (mode != this)
         {

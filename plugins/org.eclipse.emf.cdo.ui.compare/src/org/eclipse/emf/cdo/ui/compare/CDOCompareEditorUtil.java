@@ -81,9 +81,12 @@ import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.StructuredViewer;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.Viewer;
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
+import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -1054,13 +1057,29 @@ public final class CDOCompareEditorUtil
     @Override
     public Control createContents(Composite parent)
     {
-      if (inputConsumer instanceof ContentsCreator)
+      try
       {
-        ContentsCreator contentsCreator = (ContentsCreator)inputConsumer;
-        return contentsCreator.createContents(parent, super::createContents);
-      }
+        if (inputConsumer instanceof ContentsCreator)
+        {
+          ContentsCreator contentsCreator = (ContentsCreator)inputConsumer;
+          return contentsCreator.createContents(parent, super::createContents);
+        }
 
-      return super.createContents(parent);
+        return super.createContents(parent);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error(ex);
+
+        if (!parent.isDisposed())
+        {
+          Label label = new Label(parent, SWT.NONE);
+          label.setText("An error has been logged");
+          return label;
+        }
+
+        throw new SWTException(SWT.ERROR_WIDGET_DISPOSED, ex.getMessage());
+      }
     }
 
     @Override

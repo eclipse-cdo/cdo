@@ -155,6 +155,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/net4j/util/ui/widgets/SafeBrowser.java" type="org.eclipse.net4j.util.ui.widgets.SafeBrowser">
+        <filter id="571473929">
+            <message_arguments>
+                <message_argument value="Browser"/>
+                <message_argument value="SafeBrowser"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/net4j/util/ui/widgets/SecondaryToolItem.java" type="org.eclipse.net4j.util.ui.widgets.SecondaryToolItem">
         <filter id="571473929">
             <message_arguments>

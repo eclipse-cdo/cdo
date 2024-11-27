@@ -472,12 +472,15 @@ public class OpenReviewAction extends AbstractReviewAction
         ISelectionProvider oldProvider = site.getSelectionProvider();
 
         @SuppressWarnings("unchecked")
-        ListenerList<ISelectionChangedListener> listeners = (ListenerList<ISelectionChangedListener>) //
-        ReflectUtil.getValue(SELECTION_LISTENERS_FIELD, oldProvider);
+        ListenerList<ISelectionChangedListener> listeners = oldProvider == null ? null
+            : (ListenerList<ISelectionChangedListener>)ReflectUtil.getValue(SELECTION_LISTENERS_FIELD, oldProvider);
 
-        for (ISelectionChangedListener listener : listeners)
+        if (listeners != null)
         {
-          treeViewer.addSelectionChangedListener(listener);
+          for (ISelectionChangedListener listener : listeners)
+          {
+            treeViewer.addSelectionChangedListener(listener);
+          }
         }
 
         site.setSelectionProvider(treeViewer);

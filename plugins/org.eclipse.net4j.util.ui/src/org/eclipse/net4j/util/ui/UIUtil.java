@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.internal.ui.bundle.OM;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 import org.eclipse.net4j.util.ui.security.InteractiveCredentialsProvider;
+import org.eclipse.net4j.util.ui.widgets.SafeBrowser;
 
 import org.eclipse.core.runtime.Adapters;
 import org.eclipse.core.runtime.IAdaptable;
@@ -507,6 +508,14 @@ public final class UIUtil
   public static IPasswordCredentialsProvider createInteractiveCredentialsProvider()
   {
     return new InteractiveCredentialsProvider();
+  }
+
+  /**
+   * @since 3.19
+   */
+  public static SafeBrowser createBrowser(Composite parent)
+  {
+    return new SafeBrowser(parent);
   }
 
   public static Composite createGridComposite(Composite parent, int columns)

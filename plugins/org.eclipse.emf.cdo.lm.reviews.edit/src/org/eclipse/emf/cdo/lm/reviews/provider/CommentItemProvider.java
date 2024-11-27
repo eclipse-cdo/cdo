@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.etypes.provider.ModelElementItemProvider;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 
+import org.eclipse.net4j.util.StringUtil;
+
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.edit.provider.ComposeableAdapterFactory;
@@ -203,13 +205,27 @@ public class CommentItemProvider extends ModelElementItemProvider
    * This returns the label styled text for the adapted class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
+   * @generated NOT
    */
   @Override
   public Object getStyledText(Object object)
   {
     Comment comment = (Comment)object;
-    return new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Integer.toString(comment.getId()));
+    String text = comment.getText();
+    if (StringUtil.isEmpty(text))
+    {
+      return new StyledString(getString("_UI_Comment_type"), StyledString.Style.QUALIFIER_STYLER).append(" ").append(Integer.toString(comment.getId()));
+    }
+
+    StyledString styledString = new StyledString(text);
+
+    String author = comment.getAuthor();
+    if (!StringUtil.isEmpty(author))
+    {
+      styledString.append("  [" + author + "]", StyledString.Style.QUALIFIER_STYLER);
+    }
+
+    return styledString;
   }
 
   /**

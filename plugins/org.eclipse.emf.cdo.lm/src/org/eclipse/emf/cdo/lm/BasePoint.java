@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.lm;
 import java.util.Objects;
 
 /**
+ * Represents a {@link #getTimeStamp() time stamp} in a {@link FloatingBaseline floating baseline}.
+ *
  * @author Eike Stepper
  */
 public final class BasePoint

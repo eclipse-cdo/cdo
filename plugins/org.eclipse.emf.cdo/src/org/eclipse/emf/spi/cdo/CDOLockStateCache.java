@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
+import org.eclipse.emf.cdo.session.CDOSession;
 
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.function.Consumer;
 
 /**
+ * An optimized cache for {@link CDOLockState lock states} in the context of an entire {@link CDOSession session}.
+ *
  * @author Eike Stepper
  * @since 4.15
  * @noextend This interface is not intended to be extended by clients.
@@ -53,6 +56,8 @@ public interface CDOLockStateCache extends ILifecycle
   public void remapOwner(CDOBranch branch, CDOLockOwner oldOwner, CDOLockOwner newOwner);
 
   /**
+   * An {@link IllegalStateException} thrown from {@link CDOLockStateCache} instances when a lock could not be obtained.
+   *
    * @author Eike Stepper
    */
   public static final class ObjectAlreadyLockedException extends IllegalStateException

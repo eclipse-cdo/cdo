@@ -43,9 +43,6 @@ public interface CDOProtocol extends CDOProtocolConstants
    * @author Eike Stepper
    * @since 4.3
    */
-  /**
-   * @author Eike Stepper
-   */
   public static final class CommitNotificationInfo
   {
     public static final byte IMPACT_NONE = 0;
@@ -255,6 +252,8 @@ public interface CDOProtocol extends CDOProtocolConstants
   }
 
   /**
+   * A data transfer object for the essential commit data.
+   *
    * @author Eike Stepper
    * @since 4.8
    */

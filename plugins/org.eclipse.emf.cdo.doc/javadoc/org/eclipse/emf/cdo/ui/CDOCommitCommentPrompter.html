@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOCommitCommentPrompter</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Attaches to a given <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and pops up a <a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a>
+ for a commit comment whenever this transaction is <a href="../transaction/CDOUserTransaction.html#commit()"><code>committed</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.10</dd>
@@ -99,7 +101,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOCommitCommentPrompter.CommentDialog.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A dialog for commit comments.</div>
+</div>
 </div>
 </section>
 </li>

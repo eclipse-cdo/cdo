@@ -80,6 +80,10 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">LMMerger2</span><span class="extends-implements">
 extends <a href="LMMerger.html" title="interface in org.eclipse.emf.cdo.lm.util">LMMerger</a></span></div>
+<div class="block">Merges the commits of a source <a href="../Change.html" title="interface in org.eclipse.emf.cdo.lm"><code>change</code></a> into the <a href="../../common/branch/CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch</code></a> of a target <a href="../Stream.html" title="interface in org.eclipse.emf.cdo.lm"><code>stream</code></a>
+ in order to create a <a href="../Delivery.html" title="interface in org.eclipse.emf.cdo.lm"><code>delivery</code></a>.
+ <p>
+ Note: The <a href="#mergeDelivery(org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos)"><code>mergeDelivery(LMMergeInfos)</code></a> method allows to augment the merge parameters in the future without breaking APIs.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>1.2</dd>
@@ -100,7 +104,9 @@ extends <a href="LMMerger.html" title="interface in org.eclipse.emf.cdo.lm.util"
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="LMMerger2.LMMergeInfos.html" class="type-name-link" title="class in org.eclipse.emf.cdo.lm.util">LMMerger2.LMMergeInfos</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Encapsulates the <a href="#mergeDelivery(org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos)"><code>merge</code></a> parameters.</div>
+</div>
 </div>
 </section>
 </li>

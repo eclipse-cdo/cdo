@@ -117,7 +117,9 @@ loadScripts(document, 'script');</script>
 <div class="block">A strategy interface to customize the invalidation behavior of a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOListWrapper.html" title="interface in org.eclipse.emf.cdo.view">CDOListWrapper</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Can wrap given lists in order to augment the behavior of those given lists with custom behavior.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOLockStatePrefetcher.html" title="class in org.eclipse.emf.cdo.view">CDOLockStatePrefetcher</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Prefetches <a href="../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> for a given <a href="CDOLockStatePrefetcher.html#getView()"><code>view</code></a> when <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> are loaded.</div>
@@ -128,9 +130,13 @@ loadScripts(document, 'script');</script>
  changes of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOPrefetcherManager.html" title="class in org.eclipse.emf.cdo.view">CDOPrefetcherManager</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Orchestrates (adds, changes, removes) per-view <a href="CDOPrefetcherManager.Prefetcher.html" title="class in org.eclipse.emf.cdo.view"><code>prefetchers</code></a> for all views in a <a href="CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view set</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOPrefetcherManager.Prefetcher.html" title="class in org.eclipse.emf.cdo.view">CDOPrefetcherManager.Prefetcher</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Prefetches <a href="../common/revision/CDORevision.html" title="interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> and, optionally, <a href="../common/lock/CDOLockState.html" title="interface in org.eclipse.emf.cdo.common.lock"><code>lock states</code></a> for a given, single <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOQuery.html" title="interface in org.eclipse.emf.cdo.view">CDOQuery</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Provides access to the information that specifies a query from a <a href="../common/CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>view</code></a> to a
@@ -392,7 +398,10 @@ loadScripts(document, 'script');</script>
 <div class="block">An unchecked <a href="../common/util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> being thrown from <a href="CDOViewSet.html" title="interface in org.eclipse.emf.cdo.view"><code>view sets</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOViewSetHandler.html" title="class in org.eclipse.emf.cdo.view">CDOViewSetHandler</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A customizable handler of all <a href="CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view target changed events</code></a>
+ in all <a href="CDOViewSet.html#getViews()"><code>views</code></a> of a given <a href="CDOViewSetHandler.html#getViewSet()"><code>view set</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view">CDOViewTargetChangedEvent</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A <a href="CDOViewEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view event</code></a> fired when the branch point of a <a href="CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> has changed.</div>

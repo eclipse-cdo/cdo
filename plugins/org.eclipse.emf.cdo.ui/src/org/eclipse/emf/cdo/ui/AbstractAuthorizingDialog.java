@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.internal.ui.dialogs.DeleteBranchDialog;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.Authorizer.AuthorizerContext;
 
@@ -21,8 +22,12 @@ import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Shell;
 
 /**
+ * An abstract base class for {@link AbstractDialog dialogs} that asynchronously update their UI with
+ * {@link Authorizer#getAuthorization(Object) authorization} information.
+ *
  * @author Eike Stepper
  * @since 4.11
+ * @see DeleteBranchDialog
  */
 public abstract class AbstractAuthorizingDialog<E> extends AbstractDialog implements AuthorizerContext<E>
 {

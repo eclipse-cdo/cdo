@@ -10,10 +10,13 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.internal.ui.editor.CDOLoadResourceAction;
+
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.URI;
+import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import org.eclipse.swt.graphics.Image;
@@ -23,6 +26,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * A {@link Factory contributable} provider for {@link Resource resources} that can be loaded into a resource set.
+ * Used by {@link CDOLoadResourceAction}.
+ *
  * @author Eike Stepper
  * @since 4.13
  */
@@ -35,6 +41,8 @@ public interface CDOLoadResourceProvider
   public List<URI> browseResources(ResourceSet resourceSet, Shell shell, boolean multi);
 
   /**
+   * Creates {@link CDOLoadResourceProvider load resource providers}.
+   *
    * @author Eike Stepper
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -64,6 +72,9 @@ public interface CDOLoadResourceProvider
   }
 
   /**
+   * An optional {@link #getButtonImage(ResourceSet) button image} provider interface
+   * for {@link CDOLoadResourceProvider load resource providers}.
+   *
    * @author Eike Stepper
    * @since 4.15
    */

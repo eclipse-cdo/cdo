@@ -104,7 +104,9 @@ loadScripts(document, 'script');</script>
  been created.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab3"><a href="CDOBranchChangedEvent.ChangeKind.html" title="enum class in org.eclipse.emf.cdo.common.branch">CDOBranchChangedEvent.ChangeKind</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="block">Enumerates the kinds of branch changes.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchCreatedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchCreatedEvent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">Deprecated.
 <div class="deprecation-comment">As of 4.3 use <a href="CDOBranchChangedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchChangedEvent</code></a>.</div>
@@ -112,7 +114,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchCreationContext.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchCreationContext</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab5"><a href="CDOBranchDoesNotExistException.html" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchDoesNotExistException</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab5">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab5">
+<div class="block">Thrown from <a href="CDOBranch.html#getBase()"><code>CDOBranch.getBase()</code></a> or <a href="CDOBranch.html#getName()"><code>CDOBranch.getName()</code></a> when the branch has been deleted remotely.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchHandler.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchHandler</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A call-back interface that indicates the ability to <i>handle</i> branches that are passed from other entities.</div>
@@ -122,15 +126,26 @@ loadScripts(document, 'script');</script>
 <div class="block">Manages a tree of <a href="CDOBranch.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branches</code></a> and notifies about changes in this branch tree.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchManager.CDOTagList.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A <code>container</code> of all <a href="CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tags</code></a> in the scope of a <a href="CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">An <code>event</code> fired from a <a href="CDOBranchManager.CDOTagList.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchManager.CDOTagList.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagMovedEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list event</code></a> fired when a branch tag was moved.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchManager.CDOTagList.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagRenamedEvent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list event</code></a> fired when a branch tag was renamed.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOBranchManager.EventAdapter.html" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchManager.EventAdapter</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A <code>listener</code> that dispatches <a href="CDOBranchChangedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch changed events</code></a> to methods that can be
+ overridden by extenders.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A <a href="CDOBranchPoint.html#getTimeStamp()"><code>point in time</code></a> in a particular <a href="CDOBranchPoint.html#getBranch()"><code>branch</code></a>.</div>
@@ -166,19 +181,30 @@ loadScripts(document, 'script');</script>
 <div class="block">A persistent, named <a href="CDOBranchPoint.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchTag.TagDeletedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagDeletedEvent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag event</code></a> fired when a branch tag was deleted.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">An <code>event</code> fired from a <a href="CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tag</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchTag.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagMovedEvent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag event</code></a> fired when a branch tag was moved.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOBranchTag.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagRenamedEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag event</code></a> fired when a branch tag was renamed.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOBranchVersion.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchVersion</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A pair of a <a href="CDOBranchVersion.html#getBranch()"><code>branch</code></a> and an integer <a href="CDOBranchVersion.html#getVersion()"><code>version</code></a> number.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab5"><a href="CDODuplicateBranchException.html" title="class in org.eclipse.emf.cdo.common.branch">CDODuplicateBranchException</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab5">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab5">
+<div class="block">A CDO <a href="../util/CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown from <a href="CDOBranch.html#createBranch(java.lang.String,long)"><code>CDOBranch.createBranch()</code></a>
+ if the <a href="CDOBranch.html#getPathName()"><code>path name</code></a> of the branch to be created already exists.</div>
+</div>
 </div>
 </div>
 </div>

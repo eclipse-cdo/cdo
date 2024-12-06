@@ -40,6 +40,8 @@ import org.eclipse.emf.cdo.util.CDOUpdatable;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.ReadOnlyException;
 
+import org.eclipse.emf.internal.cdo.CDOObjectImpl;
+
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IContainer;
@@ -895,6 +897,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
     public void setFeatureAnalyzer(CDOFeatureAnalyzer featureAnalyzer);
 
     /**
+     * The returned adapter policy may optionally implement {@link CDOListWrapper}, see {@link CDOObjectImpl#eAdapters()}.
+     *
      * @since 4.12
      */
     public CDOAdapterPolicy getClearAdapterPolicy();

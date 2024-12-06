@@ -23,7 +23,13 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.spi.cdo.InternalCDOObject;
 
+import org.eclipse.jface.viewers.TreeViewer;
+import org.eclipse.swt.widgets.Tree;
+
 /**
+ * Listens to {@link CDOViewTargetChangedEvent view target changed events} from the given {@link CDOView view} and
+ * adjusts the {@link TreeViewer#setInput(Object) input} of a {@link Tree tree-based} UI accordingly.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

@@ -58,6 +58,8 @@ public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider, Comparabl
   public boolean isDeleted();
 
   /**
+   * An {@link IEvent event} fired from a {@link CDOBranchTag branch tag}.
+   *
    * @author Eike Stepper
    * @since 4.11
    */
@@ -67,6 +69,8 @@ public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider, Comparabl
   }
 
   /**
+   * A {@link TagEvent tag event} fired when a branch tag was renamed.
+   *
    * @author Eike Stepper
    * @since 4.11
    */
@@ -78,6 +82,8 @@ public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider, Comparabl
   }
 
   /**
+   * A {@link TagEvent tag event} fired when a branch tag was moved.
+   *
    * @author Eike Stepper
    * @since 4.11
    */
@@ -89,6 +95,8 @@ public interface CDOBranchTag extends CDOBranchPoint, CDONameProvider, Comparabl
   }
 
   /**
+   * A {@link TagEvent tag event} fired when a branch tag was deleted.
+   *
    * @author Eike Stepper
    * @since 4.11
    */

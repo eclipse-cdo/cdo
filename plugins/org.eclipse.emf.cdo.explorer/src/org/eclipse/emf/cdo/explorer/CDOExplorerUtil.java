@@ -47,6 +47,8 @@ import org.eclipse.core.runtime.Path;
 import java.util.LinkedList;
 
 /**
+ * Various static methods that may help in CDO explorer applications.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

@@ -539,6 +539,8 @@ public interface CDOProtocolConstants
   // Units
 
   /**
+   * Enumerates the possible opcodes for {@link CDOProtocolConstants#SIGNAL_UNIT unit requests}.
+   *
    * @author Eike Stepper
    * @since 4.5
    */

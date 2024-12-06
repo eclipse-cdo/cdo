@@ -84,6 +84,13 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">CDOBranchManager.CDOTagList</span><span class="extends-implements">
 extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag</a>&gt;</span></div>
+<div class="block">A <code>container</code> of all <a href="CDOBranchTag.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch tags</code></a> in the scope of a <a href="CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>branch manager</code></a>.
+ <p>
+ In addition to the <code>container</code> events a tag list can fire the following events:
+ <ul>
+ <li> <a href="CDOBranchManager.CDOTagList.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager.CDOTagList.TagRenamedEvent</code></a> when a branch tag was renamed.
+ <li> <a href="CDOBranchManager.CDOTagList.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager.CDOTagList.TagMovedEvent</code></a> when a branch tag was moved.
+ </ul></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.11</dd>
@@ -104,13 +111,19 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDOBranchTag.htm
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOBranchManager.CDOTagList.TagListEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">An <code>event</code> fired from a <a href="CDOBranchManager.CDOTagList.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOBranchManager.CDOTagList.TagMovedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagMovedEvent</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list event</code></a> fired when a branch tag was moved.</div>
+</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOBranchManager.CDOTagList.TagRenamedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagRenamedEvent</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list event</code></a> fired when a branch tag was renamed.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.container.IContainer">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.container.IContainer</h2>

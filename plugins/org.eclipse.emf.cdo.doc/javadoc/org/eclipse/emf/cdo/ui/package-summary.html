@@ -99,19 +99,37 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Class</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingDialog.html" title="class in org.eclipse.emf.cdo.ui">AbstractAuthorizingDialog</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">An abstract base class for <code>dialogs</code> that asynchronously update their UI with
+ <a href="Authorizer.html#getAuthorization(E)"><code>authorization</code></a> information.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingHandler.html" title="class in org.eclipse.emf.cdo.ui">AbstractAuthorizingHandler</a>&lt;T&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">An abstract base class for <code>handlers</code> that automatically update their
+ <a href="AbstractAuthorizingHandler.html#isEnabled()"><code>enablement</code></a> based on an <code>authorizable operation</code>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractResourceSelectionDialog.html" title="class in org.eclipse.emf.cdo.ui">AbstractResourceSelectionDialog</a>&lt;INPUT&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">An abstract base class for resource selection <code>dialogs</code> that can be used with
+ <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Authorizer.html" title="class in org.eclipse.emf.cdo.ui">Authorizer</a>&lt;E&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Asynchronously authorizes <code>authorizable operations</code> and caches the authorization results.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="Authorizer.AuthorizerContext.html" title="interface in org.eclipse.emf.cdo.ui">Authorizer.AuthorizerContext</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">An <a href="Authorizer.html" title="class in org.eclipse.emf.cdo.ui"><code>authorizer's</code></a> context.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Attaches to a given <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and pops up a <a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a>
+ for a commit comment whenever this transaction is <a href="../transaction/CDOUserTransaction.html#commit()"><code>committed</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A dialog for commit comments.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A specialized <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html" title="class or interface in org.eclipse.ui" class="external-link"><code>IEditorInput</code></a> for the CDO editor.</div>
@@ -125,13 +143,22 @@ loadScripts(document, 'script');</script>
 <div class="block">An extension to <a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides long-running <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> opening.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Opens an <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor</code></a> for a given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">An abstract default <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorOpener</code></a> implementation.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A registry for <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor openers</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">An <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor opener</code></a> descriptor registered with the <a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui"><code>registry</code></a>
+ for contributions to the <code>"org.eclipse.emf.cdo.ui.editorOpeners"</code> extension point.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Some utility methods to cope with CDOEditor and CDOEditorInput</div>
@@ -151,7 +178,10 @@ loadScripts(document, 'script');</script>
 <div class="block">A dialog that shows CDO related exceptions in a convenient manner.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOInvalidRootAgent</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Listens to <a href="../view/CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view target changed events</code></a> from the given <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> and
+ adjusts the <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html#setInput(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>input</code></a> of a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Tree.html" title="class or interface in org.eclipse.swt.widgets" class="external-link"><code>tree-based</code></a> UI accordingly.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOItemProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Implements multiple functionality related with UI representation of basic CDO concepts on
@@ -173,19 +203,38 @@ loadScripts(document, 'script');</script>
  <a href="../CDOState.html" title="enum class in org.eclipse.emf.cdo"><code>state</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A <a href="CDOLoadResourceProvider.Factory.html" title="class in org.eclipse.emf.cdo.ui"><code>contributable</code></a> provider for <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> that can be loaded into a resource set.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOLoadResourceProvider.Factory.html" title="class in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.Factory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Creates <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.ImageProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.ImageProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">An optional <a href="CDOLoadResourceProvider.ImageProvider.html#getButtonImage(org.eclipse.emf.ecore.resource.ResourceSet)"><code>button image</code></a> provider interface
+ for <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOTopicProvider</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">Provides an array of <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topics</code></a> and supports the registration of <a href="CDOTopicProvider.Listener.html" title="interface in org.eclipse.emf.cdo.ui"><code>listeners</code></a>
+ that are notified about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
+ <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from this array.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.Listener.html" title="interface in org.eclipse.emf.cdo.ui">CDOTopicProvider.Listener</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Notifies about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
+ <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from the array of topics of a <a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">An <a href="CDOTopicProvider.Topic.html#getId()"><code>identifiable</code></a> topic in the scope of a <a href="CDOTopicProvider.Topic.html#getSession()"><code>session</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.TopicChangedEvent.html" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic.TopicChangedEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">An <code>event</code> fired from a <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topic</code></a> when the <a href="CDOTopicProvider.Topic.html#getImage()"><code>image</code></a>, the <a href="CDOTopicProvider.Topic.html#getText()"><code>text</code></a> (label),
+ or the <a href="CDOTopicProvider.Topic.html#getDescription()"><code>description</code></a> attribute of the topic were changed.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTreeExpansionAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Automatically preserves a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>tree viewer's</code></a> item expansion states across
@@ -193,33 +242,62 @@ loadScripts(document, 'script');</script>
  of the underlying <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DecoratingStyledLabelProvider.html" title="class in org.eclipse.emf.cdo.ui">DecoratingStyledLabelProvider</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">An exception-tolerant <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DecoratingLabelProvider.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>DecoratingLabelProvider</code></a> with support for <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>styled labels</code></a>
+ and <code>lazy loading</code>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultTopicProvider.html" title="class in org.eclipse.emf.cdo.ui">DefaultTopicProvider</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashSet.html" title="class or interface in java.util" class="external-link"><code>hash set</code></a>-based <a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OverlayImage.html" title="class in org.eclipse.emf.cdo.ui">OverlayImage</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block"><a href="OverlayImage.html#compose()"><code>Composes</code></a> an image by overlaying one image on top of another image.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="Support.html" title="class in org.eclipse.emf.cdo.ui">Support</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
 <div class="deprecation-comment">As of 4.15 use <a href="../common/util/Support.html" title="class in org.eclipse.emf.cdo.common.util"><code>Support</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.html" title="class in org.eclipse.emf.cdo.ui">UserInfo</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Encapsulates <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>serializable</code></a> information about a user, namely her <a href="UserInfo.html#getFirstName()"><code>first</code></a>,
+ <a href="UserInfo.html#getLastName()"><code>last</code></a>, and <a href="UserInfo.html#getDisplayName()"><code>display</code></a> names.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Manages the <a href="UserInfo.html" title="class in org.eclipse.emf.cdo.ui"><code>user info</code></a> of the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a> and maintains a user info cache for
+ <a href="UserInfo.Manager.html#getRemoteUser(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>remote users</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+ in the file "${user.home}/.eclipse/org.eclipse.emf.cdo.ui/user.properties" .</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage.Factory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Creates <a href="UserInfo.Manager.HomeUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui"><code>home user info storages</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+ in the Eclipse <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html" title="class or interface in org.eclipse.jface.preference" class="external-link"><code>IPreferenceStore</code></a> of the "org.eclipse.emf.cdo.ui" bundle.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage.Factory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Creates <a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui"><code>preference user info storages</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Provides a method to load the user info object for the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.UserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Factory</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Creates <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storages</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.Writable.html" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Writable</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">Provides a method to save the user info object for the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a>.</div>
+</div>
 </div>
 </div>
 </div>

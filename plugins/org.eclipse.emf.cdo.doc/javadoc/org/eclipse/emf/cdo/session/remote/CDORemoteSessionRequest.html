@@ -79,7 +79,8 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDORemoteSessionRequest</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
-<div class="block">An asynchronous request to a <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a>.</div>
+<div class="block">An <a href="#send(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>asynchronous</code></a> or <a href="#sendSynchronous(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>synchronous</code></a> request
+ to a <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.17</dd>
@@ -100,10 +101,16 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORemoteSessionRequest.GlobalRequestHandler.html" class="type-name-link" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionRequest.GlobalRequestHandler</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Handles incoming <a href="CDORemoteSessionRequest.html" title="class in org.eclipse.emf.cdo.session.remote"><code>requests</code></a> in the context of all <a href="../CDOSessionRegistry.html#INSTANCE"><code>globally registered</code></a> sessions
+ and optionally sends back response <a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote"><code>messages</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDORemoteSessionRequest.RequestHandler.html" class="type-name-link" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionRequest.RequestHandler</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Handles incoming <a href="CDORemoteSessionRequest.html" title="class in org.eclipse.emf.cdo.session.remote"><code>requests</code></a> in the context of a single <a href="../CDOSession.html#getRemoteSessionManager()"><code>session</code></a>
+ and optionally sends back response <a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote"><code>messages</code></a>.</div>
+</div>
 </div>
 </section>
 </li>

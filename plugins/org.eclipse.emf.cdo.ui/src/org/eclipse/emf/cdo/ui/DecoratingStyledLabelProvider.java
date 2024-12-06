@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.ui;
 
 import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
+import org.eclipse.emf.cdo.internal.ui.ViewerUtil.Pending;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -29,6 +30,9 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.PlatformUI;
 
 /**
+ * An exception-tolerant {@link DecoratingLabelProvider} with support for {@link IStyledLabelProvider styled labels}
+ * and {@link Pending lazy loading}.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

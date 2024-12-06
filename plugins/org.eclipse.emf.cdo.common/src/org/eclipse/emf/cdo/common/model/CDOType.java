@@ -195,6 +195,9 @@ public interface CDOType
   public Object convertToCDO(EClassifier feature, Object value);
 
   /**
+   * A {@link #writeValue(CDODataOutput, Object) serialization} and {@link #readValue(CDODataInput) deserialization}
+   * strategy for values of custom {@link CDOType types}.
+   *
    * @author Eike Stepper
    * @since 4.18
    */
@@ -226,6 +229,8 @@ public interface CDOType
     public abstract Object readValue(CDODataInput in) throws IOException;
 
     /**
+     * A global registry for {@link Handler type handlers}.
+     *
      * @author Eike Stepper
      */
     public static final class Registry
@@ -290,6 +295,8 @@ public interface CDOType
     }
 
     /**
+     * Creates {@link Handler type handlers}.
+     *
      * @author Eike Stepper
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory

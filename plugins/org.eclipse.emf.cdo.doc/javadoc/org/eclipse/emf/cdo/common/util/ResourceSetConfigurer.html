@@ -79,6 +79,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ResourceSetConfigurer</span></div>
+<div class="block">Customizable strategy to <a href="#configureResourceSet(org.eclipse.emf.ecore.resource.ResourceSet,java.lang.Object,org.eclipse.net4j.util.container.IManagedContainer)"><code>configure</code></a>
+ resource sets based on context objects (usually <a href="../CDOCommonView.html" title="interface in org.eclipse.emf.cdo.common"><code>views</code></a>).</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.12</dd>
@@ -99,10 +101,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="ResourceSetConfigurer.Factory.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Factory</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates <a href="ResourceSetConfigurer.html" title="interface in org.eclipse.emf.cdo.common.util"><code>resource set configurer</code></a> instances.</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="ResourceSetConfigurer.Registry.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.common.util">ResourceSetConfigurer.Registry</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A global registry for <a href="ResourceSetConfigurer.html" title="interface in org.eclipse.emf.cdo.common.util"><code>resource set configurers</code></a>.</div>
+</div>
 </div>
 </section>
 </li>

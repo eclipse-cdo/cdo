@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.internal.ui.bundle.OM;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSession;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionRequest;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionRequest.GlobalRequestHandler;
+import org.eclipse.emf.cdo.ui.UserInfo.Manager.UserInfoStorage;
 
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -23,6 +24,8 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
+
+import org.eclipse.jface.preference.IPreferenceStore;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -36,6 +39,9 @@ import java.util.Properties;
 import java.util.StringTokenizer;
 
 /**
+ * Encapsulates {@link UserInfoStorage serializable} information about a user, namely her {@link #getFirstName() first},
+ * {@link #getLastName() last}, and {@link #getDisplayName() display} names.
+ *
  * @author Eike Stepper
  * @since 4.13
  */
@@ -106,6 +112,10 @@ public final class UserInfo
   }
 
   /**
+   * Manages the {@link UserInfo user info} of the {@link #getLocalUser() local user} and maintains a user info cache for
+   * {@link #getRemoteUser(CDORemoteSession) remote users}. Missing remote user infos are automatically requested
+   * from the respective {@link CDORemoteSession remote sessions}.
+   *
    * @author Eike Stepper
    */
   public static final class Manager extends Lifecycle
@@ -252,6 +262,9 @@ public final class UserInfo
     }
 
     /**
+     * An {@link Event event} fired from a {@link Manager user info manager} when the {@link Manager#getLocalUser() local user info}
+     * was changed.
+     *
      * @author Eike Stepper
      */
     public final class UserChangedEvent extends Event
@@ -329,13 +342,18 @@ public final class UserInfo
     }
 
     /**
+     * Provides a method to load the user info object for the {@link Manager#getLocalUser() local user}.
+     *
      * @author Eike Stepper
+     * @see Writable
      */
     public interface UserInfoStorage
     {
       public UserInfo loadUserInfo() throws IOException;
 
       /**
+       * Provides a method to save the user info object for the {@link Manager#getLocalUser() local user}.
+       *
        * @author Eike Stepper
        */
       public interface Writable extends UserInfoStorage
@@ -344,6 +362,8 @@ public final class UserInfo
       }
 
       /**
+       * Creates {@link UserInfoStorage user info storages}.
+       *
        * @author Eike Stepper
        */
       public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -393,6 +413,9 @@ public final class UserInfo
     }
 
     /**
+     * A {@link UserInfoStorage user info storage} that persists the local user info
+     * in the Eclipse {@link IPreferenceStore} of the "org.eclipse.emf.cdo.ui" bundle.
+     *
      * @author Eike Stepper
      */
     public static final class PreferencesUserInfoStorage implements UserInfoStorage.Writable
@@ -419,6 +442,8 @@ public final class UserInfo
       }
 
       /**
+       * Creates {@link PreferencesUserInfoStorage preference user info storages}.
+       *
        * @author Eike Stepper
        */
       public static final class Factory extends UserInfoStorage.Factory
@@ -439,6 +464,9 @@ public final class UserInfo
     }
 
     /**
+     * A {@link UserInfoStorage user info storage} that persists the local user info
+     * in the file "${user.home}/.eclipse/org.eclipse.emf.cdo.ui/user.properties" .
+     *
      * @author Eike Stepper
      */
     public static final class HomeUserInfoStorage implements UserInfoStorage.Writable
@@ -538,6 +566,8 @@ public final class UserInfo
       }
 
       /**
+       * Creates {@link HomeUserInfoStorage home user info storages}.
+       *
        * @author Eike Stepper
        */
       public static final class Factory extends UserInfoStorage.Factory

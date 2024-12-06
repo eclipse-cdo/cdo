@@ -109,6 +109,14 @@ public interface CDOBranchManager extends INotifier
   public CDOTagList getTagList();
 
   /**
+   * A {@link IContainer container} of all {@link CDOBranchTag branch tags} in the scope of a {@link CDOBranchManager branch manager}.
+   * <p>
+   * In addition to the {@link IContainer container} events a tag list can fire the following events:
+   * <ul>
+   * <li> {@link TagRenamedEvent} when a branch tag was renamed.
+   * <li> {@link TagMovedEvent} when a branch tag was moved.
+   * </ul>
+   *
    * @author Eike Stepper
    * @since 4.11
    */
@@ -124,6 +132,8 @@ public interface CDOBranchManager extends INotifier
     public CDOBranchTag[] getTags(CDOBranch branch);
 
     /**
+     * An {@link IEvent event} fired from a {@link CDOTagList tag list}.
+     *
      * @author Eike Stepper
      */
     public interface TagListEvent extends IEvent
@@ -132,6 +142,8 @@ public interface CDOBranchManager extends INotifier
     }
 
     /**
+     * A {@link TagListEvent tag list event} fired when a branch tag was renamed.
+     *
      * @author Eike Stepper
      */
     public interface TagRenamedEvent extends TagListEvent, CDOBranchTag.TagRenamedEvent
@@ -139,14 +151,19 @@ public interface CDOBranchManager extends INotifier
     }
 
     /**
+     * A {@link TagListEvent tag list event} fired when a branch tag was moved.
+     *
      * @author Eike Stepper
      */
-    public interface TagMovedEvent extends TagListEvent, CDOBranchTag.TagRenamedEvent
+    public interface TagMovedEvent extends TagListEvent, CDOBranchTag.TagMovedEvent
     {
     }
   }
 
   /**
+   * A {@link IListener listener} that dispatches {@link CDOBranchChangedEvent branch changed events} to methods that can be
+   * overridden by extenders.
+   *
    * @author Eike Stepper
    * @since 4.15
    */

@@ -28,8 +28,13 @@ import java.util.Objects;
 import java.util.function.Function;
 
 /**
+ * Provides an array of {@link Topic topics} and supports the registration of {@link Listener listeners}
+ * that are notified about {@link Listener#topicAdded(CDOTopicProvider, Topic) additions} to and
+ * {@link Listener#topicRemoved(CDOTopicProvider, Topic) removals} from this array.
+ *
  * @author Eike Stepper
  * @since 4.12
+ * @see DefaultTopicProvider
  */
 public interface CDOTopicProvider
 {
@@ -48,6 +53,12 @@ public interface CDOTopicProvider
   }
 
   /**
+   * An {@link #getId() identifiable} topic in the scope of a {@link #getSession() session}.
+   * <p>
+   * For displaying a topic carries an {@link #getImage() image}, a {@link #getText() text} (label),
+   * and a {@link #getDescription() description}. Notifies {@link #addListener(org.eclipse.net4j.util.event.IListener) registered listeners}
+   * about changes in any of these attributes with {@link TopicChangedEvent topic changed events}.
+   *
    * @author Eike Stepper
    */
   public static final class Topic extends Notifier implements IAdaptable
@@ -256,6 +267,9 @@ public interface CDOTopicProvider
     }
 
     /**
+     * An {@link Event event} fired from a {@link Topic topic} when the {@link #getImage() image}, the {@link #getText() text} (label),
+     * or the {@link #getDescription() description} attribute of the topic were changed.
+     *
      * @author Eike Stepper
      * @since 4.14
      */
@@ -325,6 +339,9 @@ public interface CDOTopicProvider
   }
 
   /**
+   * Notifies about {@link Listener#topicAdded(CDOTopicProvider, Topic) additions} to and
+   * {@link Listener#topicRemoved(CDOTopicProvider, Topic) removals} from the array of topics of a {@link CDOTopicProvider topic provider}.
+   *
    * @author Eike Stepper
    */
   public interface Listener

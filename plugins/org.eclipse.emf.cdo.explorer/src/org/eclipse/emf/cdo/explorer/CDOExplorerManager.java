@@ -10,12 +10,18 @@
  */
 package org.eclipse.emf.cdo.explorer;
 
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckoutManager;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
+
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
 
 import org.eclipse.core.runtime.IAdaptable;
 
 /**
+ * A common base interface for {@link CDORepositoryManager repository managers} and
+ * {@link CDOCheckoutManager checkout managers}.
+ *
  * @author Eike Stepper
  * @since 4.4
  * @noextend This interface is not intended to be extended by clients.
@@ -29,6 +35,9 @@ public interface CDOExplorerManager<T extends CDOExplorerElement> extends IConta
   public String getUniqueLabel(String label);
 
   /**
+   * An {@link IEvent event} fired from {@link CDOExplorerManager explorer managers} when their
+   * {@link #getChangedElements() elements} have changed.
+   *
    * @author Eike Stepper
    */
   public interface ElementsChangedEvent extends IEvent
@@ -41,6 +50,9 @@ public interface CDOExplorerManager<T extends CDOExplorerElement> extends IConta
     public Object[] getChangedElements();
 
     /**
+     * Enumerates the possible {@link ElementsChangedEvent#getStructuralImpact() structural impacts}
+     * that {@link ElementsChangedEvent#getChangedElements() element changes} can have.
+     *
      * @author Eike Stepper
      */
     public static enum StructuralImpact

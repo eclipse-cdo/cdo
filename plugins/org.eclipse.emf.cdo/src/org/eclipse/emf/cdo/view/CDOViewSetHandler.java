@@ -23,6 +23,13 @@ import org.eclipse.emf.common.notify.impl.AdapterImpl;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
+ * A customizable handler of all {@link CDOViewTargetChangedEvent view target changed events}
+ * in all {@link CDOViewSet#getViews() views} of a given {@link #getViewSet() view set}.
+ * <p>
+ * Extenders may override {@link #viewAdded(CDOView) viewAdded()},
+ * {@link #viewChanged(CDOView, CDOBranchPoint, CDOBranchPoint) viewChanged()},
+ * and/or {@link #viewRemoved(CDOView) viewRemoved()}.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

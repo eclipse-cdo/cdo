@@ -845,6 +845,9 @@ public final class CDOCompareEditorUtil
   // }
 
   /**
+   * An optional mix-in interface for {@link CDOCompareEditorUtil#setInputConsumer input consumers} that need to be
+   * notified when an associated Compare {@link IEditorPart editor} was opened.
+   *
    * @author Eike Stepper
    * @since 4.9
    */
@@ -855,6 +858,9 @@ public final class CDOCompareEditorUtil
   }
 
   /**
+   * An optional mix-in interface for {@link CDOCompareEditorUtil#setInputConsumer input consumers} that want to
+   * customize the creation of the visual controls of the Compare UI.
+   *
    * @author Eike Stepper
    * @since 4.9
    */
@@ -865,6 +871,8 @@ public final class CDOCompareEditorUtil
   }
 
   /**
+   * A default implementation of an {@link CDOCompareEditorUtil#setInputConsumer input consumer}.
+   *
    * @author Eike Stepper
    * @since 4.6
    */
@@ -1381,6 +1389,9 @@ public final class CDOCompareEditorUtil
   }
 
   /**
+   * A {@link CDOTransactionOpener transaction opener} that automatically closes the editor of a transaction
+   * when the transaction is closed.
+   *
    * @author Eike Stepper
    * @since 4.4
    */

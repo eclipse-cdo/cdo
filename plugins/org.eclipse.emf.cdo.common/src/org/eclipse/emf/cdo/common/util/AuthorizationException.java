@@ -10,7 +10,12 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
+
 /**
+ * A CDO {@link CDOException exception} thrown when an {@link AuthorizableOperation authorizable operation}
+ * could not be authorized.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

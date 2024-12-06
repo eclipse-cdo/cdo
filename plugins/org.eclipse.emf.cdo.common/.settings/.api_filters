@@ -132,6 +132,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/common/branch/CDOBranchManager.java" type="org.eclipse.emf.cdo.common.branch.CDOBranchManager$CDOTagList$TagMovedEvent">
+        <filter id="404791350">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchManager.CDOTagList.TagMovedEvent"/>
+                <message_argument value="org.eclipse.emf.cdo.common.branch.CDOBranchTag$TagRenamedEvent"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/common/branch/CDOBranchPointRef.java" type="org.eclipse.emf.cdo.common.branch.CDOBranchPointRef">
         <filter id="338722907">
             <message_arguments>

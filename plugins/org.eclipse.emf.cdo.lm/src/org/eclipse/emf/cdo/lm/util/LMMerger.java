@@ -12,9 +12,15 @@ package org.eclipse.emf.cdo.lm.util;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
+import org.eclipse.emf.cdo.lm.Change;
+import org.eclipse.emf.cdo.lm.Delivery;
+import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
+ * Merges the commits of a source {@link Change change} into the {@link CDOBranch branch} of a target {@link Stream stream}
+ * in order to create a {@link Delivery delivery}.
+ *
  * @author Eike Stepper
  */
 public interface LMMerger

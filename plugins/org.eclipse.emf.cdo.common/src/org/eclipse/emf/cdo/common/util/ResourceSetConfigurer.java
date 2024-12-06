@@ -10,17 +10,22 @@
  */
 package org.eclipse.emf.cdo.common.util;
 
+import org.eclipse.emf.cdo.common.CDOCommonView;
 import org.eclipse.emf.cdo.internal.common.util.ResourceSetConfigurerRegistry;
 
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
+import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import java.util.Map;
 
 /**
+ * Customizable strategy to {@link #configureResourceSet(ResourceSet, Object, IManagedContainer) configure}
+ * resource sets based on context objects (usually {@link CDOCommonView  views}).
+ *
  * @author Eike Stepper
  * @since 4.12
  */
@@ -29,6 +34,8 @@ public interface ResourceSetConfigurer
   public Object configureResourceSet(ResourceSet resourceSet, Object context, IManagedContainer container);
 
   /**
+   * Creates {@link ResourceSetConfigurer resource set configurer} instances.
+   *
    * @author Eike Stepper
    */
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -45,7 +52,11 @@ public interface ResourceSetConfigurer
   }
 
   /**
+   * A global registry for {@link ResourceSetConfigurer resource set configurers}.
+   *
    * @author Eike Stepper
+   * @noextend This interface is not intended to be extended by clients.
+   * @noimplement This interface is not intended to be implemented by clients.
    */
   public interface Registry
   {
@@ -63,9 +74,14 @@ public interface ResourceSetConfigurer
     public ResourceSetConfiguration configureResourceSet(ResourceSet resourceSet, Object context);
 
     /**
+     * A resource set {@link Adapter adapter} that carries the {@link #getConfigurerResults() results} of all
+     * {@link ResourceSetConfigurer resource set configurers} that configured the adapted resource set.
+     *
      * @author Eike Stepper
+     * @noextend This interface is not intended to be extended by clients.
+     * @noimplement This interface is not intended to be implemented by clients.
      */
-    public interface ResourceSetConfiguration
+    public interface ResourceSetConfiguration extends Adapter
     {
       public ResourceSet getResourceSet();
 

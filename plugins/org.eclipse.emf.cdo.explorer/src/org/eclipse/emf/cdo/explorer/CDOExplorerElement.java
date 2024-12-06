@@ -10,6 +10,9 @@
  */
 package org.eclipse.emf.cdo.explorer;
 
+import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
+import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
+
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -23,7 +26,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * A CDO server independent representation of a repository.
+ * A common base interface for {@link CDORepository repositories} and {@link CDOCheckout checkouts}.
  *
  * @author Eike Stepper
  * @since 4.4
@@ -122,6 +125,11 @@ public interface CDOExplorerElement extends INotifier, IAdaptable, Adapter, Comp
   public void delete(boolean deleteContents);
 
   /**
+   * An {@link IEvent event} fired from {@link CDOExplorerElement explorer elements} when their state has changed.
+   * <p>
+   * For {@link CDORepository repositories} this relates to the {@link CDORepository#isConnected() connected} state.
+   * For {@link CDOCheckout checkouts} this relates to the {@link CDOCheckout#isOpen() open} state.
+   *
    * @author Eike Stepper
    * @since 4.12
    * @noextend This interface is not intended to be extended by clients.

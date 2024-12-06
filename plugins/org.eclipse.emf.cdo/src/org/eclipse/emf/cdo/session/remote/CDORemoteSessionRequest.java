@@ -34,7 +34,8 @@ import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
- * An asynchronous request to a {@link CDORemoteSession remote session}.
+ * An {@link #send(CDORemoteSession) asynchronous} or {@link #sendSynchronous(CDORemoteSession) synchronous} request
+ * to a {@link CDORemoteSession remote session}.
  *
  * @author Eike Stepper
  * @since 4.17
@@ -252,6 +253,9 @@ public final class CDORemoteSessionRequest
   }
 
   /**
+   * Handles incoming {@link CDORemoteSessionRequest requests} in the context of a single {@link CDOSession#getRemoteSessionManager() session}
+   * and optionally sends back response {@link CDORemoteSessionMessage messages}.
+   *
    * @author Eike Stepper
    */
   public static abstract class RequestHandler implements IDeactivateable
@@ -329,6 +333,9 @@ public final class CDORemoteSessionRequest
   }
 
   /**
+   * Handles incoming {@link CDORemoteSessionRequest requests} in the context of all {@link CDOSessionRegistry#INSTANCE globally registered} sessions
+   * and optionally sends back response {@link CDORemoteSessionMessage messages}.
+   *
    * @author Eike Stepper
    */
   public static abstract class GlobalRequestHandler implements IDeactivateable

@@ -101,18 +101,31 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">A CDO server independent representation of a repository.</div>
+<div class="block">A common base interface for <a href="repositories/CDORepository.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repositories</code></a> and <a href="checkouts/CDOCheckout.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkouts</code></a>.</div>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOExplorerElement.StateChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement.StateChangedEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">An <code>event</code> fired from <a href="CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer"><code>explorer elements</code></a> when their state has changed.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager</a>&lt;T extends <a href="CDOExplorerElement.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerElement</a>&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
+<div class="block">A common base interface for <a href="repositories/CDORepositoryManager.html" title="interface in org.eclipse.emf.cdo.explorer.repositories"><code>repository managers</code></a> and
+ <a href="checkouts/CDOCheckoutManager.html" title="interface in org.eclipse.emf.cdo.explorer.checkouts"><code>checkout managers</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOExplorerManager.ElementsChangedEvent.html" title="interface in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">An <code>event</code> fired from <a href="CDOExplorerManager.html" title="interface in org.eclipse.emf.cdo.explorer"><code>explorer managers</code></a> when their
+ <a href="CDOExplorerManager.ElementsChangedEvent.html#getChangedElements()"><code>elements</code></a> have changed.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab3"><a href="CDOExplorerManager.ElementsChangedEvent.StructuralImpact.html" title="enum class in org.eclipse.emf.cdo.explorer">CDOExplorerManager.ElementsChangedEvent.StructuralImpact</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="block">Enumerates the possible <a href="CDOExplorerManager.ElementsChangedEvent.html#getStructuralImpact()"><code>structural impacts</code></a>
+ that <a href="CDOExplorerManager.ElementsChangedEvent.html#getChangedElements()"><code>element changes</code></a> can have.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOExplorerUtil.html" title="class in org.eclipse.emf.cdo.explorer">CDOExplorerUtil</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Various static methods that may help in CDO explorer applications.</div>
+</div>
 </div>
 </div>
 </div>

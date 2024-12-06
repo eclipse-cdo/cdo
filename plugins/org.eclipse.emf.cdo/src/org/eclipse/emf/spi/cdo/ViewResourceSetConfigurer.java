@@ -18,6 +18,8 @@ import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 /**
+ * A convenient base class for {@link ResourceSetConfigurer resource set configurers} that require a {@link CDOView} as their context.
+ *
  * @author Eike Stepper
  * @since 4.26
  */

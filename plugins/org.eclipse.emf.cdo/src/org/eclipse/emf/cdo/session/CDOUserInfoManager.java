@@ -16,6 +16,10 @@ import java.util.Arrays;
 import java.util.Map;
 
 /**
+ * Provides additional user information for given user IDs in the context of a {@link CDOSession session}.
+ * User information {@link Entity entities} are requested from the repository of the {@link #getSession() session}
+ * and cached in this user info manager.
+ *
  * @author Eike Stepper
  * @since 4.26
  */

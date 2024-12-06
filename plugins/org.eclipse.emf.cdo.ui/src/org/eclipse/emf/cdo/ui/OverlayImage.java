@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
+ * {@link #compose() Composes} an image by overlaying one image on top of another image.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

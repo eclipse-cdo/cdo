@@ -15,6 +15,8 @@ import org.eclipse.emf.cdo.internal.common.util.URIHandlerRegistryImpl;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 /**
+ * A {@link #INSTANCE global} URI handler registry.
+ *
  * @author Eike Stepper
  * @since 4.13
  */

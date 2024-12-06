@@ -27,6 +27,8 @@ import java.util.Objects;
 import java.util.Set;
 
 /**
+ * If the meaning of this type isn't clear, there really should be more of a description here...
+ *
  * @author Eike Stepper
  * @since 4.15
  * @noextend This class is not intended to be extended by clients.

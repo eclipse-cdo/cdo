@@ -16,6 +16,8 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.emf.ecore.resource.URIHandler;
 
 /**
+ * Creates {@link URIHandler URI handler} instances.
+ *
  * @author Eike Stepper
  * @since 4.13
  */

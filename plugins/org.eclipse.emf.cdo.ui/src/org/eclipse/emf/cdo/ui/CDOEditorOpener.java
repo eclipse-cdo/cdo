@@ -44,6 +44,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Opens an {@link IEditorPart editor} for a given {@link URI}.
+ * Can be registered in the {@link Registry#INSTANCE editor opener registry}.
+ *
  * @author Eike Stepper
  * @since 4.4
  */
@@ -76,6 +79,8 @@ public interface CDOEditorOpener
   public IEditorPart openEditor(IWorkbenchPage page, URI uri);
 
   /**
+   * An abstract default {@link CDOEditorOpener} implementation.
+   *
    * @author Eike Stepper
    */
   public static abstract class Default implements CDOEditorOpener
@@ -226,6 +231,10 @@ public interface CDOEditorOpener
   }
 
   /**
+   * A registry for {@link CDOEditorOpener editor openers}.
+   * {@link EditorOpenerDescriptor Descriptors} are registered for contributions to the <code>"org.eclipse.emf.cdo.ui.editorOpeners"</code>
+   * extension point.
+   *
    * @author Eike Stepper
    * @since 4.4
    * @noextend This class is not intended to be subclassed by clients.
@@ -386,6 +395,9 @@ public interface CDOEditorOpener
     }
 
     /**
+     * An {@link CDOEditorOpener editor opener} descriptor registered with the {@link Registry registry}
+     * for contributions to the <code>"org.eclipse.emf.cdo.ui.editorOpeners"</code> extension point.
+     *
      * @author Eike Stepper
      */
     public static final class EditorOpenerDescriptor extends CDOEditorOpener.Default

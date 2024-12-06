@@ -117,6 +117,9 @@ public interface CDOLock extends Lock, AutoCloseable
   public static final int NO_WAIT = IRWLockManager.NO_WAIT;
 
   /**
+   * Captures additional information about an {@link CDOLock#acquire(long, TimeUnit, boolean) acquired} lock,
+   * such as whether it is {@link #isRecursive() recursive}.
+   *
    * @author Eike Stepper
    * @since 4.16
    */

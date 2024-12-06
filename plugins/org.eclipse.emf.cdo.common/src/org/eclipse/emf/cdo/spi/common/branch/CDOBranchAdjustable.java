@@ -10,9 +10,14 @@
  */
 package org.eclipse.emf.cdo.spi.common.branch;
 
+import org.eclipse.emf.cdo.common.CDOCommonSession;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 
 /**
+ * An interface for something that carries {@link CDOBranch branch} information that possibly
+ * comes from other {@link CDOCommonSession sessions} and needs to be adjusted to the scope of a local session.
+ *
  * @author Eike Stepper
  * @since 4.3
  */

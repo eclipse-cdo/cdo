@@ -105,10 +105,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../branch/CDOBranchDoesNotExistException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.branch">CDOBranchDoesNotExistException</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Thrown from <a href="../../branch/CDOBranch.html#getBase()"><code>CDOBranch.getBase()</code></a> or <a href="../../branch/CDOBranch.html#getName()"><code>CDOBranch.getName()</code></a> when the branch has been deleted remotely.</div>
+</div>
 <div class="col-first odd-row-color"><code>class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../../branch/CDODuplicateBranchException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.branch">CDODuplicateBranchException</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A CDO <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown from <a href="../../branch/CDOBranch.html#createBranch(java.lang.String,long)"><code>CDOBranch.createBranch()</code></a>
+ if the <a href="../../branch/CDOBranch.html#getPathName()"><code>path name</code></a> of the branch to be created already exists.</div>
+</div>
 </div>
 </section>
 </li>
@@ -137,7 +142,10 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../AuthorizationException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.util">AuthorizationException</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A CDO <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown when an <code>authorizable operation</code>
+ could not be authorized.</div>
+</div>
 <div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../CDOClassNotFoundException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.util">CDOClassNotFoundException</a></code></div>
 <div class="col-last odd-row-color">
@@ -145,7 +153,10 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../CDODuplicateResourceException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.util">CDODuplicateResourceException</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A CDO <a href="../CDOException.html" title="class in org.eclipse.emf.cdo.common.util"><code>exception</code></a> thrown from a <code>CDOResourceNode</code> to indicate
+ an illegal attempt to change the path of the node to a path that already exists.</div>
+</div>
 <div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="../CDOPackageNotFoundException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.common.util">CDOPackageNotFoundException</a></code></div>
 <div class="col-last odd-row-color">
@@ -189,7 +200,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="../../../net4j/CDOSessionRecoveryException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.net4j">CDOSessionRecoveryException</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">An exception thrown from <code>RecoveringCDOSessionImpl.recoverSession()</code>.</div>
+</div>
 </div>
 </section>
 </li>

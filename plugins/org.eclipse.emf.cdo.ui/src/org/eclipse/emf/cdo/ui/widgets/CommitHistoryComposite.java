@@ -602,6 +602,8 @@ public class CommitHistoryComposite extends Composite
     }
 
     /**
+     * Allows implementors to display alternative histories for selected {@link EObject model objects}.
+     *
      * @author Eike Stepper
      * @since 4.9
      */
@@ -610,6 +612,8 @@ public class CommitHistoryComposite extends Composite
       public Object modifyObject(EObject object);
 
       /**
+       * Creates {@link ObjectModifier object modifier} instances.
+       *
        * @author Eike Stepper
        */
       public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
@@ -627,6 +631,8 @@ public class CommitHistoryComposite extends Composite
     }
 
     /**
+     * Thrown from {@link Input#Input(Object)} when no history could be created from the passed parameter object.
+     *
      * @author Eike Stepper
      * @since 4.4
      */

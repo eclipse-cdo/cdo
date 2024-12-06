@@ -22,6 +22,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
+ * Enumerates the possible types of {@link EStructuralFeature features}.
+ *
  * @author Eike Stepper
  * @since 4.5
  */

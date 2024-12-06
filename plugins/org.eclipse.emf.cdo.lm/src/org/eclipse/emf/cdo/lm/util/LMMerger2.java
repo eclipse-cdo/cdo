@@ -13,10 +13,18 @@ package org.eclipse.emf.cdo.lm.util;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.lm.Baseline;
+import org.eclipse.emf.cdo.lm.Change;
+import org.eclipse.emf.cdo.lm.Delivery;
 import org.eclipse.emf.cdo.lm.FloatingBaseline;
+import org.eclipse.emf.cdo.lm.Stream;
 import org.eclipse.emf.cdo.session.CDOSession;
 
 /**
+ * Merges the commits of a source {@link Change change} into the {@link CDOBranch branch} of a target {@link Stream stream}
+ * in order to create a {@link Delivery delivery}.
+ * <p>
+ * Note: The {@link #mergeDelivery(LMMergeInfos)} method allows to augment the merge parameters in the future without breaking APIs.
+ *
  * @author Eike Stepper
  * @since 1.2
  */
@@ -40,6 +48,8 @@ public interface LMMerger2 extends LMMerger
   }
 
   /**
+   * Encapsulates the {@link LMMerger2#mergeDelivery(LMMergeInfos) merge} parameters.
+   *
    * @author Eike Stepper
    */
   public static final class LMMergeInfos

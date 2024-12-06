@@ -228,7 +228,9 @@ loadScripts(document, 'script');</script>
 <div class="block">An EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>adapter</code></a> that encapsulates CDO specific information about an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EClass</code></a>.</div>
 </div>
 <div class="col-first even-row-color"><a href="class-use/CDOFeatureType.html#org.eclipse.emf.cdo.common.model">CDOFeatureType</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Enumerates the possible types of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>features</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/CDOModelConstants.html#org.eclipse.emf.cdo.common.model">CDOModelConstants</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Symbolic model constants commonly used in CDO.</div>
@@ -264,9 +266,14 @@ loadScripts(document, 'script');</script>
 <div class="block">Provides access to all CDO-supported data types.</div>
 </div>
 <div class="col-first odd-row-color"><a href="class-use/CDOType.Handler.html#org.eclipse.emf.cdo.common.model">CDOType.Handler</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A <a href="CDOType.Handler.html#writeValue(org.eclipse.emf.cdo.common.protocol.CDODataOutput,java.lang.Object)"><code>serialization</code></a> and <a href="CDOType.Handler.html#readValue(org.eclipse.emf.cdo.common.protocol.CDODataInput)"><code>deserialization</code></a>
+ strategy for values of custom <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model"><code>types</code></a>.</div>
+</div>
 <div class="col-first even-row-color"><a href="class-use/CDOType.Handler.Registry.html#org.eclipse.emf.cdo.common.model">CDOType.Handler.Registry</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A global registry for <a href="CDOType.Handler.html" title="class in org.eclipse.emf.cdo.common.model"><code>type handlers</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/EMFUtil.ExtResourceSet.html#org.eclipse.emf.cdo.common.model">EMFUtil.ExtResourceSet</a></div>
 <div class="col-last odd-row-color">
 <div class="block">An extension of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/impl/ResourceSetImpl.html" title="class or interface in org.eclipse.emf.ecore.resource.impl" class="external-link"><code>ResourceSetImpl</code></a> that allows demandLoading of resources and delegation of resource lookups,

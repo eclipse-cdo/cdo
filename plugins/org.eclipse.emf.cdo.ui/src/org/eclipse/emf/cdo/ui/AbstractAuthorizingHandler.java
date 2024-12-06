@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.ui;
 
+import org.eclipse.emf.cdo.internal.ui.handlers.CreateBranchHandler;
+import org.eclipse.emf.cdo.internal.ui.handlers.DeleteBranchHandler;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOUtil;
 
@@ -17,8 +19,13 @@ import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.ui.handlers.AbstractBaseHandler;
 
 /**
+ * An abstract base class for {@link AbstractBaseHandler handlers} that automatically update their
+ * {@link #isEnabled() enablement} based on an {@link AuthorizableOperation authorizable operation}.
+ *
  * @author Eike Stepper
  * @since 4.11
+ * @see CreateBranchHandler
+ * @see DeleteBranchHandler
  */
 public class AbstractAuthorizingHandler<T> extends AbstractBaseHandler<T>
 {

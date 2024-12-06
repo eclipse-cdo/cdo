@@ -87,6 +87,8 @@ public interface Assembly extends ModelElement
   }
 
   /**
+   * A callback interface to be used with {@link Assembly#compareTo(Assembly, DeltaHandler) Assembly.compareTo()}.
+   *
    * @author Eike Stepper
    */
   public interface DeltaHandler

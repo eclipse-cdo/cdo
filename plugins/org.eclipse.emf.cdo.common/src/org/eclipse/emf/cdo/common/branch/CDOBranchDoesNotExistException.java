@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
+ * Thrown from {@link CDOBranch#getBase()} or {@link CDOBranch#getName()} when the branch has been deleted remotely.
+ *
  * @author Eike Stepper
  * @since 4.20
  */

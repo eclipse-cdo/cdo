@@ -13,8 +13,14 @@ package org.eclipse.emf.cdo.lm;
 import org.eclipse.net4j.util.StringUtil;
 
 /**
+ * Encapsulates the {@link #getMajorVersion() major version}, the {@link #getMinorVersion() minor version},
+ * and the {@link #getCodeName() code name} of a {@link Stream stream}.
+ *
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
+ * @see Stream#getMajorVersion()
+ * @see Stream#getMinorVersion()
+ * @see Stream#getCodeName()
  */
 public class StreamSpec
 {

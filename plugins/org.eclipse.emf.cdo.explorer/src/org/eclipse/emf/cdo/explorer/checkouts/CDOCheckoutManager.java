@@ -38,6 +38,8 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
   public CDOCheckout addCheckout(Properties properties);
 
   /**
+   * An {@link IEvent event} fired from a {@link CDOCheckoutManager checkout manager}.
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -52,6 +54,8 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
   }
 
   /**
+   * A {@link CheckoutEvent checkout event} fired when the {@link CDOCheckout#getState() state} of a checkout has changed.
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.
@@ -64,6 +68,8 @@ public interface CDOCheckoutManager extends CDOExplorerManager<CDOCheckout>
   }
 
   /**
+   * A {@link CheckoutEvent checkout event} fired when a {@link CDOCheckout checkout} is in the process of being opened.
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

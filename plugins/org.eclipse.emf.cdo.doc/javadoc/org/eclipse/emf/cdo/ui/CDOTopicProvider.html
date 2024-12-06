@@ -79,11 +79,20 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOTopicProvider</span></div>
+<div class="block">Provides an array of <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topics</code></a> and supports the registration of <a href="CDOTopicProvider.Listener.html" title="interface in org.eclipse.emf.cdo.ui"><code>listeners</code></a>
+ that are notified about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
+ <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from this array.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.12</dd>
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="see-list">
+<li><a href="DefaultTopicProvider.html" title="class in org.eclipse.emf.cdo.ui"><code>DefaultTopicProvider</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 <section class="summary">
@@ -99,10 +108,15 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOTopicProvider.Listener.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.ui">CDOTopicProvider.Listener</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Notifies about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
+ <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from the array of topics of a <a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOTopicProvider.Topic.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">An <a href="CDOTopicProvider.Topic.html#getId()"><code>identifiable</code></a> topic in the scope of a <a href="CDOTopicProvider.Topic.html#getSession()"><code>session</code></a>.</div>
+</div>
 </div>
 </section>
 </li>

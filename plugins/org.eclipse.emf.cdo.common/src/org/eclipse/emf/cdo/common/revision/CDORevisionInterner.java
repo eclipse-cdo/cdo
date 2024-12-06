@@ -11,6 +11,8 @@
 package org.eclipse.emf.cdo.common.revision;
 
 /**
+ * {@link #internRevision(CDORevision) Interns} revisions.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

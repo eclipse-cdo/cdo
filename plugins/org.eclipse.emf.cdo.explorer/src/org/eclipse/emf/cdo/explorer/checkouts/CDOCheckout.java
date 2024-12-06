@@ -151,6 +151,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
   public void setEditorOpenerID(CDOID objectID, String editorOpenerID);
 
   /**
+   * Enumerates the possible {@link CDOCheckout#getState() states} of a {@link CDOCheckout checkout}.
+   *
    * @author Eike Stepper
    */
   public enum State
@@ -159,6 +161,8 @@ public interface CDOCheckout extends CDOExplorerElement, CDOTimeProvider, StateP
   }
 
   /**
+   * Enumerates the possible {@link CDOCheckout#getRootType() types} of an {@link EObject}.
+   *
    * @author Eike Stepper
    */
   public enum ObjectType

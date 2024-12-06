@@ -100,19 +100,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOCompareEditorUtil.ContentsCreator.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.ContentsCreator</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">An optional mix-in interface for <a href="#setInputConsumer(java.util.function.Consumer)"><code>input consumers</code></a> that want to
+ customize the creation of the visual controls of the Compare UI.</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOCompareEditorUtil.EditorConsumer.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.EditorConsumer</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">An optional mix-in interface for <a href="#setInputConsumer(java.util.function.Consumer)"><code>input consumers</code></a> that need to be
+ notified when an associated Compare <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor</code></a> was opened.</div>
+</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOCompareEditorUtil.Input.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.Input</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDOCompareEditorUtil.InputHolder.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.InputHolder</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A default implementation of an <a href="#setInputConsumer(java.util.function.Consumer)"><code>input consumer</code></a>.</div>
+</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOCompareEditorUtil.TransactionOpenerAndEditorCloser.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui.compare">CDOCompareEditorUtil.TransactionOpenerAndEditorCloser</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A <a href="../../transaction/CDOTransactionOpener.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction opener</code></a> that automatically closes the editor of a transaction
+ when the transaction is closed.</div>
+</div>
 </div>
 </section>
 </li>

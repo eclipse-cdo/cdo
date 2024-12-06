@@ -23,8 +23,12 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Asynchronously authorizes {@link AuthorizableOperation authorizable operations} and caches the authorization results.
+ *
  * @author Eike Stepper
  * @since 4.11
+ * @see AuthorizerContext
+ * @see AbstractAuthorizingDialog
  */
 public class Authorizer<E>
 {
@@ -133,7 +137,10 @@ public class Authorizer<E>
   }
 
   /**
+   * An {@link Authorizer authorizer's} context.
+   *
    * @author Eike Stepper
+   * @see AbstractAuthorizingDialog
    */
   public interface AuthorizerContext<E>
   {

@@ -13,6 +13,8 @@ package org.eclipse.emf.cdo.spi.common.util;
 import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 /**
+ * An {@link AuthorizableOperation authorizable operation} factory for the operations of the CDO core.
+ *
  * @author Eike Stepper
  * @since 4.15
  */

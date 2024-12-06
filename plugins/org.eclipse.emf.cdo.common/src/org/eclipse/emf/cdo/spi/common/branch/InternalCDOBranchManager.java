@@ -167,8 +167,11 @@ public interface InternalCDOBranchManager extends CDOBranchManager, ILifecycle
   }
 
   /**
+   * Enumerates the possible kinds of changes to a {@link CDOBranchTag branch tag}.
+   *
    * @author Eike Stepper
    * @since 4.11
+   * @see InternalCDOBranchManager#getTagChangeKind(String, String, CDOBranchPoint)
    */
   public enum TagChangeKind
   {

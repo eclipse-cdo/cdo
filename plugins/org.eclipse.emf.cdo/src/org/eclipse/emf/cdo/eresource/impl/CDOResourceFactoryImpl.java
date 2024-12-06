@@ -23,6 +23,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 
 import java.util.HashSet;
@@ -119,6 +120,9 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
   }
 
   /**
+   * Provides additional class names of {@link ResourceSet resource set} implementations to customize the
+   * stack inspection in {@link CDOResourceFactoryImpl#isGetResource()}.
+   *
    * @author Eike Stepper
    * @since 4.17
    */
@@ -127,6 +131,8 @@ public class CDOResourceFactoryImpl implements CDOResourceFactory
     public String[] getResourceSetClassNames();
 
     /**
+     * {@link #create(String) Creates} instances of {@link ResourceSetClassNameProvider}.
+     *
      * @author Eike Stepper
      */
     public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory

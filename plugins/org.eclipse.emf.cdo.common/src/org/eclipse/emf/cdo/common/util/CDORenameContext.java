@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.common.util;
 
 /**
+ * Represents the context of a rename operation as implemented by <code>RenameDialog</code>
+ * or <code>RenameHandler</code>.
+ *
  * @author Eike Stepper
  * @since 4.4
  */
@@ -25,6 +28,9 @@ public interface CDORenameContext
   public String validateName(String name);
 
   /**
+   * A {@link CDORenameContext rename context} that provides access to the {@link #getElement() element}
+   * to be renamed.
+   *
    * @since 4.15
    */
   public interface WithElement extends CDORenameContext

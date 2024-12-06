@@ -91,6 +91,9 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">UserInfo.Manager</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle</span></div>
+<div class="block">Manages the <a href="UserInfo.html" title="class in org.eclipse.emf.cdo.ui"><code>user info</code></a> of the <a href="#getLocalUser()"><code>local user</code></a> and maintains a user info cache for
+ <a href="#getRemoteUser(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>remote users</code></a>. Missing remote user infos are automatically requested
+ from the respective <a href="../session/remote/CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a>.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -109,16 +112,27 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="UserInfo.Manager.HomeUserInfoStorage.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+ in the file "${user.home}/.eclipse/org.eclipse.emf.cdo.ui/user.properties" .</div>
+</div>
 <div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="UserInfo.Manager.PreferencesUserInfoStorage.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+ in the Eclipse <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html" title="class or interface in org.eclipse.jface.preference" class="external-link"><code>IPreferenceStore</code></a> of the "org.eclipse.emf.cdo.ui" bundle.</div>
+</div>
 <div class="col-first even-row-color"><code>final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="UserInfo.Manager.UserChangedEvent.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserChangedEvent</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">An <code>event</code> fired from a <a href="UserInfo.Manager.html" title="class in org.eclipse.emf.cdo.ui"><code>user info manager</code></a> when the <a href="#getLocalUser()"><code>local user info</code></a>
+ was changed.</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="UserInfo.Manager.UserInfoStorage.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Provides a method to load the user info object for the <a href="#getLocalUser()"><code>local user</code></a>.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>

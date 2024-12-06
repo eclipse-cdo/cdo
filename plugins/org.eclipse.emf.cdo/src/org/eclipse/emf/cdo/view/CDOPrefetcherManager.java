@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCache;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
@@ -42,6 +43,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 
 /**
+ * Orchestrates (adds, changes, removes) per-view {@link Prefetcher prefetchers} for all views in a {@link CDOViewSet view set}.
+ *
  * @author Eike Stepper
  * @since 4.15
  */
@@ -218,6 +221,8 @@ public class CDOPrefetcherManager extends CDOViewSetHandler
   }
 
   /**
+   * Prefetches {@link CDORevision revisions} and, optionally, {@link CDOLockState lock states} for a given, single {@link CDOView view}.
+   *
    * @author Eike Stepper
    */
   public static class Prefetcher

@@ -90,6 +90,11 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">CDOTopicProvider.Topic</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.event.Notifier
 implements <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IAdaptable.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IAdaptable</a></span></div>
+<div class="block">An <a href="#getId()"><code>identifiable</code></a> topic in the scope of a <a href="#getSession()"><code>session</code></a>.
+ <p>
+ For displaying a topic carries an <a href="#getImage()"><code>image</code></a>, a <a href="#getText()"><code>text</code></a> (label),
+ and a <a href="#getDescription()"><code>description</code></a>. Notifies <code>registered listeners</code>
+ about changes in any of these attributes with <a href="CDOTopicProvider.Topic.TopicChangedEvent.html" title="class in org.eclipse.emf.cdo.ui"><code>topic changed events</code></a>.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -108,7 +113,10 @@ implements <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDOTopicProvider.Topic.TopicChangedEvent.html" class="type-name-link" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic.TopicChangedEvent</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">An <code>event</code> fired from a <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topic</code></a> when the <a href="#getImage()"><code>image</code></a>, the <a href="#getText()"><code>text</code></a> (label),
+ or the <a href="#getDescription()"><code>description</code></a> attribute of the topic were changed.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>

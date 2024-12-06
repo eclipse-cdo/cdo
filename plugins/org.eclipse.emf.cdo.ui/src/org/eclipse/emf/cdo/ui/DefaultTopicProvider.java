@@ -24,6 +24,8 @@ import java.util.Set;
 import java.util.function.Consumer;
 
 /**
+ * A {@link HashSet hash set}-based {@link CDOTopicProvider topic provider}.
+ *
  * @author Eike Stepper
  * @since 4.17
  */

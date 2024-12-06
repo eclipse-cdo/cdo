@@ -138,12 +138,19 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDORemoteSessionRequest.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionRequest</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An asynchronous request to a <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a>.</div>
+<div class="block">An <a href="CDORemoteSessionRequest.html#send(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>asynchronous</code></a> or <a href="CDORemoteSessionRequest.html#sendSynchronous(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>synchronous</code></a> request
+ to a <a href="CDORemoteSession.html" title="interface in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDORemoteSessionRequest.GlobalRequestHandler.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionRequest.GlobalRequestHandler</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Handles incoming <a href="CDORemoteSessionRequest.html" title="class in org.eclipse.emf.cdo.session.remote"><code>requests</code></a> in the context of all <a href="../CDOSessionRegistry.html#INSTANCE"><code>globally registered</code></a> sessions
+ and optionally sends back response <a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote"><code>messages</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDORemoteSessionRequest.RequestHandler.html" title="class in org.eclipse.emf.cdo.session.remote">CDORemoteSessionRequest.RequestHandler</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">Handles incoming <a href="CDORemoteSessionRequest.html" title="class in org.eclipse.emf.cdo.session.remote"><code>requests</code></a> in the context of a single <a href="../CDOSession.html#getRemoteSessionManager()"><code>session</code></a>
+ and optionally sends back response <a href="CDORemoteSessionMessage.html" title="class in org.eclipse.emf.cdo.session.remote"><code>messages</code></a>.</div>
+</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDORemoteTopic.html" title="interface in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A topic to that the <a href="CDORemoteSessionManager.html#getLocalSession()"><code>local session</code></a> and

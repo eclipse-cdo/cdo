@@ -31,6 +31,9 @@ import org.eclipse.swt.widgets.Text;
 import java.util.Set;
 
 /**
+ * Attaches to a given {@link CDOTransaction transaction} and pops up a {@link CommentDialog dialog}
+ * for a commit comment whenever this transaction is {@link CDOTransaction#commit() committed}.
+ *
  * @author Eike Stepper
  * @since 4.10
  */
@@ -107,7 +110,10 @@ public class CDOCommitCommentPrompter
   }
 
   /**
+   * A dialog for commit comments.
+   *
    * @author Eike Stepper
+   * @see CDOCommitCommentPrompter
    */
   public static class CommentDialog extends TitleAreaDialog
   {

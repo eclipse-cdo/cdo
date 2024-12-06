@@ -11,8 +11,11 @@
 package org.eclipse.emf.cdo.net4j;
 
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.internal.net4j.RecoveringCDOSessionImpl;
 
 /**
+ * An exception thrown from {@link RecoveringCDOSessionImpl#recoverSession}.
+ *
  * @author Eike Stepper
  * @since 4.6
  */

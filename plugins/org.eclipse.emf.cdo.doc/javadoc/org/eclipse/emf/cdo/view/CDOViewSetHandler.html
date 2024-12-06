@@ -91,6 +91,12 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">CDOViewSetHandler</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle</span></div>
+<div class="block">A customizable handler of all <a href="CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view target changed events</code></a>
+ in all <a href="CDOViewSet.html#getViews()"><code>views</code></a> of a given <a href="#getViewSet()"><code>view set</code></a>.
+ <p>
+ Extenders may override <a href="#viewAdded(org.eclipse.emf.cdo.view.CDOView)"><code>viewAdded()</code></a>,
+ <a href="#viewChanged(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>viewChanged()</code></a>,
+ and/or <a href="#viewRemoved(org.eclipse.emf.cdo.view.CDOView)"><code>viewRemoved()</code></a>.</div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.15</dd>

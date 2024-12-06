@@ -13,6 +13,9 @@ package org.eclipse.emf.cdo.common.branch;
 import org.eclipse.emf.cdo.common.util.CDOException;
 
 /**
+ * A CDO {@link CDOException exception} thrown from {@link CDOBranch#createBranch(String, long) CDOBranch.createBranch()}
+ * if the {@link CDOBranch#getPathName() path name} of the branch to be created already exists.
+ *
  * @author Eike Stepper
  * @since 4.16
  */

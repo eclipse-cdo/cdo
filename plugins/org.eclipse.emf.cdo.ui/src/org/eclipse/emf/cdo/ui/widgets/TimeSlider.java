@@ -42,6 +42,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A scale widget that can be {@link #connect(CDOView, TreeViewer) connected} to different {@link CDOView views}
+ * and {@link TreeViewer tree viewers} (one such pair at a time) to synchronize the view's {@link CDOView#getTimeStamp() timestamp}
+ * with this widget's selection.
+ *
  * @author Eike Stepper
  * @since 4.4
  */

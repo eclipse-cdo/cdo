@@ -122,6 +122,8 @@ public interface CDORepository extends CDOExplorerElement, //
   public void releaseSession();
 
   /**
+   * Enumerates the possible {@link CDORepository#getVersioningMode() versioning modes} of a {@link CDORepository repository}.
+   *
    * @author Eike Stepper
    */
   public enum VersioningMode
@@ -165,6 +167,8 @@ public interface CDORepository extends CDOExplorerElement, //
   }
 
   /**
+   * Enumerates the possible {@link CDORepository#getIDGeneration() ID generation locations} of a {@link CDORepository repository}.
+   *
    * @author Eike Stepper
    */
   public enum IDGeneration
@@ -195,6 +199,8 @@ public interface CDORepository extends CDOExplorerElement, //
   }
 
   /**
+   * Enumerates the possible {@link CDORepository#getState() states} of a {@link CDORepository repository}.
+   *
    * @author Eike Stepper
    */
   public enum State

@@ -47,6 +47,9 @@ public interface CDORepositoryManager extends CDOExplorerManager<CDORepository>
   public CDORepository addRepository(Properties properties, IPasswordCredentials credentials);
 
   /**
+   * An {@link IEvent event} fired from a {@link CDORepositoryManager repository manager}
+   * when the {@link CDORepository#isConnected() repository connection} state has changed.
+   *
    * @author Eike Stepper
    * @noextend This interface is not intended to be extended by clients.
    * @noimplement This interface is not intended to be implemented by clients.

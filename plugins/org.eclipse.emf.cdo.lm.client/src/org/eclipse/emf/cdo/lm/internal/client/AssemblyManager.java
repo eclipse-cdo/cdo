@@ -394,8 +394,8 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     if (event instanceof CheckoutInitializeEvent)
     {
       CheckoutInitializeEvent e = (CheckoutInitializeEvent)event;
-      initializeDescriptor(e.getCheckout());
 
+      initializeDescriptor(e.getCheckout());
     }
     else if (event instanceof CheckoutStateEvent)
     {

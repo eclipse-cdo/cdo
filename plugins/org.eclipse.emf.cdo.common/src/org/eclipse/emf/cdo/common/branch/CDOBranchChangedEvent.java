@@ -37,6 +37,8 @@ public interface CDOBranchChangedEvent extends IEvent, CDOBranchProvider
   public ChangeKind getChangeKind();
 
   /**
+   * Enumerates the kinds of branch changes.
+   *
    * @author Eike Stepper
    */
   public enum ChangeKind

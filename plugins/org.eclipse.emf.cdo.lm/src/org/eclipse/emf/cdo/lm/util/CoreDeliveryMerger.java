@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.spi.cdo.DefaultCDOMerger;
 
 /**
+ * An {@link LMMerger LM merger} based on a {@link CDOMerger core merger}.
+ *
  * @author Eike Stepper
  * @since 1.3
  */

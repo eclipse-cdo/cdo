@@ -13,8 +13,11 @@ package org.eclipse.emf.cdo.view;
 import org.eclipse.emf.common.util.EList;
 
 /**
+ * Can wrap given lists in order to augment the behavior of those given lists with custom behavior.
+ *
  * @author Eike Stepper
  * @since 4.19
+ * @see CDOView.Options#getClearAdapterPolicy()
  */
 public interface CDOListWrapper<E>
 {

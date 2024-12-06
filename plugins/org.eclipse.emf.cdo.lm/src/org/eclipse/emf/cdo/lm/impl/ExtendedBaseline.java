@@ -11,10 +11,14 @@
 package org.eclipse.emf.cdo.lm.impl;
 
 import org.eclipse.emf.cdo.lm.Baseline;
+import org.eclipse.emf.cdo.lm.Stream;
 
 /**
+ * A mix-in interface for {@link Baseline baselines} to customize the sorting order within a {@link Stream stream}.
+ *
  * @author Eike Stepper
  * @since 1.3
+ * @see Stream#getContents()
  */
 public interface ExtendedBaseline extends Baseline
 {

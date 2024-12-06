@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 
 /**
+ * Represents the {@link Kind#ADDED addition}, {@link Kind#REMOVED removal}, or the {@link Kind#REMAPPED remapping}
+ * of an object lock.
+ *
  * @author Eike Stepper
  * @since 4.15
  * @noextend This interface is not intended to be extended by clients.
@@ -33,6 +36,9 @@ public interface CDOLockDelta extends CDOIDAndBranch
   public Kind getKind();
 
   /**
+   * Enumerates the {@link CDOLockDelta#getKind() kinds} of lock deltas.
+   *
+   *
    * @author Eike Stepper
    */
   public enum Kind

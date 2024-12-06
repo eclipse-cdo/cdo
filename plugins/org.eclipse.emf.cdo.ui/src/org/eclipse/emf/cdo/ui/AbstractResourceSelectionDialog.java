@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.internal.ui.CDOViewerComparator;
 import org.eclipse.emf.cdo.internal.ui.RunnableViewerRefresh;
 import org.eclipse.emf.cdo.internal.ui.ViewerUtil;
 import org.eclipse.emf.cdo.internal.ui.bundle.OM;
+import org.eclipse.emf.cdo.internal.ui.dialogs.RepositoryResourceSelectionDialog;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
@@ -58,8 +59,12 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 
 /**
+ * An abstract base class for resource selection {@link BaseDialog dialogs} that can be used with
+ * {@link CDOLoadResourceProvider load resource providers}.
+ *
  * @author Eike Stepper
  * @since 4.15
+ * @see RepositoryResourceSelectionDialog
  */
 public abstract class AbstractResourceSelectionDialog<INPUT> extends BaseDialog<TreeViewer>
 {

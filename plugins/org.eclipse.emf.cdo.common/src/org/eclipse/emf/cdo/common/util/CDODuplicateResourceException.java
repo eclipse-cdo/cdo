@@ -11,6 +11,9 @@
 package org.eclipse.emf.cdo.common.util;
 
 /**
+ * A CDO {@link CDOException exception} thrown from a <code>CDOResourceNode</code> to indicate
+ * an illegal attempt to change the path of the node to a path that already exists.
+ *
  * @author Eike Stepper
  * @since 4.8
  */

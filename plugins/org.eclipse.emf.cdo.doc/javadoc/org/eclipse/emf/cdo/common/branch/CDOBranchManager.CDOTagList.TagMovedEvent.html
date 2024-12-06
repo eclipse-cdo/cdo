@@ -71,7 +71,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Superinterfaces:</dt>
-<dd><code><a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a></code>, <code><a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagEvent</a></code>, <code><a href="CDOBranchTag.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagRenamedEvent</a></code>, <code>org.eclipse.net4j.util.event.IEvent</code></dd>
+<dd><code><a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a></code>, <code><a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagEvent</a></code>, <code><a href="CDOBranchTag.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagMovedEvent</a></code>, <code>org.eclipse.net4j.util.event.IEvent</code></dd>
 </dl>
 <dl class="notes">
 <dt>Enclosing interface:</dt>
@@ -79,7 +79,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">CDOBranchManager.CDOTagList.TagMovedEvent</span><span class="extends-implements">
-extends <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a>, <a href="CDOBranchTag.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagRenamedEvent</a></span></div>
+extends <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager.CDOTagList.TagListEvent</a>, <a href="CDOBranchTag.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagMovedEvent</a></span></div>
+<div class="block">A <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface in org.eclipse.emf.cdo.common.branch"><code>tag list event</code></a> fired when a branch tag was moved.</div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -98,8 +99,8 @@ extends <a href="CDOBranchManager.CDOTagList.TagListEvent.html" title="interface
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagEvent">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="CDOBranchTag.TagEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagEvent</a></h3>
 <code><a href="CDOBranchTag.TagEvent.html#getTag()">getTag</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagRenamedEvent">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="CDOBranchTag.TagRenamedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagRenamedEvent</a></h3>
-<code><a href="CDOBranchTag.TagRenamedEvent.html#getNewName()">getNewName</a>, <a href="CDOBranchTag.TagRenamedEvent.html#getOldName()">getOldName</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.branch.CDOBranchTag.TagMovedEvent">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.branch.<a href="CDOBranchTag.TagMovedEvent.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchTag.TagMovedEvent</a></h3>
+<code><a href="CDOBranchTag.TagMovedEvent.html#getNewBranchPoint()">getNewBranchPoint</a>, <a href="CDOBranchTag.TagMovedEvent.html#getOldBranchPoint()">getOldBranchPoint</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.IEvent">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.IEvent</h3>
 <code>getSource</code></div>

@@ -55,6 +55,11 @@ public abstract class OM
   public static Image getOverlayImage(String imagePath, String overlayImagePath, int x, int y)
   {
     URI image = getBundleURI(imagePath);
+    if (image == null)
+    {
+      return null;
+    }
+
     URI overlayImage = getBundleURI(overlayImagePath);
     return new OverlayImage(image, overlayImage, x, y).compose();
   }

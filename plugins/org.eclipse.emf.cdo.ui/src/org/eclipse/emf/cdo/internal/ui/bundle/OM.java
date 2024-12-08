@@ -101,6 +101,11 @@ public abstract class OM
 
   public static Image getOverlayImage(Object image, Object overlayImage, int x, int y)
   {
+    if (image == null)
+    {
+      return null;
+    }
+
     return new OverlayImage(image, overlayImage, x, y).compose();
   }
 

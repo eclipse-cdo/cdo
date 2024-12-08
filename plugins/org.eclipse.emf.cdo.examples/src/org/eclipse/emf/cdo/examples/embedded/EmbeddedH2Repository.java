@@ -98,7 +98,7 @@ public class EmbeddedH2Repository extends CDOEmbeddedRepositoryConfig
   protected JdbcDataSource createDataSource()
   {
     JdbcDataSource dataSource = new JdbcDataSource();
-    dataSource.setURL("jdbc:h2:" + dbFolder + "/" + getRepositoryName() + ";MVCC=FALSE");
+    dataSource.setURL("jdbc:h2:" + dbFolder + "/" + getRepositoryName());
     return dataSource;
   }
 

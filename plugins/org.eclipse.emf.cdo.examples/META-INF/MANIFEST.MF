@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.examples;singleton:=true
-Bundle-Version: 4.1.10.qualifier
+Bundle-Version: 4.1.11.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Activator: org.eclipse.emf.cdo.internal.examples.bundle.OM$Activator
@@ -23,9 +23,9 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";resoluti
  org.eclipse.emf.cdo.security;bundle-version="[4.0.0,5.0.0)",
  org.eclipse.emf.cdo.server.security;bundle-version="[4.0.0,5.0.0)"
 Import-Package: org.h2.jdbcx;version="[2.0.0,3.0.0)"
-Export-Package: org.eclipse.emf.cdo.examples;version="4.1.10";x-internal:=true,
- org.eclipse.emf.cdo.examples.embedded;version="4.1.10",
- org.eclipse.emf.cdo.examples.server;version="4.1.10";x-internal:=true,
- org.eclipse.emf.cdo.examples.server.offline;version="4.1.10";x-internal:=true,
- org.eclipse.emf.cdo.internal.examples.bundle;version="4.1.10";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.examples;version="4.1.11";x-internal:=true,
+ org.eclipse.emf.cdo.examples.embedded;version="4.1.11",
+ org.eclipse.emf.cdo.examples.server;version="4.1.11";x-internal:=true,
+ org.eclipse.emf.cdo.examples.server.offline;version="4.1.11";x-internal:=true,
+ org.eclipse.emf.cdo.internal.examples.bundle;version="4.1.11";x-internal:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.examples

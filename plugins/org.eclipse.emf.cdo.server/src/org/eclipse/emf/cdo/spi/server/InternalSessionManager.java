@@ -33,6 +33,7 @@ import org.eclipse.net4j.util.security.IUserManager;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -133,6 +134,12 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
    * @since 4.14
    */
   public InternalSession openSession(ISessionProtocol protocol, int sessionID);
+
+  /**
+   * @return Never <code>null</code>
+   * @since 4.23
+   */
+  public InternalSession openSession(ISessionProtocol protocol, int sessionID, Consumer<InternalSession> sessionInitializer);
 
   public void sessionClosed(InternalSession session);
 

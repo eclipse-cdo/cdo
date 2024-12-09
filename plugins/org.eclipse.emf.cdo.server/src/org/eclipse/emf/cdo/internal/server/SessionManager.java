@@ -69,6 +69,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.Consumer;
 
 /**
  * @author Eike Stepper
@@ -282,6 +283,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public InternalSession openSession(ISessionProtocol sessionProtocol, int sessionID)
   {
+    return openSession(sessionProtocol, sessionID, null);
+  }
+
+  @Override
+  public InternalSession openSession(ISessionProtocol sessionProtocol, int sessionID, Consumer<InternalSession> sessionInitializer)
+  {
     int id;
 
     if (sessionID == 0)
@@ -305,6 +312,12 @@ public class SessionManager extends Container<ISession> implements InternalSessi
 
     String userID = authenticateUser(sessionProtocol);
     InternalSession session = createSession(id, userID, sessionProtocol);
+
+    if (sessionInitializer != null)
+    {
+      sessionInitializer.accept(session);
+    }
+
     LifecycleUtil.activate(session);
 
     synchronized (sessions)

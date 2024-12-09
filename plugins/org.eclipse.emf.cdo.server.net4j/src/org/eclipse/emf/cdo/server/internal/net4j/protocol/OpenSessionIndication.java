@@ -146,7 +146,17 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       try
       {
         InternalSessionManager sessionManager = repository.getSessionManager();
-        session = sessionManager.openSession(protocol, sessionID);
+        session = sessionManager.openSession(protocol, sessionID, s -> {
+          if (s.getUserID() == null && userID != null)
+          {
+            s.setUserID(userID);
+          }
+
+          s.setPassiveUpdateEnabled(passiveUpdateEnabled);
+          s.setPassiveUpdateMode(passiveUpdateMode);
+          s.setLockNotificationMode(lockNotificationMode);
+          s.setSubscribed(subscribed);
+        });
       }
       catch (NotAuthenticatedException ex)
       {
@@ -166,18 +176,6 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
         return;
       }
-
-      if (session.getUserID() == null && userID != null)
-      {
-        session.setUserID(userID);
-      }
-
-      String[] authorizations = session.authorizeOperations(operations);
-
-      session.setPassiveUpdateEnabled(passiveUpdateEnabled);
-      session.setPassiveUpdateMode(passiveUpdateMode);
-      session.setLockNotificationMode(lockNotificationMode);
-      session.setSubscribed(subscribed);
 
       protocol.setInfraStructure(session);
 
@@ -213,6 +211,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeEnum(repository.getIDGenerationLocation());
       out.writeEnum(repository.getCommitInfoStorage());
 
+      String[] authorizations = session.authorizeOperations(operations);
       int length = authorizations == null ? 0 : authorizations.length;
       out.writeXInt(length);
 

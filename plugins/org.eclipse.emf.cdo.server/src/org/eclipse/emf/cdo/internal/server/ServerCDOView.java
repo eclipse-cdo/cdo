@@ -795,6 +795,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       throw new UnsupportedOperationException();
     }
 
+    @Override
+    public Map<String, Entity> clientEntities()
+    {
+      return repository.getClientEntities();
+    }
+
     /**
      * Server sessions may not be used to change the user's credentials: it must
      * be done client-side by interaction with the user.
@@ -1424,6 +1430,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
 
     @Override
     public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
+    {
+      throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void setOneTimeLoginToken(byte[] oneTimeLoginToken)
     {
       throw new UnsupportedOperationException();
     }

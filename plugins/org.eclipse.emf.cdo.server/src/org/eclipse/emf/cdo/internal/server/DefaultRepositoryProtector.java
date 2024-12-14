@@ -38,7 +38,7 @@ import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 import org.eclipse.emf.cdo.spi.server.InternalCommitContext;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
-import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.TreeExtension;
 
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.RunnableWithException;
@@ -546,7 +546,14 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   {
     checkState(repository, "repository"); //$NON-NLS-1$
     checkState(userAuthenticator, "userAuthenticator"); //$NON-NLS-1$
-    checkState(authorizationStrategy, "authorizationStrategy"); //$NON-NLS-1$
+
+    if (authorizationStrategy == null)
+    {
+      String name = repository.getName();
+      OM.LOG.warn("No authorization strategy specified for repository " + name);
+      OM.LOG.warn("Granting WRITE access to all users of repository " + name);
+      authorizationStrategy = new AuthorizationStrategy.Constant.Write();
+    }
   }
 
   @Override
@@ -828,23 +835,20 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   /**
    * @author Eike Stepper
    */
-  public static final class RepositoryConfiguratorExtension implements RepositoryConfigurator.Extension
+  public static final class RepositoryConfiguratorExtension extends TreeExtension
   {
     public RepositoryConfiguratorExtension()
     {
     }
 
     @Override
-    public String configureRepository(InternalRepository repository, org.w3c.dom.Element protectorConfig, Map<String, String> parameters,
-        IManagedContainer container)
+    protected String configureRepository(InternalRepository repository, Tree config, Map<String, String> parameters, IManagedContainer container)
     {
-      String type = protectorConfig.getAttribute("type"); //$NON-NLS-1$
+      String type = config.attribute("type"); //$NON-NLS-1$
       if (StringUtil.isEmpty(type))
       {
         type = DEFAULT_TYPE;
       }
-
-      Tree config = Tree.XMLConverter.convertElementToTree(protectorConfig, parameters);
 
       IRepositoryProtector protector = container.createElement(IRepositoryProtector.PRODUCT_GROUP, type, config);
       repository.setProtector(protector);

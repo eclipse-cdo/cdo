@@ -131,11 +131,12 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
     return packageURICompressor;
   }
 
-  public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, boolean loginPeek, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
+  public OpenSessionResult openSession(String repositoryName, int sessionID, String userID, byte[] oneTimeLoginToken, boolean loginPeek,
+      boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed,
+      AuthorizableOperation[] operations)
   {
-    return send(new OpenSessionRequest(this, repositoryName, sessionID, userID, loginPeek, passiveUpdateEnabled, passiveUpdateMode, lockNotificationMode,
-        subscribed, operations), new Monitor());
+    return send(new OpenSessionRequest(this, repositoryName, sessionID, userID, oneTimeLoginToken, loginPeek, passiveUpdateEnabled, passiveUpdateMode,
+        lockNotificationMode, subscribed, operations), new Monitor());
   }
 
   @Override

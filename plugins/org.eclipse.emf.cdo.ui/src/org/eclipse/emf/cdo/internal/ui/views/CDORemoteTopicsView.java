@@ -329,14 +329,17 @@ public class CDORemoteTopicsView extends ViewPart implements ISelectionProvider,
       CDORemoteSession remoteSession = e.getRemoteSession();
       if (remoteSession != null)
       {
-        for (Object topic : root.getChildren())
+        synchronized (remoteTopics)
         {
-          for (Object child : ((RemoteTopicItem)topic).getChildren())
+          for (Object topic : root.getChildren())
           {
-            RemoteMemberItem member = (RemoteMemberItem)child;
-            if (member.getRemoteSession() == remoteSession)
+            for (Object child : ((RemoteTopicItem)topic).getChildren())
             {
-              UIUtil.asyncExec(() -> member.updateText());
+              RemoteMemberItem member = (RemoteMemberItem)child;
+              if (member.getRemoteSession() == remoteSession)
+              {
+                UIUtil.asyncExec(() -> member.updateText());
+              }
             }
           }
         }

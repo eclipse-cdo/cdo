@@ -26,6 +26,7 @@ import org.eclipse.net4j.util.ParameterAware;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.XMLUtil.ElementHandler;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
@@ -740,6 +741,27 @@ public class RepositoryConfigurator implements IManagedContainerProvider
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions"; //$NON-NLS-1$
 
     public String configureRepository(InternalRepository repository, Element extensionConfig, Map<String, String> parameters, IManagedContainer container);
+  }
+
+  /**
+   * A repository configurator {@link Extension extension} that
+   * @author Eike Stepper
+   * @since 4.23
+   */
+  public static abstract class TreeExtension implements Extension
+  {
+    public TreeExtension()
+    {
+    }
+
+    @Override
+    public String configureRepository(InternalRepository repository, Element extensionConfig, Map<String, String> parameters, IManagedContainer container)
+    {
+      Tree config = Tree.XMLConverter.convertElementToTree(extensionConfig, parameters);
+      return configureRepository(repository, config, parameters, container);
+    }
+
+    protected abstract String configureRepository(InternalRepository repository, Tree config, Map<String, String> parameters, IManagedContainer container);
   }
 
   /**

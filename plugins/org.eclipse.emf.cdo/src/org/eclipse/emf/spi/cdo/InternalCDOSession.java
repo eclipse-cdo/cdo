@@ -99,6 +99,11 @@ public interface InternalCDOSession
    */
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
+  /**
+   * @since 4.27
+   */
+  public void setOneTimeLoginToken(byte[] oneTimeLoginToken);
+
   @Override
   public InternalCDOPackageRegistry getPackageRegistry();
 

@@ -441,6 +441,17 @@ public class OfflineCDOCheckout extends CDOCheckoutImpl
     }
 
     @Override
+    public byte[] getOneTimeLoginToken()
+    {
+      return null;
+    }
+
+    @Override
+    public void setOneTimeLoginToken(byte[] oneTimeLoginToken)
+    {
+    }
+
+    @Override
     public boolean isActivateOnOpen()
     {
       return false;

@@ -100,13 +100,29 @@ public final class ChatComposite extends Composite
   {
     if (messageBrowser.isDocumentAvailable())
     {
-      int scrollTop = ((Double)messageBrowser.evaluate("return document.body.scrollTop;")).intValue();
-      int scrollHeight = ((Double)messageBrowser.evaluate("return document.body.scrollHeight;")).intValue();
+      int scrollTop = messageBrowser.evaluateInt("return document.body.scrollTop;");
+      int scrollHeight = messageBrowser.evaluateInt("return document.body.scrollHeight;");
       int height = messageBrowser.getSize().y;
       return scrollTop + height == scrollHeight;
     }
 
     return false;
+  }
+
+  /**
+   * @since 3.20
+   */
+  public String getOwnUserID()
+  {
+    return config.getOwnUserID();
+  }
+
+  /**
+   * @since 3.20
+   */
+  public void setOwnUserID(String ownUserID)
+  {
+    config.setOwnUserID(ownUserID);
   }
 
   public Browser getMessageBrowser()

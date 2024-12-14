@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.internal.ui.CDOAuthorCache;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.reviews.Comment;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
@@ -28,7 +29,6 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
-import org.eclipse.emf.cdo.session.CDOUserInfoManager;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
@@ -40,7 +40,6 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
-import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
@@ -49,7 +48,6 @@ import org.eclipse.net4j.util.ui.ColorStyler;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.chat.ChatComposite;
 import org.eclipse.net4j.util.ui.chat.ChatMessage;
-import org.eclipse.net4j.util.ui.chat.ChatMessage.Author;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
@@ -106,10 +104,8 @@ import org.eclipse.ui.IWorkbenchPage;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.function.Consumer;
@@ -305,7 +301,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private ChatComposite chatComposite;
 
-    private final Author.Cache authorCache;
+    private final CDOAuthorCache authorCache;
 
     static
     {
@@ -401,7 +397,7 @@ public class OpenReviewAction extends AbstractReviewAction
     @Override
     public Control createContents(Composite parent, Function<Composite, Control> defaultContentsCreator)
     {
-      return new SashComposite(parent, SWT.NONE, 100, 50, true, true, false)
+      return new SashComposite(parent, SWT.NONE, 100, 50, false, true, false)
       {
         @Override
         protected Control createControl1(Composite parent)
@@ -921,9 +917,9 @@ public class OpenReviewAction extends AbstractReviewAction
       }
     }
 
-    private Author.Cache initializeAuthorCache(DeliveryReview review)
+    private CDOAuthorCache initializeAuthorCache(DeliveryReview review)
     {
-      Author.Cache cache = Author.Cache.of(review.cdoView().getSession(), this::loadAuthors);
+      CDOAuthorCache cache = CDOAuthorCache.of(review.cdoView().getSession());
       Set<String> userIDs = collectUserIDs(review);
       cache.getAuthors(userIDs);
       return cache;
@@ -958,30 +954,6 @@ public class OpenReviewAction extends AbstractReviewAction
         collector.accept(topic.getAuthor());
         collectUserIDs(topic, collector);
       }
-    }
-
-    private Map<String, Author> loadAuthors(Iterable<String> userIDs)
-    {
-      Map<String, Author> authors = new HashMap<>();
-
-      CDOUserInfoManager userInfoManager = review.cdoView().getSession().getUserInfoManager();
-      Map<String, Entity> userInfos = userInfoManager.getUserInfos(userIDs);
-
-      for (String userID : userIDs)
-      {
-        Author.Builder builder = Author.builder(userID);
-
-        Entity entity = userInfos.get(userID);
-        if (entity != null)
-        {
-          builder.firstName(entity.property("givenName"));
-          builder.lastName(entity.property("sn"));
-        }
-
-        authors.put(userID, builder.build());
-      }
-
-      return authors;
     }
 
     private void addMessages(List<ChatMessage> messages, TopicContainer container)

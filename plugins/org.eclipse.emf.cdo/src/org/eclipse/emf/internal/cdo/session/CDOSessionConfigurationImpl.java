@@ -52,6 +52,8 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
 
   private IPasswordCredentialsProvider credentialsProvider;
 
+  private byte[] oneTimeLoginToken;
+
   private CDOSession.ExceptionHandler exceptionHandler;
 
   private CDOIDGenerator idGenerator;
@@ -240,6 +242,18 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     checkNotOpen();
     this.credentialsProvider = credentialsProvider;
+  }
+
+  @Override
+  public byte[] getOneTimeLoginToken()
+  {
+    return oneTimeLoginToken;
+  }
+
+  @Override
+  public void setOneTimeLoginToken(byte[] oneTimeLoginToken)
+  {
+    this.oneTimeLoginToken = oneTimeLoginToken;
   }
 
   @Override
@@ -439,6 +453,7 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
     session.setFetchRuleManager(fetchRuleManager);
     session.setIDGenerator(idGenerator);
     session.setCredentialsProvider(credentialsProvider);
+    session.setOneTimeLoginToken(oneTimeLoginToken);
     session.setRevisionManager(revisionManager);
     session.setBranchManager(branchManager);
     session.setCommitInfoManager(commitInfoManager);

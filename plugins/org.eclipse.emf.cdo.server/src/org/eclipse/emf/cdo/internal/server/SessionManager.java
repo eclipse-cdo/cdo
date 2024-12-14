@@ -41,12 +41,14 @@ import org.eclipse.emf.cdo.spi.server.InternalTopic;
 import org.eclipse.emf.cdo.spi.server.InternalTopicManager;
 
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.container.Container;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.io.ExtendedDataInputStream;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.net4j.util.security.CredentialsUpdateOperation;
 import org.eclipse.net4j.util.security.DiffieHellman;
@@ -62,10 +64,12 @@ import java.io.ByteArrayInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -77,6 +81,14 @@ import java.util.function.Consumer;
 public class SessionManager extends Container<ISession> implements InternalSessionManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, SessionManager.class);
+
+  private static final int ONE_TIME_LOGIN_TOKEN_LENGTH = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.internal.server.SessionManager.ONE_TIME_LOGIN_TOKEN_LENGTH", 2048);
+
+  private static final long ONE_TIME_LOGIN_TOKEN_TIMEOUT = OMPlatform.INSTANCE
+      .getProperty("org.eclipse.emf.cdo.internal.server.SessionManager.ONE_TIME_LOGIN_TOKEN_TIMEOUT", 10 * 1000);
+
+  private static final Random ONE_TIME_LOGIN_TOKEN_GENERATOR = new Random(System.currentTimeMillis());
 
   private InternalRepository repository;
 
@@ -91,6 +103,9 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   private final Map<Integer, InternalSession> sessions = new HashMap<>();
 
   private final AtomicInteger lastSessionID = new AtomicInteger();
+
+  @ExcludeFromDump
+  private final Map<OneTimeLoginToken, Long> oneTimeLoginTokens = Collections.synchronizedMap(new HashMap<>());
 
   private final Map<InternalSession, List<CommitNotificationInfo>> commitNotificationInfoQueues = new HashMap<>();
 
@@ -289,10 +304,17 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   @Override
   public InternalSession openSession(ISessionProtocol sessionProtocol, int sessionID, Consumer<InternalSession> sessionInitializer)
   {
+    return openSession(sessionProtocol, sessionID, sessionInitializer, null);
+  }
+
+  @Override
+  public InternalSession openSession(ISessionProtocol sessionProtocol, int sessionID, Consumer<InternalSession> sessionInitializer, byte[] oneTimeLoginToken)
+  {
     int id;
 
     if (sessionID == 0)
     {
+      // FIXME: Attack vector: Exhaust session IDs!
       id = lastSessionID.incrementAndGet();
 
       if (TRACER.isEnabled())
@@ -310,7 +332,21 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       }
     }
 
-    String userID = authenticateUser(sessionProtocol);
+    String userID = null;
+
+    if (oneTimeLoginToken != null)
+    {
+      Long deadline = oneTimeLoginTokens.remove(new OneTimeLoginToken(oneTimeLoginToken));
+      if (deadline == null || deadline < repository.getTimeStamp())
+      {
+        throw new SecurityException("Access denied");
+      }
+    }
+    else
+    {
+      userID = authenticateUser(sessionProtocol);
+    }
+
     InternalSession session = createSession(id, userID, sessionProtocol);
 
     if (sessionInitializer != null)
@@ -342,6 +378,20 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   protected InternalSession createSession(int id, String userID, ISessionProtocol protocol)
   {
     return new Session(this, protocol, id, userID);
+  }
+
+  @Override
+  public byte[] generateOneTimeLoginToken()
+  {
+    byte[] bytes = new byte[ONE_TIME_LOGIN_TOKEN_LENGTH];
+    synchronized (ONE_TIME_LOGIN_TOKEN_GENERATOR)
+    {
+      ONE_TIME_LOGIN_TOKEN_GENERATOR.nextBytes(bytes);
+    }
+
+    long deadline = repository.getTimeStamp() + ONE_TIME_LOGIN_TOKEN_TIMEOUT;
+    oneTimeLoginTokens.put(new OneTimeLoginToken(bytes), deadline);
+    return bytes;
   }
 
   @Override
@@ -895,5 +945,49 @@ public class SessionManager extends Container<ISession> implements InternalSessi
   {
     // Existing clients may expect this deprecated exception type
     return new org.eclipse.emf.cdo.common.util.NotAuthenticatedException();
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class OneTimeLoginToken
+  {
+    private final byte[] bytes;
+
+    private final int hash;
+
+    public OneTimeLoginToken(byte[] bytes)
+    {
+      this.bytes = bytes;
+      hash = Arrays.hashCode(bytes);
+    }
+
+    @Override
+    public int hashCode()
+    {
+      return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (obj == null)
+      {
+        return false;
+      }
+
+      if (getClass() != obj.getClass())
+      {
+        return false;
+      }
+
+      OneTimeLoginToken other = (OneTimeLoginToken)obj;
+      return Arrays.equals(bytes, other.bytes);
+    }
   }
 }

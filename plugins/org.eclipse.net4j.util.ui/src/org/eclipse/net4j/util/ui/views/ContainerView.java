@@ -761,6 +761,8 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
   {
     private CONTAINER container;
 
+    private IListener containerListener;
+
     public Default()
     {
     }
@@ -780,16 +782,17 @@ public abstract class ContainerView extends ViewPart implements ISelectionProvid
     {
       if (this.container != container)
       {
-        IListener containerListener = getContainerListener();
         if (containerListener != null && this.container != null)
         {
           this.container.removeListener(containerListener);
         }
 
         this.container = container;
-        if (containerListener != null && this.container != null)
+
+        containerListener = getContainerListener();
+        if (containerListener != null && container != null)
         {
-          this.container.addListener(containerListener);
+          container.addListener(containerListener);
         }
 
         resetInput();

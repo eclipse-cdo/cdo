@@ -533,7 +533,7 @@ public interface CDOProtocolConstants
   /**
    * @since 4.24
    */
-  public static final String[] USER_INFO_PROPERTIES = { "givenName", "sn", "cn" };
+  public static final String[] USER_INFO_PROPERTIES = { "givenName", "sn", "cn", "Initials", "mail", "gravatar", "avatarUri" };
 
   // //////////////////////////////////////////////////////////////////////
   // Units

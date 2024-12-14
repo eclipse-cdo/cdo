@@ -106,6 +106,7 @@ import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
@@ -217,6 +218,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 
   private String userID;
 
+  @ExcludeFromDump
+  private byte[] oneTimeLoginToken;
+
   private long openingTime;
 
   private long lastUpdateTime;
@@ -246,6 +250,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private IPasswordCredentialsProvider credentialsProvider;
 
   private InternalCDORemoteSessionManager remoteSessionManager;
+
+  private Map<String, Entity> clientEntities = Collections.emptyMap();
 
   /**
    * A map to track for every object that was committed since this session's last refresh, onto what CDOBranchPoint it
@@ -317,6 +323,17 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void setUserID(String userID)
   {
     this.userID = userID;
+  }
+
+  public byte[] getOneTimeLoginToken()
+  {
+    return oneTimeLoginToken;
+  }
+
+  @Override
+  public void setOneTimeLoginToken(byte[] oneTimeLoginToken)
+  {
+    this.oneTimeLoginToken = oneTimeLoginToken;
   }
 
   @Override
@@ -535,6 +552,27 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public void setRemoteSessionManager(InternalCDORemoteSessionManager remoteSessionManager)
   {
     this.remoteSessionManager = remoteSessionManager;
+  }
+
+  @Override
+  public Map<String, Entity> clientEntities()
+  {
+    return clientEntities;
+  }
+
+  public void setClientEntities(Entity[] clientEntities)
+  {
+    if (clientEntities != null)
+    {
+      Map<String, Entity> map = new HashMap<>();
+
+      for (Entity entity : clientEntities)
+      {
+        map.put(entity.id(), entity);
+      }
+
+      this.clientEntities = Collections.unmodifiableMap(map);
+    }
   }
 
   @Override

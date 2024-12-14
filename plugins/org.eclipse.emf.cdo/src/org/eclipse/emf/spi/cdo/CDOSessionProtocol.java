@@ -397,6 +397,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private String[] authorizationResults;
 
+    private Entity[] clientEntities;
+
     /**
      * @since 4.4
      */
@@ -434,8 +436,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       idGenerationLocation = in.readEnum(IDGenerationLocation.class);
       commitInfoStorage = in.readEnum(CommitInfoStorage.class);
 
-      int operations = in.readXInt();
-      authorizationResults = new String[operations];
+      authorizationResults = new String[in.readXInt()];
       for (int i = 0; i < authorizationResults.length; i++)
       {
         authorizationResults[i] = in.readString();
@@ -445,6 +446,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       for (int i = 0; i < packageUnits.length; i++)
       {
         this.packageUnits.add((InternalCDOPackageUnit)packageUnits[i]);
+      }
+
+      clientEntities = new Entity[in.readXInt()];
+      for (int i = 0; i < clientEntities.length; i++)
+      {
+        clientEntities[i] = Entity.read(in);
       }
     }
 
@@ -650,6 +657,14 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public String[] getAuthorizationResults()
     {
       return authorizationResults;
+    }
+
+    /**
+     * @since 4.27
+     */
+    public Entity[] getClientEntities()
+    {
+      return clientEntities;
     }
 
     /**

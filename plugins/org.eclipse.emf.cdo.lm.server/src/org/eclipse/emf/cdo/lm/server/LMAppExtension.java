@@ -121,6 +121,9 @@ public class LMAppExtension extends AppExtension
     lifecycleManager.setModuleDefinitionPath(moduleDefinitionPath);
     lifecycleManager.setModuleTemplateElement(moduleTemplateElement);
 
+    boolean credentialsBasedLogin = StringUtil.isTrue(getAttribute(lmElement, "credentialsBasedLogin"));
+    lifecycleManager.setCredentialsBasedLogin(credentialsBasedLogin);
+
     IPasswordCredentials credentials = createCredentials(lmElement);
     lifecycleManager.setCredentials(credentials);
 

@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.spi.server.ICommitConflictResolver;
 
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -51,6 +52,16 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
   public IStore getStore();
 
   public Map<String, String> getProperties();
+
+  /**
+   * @since 4.23
+   */
+  public Map<String, Entity> getEntities();
+
+  /**
+   * @since 4.23
+   */
+  public Map<String, Entity> getClientEntities();
 
   /**
    * Returns the EMF {@link Registry package registry} that is used by this repository.

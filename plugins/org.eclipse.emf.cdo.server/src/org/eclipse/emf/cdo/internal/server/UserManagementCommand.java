@@ -44,7 +44,7 @@ public abstract class UserManagementCommand extends CDOCommand.WithRepository
 
   protected abstract void execute(InternalRepository repository, IUserManagement userManagement, String[] args) throws Exception;
 
-  private IUserManagement getUserManagement(InternalRepository repository)
+  private static IUserManagement getUserManagement(InternalRepository repository)
   {
     IRepositoryProtector protector = repository.getProtector();
     if (protector != null)
@@ -62,7 +62,7 @@ public abstract class UserManagementCommand extends CDOCommand.WithRepository
       return (IUserManagement)authenticator;
     }
 
-    throw new CommandException("User management not found for " + repository);
+    throw new CommandException("User management of " + repository + " not found!");
   }
 
   protected final PasswordChangeSupport getPasswordChangeSupport(InternalRepository repository)
@@ -166,6 +166,36 @@ public abstract class UserManagementCommand extends CDOCommand.WithRepository
 
       userManagement.setAdministrator(username, administrator);
       println("Administrator role of user " + username + (administrator ? " set" : " unset"));
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public static final class UserSetAttribute extends UserManagementCommand
+  {
+    public UserSetAttribute()
+    {
+      super("userattr", "set or unset an attribute of a repository user", parameter("username"), parameter("attribute"), optional("value"));
+    }
+
+    @Override
+    protected void execute(InternalRepository repository, IUserManagement userManagement, String[] args) throws Exception
+    {
+      String username = args[0];
+      String attribute = args[1];
+      String value = args[2];
+
+      if (userManagement instanceof IUserManagement.Attributed)
+      {
+        IUserManagement.Attributed attributed = (IUserManagement.Attributed)userManagement;
+        attributed.setAttribute(username, attribute, value);
+        println("Attribute " + attribute + " of user " + username + (value != null ? " set to " + value : " unset"));
+      }
+      else
+      {
+        throw new CommandException("User management of " + repository + " has not support for attributes!");
+      }
     }
   }
 }

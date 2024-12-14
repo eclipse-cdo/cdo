@@ -115,6 +115,20 @@ public class SafeBrowser extends Browser
     }
   }
 
+  /**
+   * @since 3.20
+   */
+  public int evaluateInt(String script)
+  {
+    Object result = evaluate(script);
+    if (result instanceof Number)
+    {
+      return ((Number)result).intValue();
+    }
+
+    return 0;
+  }
+
   @Override
   public boolean execute(String script)
   {

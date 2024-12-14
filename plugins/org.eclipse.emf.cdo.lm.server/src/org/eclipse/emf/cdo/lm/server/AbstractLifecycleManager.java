@@ -62,6 +62,7 @@ import org.eclipse.net4j.jvm.IJVMConnector;
 import org.eclipse.net4j.jvm.JVMUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
@@ -172,6 +173,9 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   private Consumer<Process> processInitializer;
 
+  private boolean credentialsBasedLogin;
+
+  @ExcludeFromDump
   private IPasswordCredentials credentials;
 
   private SecuritySupport securitySupport = SecuritySupport.UNAVAILABLE;
@@ -230,6 +234,22 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   public void setProcessInitializer(Consumer<Process> processInitializer)
   {
     this.processInitializer = processInitializer;
+  }
+
+  /**
+   * @since 1.6
+   */
+  public boolean isCredentialsBasedLogin()
+  {
+    return credentialsBasedLogin;
+  }
+
+  /**
+   * @since 1.6
+   */
+  public void setCredentialsBasedLogin(boolean credentialsBasedLogin)
+  {
+    this.credentialsBasedLogin = credentialsBasedLogin;
   }
 
   /**
@@ -731,6 +751,12 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     CDONet4jSessionConfiguration configuration = CDONet4jUtil.createNet4jSessionConfiguration();
     configuration.setConnector(connector);
     configuration.setRepositoryName(repositoryName);
+
+    if (!credentialsBasedLogin)
+    {
+      byte[] oneTimeLoginToken = systemRepository.getSessionManager().generateOneTimeLoginToken();
+      configuration.setOneTimeLoginToken(oneTimeLoginToken);
+    }
 
     IPasswordCredentials credentials = securitySupport.getCredentials();
     if (credentials != null)

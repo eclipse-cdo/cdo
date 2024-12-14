@@ -221,8 +221,8 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       AuthorizableOperation[] operations = AuthorizableOperationFactory.getAuthorizableOperations(getContainer());
 
       // TODO (CD) The next call is on the CDOClientProtocol; shouldn't it be on the DelegatingSessionProtocol instead?
-      OpenSessionResult result = protocol.openSession(repositoryName, getSessionID(), userID, loginPeek, passiveUpdateEnabled, passiveUpdateMode,
-          lockNotificationMode, subscribed, operations);
+      OpenSessionResult result = protocol.openSession(repositoryName, getSessionID(), userID, getOneTimeLoginToken(), loginPeek, passiveUpdateEnabled,
+          passiveUpdateMode, lockNotificationMode, subscribed, operations);
 
       if (result == null)
       {
@@ -235,6 +235,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       setLastUpdateTime(result.getLastUpdateTime());
       setOpeningTime(result.getOpeningTime());
       setRepositoryInfo(new RepositoryInfo(this, result));
+      setClientEntities(result.getClientEntities());
 
       if (result.isAuthorizingOperations())
       {

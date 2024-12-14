@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOView;
 
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
@@ -53,6 +54,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
+import java.util.Map;
 import java.util.concurrent.locks.Lock;
 
 /**
@@ -249,6 +251,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
    * @since 4.13
    */
   public CDOBlob newBlob(byte[] contents) throws IOException;
+
+  /**
+   * @since 4.27
+   */
+  public Map<String, Entity> clientEntities();
 
   /**
    * Returns the {@link Options options} of this session.

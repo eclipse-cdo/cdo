@@ -20,9 +20,15 @@
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>
 
-    <!-- 
     <protector>
-      <userAuthenticator type="ldap">
+      <userAuthenticator type="file" path="@config/passwd.txt" portable="false">
+        <!-- 
+         passwordCrypter type="SHA-512" params="2874365"/>
+         -->
+      </userAuthenticator>
+      
+      <!-- 
+      <userAuthenticator type="ldap" doc="Only the first authenticator is used!">
         <environment id="base">
           <property name="java.naming.factory.initial" value="com.sun.jndi.ldap.LdapCtxFactory"/>
           <property name="java.naming.provider.url" value="ldap://localhost:10389"/>
@@ -45,10 +51,7 @@
           <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
         </loginUser>
       </userAuthenticator> 
-      
-      <userAuthenticator type="file" path="@config/passwd.txt" portable="true" doc="Only the first authenticator is used!">
-        <passwordCrypter type="SHA-512" params="2874365"/>
-      </userAuthenticator>
+    
       
       <authorizationStrategy type="additive"/>
        
@@ -66,13 +69,9 @@
       <revisionAuthorizer permission="read">
         <matcher ref="AMS_USERS"/>
       </revisionAuthorizer>
+      -->
     </protector>
-    -->
 
-    <!--  
-    <securityManager type="default" description="/security:annotation:home(/home)"/>
-    -->
-    
     <store type="db">
       <property name="connectionKeepAlivePeriod" value="60"/>
       <property name="readerPoolCapacity" value="20"/>
@@ -88,6 +87,15 @@
         URL="jdbc:h2:/develop/cdo-master/h2/lm;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
     </store>
 
+    <entity namespace="cdo/client" name="user-info" version="1">
+      <property name="entityNamespace" value="cdo/user/info" />
+      <property name="firstName" value="givenName" />
+      <property name="lastName" value="sn" />
+      <property name="fullName" value="cn" />
+      <property name="initials" value="Initials" />
+      <property name="avatar" value="avatarUri" />
+    </entity>
+    
     <lifecycleManager type="default" systemName="CDO-LM" moduleDefinitionPath="module.md">
       <credentials userId="$$$system_property(LM_USER_ID)$$$" password="$$$system_property(LM_USER_PW)$$$"/>
       

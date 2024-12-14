@@ -14,8 +14,8 @@ import org.eclipse.net4j.internal.util.bundle.OM;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
-import org.eclipse.net4j.util.lifecycle.ILifecycle;
-import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
+import org.eclipse.net4j.util.lifecycle.LifecycleMapping;
+import org.eclipse.net4j.util.security.IUserInfo;
 
 import java.io.File;
 import java.io.Serializable;
@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.WeakHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -60,7 +59,7 @@ public interface ChatMessage extends Comparable<ChatMessage>
   /**
    * @author Eike Stepper
    */
-  public static final class Author implements Serializable, Comparable<Author>
+  public static final class Author implements IUserInfo, Serializable, Comparable<Author>
   {
     private static final long serialVersionUID = 1L;
 
@@ -77,46 +76,53 @@ public interface ChatMessage extends Comparable<ChatMessage>
     // https://www.gravatar.com/avatar/
     private final URI avatar;
 
-    private Author(String userID, String firstName, String lastName, URI avatar)
+    private Author(String userID, String firstName, String lastName, String fullName, String initials, URI avatar)
     {
       this.userID = userID;
       this.firstName = firstName;
       this.lastName = lastName;
-      fullName = (firstName == null ? "" : firstName + " ") + lastName;
-      initials = ((firstName == null ? "" : firstName.substring(0, 1)) + lastName.substring(0, 1)).toUpperCase();
+      this.fullName = fullName == null ? (firstName == null ? "" : firstName + " ") + lastName : fullName;
+      this.initials = initials == null ? ((firstName == null ? "" : firstName.substring(0, 1)) + lastName.substring(0, 1)).toUpperCase() : initials;
       this.avatar = avatar;
     }
 
+    @Override
     public String getUserID()
     {
       return userID;
     }
 
+    @Override
     public String getFirstName()
     {
       return firstName;
     }
 
+    @Override
     public String getLastName()
     {
       return lastName;
     }
 
+    @Override
     public String getShortName()
     {
       return firstName == null ? lastName : firstName;
     }
 
+    @Override
     public String getFullName()
     {
       return fullName;
     }
 
+    @Override
     public String getInitials()
     {
       return initials;
     }
 
+    @Override
     public URI getAvatar()
     {
       return avatar;
@@ -180,6 +186,10 @@ public interface ChatMessage extends Comparable<ChatMessage>
 
       private String lastName;
 
+      private String fullName;
+
+      private String initials;
+
       // https://www.gravatar.com/avatar/
       private URI avatar;
 
@@ -201,6 +211,24 @@ public interface ChatMessage extends Comparable<ChatMessage>
         return this;
       }
 
+      /**
+       * @since 3.20
+       */
+      public Builder fullName(String fullName)
+      {
+        this.fullName = fullName;
+        return this;
+      }
+
+      /**
+       * @since 3.20
+       */
+      public Builder initials(String initials)
+      {
+        this.initials = initials;
+        return this;
+      }
+
       public Builder avatar(URI avatar)
       {
         this.avatar = avatar;
@@ -214,7 +242,11 @@ public interface ChatMessage extends Comparable<ChatMessage>
 
       public Builder gravatar(String email)
       {
-        CheckUtil.checkArg(!StringUtil.isEmpty(email), "email");
+        if (StringUtil.isEmpty(email))
+        {
+          return null;
+        }
+
         return avatar(URI.create("https://www.gravatar.com/avatar/" + sha256(email.toLowerCase())));
       }
 
@@ -229,10 +261,22 @@ public interface ChatMessage extends Comparable<ChatMessage>
         String lastName = this.lastName;
         if (StringUtil.isEmpty(lastName))
         {
-          lastName = userID;
+          lastName = StringUtil.cap(userID);
         }
 
-        return new Author(userID, firstName, lastName, avatar);
+        String fullName = this.fullName;
+        if (StringUtil.isEmpty(fullName))
+        {
+          fullName = null;
+        }
+
+        String initials = this.initials;
+        if (StringUtil.isEmpty(initials))
+        {
+          initials = null;
+        }
+
+        return new Author(userID, firstName, lastName, fullName, initials, avatar);
       }
 
       private static String sha256(String string)
@@ -271,7 +315,7 @@ public interface ChatMessage extends Comparable<ChatMessage>
      */
     public static final class Cache
     {
-      private static final Map<Object, Cache> CACHES = new WeakHashMap<>();
+      private static final LifecycleMapping<Object, Cache> CACHES = new LifecycleMapping<>();
 
       private final Map<String, Author> authors = new ConcurrentHashMap<>();
 
@@ -342,29 +386,7 @@ public interface ChatMessage extends Comparable<ChatMessage>
 
       public static Cache of(Object object, Supplier<Function<Iterable<String>, Map<String, Author>>> authorsLoaderSupplier)
       {
-        synchronized (CACHES)
-        {
-          return CACHES.computeIfAbsent(object, k -> {
-            Cache cache = new Cache(authorsLoaderSupplier.get());
-
-            if (object instanceof ILifecycle)
-            {
-              ((ILifecycle)object).addListener(new LifecycleEventAdapter()
-              {
-                @Override
-                protected void onDeactivated(ILifecycle lifecycle)
-                {
-                  synchronized (CACHES)
-                  {
-                    CACHES.remove(lifecycle);
-                  }
-                }
-              });
-            }
-
-            return cache;
-          });
-        }
+        return CACHES.getOrAddMapping(object, () -> new Cache(authorsLoaderSupplier.get()));
       }
     }
   }

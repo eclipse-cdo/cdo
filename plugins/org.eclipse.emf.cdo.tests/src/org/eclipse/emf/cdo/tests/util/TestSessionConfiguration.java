@@ -76,6 +76,24 @@ public abstract class TestSessionConfiguration extends Notifier implements CDOSe
   }
 
   @Override
+  public byte[] getOneTimeLoginToken()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public void setOneTimeLoginToken(byte[] oneTimeLoginToken)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public CDOSession openSession()
+  {
+    return null;
+  }
+
+  @Override
   public boolean isPassiveUpdateEnabled()
   {
     throw new UnsupportedOperationException();

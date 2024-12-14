@@ -336,6 +336,11 @@ public interface InternalRepository extends IRepository, //
   public void setOptimisticLockingTimeout(long optimisticLockingTimeout);
 
   /**
+   * @since 4.23
+   */
+  public void addEntity(Entity entity);
+
+  /**
    * @noimplement This interface is not intended to be implemented by clients.
    * @noextend This interface is not intended to be extended by clients.
    * @author Eike Stepper

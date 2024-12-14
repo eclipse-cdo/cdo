@@ -10,12 +10,15 @@
  */
 package org.eclipse.emf.cdo.internal.server;
 
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserAuthenticator;
 import org.eclipse.emf.cdo.server.IRepositoryProtector.UserInfo;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
@@ -31,18 +34,26 @@ import java.nio.file.Path;
 import java.nio.file.attribute.FileTime;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
-import java.util.StringTokenizer;
 import java.util.function.Function;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Eike Stepper
  */
-public class FileUserAuthenticator extends UserAuthenticator implements IUserManagement
+public class FileUserAuthenticator extends UserAuthenticator implements IUserManagement, Entity.Store.Provider
 {
+  private static final Map<String, String> NO_ATTRIBUTES = Collections.emptyMap();
+
+  private static final Pattern ATTRIBUTE_PATTERN = Pattern.compile("([a-zA-Z][a-zA-Z0-9_\\-.]*) *= *(.*)");
+
   private Path path;
 
   private boolean portable;
@@ -52,6 +63,8 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
   private FileTime fileModifiedTime;
 
   private final Map<String, FileUserInfo> userInfos = new HashMap<>();
+
+  private final FileEntityStore entityStore = new FileEntityStore();
 
   public FileUserAuthenticator()
   {
@@ -165,7 +178,7 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
   public void setPassword(String userID, char[] newPassword)
   {
     checkActive();
-    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, convertPassword(newPassword), oldUserInfo.administrator()));
+    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, convertPassword(newPassword), oldUserInfo.administrator(), oldUserInfo.attributes()));
   }
 
   @Override
@@ -193,7 +206,44 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
   public void setAdministrator(String userID, boolean administrator)
   {
     checkActive();
-    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, oldUserInfo.convertedPassword, administrator));
+    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, oldUserInfo.convertedPassword, administrator, oldUserInfo.attributes()));
+  }
+
+  public Map<String, String> getAttributes(String userID)
+  {
+    checkActive();
+
+    synchronized (userInfos)
+    {
+      try
+      {
+        reconcileFile();
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+
+      FileUserInfo userInfo = userInfos.get(userID);
+      if (userInfo != null)
+      {
+        return userInfo.attributes();
+      }
+
+      return NO_ATTRIBUTES;
+    }
+  }
+
+  public void setAttributes(String userID, Map<String, String> attributes)
+  {
+    checkActive();
+    modifyUser(userID, oldUserInfo -> new FileUserInfo(userID, oldUserInfo.convertedPassword, oldUserInfo.administrator(), attributes));
+  }
+
+  @Override
+  public Entity.Store getEntityStore()
+  {
+    return entityStore;
   }
 
   @Override
@@ -294,7 +344,7 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
     {
       for (FileUserInfo userInfo : list)
       {
-        String line = convertLine(userInfo);
+        String line = toLine(userInfo);
         writer.write(line);
         writer.write(StringUtil.NL);
       }
@@ -343,78 +393,6 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
     }
   }
 
-  private FileUserInfo parseLine(String line)
-  {
-    StringTokenizer tokenizer = new StringTokenizer(line, ":");
-    if (tokenizer.hasMoreTokens())
-    {
-      String userID = StringUtil.unescape(tokenizer.nextToken(), ':');
-
-      if (tokenizer.hasMoreTokens())
-      {
-        String convertedPassword = StringUtil.unescape(tokenizer.nextToken(), ':');
-
-        boolean administrator = false;
-        if (tokenizer.hasMoreTokens())
-        {
-          administrator = Boolean.parseBoolean(tokenizer.nextToken());
-        }
-
-        return new FileUserInfo(userID, convertedPassword, administrator);
-      }
-    }
-
-    return null;
-  }
-
-  private String convertLine(FileUserInfo userInfo)
-  {
-    String line = StringUtil.escape(userInfo.userID(), ':') + ':' + StringUtil.escape(userInfo.convertedPassword, ':');
-    if (userInfo.administrator())
-    {
-      line += ":true";
-    }
-
-    return line;
-  }
-
-  private String convertPassword(char[] password)
-  {
-    return convertPassword(password, passwordCrypter);
-  }
-
-  private String convertPassword(char[] password, ICrypter crypter)
-  {
-    String convertedPassword = SecurityUtil.toString(password);
-
-    if (crypter != null)
-    {
-      byte[] data = convertedPassword.getBytes(StandardCharsets.UTF_8);
-      byte[] crypted = crypter.apply(data);
-      convertedPassword = Base64.getEncoder().encodeToString(crypted);
-
-      if (portable)
-      {
-        convertedPassword = makePortable(convertedPassword, crypter);
-      }
-    }
-
-    return convertedPassword;
-  }
-
-  private String makePortable(String convertedPassword, ICrypter crypter)
-  {
-    String prefix = "$" + StringUtil.escape(crypter.getType(), '$') + "$";
-
-    String params = crypter.getParams();
-    if (params != null)
-    {
-      prefix += StringUtil.escape(params, '$') + "$";
-    }
-
-    return prefix + convertedPassword;
-  }
-
   private void modifyUser(String userID, Function<FileUserInfo, FileUserInfo> modifier)
   {
     synchronized (userInfos)
@@ -445,6 +423,127 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
     }
   }
 
+  private String convertPassword(char[] password)
+  {
+    return convertPassword(password, passwordCrypter);
+  }
+
+  private String convertPassword(char[] password, ICrypter crypter)
+  {
+    String convertedPassword = SecurityUtil.toString(password);
+
+    if (crypter != null)
+    {
+      byte[] data = convertedPassword.getBytes(StandardCharsets.UTF_8);
+      byte[] crypted = crypter.apply(data);
+      convertedPassword = Base64.getEncoder().encodeToString(crypted);
+
+      if (portable)
+      {
+        convertedPassword = makePortable(convertedPassword, crypter);
+      }
+    }
+
+    return convertedPassword;
+  }
+
+  private static String toLine(FileUserInfo userInfo)
+  {
+    StringBuilder builder = new StringBuilder();
+    builder.append(StringUtil.escape(userInfo.userID(), ':'));
+    builder.append(':');
+    builder.append(StringUtil.escape(userInfo.convertedPassword, ':'));
+
+    boolean administrator = userInfo.administrator();
+    Map<String, String> attributes = userInfo.attributes();
+
+    if (administrator || !attributes.isEmpty())
+    {
+      builder.append(':');
+
+      if (administrator)
+      {
+        builder.append("true");
+      }
+
+      for (Entry<String, String> entry : attributes.entrySet())
+      {
+        builder.append(':');
+        builder.append(StringUtil.escape(entry.getKey()));
+        builder.append('=');
+        builder.append(StringUtil.escape(entry.getValue()));
+      }
+    }
+
+    return builder.toString();
+  }
+
+  private static FileUserInfo parseLine(String line)
+  {
+    line = line.trim();
+
+    if (!StringUtil.isEmpty(line) && !line.startsWith("#"))
+    {
+      String[] tokens = line.split(":");
+      int length = tokens.length;
+      if (length > 0)
+      {
+        String userID = unescape(tokens[0]);
+        String convertedPassword = length > 1 ? unescape(tokens[1]) : null;
+        boolean administrator = length > 2 ? StringUtil.isTrue(unescape(tokens[2])) : false;
+        Map<String, String> attributes = new HashMap<>();
+
+        for (int i = 3; i < length; i++)
+        {
+          String attribute = unescape(tokens[i]);
+          parseAttribute(attribute, attributes);
+        }
+
+        return new FileUserInfo(userID, convertedPassword, administrator, attributes);
+      }
+    }
+
+    return null;
+  }
+
+  private static String unescape(String token)
+  {
+    return StringUtil.unescape(token, ':').trim();
+  }
+
+  private static void parseAttribute(String attribute, Map<String, String> attributes)
+  {
+    Matcher matcher = ATTRIBUTE_PATTERN.matcher(attribute);
+    if (matcher.matches())
+    {
+      String name = matcher.group(1);
+      String value = matcher.group(2);
+      attributes.put(name, value);
+    }
+  }
+
+  private static String makePortable(String convertedPassword, ICrypter crypter)
+  {
+    String prefix = "$" + StringUtil.escape(crypter.getType(), '$') + "$";
+
+    String params = crypter.getParams();
+    if (params != null)
+    {
+      prefix += StringUtil.escape(params, '$') + "$";
+    }
+
+    return prefix + convertedPassword;
+  }
+
+  public static void checkValidAttribute(String name, String value)
+  {
+    String attribute = name + "=" + value;
+    if (!ATTRIBUTE_PATTERN.matcher(attribute).matches())
+    {
+      throw new IllegalArgumentException("Illegal attribute: " + attribute);
+    }
+  }
+
   /**
    * @author Eike Stepper
    */
@@ -454,11 +553,24 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
 
     private final boolean administrator;
 
+    private final Map<String, String> attributes;
+
     public FileUserInfo(String userID, String convertedPassword, boolean administrator)
+    {
+      this(userID, convertedPassword, administrator, null);
+    }
+
+    public FileUserInfo(String userID, String convertedPassword, boolean administrator, Map<String, String> attributes)
     {
       super(userID);
       this.convertedPassword = convertedPassword;
       this.administrator = administrator;
+      this.attributes = ObjectUtil.isEmpty(attributes) ? NO_ATTRIBUTES : Collections.unmodifiableMap(new HashMap<>(attributes));
+
+      for (Map.Entry<String, String> entry : this.attributes.entrySet())
+      {
+        checkValidAttribute(entry.getKey(), entry.getValue());
+      }
     }
 
     public final boolean administrator()
@@ -466,11 +578,57 @@ public class FileUserAuthenticator extends UserAuthenticator implements IUserMan
       return administrator;
     }
 
+    public final Map<String, String> attributes()
+    {
+      return attributes;
+    }
+
     @Override
     protected boolean isStructurallyEqual(UserInfo userInfo)
     {
       FileUserInfo other = (FileUserInfo)userInfo;
-      return administrator == other.administrator;
+      return administrator == other.administrator && attributes.equals(other.attributes);
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class FileEntityStore extends Entity.SingleNamespaceComputer
+  {
+    public FileEntityStore()
+    {
+      super(CDOProtocolConstants.USER_INFO_NAMESPACE);
+    }
+
+    @Override
+    protected Collection<String> computeNames()
+    {
+      return Collections.emptySet();
+    }
+
+    @Override
+    protected Entity computeEntity(String name)
+    {
+      FileUserInfo userInfo = userInfos.get(name);
+      if (userInfo != null)
+      {
+        Map<String, String> attributes = userInfo.attributes();
+        Entity.Builder builder = entityBuilder(name);
+
+        for (String propertyName : CDOProtocolConstants.USER_INFO_PROPERTIES)
+        {
+          String attribute = attributes.get(propertyName);
+          if (attribute != null)
+          {
+            builder.property(propertyName, attribute);
+          }
+        }
+
+        return builder.build();
+      }
+
+      return null;
     }
   }
 }

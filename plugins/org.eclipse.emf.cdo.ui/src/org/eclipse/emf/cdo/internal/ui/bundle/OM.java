@@ -81,6 +81,12 @@ public abstract class OM
   public static final OMPreference<String> PREF_USER_DISPLAY_NAME = //
       PREFS.init("PREF_USER_DISPLAY_NAME", System.getProperty("user.name")); //$NON-NLS-1$
 
+  public static final OMPreference<String> PREF_USER_AVATAR = //
+      PREFS.init("PREF_USER_AVATAR", ""); //$NON-NLS-1$
+
+  public static final OMPreference<Boolean> PREF_COLLABORATION_SHOW_UNSUBSCRIBED = //
+      PREFS.init("PREF_COLLABORATION_SHOW_UNSUBSCRIBED", false); //$NON-NLS-1$
+
   /**
    * @deprecated As of 4.13 use {@link Support#UI_HISTORY Support.UI_HISTORY.isAvailable()}.
    */

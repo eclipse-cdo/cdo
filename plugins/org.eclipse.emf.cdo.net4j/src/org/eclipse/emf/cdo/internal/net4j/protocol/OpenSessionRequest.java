@@ -36,6 +36,8 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private final String userID;
 
+  private final byte[] oneTimeLoginToken;
+
   private final boolean loginPeek;
 
   private final boolean passiveUpdateEnabled;
@@ -48,13 +50,15 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
 
   private final AuthorizableOperation[] operations;
 
-  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, boolean loginPeek, boolean passiveUpdateEnabled,
-      PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed, AuthorizableOperation[] operations)
+  public OpenSessionRequest(CDOClientProtocol protocol, String repositoryName, int sessionID, String userID, byte[] oneTimeLoginToken, boolean loginPeek,
+      boolean passiveUpdateEnabled, PassiveUpdateMode passiveUpdateMode, LockNotificationMode lockNotificationMode, boolean subscribed,
+      AuthorizableOperation[] operations)
   {
     super(protocol, CDOProtocolConstants.SIGNAL_OPEN_SESSION);
     this.repositoryName = repositoryName;
     this.sessionID = sessionID;
     this.userID = userID;
+    this.oneTimeLoginToken = oneTimeLoginToken;
     this.loginPeek = loginPeek;
     this.passiveUpdateEnabled = passiveUpdateEnabled;
     this.passiveUpdateMode = passiveUpdateMode;
@@ -69,6 +73,7 @@ public class OpenSessionRequest extends CDOClientRequestWithMonitoring<OpenSessi
     out.writeString(repositoryName);
     out.writeXInt(sessionID);
     out.writeString(userID);
+    out.writeByteArray(oneTimeLoginToken);
     out.writeBoolean(loginPeek);
     out.writeBoolean(passiveUpdateEnabled);
     out.writeEnum(passiveUpdateMode);

@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.om.OMPlatform;
+import org.eclipse.net4j.util.security.IUserInfo;
 
 import org.eclipse.jface.preference.IPreferenceStore;
 
@@ -32,6 +33,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,7 +47,7 @@ import java.util.StringTokenizer;
  * @author Eike Stepper
  * @since 4.13
  */
-public final class UserInfo
+public final class UserInfo implements IUserInfo
 {
   private static final String UNKNOWN = "Unknown";
 
@@ -55,29 +57,62 @@ public final class UserInfo
 
   private String displayName;
 
+  private URI avatar;
+
   UserInfo()
   {
-    this(null, null, null);
+    this(null, null, null, null);
   }
 
   public UserInfo(String firstName, String lastName, String displayName)
   {
-    change(firstName, lastName, displayName);
+    this(firstName, lastName, displayName, null);
   }
 
+  /**
+   * @since 4.18
+   */
+  public UserInfo(String firstName, String lastName, String displayName, URI avatar)
+  {
+    change(firstName, lastName, displayName, avatar);
+  }
+
+  @Override
+  public String getUserID()
+  {
+    return null;
+  }
+
+  @Override
   public String getFirstName()
   {
     return firstName;
   }
 
+  @Override
   public String getLastName()
   {
     return lastName;
   }
 
+  @Override
+  public String getFullName()
+  {
+    return StringUtil.isEmpty(displayName) ? IUserInfo.super.getFullName() : displayName;
+  }
+
   public String getDisplayName()
   {
     return displayName;
+  }
+
+  /**
+   * @since 4.18
+   */
+  @Override
+  public URI getAvatar()
+  {
+    return avatar;
   }
 
   @Override
@@ -86,21 +121,28 @@ public final class UserInfo
     return "UserInfo[" + displayName + "]";
   }
 
-  void change(String firstName, String lastName, String displayName)
+  void change(String firstName, String lastName, String displayName, URI avatar)
   {
     this.firstName = StringUtil.isEmpty(firstName) ? UNKNOWN : firstName;
     this.lastName = StringUtil.isEmpty(lastName) ? UNKNOWN : lastName;
     this.displayName = StringUtil.isEmpty(displayName) ? UNKNOWN : displayName;
+    this.avatar = avatar;
   }
 
   void change(UserInfo userInfo)
   {
-    change(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getDisplayName());
+    change(userInfo.getFirstName(), userInfo.getLastName(), userInfo.getDisplayName(), userInfo.getAvatar());
   }
 
   byte[] serialize()
   {
     String string = firstName + StringUtil.NL + lastName + StringUtil.NL + displayName;
+
+    if (avatar != null)
+    {
+      string += StringUtil.NL + avatar;
+    }
+
     return string.getBytes(StandardCharsets.UTF_8);
   }
 
@@ -108,7 +150,32 @@ public final class UserInfo
   {
     String string = new String(data, StandardCharsets.UTF_8);
     StringTokenizer tokenizer = new StringTokenizer(string, StringUtil.NL);
-    change(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken());
+    change(tokenizer.nextToken(), tokenizer.nextToken(), tokenizer.nextToken(), uri(tokenizer));
+  }
+
+  private static URI uri(StringTokenizer tokenizer)
+  {
+    if (tokenizer.hasMoreTokens())
+    {
+      String string = tokenizer.nextToken();
+      return uri(string);
+    }
+
+    return null;
+  }
+
+  private static URI uri(String string)
+  {
+    return StringUtil.isEmpty(string) ? null : URI.create(string);
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 4.18
+   */
+  public interface Provider
+  {
+    public UserInfo getRemoteUser(CDORemoteSession remoteSession);
   }
 
   /**
@@ -118,7 +185,7 @@ public final class UserInfo
    *
    * @author Eike Stepper
    */
-  public static final class Manager extends Lifecycle
+  public static final class Manager extends Lifecycle implements Provider
   {
     private static UserInfo.Manager instance;
 
@@ -143,6 +210,14 @@ public final class UserInfo
 
     public void changeLocalUser(String firstName, String lastName, String displayName)
     {
+      changeLocalUser(firstName, lastName, displayName, null);
+    }
+
+    /**
+     * @since 4.18
+     */
+    public void changeLocalUser(String firstName, String lastName, String displayName, URI avatar)
+    {
       UserInfo userInfo;
       CDORemoteSession[] remoteSessions;
 
@@ -150,7 +225,7 @@ public final class UserInfo
       {
         if (localUser != null)
         {
-          localUser.change(firstName, lastName, displayName);
+          localUser.change(firstName, lastName, displayName, avatar);
         }
 
         userInfo = localUser;
@@ -184,6 +259,7 @@ public final class UserInfo
       }
     }
 
+    @Override
     public synchronized UserInfo getRemoteUser(CDORemoteSession remoteSession)
     {
       return remoteUsers.computeIfAbsent(remoteSession, k -> {
@@ -430,7 +506,8 @@ public final class UserInfo
         String firstName = OM.PREF_USER_FIRST_NAME.getValue();
         String lastName = OM.PREF_USER_LAST_NAME.getValue();
         String displayName = OM.PREF_USER_DISPLAY_NAME.getValue();
-        return new UserInfo(firstName, lastName, displayName);
+        URI avatar = uri(OM.PREF_USER_AVATAR.getValue());
+        return new UserInfo(firstName, lastName, displayName, avatar);
       }
 
       @Override
@@ -439,6 +516,7 @@ public final class UserInfo
         OM.PREF_USER_FIRST_NAME.setValue(userInfo.getFirstName());
         OM.PREF_USER_LAST_NAME.setValue(userInfo.getLastName());
         OM.PREF_USER_DISPLAY_NAME.setValue(userInfo.getDisplayName());
+        OM.PREF_USER_AVATAR.setValue(userInfo.getDisplayName());
       }
 
       /**
@@ -477,6 +555,8 @@ public final class UserInfo
 
       private static final String PROP_DISPLAY_NAME = "displayName";
 
+      private static final String PROP_AVATAR = "avatar";
+
       private static final File FILE = new File(OM.BUNDLE.getUserLocation(), "user.properties");
 
       public HomeUserInfoStorage()
@@ -501,8 +581,9 @@ public final class UserInfo
             String firstName = properties.getProperty(PROP_FIRST_NAME);
             String lastName = properties.getProperty(PROP_LAST_NAME);
             String displayName = properties.getProperty(PROP_DISPLAY_NAME);
+            String avatar = properties.getProperty(PROP_AVATAR);
 
-            return new UserInfo(firstName, lastName, displayName);
+            return new UserInfo(firstName, lastName, displayName, uri(avatar));
           }
           catch (Exception ex)
           {
@@ -530,6 +611,13 @@ public final class UserInfo
           properties.setProperty(PROP_FIRST_NAME, userInfo.getFirstName());
           properties.setProperty(PROP_LAST_NAME, userInfo.getLastName());
           properties.setProperty(PROP_DISPLAY_NAME, userInfo.getDisplayName());
+
+          URI avatar = userInfo.getAvatar();
+          if (avatar != null)
+          {
+            properties.setProperty(PROP_AVATAR, avatar.toString());
+          }
+
           properties.store(out, "Local user information");
         }
         catch (IOException ex)

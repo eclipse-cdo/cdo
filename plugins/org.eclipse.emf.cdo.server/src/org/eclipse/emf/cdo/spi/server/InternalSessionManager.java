@@ -141,6 +141,17 @@ public interface InternalSessionManager extends ISessionManager, IExecutorServic
    */
   public InternalSession openSession(ISessionProtocol protocol, int sessionID, Consumer<InternalSession> sessionInitializer);
 
+  /**
+   * @return Never <code>null</code>
+   * @since 4.23
+   */
+  public InternalSession openSession(ISessionProtocol protocol, int sessionID, Consumer<InternalSession> sessionInitializer, byte[] oneTimeLoginToken);
+
+  /**
+   * @since 4.23
+   */
+  public byte[] generateOneTimeLoginToken();
+
   public void sessionClosed(InternalSession session);
 
   /**

@@ -88,7 +88,7 @@ public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedCont
 
     public UserInfo(String userID)
     {
-      this.userID = userID;
+      this.userID = Objects.requireNonNull(userID);
     }
 
     public final String userID()
@@ -350,6 +350,10 @@ public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedCont
       return test(currentPermission, newPermission) ? newPermission : currentPermission;
     }
 
+    /**
+     * Returns <code>true</code> if the <code>newPermission</code> is supposed to replace the
+     * <code>currentPermission</code>, <code>false</code> otherwise.
+     */
     @Override
     public abstract boolean test(CDOPermission currentPermission, CDOPermission newPermission);
 
@@ -358,6 +362,58 @@ public interface IRepositoryProtector extends IContainer<UserInfo>, IManagedCont
     {
       checkState(initialPermission, "initialPermission"); //$NON-NLS-1$
       checkState(terminalPermission, "terminalPermission"); //$NON-NLS-1$
+    }
+
+    /**
+     * @author Eike Stepper
+     * @since 4.23
+     */
+    public static class Constant extends AuthorizationStrategy
+    {
+      public Constant(CDOPermission permission)
+      {
+        setInitialPermission(permission);
+        setTerminalPermission(permission);
+      }
+
+      @Override
+      public boolean test(CDOPermission currentPermission, CDOPermission newPermission)
+      {
+        return false;
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static class None extends Constant
+      {
+        public None()
+        {
+          super(CDOPermission.NONE);
+        }
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static class Read extends Constant
+      {
+        public Read()
+        {
+          super(CDOPermission.READ);
+        }
+      }
+
+      /**
+       * @author Eike Stepper
+       */
+      public static class Write extends Constant
+      {
+        public Write()
+        {
+          super(CDOPermission.WRITE);
+        }
+      }
     }
 
     /**

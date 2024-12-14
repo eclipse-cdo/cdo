@@ -23,4 +23,13 @@ public interface IUserManagement extends AdministrationPredicate
   public void setPassword(String userID, char[] newPassword);
 
   public void setAdministrator(String userID, boolean administrator);
+
+  /**
+   * @author Eike Stepper
+   * @since 3.27
+   */
+  public interface Attributed extends IUserManagement
+  {
+    public void setAttribute(String userID, String attribute, String value);
+  }
 }

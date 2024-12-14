@@ -150,6 +150,16 @@ public interface CDOSessionConfiguration extends INotifier
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   /**
+   * @since 4.27
+   */
+  public byte[] getOneTimeLoginToken();
+
+  /**
+   * @since 4.27
+   */
+  public void setOneTimeLoginToken(byte[] oneTimeLoginToken);
+
+  /**
    * Returns <code>true</code> if the session opened by {@link #openSession()} will be automatically activated,
    * <code>false</code> otherwise.
    */

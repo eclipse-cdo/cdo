@@ -110,6 +110,7 @@ import org.eclipse.emf.cdo.spi.server.InternalStore;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
+import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator.TreeExtension;
 
 import org.eclipse.emf.internal.cdo.object.CDOFactoryImpl;
 
@@ -120,9 +121,11 @@ import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Entity.ComposedStore;
+import org.eclipse.net4j.util.collection.Entity.SingleNamespaceStore;
 import org.eclipse.net4j.util.collection.Entity.Store;
 import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
@@ -171,6 +174,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 /**
@@ -194,6 +198,9 @@ public class Repository extends Container<Object> implements InternalRepository
   private static final String ENTITY_NAMESPACE = "cdo/repo";
 
   private static final String ENTITY_NAME_PROPERTIES = "properties";
+
+  private static final Pattern CLIENT_ENTITY_PATTERN = Pattern
+      .compile(OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.internal.server.Repository.CLIENT_ENTITY_PATTERN", "cdo/client"));
 
   private static final boolean DISABLE_LOGIN_PEEKS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.internal.server.Repository.DISABLE_LOGIN_PEEKS");
 
@@ -272,7 +279,11 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private IRepositoryProtector protector;
 
-  private List<OperationAuthorizer<ISession>> operationAuthorizers = new ArrayList<>();
+  private final List<OperationAuthorizer<ISession>> operationAuthorizers = new ArrayList<>();
+
+  private final Map<String, Entity> entities = new HashMap<>();
+
+  private final Map<String, Entity> clientEntities = new HashMap<>();
 
   private IManagedContainer container;
 
@@ -1242,6 +1253,30 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return accessor;
+  }
+
+  @Override
+  public void addEntity(Entity entity)
+  {
+    checkInactive();
+    entities.put(entity.id(), entity);
+
+    if (CLIENT_ENTITY_PATTERN.matcher(entity.namespace()).matches())
+    {
+      clientEntities.put(entity.id(), entity);
+    }
+  }
+
+  @Override
+  public Map<String, Entity> getEntities()
+  {
+    return Collections.unmodifiableMap(entities);
+  }
+
+  @Override
+  public Map<String, Entity> getClientEntities()
+  {
+    return Collections.unmodifiableMap(clientEntities);
   }
 
   @Override
@@ -3056,6 +3091,24 @@ public class Repository extends Container<Object> implements InternalRepository
 
   /**
    * @author Eike Stepper
+   */
+  public static final class EntityExtension extends TreeExtension
+  {
+    public EntityExtension()
+    {
+    }
+
+    @Override
+    protected String configureRepository(InternalRepository repository, Tree config, Map<String, String> parameters, IManagedContainer container)
+    {
+      Entity entity = Entity.builder(config).build();
+      repository.addEntity(entity);
+      return null;
+    }
+  }
+
+  /**
+   * @author Eike Stepper
    * @since 2.0
    */
   public static class Default extends Repository
@@ -3128,6 +3181,21 @@ public class Repository extends Container<Object> implements InternalRepository
     protected Entity.Store createEntityStore()
     {
       ComposedStore composedStore = new Entity.ComposedStore();
+
+      Map<String, SingleNamespaceStore> stores = new HashMap<>();
+      for (Entity entity : getEntities().values())
+      {
+        String namespace = entity.namespace();
+
+        SingleNamespaceStore store = stores.computeIfAbsent(namespace, k -> {
+          SingleNamespaceStore s = new SingleNamespaceStore(namespace);
+          composedStore.addStore(s);
+          return s;
+        });
+
+        store.addEntity(entity);
+      }
+
       composedStore.addStore(new Entity.SingleNamespaceComputer(ENTITY_NAMESPACE)
       {
         @Override

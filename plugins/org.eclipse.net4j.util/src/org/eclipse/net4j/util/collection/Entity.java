@@ -91,6 +91,69 @@ public final class Entity implements Comparable<Entity>
     return properties.get(requireValidName(name));
   }
 
+  /**
+   * @since 3.27
+   */
+  public String property(String name, String defaultValue)
+  {
+    String value = property(name);
+    return value != null ? value : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public boolean property(String name, boolean defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Boolean.parseBoolean(value) : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public byte property(String name, byte defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Byte.parseByte(value) : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public int property(String name, int defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Integer.parseInt(value) : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public long property(String name, long defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Long.parseLong(value) : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public float property(String name, float defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Float.parseFloat(value) : defaultValue;
+  }
+
+  /**
+   * @since 3.27
+   */
+  public double property(String name, double defaultValue)
+  {
+    String value = property(name);
+    return value != null ? Double.parseDouble(value) : defaultValue;
+  }
+
   public Entity filter(String... propertyNames)
   {
     return filter(Arrays.asList(propertyNames));
@@ -248,6 +311,43 @@ public final class Entity implements Comparable<Entity>
   public static Builder builder(String namespace, String name)
   {
     return builder(namespace).name(name);
+  }
+
+  /**
+   * @since 3.27
+   */
+  public static Builder builder(Tree tree)
+  {
+    Builder builder = builder();
+
+    String namespace = tree.attribute("namespace");
+    if (!StringUtil.isEmpty(namespace))
+    {
+      builder.namespace(namespace);
+    }
+
+    String name = tree.attribute("name");
+    if (!StringUtil.isEmpty(name))
+    {
+      builder.name(name);
+    }
+
+    String version = tree.attribute("version");
+    if (!StringUtil.isEmpty(version))
+    {
+      builder.version(Integer.parseInt(version));
+    }
+
+    tree.children("property", property -> {
+      String propertyName = property.attribute("name");
+      String propertyValue = property.attribute("value");
+      if (!StringUtil.isEmpty(propertyName) && !StringUtil.isEmpty(propertyValue))
+      {
+        builder.property(propertyName, propertyValue);
+      }
+    });
+
+    return builder;
   }
 
   public static Builder builder(Builder source)
@@ -897,7 +997,28 @@ public final class Entity implements Comparable<Entity>
       requireValidNamespace(namespace);
       requireValidName(name);
 
-      return entities(namespace).filter(entity -> entity.name().equals(name)).findFirst().orElse(null);
+      List<Store> namespaceStores = storesByNamespace.get(namespace);
+      int size = namespaceStores == null ? 0 : namespaceStores.size();
+      if (size == 0)
+      {
+        return null;
+      }
+
+      if (size == 1)
+      {
+        return namespaceStores.get(0).entity(namespace, name);
+      }
+
+      for (Store store : namespaceStores)
+      {
+        Entity entity = store.entity(namespace, name);
+        if (entity != null)
+        {
+          return entity;
+        }
+      }
+
+      return null;
     }
   }
 

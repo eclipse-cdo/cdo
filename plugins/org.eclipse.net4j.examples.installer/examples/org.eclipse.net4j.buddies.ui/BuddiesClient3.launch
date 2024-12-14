@@ -5,7 +5,7 @@
     <booleanAttribute key="automaticAdd" value="false"/>
     <booleanAttribute key="automaticValidate" value="false"/>
     <stringAttribute key="bootstrap" value=""/>
-    <stringAttribute key="checked" value="org.eclipse.net4j,org.eclipse.net4j.buddies,org.eclipse.net4j.buddies.common,org.eclipse.net4j.buddies.ui,org.eclipse.net4j.tcp,org.eclipse.net4j.ui,org.eclipse.net4j.util,org.eclipse.net4j.util.ui"/>
+    <stringAttribute key="checked" value="[NONE]"/>
     <booleanAttribute key="clearConfig" value="true"/>
     <booleanAttribute key="clearws" value="false"/>
     <booleanAttribute key="clearwslog" value="false"/>
@@ -29,7 +29,6 @@
         <setEntry value="com.ibm.icu@default:default"/>
         <setEntry value="com.jcraft.jsch@default:default"/>
         <setEntry value="org.apache.ant@default:default"/>
-        <setEntry value="org.apache.commons.logging@default:default"/>
         <setEntry value="org.eclipse.ant.core@default:default"/>
         <setEntry value="org.eclipse.ant.ui@default:default"/>
         <setEntry value="org.eclipse.compare@default:default"/>
@@ -105,7 +104,6 @@
         <setEntry value="org.eclipse.jsch.core@default:default"/>
         <setEntry value="org.eclipse.ltk.core.refactoring@default:default"/>
         <setEntry value="org.eclipse.ltk.ui.refactoring@default:default"/>
-        <setEntry value="org.eclipse.osgi.services@default:default"/>
         <setEntry value="org.eclipse.osgi.util@default:default"/>
         <setEntry value="org.eclipse.osgi@-1:true"/>
         <setEntry value="org.eclipse.pde.build@default:default"/>
@@ -157,7 +155,7 @@
     </setAttribute>
     <booleanAttribute key="show_selected_only" value="false"/>
     <stringAttribute key="templateConfig" value="${target_home}\configuration\config.ini"/>
-    <booleanAttribute key="tracing" value="true"/>
+    <booleanAttribute key="tracing" value="false"/>
     <mapAttribute key="tracingOptions">
         <mapEntry key="org.aspectj.osgi.service.weaving/debug" value="false"/>
         <mapEntry key="org.eclipse.core.contenttype/debug" value="false"/>

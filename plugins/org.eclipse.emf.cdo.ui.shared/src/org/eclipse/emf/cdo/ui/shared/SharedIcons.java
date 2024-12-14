@@ -219,6 +219,11 @@ public class SharedIcons
    */
   public static final String OVR_SECURITY = OVR + "security" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
 
+  /**
+   * @since 4.10
+   */
+  public static final String OVR_UNREAD = OVR + "unread" + IMAGE_FORMAT_GIF; //$NON-NLS-1$
+
   private static final String VIEW = "view16/"; //$NON-NLS-1$
 
   public static final String VIEW_SESSIONS = VIEW + "cdo_sessions" + IMAGE_FORMAT_GIF; //$NON-NLS-1$

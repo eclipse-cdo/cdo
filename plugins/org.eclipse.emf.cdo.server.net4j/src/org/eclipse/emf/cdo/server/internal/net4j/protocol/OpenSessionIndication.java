@@ -24,12 +24,14 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 import org.eclipse.net4j.util.security.NotAuthenticatedException;
 import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -42,6 +44,8 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
   private int sessionID;
 
   private String userID;
+
+  private byte[] oneTimeLoginToken;
 
   private boolean loginPeek;
 
@@ -94,6 +98,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
     repositoryName = in.readString();
     sessionID = in.readXInt();
     userID = in.readString();
+    oneTimeLoginToken = in.readByteArray();
     loginPeek = in.readBoolean();
     passiveUpdateEnabled = in.readBoolean();
     passiveUpdateMode = in.readEnum(PassiveUpdateMode.class);
@@ -156,7 +161,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
           s.setPassiveUpdateMode(passiveUpdateMode);
           s.setLockNotificationMode(lockNotificationMode);
           s.setSubscribed(subscribed);
-        });
+        }, oneTimeLoginToken);
       }
       catch (NotAuthenticatedException ex)
       {
@@ -222,6 +227,14 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
 
       CDOPackageUnit[] packageUnits = repository.getPackageRegistry(false).getPackageUnits();
       out.writeCDOPackageUnits(packageUnits);
+
+      Map<String, Entity> clientEntities = repository.getClientEntities();
+      out.writeVarInt(clientEntities.size());
+
+      for (Entity entity : clientEntities.values())
+      {
+        entity.write(out);
+      }
     }
     finally
     {

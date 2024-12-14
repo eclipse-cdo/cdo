@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.session.CDOSession.Options;
+import org.eclipse.emf.cdo.session.CDOSessionProvider;
 import org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranchManager;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
@@ -234,6 +235,12 @@ public final class CDOUtil
     if (session != null)
     {
       return session;
+    }
+
+    CDOSessionProvider sessionProvider = AdapterUtil.adapt(object, CDOSessionProvider.class);
+    if (sessionProvider != null)
+    {
+      return sessionProvider.getSession();
     }
 
     CDOView view = AdapterUtil.adapt(object, CDOView.class);

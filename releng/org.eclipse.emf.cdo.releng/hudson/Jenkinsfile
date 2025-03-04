@@ -108,6 +108,7 @@ pipeline {
       steps {
         sshagent(['projects-storage.eclipse.org-bot-ssh']) {
           sh '''
+            export MAVEN_OPTS="-XX:MaxRAMPercentage=30"
             mvn \
               -f git/pom.xml \
               --no-transfer-progress \

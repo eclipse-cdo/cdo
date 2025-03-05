@@ -337,9 +337,15 @@ public class SessionManager extends Container<ISession> implements InternalSessi
     if (oneTimeLoginToken != null)
     {
       Long deadline = oneTimeLoginTokens.remove(new OneTimeLoginToken(oneTimeLoginToken));
-      if (deadline == null || deadline < repository.getTimeStamp())
+      if (deadline == null)
       {
         throw new SecurityException("Access denied");
+      }
+
+      long now = repository.getTimeStamp();
+      if (deadline < now)
+      {
+        throw new SecurityException("Login token expired");
       }
     }
     else

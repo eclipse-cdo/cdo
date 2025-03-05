@@ -754,7 +754,8 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
     if (!credentialsBasedLogin)
     {
-      byte[] oneTimeLoginToken = systemRepository.getSessionManager().generateOneTimeLoginToken();
+      InternalRepository repository = getRepository(repositoryName);
+      byte[] oneTimeLoginToken = repository.getSessionManager().generateOneTimeLoginToken();
       configuration.setOneTimeLoginToken(oneTimeLoginToken);
     }
 
@@ -765,6 +766,16 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     }
 
     return configuration;
+  }
+
+  private InternalRepository getRepository(String repositoryName)
+  {
+    if (systemRepository != null && systemRepository.getName().equals(repositoryName))
+    {
+      return systemRepository;
+    }
+
+    return moduleRepositories.get(repositoryName);
   }
 
   private FloatingBaseline determineBaseline(String moduleName, CDOBranch branch)

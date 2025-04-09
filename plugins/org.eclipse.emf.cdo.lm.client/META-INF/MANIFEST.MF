@@ -3,16 +3,16 @@ Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.emf.cdo.lm.client;singleton:=true
 Automatic-Module-Name: org.eclipse.emf.cdo.lm.client
-Bundle-Version: 1.5.0.qualifier
+Bundle-Version: 1.5.1.qualifier
 Bundle-ClassPath: .
 Bundle-Activator: org.eclipse.emf.cdo.lm.internal.client.bundle.OM$Activator
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: org.eclipse.emf.cdo.lm.client;version="1.5.0",
- org.eclipse.emf.cdo.lm.internal.client;version="1.5.0";x-friends:="org.eclipse.emf.cdo.lm.ui,org.eclipse.emf.cdo.lm.reviews.ui,org.eclipse.emf.cdo.tests.lm",
- org.eclipse.emf.cdo.lm.internal.client.bundle;version="1.5.0";x-internal:=true,
- org.eclipse.emf.cdo.lm.internal.client.properties;version="1.5.0";x-internal:=true
+Export-Package: org.eclipse.emf.cdo.lm.client;version="1.5.1",
+ org.eclipse.emf.cdo.lm.internal.client;version="1.5.1";x-friends:="org.eclipse.emf.cdo.lm.ui,org.eclipse.emf.cdo.lm.reviews.ui,org.eclipse.emf.cdo.tests.lm",
+ org.eclipse.emf.cdo.lm.internal.client.bundle;version="1.5.1";x-internal:=true,
+ org.eclipse.emf.cdo.lm.internal.client.properties;version="1.5.1";x-internal:=true
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.core.expressions;bundle-version="[3.4.0,4.0.0)",
  org.eclipse.equinox.p2.core;bundle-version="[2.3.0,3.0.0)",

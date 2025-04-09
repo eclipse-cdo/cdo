@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason;
+import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.State;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.BaselineCreatedEvent;
 import org.eclipse.emf.cdo.lm.client.ISystemManager.ModuleDeletedEvent;
@@ -142,7 +143,22 @@ public final class AssemblyManager extends LMManager<CDOCheckout, CDOCheckoutMan
     @Override
     protected void execute(IAssemblyDescriptor descriptor, IProgressMonitor monitor) throws Exception
     {
-      ((AssemblyDescriptor)descriptor).checkForUpdates(monitor);
+      ISystemDescriptor systemDescriptor = descriptor.getSystemDescriptor();
+
+      try
+      {
+        if (systemDescriptor.getState() == State.Open)
+        {
+          ((AssemblyDescriptor)descriptor).checkForUpdates(monitor);
+        }
+      }
+      catch (Exception ex)
+      {
+        if (systemDescriptor.getState() == State.Open)
+        {
+          OM.LOG.error(ex);
+        }
+      }
     }
 
     @Override

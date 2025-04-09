@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde version="3.8"?>
-<target name="Generated from CDO" sequenceNumber="123">
+<target name="Generated from CDO" sequenceNumber="124">
   <locations>
     <location includeAllPlatforms="false" includeConfigurePhase="true" includeMode="planner" includeSource="true" type="InstallableUnit">
       <unit id="a.jre.javase" version="0.0.0"/>
@@ -56,6 +56,7 @@
       <unit id="org.eclipse.emf.sdk.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.executable.feature.group" version="0.0.0"/>
       <unit id="org.eclipse.equinox.http.service.api" version="0.0.0"/>
+      <unit id="org.eclipse.equinox.slf4j" version="0.0.0"/>
       <unit id="org.eclipse.equinox.weaving.aspectj" version="0.0.0"/>
       <unit id="org.eclipse.equinox.weaving.hook" version="0.0.0"/>
       <unit id="org.eclipse.gmf.runtime.diagram.ui.actions" version="0.0.0"/>
@@ -111,7 +112,6 @@
       <unit id="org.osgi.service.repository" version="0.0.0"/>
       <unit id="org.postgresql" version="0.0.0"/>
       <unit id="slf4j.api" version="0.0.0"/>
-      <unit id="slf4j.nop" version="0.0.0"/>
       <repository location="https://download.eclipse.org/releases/2025-03"/>
       <repository location="https://download.eclipse.org/eclipse/updates/latest"/>
       <repository location="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/nightly/latest"/>
@@ -121,7 +121,7 @@
       <repository location="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository/tools"/>
       <repository location="https://www.springsite.com/eclipse/2.1.0/update"/>
       <repository location="https://download.eclipse.org/tools/ajdt/48/dev/update"/>
-      <repository location="https://download.eclipse.org/eclipse/updates/4.35-I-builds"/>
+      <repository location="https://download.eclipse.org/eclipse/updates/4.35/R-4.35-202502280140"/>
     </location>
   </locations>
 </target>

@@ -294,6 +294,8 @@ public class UnitMappingTable extends DBStoreTable
   @Override
   protected void reActivate(IDBTable table)
   {
+    elem = table.getField(NAMES.ELEM);
+    unit = table.getField(NAMES.UNIT);
   }
 
   @Override

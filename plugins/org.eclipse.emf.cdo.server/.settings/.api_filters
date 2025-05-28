@@ -7,6 +7,12 @@
                 <message_argument value="4.14.0"/>
             </message_arguments>
         </filter>
+        <filter comment="Forgot to initialize the version baseline at begin of release cycle" id="931135546">
+            <message_arguments>
+                <message_argument value="4.23.1"/>
+                <message_argument value="4.22.0"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="META-INF/MANIFEST.MF" type="org.eclipse.emf.cdo.server.embedded.CDOSession">
         <filter id="305324134">

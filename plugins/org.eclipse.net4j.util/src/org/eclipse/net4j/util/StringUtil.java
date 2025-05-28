@@ -56,6 +56,8 @@ public final class StringUtil
 
   private static final int NO_SEPARATOR = -1;
 
+  private static final Pattern STRING_CONVERTER_PATTERN = Pattern.compile("\\$\\$\\$([^(]+)\\((.*)\\)\\$\\$\\$");
+
   private StringUtil()
   {
   }
@@ -1030,8 +1032,6 @@ public final class StringUtil
       subStrings[subStringsIndex] = string.substring(start, end);
     }
   }
-
-  private static final Pattern STRING_CONVERTER_PATTERN = Pattern.compile("\\$\\$\\$([^(]+)\\((.*)\\)\\$\\$\\$");
 
   /**
    * @since 3.1

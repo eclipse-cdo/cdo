@@ -45,10 +45,10 @@
           <property name="java.naming.security.credentials" value="$USER_PW$"/>
         </environment>
         
-        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameters USER_ID and USER_PW can be used"/>
+        <searchUser start="ou=Users,dc=example,dc=com" filter="(uid=$USER_ID$)" returnAttributes="uid" environment="bind" doc="The string substitution parameter USER_ID can be used"/>
         
         <loginUser environment="user" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used">
-          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn"/>
+          <searchGroups start="ou=Groups,dc=example,dc=com" filter="(memberUid=$USER_ATTR_uid$)" returnAttributes="cn" doc="The string substitution parameters USER_ID, USER_PW, USER_DN, USER_RDN, USER_PDN or USER_ATTR_* can be used"/>
         </loginUser>
       </userAuthenticator> 
     

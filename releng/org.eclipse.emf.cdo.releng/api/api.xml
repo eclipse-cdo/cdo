@@ -35,7 +35,7 @@
             <message_argument value="Attributed"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="Constant" kind="ADDED" message="The member type Constant has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="Constant" kind="ADDED" message="The member type Constant has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy">
         <message_arguments>
             <message_argument value="Constant"/>
         </message_arguments>
@@ -45,18 +45,18 @@
             <message_argument value="Provider"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="TreeExtension" kind="ADDED" message="The member type TreeExtension has been added" newModifiers="1033" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="TreeExtension" kind="ADDED" message="The member type TreeExtension has been added" newModifiers="1033" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.RepositoryConfigurator">
         <message_arguments>
             <message_argument value="TreeExtension"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getClientEntities()Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/net4j/util/collection/Entity;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.IRepository.getClientEntities() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getClientEntities()Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/net4j/util/collection/Entity;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.IRepository.getClientEntities() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.IRepository"/>
             <message_argument value="getClientEntities()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getEntities()Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/net4j/util/collection/Entity;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.IRepository.getEntities() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getEntities()Ljava/util/Map&lt;Ljava/lang/String;Lorg/eclipse/net4j/util/collection/Entity;&gt;;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.IRepository.getEntities() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.IRepository"/>
             <message_argument value="getEntities()"/>
@@ -80,25 +80,25 @@
             <message_argument value="setOneTimeLoginToken(byte[])"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="addEntity(Lorg/eclipse/net4j/util/collection/Entity;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalRepository.addEntity(Entity) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="addEntity(Lorg/eclipse/net4j/util/collection/Entity;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalRepository.addEntity(Entity) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalRepository">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalRepository"/>
             <message_argument value="addEntity(Entity)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="generateOneTimeLoginToken()[B" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.generateOneTimeLoginToken() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="generateOneTimeLoginToken()[B" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.generateOneTimeLoginToken() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSessionManager"/>
             <message_argument value="generateOneTimeLoginToken()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="openSession(Lorg/eclipse/emf/cdo/spi/server/ISessionProtocol;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/spi/server/InternalSession;&gt;;)Lorg/eclipse/emf/cdo/spi/server/InternalSession;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="openSession(Lorg/eclipse/emf/cdo/spi/server/ISessionProtocol;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/spi/server/InternalSession;&gt;;)Lorg/eclipse/emf/cdo/spi/server/InternalSession;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSessionManager"/>
             <message_argument value="openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="openSession(Lorg/eclipse/emf/cdo/spi/server/ISessionProtocol;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/spi/server/InternalSession;&gt;;[B)Lorg/eclipse/emf/cdo/spi/server/InternalSession;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;, byte[]) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="openSession(Lorg/eclipse/emf/cdo/spi/server/ISessionProtocol;ILjava/util/function/Consumer&lt;Lorg/eclipse/emf/cdo/spi/server/InternalSession;&gt;;[B)Lorg/eclipse/emf/cdo/spi/server/InternalSession;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalSessionManager.openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;, byte[]) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalSessionManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.server.InternalSessionManager"/>
             <message_argument value="openSession(ISessionProtocol, int, Consumer&lt;InternalSession&gt;, byte[])"/>
@@ -142,18 +142,18 @@
             <message_argument value="4.25.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm.server (from version 1.5.0 to 1.6.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.lm.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.lm.server (from version 1.5.0 to 1.6.1)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.server"/>
             <message_argument value="1.5.0"/>
-            <message_argument value="1.6.0"/>
+            <message_argument value="1.6.1"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server (from version 4.22.0 to 4.23.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.23.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server (from version 4.22.0 to 4.23.1)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server"/>
             <message_argument value="4.22.0"/>
-            <message_argument value="4.23.0"/>
+            <message_argument value="4.23.1"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.ui(4.18.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.ui" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.ui (from version 4.17.0 to 4.18.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
@@ -184,13 +184,19 @@
             <message_argument value="3.20.0"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isCredentialsBasedLogin()Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.isCredentialsBasedLogin() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getRepository(Ljava/lang/String;)Lorg/eclipse/emf/cdo/spi/server/InternalRepository;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.getRepository(String) has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
+            <message_argument value="getRepository(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isCredentialsBasedLogin()Z" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.isCredentialsBasedLogin() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
             <message_argument value="isCredentialsBasedLogin()"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setCredentialsBasedLogin(Z)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.setCredentialsBasedLogin(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.1)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="setCredentialsBasedLogin(Z)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.setCredentialsBasedLogin(boolean) has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
             <message_argument value="setCredentialsBasedLogin(boolean)"/>
@@ -304,7 +310,7 @@
             <message_argument value="evaluateInt(String)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="credentialsBasedLogin" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.credentialsBasedLogin has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.6.1)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="credentialsBasedLogin" kind="ADDED" message="The non-visible field org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.credentialsBasedLogin has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager"/>
             <message_argument value="credentialsBasedLogin"/>

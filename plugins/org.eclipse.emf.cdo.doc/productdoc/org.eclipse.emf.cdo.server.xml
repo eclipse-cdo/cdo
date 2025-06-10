@@ -12,6 +12,7 @@
 	<productGroup id="org.eclipse.emf.cdo.server.commands" name="CDO Commands" description="" deprecated="false">
 		<factory type="useradd" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdd" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="useradmin" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserAdmin" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="userattr" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserSetAttribute" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="userdel" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserDelete" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="userpw" class="org.eclipse.emf.cdo.internal.server.UserManagementCommand$UserPassword" contributor="org.eclipse.emf.cdo.server"/>
 	</productGroup>
@@ -22,6 +23,7 @@
 		<factory type="rolling" class="org.eclipse.emf.cdo.spi.server.RepositoryActivityLog$Rolling$Factory" contributor="org.eclipse.emf.cdo.server"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.repositoryConfiguratorExtensions" name="CDO Repository Configurator Extensions" description="" deprecated="false">
+		<factory type="entity" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.server.Repository$EntityExtension" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="protector" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.server.DefaultRepositoryProtector$RepositoryConfiguratorExtension" contributor="org.eclipse.emf.cdo.server"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.repositoryConfigurators" name="CDO Repository Configurators" description="" deprecated="false">
@@ -29,7 +31,10 @@
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorAuthorizationStrategies" name="CDO Repository Protector Authorization Strategies" description="" deprecated="false">
 		<factory type="additive" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Additive" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="none" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Constant$None" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="read" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Constant$Read" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="subtractive" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Subtractive" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="write" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.IRepositoryProtector$AuthorizationStrategy$Constant$Write" contributor="org.eclipse.emf.cdo.server"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorCommitHandlers" name="CDO Repository Protector Commit Handlers" description="" deprecated="false"/>
 	<productGroup id="org.eclipse.emf.cdo.server.repositoryProtectorRevisionAuthorizers" name="CDO Repository Protector Revision Authorizers" description="" deprecated="false">

@@ -78,7 +78,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="ChatMessage.Author.html" title="class in org.eclipse.net4j.util.ui.chat">ChatMessage.Author</a>&gt;</code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a></code>, <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="ChatMessage.Author.html" title="class in org.eclipse.net4j.util.ui.chat">ChatMessage.Author</a>&gt;</code>, <code><a href="../../security/IUserAware.html" title="interface in org.eclipse.net4j.util.security">IUserAware</a></code>, <code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Enclosing interface:</dt>
@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static final class </span><span class="element-name type-name-label">ChatMessage.Author</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>
-implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="ChatMessage.Author.html" title="class in org.eclipse.net4j.util.ui.chat">ChatMessage.Author</a>&gt;</span></div>
+implements <a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/Serializable.html" title="class or interface in java.io" class="external-link">Serializable</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Comparable.html" title="class or interface in java.lang" class="external-link">Comparable</a>&lt;<a href="ChatMessage.Author.html" title="class in org.eclipse.net4j.util.ui.chat">ChatMessage.Author</a>&gt;</span></div>
 <dl class="notes">
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
@@ -187,42 +187,70 @@ implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <section class="detail" id="getUserID()">
 <h3>getUserID</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getUserID</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserAware.html#getUserID()">getUserID</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserAware.html" title="interface in org.eclipse.net4j.util.security">IUserAware</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getFirstName()">
 <h3>getFirstName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFirstName</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getFirstName()">getFirstName</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getLastName()">
 <h3>getLastName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getLastName</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getLastName()">getLastName</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getShortName()">
 <h3>getShortName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getShortName</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getShortName()">getShortName</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getFullName()">
 <h3>getFullName</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFullName</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getFullName()">getFullName</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getInitials()">
 <h3>getInitials</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getInitials</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getInitials()">getInitials</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getAvatar()">
 <h3>getAvatar</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/net/URI.html" title="class or interface in java.net" class="external-link">URI</a></span>&nbsp;<span class="element-name">getAvatar</span>()</div>
+<dl class="notes">
+<dt>Specified by:</dt>
+<dd><code><a href="../../security/IUserInfo.html#getAvatar()">getAvatar</a></code>&nbsp;in interface&nbsp;<code><a href="../../security/IUserInfo.html" title="interface in org.eclipse.net4j.util.security">IUserInfo</a></code></dd>
+</dl>
 </section>
 </li>
 <li>

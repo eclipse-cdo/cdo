@@ -309,25 +309,31 @@ implements <a href="../LMPackage.Literals.html" title="interface in org.eclipse.
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initSystemRepository(org.eclipse.emf.cdo.session.CDOSession,java.util.function.BiConsumer)" class="member-name-link">initSystemRepository</a><wbr>(<a href="../../session/CDOSession.html" title="interface in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="class or interface in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&gt;&nbsp;moduleInfoComsumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidModuleName(java.lang.String)" class="member-name-link">isValidModuleName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;moduleName)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCredentialsBasedLogin()" class="member-name-link">isCredentialsBasedLogin</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AbstractLifecycleManager.html" title="class in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">of</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;systemName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AbstractLifecycleManager.html" title="class in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">of</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
- <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openModuleSession(org.eclipse.emf.cdo.spi.server.InternalRepository)" class="member-name-link">openModuleSession</a><wbr>(<a href="../../spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;moduleRepository)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidModuleName(java.lang.String)" class="member-name-link">isValidModuleName</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;moduleName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeSystemCommitHandler(org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.SystemCommitHandler)" class="member-name-link">removeSystemCommitHandler</a><wbr>(<a href="AbstractLifecycleManager.SystemCommitHandler.html" title="interface in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager.SystemCommitHandler</a>&nbsp;handler)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AbstractLifecycleManager.html" title="class in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(org.eclipse.net4j.util.container.IManagedContainer,java.lang.String)" class="member-name-link">of</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;systemName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="AbstractLifecycleManager.html" title="class in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#of(org.eclipse.net4j.util.container.IManagedContainer,org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">of</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container,
+ <a href="../../server/IRepository.html" title="interface in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../net4j/CDONet4jSession.html" title="interface in org.eclipse.emf.cdo.net4j">CDONet4jSession</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openModuleSession(org.eclipse.emf.cdo.spi.server.InternalRepository)" class="member-name-link">openModuleSession</a><wbr>(<a href="../../spi/server/InternalRepository.html" title="interface in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;moduleRepository)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCredentials(org.eclipse.net4j.util.security.IPasswordCredentials)" class="member-name-link">setCredentials</a><wbr>(org.eclipse.net4j.util.security.IPasswordCredentials&nbsp;credentials)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeSystemCommitHandler(org.eclipse.emf.cdo.lm.server.AbstractLifecycleManager.SystemCommitHandler)" class="member-name-link">removeSystemCommitHandler</a><wbr>(<a href="AbstractLifecycleManager.SystemCommitHandler.html" title="interface in org.eclipse.emf.cdo.lm.server">AbstractLifecycleManager.SystemCommitHandler</a>&nbsp;handler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCredentials(org.eclipse.net4j.util.security.IPasswordCredentials)" class="member-name-link">setCredentials</a><wbr>(org.eclipse.net4j.util.security.IPasswordCredentials&nbsp;credentials)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setCredentialsBasedLogin(boolean)" class="member-name-link">setCredentialsBasedLogin</a><wbr>(boolean&nbsp;credentialsBasedLogin)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setModuleDefinitionPath(java.lang.String)" class="member-name-link">setModuleDefinitionPath</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;moduleDefinitionPath)</code></div>
@@ -440,6 +446,26 @@ implements <a href="../LMPackage.Literals.html" title="interface in org.eclipse.
 <section class="detail" id="setProcessInitializer(java.util.function.Consumer)">
 <h3>setProcessInitializer</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setProcessInitializer</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="class or interface in java.util.function" class="external-link">Consumer</a>&lt;<a href="../Process.html" title="interface in org.eclipse.emf.cdo.lm">Process</a>&gt;&nbsp;processInitializer)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="isCredentialsBasedLogin()">
+<h3>isCredentialsBasedLogin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isCredentialsBasedLogin</span>()</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>1.6</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="setCredentialsBasedLogin(boolean)">
+<h3>setCredentialsBasedLogin</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setCredentialsBasedLogin</span><wbr><span class="parameters">(boolean&nbsp;credentialsBasedLogin)</span></div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>1.6</dd>
+</dl>
 </section>
 </li>
 <li>

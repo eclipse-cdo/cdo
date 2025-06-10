@@ -315,6 +315,35 @@
       <sourceLocator
           rootFolder="${cdo.github.clone.location}"/>
       <repositoryList
+          name="2025-09">
+        <repository
+            url="https://download.eclipse.org/releases/2025-09"/>
+        <repository
+            url="https://download.eclipse.org/eclipse/updates/latest"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/orbit-aggregation/nightly/latest"/>
+        <repository
+            url="https://download.eclipse.org/nebula/archive/releases/3.1.1"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.15"/>
+        <repository
+            url="https://download.eclipse.org/ecp/releases/releases_116/1160/ecp">
+          <annotation
+              source="Documentation">
+            <detail
+                key="Reason">
+              <value>ECP removed from Simrel, see https://www.eclipse.org/lists/cross-project-issues-dev/msg19881.html</value>
+            </detail>
+          </annotation>
+        </repository>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository/tools"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+        <repository
+            url="${aspectj.repository}"/>
+      </repositoryList>
+      <repositoryList
           name="2025-06">
         <repository
             url="https://download.eclipse.org/releases/2025-06"/>
@@ -1036,6 +1065,57 @@
           name="org.eclipse.pde.feature.group"/>
       <requirement
           name="org.eclipse.equinox.executable.feature.group"/>
+      <repositoryList
+          name="4.31">
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20250604-1629"/>
+        <repository
+            url="https://download.eclipse.org/releases/2025-06/202506111000"/>
+        <repository
+            url="https://download.eclipse.org/nebula/archive/releases/3.1.1"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.15"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
+          name="4.30">
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20250305-0750"/>
+        <repository
+            url="https://download.eclipse.org/releases/2025-03/202503121000"/>
+        <repository
+            url="https://download.eclipse.org/nebula/archive/releases/3.1.1"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.15"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
+      <repositoryList
+          name="4.29">
+        <repository
+            url="https://download.eclipse.org/modeling/emf/cdo/drops/R20241127-0909"/>
+        <repository
+            url="https://download.eclipse.org/releases/2024-12/202412041000"/>
+        <repository
+            url="https://download.eclipse.org/nebula/archive/releases/3.1.1"/>
+        <repository
+            url="https://download.eclipse.org/tools/orbit/simrel/maven-jetty/release/12.0.15"/>
+        <repository
+            url="https://download.eclipse.org/modeling/emf/teneo/updates/2.1.0/interim"/>
+        <repository
+            url="https://download.oracle.com/otn_software/oepe/12.2.1.3/mars/repository"/>
+        <repository
+            url="https://www.springsite.com/eclipse/2.1.0/update"/>
+      </repositoryList>
       <repositoryList
           name="4.30">
         <repository
@@ -1798,14 +1878,14 @@
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.bugzilla.version"
-        value="4.31"/>
+        value="4.32"/>
     <setupTask
         xsi:type="setup:VariableTask"
         name="cdo.baseline.version"
-        value="4.30"/>
+        value="4.31"/>
     <setupTask
         xsi:type="jdt:JRETask"
-        version="JavaSE-17"
-        location="${jre.location-17}"/>
+        version="JavaSE-21"
+        location="${jre.location-21}"/>
   </stream>
 </setup:Project>

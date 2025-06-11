@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.doc.online;
 /**
  * CDO Wiki
  *
- * @external http://wiki.eclipse.org/CDO
+ * @external https://wiki.eclipse.org/CDO
  * @number 2
  */
 public class CDOWiki

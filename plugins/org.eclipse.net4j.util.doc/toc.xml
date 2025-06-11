@@ -85,8 +85,8 @@
     </topic>
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="Homepage" href="http://www.eclipse.org/cdo" icon="external" />
-    <topic label="Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
+    <topic label="Homepage" href="https://eclipse.dev/cdo" icon="external" />
+    <topic label="Wiki" href="https://wiki.eclipse.org/CDO" icon="external" />
   </topic>
   <topic label="Legal" href="about.html" />
 </toc>

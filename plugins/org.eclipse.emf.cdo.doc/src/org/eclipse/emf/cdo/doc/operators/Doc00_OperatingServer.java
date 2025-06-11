@@ -26,7 +26,7 @@ public class Doc00_OperatingServer
    * Deploying a CDO Server
    * <p>
    * The easiest way to deploy a stand-alone CDO Server is to download the latest
-   * <a href="http://wiki.eclipse.org/Eclipse_Installer">Eclipse Installer</a> for the target environment:
+   * <a href="https://wiki.eclipse.org/Eclipse_Installer">Eclipse Installer</a> for the target environment:
    * <ul>
    * <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-win64.exe">Windows 64 Bit</a> (self-extracting exe)
    * <li><a href="http://www.eclipse.org/downloads/download.php?file=/oomph/products/latest/eclipse-inst-win32.exe">Windows 32 Bit</a> (self-extracting exe)

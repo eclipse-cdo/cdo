@@ -18,7 +18,7 @@
     <topic label="Operating a CDO Server" href="html/operators/Doc00_OperatingServer.html" />
     <topic label="Configuring Repositories" href="html/operators/Doc01_ConfiguringRepositories.html" />
     <topic label="Configuring Acceptors" href="html/operators/Doc02_ConfiguringAcceptors.html" />
-    <topic label="Managing Security" href="http://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
+    <topic label="Managing Security" href="https://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
   </topic>
   <topic label="Programmer's Guide" href="html/programmers/index.html">
     <topic label="Developing Client Applications" href="html/programmers/client/index.html">
@@ -313,8 +313,8 @@
     <topic label="DBStore Mapping Strategies" href="html/reference/MappingStrategies.html" />
   </topic>
   <topic label="Online Docs" href="html/online/index.html">
-    <topic label="CDO Homepage" href="http://www.eclipse.org/cdo" icon="external" />
-    <topic label="CDO Wiki" href="http://wiki.eclipse.org/CDO" icon="external" />
+    <topic label="CDO Homepage" href="https://eclipse.dev/cdo" icon="external" />
+    <topic label="CDO Wiki" href="https://wiki.eclipse.org/CDO" icon="external" />
     <topic label="CDO Scalability" href="http://thegordian.blogspot.de/2008/11/how-scalable-are-my-models.html" icon="external" />
     <topic label="EMF Developer Guide" href="http://help.eclipse.org/mars/nav/21" icon="external" />
     <topic label="EMF Compare Guide" href="http://www.eclipse.org/emf/compare/documentation/latest/user/user-guide.html" icon="external" />

@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.doc.online;
 /**
  * CDO Homepage
  *
- * @external http://www.eclipse.org/cdo
+ * @external https://eclipse.dev/cdo
  * @number 1
  */
 public class CDOHomepage

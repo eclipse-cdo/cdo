@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.hsqldb;singleton:=true
-Bundle-Version: 4.4.4.qualifier
+Bundle-Version: 4.4.5.qualifier
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Bundle-ActivationPolicy: lazy
@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.net4j.db;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
 Import-Package: org.hsqldb;version="[2.0.0,3.0.0)";resolution:=optional;x-installation:=greedy,
  org.hsqldb.jdbc;version="[2.0.0,3.0.0)";resolution:=optional;x-installation:=greedy
-Export-Package: org.eclipse.net4j.db.hsqldb;version="4.4.4",
- org.eclipse.net4j.db.internal.hsqldb.bundle;version="4.4.4";x-internal:=true
+Export-Package: org.eclipse.net4j.db.hsqldb;version="4.4.5",
+ org.eclipse.net4j.db.internal.hsqldb.bundle;version="4.4.5";x-internal:=true
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Automatic-Module-Name: org.eclipse.net4j.db.hsqldb

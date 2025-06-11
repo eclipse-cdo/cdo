@@ -13,7 +13,7 @@ package org.eclipse.net4j.doc.online;
 /**
  * Homepage
  *
- * @external http://www.eclipse.org/cdo
+ * @external https://eclipse.dev/cdo
  * @number 1
  */
 public class Homepage

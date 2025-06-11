@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <cdoServer>
 
-  <!-- ============================================================== -->
-  <!-- See http://wiki.eclipse.org/CDO/Server_Configuration_Reference -->
-  <!-- ============================================================== -->
+  <!-- =============================================================== -->
+  <!-- See https://wiki.eclipse.org/CDO/Server_Configuration_Reference -->
+  <!-- =============================================================== -->
 
   <acceptor type="tcp" listenAddr="0.0.0.0" port="2036"/>
 
@@ -148,30 +148,30 @@
     </protector>
     -->
 
-    <!-- Example http://wiki.eclipse.org/CDO/Security_Manager
+    <!-- Example https://wiki.eclipse.org/CDO/Security_Manager
 		  <securityManager type="default" description="/security:annotation:home(/home)"/>
     -->
 
-    <!-- Example http://bugs.eclipse.org/418454
+    <!-- Example https://bugs.eclipse.org/418454
       <adminRepository configurationManager="default" catalogPath="/catalog"/>
     -->
 
-    <!-- Example http://bugs.eclipse.org/302775
+    <!-- Example https://bugs.eclipse.org/302775
 			<authenticator type="file" description="@config/repo1.users"/>
     -->
 
-    <!-- Example http://bugs.eclipse.org/577114
+    <!-- Example https://bugs.eclipse.org/577114
       <operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.DeleteBranch:Administrators"/>
       <operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.ui.DeleteBranches:Administrators"/>
       <operationAuthorizer type="requireUser" description="org.foo.bar.HuntKlingons:Kirk,Picard"/>
       <operationAuthorizer type="requireRole" description="org.foo.bar.CreateAccounts:Accountant"/>
     -->
 
-    <!-- Example http://bugs.eclipse.org/345431
+    <!-- Example https://bugs.eclipse.org/345431
 			<initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
     -->
 
-    <!-- Example http://bugs.eclipse.org/534898
+    <!-- Example https://bugs.eclipse.org/534898
 			<activityLog type="rolling">
         <property name="file" value="/develop/cdo-master/repo1-activities"/>
         <property name="size" value="100000000"/>
@@ -192,11 +192,11 @@
       <property name="createSchemaIfNeeded" value="true"/>
       -->
 
-      <!-- Example http://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)
+      <!-- Example https://bugs.eclipse.org/396379 (if idGenerationLocation == CLIENT)
 	      <property name="idColumnLength" value="34"/>
 			-->
 
-      <!-- Example http://bugs.eclipse.org/493598
+      <!-- Example https://bugs.eclipse.org/493598
 	      <property name="jdbcFetchSize" value="10000"/>
 			-->
 

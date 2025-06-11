@@ -21,11 +21,11 @@
 			</h1>
 			<p>
 				<em>For information about CDO or Net4j, see their
-					<a href="http://www.eclipse.org/cdo">homepage</a> or
-					<a href="http://wiki.eclipse.org/CDO">wiki</a>.
+					<a href="https://eclipse.dev/cdo">homepage</a> or
+					<a href="https://wiki.eclipse.org/CDO">wiki</a>.
 					<br/> For information about installing or updating Eclipse software, see the
 					<a
-						href="http://help.eclipse.org/2019-09/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
+						href="https://help.eclipse.org/latest/index.jsp?topic=/org.eclipse.platform.doc.user/tasks/tasks-124.htm">
 						Eclipse Platform Help</a>.
 					<br/> Some plugins require third party software from p2 repositories listed in this
 					<a href="bookmarks.xml">bookmarks.xml</a> file.</em>

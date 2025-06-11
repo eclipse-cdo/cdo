@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server.mongodb;singleton:=true
-Bundle-Version: 4.1.4.qualifier
+Bundle-Version: 4.1.5.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -11,9 +11,9 @@ Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
  org.eclipse.emf.cdo.server;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.server.internal.mongodb;version="4.1.4";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.tests.mongodb",
- org.eclipse.emf.cdo.server.internal.mongodb.bundle;version="4.1.4";x-internal:=true,
- org.eclipse.emf.cdo.server.mongodb;version="4.1.4"
+Export-Package: org.eclipse.emf.cdo.server.internal.mongodb;version="4.1.5";x-friends:="org.eclipse.emf.cdo.tests,org.eclipse.emf.cdo.tests.mongodb",
+ org.eclipse.emf.cdo.server.internal.mongodb.bundle;version="4.1.5";x-internal:=true,
+ org.eclipse.emf.cdo.server.mongodb;version="4.1.5"
 Import-Package: com.mongodb;version="[3.0.0,4.0.0)",
  com.mongodb.gridfs;version="[3.0.0,4.0.0)",
  com.mongodb.util;version="[3.0.0,4.0.0)",

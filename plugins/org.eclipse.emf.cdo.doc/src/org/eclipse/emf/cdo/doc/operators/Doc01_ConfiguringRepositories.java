@@ -203,7 +203,7 @@ public class Doc01_ConfiguringRepositories
    * <p>
    * Example: &lt;securityManager type="default" description="/security:annotation:home(/home)"/>
    * <p>
-   * See also: <a href="http://wiki.eclipse.org/CDO/Security_Manager">http://wiki.eclipse.org/CDO/Security_Manager</a>
+   * See also: <a href="https://wiki.eclipse.org/CDO/Security_Manager">https://wiki.eclipse.org/CDO/Security_Manager</a>
    */
   public class Element_securityManager
   {
@@ -214,7 +214,7 @@ public class Doc01_ConfiguringRepositories
    * <p>
    * Example: &lt;authenticator type="file" description="_database/repo1.users"/>
    * <p>
-   * See also: <a href="http://bugs.eclipse.org/302775">http://bugs.eclipse.org/302775</a>
+   * See also: <a href="https://bugs.eclipse.org/302775">https://bugs.eclipse.org/302775</a>
    */
   public class Element_authenticator
   {
@@ -225,7 +225,7 @@ public class Doc01_ConfiguringRepositories
    * <p>
    * Example: &lt;initialPackage nsURI="http://www.eclipse.org/emf/CDO/examples/company/1.0.0"/>
    * <p>
-   * See also: <a href="http://bugs.eclipse.org/345431">http://bugs.eclipse.org/345431</a>
+   * See also: <a href="https://bugs.eclipse.org/345431">https://bugs.eclipse.org/345431</a>
    */
   public class Element_initialPackage
   {

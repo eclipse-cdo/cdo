@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.doc.operators;
 /**
  * Managing Security
  *
- * @external http://wiki.eclipse.org/CDO/Security_Manager
+ * @external https://wiki.eclipse.org/CDO/Security_Manager
  */
 public class Doc03_ManagingSecurity
 {

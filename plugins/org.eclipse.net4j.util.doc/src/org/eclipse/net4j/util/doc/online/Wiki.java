@@ -13,7 +13,7 @@ package org.eclipse.net4j.util.doc.online;
 /**
  * Wiki
  *
- * @external http://wiki.eclipse.org/CDO
+ * @external https://wiki.eclipse.org/CDO
  * @number 2
  */
 public class Wiki

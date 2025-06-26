@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -45,14 +46,14 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
 
   public CDOChangeSetDataImpl(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
   {
-    this.newObjects = newObjects;
-    this.changedObjects = changedObjects;
-    this.detachedObjects = detachedObjects;
+    this.newObjects = Objects.requireNonNullElseGet(newObjects, () -> new ArrayList<CDOIDAndVersion>());
+    this.changedObjects = Objects.requireNonNullElseGet(changedObjects, () -> new ArrayList<CDORevisionKey>());
+    this.detachedObjects = Objects.requireNonNullElseGet(detachedObjects, () -> new ArrayList<CDOIDAndVersion>());
   }
 
   public CDOChangeSetDataImpl()
   {
-    this(new ArrayList<CDOIDAndVersion>(), new ArrayList<CDORevisionKey>(), new ArrayList<CDOIDAndVersion>());
+    this(null, null, null);
   }
 
   @Override

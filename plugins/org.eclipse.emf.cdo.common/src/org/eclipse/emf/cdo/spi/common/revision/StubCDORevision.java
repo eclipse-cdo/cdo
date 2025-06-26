@@ -183,6 +183,15 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.26
+   */
+  @Override
+  public boolean readValue(CDODataInput in, EClass owner, EStructuralFeature feature, int i, boolean unchunked) throws IOException
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
   @Override
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
@@ -203,6 +212,15 @@ public class StubCDORevision extends AbstractCDORevision
    */
   @Override
   public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  /**
+   * @since 4.26
+   */
+  @Override
+  public void writeValue(CDODataOutput out, EClass owner, EStructuralFeature feature, int i, int referenceChunk) throws IOException
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }

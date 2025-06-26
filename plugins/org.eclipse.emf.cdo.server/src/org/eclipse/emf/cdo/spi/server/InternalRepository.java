@@ -66,6 +66,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.Semaphore;
+import java.util.function.Function;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -119,6 +120,16 @@ public interface InternalRepository extends IRepository, //
    * @since 4.6
    */
   public void setTimeProvider(CDOTimeProvider timeProvider);
+
+  /**
+   * @since 4.24
+   */
+  public Function<CDORevision, CDOID> getIDGenerator();
+
+  /**
+   * @since 4.24
+   */
+  public void setIDGenerator(Function<CDORevision, CDOID> idGenerator);
 
   /**
    * @since 4.1

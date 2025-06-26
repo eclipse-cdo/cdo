@@ -23,6 +23,7 @@
             productGroup="org.eclipse.emf.cdo.lm.reviews.server.reviewManagers"
             type="default">
       </annotationFactory>
+      <factory productGroup="org.eclipse.emf.cdo.lm.server.baselineBranchPointProviders" type="DropReview" class="org.eclipse.emf.cdo.lm.reviews.internal.server.DropReviewBranchPointProvider$Factory"/>
    </extension>
    
    <extension point="org.eclipse.emf.cdo.server.appExtensions">

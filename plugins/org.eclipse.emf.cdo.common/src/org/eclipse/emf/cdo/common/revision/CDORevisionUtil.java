@@ -42,6 +42,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.common.revision.ManagedRevisionProvider;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -405,6 +406,20 @@ public final class CDORevisionUtil
     }
 
     return provider.getRevision(parentID);
+  }
+
+  /**
+   * @since 4.26
+   */
+  public static CDORevision getParentRevision(CDORevision revision, CDORevisionProvider provider, EClass type)
+  {
+    CDORevision parentRevision = getParentRevision(revision, provider);
+    if (parentRevision != null && !type.isSuperTypeOf(parentRevision.getEClass()))
+    {
+      parentRevision = getParentRevision(parentRevision, provider, type);
+    }
+
+    return parentRevision;
   }
 
   /**

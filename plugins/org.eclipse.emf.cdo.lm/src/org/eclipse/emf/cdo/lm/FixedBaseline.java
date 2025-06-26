@@ -36,6 +36,26 @@ import org.eclipse.equinox.p2.metadata.Version;
 public interface FixedBaseline extends Baseline
 {
   /**
+   * @since 1.4
+   */
+  public static final String FINGER_PRINT_ANNOTATION_SOURCE = "http://www.eclipse.org/CDO/LM/FingerPrint";
+
+  /**
+   * @since 1.4
+   */
+  public static final String FINGER_PRINT_ANNOTATION_DETAIL_PARAM = "param";
+
+  /**
+   * @since 1.4
+   */
+  public static final String FINGER_PRINT_ANNOTATION_DETAIL_VALUE = "value";
+
+  /**
+   * @since 1.4
+   */
+  public static final String FINGER_PRINT_ANNOTATION_DETAIL_COUNT = "count";
+
+  /**
    * Returns the value of the '<em><b>Version</b></em>' attribute. <!--
    * begin-user-doc --> <!-- end-user-doc -->
    *

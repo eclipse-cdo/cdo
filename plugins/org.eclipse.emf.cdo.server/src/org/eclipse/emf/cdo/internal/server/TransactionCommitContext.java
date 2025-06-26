@@ -36,13 +36,16 @@ import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndBranch;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
+import org.eclipse.emf.cdo.common.revision.CDOList;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOContainerFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDeltaVisitor;
+import org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
@@ -50,11 +53,14 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.internal.common.commit.FailureCommitInfo;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOAddFeatureDeltaImpl;
+import org.eclipse.emf.cdo.internal.common.revision.delta.CDOSetFeatureDeltaImpl;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockDeltaCollector;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IStoreAccessor.NewIDSupport;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
@@ -105,9 +111,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
+import java.util.function.Function;
 
 /**
  * @author Simon McDuff
@@ -1431,6 +1439,86 @@ public class TransactionCommitContext implements InternalCommitContext
     ModificationContext modificationContext = new ModificationContext()
     {
       @Override
+      public CDORevision attachNewObject(CDOID containerID, EReference containingReference, EClass eClass)
+      {
+        Function<CDORevision, CDOID> idGenerator = repository.getIDGenerator();
+        if (idGenerator == null)
+        {
+          idGenerator = this::getNewID;
+        }
+
+        CDOChangeSetData changeSetData = getChangeSetData();
+        List<CDOIDAndVersion> newObjects = new ArrayList<>();
+        List<CDORevisionKey> changedObjects = new ArrayList<>();
+
+        CDORevisionFactory revisionFactory = repository.getRevisionManager().getFactory();
+        InternalCDORevision newObject = (InternalCDORevision)revisionFactory.createRevision(eClass);
+        newObject.setBranchPoint(getBranchPoint());
+        newObject.setVersion(CDOBranchVersion.FIRST_VERSION);
+        newObject.setContainerID(containerID);
+
+        CDOID newObjectID = idGenerator.apply(newObject); // Must come after newObject.setBranchPoint().
+        if (CDOIDUtil.isNull(newObjectID))
+        {
+          throw new IllegalStateException("New id is null for " + newObject);
+        }
+
+        newObject.setID(newObjectID);
+        newObjects.add(newObject);
+
+        InternalCDORevisionDelta revisionDelta = null;
+
+        // Is the container already in newObjects?
+        InternalCDORevision container = (InternalCDORevision)changeSetData.getNewObject(containerID);
+        if (container == null)
+        {
+          // No, the container is an existing object.
+          container = Objects.requireNonNull(getRevision(containerID));
+
+          // Is the existing container already in changedObjects?
+          revisionDelta = (InternalCDORevisionDelta)changeSetData.getChangedObject(containerID);
+          if (revisionDelta == null)
+          {
+            // No, the existing container is not yet changed in the current commit.
+            revisionDelta = (InternalCDORevisionDelta)CDORevisionUtil.createDelta(container);
+            changedObjects.add(revisionDelta);
+          }
+        }
+
+        newObject.setContainingReference(containingReference);
+
+        if (containingReference.isMany())
+        {
+          CDOList list = container.getOrCreateList(containingReference);
+          list.add(newObjectID);
+
+          if (revisionDelta != null)
+          {
+            CDOListFeatureDelta featureDelta = (CDOListFeatureDelta)revisionDelta.getFeatureDelta(containingReference);
+            List<CDOFeatureDelta> listChanges = featureDelta.getListChanges();
+            listChanges.add(new CDOAddFeatureDeltaImpl(containingReference, list.size() - 1, newObjectID));
+          }
+        }
+        else
+        {
+          container.setValue(containingReference, newObjectID);
+
+          if (revisionDelta != null)
+          {
+            revisionDelta.addFeatureDelta(new CDOSetFeatureDeltaImpl(containingReference, 0, newObjectID), null);
+          }
+        }
+
+        cachedRevisions.put(containerID, container);
+        cachedRevisions.put(newObjectID, newObject);
+
+        CDOChangeSetData additionalChanges = CDORevisionUtil.createChangeSetData(newObjects, changedObjects, null);
+        changeSetData.merge(additionalChanges);
+
+        return newObject;
+      }
+
+      @Override
       public CDOChangeSetData getChangeSetData()
       {
         return changeSetData;
@@ -1440,6 +1528,23 @@ public class TransactionCommitContext implements InternalCommitContext
       public void cancelModification()
       {
         canceled.set(true);
+      }
+
+      private CDOID getNewID(CDORevision revision)
+      {
+        if (repository.getIDGenerationLocation() == IDGenerationLocation.CLIENT)
+        {
+          // The calling modifier is responsible for creating an adequate client-side ID.
+          return null;
+        }
+
+        if (accessor instanceof NewIDSupport)
+        {
+          return ((NewIDSupport)accessor).getNewID(revision);
+        }
+
+        // The calling modifier is responsible for creating an adequate server-side ID.
+        return null;
       }
     };
 

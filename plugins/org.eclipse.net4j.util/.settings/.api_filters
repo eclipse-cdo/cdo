@@ -20,6 +20,18 @@
         <filter id="403767336">
             <message_arguments>
                 <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="BASE64"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
+                <message_argument value="HEX"/>
+            </message_arguments>
+        </filter>
+        <filter id="403767336">
+            <message_arguments>
+                <message_argument value="org.eclipse.net4j.util.StringConverter"/>
                 <message_argument value="STRIP_HTML"/>
             </message_arguments>
         </filter>

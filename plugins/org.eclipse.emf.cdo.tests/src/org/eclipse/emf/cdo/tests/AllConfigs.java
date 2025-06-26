@@ -36,6 +36,11 @@ public class AllConfigs extends ConfigTestSuite
     return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.bugzilla");
   }
 
+  public List<Class<? extends ConfigTest>> getIssueTests()
+  {
+    return getTestClasses(OM.BUNDLE, "org.eclipse.emf.cdo.tests.issues");
+  }
+
   @Override
   protected void initTestClasses(List<Class<? extends ConfigTest>> testClasses, IScenario scenario)
   {
@@ -124,6 +129,7 @@ public class AllConfigs extends ConfigTestSuite
 
     // Bugzilla verifications
     testClasses.addAll(getBugzillaTests());
+    testClasses.addAll(getIssueTests());
   }
 
   @Override

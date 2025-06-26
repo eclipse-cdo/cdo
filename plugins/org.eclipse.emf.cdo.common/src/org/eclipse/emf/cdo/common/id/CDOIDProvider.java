@@ -15,6 +15,7 @@ package org.eclipse.emf.cdo.common.id;
  *
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface CDOIDProvider
 {
   /**

@@ -514,9 +514,15 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
      *
      * @author Eike Stepper
      * @since 4.10
+     * @noimplement This interface is not intended to be implemented by clients.
      */
     public interface ModificationContext
     {
+      /**
+       * @since 4.24
+       */
+      public CDORevision attachNewObject(CDOID containerID, EReference containingReference, EClass eClass);
+
       public CDOChangeSetData getChangeSetData();
 
       public void cancelModification();
@@ -913,5 +919,16 @@ public interface IStoreAccessor extends IQueryHandlerProvider, BranchLoader, Com
     public void finishUnit(IView view, CDOID rootID, CDORevisionHandler revisionHandler, long timeStamp, Object initResult, List<CDOID> ids);
 
     public void writeUnits(Map<CDOID, CDOID> unitMappings, long timeStamp);
+  }
+
+  /**
+   * An extension interface for {@link IStoreAccessor store accessors} that support <i>units</i>.
+   *
+   * @author Eike Stepper
+   * @since 4.24
+   */
+  public interface NewIDSupport extends IStoreAccessor
+  {
+    public CDOID getNewID(CDORevision revision);
   }
 }

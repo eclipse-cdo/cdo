@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.tests.config.impl;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.revision.CDORevisionManager;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -158,6 +159,7 @@ public abstract class SessionConfig extends Config implements ISessionConfig
     container.setName("client");
 
     Net4jUtil.prepareContainer(container);
+    CDOCommonUtil.prepareContainer(container);
 
     container.registerFactory(new ExecutorServiceFactory()
     {

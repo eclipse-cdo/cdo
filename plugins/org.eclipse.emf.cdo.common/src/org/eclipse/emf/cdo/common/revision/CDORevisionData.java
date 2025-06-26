@@ -12,9 +12,14 @@ package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EStructuralFeature.Internal.DynamicValueHolder;
+import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.impl.BasicEObjectImpl;
+import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
 
 /**
  * Encapsulates the modeled information and the EMF system values of a {@link CDORevision revision}.
@@ -62,10 +67,24 @@ public interface CDORevisionData
    *     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
    *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</code></pre>
    *
+   * @see #calculateContainingReference(int, EClass, EClass)
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
    * @see BasicEObjectImpl#eContainingFeature()
    * @see #getContainerID()
    */
   public int getContainingFeatureID();
+
+  /**
+   * @see #getContainingFeatureID()
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
+   * @since 4.26
+   */
+  public default EReference getContainingReference(EClass containerClass)
+  {
+    int containingFeatureID = getContainingFeatureID();
+    EClass eClass = revision().getEClass();
+    return calculateContainingReference(containingFeatureID, eClass, containerClass);
+  }
 
   /**
    * @since 2.0
@@ -128,4 +147,65 @@ public interface CDORevisionData
    * @since 4.9
    */
   public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter);
+
+  /**
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
+   * @since 4.26
+   */
+  public default int calculateContainingReferenceID(EReference containingReference)
+  {
+    EClass eClass = revision().getEClass();
+    return calculateContainingReferenceID(containingReference, eClass);
+  }
+
+  /**
+   * @see #getContainingFeatureID()
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
+   * @since 4.26
+   */
+  public static int calculateContainingReferenceID(EReference containingReference, EClass childClass)
+  {
+    EReference inverseReference = containingReference.getEOpposite();
+    if (inverseReference != null) // hasNavigableInverse()
+    {
+      Class<?> instanceClass = containingReference.getEType().getInstanceClass();
+      if (instanceClass == null)
+      {
+        return childClass.getFeatureID(inverseReference);
+      }
+
+      return inverseReference.getFeatureID();
+    }
+
+    return InternalEObject.EOPPOSITE_FEATURE_BASE - containingReference.getFeatureID();
+  }
+
+  /**
+   * Provides the input to the calculation of the feature in the container revision that actually holds this revision.
+   * <p>
+   * <b>Usage Example:</b>
+   * <p>
+   * <pre><code>
+   * CDORevision revision = ...;
+   * CDORevision container = <i>Util.getRevision</i>(revision.data().getContainerID());
+   *
+   * int containingFeatureID = revision.data().getContainingFeatureID();
+   *
+   * EStructuralFeature feature = containingFeatureID &lt;= InternalEObject.EOPPOSITE_FEATURE_BASE ?
+   *     container.getEClass().getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID) :
+   *     ((EReference)revision.getEClass().getEStructuralFeature(containingFeatureID)).getEOpposite();</code></pre>
+   *
+   * @see #getContainingFeatureID()
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
+   * @since 4.26
+   */
+  public static EReference calculateContainingReference(int containingFeatureID, EClass childClass, EClass containerClass)
+  {
+    if (containingFeatureID <= InternalEObject.EOPPOSITE_FEATURE_BASE)
+    {
+      return (EReference)containerClass.getEStructuralFeature(InternalEObject.EOPPOSITE_FEATURE_BASE - containingFeatureID);
+    }
+
+    return ((EReference)childClass.getEStructuralFeature(containingFeatureID)).getEOpposite();
+  }
 }

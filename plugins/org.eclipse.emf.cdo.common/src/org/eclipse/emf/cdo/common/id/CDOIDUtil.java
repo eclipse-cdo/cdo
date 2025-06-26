@@ -44,6 +44,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -594,6 +595,25 @@ public final class CDOIDUtil
     }
 
     return false;
+  }
+
+  /**
+   * @since 4.26
+   */
+  public static <K extends CDOIDAndVersion> K getKey(Collection<? extends CDOIDAndVersion> keys, CDOID id)
+  {
+    for (CDOIDAndVersion key : keys)
+    {
+      if (key.getID() == id)
+      {
+        @SuppressWarnings("unchecked")
+        K result = (K)key;
+        return result;
+      }
+    }
+
+    return null;
+
   }
 
   /**

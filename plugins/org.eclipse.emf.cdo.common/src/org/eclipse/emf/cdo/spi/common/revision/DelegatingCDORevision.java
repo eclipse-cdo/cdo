@@ -424,6 +424,12 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   @Override
+  public boolean readValue(CDODataInput in, EClass owner, EStructuralFeature feature, int i, boolean unchunked) throws IOException
+  {
+    return getDelegate().readValue(in, owner, feature, i, unchunked);
+  }
+
+  @Override
   public void write(CDODataOutput out, int referenceChunk) throws IOException
   {
     getDelegate().write(out, referenceChunk);
@@ -445,6 +451,12 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void writeValues(CDODataOutput out, int referenceChunk) throws IOException
   {
     getDelegate().writeValues(out, referenceChunk);
+  }
+
+  @Override
+  public void writeValue(CDODataOutput out, EClass owner, EStructuralFeature feature, int i, int referenceChunk) throws IOException
+  {
+    getDelegate().writeValue(out, owner, feature, i, referenceChunk);
   }
 
   @Override

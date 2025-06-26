@@ -25,7 +25,11 @@ import org.eclipse.emf.cdo.spi.common.branch.CDOBranchAdjustable;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOClassInfo;
 
+import org.eclipse.emf.common.notify.NotificationChain;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.util.DelegatingEcoreEList;
 
 import java.io.IOException;
 import java.util.List;
@@ -83,6 +87,16 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public void setContainerID(Object containerID);
 
   public void setContainingFeatureID(int containingFeatureID);
+
+  /**
+   * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
+   * @since 4.26
+   */
+  public default void setContainingReference(EReference containingReference)
+  {
+    int containingReferenceID = calculateContainingReferenceID(containingReference);
+    setContainingFeatureID(containingReferenceID);
+  }
 
   /**
    * @since 3.0
@@ -163,6 +177,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
   public boolean readValues(CDODataInput in) throws IOException;
 
   /**
+   * @since 4.26
+   */
+  public boolean readValue(CDODataInput in, EClass owner, EStructuralFeature feature, int i, boolean unchunked) throws IOException;
+
+  /**
    * @since 3.0
    */
   public void write(CDODataOutput out, int referenceChunk) throws IOException;
@@ -176,6 +195,11 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 4.3
    */
   public void writeValues(CDODataOutput out, int referenceChunk) throws IOException;
+
+  /**
+   * @since 4.26
+   */
+  public void writeValue(CDODataOutput out, EClass owner, EStructuralFeature feature, int i, int referenceChunk) throws IOException;
 
   /**
    * @since 3.0

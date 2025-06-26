@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.common.commit;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionKey;
@@ -71,6 +72,30 @@ public interface CDOChangeSetData extends CDOChangeKindProvider
    * {@link CDOBranchVersion#UNSPECIFIED_VERSION unspecified}.
    */
   public List<CDOIDAndVersion> getDetachedObjects();
+
+  /**
+   * @since 4.26
+   */
+  public default CDOIDAndVersion getNewObject(CDOID id)
+  {
+    return CDOIDUtil.getKey(getNewObjects(), id);
+  }
+
+  /**
+   * @since 4.26
+   */
+  public default CDORevisionKey getChangedObject(CDOID id)
+  {
+    return CDOIDUtil.getKey(getChangedObjects(), id);
+  }
+
+  /**
+   * @since 4.26
+   */
+  public default CDOIDAndVersion getDetachedObject(CDOID id)
+  {
+    return CDOIDUtil.getKey(getDetachedObjects(), id);
+  }
 
   /**
    * Returns a list of ids denoting which revisions have been added, changed, or revised in the context of a commit operation.

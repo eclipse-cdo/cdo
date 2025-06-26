@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.lm.reviews.internal.server;
 
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.lm.FloatingBaseline;
+import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.reviews.DeliveryReview;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
@@ -48,8 +49,8 @@ public final class ServerReviewStatemachine<REVIEW extends Review> extends Revie
     {
       DeliveryReview deliveryReview = (DeliveryReview)review;
 
-      String moduleName = deliveryReview.getModule().getName();
-      CDOSession moduleSession = reviewManager.getLifecycleManager().getModuleSession(moduleName);
+      Module module = deliveryReview.getModule();
+      CDOSession moduleSession = reviewManager.getLifecycleManager().getModuleSession(module);
 
       boolean sourceOutdated = isOutdated(moduleSession, deliveryReview.getSourceChange(), deliveryReview.getSourceCommit());
       boolean targetOutdated = isOutdated(moduleSession, deliveryReview.getStream(), deliveryReview.getTargetCommit());

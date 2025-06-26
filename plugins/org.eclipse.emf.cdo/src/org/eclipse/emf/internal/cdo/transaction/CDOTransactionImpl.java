@@ -5141,7 +5141,14 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
         }
         else
         {
-          applyNewCommitData(newCommitData, result.getIDMappings(), timeStamp);
+          Map<CDOID, CDOID> idMappings = result.getIDMappings();
+          // if (idMappings.isEmpty() || session.getRepositoryInfo().getIDGenerationLocation() ==
+          // IDGenerationLocation.CLIENT)
+          // {
+          // idMappings = null;
+          // }
+
+          applyNewCommitData(newCommitData, idMappings, timeStamp);
         }
 
         CDOTransactionHandler2[] handlers = getTransactionHandlers2();
@@ -5367,8 +5374,11 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
       rememberedNewObjects.putAll(newObjects);
 
       bypassRegistrationHandlers(() -> {
-        getTransactionStrategy().rollback(transaction, firstSavepoint); // Transitions objects to CLEAN.
-        waitForBaseline(timeStamp); // Transitions objects to PROXY.
+        // Transition objects DIRTY --> CLEAN and NEW --> TRANSIENT.
+        getTransactionStrategy().rollback(transaction, firstSavepoint);
+
+        // Transition objects PERSISTENT --> PROXY.
+        waitForBaseline(timeStamp);
 
         Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
 
@@ -5377,15 +5387,17 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
           InternalCDOObject rememberedNewObject = (InternalCDOObject)entry.getValue();
           if (rememberedNewObject instanceof CDOObjectImpl)
           {
-            CDOID tempID = entry.getKey();
-            CDOID permID = idMappings.get(tempID);
+            CDOID origID = entry.getKey();
 
-            if (permID != null)
+            CDOID permID = idMappings.get(origID);
+            if (permID == null)
             {
-              CDOObjectImpl object = (CDOObjectImpl)getObject(permID);
-              ReflectUtil.invokeMethod(COPY_OBJECT_METHOD, object, rememberedNewObject);
-              objects.put(permID, rememberedNewObject);
+              permID = origID;
             }
+
+            CDOObjectImpl object = (CDOObjectImpl)getObject(permID);
+            ReflectUtil.invokeMethod(COPY_OBJECT_METHOD, object, rememberedNewObject);
+            objects.put(permID, rememberedNewObject);
           }
         }
       });

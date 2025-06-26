@@ -425,6 +425,21 @@ public interface CDOProtocolConstants
    */
   public static final String QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES = "sourceReferences"; //$NON-NLS-1$
 
+  /**
+   * @since 4.26
+   */
+  public static final String QUERY_LANGUAGE_FINGER_PRINT = "fingerPrint"; //$NON-NLS-1$
+
+  /**
+   * @since 4.26
+   */
+  public static final String QUERY_LANGUAGE_FINGER_PRINT_TYPE = "type"; //$NON-NLS-1$
+
+  /**
+   * @since 4.26
+   */
+  public static final String QUERY_LANGUAGE_FINGER_PRINT_PARAM = "param"; //$NON-NLS-1$
+
   // //////////////////////////////////////////////////////////////////////
   // Locking Objects
 

@@ -98,6 +98,8 @@
     
     <lifecycleManager type="default" systemName="CDO-LM" moduleDefinitionPath="module.md">
       <credentials userId="$$$system_property(LM_USER_ID)$$$" password="$$$system_property(LM_USER_PW)$$$"/>
+
+      <fingerPrinter type="digest" param="SHA-512,base64" />
       
       <dropType name="Tag" />    
       <dropType name="Milestone" />    

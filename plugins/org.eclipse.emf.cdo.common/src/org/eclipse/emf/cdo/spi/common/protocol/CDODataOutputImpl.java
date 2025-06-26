@@ -72,6 +72,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.UnaryOperator;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -522,64 +523,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   @Override
   public void writeCDOList(EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk) throws IOException
   {
-    // TODO Simon: Could most of this stuff be moved into the list?
-    // (only if protected methods of this class don't need to become public)
-    int size = list == null ? 0 : list.size();
-    if (size > 0)
-    {
-      // Need to adjust the referenceChunk in case where we do not have enough value in the list.
-      // Even if the referenceChunk is specified, a provider of data could have override that value.
-      int sizeToLook = referenceChunk == CDORevision.UNCHUNKED ? size : Math.min(referenceChunk, size);
-      for (int i = 0; i < sizeToLook; i++)
-      {
-        Object element = list.get(i, false);
-        if (element == CDORevisionUtil.UNINITIALIZED)
-        {
-          referenceChunk = i;
-          break;
-        }
-      }
-    }
-
-    if (referenceChunk != CDORevision.UNCHUNKED && referenceChunk < size)
-    {
-      // This happens only on server-side
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
-      }
-
-      writeXInt(-size);
-      writeXInt(referenceChunk);
-      size = referenceChunk;
-    }
-    else
-    {
-      if (TRACER.isEnabled())
-      {
-        TRACER.format("Writing feature {0}: size={1}", feature.getName(), size); //$NON-NLS-1$
-      }
-
-      writeXInt(size);
-    }
-
-    CDOIDProvider idProvider = getIDProvider();
-
-    for (int j = 0; j < size; j++)
-    {
-      Object value = list.get(j, false);
-      if (value != null && feature instanceof EReference)
-      {
-        value = idProvider.provideCDOID(value);
-      }
-
-      if (TRACER.isEnabled())
-      {
-        TRACER.trace("    " + value); //$NON-NLS-1$
-      }
-
-      writeCDOFeatureValue(feature, value);
-    }
+    writeCDOList(this, owner, feature, list, referenceChunk, null);
   }
 
   @Override
@@ -709,5 +653,96 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
   protected StringIO getPackageURICompressor()
   {
     return StringIO.DIRECT;
+  }
+
+  /**
+   * @since 4.26
+   */
+  public static void writeCDOList(CDODataOutput out, EClass owner, EStructuralFeature feature, CDOList list, int referenceChunk,
+      UnaryOperator<CDOID> idConverter) throws IOException
+  {
+    // TODO Simon: Could most of this stuff be moved into the list?
+    // (only if protected methods of this class don't need to become public)
+    int size = list == null ? 0 : list.size();
+    if (size > 0)
+    {
+      // Need to adjust the referenceChunk in case where we do not have enough value in the list.
+      // Even if the referenceChunk is specified, a provider of data could have override that value.
+      int sizeToLook = referenceChunk == CDORevision.UNCHUNKED ? size : Math.min(referenceChunk, size);
+      for (int i = 0; i < sizeToLook; i++)
+      {
+        Object element = list.get(i, false);
+        if (element == CDORevisionUtil.UNINITIALIZED)
+        {
+          referenceChunk = i;
+          break;
+        }
+      }
+    }
+
+    if (referenceChunk != CDORevision.UNCHUNKED && referenceChunk < size)
+    {
+      // This happens only on server-side
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing feature {0}: size={1}, referenceChunk={2}", feature.getName(), size, referenceChunk); //$NON-NLS-1$
+      }
+
+      out.writeXInt(-size);
+      out.writeXInt(referenceChunk);
+      size = referenceChunk;
+    }
+    else
+    {
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Writing feature {0}: size={1}", feature.getName(), size); //$NON-NLS-1$
+      }
+
+      out.writeXInt(size);
+    }
+
+    if (feature instanceof EReference)
+    {
+      CDOIDProvider idProvider = out.getIDProvider();
+
+      for (int j = 0; j < size; j++)
+      {
+        Object value = list.get(j, false);
+        if (value != null)
+        {
+          if (idProvider != null)
+          {
+            value = idProvider.provideCDOID(value);
+          }
+
+          if (idConverter != null)
+          {
+            value = idConverter.apply((CDOID)value);
+          }
+        }
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("    " + value); //$NON-NLS-1$
+        }
+
+        out.writeCDOFeatureValue(feature, value);
+      }
+    }
+    else
+    {
+      for (int j = 0; j < size; j++)
+      {
+        Object value = list.get(j, false);
+
+        if (TRACER.isEnabled())
+        {
+          TRACER.trace("    " + value); //$NON-NLS-1$
+        }
+
+        out.writeCDOFeatureValue(feature, value);
+      }
+    }
   }
 }

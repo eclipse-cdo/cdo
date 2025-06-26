@@ -592,7 +592,7 @@ public final class CDOModelUtil implements CDOModelConstants
       CDOClassInfo classInfo = (CDOClassInfo)EcoreUtil.getAdapter(adapters, CDOClassInfo.class);
       if (classInfo == null)
       {
-        classInfo = new CDOClassInfoImpl();
+        classInfo = new CDOClassInfoImpl(); // Initialized via CDOClassInfoImpl.setTarget().
         adapters.add(0, classInfo);
       }
 

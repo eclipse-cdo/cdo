@@ -174,6 +174,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
@@ -247,6 +248,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private long optimisticLockingTimeout = 10000L;
 
   private Entity.Store entityStore;
+
+  private Function<CDORevision, CDOID> idGenerator;
 
   private CDOTimeProvider timeProvider;
 
@@ -1306,6 +1309,18 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  public Function<CDORevision, CDOID> getIDGenerator()
+  {
+    return idGenerator;
+  }
+
+  @Override
+  public void setIDGenerator(Function<CDORevision, CDOID> idGenerator)
+  {
+    this.idGenerator = idGenerator;
+  }
+
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
     if (considerCommitContext)
@@ -1669,6 +1684,11 @@ public class Repository extends Container<Object> implements InternalRepository
     if (CDOProtocolConstants.QUERY_LANGUAGE_XREFS.equals(language))
     {
       return new XRefsQueryHandler();
+    }
+
+    if (CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT.equals(language))
+    {
+      return new FingerPrintQueryHandler();
     }
 
     IStoreAccessor storeAccessor = StoreThreadLocal.getAccessor();

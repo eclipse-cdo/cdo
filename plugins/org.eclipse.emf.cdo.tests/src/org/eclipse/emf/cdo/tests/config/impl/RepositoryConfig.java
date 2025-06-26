@@ -21,8 +21,10 @@ import org.eclipse.emf.cdo.common.branch.CDODuplicateBranchException;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
+import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.common.util.CDOQueryInfo;
 import org.eclipse.emf.cdo.common.util.CountedTimeProvider;
 import org.eclipse.emf.cdo.internal.common.revision.NOOPRevisionCache;
@@ -383,6 +385,7 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
     container.setName("server");
 
     Net4jUtil.prepareContainer(container);
+    CDOCommonUtil.prepareContainer(container);
     CDONet4jServerUtil.prepareContainer(container);
 
     container.registerFactory(new ExecutorServiceFactory()
@@ -901,6 +904,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
 
     Map<String, String> repoProps = getRepositoryProperties();
     InternalRepository repository = createRepository(name, store, repoProps);
+
+    if (idGenerationLocation == IDGenerationLocation.CLIENT)
+    {
+      repository.setIDGenerator(revision -> CDOIDGenerator.UUID.generateCDOID(null));
+    }
 
     if (hasAnnotation(CountedTime.class))
     {

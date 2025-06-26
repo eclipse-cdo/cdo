@@ -23,11 +23,13 @@ import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDOListFactory;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionFactory;
+import org.eclipse.emf.cdo.internal.common.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataInputImpl;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.INotifier;
@@ -102,6 +104,14 @@ public final class CDOCommonUtil
 
   private CDOCommonUtil()
   {
+  }
+
+  /**
+   * @since 4.26
+   */
+  public static void prepareContainer(IManagedContainer container)
+  {
+    OM.BUNDLE.prepareContainer(container);
   }
 
   /**

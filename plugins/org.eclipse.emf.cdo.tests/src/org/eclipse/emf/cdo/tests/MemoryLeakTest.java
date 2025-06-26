@@ -79,7 +79,7 @@ public class MemoryLeakTest extends AbstractCDOTest
 
     try
     {
-      createModel(category, LEVELS, CATEGORIES, PRODUCTS, () -> commit());
+      createModel(category, LEVELS, CATEGORIES, PRODUCTS, this::commit);
     }
     catch (OutOfMemoryError error)
     {

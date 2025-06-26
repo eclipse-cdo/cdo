@@ -179,11 +179,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
 
         EClass eClass = getEClass();
         EStructuralFeature[] features = getAllPersistentFeatures();
-        readValue(in, eClass, features, RESOURCE_NODE_NAME_INDEX, true);
+        readValue(in, eClass, features[RESOURCE_NODE_NAME_INDEX], RESOURCE_NODE_NAME_INDEX, true);
 
         if (getClassInfo().isResourceFolder())
         {
-          if (!readValue(in, eClass, features, RESOURCE_FOLDER_NODES_INDEX, true))
+          if (!readValue(in, eClass, features[RESOURCE_FOLDER_NODES_INDEX], RESOURCE_FOLDER_NODES_INDEX, true))
           {
             flags &= ~UNCHUNKED_FLAG;
           }
@@ -247,13 +247,17 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     boolean unchunked = true;
     for (int i = 0; i < features.length; i++)
     {
-      unchunked = readValue(in, owner, features, i, unchunked);
+      unchunked = readValue(in, owner, features[i], i, unchunked);
     }
 
     return unchunked;
   }
 
-  private boolean readValue(CDODataInput in, EClass owner, EStructuralFeature[] features, int i, boolean unchunked) throws IOException
+  /**
+   * @since 4.26
+   */
+  @Override
+  public boolean readValue(CDODataInput in, EClass owner, EStructuralFeature feature, int i, boolean unchunked) throws IOException
   {
     Object value;
     byte unsetState = in.readByte();
@@ -267,7 +271,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       return unchunked;
     }
 
-    EStructuralFeature feature = features[i];
     if (feature.isMany())
     {
       CDOList list = in.readCDOList(owner, feature);
@@ -331,11 +334,11 @@ public abstract class BaseCDORevision extends AbstractCDORevision
       {
         EClass eClass = getEClass();
         EStructuralFeature[] features = getAllPersistentFeatures();
-        writeValue(out, eClass, features, RESOURCE_NODE_NAME_INDEX, referenceChunk);
+        writeValue(out, eClass, features[RESOURCE_NODE_NAME_INDEX], RESOURCE_NODE_NAME_INDEX, referenceChunk);
 
         if (getClassInfo().isResourceFolder())
         {
-          writeValue(out, eClass, features, RESOURCE_FOLDER_NODES_INDEX, referenceChunk);
+          writeValue(out, eClass, features[RESOURCE_FOLDER_NODES_INDEX], RESOURCE_FOLDER_NODES_INDEX, referenceChunk);
         }
       }
     }
@@ -397,30 +400,33 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     EStructuralFeature[] features = getAllPersistentFeatures();
     for (int i = 0; i < features.length; i++)
     {
-      writeValue(out, owner, features, i, referenceChunk);
+      writeValue(out, owner, features[i], i, referenceChunk);
     }
   }
 
-  private void writeValue(CDODataOutput out, EClass owner, EStructuralFeature[] features, int i, int referenceChunk) throws IOException
+  /**
+   * @since 4.26
+   */
+  @Override
+  public void writeValue(CDODataOutput out, EClass owner, EStructuralFeature feature, int i, int referenceChunk) throws IOException
   {
-    EStructuralFeature feature = features[i];
     Object value = getValue(i);
     if (value == null)
     {
-      // Feature is NOT set
+      // Feature IS NOT SET
       out.writeByte(UNSET_OPCODE);
       return;
     }
 
-    // Feature IS set
+    // Feature IS SET
     if (value == CDORevisionData.NIL)
     {
-      // Feature IS null
+      // Feature IS NULL
       out.writeByte(SET_NULL_OPCODE);
       return;
     }
 
-    // Feature is NOT null
+    // Feature IS NOT NULL
     out.writeByte(SET_NOT_NULL_OPCODE);
     if (feature.isMany())
     {

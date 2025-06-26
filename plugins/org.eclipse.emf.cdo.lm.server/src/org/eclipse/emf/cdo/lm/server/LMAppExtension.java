@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.lm.server;
 
+import org.eclipse.emf.cdo.common.util.CDOFingerPrinter;
+import org.eclipse.emf.cdo.internal.common.util.DigestFingerPrinter;
 import org.eclipse.emf.cdo.lm.DropType;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.ModuleType;
@@ -51,6 +53,11 @@ public class LMAppExtension extends AppExtension
       "org.eclipse.emf.cdo.lm.server.LMAppExtension.DEFAULT_LIFECYCLE_MANAGER_TYPE", //
       XMLLifecycleManager.Factory.DEFAULT_TYPE);
 
+  @SuppressWarnings("restriction")
+  private static final String DEFAULT_FINGER_PRINTER_TYPE = OMPlatform.INSTANCE.getProperty( //
+      "org.eclipse.emf.cdo.lm.server.LMAppExtension.DEFAULT_FINGER_PRINTER_TYPE", //
+      DigestFingerPrinter.Factory.TYPE);
+
   private static final Map<InternalRepository, XMLLifecycleManager> LIFECYCLE_MANAGERS = Collections.synchronizedMap(new HashMap<>());
 
   public LMAppExtension()
@@ -91,7 +98,10 @@ public class LMAppExtension extends AppExtension
     }
   }
 
-  private void configureLifecycleManager(InternalRepository repository, Element lmElement)
+  /**
+   * @since 1.7
+   */
+  protected void configureLifecycleManager(InternalRepository repository, Element lmElement)
   {
     String systemName = getAttribute(lmElement, "systemName");
     if (StringUtil.isEmpty(systemName))
@@ -130,10 +140,40 @@ public class LMAppExtension extends AppExtension
     Consumer<Process> processInitializer = createProcessInitializater(lmElement);
     lifecycleManager.setProcessInitializer(processInitializer);
 
+    configureFingerPrinter(lmElement, repository, lifecycleManager);
+
     OM.LOG.info("Activating lifecycle manager of repository " + repository.getName());
     lifecycleManager.activate();
 
     LIFECYCLE_MANAGERS.put(repository, lifecycleManager);
+  }
+
+  /**
+   * @since 1.7
+   */
+  protected void configureFingerPrinter(Element lmElement, InternalRepository repository, XMLLifecycleManager lifecycleManager)
+  {
+    try
+    {
+      XMLUtil.handleChildElements(lmElement, child -> {
+        if ("fingerPrinter".equals(child.getTagName()))
+        {
+          if (lifecycleManager.getFingerPrinter() == null)
+          {
+            CDOFingerPrinter fingerPrinter = createFingerPrinter(repository, child);
+            lifecycleManager.setFingerPrinter(fingerPrinter);
+          }
+          else
+          {
+            OM.LOG.info("Multiple finger printers specified. Using first.");
+          }
+        }
+      });
+    }
+    catch (Exception ex)
+    {
+      throw WrappedException.wrap(ex);
+    }
   }
 
   /**
@@ -148,7 +188,25 @@ public class LMAppExtension extends AppExtension
   {
     IManagedContainer container = repository.getContainer();
     String lifecycleManagerType = getDefaultLifecycleManagerType();
-    return getContainerElement(lmElement, lifecycleManagerType, "systemName", container);
+    return getContainerElement(lmElement, AbstractLifecycleManager.Factory.PRODUCT_GROUP, lifecycleManagerType, "systemName", container);
+  }
+
+  /**
+   * @since 1.7
+   */
+  protected String getDefaultFingerPrinterType()
+  {
+    return DEFAULT_FINGER_PRINTER_TYPE;
+  }
+
+  /**
+   * @since 1.7
+   */
+  protected CDOFingerPrinter createFingerPrinter(InternalRepository repository, Element lmElement)
+  {
+    IManagedContainer container = repository.getContainer();
+    String fingerPrinterType = getDefaultFingerPrinterType();
+    return getContainerElement(lmElement, CDOFingerPrinter.Factory.PRODUCT_GROUP, fingerPrinterType, "param", container);
   }
 
   /**
@@ -252,7 +310,7 @@ public class LMAppExtension extends AppExtension
     return result;
   }
 
-  private <T> T getContainerElement(Element element, String defaultType, String descriptionAttribute, IManagedContainer container)
+  private <T> T getContainerElement(Element element, String productGroup, String defaultType, String descriptionAttribute, IManagedContainer container)
   {
     String type = getAttribute(element, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
@@ -273,7 +331,7 @@ public class LMAppExtension extends AppExtension
     }
 
     @SuppressWarnings("unchecked")
-    T containerElement = (T)container.getElement(AbstractLifecycleManager.Factory.PRODUCT_GROUP, type, description, false);
+    T containerElement = (T)container.getElement(productGroup, type, description, false);
 
     return containerElement;
   }

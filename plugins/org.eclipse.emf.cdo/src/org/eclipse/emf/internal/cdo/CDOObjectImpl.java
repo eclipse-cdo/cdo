@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.internal.cdo.bundle.OM;
 import org.eclipse.emf.internal.cdo.messages.Messages;
 import org.eclipse.emf.internal.cdo.object.CDOLockImpl;
+import org.eclipse.emf.internal.cdo.transaction.CDOTransactionImpl;
 import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 
 import org.eclipse.net4j.util.ObjectUtil;
@@ -648,6 +649,9 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
   }
 
   /**
+   * @see CDOTransactionImpl#COPY_OBJECT_METHOD
+   * @see CDOTransactionImpl.CDOCommitContextImpl#applyNewCommitData()
+   *
    * @since 4.12
    */
   final void cdoInternalCopyTo(CDOObjectImpl other)

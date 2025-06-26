@@ -49,6 +49,8 @@
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="identity" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="chars" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="safe" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="hex" class="org.eclipse.net4j.util.StringConverter"/>
+      <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="base64" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="upper" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="lower" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="cap" class="org.eclipse.net4j.util.StringConverter"/>

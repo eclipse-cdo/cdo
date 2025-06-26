@@ -20,6 +20,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
+import java.util.Base64;
+import java.util.Base64.Encoder;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.function.Function;
@@ -59,6 +61,32 @@ public interface StringConverter extends Function<Object, String>
     public String apply(Object value)
     {
       return StringUtil.safe(value);
+    }
+  };
+
+  /**
+   * @since 3.27
+   */
+  public static final StringConverter HEX = new StringConverter()
+  {
+    @Override
+    public String apply(Object value)
+    {
+      return value == null ? null : HexUtil.bytesToHex((byte[])value);
+    }
+  };
+
+  /**
+   * @since 3.27
+   */
+  public static final StringConverter BASE64 = new StringConverter()
+  {
+    private final Encoder encoder = Base64.getEncoder();
+
+    @Override
+    public String apply(Object value)
+    {
+      return value == null ? null : encoder.encodeToString((byte[])value);
     }
   };
 
@@ -275,6 +303,8 @@ public interface StringConverter extends Function<Object, String>
         new SingletonFactory(PG, "identity", IDENTITY), //
         new SingletonFactory(PG, "chars", CHARS), //
         new SingletonFactory(PG, "safe", SAFE), //
+        new SingletonFactory(PG, "hex", HEX), //
+        new SingletonFactory(PG, "base64", BASE64), //
         new SingletonFactory(PG, "upper", UPPER), //
         new SingletonFactory(PG, "lower", LOWER), //
         new SingletonFactory(PG, "cap", CAP), //

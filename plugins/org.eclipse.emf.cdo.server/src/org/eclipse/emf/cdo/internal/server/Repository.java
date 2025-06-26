@@ -74,6 +74,7 @@ import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.StoreThreadLocal.NoSessionRegisteredException;
+import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationContext;
 import org.eclipse.emf.cdo.spi.common.CDOReplicationInfo;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
@@ -242,6 +243,8 @@ public class Repository extends Container<Object> implements InternalRepository
   private boolean ensuringReferentialIntegrity;
 
   private IDGenerationLocation idGenerationLocation;
+
+  private String lobDigestAlgorithm;
 
   private CommitInfoStorage commitInfoStorage;
 
@@ -485,6 +488,12 @@ public class Repository extends Container<Object> implements InternalRepository
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  @Override
+  public String getLobDigestAlgorithm()
+  {
+    return lobDigestAlgorithm;
   }
 
   @Override
@@ -2575,6 +2584,12 @@ public class Repository extends Container<Object> implements InternalRepository
     if (idGenerationLocation == null)
     {
       idGenerationLocation = IDGenerationLocation.STORE;
+    }
+
+    lobDigestAlgorithm = properties.get(Props.ID_GENERATION_LOCATION);
+    if (StringUtil.isEmpty(lobDigestAlgorithm))
+    {
+      lobDigestAlgorithm = CDOLobStoreImpl.DEFAULT_DIGEST_ALGORITHM;
     }
 
     // COMMIT_INFO_STORAGE

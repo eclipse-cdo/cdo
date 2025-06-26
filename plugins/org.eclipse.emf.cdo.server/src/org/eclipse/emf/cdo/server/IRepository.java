@@ -369,6 +369,11 @@ public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider,
     public static final String ID_GENERATION_LOCATION = "idGenerationLocation"; //$NON-NLS-1$
 
     /**
+     * @since 4.24
+     */
+    public static final String LOB_DIGEST_ALGORITHM = "lobDigestAlgorithm"; //$NON-NLS-1$
+
+    /**
      * Possible values: NO | YES | WITH_MERGE_SOURCE.
      *
      * @since 4.6

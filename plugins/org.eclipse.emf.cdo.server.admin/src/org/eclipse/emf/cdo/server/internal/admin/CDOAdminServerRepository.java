@@ -226,6 +226,12 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
   }
 
   @Override
+  public String getLobDigestAlgorithm()
+  {
+    return delegate.getLobDigestAlgorithm();
+  }
+
+  @Override
   public CommitInfoStorage getCommitInfoStorage()
   {
     return delegate.getCommitInfoStorage();
@@ -279,6 +285,7 @@ public class CDOAdminServerRepository extends Notifier implements CDOAdminReposi
     out.writeBoolean(isEnsuringReferentialIntegrity());
     out.writeBoolean(isAuthorizingOperations());
     out.writeEnum(getIDGenerationLocation());
+    out.writeString(getLobDigestAlgorithm());
     out.writeEnum(getCommitInfoStorage());
   }
 

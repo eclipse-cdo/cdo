@@ -42,6 +42,7 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
@@ -1030,6 +1031,9 @@ public class DBStoreTables extends Lifecycle
    */
   public static final class LobsTable extends DBStoreTable
   {
+    private static final int LOB_ID_LENGTH = //
+        OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable.LOB_ID_LENGTH", 64);
+
     private IDBField id;
 
     private IDBField size;
@@ -1227,7 +1231,7 @@ public class DBStoreTables extends Lifecycle
     @Override
     protected void firstActivate(IDBTable table)
     {
-      id = table.addField(NAMES.ID, DBType.VARCHAR, 64, true);
+      id = table.addField(NAMES.ID, DBType.VARCHAR, LOB_ID_LENGTH, true);
       size = table.addField(NAMES.SIZE, DBType.BIGINT);
       bdata = table.addField(NAMES.BDATA, DBType.BLOB);
       cdata = table.addField(NAMES.CDATA, DBType.CLOB);

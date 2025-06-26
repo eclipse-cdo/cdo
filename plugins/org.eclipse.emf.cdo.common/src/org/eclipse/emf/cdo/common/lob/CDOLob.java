@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 /**
  * A identifiable large object with streaming support.
@@ -36,7 +37,8 @@ public abstract class CDOLob<IO> extends CDOLobInfo
 
   CDOLob(IO contents, CDOLobStore store) throws IOException
   {
-    this.store = store;
+    this.store = Objects.requireNonNull(store);
+
     CDOLobInfo info = put(contents);
     id = info.getID();
     size = info.getSize();

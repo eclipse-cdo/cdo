@@ -800,7 +800,7 @@ public abstract class CDORepositoryImpl extends AbstractElement implements CDORe
 
     CDOSession session = sessionConfiguration.openSession();
     session.options().setGeneratedPackageEmulationEnabled(true);
-    session.options().setLobCache(new CDOLobStoreImpl(new File(getFolder(), "lobs")));
+    session.options().setLobCache(new CDOLobStoreImpl(new File(getFolder(), "lobs"), session.getRepositoryInfo().getLobDigestAlgorithm()));
 
     if (!SET_USER_NAME_REMOTE && SET_USER_NAME && StringUtil.isEmpty(session.getUserID()))
     {

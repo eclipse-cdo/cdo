@@ -214,6 +214,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       out.writeBoolean(repository.isEnsuringReferentialIntegrity());
       out.writeBoolean(repository.isAuthorizingOperations());
       out.writeEnum(repository.getIDGenerationLocation());
+      out.writeString(repository.getLobDigestAlgorithm());
       out.writeEnum(repository.getCommitInfoStorage());
 
       String[] authorizations = session.authorizeOperations(operations);

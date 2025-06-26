@@ -332,14 +332,14 @@ public abstract class SessionConfig extends Config implements ISessionConfig
 
   public void configureSession(CDOSession session)
   {
-    final File lobCache = getCurrentTest().getTempName("lobs_" + new Date().getTime() + "_", ".tmp");
-    session.options().setLobCache(new CDOLobStoreImpl(lobCache));
+    final File lobCacheFolder = getCurrentTest().getTempName("lobs_" + new Date().getTime() + "_", ".tmp");
+    session.options().setLobCache(new CDOLobStoreImpl(lobCacheFolder));
     session.addListener(new LifecycleEventAdapter()
     {
       @Override
       protected void onDeactivated(ILifecycle lifecycle)
       {
-        IOUtil.delete(lobCache);
+        IOUtil.delete(lobCacheFolder);
       }
     });
   }

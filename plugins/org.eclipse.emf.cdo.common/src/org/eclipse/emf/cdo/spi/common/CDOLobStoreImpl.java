@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.DigestWriter;
 import org.eclipse.net4j.util.io.ExpectedFileInputStream;
@@ -33,6 +34,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -42,35 +44,89 @@ import java.security.NoSuchAlgorithmException;
  */
 public class CDOLobStoreImpl implements CDOLobStore
 {
+  /**
+   * @since 4.26
+   */
+  public static final String DEFAULT_DIGEST_ALGORITHM = //
+      OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl.DEFAULT_DIGEST_ALGORITHM", "SHA-1");
+
   public static final CDOLobStoreImpl INSTANCE = new CDOLobStoreImpl();
 
-  private static final boolean ID_PREFIX_WITH_DEFAULT_CHARSET = OMPlatform.INSTANCE
-      .isProperty("org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl.ID_PREFIX_WITH_DEFAULT_CHARSET");
+  private static final boolean ID_PREFIX_WITH_DEFAULT_CHARSET = //
+      OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl.ID_PREFIX_WITH_DEFAULT_CHARSET");
 
-  private static final Charset ID_PREFIX_CHARSET = ID_PREFIX_WITH_DEFAULT_CHARSET ? Charset.defaultCharset() : StandardCharsets.UTF_8;
+  private static final String ID_PREFIX_CHARSET_NAME = //
+      OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl.ID_PREFIX_CHARSET");
+
+  private static final Charset ID_PREFIX_CHARSET = StringUtil.isEmpty(ID_PREFIX_CHARSET_NAME)
+      ? ID_PREFIX_WITH_DEFAULT_CHARSET ? Charset.defaultCharset() : StandardCharsets.UTF_8
+      : Charset.forName(ID_PREFIX_CHARSET_NAME);
 
   private static final byte[] ID_PREFIX_BINARY = "BINARY".getBytes(ID_PREFIX_CHARSET);
 
   private static final byte[] ID_PREFIX_CHARACTER = "CHARACTER".getBytes(ID_PREFIX_CHARSET);
 
-  private long timeout = IOUtil.DEFAULT_TIMEOUT;
+  private static final String EXTENSION_BLOB = ".blob";
 
-  private File folder;
+  private static final String EXTENSION_CLOB = ".clob";
+
+  private final File folder;
+
+  private final String digestAlgorithm;
 
   private int tempID;
 
-  public CDOLobStoreImpl(File folder)
+  private long timeout = IOUtil.DEFAULT_TIMEOUT;
+
+  /**
+   * @since 4.26
+   */
+  public CDOLobStoreImpl(File folder, String digestAlgorithm)
   {
-    this.folder = folder;
-    if (folder.exists())
+    this.folder = Objects.requireNonNullElseGet(folder, CDOLobStoreImpl::getDefaultFolder);
+    this.digestAlgorithm = Objects.requireNonNullElse(digestAlgorithm, DEFAULT_DIGEST_ALGORITHM);
+
+    if (this.folder.exists())
     {
       checkDirectory();
     }
   }
 
+  public CDOLobStoreImpl(File folder)
+  {
+    this(folder, null);
+  }
+
+  /**
+   * @since 4.26
+   */
+  public CDOLobStoreImpl(String digestAlgorithm)
+  {
+    this(null, digestAlgorithm);
+  }
+
   public CDOLobStoreImpl()
   {
-    this(getDefaultFolder());
+    this(null, null);
+  }
+
+  public File getFolder()
+  {
+    if (!folder.exists())
+    {
+      folder.mkdirs();
+    }
+
+    checkDirectory();
+    return folder;
+  }
+
+  /**
+   * @since 4.26
+   */
+  public String getDigestAlgorithm()
+  {
+    return digestAlgorithm;
   }
 
   /**
@@ -89,21 +145,10 @@ public class CDOLobStoreImpl implements CDOLobStore
     this.timeout = timeout;
   }
 
-  public File getFolder()
-  {
-    if (!folder.exists())
-    {
-      folder.mkdirs();
-    }
-
-    checkDirectory();
-    return folder;
-  }
-
   @Override
   public File getBinaryFile(byte[] id)
   {
-    return new File(getFolder(), HexUtil.bytesToHex(id) + ".blob");
+    return getFile(id, EXTENSION_BLOB);
   }
 
   @Override
@@ -145,7 +190,7 @@ public class CDOLobStoreImpl implements CDOLobStore
   @Override
   public File getCharacterFile(byte[] id)
   {
-    return new File(getFolder(), HexUtil.bytesToHex(id) + ".clob");
+    return getFile(id, EXTENSION_CLOB);
   }
 
   @Override
@@ -194,7 +239,7 @@ public class CDOLobStoreImpl implements CDOLobStore
   {
     try
     {
-      return MessageDigest.getInstance("SHA-1");
+      return MessageDigest.getInstance(digestAlgorithm);
     }
     catch (NoSuchAlgorithmException ex)
     {
@@ -207,6 +252,7 @@ public class CDOLobStoreImpl implements CDOLobStore
     for (;;)
     {
       ++tempID;
+
       File file = new File(getFolder(), "contents" + tempID + ".tmp");
       if (!file.exists())
       {
@@ -233,6 +279,11 @@ public class CDOLobStoreImpl implements CDOLobStore
     {
       throw new IORuntimeException("Not a folder: " + folder.getAbsolutePath());
     }
+  }
+
+  private File getFile(byte[] id, String extension)
+  {
+    return new File(getFolder(), HexUtil.bytesToHex(id) + extension);
   }
 
   private static File getDefaultFolder()

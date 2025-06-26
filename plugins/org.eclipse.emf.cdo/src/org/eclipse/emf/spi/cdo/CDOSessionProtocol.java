@@ -393,6 +393,8 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
 
     private IDGenerationLocation idGenerationLocation;
 
+    private String lobDigestAlgorithm;
+
     private CommitInfoStorage commitInfoStorage;
 
     private String[] authorizationResults;
@@ -434,6 +436,7 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
       ensuringReferentialIntegrity = in.readBoolean();
       authorizingOperations = in.readBoolean();
       idGenerationLocation = in.readEnum(IDGenerationLocation.class);
+      lobDigestAlgorithm = in.readString();
       commitInfoStorage = in.readEnum(CommitInfoStorage.class);
 
       authorizationResults = new String[in.readXInt()];
@@ -640,6 +643,12 @@ public interface CDOSessionProtocol extends CDOProtocol, PackageLoader, BranchLo
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
+    }
+
+    @Override
+    public String getLobDigestAlgorithm()
+    {
+      return lobDigestAlgorithm;
     }
 
     /**

@@ -79,6 +79,11 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public IDGenerationLocation getIDGenerationLocation();
 
   /**
+   * @since 4.26
+   */
+  public String getLobDigestAlgorithm();
+
+  /**
    * @since 4.6
    */
   public CommitInfoStorage getCommitInfoStorage();

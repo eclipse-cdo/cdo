@@ -76,8 +76,13 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
 
   private IDGenerationLocation idGenerationLocation;
 
+  private String lobDigestAlgorithm;
+
   private CommitInfoStorage commitInfoStorage;
 
+  /*
+   * @see org.eclipse.emf.cdo.server.internal.admin.CDOAdminServerRepository.write(ExtendedDataOutputStream).
+   */
   public CDOAdminClientRepositoryImpl(CDOAdminClientImpl admin, ExtendedDataInputStream in) throws IOException
   {
     this.admin = admin;
@@ -114,6 +119,7 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
     ensuringReferentialIntegrity = in.readBoolean();
     authorizingOperations = in.readBoolean();
     idGenerationLocation = in.readEnum(IDGenerationLocation.class);
+    lobDigestAlgorithm = in.readString();
     commitInfoStorage = in.readEnum(CommitInfoStorage.class);
   }
 
@@ -230,6 +236,12 @@ public class CDOAdminClientRepositoryImpl extends Notifier implements CDOAdminCl
   public IDGenerationLocation getIDGenerationLocation()
   {
     return idGenerationLocation;
+  }
+
+  @Override
+  public String getLobDigestAlgorithm()
+  {
+    return lobDigestAlgorithm;
   }
 
   @Override

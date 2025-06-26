@@ -1052,6 +1052,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     }
 
     @Override
+    public String getLobDigestAlgorithm()
+    {
+      return repository.getLobDigestAlgorithm();
+    }
+
+    @Override
     public CommitInfoStorage getCommitInfoStorage()
     {
       return repository.getCommitInfoStorage();

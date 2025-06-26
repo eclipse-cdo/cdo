@@ -192,6 +192,8 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
 
     private IDGenerationLocation idGenerationLocation;
 
+    private String lobDigestAlgorithm;
+
     private CommitInfoStorage commitInfoStorage;
 
     private InternalCDOSession session;
@@ -217,6 +219,7 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
       ensuringReferentialIntegrity = result.isEnsuringReferentialIntegrity();
       authorizingOperations = result.isAuthorizingOperations();
       idGenerationLocation = result.getIDGenerationLocation();
+      lobDigestAlgorithm = result.getLobDigestAlgorithm();
       commitInfoStorage = result.getCommitInfoStorage();
     }
 
@@ -380,6 +383,12 @@ public class CDONet4jSessionConfigurationImpl extends CDOSessionConfigurationImp
     public IDGenerationLocation getIDGenerationLocation()
     {
       return idGenerationLocation;
+    }
+
+    @Override
+    public String getLobDigestAlgorithm()
+    {
+      return lobDigestAlgorithm;
     }
 
     @Override

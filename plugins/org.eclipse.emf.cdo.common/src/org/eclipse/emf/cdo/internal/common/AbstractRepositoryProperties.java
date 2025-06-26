@@ -193,6 +193,17 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
       }
     });
 
+    add(new Property<RECEIVER>("lobDigestAlgorithm", Messages.getString("RepositoryPropertyTester_46"), //
+        Messages.getString("RepositoryPropertyTester_47"), //$NON-NLS-1$
+        CATEGORY_REPOSITORY)
+    {
+      @Override
+      protected Object eval(RECEIVER receiver)
+      {
+        return getRepository(receiver).getLobDigestAlgorithm();
+      }
+    });
+
     add(new Property<RECEIVER>("commitInfoStorage", Messages.getString("RepositoryPropertyTester_42"), //
         Messages.getString("RepositoryPropertyTester_43"), //$NON-NLS-1$
         CATEGORY_REPOSITORY)
@@ -292,6 +303,12 @@ public abstract class AbstractRepositoryProperties<RECEIVER> extends Properties<
 
   @Override
   public IDGenerationLocation getIDGenerationLocation()
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  public String getLobDigestAlgorithm()
   {
     throw new UnsupportedOperationException();
   }

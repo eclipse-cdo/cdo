@@ -24,6 +24,7 @@
     <property name="ensureReferentialIntegrity" value="false"/>
     <property name="allowInterruptRunningQueries" value="true"/>
     <property name="idGenerationLocation" value="STORE"/> <!-- Possible values: STORE | CLIENT -->
+    <property name="lobDigestAlgorithm" value="SHA-1"/>
     <property name="commitInfoStorage" value="WITH_MERGE_SOURCE"/> <!-- Possible values: NO | YES | WITH_MERGE_SOURCE -->
     <property name="serializeCommits" value="false"/>
     <property name="optimisticLockingTimeout" value="10000"/>

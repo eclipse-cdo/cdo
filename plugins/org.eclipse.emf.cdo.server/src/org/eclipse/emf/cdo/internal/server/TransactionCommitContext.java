@@ -1591,7 +1591,7 @@ public class TransactionCommitContext implements InternalCommitContext
           if (idAndVersion instanceof InternalCDORevision)
           {
             InternalCDORevision newObject = (InternalCDORevision)idAndVersion;
-            if (force || newObject.getID().isTemporary())
+            if (force || isNewObject(newObject.getID()))
             {
               newObjectsList.add(newObject);
             }
@@ -1664,6 +1664,21 @@ public class TransactionCommitContext implements InternalCommitContext
       dirtyObjectDeltas = dirtyObjectDeltasList.toArray(new InternalCDORevisionDelta[dirtyObjectDeltasList.size()]);
       dirtyObjects = dirtyObjectsList.toArray(new InternalCDORevision[dirtyObjectsList.size()]);
     }
+  }
+
+  protected boolean isNewObject(CDOID id)
+  {
+    if (id.isTemporary())
+    {
+      return true;
+    }
+
+    if (originalCommmitData != null && originalCommmitData.isNewObject(id))
+    {
+      return true;
+    }
+
+    return false;
   }
 
   protected void checkContainmentCycles()

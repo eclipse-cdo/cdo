@@ -372,6 +372,25 @@ public interface CDOProtocol extends CDOProtocolConstants
       }
     }
 
+    /**
+     * @since 4.26
+     */
+    public boolean isNewObject(CDOID id)
+    {
+      if (newObjects != null)
+      {
+        for (int i = 0; i < newObjects.length; i++)
+        {
+          if (newObjects[i].getID() == id)
+          {
+            return true;
+          }
+        }
+      }
+
+      return false;
+    }
+
     public InternalCDORevision[] getNewObjects()
     {
       return newObjects;

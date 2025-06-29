@@ -121,7 +121,6 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.Entity;
-import org.eclipse.net4j.util.collection.Entity.ComposedStore;
 import org.eclipse.net4j.util.collection.Entity.SingleNamespaceStore;
 import org.eclipse.net4j.util.collection.Entity.Store;
 import org.eclipse.net4j.util.collection.MoveableList;
@@ -1302,6 +1301,25 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     checkInactive();
     this.entityStore = entityStore;
+  }
+
+  @Override
+  public void addEntityStore(Store entityStore)
+  {
+    Entity.ComposedStore composedStore;
+
+    if (this.entityStore instanceof Entity.ComposedStore)
+    {
+      composedStore = (Entity.ComposedStore)this.entityStore;
+    }
+    else
+    {
+      composedStore = new Entity.ComposedStore();
+      composedStore.addStore(this.entityStore);
+      this.entityStore = composedStore;
+    }
+
+    composedStore.addStore(entityStore);
   }
 
   @Override
@@ -3215,7 +3233,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     protected Entity.Store createEntityStore()
     {
-      ComposedStore composedStore = new Entity.ComposedStore();
+      Entity.ComposedStore composedStore = new Entity.ComposedStore();
 
       Map<String, SingleNamespaceStore> stores = new HashMap<>();
       for (Entity entity : getEntities().values())

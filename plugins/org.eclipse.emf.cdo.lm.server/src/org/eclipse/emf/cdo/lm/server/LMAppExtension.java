@@ -56,7 +56,7 @@ public class LMAppExtension extends AppExtension
   @SuppressWarnings("restriction")
   private static final String DEFAULT_FINGER_PRINTER_TYPE = OMPlatform.INSTANCE.getProperty( //
       "org.eclipse.emf.cdo.lm.server.LMAppExtension.DEFAULT_FINGER_PRINTER_TYPE", //
-      DigestFingerPrinter.Factory.TYPE);
+      DigestFingerPrinter.TYPE);
 
   private static final Map<InternalRepository, XMLLifecycleManager> LIFECYCLE_MANAGERS = Collections.synchronizedMap(new HashMap<>());
 
@@ -162,6 +162,9 @@ public class LMAppExtension extends AppExtension
           {
             CDOFingerPrinter fingerPrinter = createFingerPrinter(repository, child);
             lifecycleManager.setFingerPrinter(fingerPrinter);
+
+            String automatic = getAttribute(child, "automatic");
+            lifecycleManager.setAutoFingerPrinting(StringUtil.isTrue(automatic));
           }
           else
           {
@@ -187,8 +190,8 @@ public class LMAppExtension extends AppExtension
   protected XMLLifecycleManager createLifecycleManager(InternalRepository repository, Element lmElement)
   {
     IManagedContainer container = repository.getContainer();
-    String lifecycleManagerType = getDefaultLifecycleManagerType();
-    return getContainerElement(lmElement, AbstractLifecycleManager.Factory.PRODUCT_GROUP, lifecycleManagerType, "systemName", container);
+    String defaultLifecycleManagerType = getDefaultLifecycleManagerType();
+    return getContainerElement(lmElement, AbstractLifecycleManager.Factory.PRODUCT_GROUP, defaultLifecycleManagerType, "systemName", container);
   }
 
   /**
@@ -205,8 +208,8 @@ public class LMAppExtension extends AppExtension
   protected CDOFingerPrinter createFingerPrinter(InternalRepository repository, Element lmElement)
   {
     IManagedContainer container = repository.getContainer();
-    String fingerPrinterType = getDefaultFingerPrinterType();
-    return getContainerElement(lmElement, CDOFingerPrinter.Factory.PRODUCT_GROUP, fingerPrinterType, "param", container);
+    String defaultFingerPrinterType = getDefaultFingerPrinterType();
+    return getContainerElement(lmElement, CDOFingerPrinter.Factory.PRODUCT_GROUP, defaultFingerPrinterType, "param", container);
   }
 
   /**

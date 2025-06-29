@@ -112,6 +112,11 @@ public interface InternalRepository extends IRepository, //
   public void setEntityStore(Entity.Store entityStore);
 
   /**
+   * @since 4.24
+   */
+  public void addEntityStore(Entity.Store entityStore);
+
+  /**
    * @since 4.6
    */
   public CDOTimeProvider getTimeProvider();

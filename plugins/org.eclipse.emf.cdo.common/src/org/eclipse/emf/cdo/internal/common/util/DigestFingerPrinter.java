@@ -34,6 +34,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class DigestFingerPrinter implements CDOFingerPrinter
 {
+  public static final String TYPE = "digest"; //$NON-NLS-1$
+
   public static final String DEFAULT_ALGORITHM = "SHA-512";
 
   public static final String DEFAULT_ENCODER = "base64";
@@ -73,6 +75,12 @@ public class DigestFingerPrinter implements CDOFingerPrinter
     localIDs = tokens.length < 3 ? false : LOCAL_IDS.equalsIgnoreCase(tokens[2]);
 
     this.param = algorithm + SEPARATOR + encoderName + (localIDs ? SEPARATOR + LOCAL_IDS : "");
+  }
+
+  @Override
+  public final String getType()
+  {
+    return TYPE;
   }
 
   @Override
@@ -123,8 +131,6 @@ public class DigestFingerPrinter implements CDOFingerPrinter
    */
   public static class Factory extends CDOFingerPrinter.Factory implements ContainerAware
   {
-    public static final String TYPE = "digest"; //$NON-NLS-1$
-
     private IManagedContainer container = IPluginContainer.INSTANCE;
 
     public Factory()

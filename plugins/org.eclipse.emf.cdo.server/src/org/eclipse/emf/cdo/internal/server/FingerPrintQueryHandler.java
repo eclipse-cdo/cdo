@@ -32,7 +32,7 @@ import org.eclipse.net4j.util.factory.ProductCreationException;
  */
 public class FingerPrintQueryHandler implements IQueryHandler
 {
-  private static final String DEFAULT_TYPE = DigestFingerPrinter.Factory.TYPE;
+  private static final String DEFAULT_TYPE = DigestFingerPrinter.TYPE;
 
   private static final String DEFAULT_PARAM = "SHA-512,base64";
 

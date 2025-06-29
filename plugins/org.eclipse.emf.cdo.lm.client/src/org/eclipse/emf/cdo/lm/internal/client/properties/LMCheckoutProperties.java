@@ -16,31 +16,41 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 
 import org.eclipse.net4j.util.properties.DefaultPropertyTester;
 import org.eclipse.net4j.util.properties.IProperties;
-import org.eclipse.net4j.util.properties.Properties;
 import org.eclipse.net4j.util.properties.Property;
 
 /**
  * @author Eike Stepper
  */
-public class CheckoutProperties extends Properties<CDOCheckout>
+public class LMCheckoutProperties extends AbstractLMProperties<CDOCheckout>
 {
-  public static final IProperties<CDOCheckout> INSTANCE = new CheckoutProperties();
+  public static final IProperties<CDOCheckout> INSTANCE = new LMCheckoutProperties();
 
   public static final String CATEGORY_CHECKOUT = "Checkout"; //$NON-NLS-1$
 
-  private CheckoutProperties()
+  private LMCheckoutProperties()
   {
     super(CDOCheckout.class);
+  }
 
+  @Override
+  protected IAssemblyDescriptor getAssemblyDescriptor(CDOCheckout checkout)
+  {
+    return IAssemblyManager.INSTANCE.getDescriptor(checkout);
+  }
+
+  @Override
+  protected void initProperties()
+  {
     add(new Property<CDOCheckout>("isModule")
     {
       @Override
       protected Object eval(CDOCheckout checkout)
       {
-        IAssemblyDescriptor descriptor = IAssemblyManager.INSTANCE.getDescriptor(checkout);
-        return descriptor != null;
+        return getAssemblyDescriptor(checkout) != null;
       }
     });
+
+    super.initProperties();
   }
 
   public static void main(String[] args)

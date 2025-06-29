@@ -67,7 +67,8 @@ public class DropReviewBranchPointProvider implements BaselineBranchPointProvide
     }
 
     CDORevision delivery = provider.getRevision(deliveryID);
-    CDOBranchPointRef mergeTarget = (CDOBranchPointRef)((InternalCDORevision)delivery).getValue(LMPackage.Literals.DELIVERY__MERGE_TARGET);
+    String mergeTargetSring = (String)((InternalCDORevision)delivery).getValue(LMPackage.Literals.DELIVERY__MERGE_TARGET);
+    CDOBranchPointRef mergeTarget = new CDOBranchPointRef(mergeTargetSring);
     return mergeTarget.getTimeStamp();
   }
 

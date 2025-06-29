@@ -30,7 +30,6 @@ import org.eclipse.emf.cdo.common.util.CDOFingerPrinter;
 import org.eclipse.emf.cdo.common.util.CDOFingerPrinter.FingerPrint;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
-import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.FloatingBaseline;
 import org.eclipse.emf.cdo.lm.LMFactory;
 import org.eclipse.emf.cdo.lm.LMPackage;
@@ -43,6 +42,8 @@ import org.eclipse.emf.cdo.lm.impl.SystemImpl;
 import org.eclipse.emf.cdo.lm.internal.server.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
+import org.eclipse.emf.cdo.lm.util.LMEntities;
+import org.eclipse.emf.cdo.lm.util.LMFingerPrintAnnotation;
 import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.net4j.CDONet4jSessionConfiguration;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
@@ -78,6 +79,7 @@ import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
+import org.eclipse.net4j.util.collection.Entity.SingleNamespaceStore;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.Event;
@@ -187,6 +189,8 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   private CDOFingerPrinter fingerPrinter;
 
+  private boolean autoFingerPrinting;
+
   private boolean credentialsBasedLogin;
 
   @ExcludeFromDump
@@ -266,6 +270,23 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   {
     checkInactive();
     this.fingerPrinter = fingerPrinter;
+  }
+
+  /**
+   * @since 1.7
+   */
+  public boolean isAutoFingerPrinting()
+  {
+    return autoFingerPrinting;
+  }
+
+  /**
+   * @since 1.7
+   */
+  public void setAutoFingerPrinting(boolean autoFingerPrinting)
+  {
+    checkInactive();
+    this.autoFingerPrinting = autoFingerPrinting;
   }
 
   /**
@@ -431,6 +452,17 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
       addModule(moduleName, moduleTypeName);
     }
 
+    SingleNamespaceStore entityStore = new SingleNamespaceStore(LMEntities.NAMESPACE);
+    if (fingerPrinter != null)
+    {
+      entityStore.addEntity(LMEntities.FINGER_PRINTER) //
+          .property(LMEntities.FINGER_PRINTER_TYPE, fingerPrinter.getType()) //
+          .property(LMEntities.FINGER_PRINTER_PARAM, fingerPrinter.getParam()) //
+          .property(LMEntities.FINGER_PRINTER_AUTOMATIC, Boolean.toString(autoFingerPrinting)) //
+          .build();
+    }
+
+    systemRepository.addEntityStore(entityStore);
     systemRepository.addHandler(writeAccessHandler);
   }
 
@@ -647,7 +679,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
   protected void handleBaselineAddition(CommitContext commitContext, InternalCDORevision addedContent)
   {
-    if (fingerPrinter != null)
+    if (fingerPrinter != null && autoFingerPrinting)
     {
       EClass eClass = addedContent.getEClass();
       if (FIXED_BASELINE.isSuperTypeOf(eClass))
@@ -692,14 +724,15 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     commitContext.modify(context -> {
       InternalCDORevision annotation = (InternalCDORevision)context.attachNewObject( //
           fixedBaseline.getID(), EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, EtypesPackage.Literals.ANNOTATION);
-      annotation.setValue(EtypesPackage.Literals.ANNOTATION__SOURCE, FixedBaseline.FINGER_PRINT_ANNOTATION_SOURCE);
-      addAnnotationDetail(context, annotation, FixedBaseline.FINGER_PRINT_ANNOTATION_DETAIL_VALUE, value);
+      annotation.setValue(EtypesPackage.Literals.ANNOTATION__SOURCE, LMFingerPrintAnnotation.ANNOTATION_SOURCE);
+
+      addAnnotationDetail(context, annotation, LMFingerPrintAnnotation.ANNOTATION_DETAIL_VALUE, value);
 
       long count = fingerPrint.getCount();
-      addAnnotationDetail(context, annotation, FixedBaseline.FINGER_PRINT_ANNOTATION_DETAIL_COUNT, Long.toString(count));
+      addAnnotationDetail(context, annotation, LMFingerPrintAnnotation.ANNOTATION_DETAIL_COUNT, Long.toString(count));
 
       String param = fingerPrint.getParam();
-      addAnnotationDetail(context, annotation, FixedBaseline.FINGER_PRINT_ANNOTATION_DETAIL_PARAM, param);
+      addAnnotationDetail(context, annotation, LMFingerPrintAnnotation.ANNOTATION_DETAIL_PARAM, param);
     });
   }
 

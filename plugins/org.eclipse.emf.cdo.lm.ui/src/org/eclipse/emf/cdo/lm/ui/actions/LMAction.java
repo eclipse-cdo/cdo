@@ -307,8 +307,9 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
   {
     private final StructuredViewer viewer;
 
-    public NewElement(IWorkbenchPage page, StructuredViewer viewer, String text, String toolTipText, ImageDescriptor image, String bannerMessage,
-        String bannerImagePath, CONTEXT context)
+    public NewElement(IWorkbenchPage page, StructuredViewer viewer, //
+        String text, String toolTipText, ImageDescriptor image, //
+        String bannerMessage, String bannerImagePath, CONTEXT context)
     {
       super(page, text, toolTipText, image, bannerMessage, bannerImagePath, context);
       this.viewer = viewer;

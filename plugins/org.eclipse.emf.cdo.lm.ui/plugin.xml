@@ -13,25 +13,23 @@
 
 <plugin>
 
-    <extension point="org.eclipse.net4j.util.factories">
-       <factory
-             productGroup="org.eclipse.emf.cdo.lm.modules.targetNameProviders"
-             type="lm"
-             class="org.eclipse.emf.cdo.lm.ui.LMTargetNameProvider$Factory"/>
-       <factory
-             productGroup="org.eclipse.net4j.util.ui.menuFillers"
-             type="lm"
-             class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory"/>
-       <factory
-             productGroup="org.eclipse.emf.cdo.ui.historyInputObjectModifiers"
-             type="lm"
-             class="org.eclipse.emf.cdo.lm.ui.LMHistoryInputObjectModifier$Factory"/>
-       <factory
-             productGroup="org.eclipse.emf.cdo.ui.loadResourceProviders"
-             type="lm"
-             class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory"/>
-    </extension>
+   <extension point="org.eclipse.net4j.util.factories">
+       <factory productGroup="org.eclipse.emf.cdo.lm.modules.targetNameProviders" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMTargetNameProvider$Factory"/>
+       <factory productGroup="org.eclipse.net4j.util.ui.menuFillers" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMMenuFiller$Factory"/>
+       <factory productGroup="org.eclipse.net4j.util.ui.propertyExtenders" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMPropertyExtender$Factory"/>
+       <factory productGroup="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMHistoryInputObjectModifier$Factory"/>
+       <factory productGroup="org.eclipse.emf.cdo.ui.loadResourceProviders" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory"/>
+   </extension>
 
+   <extension point="org.eclipse.core.runtime.adapters">
+     <factory
+           adaptableType="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor"
+           class="org.eclipse.emf.cdo.lm.ui.properties.LMPropertiesAdapterFactory">
+        <adapter type="org.eclipse.ui.views.properties.IPropertySourceProvider"/>
+        <adapter type="org.eclipse.ui.IActionFilter"/>
+     </factory>
+   </extension>
+    
    <extension point="org.eclipse.ui.views">
       <view
             category="org.eclipse.emf.cdo"
@@ -64,11 +62,16 @@
       </decorator>
    </extension>
 
+
   <extension point="org.eclipse.ui.commands">
       <command
             id="org.eclipse.emf.cdo.lm.InstallUpdates"
             name="%install.updates.name"
             defaultHandler="org.eclipse.emf.cdo.lm.ui.actions.InstallUpdatesHandler"/>
+      <command
+            id="org.eclipse.emf.cdo.lm.VerifyFingerPrint"
+            name="%verify.finger.print.name"
+            defaultHandler="org.eclipse.emf.cdo.lm.ui.actions.VerifyFingerPrintHandler"/>
   </extension>
 
   <extension point="org.eclipse.ui.handlers">
@@ -83,28 +86,60 @@
             </iterate>
          </activeWhen>
       </handler>
+      <handler
+            class="org.eclipse.emf.cdo.lm.ui.actions.VerifyFingerPrintHandler"
+            commandId="org.eclipse.emf.cdo.lm.VerifyFingerPrint">
+         <activeWhen>
+            <iterate ifEmpty="false">
+                <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
+                   <test property="org.eclipse.emf.cdo.lm.assembly.baselineHasFingerPrint" value="true"/>
+                </adapt>
+            </iterate>
+         </activeWhen>
+      </handler>
   </extension>
 
   <extension point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
-         <command
-               commandId="org.eclipse.emf.cdo.lm.InstallUpdates"
-               icon="icons/Update.gif"
-               label="%install.updates.label"
-               style="push"
-               tooltip="%install.updates.tooltip">
-            <visibleWhen checkEnabled="false">
-               <with variable="activeMenuSelection">
-                  <iterate ifEmpty="false">
-                    <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
-                       <test property="org.eclipse.emf.cdo.lm.assembly.updatesAvailable" value="true"/>
-                    </adapt>
-                  </iterate>
-               </with>
-            </visibleWhen>
-         </command>
+         <menu
+               id="org.eclipse.emf.cdo.lm"
+               label="%lifecycle.management.label"
+               tooltip="%lifecycle.management.tooltip">
+           <command
+                 commandId="org.eclipse.emf.cdo.lm.InstallUpdates"
+                 icon="icons/Update.gif"
+                 label="%install.updates.label"
+                 style="push"
+                 tooltip="%install.updates.tooltip">
+              <visibleWhen checkEnabled="false">
+                 <with variable="activeMenuSelection">
+                    <iterate ifEmpty="false">
+                      <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
+                         <test property="org.eclipse.emf.cdo.lm.assembly.updatesAvailable" value="true"/>
+                      </adapt>
+                    </iterate>
+                 </with>
+              </visibleWhen>
+           </command>
+           <command
+                 commandId="org.eclipse.emf.cdo.lm.VerifyFingerPrint"
+                 icon="icons/FingerPrint.gif"
+                 label="%verify.finger.print.label"
+                 style="push"
+                 tooltip="%verify.finger.print.tooltip">
+              <visibleWhen checkEnabled="false">
+                 <with variable="activeMenuSelection">
+                    <iterate ifEmpty="false">
+                      <adapt type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor">
+                         <test property="org.eclipse.emf.cdo.lm.assembly.baselineHasFingerPrint" value="true"/>
+                      </adapt>
+                    </iterate>
+                 </with>
+              </visibleWhen>
+           </command>
+         </menu>
       </menuContribution>
   </extension>
 

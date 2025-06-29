@@ -23,6 +23,7 @@
      <productGroup id="org.eclipse.net4j.util.ui.entryControlAdvisors" name="%productGroup.name.4"/>
      <productGroup id="org.eclipse.net4j.util.ui.chatRenderers" name="%productGroup.name.5"/>
      <productGroup id="org.eclipse.net4j.util.ui.avatarGenerators" name="%productGroup.name.6"/>
+     <productGroup id="org.eclipse.net4j.util.ui.propertyExtenders" name="%productGroup.name.7"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

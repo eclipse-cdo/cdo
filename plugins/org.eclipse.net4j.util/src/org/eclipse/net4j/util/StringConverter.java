@@ -65,7 +65,7 @@ public interface StringConverter extends Function<Object, String>
   };
 
   /**
-   * @since 3.27
+   * @since 3.28
    */
   public static final StringConverter HEX = new StringConverter()
   {
@@ -77,7 +77,7 @@ public interface StringConverter extends Function<Object, String>
   };
 
   /**
-   * @since 3.27
+   * @since 3.28
    */
   public static final StringConverter BASE64 = new StringConverter()
   {

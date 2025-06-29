@@ -10,16 +10,21 @@
  */
 package org.eclipse.emf.cdo.lm.ui;
 
+import org.eclipse.emf.cdo.common.util.CDOFingerPrinter.FingerPrint;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.explorer.ui.checkouts.actions.ShowInActionProvider;
 import org.eclipse.emf.cdo.explorer.ui.repositories.CDORepositoriesView;
+import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
+import org.eclipse.emf.cdo.lm.ui.actions.AttachFingerPrintAction;
+import org.eclipse.emf.cdo.lm.ui.actions.VerifyFingerPrintAction;
 import org.eclipse.emf.cdo.lm.ui.views.AssembliesView;
 import org.eclipse.emf.cdo.lm.ui.views.SystemsView;
+import org.eclipse.emf.cdo.lm.util.LMFingerPrintAnnotation;
 
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.ui.MenuFiller;
@@ -43,8 +48,9 @@ public class LMMenuFiller implements MenuFiller
   @Override
   public boolean fillMenu(IWorkbenchPage page, StructuredViewer viewer, IMenuManager menu, Object selectedElement)
   {
-    if (selectedElement instanceof CDOCheckout //
-        && ShowInActionProvider.ID.equals(menu.getId()))
+    boolean changed = false;
+
+    if (selectedElement instanceof CDOCheckout && ShowInActionProvider.ID.equals(menu.getId()))
     {
       CDOCheckout checkout = (CDOCheckout)selectedElement;
 
@@ -69,7 +75,7 @@ public class LMMenuFiller implements MenuFiller
           }
         });
 
-        return true;
+        changed = true;
       }
     }
     else if (selectedElement instanceof CDORepository //
@@ -90,11 +96,27 @@ public class LMMenuFiller implements MenuFiller
           }
         });
 
-        return true;
+        changed = true;
       }
     }
+    else if (selectedElement instanceof FixedBaseline)
+    {
+      FixedBaseline fixedBaseline = (FixedBaseline)selectedElement;
 
-    return false;
+      FingerPrint fingerPrint = LMFingerPrintAnnotation.getFingerPrint(fixedBaseline);
+      if (fingerPrint == null)
+      {
+        menu.add(new AttachFingerPrintAction(page, viewer, fixedBaseline));
+      }
+      else
+      {
+        menu.add(new VerifyFingerPrintAction(page, viewer, fixedBaseline));
+      }
+
+      changed = true;
+    }
+
+    return changed;
   }
 
   /**

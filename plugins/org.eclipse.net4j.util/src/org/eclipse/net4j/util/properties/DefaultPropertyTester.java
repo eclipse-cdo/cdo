@@ -98,7 +98,7 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
 
   public void dumpContributionMarkup()
   {
-    System.out.println("   <extension point=\"org.eclipse.core.expressions.propertyTesters\">");
+    // System.out.println(" <extension point=\"org.eclipse.core.expressions.propertyTesters\">");
     System.out.println("      <propertyTester");
     System.out.println("         id=\"" + getNamespace() + ".properties\"");
     System.out.println("         type=\"" + getReceiverTypeName() + "\"");
@@ -122,7 +122,7 @@ public class DefaultPropertyTester<RECEIVER> extends PropertyTester implements I
 
     System.out.println("\"");
     System.out.println("         class=\"" + getClass().getName() + "\"/>");
-    System.out.println("   </extension>");
+    // System.out.println(" </extension>");
 
   }
 }

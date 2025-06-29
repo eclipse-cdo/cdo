@@ -31,14 +31,14 @@
          id="org.eclipse.emf.cdo.lm.checkout.properties"
          type="org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout"
          namespace="org.eclipse.emf.cdo.lm.checkout"
-         properties="isModule"
-         class="org.eclipse.emf.cdo.lm.internal.client.properties.CheckoutProperties$Tester"/>
-     <propertyTester
+         properties="isModule,moduleName,moduleType,systemName,baselineName,baselineTypeName,baselineTypeAndName,baselineType,baselineFloating,baselineHasFingerPrint,baselineFingerPrint,streamName,streamCodeName,streamModeName,streamVersion,updatesAvailable"
+         class="org.eclipse.emf.cdo.lm.internal.client.properties.LMCheckoutProperties$Tester"/>
+      <propertyTester
          id="org.eclipse.emf.cdo.lm.assembly.properties"
          type="org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor"
          namespace="org.eclipse.emf.cdo.lm.assembly"
-         properties="moduleName,systemName,baselineName,baselineTypeName,baselineType,updatesAvailable"
-         class="org.eclipse.emf.cdo.lm.internal.client.properties.ModuleCheckoutProperties$Tester"/>
+         properties="moduleName,moduleType,systemName,baselineName,baselineTypeName,baselineTypeAndName,baselineType,baselineFloating,baselineHasFingerPrint,baselineFingerPrint,streamName,streamCodeName,streamModeName,streamVersion,updatesAvailable"
+         class="org.eclipse.emf.cdo.lm.internal.client.properties.LMModuleCheckoutProperties$Tester"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.viewProviders">

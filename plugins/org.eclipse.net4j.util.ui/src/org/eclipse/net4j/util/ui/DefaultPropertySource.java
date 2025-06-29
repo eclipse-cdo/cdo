@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.ui;
 
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.properties.IPropertyProvider;
 import org.eclipse.net4j.util.properties.Property;
 
@@ -32,18 +34,18 @@ import java.util.Objects;
  */
 public class DefaultPropertySource<RECEIVER> implements IPropertySource
 {
-  private Map<Object, IPropertyDescriptor> descriptors = new LinkedHashMap<>();
+  private final Map<Object, IPropertyDescriptor> descriptors = new LinkedHashMap<>();
 
-  private RECEIVER receiver;
+  private final RECEIVER receiver;
 
   public DefaultPropertySource(RECEIVER receiver)
   {
     this.receiver = receiver;
   }
 
-  public DefaultPropertySource(RECEIVER object, IPropertyProvider<RECEIVER> provider)
+  public DefaultPropertySource(RECEIVER receiver, IPropertyProvider<RECEIVER> provider)
   {
-    this(object);
+    this(receiver);
     addDescriptors(provider);
   }
 
@@ -67,6 +69,20 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
     return true;
   }
 
+  /**
+   * @since 3.21
+   */
+  public boolean addDescriptor(Property<RECEIVER> property)
+  {
+    if (property.getLabel() != null)
+    {
+      DelegatingPropertyDescriptor<RECEIVER> descriptor = new DelegatingPropertyDescriptor<>(property);
+      return addDescriptor(descriptor);
+    }
+
+    return false;
+  }
+
   public PropertyDescriptor addDescriptor(String category, Object id, String displayName, String description)
   {
     PropertyDescriptor descriptor = new PropertyDescriptor(id, displayName);
@@ -85,12 +101,33 @@ public class DefaultPropertySource<RECEIVER> implements IPropertySource
   {
     for (Property<RECEIVER> property : provider.getProperties())
     {
-      if (property.getLabel() != null)
-      {
-        DelegatingPropertyDescriptor<RECEIVER> descriptor = new DelegatingPropertyDescriptor<>(property);
-        addDescriptor(descriptor);
-      }
+      addDescriptor(property);
     }
+  }
+
+  /**
+   * @since 3.21
+   */
+  public DefaultPropertySource<RECEIVER> extendDescriptors()
+  {
+    return extendDescriptors(IPluginContainer.INSTANCE);
+  }
+
+  /**
+   * @since 3.21
+   */
+  public DefaultPropertySource<RECEIVER> extendDescriptors(IManagedContainer container)
+  {
+    container.forEachElement(PropertyExtender.Factory.PRODUCT_GROUP, PropertyExtender.class, propertyExtender -> {
+      propertyExtender.forEachExtendedProperty(receiver, property -> {
+        @SuppressWarnings("unchecked")
+        Property<RECEIVER> p = (Property<RECEIVER>)property;
+
+        addDescriptor(p);
+      });
+    });
+
+    return this;
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.CDOObjectReference;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.etypes.Annotation;
 import org.eclipse.emf.cdo.etypes.ModelElement;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepository;
 import org.eclipse.emf.cdo.lm.Baseline;
@@ -160,6 +161,17 @@ public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
 
   public Delivery createDelivery(Stream stream, Change change, LMMerger merger, IProgressMonitor monitor) //
       throws ConcurrentAccessException, CommitException;
+
+  /**
+   * @since 1.6
+   */
+  public Annotation attachFingerPrint(FixedBaseline fixedBaseline) //
+      throws CommitException;
+
+  /**
+   * @since 1.6
+   */
+  public boolean verifyFingerPrint(FixedBaseline fixedBaseline);
 
   /**
    * @author Eike Stepper

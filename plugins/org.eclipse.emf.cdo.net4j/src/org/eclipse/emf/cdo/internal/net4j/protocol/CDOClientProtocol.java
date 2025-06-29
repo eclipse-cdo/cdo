@@ -604,12 +604,14 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
   public Map<String, Entity> requestEntities(String namespace, String... names)
   {
     Map<String, Entity> entities = new HashMap<>();
+
     send(new EntityRequest(this, (name, entity) -> {
       if (entity != null)
       {
         entities.put(name, entity);
       }
     }, namespace, names));
+
     return entities;
   }
 

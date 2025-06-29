@@ -55,8 +55,7 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
         {
           return new DefaultPropertySource<>(session, SessionProperties.INSTANCE);
         }
-      };
-
+      }.extendDescriptors();
     }
 
     if (object instanceof CDOCheckout)
@@ -71,7 +70,7 @@ public class ExplorerPropertiesAdapterFactory extends AbstractPropertyAdapterFac
         {
           return new DefaultPropertySource<>(view, ViewProperties.INSTANCE);
         }
-      };
+      }.extendDescriptors();
     }
 
     return null;

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.delta.CDOAddFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
@@ -29,6 +30,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.security.CDOPermission;
 import org.eclipse.emf.cdo.common.util.CDOException;
+import org.eclipse.emf.cdo.common.util.CDOFingerPrinter.FingerPrint;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.etypes.Annotation;
@@ -66,6 +68,8 @@ import org.eclipse.emf.cdo.lm.internal.client.bundle.OM;
 import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
+import org.eclipse.emf.cdo.lm.util.LMEntities;
+import org.eclipse.emf.cdo.lm.util.LMFingerPrintAnnotation;
 import org.eclipse.emf.cdo.lm.util.LMMerger;
 import org.eclipse.emf.cdo.lm.util.LMMerger2;
 import org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos;
@@ -76,12 +80,14 @@ import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
+import org.eclipse.emf.cdo.view.CDOQuery;
 import org.eclipse.emf.cdo.view.CDOView;
 import org.eclipse.emf.cdo.view.CDOViewCommitInfoListener;
 
 import org.eclipse.net4j.Net4jUtil;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.event.IListener;
@@ -103,6 +109,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
+import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 import org.eclipse.emf.spi.cdo.FSMUtil;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
@@ -244,6 +251,8 @@ public final class SystemDescriptor implements ISystemDescriptor
   private String moduleDefinitionPath;
 
   private final Map<String, CDORepository> moduleRepositories = new HashMap<>();
+
+  private Entity fingerPrinterEntity;
 
   private SystemDescriptor()
   {
@@ -1263,6 +1272,101 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     return result[0];
+  }
+
+  @Override
+  public Annotation attachFingerPrint(FixedBaseline fixedBaseline) throws CommitException
+  {
+    FingerPrint fingerPrint = calculateFingerPrint(fixedBaseline);
+    if (fingerPrint == null)
+    {
+      return null;
+    }
+
+    Annotation annotation = LMFingerPrintAnnotation.create(fingerPrint);
+
+    return modify(fixedBaseline, fb -> {
+      fb.getAnnotations().add(annotation);
+      return annotation;
+    }, null);
+  }
+
+  @Override
+  public boolean verifyFingerPrint(FixedBaseline fixedBaseline)
+  {
+    FingerPrint attachedFingerPrint = LMFingerPrintAnnotation.getFingerPrint(fixedBaseline);
+    if (attachedFingerPrint == null)
+    {
+      throw new IllegalStateException("No finger print attached to the fixed baseline");
+    }
+
+    FingerPrint fingerPrint = calculateFingerPrint(fixedBaseline);
+    if (fingerPrint == null)
+    {
+      throw new IllegalStateException("Finger print could not be calculated");
+    }
+
+    return fingerPrint.equals(attachedFingerPrint);
+  }
+
+  public boolean canCalculateFingerPrint()
+  {
+    try
+    {
+      return getFingerPrinterEntity() != null;
+    }
+    catch (Exception ex)
+    {
+      return false;
+    }
+  }
+
+  public FingerPrint calculateFingerPrint(FixedBaseline fixedBaseline)
+  {
+    Entity fingerPrinterEntity = getFingerPrinterEntity();
+    FingerPrint[] fingerPrint = { null };
+
+    withModuleSession(fixedBaseline.getModule().getName(), session -> {
+      CDOBranchPoint branchPoint = fixedBaseline.getBranchPoint().resolve(session.getBranchManager());
+      CDOView view = session.openView(branchPoint);
+
+      try
+      {
+        CDOQuery query = view.createQuery(CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT, null);
+        query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT_TYPE, fingerPrinterEntity.property(LMEntities.FINGER_PRINTER_TYPE));
+        query.setParameter(CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT_PARAM, fingerPrinterEntity.property(LMEntities.FINGER_PRINTER_PARAM));
+
+        List<Object> result = query.getResult();
+        String value = (String)result.get(0);
+        long count = (Long)result.get(1);
+        String param = (String)result.get(2);
+
+        fingerPrint[0] = new FingerPrint(value, count, param);
+      }
+      finally
+      {
+        view.close();
+      }
+    });
+
+    return fingerPrint[0];
+  }
+
+  private Entity getFingerPrinterEntity()
+  {
+    if (fingerPrinterEntity == null)
+    {
+      CDOSessionProtocol protocol = ((InternalCDOSession)systemView.getSession()).getSessionProtocol();
+      Map<String, Entity> entities = protocol.requestEntities(LMEntities.NAMESPACE, LMEntities.FINGER_PRINTER);
+
+      fingerPrinterEntity = entities.get(LMEntities.FINGER_PRINTER);
+      if (fingerPrinterEntity == null)
+      {
+        throw new IllegalStateException("No finger printer configured on the lifecycle manager");
+      }
+    }
+
+    return fingerPrinterEntity;
   }
 
   public Assembly createEmptyAssembly()

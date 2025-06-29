@@ -60,7 +60,7 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
         ExtendedImageRegistry.INSTANCE.getImageDescriptor(ReviewsEditPlugin.INSTANCE.getImage( //
             dropType.isRelease() ? "full/obj16/ReleaseReview" : "full/obj16/DropReview")), //
         "Add a new " + dropType.getName().toLowerCase() + " review to stream '" + delivery.getStream().getName() + "'.", //
-        dropType.isRelease() ? "icons/NewRelease.png" : "icons/NewDrop.png", //
+        dropType.isRelease() ? "icons/wizban/NewRelease.png" : "icons/wizban/NewDrop.png", //
         delivery);
     this.dropType = dropType;
   }

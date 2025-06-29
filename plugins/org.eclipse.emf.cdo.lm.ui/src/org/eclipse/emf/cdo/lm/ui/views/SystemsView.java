@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.State;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.ui.actions.CheckoutAction;
 import org.eclipse.emf.cdo.lm.ui.actions.DeleteChangeAction;
+import org.eclipse.emf.cdo.lm.ui.actions.DeleteCheckoutsAction;
 import org.eclipse.emf.cdo.lm.ui.actions.DeleteModuleAction;
 import org.eclipse.emf.cdo.lm.ui.actions.NewChangeAction;
 import org.eclipse.emf.cdo.lm.ui.actions.NewDeliveryAction;
@@ -193,8 +194,9 @@ public class SystemsView extends MultiViewersView
     else if (element instanceof System)
     {
       System system = (System)element;
-      manager.add(new NewModuleAction(page, treeViewer, system));
 
+      manager.add(new NewModuleAction(page, treeViewer, system));
+      manager.add(new DeleteCheckoutsAction.OfSystem(page, system));
       manager.add(new Action("Close")
       {
         @Override
@@ -208,7 +210,9 @@ public class SystemsView extends MultiViewersView
     else if (element instanceof Module)
     {
       Module module = (Module)element;
+
       manager.add(new NewStreamAction(page, treeViewer, adapterFactory, module));
+      manager.add(new DeleteCheckoutsAction.OfModule(page, module));
       manager.add(new DeleteModuleAction(page, module));
     }
     else if (element instanceof Baseline)
@@ -219,6 +223,7 @@ public class SystemsView extends MultiViewersView
       {
         FixedBaseline fixedBaseline = (FixedBaseline)baseline;
         manager.add(new CheckoutAction(page, baseline));
+        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
         manager.add(new Separator());
 
         Stream stream = fixedBaseline.getStream();
@@ -228,7 +233,9 @@ public class SystemsView extends MultiViewersView
       else if (baseline instanceof Stream)
       {
         Stream stream = (Stream)baseline;
+
         manager.add(new CheckoutAction(page, baseline));
+        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
         manager.add(new Separator());
         manager.add(new NewChangeAction(page, treeViewer, stream, null));
         manager.add(new NewDeliveryAction(page, treeViewer, stream, null));
@@ -243,7 +250,9 @@ public class SystemsView extends MultiViewersView
       else if (baseline instanceof Change)
       {
         Change change = (Change)baseline;
+
         manager.add(new CheckoutAction(page, baseline));
+        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
         manager.add(new Separator());
 
         if (change.getDeliveries().isEmpty())

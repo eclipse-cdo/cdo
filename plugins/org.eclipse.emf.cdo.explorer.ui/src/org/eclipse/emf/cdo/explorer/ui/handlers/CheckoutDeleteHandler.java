@@ -33,8 +33,8 @@ public class CheckoutDeleteHandler extends AbstractCheckoutHandler
   @Override
   protected void preRun(ExecutionEvent event) throws Exception
   {
-    AbstractElement[] repositories = AbstractElement.collect(elements);
-    DeleteElementsDialog dialog = new DeleteElementsDialog(HandlerUtil.getActiveShell(event), repositories);
+    AbstractElement[] checkouts = AbstractElement.collect(elements);
+    DeleteElementsDialog dialog = new DeleteElementsDialog(HandlerUtil.getActiveShell(event), checkouts);
 
     if (dialog.open() == DeleteElementsDialog.OK)
     {

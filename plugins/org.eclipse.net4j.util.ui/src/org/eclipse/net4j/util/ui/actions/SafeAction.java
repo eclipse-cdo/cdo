@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.resource.ImageDescriptor;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
 /**
@@ -25,6 +26,8 @@ import org.eclipse.swt.widgets.Shell;
 public abstract class SafeAction extends Action
 {
   public static final String INTERACTIVE = Messages.getString("SafeAction_0"); //$NON-NLS-1$
+
+  private static final ThreadLocal<Event> EVENT = new ThreadLocal<>();
 
   public SafeAction()
   {
@@ -68,6 +71,17 @@ public abstract class SafeAction extends Action
   @Override
   public final void run()
   {
+    runWithEvent(null);
+  }
+
+  @Override
+  public final void runWithEvent(Event event)
+  {
+    if (event != null)
+    {
+      EVENT.set(event);
+    }
+
     try
     {
       safeRun();
@@ -77,6 +91,21 @@ public abstract class SafeAction extends Action
       OM.LOG.error(ex);
       MessageDialog.openError(null, getText(), ex.getLocalizedMessage() + "\n" + Messages.getString("SafeAction_1")); //$NON-NLS-1$ //$NON-NLS-2$
     }
+    finally
+    {
+      if (event != null)
+      {
+        EVENT.remove();
+      }
+    }
+  }
+
+  /**
+   * @since 3.21
+   */
+  protected final Event getEvent()
+  {
+    return EVENT.get();
   }
 
   protected abstract void safeRun() throws Exception;

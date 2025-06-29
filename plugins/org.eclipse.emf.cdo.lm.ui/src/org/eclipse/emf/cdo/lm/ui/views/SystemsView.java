@@ -222,8 +222,7 @@ public class SystemsView extends MultiViewersView
       if (baseline instanceof Delivery || baseline instanceof Drop)
       {
         FixedBaseline fixedBaseline = (FixedBaseline)baseline;
-        manager.add(new CheckoutAction(page, baseline));
-        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
+        addBaselineCheckoutActions(manager, page, baseline);
         manager.add(new Separator());
 
         Stream stream = fixedBaseline.getStream();
@@ -234,8 +233,7 @@ public class SystemsView extends MultiViewersView
       {
         Stream stream = (Stream)baseline;
 
-        manager.add(new CheckoutAction(page, baseline));
-        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
+        addBaselineCheckoutActions(manager, page, baseline);
         manager.add(new Separator());
         manager.add(new NewChangeAction(page, treeViewer, stream, null));
         manager.add(new NewDeliveryAction(page, treeViewer, stream, null));
@@ -251,8 +249,7 @@ public class SystemsView extends MultiViewersView
       {
         Change change = (Change)baseline;
 
-        manager.add(new CheckoutAction(page, baseline));
-        new DeleteCheckoutsAction.OfBaseline(page, baseline).contributeIfNeeded(manager);
+        addBaselineCheckoutActions(manager, page, baseline);
         manager.add(new Separator());
 
         if (change.getDeliveries().isEmpty())
@@ -294,6 +291,14 @@ public class SystemsView extends MultiViewersView
         org.eclipse.emf.cdo.lm.internal.client.SystemManager.INSTANCE.scheduleOpenSystem(descriptor);
       }
     }
+  }
+
+  private void addBaselineCheckoutActions(IMenuManager manager, IWorkbenchPage page, Baseline baseline)
+  {
+    manager.add(new CheckoutAction(page, baseline));
+
+    DeleteCheckoutsAction.OfBaseline deleteCheckoutsAction = new DeleteCheckoutsAction.OfBaseline(page, baseline);
+    deleteCheckoutsAction.contributeIfNeeded(manager);
   }
 
   /**

@@ -293,12 +293,12 @@ public class SystemsView extends MultiViewersView
     }
   }
 
-  private void addBaselineCheckoutActions(IMenuManager manager, IWorkbenchPage page, Baseline baseline)
+  private void addBaselineCheckoutActions(IMenuManager menu, IWorkbenchPage page, Baseline baseline)
   {
-    manager.add(new CheckoutAction(page, baseline));
+    menu.add(new CheckoutAction(page, baseline));
 
     DeleteCheckoutsAction.OfBaseline deleteCheckoutsAction = new DeleteCheckoutsAction.OfBaseline(page, baseline);
-    deleteCheckoutsAction.contributeIfNeeded(manager);
+    deleteCheckoutsAction.contributeIfNeeded(menu);
   }
 
   /**

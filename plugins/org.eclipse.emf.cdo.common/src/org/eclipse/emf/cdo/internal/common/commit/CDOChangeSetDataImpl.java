@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeKindCache;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 
 import java.text.MessageFormat;
@@ -29,7 +30,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Eike Stepper
@@ -46,9 +46,9 @@ public class CDOChangeSetDataImpl implements CDOChangeSetData
 
   public CDOChangeSetDataImpl(List<CDOIDAndVersion> newObjects, List<CDORevisionKey> changedObjects, List<CDOIDAndVersion> detachedObjects)
   {
-    this.newObjects = Objects.requireNonNullElseGet(newObjects, () -> new ArrayList<CDOIDAndVersion>());
-    this.changedObjects = Objects.requireNonNullElseGet(changedObjects, () -> new ArrayList<CDORevisionKey>());
-    this.detachedObjects = Objects.requireNonNullElseGet(detachedObjects, () -> new ArrayList<CDOIDAndVersion>());
+    this.newObjects = ObjectUtil.requireNonNullElseGet(newObjects, () -> new ArrayList<CDOIDAndVersion>());
+    this.changedObjects = ObjectUtil.requireNonNullElseGet(changedObjects, () -> new ArrayList<CDORevisionKey>());
+    this.detachedObjects = ObjectUtil.requireNonNullElseGet(detachedObjects, () -> new ArrayList<CDOIDAndVersion>());
   }
 
   public CDOChangeSetDataImpl()

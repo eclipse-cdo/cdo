@@ -17,7 +17,9 @@ import org.eclipse.net4j.util.collection.Closeable;
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * Various static helper methods.
@@ -190,6 +192,22 @@ public final class ObjectUtil
     }
 
     return object;
+  }
+
+  /**
+   * @since 3.28
+   */
+  public static <T> T requireNonNullElse(T obj, T defaultObj)
+  {
+    return obj != null ? obj : Objects.requireNonNull(defaultObj, "defaultObj");
+  }
+
+  /**
+   * @since 3.28
+   */
+  public static <T> T requireNonNullElseGet(T obj, Supplier<? extends T> supplier)
+  {
+    return obj != null ? obj : Objects.requireNonNull(Objects.requireNonNull(supplier, "supplier").get(), "supplier.get()");
   }
 
   /**

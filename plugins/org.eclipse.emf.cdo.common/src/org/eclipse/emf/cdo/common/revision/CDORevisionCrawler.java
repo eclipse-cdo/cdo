@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.FeatureStrategy.De
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
@@ -72,7 +73,7 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
   public void setContainmentProxyStrategy(ContainmentProxyStrategy containmentProxyStrategy)
   {
-    this.containmentProxyStrategy = Objects.requireNonNullElse(containmentProxyStrategy, ContainmentProxyStrategy.Physical);
+    this.containmentProxyStrategy = ObjectUtil.requireNonNullElse(containmentProxyStrategy, ContainmentProxyStrategy.Physical);
   }
 
   public FeatureStrategy getFeatureStrategy()
@@ -82,7 +83,7 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
   public void setFeatureStrategy(FeatureStrategy featureStrategy)
   {
-    this.featureStrategy = Objects.requireNonNullElse(featureStrategy, FeatureStrategy.TREE);
+    this.featureStrategy = ObjectUtil.requireNonNullElse(featureStrategy, FeatureStrategy.TREE);
   }
 
   public CDORevisionProvider getRevisionProvider()

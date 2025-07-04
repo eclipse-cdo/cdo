@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 
 import org.eclipse.net4j.util.HexUtil;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.DigestWriter;
@@ -34,7 +35,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.DigestOutputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
 
 /**
  * If the meaning of this type isn't clear, there really should be more of a description here...
@@ -83,8 +83,8 @@ public class CDOLobStoreImpl implements CDOLobStore
    */
   public CDOLobStoreImpl(File folder, String digestAlgorithm)
   {
-    this.folder = Objects.requireNonNullElseGet(folder, CDOLobStoreImpl::getDefaultFolder);
-    this.digestAlgorithm = Objects.requireNonNullElse(digestAlgorithm, DEFAULT_DIGEST_ALGORITHM);
+    this.folder = ObjectUtil.requireNonNullElseGet(folder, CDOLobStoreImpl::getDefaultFolder);
+    this.digestAlgorithm = ObjectUtil.requireNonNullElse(digestAlgorithm, DEFAULT_DIGEST_ALGORITHM);
 
     if (this.folder.exists())
     {

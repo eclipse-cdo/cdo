@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
+import org.eclipse.net4j.util.io.IOUtil;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -594,7 +595,7 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
     private static DigestOutputStream newOutputStream(MessageDigest digest)
     {
-      return new DigestOutputStream(OutputStream.nullOutputStream(), digest);
+      return new DigestOutputStream(IOUtil.nullOutputStream(), digest);
     }
   }
 }

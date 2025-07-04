@@ -333,6 +333,43 @@ public final class IOUtil
   }
 
   /**
+   * @since 3.28
+   */
+  public static OutputStream nullOutputStream()
+  {
+    return new OutputStream()
+    {
+      private volatile boolean closed;
+
+      private void ensureOpen() throws IOException
+      {
+        if (closed)
+        {
+          throw new IOException("Stream closed");
+        }
+      }
+
+      @Override
+      public void write(int b) throws IOException
+      {
+        ensureOpen();
+      }
+
+      @Override
+      public void write(byte[] b, int off, int len) throws IOException
+      {
+        ensureOpen();
+      }
+
+      @Override
+      public void close()
+      {
+        closed = true;
+      }
+    };
+  }
+
+  /**
    * @since 3.26
    */
   public static BufferedInputStream buffered(InputStream in)

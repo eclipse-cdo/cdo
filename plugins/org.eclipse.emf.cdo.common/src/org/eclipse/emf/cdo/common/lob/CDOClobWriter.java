@@ -27,6 +27,10 @@ public class CDOClobWriter extends Writer
 
   private CDOClob clob;
 
+  public CDOClobWriter()
+  {
+  }
+
   @Override
   public void write(char[] cbuf, int off, int len) throws IOException
   {

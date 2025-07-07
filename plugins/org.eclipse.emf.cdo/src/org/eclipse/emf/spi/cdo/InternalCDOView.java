@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.CDOState;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
@@ -50,7 +51,7 @@ import java.util.function.Consumer;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface InternalCDOView extends CDOView, CDOIDProvider, ILifecycle, IExecutorServiceProvider
+public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, ILifecycle, IExecutorServiceProvider
 {
   public void setViewID(int viewId);
 

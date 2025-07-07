@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOChangeSet;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol.CommitNotificationInfo;
@@ -60,7 +61,7 @@ import java.util.Set;
  * @noimplement This interface is not intended to be implemented by clients.
  */
 public interface InternalCDOSession
-    extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, ILifecycle, IExecutorServiceProvider
+    extends CDOSession, PackageProcessor, PackageLoader, RevisionLocker, CDORevisionUnchunker, CDOLobLoader, ILifecycle, IExecutorServiceProvider
 {
   /**
    * @since 4.12

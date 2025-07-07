@@ -688,8 +688,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         try
         {
-          CDOSessionProtocol sessionProtocol = getSessionProtocol();
-          sessionProtocol.loadLob(info, outputStreamOrWriter);
+          loadLob(info, outputStreamOrWriter);
         }
         catch (Throwable t)
         {
@@ -698,6 +697,13 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
         }
       }
     });
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+  {
+    CDOSessionProtocol sessionProtocol = getSessionProtocol();
+    sessionProtocol.loadLob(info, outputStreamOrWriter);
   }
 
   @Override

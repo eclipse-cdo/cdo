@@ -27,6 +27,10 @@ public class CDOBlobOutputStream extends OutputStream
 
   private CDOBlob blob;
 
+  public CDOBlobOutputStream()
+  {
+  }
+
   @Override
   public void write(int b) throws IOException
   {

@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoHandler;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.lock.IDurableLockingManager;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -42,7 +43,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends CDOCommonRepository, IQueryHandlerProvider, IPropertiesContainer, IContainer<Object>, ILifecycle
+public interface IRepository extends CDOCommonRepository, CDOLobLoader, IQueryHandlerProvider, IPropertiesContainer, IContainer<Object>, ILifecycle
 {
   /**
    * @since 3.0

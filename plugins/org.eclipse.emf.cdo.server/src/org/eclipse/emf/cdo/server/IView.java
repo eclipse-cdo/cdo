@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.server;
 
 import org.eclipse.emf.cdo.common.CDOCommonView;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.view.CDOView;
 
 /**
@@ -20,7 +21,7 @@ import org.eclipse.emf.cdo.view.CDOView;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IView extends CDOCommonView
+public interface IView extends CDOCommonView, CDOLobLoader
 {
   /**
    * @since 2.0

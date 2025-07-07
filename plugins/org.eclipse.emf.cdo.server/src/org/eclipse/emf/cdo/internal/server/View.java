@@ -16,6 +16,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode;
@@ -41,6 +42,7 @@ import org.eclipse.net4j.util.options.IOptionsContainer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -185,6 +187,12 @@ public class View extends Lifecycle implements InternalView, CDOCommonView.Optio
   public InternalRepository getRepository()
   {
     return repository;
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+  {
+    getSession().loadLob(info, outputStreamOrWriter);
   }
 
   @Override

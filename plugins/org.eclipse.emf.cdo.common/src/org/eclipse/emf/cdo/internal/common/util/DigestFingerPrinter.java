@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.internal.common.util;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCrawler;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.ContainmentProxyStrategy;
@@ -44,6 +45,8 @@ public class DigestFingerPrinter implements CDOFingerPrinter
 
   private static final String LOCAL_IDS = "localIDs";
 
+  private static final String LOB_VALUES = "lobValues";
+
   private static final String SEPARATOR = ",";
 
   private final String param;
@@ -53,6 +56,8 @@ public class DigestFingerPrinter implements CDOFingerPrinter
   private final StringConverter encoder;
 
   private final boolean localIDs;
+
+  private final boolean lobValues;
 
   public DigestFingerPrinter(String param, IManagedContainer container)
   {
@@ -72,9 +77,28 @@ public class DigestFingerPrinter implements CDOFingerPrinter
       encoderName = DEFAULT_ENCODER;
     }
 
-    localIDs = tokens.length < 3 ? false : LOCAL_IDS.equalsIgnoreCase(tokens[2]);
+    boolean localIDs = false;
+    boolean lobValues = false;
 
-    this.param = algorithm + SEPARATOR + encoderName + (localIDs ? SEPARATOR + LOCAL_IDS : "");
+    for (int i = 2; i < tokens.length; i++)
+    {
+      if (LOCAL_IDS.equalsIgnoreCase(tokens[i]))
+      {
+        localIDs = true;
+      }
+      else if (LOB_VALUES.equalsIgnoreCase(tokens[i]))
+      {
+        lobValues = true;
+      }
+    }
+
+    this.localIDs = localIDs;
+    this.lobValues = lobValues;
+
+    this.param = algorithm //
+        + SEPARATOR + encoderName //
+        + (localIDs ? SEPARATOR + LOCAL_IDS : "") //
+        + (lobValues ? SEPARATOR + LOB_VALUES : "");
   }
 
   @Override
@@ -94,23 +118,27 @@ public class DigestFingerPrinter implements CDOFingerPrinter
   {
     CDORevision rootResource = revisionProvider.getRevision(rootID);
 
-    MessageDigest digest = createMessageDigest();
-    MessageDigestHandler handler = new MessageDigestHandler(digest, localIDs);
-
-    CDORevisionCrawler crawler = new CDORevisionCrawler(handler);
-    crawler.setFeatureStrategy(FeatureStrategy.TREE);
-    crawler.setContainmentProxyStrategy(ContainmentProxyStrategy.Physical);
-    crawler.setRevisionProvider(revisionProvider);
-    crawler.addRevision(rootResource);
-
-    if (localIDs)
+    CDOLobLoader lobLoader = null;
+    if (lobValues && revisionProvider instanceof CDOLobLoader)
     {
-      handler.finishLocalIDs();
+      lobLoader = (CDOLobLoader)revisionProvider;
     }
+
+    MessageDigest digest = createMessageDigest();
+    MessageDigestHandler handler = new MessageDigestHandler(digest, localIDs, lobLoader);
+
+    long count = new CDORevisionCrawler() //
+        .handler(handler) //
+        .featureStrategy(FeatureStrategy.TREE) //
+        .containmentProxyStrategy(ContainmentProxyStrategy.Physical) //
+        .revisionProvider(revisionProvider) //
+        .begin() //
+        .addRevision(rootResource) //
+        .finish() //
+        .revisionCount();
 
     byte[] bytes = digest.digest();
     String value = encoder.apply(bytes);
-    long count = crawler.getRevisionCount();
     return new FingerPrint(value, count, param);
   }
 

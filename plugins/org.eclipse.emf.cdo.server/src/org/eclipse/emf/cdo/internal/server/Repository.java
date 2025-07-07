@@ -31,6 +31,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDTemp;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOLobHandler;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
@@ -2323,6 +2324,12 @@ public class Repository extends Container<Object> implements InternalRepository
   {
     IStoreAccessor accessor = StoreThreadLocal.getAccessor();
     accessor.loadLob(id, out);
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStream) throws IOException
+  {
+    loadLob(info.getID(), (OutputStream)outputStream);
   }
 
   @Override

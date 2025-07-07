@@ -13,15 +13,20 @@ package org.eclipse.emf.cdo.common.revision;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDProvider;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOLob;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.FeatureStrategy.Decision;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
-import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.io.ExtendedDataOutputStream;
 import org.eclipse.net4j.util.io.IORuntimeException;
 import org.eclipse.net4j.util.io.IOUtil;
+import org.eclipse.net4j.util.lifecycle.Lifecycle;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EReference;
@@ -34,7 +39,6 @@ import java.security.MessageDigest;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Queue;
 import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
@@ -45,9 +49,9 @@ import java.util.function.UnaryOperator;
  * @author Eike Stepper
  * @since 4.26
  */
-public final class CDORevisionCrawler implements CDORevisionCacheAdder
+public final class CDORevisionCrawler extends Lifecycle
 {
-  private final Handler handler;
+  private Handler handler;
 
   private ContainmentProxyStrategy containmentProxyStrategy = ContainmentProxyStrategy.Physical;
 
@@ -57,54 +61,67 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
   private long revisionCount;
 
-  public CDORevisionCrawler(Handler handler)
+  public CDORevisionCrawler()
   {
-    this.handler = Objects.requireNonNull(handler);
   }
 
-  public Handler getHandler()
+  public Handler handler()
   {
     return handler;
   }
 
-  public ContainmentProxyStrategy getContainmentProxyStrategy()
+  public CDORevisionCrawler handler(Handler handler)
+  {
+    checkInactive();
+    this.handler = handler;
+    return this;
+  }
+
+  public ContainmentProxyStrategy containmentProxyStrategy()
   {
     return containmentProxyStrategy;
   }
 
-  public void setContainmentProxyStrategy(ContainmentProxyStrategy containmentProxyStrategy)
+  public CDORevisionCrawler containmentProxyStrategy(ContainmentProxyStrategy containmentProxyStrategy)
   {
-    this.containmentProxyStrategy = ObjectUtil.requireNonNullElse(containmentProxyStrategy, ContainmentProxyStrategy.Physical);
+    checkInactive();
+    this.containmentProxyStrategy = containmentProxyStrategy;
+    return this;
   }
 
-  public FeatureStrategy getFeatureStrategy()
+  public FeatureStrategy featureStrategy()
   {
     return featureStrategy;
   }
 
-  public void setFeatureStrategy(FeatureStrategy featureStrategy)
+  public CDORevisionCrawler featureStrategy(FeatureStrategy featureStrategy)
   {
-    this.featureStrategy = ObjectUtil.requireNonNullElse(featureStrategy, FeatureStrategy.TREE);
+    checkInactive();
+    this.featureStrategy = featureStrategy;
+    return this;
   }
 
-  public CDORevisionProvider getRevisionProvider()
+  public CDORevisionProvider revisionProvider()
   {
     return revisionProvider;
   }
 
-  public void setRevisionProvider(CDORevisionProvider revisionProvider)
+  public CDORevisionCrawler revisionProvider(CDORevisionProvider revisionProvider)
   {
+    checkInactive();
     this.revisionProvider = revisionProvider;
+    return this;
   }
 
-  public long getRevisionCount()
+  public long revisionCount()
   {
     return revisionCount;
   }
 
-  @Override
-  public void addRevision(CDORevision revision)
+  public CDORevisionCrawler addRevision(CDORevision revision)
   {
+    checkActive();
+
     Queue<InternalCDORevision> queue = new LinkedList<>();
     queue.offer((InternalCDORevision)revision);
 
@@ -113,7 +130,7 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
       InternalCDORevision rev = queue.remove();
       ++revisionCount;
 
-      if (handler.beginRevision(this, rev))
+      if (handler.beginRevision(rev))
       {
         for (EStructuralFeature feature : rev.getClassInfo().getAllPersistentFeatures())
         {
@@ -130,14 +147,48 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
           }
         }
 
-        handler.endRevision(this, rev);
+        handler.endRevision(rev);
       }
     }
+
+    return this;
+  }
+
+  public CDORevisionCrawler begin()
+  {
+    activate();
+    return this;
+  }
+
+  public CDORevisionCrawler finish()
+  {
+    deactivate();
+    return this;
+  }
+
+  @Override
+  protected void doBeforeActivate() throws Exception
+  {
+    CheckUtil.checkState(handler, "handler");
+    CheckUtil.checkState(containmentProxyStrategy, "containmentProxyStrategy");
+    CheckUtil.checkState(featureStrategy, "featureStrategy");
+  }
+
+  @Override
+  protected void doActivate() throws Exception
+  {
+    handler.begin(this);
+  }
+
+  @Override
+  protected void doDeactivate() throws Exception
+  {
+    handler.finish();
   }
 
   private void handleFeature(InternalCDORevision rev, EStructuralFeature feature)
   {
-    handler.handleFeature(this, rev, feature);
+    handler.handleFeature(rev, feature);
   }
 
   private void followReference(InternalCDORevision revision, EStructuralFeature feature, Queue<InternalCDORevision> queue)
@@ -281,18 +332,29 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
    */
   public interface Handler
   {
-    public default boolean beginRevision(CDORevisionCrawler crawler, CDORevision revision)
+    public default boolean begin(CDORevisionCrawler crawler)
     {
       // Continue crawling.
       return true;
     }
 
-    public default void handleFeature(CDORevisionCrawler crawler, CDORevision revision, EStructuralFeature feature)
+    public default boolean beginRevision(CDORevision revision)
+    {
+      // Continue crawling.
+      return true;
+    }
+
+    public default void handleFeature(CDORevision revision, EStructuralFeature feature)
     {
       // Do nothing.
     }
 
-    public default void endRevision(CDORevisionCrawler crawler, CDORevision revision)
+    public default void endRevision(CDORevision revision)
+    {
+      // Do nothing.
+    }
+
+    public default void finish()
     {
       // Do nothing.
     }
@@ -311,107 +373,132 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
     private final CDODataOutput out;
 
-    private final LocalIDMapper localIDMapper;
+    private final IDMapper idMapper;
 
     private CDORevisionCrawler crawler;
 
     public OutputStreamHandler(OutputStream stream)
     {
-      this(stream, false);
+      this(stream, false, null);
     }
 
-    public OutputStreamHandler(OutputStream stream, boolean localIDs)
+    public OutputStreamHandler(OutputStream stream, boolean localIDs, CDOLobLoader lobLoader)
     {
-      this(stream, localIDs ? new LocalIDMapper.InMemory() : null);
+      this(stream, localIDs ? new IDMapper.InMemory() : null, lobLoader);
     }
 
-    public OutputStreamHandler(OutputStream stream, LocalIDMapper localIDMapper)
+    public OutputStreamHandler(OutputStream stream, IDMapper idMapper, CDOLobLoader lobLoader)
     {
       this(new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
       {
-        private final CDOIDProvider idProvider = localIDMapper == null ? //
+        private final CDOIDProvider idProvider = idMapper == null ? //
             CDOIDProvider.NOOP : //
-            realID -> localIDMapper.lookup((CDOID)realID);
+            realID -> idMapper.lookup((CDOID)realID);
 
         @Override
         public CDOIDProvider getIDProvider()
         {
           return idProvider;
         }
-      }, localIDMapper);
+
+        @Override
+        public void writeCDOFeatureValue(EStructuralFeature feature, Object value) throws IOException
+        {
+          if (lobLoader != null)
+          {
+            CDOType type = CDOModelUtil.getType(feature);
+            if (type == CDOType.BLOB || type == CDOType.CLOB)
+            {
+              CDOLob<?> lob = (CDOLob<?>)value;
+              lobLoader.loadLob(lob, getDelegate());
+              return;
+            }
+
+            type.writeValue(this, value);
+            return;
+          }
+
+          super.writeCDOFeatureValue(feature, value);
+        }
+      }, idMapper);
     }
 
-    protected OutputStreamHandler(CDODataOutput out, LocalIDMapper localIDMapper)
+    protected OutputStreamHandler(CDODataOutput out, IDMapper idMapper)
     {
       this.out = out;
-      this.localIDMapper = localIDMapper;
+      this.idMapper = idMapper;
     }
 
-    public LocalIDMapper getLocalIDMapper()
+    public IDMapper getLocalIDMapper()
     {
-      return localIDMapper;
+      return idMapper;
     }
 
     @Override
-    public final boolean beginRevision(CDORevisionCrawler crawler, CDORevision revision)
+    public boolean begin(CDORevisionCrawler crawler)
     {
-      setCrawler(crawler);
+      this.crawler = crawler;
+      return true;
+    }
 
-      if (localIDMapper != null)
+    @Override
+    public final boolean beginRevision(CDORevision revision)
+    {
+      if (idMapper != null)
       {
         // Just map a new local ID...
         CDOID realID = revision.getID();
-        localIDMapper.map(realID);
+        idMapper.map(realID);
 
         // ... and continue crawling.
         return true;
       }
 
-      return doBeginRevision(crawler, revision);
+      return doBeginRevision(revision);
     }
 
     @Override
-    public final void handleFeature(CDORevisionCrawler crawler, CDORevision revision, EStructuralFeature feature)
+    public final void handleFeature(CDORevision revision, EStructuralFeature feature)
     {
-      if (localIDMapper != null)
+      if (idMapper != null)
       {
         // For local IDs this is the first (id mapping) phase.
         // The real feature handling happens in finishLocalIDs(CDORevisionProvider).
         return;
       }
 
-      doHandleFeature(crawler, revision, feature);
+      doHandleFeature(revision, feature);
     }
 
     @Override
-    public final void endRevision(CDORevisionCrawler crawler, CDORevision revision)
+    public final void endRevision(CDORevision revision)
     {
-      if (localIDMapper != null)
+      if (idMapper != null)
       {
         // For local IDs this is the first (id mapping) phase.
         // The real feature handling happens in finishLocalIDs(CDORevisionProvider).
         return;
       }
 
-      doEndRevision(crawler, revision);
+      doEndRevision(revision);
     }
 
     public final void finishLocalIDs()
     {
-      if (localIDMapper == null || crawler == null)
+      if (idMapper == null || crawler == null)
       {
         return;
       }
 
-      CDORevisionProvider revisionProvider = crawler.getRevisionProvider();
+      CDORevisionProvider revisionProvider = crawler.revisionProvider();
       if (revisionProvider == null)
       {
         return;
       }
 
-      FeatureStrategy featureStrategy = crawler.getFeatureStrategy();
+      FeatureStrategy featureStrategy = crawler.featureStrategy();
 
-      localIDMapper.forEach(realID -> {
+      idMapper.forEach(realID -> {
         CDORevision rev = revisionProvider.getRevision(realID);
 
         for (EStructuralFeature feature : rev.getClassInfo().getAllPersistentFeatures())
@@ -419,21 +506,21 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
           Decision decision = featureStrategy.decide(rev, feature);
           if (decision.isHandle())
           {
-            doHandleFeature(crawler, rev, feature);
+            doHandleFeature(rev, feature);
           }
         }
 
-        doEndRevision(crawler, rev);
+        doEndRevision(rev);
       });
     }
 
-    protected boolean doBeginRevision(CDORevisionCrawler crawler, CDORevision revision)
+    protected boolean doBeginRevision(CDORevision revision)
     {
       CDOID id = revision.getID();
 
-      if (localIDMapper != null)
+      if (idMapper != null)
       {
-        id = localIDMapper.lookup(id);
+        id = idMapper.lookup(id);
       }
 
       try
@@ -448,7 +535,7 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
       return true;
     }
 
-    protected void doHandleFeature(CDORevisionCrawler crawler, CDORevision revision, EStructuralFeature feature)
+    protected void doHandleFeature(CDORevision revision, EStructuralFeature feature)
     {
       try
       {
@@ -475,14 +562,14 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
         {
           CDOList list = (CDOList)value;
           EClass eClass = revision.getEClass();
-          UnaryOperator<CDOID> idConverter = localIDMapper == null ? null : localIDMapper::lookup;
+          UnaryOperator<CDOID> idConverter = idMapper == null ? null : idMapper::lookup;
           CDODataOutputImpl.writeCDOList(out, eClass, feature, list, CDORevision.UNCHUNKED, idConverter);
         }
         else
         {
-          if (localIDMapper != null && feature instanceof EReference)
+          if (idMapper != null && feature instanceof EReference)
           {
-            value = localIDMapper.lookup((CDOID)value);
+            value = idMapper.lookup((CDOID)value);
           }
 
           out.writeCDOFeatureValue(feature, value);
@@ -494,39 +581,27 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
       }
     }
 
-    protected void doEndRevision(CDORevisionCrawler crawler, CDORevision revision)
+    protected void doEndRevision(CDORevision revision)
     {
       // Do nothing.
-    }
-
-    private void setCrawler(CDORevisionCrawler crawler)
-    {
-      if (this.crawler == null)
-      {
-        this.crawler = crawler;
-      }
-      else if (crawler != this.crawler)
-      {
-        throw new IllegalArgumentException("Different crawler: " + crawler);
-      }
     }
 
     /**
      * @author Eike Stepper
      */
-    public static abstract class LocalIDMapper
+    public static abstract class IDMapper
     {
-      private long nextLocalID;
+      private long nextMappedID;
 
-      public LocalIDMapper()
+      public IDMapper()
       {
       }
 
       public CDOID map(CDOID realID)
       {
-        CDOID localID = getNextLocalID();
-        register(realID, localID);
-        return localID;
+        CDOID mappedID = getNextMappedID();
+        register(realID, mappedID);
+        return mappedID;
       }
 
       public abstract CDOID lookup(CDOID realID);
@@ -535,17 +610,17 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
 
       protected abstract void register(CDOID realID, CDOID localID);
 
-      protected CDOID getNextLocalID()
+      protected CDOID getNextMappedID()
       {
-        return CDOIDUtil.createLong(++nextLocalID);
+        return CDOIDUtil.createLong(++nextMappedID);
       }
 
       /**
        * @author Eike Stepper
        */
-      public static final class InMemory extends LocalIDMapper
+      public static final class InMemory extends IDMapper
       {
-        private final Map<CDOID, CDOID> localIDs = new LinkedHashMap<>();
+        private final Map<CDOID, CDOID> mappedIDs = new LinkedHashMap<>();
 
         public InMemory()
         {
@@ -554,20 +629,20 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
         @Override
         public CDOID lookup(CDOID realID)
         {
-          return localIDs.get(realID);
+          return mappedIDs.get(realID);
         }
 
         @Override
         public void forEach(Consumer<? super CDOID> realIDConsumer)
         {
           // The encounter order of LinkedHashMap.iterator() is preserved by keySet().iterator().
-          localIDs.keySet().forEach(realIDConsumer);
+          mappedIDs.keySet().forEach(realIDConsumer);
         }
 
         @Override
-        protected void register(CDOID realID, CDOID localID)
+        protected void register(CDOID realID, CDOID mappedID)
         {
-          localIDs.put(realID, localID);
+          mappedIDs.put(realID, mappedID);
         }
       }
     }
@@ -583,14 +658,19 @@ public final class CDORevisionCrawler implements CDORevisionCacheAdder
       super(newOutputStream(digest));
     }
 
-    public MessageDigestHandler(MessageDigest digest, boolean localIDs)
+    public MessageDigestHandler(MessageDigest digest, boolean localIDs, CDOLobLoader lobLoader)
     {
-      super(newOutputStream(digest), localIDs);
+      super(newOutputStream(digest), localIDs, lobLoader);
     }
 
-    public MessageDigestHandler(MessageDigest digest, LocalIDMapper localIDMapper)
+    public MessageDigestHandler(MessageDigest digest, IDMapper idMapper, CDOLobLoader lobLoader)
     {
-      super(newOutputStream(digest), localIDMapper);
+      super(newOutputStream(digest), idMapper, lobLoader);
+    }
+
+    protected MessageDigestHandler(CDODataOutput out, IDMapper idMapper)
+    {
+      super(out, idMapper);
     }
 
     private static DigestOutputStream newOutputStream(MessageDigest digest)

@@ -10,9 +10,12 @@
  */
 package org.eclipse.emf.cdo.tests.issues;
 
+import static org.junit.Assert.assertNotEquals;
+
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOLobLoader;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDOIDAndVersion;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -29,11 +32,13 @@ import org.eclipse.emf.cdo.server.IRepository.WriteAccessHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.session.CDOSession;
+import org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
+import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig.MEMConfig.MEMStore_UT;
 import org.eclipse.emf.cdo.tests.model1.Category;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.tests.model1.Product1;
@@ -414,12 +419,12 @@ public class Issue_000105_Test extends AbstractCDOTest
     CDOID root2ID = CDOUtil.getCDOObject(root2).cdoID();
     boolean localIDs = true;
 
-    Pair<String, Long> result = getDigest(rootID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result = getDigest(rootID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex1 = result.getElement1();
     long count = result.getElement2();
     assertEquals(modelSize, count);
 
-    Pair<String, Long> result2 = getDigest(root2ID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result2 = getDigest(root2ID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex2 = result2.getElement1();
     long count2 = result2.getElement2();
     assertEquals(modelSize, count2);
@@ -449,12 +454,12 @@ public class Issue_000105_Test extends AbstractCDOTest
     CDOID order2ID = CDOUtil.getCDOObject(order2).cdoID();
     boolean localIDs = true;
 
-    Pair<String, Long> result = getDigest(order1ID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result = getDigest(order1ID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex1 = result.getElement1();
     long count = result.getElement2();
     assertEquals(modelSize, count);
 
-    Pair<String, Long> result2 = getDigest(order2ID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result2 = getDigest(order2ID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex2 = result2.getElement1();
     long count2 = result2.getElement2();
     assertEquals(modelSize, count2);
@@ -492,17 +497,75 @@ public class Issue_000105_Test extends AbstractCDOTest
     CDOID root2ID = CDOUtil.getCDOObject(company2).cdoID();
     boolean localIDs = true;
 
-    Pair<String, Long> result = getDigest(root1ID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result = getDigest(root1ID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex1 = result.getElement1();
     long count = result.getElement2();
     assertEquals(modelSize, count);
 
-    Pair<String, Long> result2 = getDigest(root2ID, localIDs, ContainmentProxyStrategy.Physical, transaction, null);
+    Pair<String, Long> result2 = getDigest(root2ID, localIDs, false, ContainmentProxyStrategy.Physical, transaction, null);
     String hex2 = result2.getElement1();
     long count2 = result2.getElement2();
     assertEquals(modelSize, count2);
 
     assertEquals(hex1, hex2);
+  }
+
+  public void testDigestTampering() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    root = getModel1Factory().createCategory();
+    root.setName("ROOT");
+
+    resource.getContents().add(root);
+    transaction.commit();
+
+    CDOID rootID = CDOUtil.getCDOObject(root).cdoID();
+    String hex1 = getDigest(rootID, ContainmentProxyStrategy.Physical, transaction, null).getElement1();
+
+    InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
+    InternalView serverView = serverSession.getView(transaction.getViewID());
+
+    BaseCDORevision revision = (BaseCDORevision)serverView.getRevision(rootID);
+    revision.unfreeze();
+    revision.setValue(getModel1Package().getCategory_Name(), "TAMPERED ROOT");
+    revision.freeze();
+
+    session = openSession();
+    transaction = session.openTransaction();
+
+    String hex2 = getDigest(rootID, ContainmentProxyStrategy.Physical, transaction, null).getElement1();
+    assertNotEquals(hex1, hex2);
+  }
+
+  @Requires("MEM")
+  public void testDigestTamperingBlobs() throws Exception
+  {
+    CDOSession session = openSession();
+    CDOTransaction transaction = session.openTransaction();
+    CDOResource resource = transaction.createResource(getResourcePath("/test1"));
+
+    Image image = getModel3Factory().createImage();
+    image.setWidth(100);
+    image.setHeight(100);
+    image.setData(new CDOBlob(new ByteArrayInputStream("Original Data".getBytes())));
+
+    resource.getContents().add(image);
+    transaction.commit();
+
+    CDOID rootID = CDOUtil.getCDOObject(image).cdoID();
+    String hex1 = getDigest(rootID, false, true, ContainmentProxyStrategy.Physical, transaction, null).getElement1();
+
+    InternalSession serverSession = getRepository().getSessionManager().getSession(session.getSessionID());
+    MEMStore_UT store = (MEMStore_UT)serverSession.getRepository().getStore();
+    store.writeBlob(image.getData().getID(), image.getData().getSize(), new ByteArrayInputStream("ORIGINAL DATA".getBytes()));
+
+    session = openSession();
+    transaction = session.openTransaction();
+    String hex2 = getDigest(rootID, false, true, ContainmentProxyStrategy.Physical, transaction, null).getElement1();
+    assertNotEquals(hex1, hex2);
   }
 
   private void commit()
@@ -521,42 +584,41 @@ public class Issue_000105_Test extends AbstractCDOTest
   private Pair<String, Long> getDigest(CDOID rootID, ContainmentProxyStrategy containmentProxyStrategy, //
       CDORevisionProvider revisionProvider, Consumer<CDORevision> revisionConsumer) throws NoSuchAlgorithmException
   {
-    return getDigest(rootID, false, containmentProxyStrategy, revisionProvider, revisionConsumer);
+    return getDigest(rootID, false, false, containmentProxyStrategy, revisionProvider, revisionConsumer);
   }
 
-  private Pair<String, Long> getDigest(CDOID rootID, boolean localIDs, ContainmentProxyStrategy containmentProxyStrategy, //
+  private Pair<String, Long> getDigest(CDOID rootID, boolean localIDs, boolean lobValues, ContainmentProxyStrategy containmentProxyStrategy, //
       CDORevisionProvider revisionProvider, Consumer<CDORevision> revisionConsumer) throws NoSuchAlgorithmException
   {
     CDORevision rootRevision = revisionProvider.getRevision(rootID);
+    CDOLobLoader lobLoader = lobValues ? (CDOLobLoader)revisionProvider : null;
 
     MessageDigest digest = MessageDigest.getInstance(ALGORITHM);
-    MessageDigestHandler handler = new MessageDigestHandler(digest, localIDs)
+    MessageDigestHandler handler = new MessageDigestHandler(digest, localIDs, lobLoader)
     {
       @Override
-      protected boolean doBeginRevision(CDORevisionCrawler crawler, CDORevision revision)
+      protected boolean doBeginRevision(CDORevision revision)
       {
         if (revisionConsumer != null)
         {
           revisionConsumer.accept(revision);
         }
 
-        return super.doBeginRevision(crawler, revision);
+        return super.doBeginRevision(revision);
       }
     };
 
-    CDORevisionCrawler crawler = new CDORevisionCrawler(handler);
-    crawler.setFeatureStrategy(FeatureStrategy.TREE);
-    crawler.setContainmentProxyStrategy(containmentProxyStrategy);
-    crawler.setRevisionProvider(revisionProvider);
-    crawler.addRevision(rootRevision);
-
-    if (localIDs)
-    {
-      handler.finishLocalIDs();
-    }
+    long count = new CDORevisionCrawler() //
+        .handler(handler) //
+        .featureStrategy(FeatureStrategy.TREE) //
+        .containmentProxyStrategy(containmentProxyStrategy) //
+        .revisionProvider(revisionProvider) //
+        .begin() //
+        .addRevision(rootRevision) //
+        .finish() //
+        .revisionCount();
 
     String hex = HexUtil.bytesToHex(digest.digest());
-    long count = crawler.getRevisionCount();
     IOUtil.OUT().println("Digest of " + count + " revisions: " + hex);
     return Pair.create(hex, count);
   }

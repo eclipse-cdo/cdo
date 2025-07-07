@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.Operation;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -64,6 +65,7 @@ import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.core.runtime.PlatformObject;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -805,6 +807,12 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     public ISession getSession()
     {
       return null;
+    }
+
+    @Override
+    public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+    {
+      throw new UnsupportedOperationException();
     }
 
     @Override

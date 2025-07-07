@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lob.CDOLobStore;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -161,6 +162,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
   public CDORevisionProvider getRevisionProvider()
   {
     return revisionProvider;
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+  {
+    session.loadLob(info, outputStreamOrWriter);
   }
 
   @Override
@@ -705,6 +712,11 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public CDOSession getSession()
     {
       return this;
+    }
+
+    public InternalRepository getRepository()
+    {
+      return repository;
     }
 
     public InternalSession getInternalSession()
@@ -1588,6 +1600,12 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
     public void setCollectionLoadingPolicy(CDOCollectionLoadingPolicy policy)
     {
       throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+    {
+      repository.loadLob(info, outputStreamOrWriter);
     }
 
     @Override

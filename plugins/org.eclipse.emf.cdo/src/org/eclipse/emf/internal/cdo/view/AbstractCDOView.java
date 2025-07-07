@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDExternal;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.id.CDOWithID;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
@@ -1829,6 +1830,12 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   public InternalCDORevision getRevision(CDOID id)
   {
     return getRevision(id, true);
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+  {
+    getSession().loadLob(info, outputStreamOrWriter);
   }
 
   @Override

@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.common.lob.CDOLobInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo;
 import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
@@ -76,6 +77,7 @@ import org.eclipse.net4j.util.security.operations.OperationAuthorizer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -583,6 +585,12 @@ public class Session extends Container<IView> implements InternalSession
   public CDOID provideCDOID(Object idObject)
   {
     return (CDOID)idObject;
+  }
+
+  @Override
+  public void loadLob(CDOLobInfo info, Object outputStreamOrWriter) throws IOException
+  {
+    getRepository().loadLob(info, outputStreamOrWriter);
   }
 
   @Override

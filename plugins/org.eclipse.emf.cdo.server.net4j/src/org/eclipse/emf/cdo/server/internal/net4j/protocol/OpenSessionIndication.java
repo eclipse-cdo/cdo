@@ -165,7 +165,10 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
       }
       catch (NotAuthenticatedException ex)
       {
-        // Skip response because the user has canceled the authentication
+        // This exception means that the user has canceled the authentication.
+        // See SessionManager.authenticationCanceledByClient().
+
+        // Skip rest of response because the user has canceled the authentication.
         out.writeXInt(0);
         flush();
 
@@ -179,6 +182,7 @@ public class OpenSessionIndication extends CDOServerIndicationWithMonitoring
           }
         });
 
+        // Skip rest of response because the user has canceled the authentication.
         return;
       }
 

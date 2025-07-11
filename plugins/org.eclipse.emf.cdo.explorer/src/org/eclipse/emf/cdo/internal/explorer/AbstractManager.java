@@ -38,6 +38,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -146,6 +147,11 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
 
   public T newElement(Properties properties)
   {
+    return newElement(properties, null);
+  }
+
+  public T newElement(Properties properties, Consumer<T> elementInitializer)
+  {
     int i = 0;
     for (;;)
     {
@@ -161,7 +167,7 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
         continue;
       }
 
-      T element = addElement(child, properties, true);
+      T element = addElement(child, properties, true, elementInitializer);
       return element;
     }
   }
@@ -171,11 +177,11 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     Properties properties = loadProperties(folder, getPropertiesFileName());
     if (properties != null)
     {
-      addElement(folder, properties, false);
+      addElement(folder, properties, false, null);
     }
   }
 
-  private T addElement(File folder, Properties properties, boolean newElement)
+  private T addElement(File folder, Properties properties, boolean newElement, Consumer<T> elementInitializer)
   {
     String type = properties.getProperty("type");
 
@@ -185,6 +191,11 @@ public abstract class AbstractManager<T extends CDOExplorerElement> extends SetC
     if (newElement)
     {
       ((AbstractElement)element).save();
+    }
+
+    if (elementInitializer != null)
+    {
+      elementInitializer.accept(element);
     }
 
     LifecycleUtil.activate(element);

@@ -78,13 +78,7 @@ public class CDORepositoryManagerImpl extends AbstractManager<CDORepository> imp
   @Override
   public CDORepository addRepository(Properties properties, IPasswordCredentials credentials)
   {
-    CDORepository repository = newElement(properties);
-    if (repository != null)
-    {
-      repository.setCredentials(credentials);
-    }
-
-    return repository;
+    return newElement(properties, repository -> repository.setCredentials(credentials));
   }
 
   public void disconnectUnusedRepositories()

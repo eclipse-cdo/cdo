@@ -244,7 +244,11 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
   @Override
   protected void explorerElementAdded(CDORepository repository)
   {
-    // Do nothing here. All is done in repositoryConnected().
+    ISystemDescriptor descriptor = getDescriptor(repository);
+    if (descriptor == null)
+    {
+      addDescriptor(repository);
+    }
   }
 
   @Override

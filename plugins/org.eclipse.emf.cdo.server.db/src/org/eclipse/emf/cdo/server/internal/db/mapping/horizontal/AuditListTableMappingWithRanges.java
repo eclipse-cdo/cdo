@@ -124,6 +124,10 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   // --------- SQL strings - see initSQLStrings() -----------------
   private String sqlSelectChunksPrefix;
 
+  /**
+   * This field is initialized on demand in {@link #queryUnitEntries(IDBStoreAccessor, IIDHandler, long, CDOID)}
+   * and not in {@link #initSQLStrings()} because the initialization requires the {@link #classMapping} field value.
+   */
   private String sqlSelectUnitEntries;
 
   private String sqlInsertEntry;
@@ -323,23 +327,6 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     builder.append(versionRemovedField);
     builder.append(" IS NULL"); //$NON-NLS-1$
     sqlDeleteList = builder.toString();
-
-    DBStore store = (DBStore)getMappingStrategy().getStore();
-    if (store.getRepository().isSupportingUnits())
-    {
-      UnitMappingTable units = store.getUnitMappingTable();
-
-      sqlSelectUnitEntries = "SELECT " + (CHECK_UNIT_ENTRIES ? classMapping.idField + ", " : "") + "cdo_list." + valueField + //
-          " FROM " + table + " cdo_list, " + classMapping.table + ", " + units + //
-          " WHERE " + units.elem() + "=" + classMapping.idField + //
-          " AND " + classMapping.idField + "=cdo_list." + sourceField + //
-          " AND " + units.unit() + "=?" + //
-          " AND " + classMapping.createdField + "<=?" + //
-          " AND (" + classMapping.revisedField + "=0 OR " + classMapping.revisedField + ">=?)" + //
-          " AND cdo_list." + versionAddedField + "<=" + classMapping.versionField + //
-          " AND (cdo_list." + versionRemovedField + " IS NULL OR cdo_list." + versionRemovedField + ">" + classMapping.versionField + ") ORDER BY cdo_list."
-          + sourceField + ", cdo_list." + indexField;
-    }
   }
 
   @Override
@@ -672,6 +659,26 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
   @Override
   public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, long timeStamp, CDOID rootID) throws SQLException
   {
+    if (sqlSelectUnitEntries == null)
+    {
+      DBStore store = (DBStore)getMappingStrategy().getStore();
+      UnitMappingTable units = store.getUnitMappingTable();
+
+      // The sqlSelectUnitEntries field is initialized here and not in initSQLStrings()
+      // because the initialization requires the classMapping field value.
+
+      sqlSelectUnitEntries = "SELECT " + (CHECK_UNIT_ENTRIES ? classMapping.idField + ", " : "") + "cdo_list." + valueField + //
+          " FROM " + table + " cdo_list, " + classMapping.table + ", " + units + //
+          " WHERE " + units.elem() + "=" + classMapping.idField + //
+          " AND " + classMapping.idField + "=cdo_list." + sourceField + //
+          " AND " + units.unit() + "=?" + //
+          " AND " + classMapping.createdField + "<=?" + //
+          " AND (" + classMapping.revisedField + "=0 OR " + classMapping.revisedField + ">=?)" + //
+          " AND cdo_list." + versionAddedField + "<=" + classMapping.versionField + //
+          " AND (cdo_list." + versionRemovedField + " IS NULL OR cdo_list." + versionRemovedField + ">" + classMapping.versionField + ") ORDER BY cdo_list."
+          + sourceField + ", cdo_list." + indexField;
+    }
+
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelectUnitEntries, ReuseProbability.MEDIUM);
     idHandler.setCDOID(stmt, 1, rootID);
     stmt.setLong(2, timeStamp);

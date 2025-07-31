@@ -20,7 +20,6 @@ import org.eclipse.net4j.util.ui.chat.ChatRenderer.Renderable;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.widgets.EntryField;
-import org.eclipse.net4j.util.ui.widgets.EntryField.FieldConfig;
 import org.eclipse.net4j.util.ui.widgets.ImageButton;
 import org.eclipse.net4j.util.ui.widgets.ImageButton.SelectionMode;
 import org.eclipse.net4j.util.ui.widgets.SafeBrowser;
@@ -191,7 +190,7 @@ public final class ChatComposite extends Composite
       }
     });
 
-    FieldConfig fieldConfig = new EntryField.FieldConfig();
+    EntryField.FieldConfig fieldConfig = new EntryField.FieldConfig();
     fieldConfig.setEntryBackground(entryBackgroundColor);
     fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
     fieldConfig.setEntryControlConfig(controlConfig);

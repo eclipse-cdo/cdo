@@ -39,6 +39,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RebaseToTargetAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.RebaseToTargetReview".intern();
+
   public RebaseToTargetAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -48,6 +50,12 @@ public class RebaseToTargetAction extends AbstractReviewAction
         "Rebase the review to the target stream '" + review.getStream().getName() + "'.", //
         "icons/wizban/RebaseToTarget.png", //
         review);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

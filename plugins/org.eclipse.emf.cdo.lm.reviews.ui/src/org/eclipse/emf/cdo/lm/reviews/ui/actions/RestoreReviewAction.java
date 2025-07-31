@@ -25,6 +25,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RestoreReviewAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.RestoreReview".intern();
+
   public RestoreReviewAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -34,6 +36,12 @@ public class RestoreReviewAction extends AbstractReviewAction
         "Restore the review.", //
         "icons/wizban/RestoreReview.png", //
         review);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

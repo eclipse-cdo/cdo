@@ -47,7 +47,8 @@ public class AbstractAuthorizingHandler<T> extends AbstractBaseHandler<T>
       CDOSession session = CDOUtil.getSession(element);
       if (session != null)
       {
-        return session.authorizeOperations(authorizableOperation)[0] == null;
+        String veto = session.authorizeOperations(authorizableOperation)[0];
+        return veto == null;
       }
     }
 

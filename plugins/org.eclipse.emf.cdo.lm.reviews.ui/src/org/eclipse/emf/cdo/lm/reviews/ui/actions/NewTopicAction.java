@@ -43,6 +43,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewTopicAction extends LMAction.NewElement<TopicContainer>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateTopic".intern();
+
   private String text;
 
   private boolean heading;
@@ -58,6 +60,12 @@ public class NewTopicAction extends LMAction.NewElement<TopicContainer>
         "Add a new topic.", //
         "icons/wizban/NewTopic.png", //
         container);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

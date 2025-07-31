@@ -88,8 +88,8 @@ public class DefaultRevisionAuthorizer extends RevisionAuthorizer
   }
 
   @Override
-  public CDOPermission authorizeRevision(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, CDORevisionProvider revisionProvider,
-      CDORevision revision)
+  public CDOPermission authorizeRevision(ISession session, UserInfo userInfo, CDOBranchPoint securityContext, //
+      CDORevisionProvider revisionProvider, CDORevision revision)
   {
     if (matcher.matches(session, userInfo, securityContext, revisionProvider, revision))
     {

@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.lm.internal.client;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.branch.CDOBranchRef;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.security.NoPermissionException;
 import org.eclipse.emf.cdo.common.util.CDOResourceNodeNotFoundException;
 import org.eclipse.emf.cdo.eresource.CDOResource;
@@ -163,9 +164,9 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
       return getDescriptor(systemName);
     }
 
-    if (object instanceof SystemElement)
+    SystemElement systemElement = EMFUtil.getNearestObject(object, SystemElement.class);
+    if (systemElement != null)
     {
-      SystemElement systemElement = (SystemElement)object;
       System system = systemElement.getSystem();
       String systemName = system.getName();
       return getDescriptor(systemName);

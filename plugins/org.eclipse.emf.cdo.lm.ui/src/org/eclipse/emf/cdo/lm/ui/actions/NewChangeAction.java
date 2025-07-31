@@ -47,6 +47,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewChangeAction extends LMAction.NewElement<Stream>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateChange".intern();
+
   private ISystemDescriptor systemDescriptor;
 
   private EList<Baseline> possibleBases;
@@ -75,6 +77,12 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
         "icons/wizban/NewChange.png", //
         stream);
     this.base = base;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

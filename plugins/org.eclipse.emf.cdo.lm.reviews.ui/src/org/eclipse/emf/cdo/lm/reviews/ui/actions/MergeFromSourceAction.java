@@ -27,6 +27,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class MergeFromSourceAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.MergeFromSourceReview".intern();
+
   public MergeFromSourceAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -36,6 +38,12 @@ public class MergeFromSourceAction extends AbstractReviewAction
         "Merge the review from the source change '" + ((DeliveryReview)review).getSourceChange().getName() + "'.", //
         "icons/wizban/MergeFromSource.gif", //
         review);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

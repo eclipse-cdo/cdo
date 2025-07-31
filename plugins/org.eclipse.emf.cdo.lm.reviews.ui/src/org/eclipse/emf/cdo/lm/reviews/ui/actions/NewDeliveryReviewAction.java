@@ -51,6 +51,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateDeliveryReview".intern();
+
   private boolean changeWasNull;
 
   private EList<Baseline> possibleChanges;
@@ -68,6 +70,12 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
         stream);
     this.change = change;
     changeWasNull = change == null;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

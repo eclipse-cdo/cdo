@@ -134,7 +134,7 @@ public abstract class LDAPOperationAuthorizer extends AbstractOperationAuthorize
       }
 
       @Override
-      protected RequireUser create(String operationID, Set<String> dns) throws ProductCreationException
+      protected LDAPOperationAuthorizer create(String operationID, Set<String> dns) throws ProductCreationException
       {
         return new RequireUser(operationID, dns);
       }
@@ -178,9 +178,9 @@ public abstract class LDAPOperationAuthorizer extends AbstractOperationAuthorize
       }
 
       @Override
-      protected RequireUser create(String operationID, Set<String> dns) throws ProductCreationException
+      protected LDAPOperationAuthorizer create(String operationID, Set<String> dns) throws ProductCreationException
       {
-        return new RequireUser(operationID, dns);
+        return new RequireGroup(operationID, dns);
       }
     }
   }

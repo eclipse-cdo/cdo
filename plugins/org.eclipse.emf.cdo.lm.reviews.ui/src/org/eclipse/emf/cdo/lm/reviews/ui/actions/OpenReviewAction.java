@@ -29,6 +29,7 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
@@ -50,10 +51,8 @@ import org.eclipse.net4j.util.ui.chat.ChatComposite;
 import org.eclipse.net4j.util.ui.chat.ChatMessage;
 import org.eclipse.net4j.util.ui.chat.ChatRenderer;
 import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor;
-import org.eclipse.net4j.util.ui.widgets.EntryControlAdvisor.ControlConfig;
 import org.eclipse.net4j.util.ui.widgets.EntryField;
 import org.eclipse.net4j.util.ui.widgets.EntryField.ButtonAdvisor;
-import org.eclipse.net4j.util.ui.widgets.EntryField.FieldConfig;
 import org.eclipse.net4j.util.ui.widgets.SashComposite;
 
 import org.eclipse.emf.common.notify.Notification;
@@ -277,6 +276,8 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final ISystemDescriptor systemDescriptor;
 
+    private final boolean permissionToCreateTopic;
+
     private final Image topicImage = OM.getImage(TOPIC_IMAGE);
 
     private final Image topicImageUnresolved = OM.getOverlayImage(TOPIC_IMAGE, IMAGE_FOLDER + "Unresolved.png", 18, 2);
@@ -290,6 +291,8 @@ public class OpenReviewAction extends AbstractReviewAction
     private Object lastDiffElement;
 
     private ChatRenderer renderer;
+
+    private Composite topicContainer;
 
     private Label topicIcon;
 
@@ -340,6 +343,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
       review.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
+      permissionToCreateTopic = LMAction.authorize(NewTopicAction.OPERATION_ID, review) == null;
       authorCache = initializeAuthorCache(review);
       remoteReviewTopic = createRemoteTopic(review);
     }
@@ -429,7 +433,7 @@ public class OpenReviewAction extends AbstractReviewAction
               ENTRY_CONTROL_ADVISOR_TYPE, //
               ENTRY_CONTROL_ADVISOR_DESCRIPTION);
 
-          Composite topicContainer = new Composite(parent, SWT.NONE);
+          topicContainer = new Composite(parent, SWT.NONE);
           topicContainer.setLayout(GridLayoutFactory.fillDefaults().margins(10, 10).spacing(LayoutConstants.getSpacing().x, 2).numColumns(2).create());
           topicContainer.setBackground(display.getSystemColor(SWT.COLOR_WHITE));
 
@@ -662,10 +666,10 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private EntryField createTopicEntryField(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
     {
-      ControlConfig controlConfig = new ControlConfig();
+      EntryControlAdvisor.ControlConfig controlConfig = new EntryControlAdvisor.ControlConfig();
       controlConfig.setOkDetector(null);
 
-      FieldConfig fieldConfig = new EntryField.FieldConfig();
+      EntryField.FieldConfig fieldConfig = new EntryField.FieldConfig();
       fieldConfig.setEntryBackground(entryBackgroundColor);
       fieldConfig.setEntryControlAdvisor(entryControlAdvisor);
       fieldConfig.setEntryControlConfig(controlConfig);
@@ -702,12 +706,26 @@ public class OpenReviewAction extends AbstractReviewAction
     private void selectTopic(ModelReference modelReference)
     {
       Topic topic = review.getTopic(modelReference);
-      setChatCompositeVisible(topic != null);
-
       if (topic == null)
       {
-        topic = ReviewsFactory.eINSTANCE.createTopic();
-        topic.setModelReference(modelReference);
+        if (permissionToCreateTopic)
+        {
+          topicContainer.setVisible(true);
+
+          topic = ReviewsFactory.eINSTANCE.createTopic();
+          topic.setModelReference(modelReference);
+        }
+        else
+        {
+          topicContainer.setVisible(false);
+        }
+
+        setChatCompositeVisible(false);
+      }
+      else
+      {
+        topicContainer.setVisible(true);
+        setChatCompositeVisible(true);
       }
 
       if (topic != currentTopic)
@@ -715,11 +733,10 @@ public class OpenReviewAction extends AbstractReviewAction
         currentTopic = topic;
         topicStatus = null;
 
-        String entry = topic.getText();
+        String entry = currentTopic == null ? null : currentTopic.getText();
         topicEntryField.setEntry(entry);
 
-        boolean previewMode = !topicEntryField.isEmpty();
-        topicEntryField.setPreviewMode(previewMode);
+        topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
 
         refreshTopicUI();
         chatComposite.refreshMessageBrowser();

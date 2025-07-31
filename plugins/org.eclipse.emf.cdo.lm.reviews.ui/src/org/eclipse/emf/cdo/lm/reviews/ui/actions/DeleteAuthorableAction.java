@@ -29,6 +29,10 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteAuthorableAction extends LMAction<Authorable>
 {
+  public static final String TOPIC_OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.DeleteTopic".intern();
+
+  public static final String COMMENT_OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.DeleteComment".intern();
+
   public DeleteAuthorableAction(IWorkbenchPage page, Authorable authorable)
   {
     super(page, //
@@ -38,6 +42,23 @@ public class DeleteAuthorableAction extends LMAction<Authorable>
         "Delete the " + getTypeLabel(authorable) + ".", //
         "icons/wizban/Delete.png", //
         authorable);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    Authorable authorable = getContext();
+    if (authorable instanceof Topic)
+    {
+      return TOPIC_OPERATION_ID;
+    }
+
+    if (authorable instanceof Comment)
+    {
+      return COMMENT_OPERATION_ID;
+    }
+
+    return null;
   }
 
   @Override

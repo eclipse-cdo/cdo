@@ -27,6 +27,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteModuleAction extends LMAction<Module>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.DeleteModule".intern();
+
   private ISystemDescriptor systemDescriptor;
 
   public DeleteModuleAction(IWorkbenchPage page, Module module)
@@ -38,6 +40,12 @@ public class DeleteModuleAction extends LMAction<Module>
         "Delete the Module '" + module.getName() + "'.", //$NON-NLS-1$ //$NON-NLS-2$
         "icons/wizban/Delete.png", //$NON-NLS-1$
         module);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

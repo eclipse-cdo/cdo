@@ -14,18 +14,30 @@
 <plugin>
 
     <extension point="org.eclipse.net4j.util.factories">
-       <factory
-             productGroup="org.eclipse.net4j.util.ui.menuFillers"
-             type="lm.reviews"
-             class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsMenuFiller$Factory"/>
-       <factory
-             productGroup="org.eclipse.net4j.util.ui.openHandlers"
-             type="lm.reviews"
-             class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory"/>
-       <simpleFactory
-             productClass="org.eclipse.emf.cdo.lm.reviews.ui.CompareModelReferenceExtractor"
-             productGroup="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors"
-             type="compare"/>
+       <factory productGroup="org.eclipse.net4j.util.ui.menuFillers" type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsMenuFiller$Factory"/>
+       <factory productGroup="org.eclipse.net4j.util.ui.openHandlers" type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory"/>
+       <simpleFactory productGroup="org.eclipse.emf.cdo.lm.reviews.modelReferenceExtractors" type="compare" productClass="org.eclipse.emf.cdo.lm.reviews.ui.CompareModelReferenceExtractor"/>
+       <factories productGroup="org.eclipse.net4j.util.security.authorizableOperations" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory">
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateDeliveryReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateDropReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateReleaseReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.MergeFromSourceReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.RebaseToTargetReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.SubmitReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.AbandonReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.RestoreReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.DeleteReview"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateTopic"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.ModifyTopic"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.ResolveTopic"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.UnresolveTopic"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.DeleteTopic"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateComment"/>
+         <type value="org.eclipse.emf.cdo.lm.reviews.ui.DeleteComment"/>
+       </factories>
+       <!--
+       -->
+       <simpleFactory productGroup="org.eclipse.emf.cdo.session.localOperationAuthorizers" type="test" productClass="org.eclipse.emf.cdo.lm.reviews.ui.TestAuthorizer"/>
     </extension>
 
 </plugin>

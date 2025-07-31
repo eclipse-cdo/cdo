@@ -46,6 +46,8 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class NewDropAction extends LMAction.NewElement<Stream>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateDrop".intern();
+
   private static final long INVALID_DATE = CDOBranchPoint.INVALID_DATE;
 
   private final DropType dropType;
@@ -78,6 +80,12 @@ public class NewDropAction extends LMAction.NewElement<Stream>
         dropType.isRelease() ? "icons/wizban/NewRelease.png" : "icons/wizban/NewDrop.png", //
         stream);
     this.dropType = dropType;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

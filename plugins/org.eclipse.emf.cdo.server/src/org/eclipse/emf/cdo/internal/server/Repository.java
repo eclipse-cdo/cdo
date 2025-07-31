@@ -1769,10 +1769,10 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       try
       {
-        String result = authorizer.authorizeOperation(session, operation);
-        if (result != null)
+        String veto = authorizer.authorizeOperation(session, operation);
+        if (veto != null)
         {
-          return result;
+          return veto;
         }
       }
       catch (Error ex)
@@ -1796,10 +1796,10 @@ public class Repository extends Container<Object> implements InternalRepository
     {
       InternalSession session = StoreThreadLocal.getSession();
 
-      String denial = authorizeOperation(session, operation);
-      if (denial != null)
+      String veto = authorizeOperation(session, operation);
+      if (veto != null)
       {
-        throw new AuthorizationException(denial);
+        throw new AuthorizationException(veto);
       }
     }
   }

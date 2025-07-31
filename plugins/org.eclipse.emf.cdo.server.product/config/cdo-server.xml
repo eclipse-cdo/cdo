@@ -162,10 +162,10 @@
     -->
 
     <!-- Example https://bugs.eclipse.org/577114
-      <operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.DeleteBranch:Administrators"/>
-      <operationAuthorizer type="requireGroup" description="org.eclipse.emf.cdo.ui.DeleteBranches:Administrators"/>
-      <operationAuthorizer type="requireUser" description="org.foo.bar.HuntKlingons:Kirk,Picard"/>
-      <operationAuthorizer type="requireRole" description="org.foo.bar.CreateAccounts:Accountant"/>
+      <operationAuthorizer type="requireGroup" operation="org.eclipse.emf.cdo.DeleteBranch" values="Administrators"/>
+      <operationAuthorizer type="requireGroup" operation="org.eclipse.emf.cdo.ui.DeleteBranches" values="Administrators"/>
+      <operationAuthorizer type="requireUser" operation="org.foo.bar.HuntKlingons" values="Kirk,Picard"/>
+      <operationAuthorizer type="requireRole" operation="org.foo.bar.CreateAccounts" values="Accountant"/>
     -->
 
     <!-- Example https://bugs.eclipse.org/345431

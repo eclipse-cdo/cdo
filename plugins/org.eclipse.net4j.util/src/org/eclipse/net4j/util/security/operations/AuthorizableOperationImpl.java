@@ -24,7 +24,9 @@ import java.util.Objects;
 /**
  * @author Eike Stepper
  * @since 3.16
+ * @deprecated As of 4.16 use {@link AuthorizableOperation}. It was an accident that this class hasn't been deleted before the release.
  */
+@Deprecated
 public final class AuthorizableOperationImpl
 {
   private static final ClassLoader CLASS_LOADER = OM.BUNDLE.getClass().getClassLoader();

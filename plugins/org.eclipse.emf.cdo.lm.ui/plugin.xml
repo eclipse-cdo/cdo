@@ -19,6 +19,18 @@
        <factory productGroup="org.eclipse.net4j.util.ui.propertyExtenders" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMPropertyExtender$Factory"/>
        <factory productGroup="org.eclipse.emf.cdo.ui.historyInputObjectModifiers" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMHistoryInputObjectModifier$Factory"/>
        <factory productGroup="org.eclipse.emf.cdo.ui.loadResourceProviders" type="lm" class="org.eclipse.emf.cdo.lm.ui.LMLoadResourceProvider$Factory"/>
+       <factories productGroup="org.eclipse.net4j.util.security.authorizableOperations" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory">
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateModule"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.DeleteModule"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateStream"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateChange"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.RenameChange"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.DeleteChange"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateDelivery"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateDrop"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.CreateRelease"/>
+         <type value="org.eclipse.emf.cdo.lm.ui.AttachFingerprint"/>
+       </factories>
    </extension>
 
    <extension point="org.eclipse.core.runtime.adapters">

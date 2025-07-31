@@ -25,6 +25,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteReviewAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.DeleteReview".intern();
+
   public DeleteReviewAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -34,6 +36,12 @@ public class DeleteReviewAction extends AbstractReviewAction
         "Delete the review.", //
         "icons/wizban/Delete.png", //
         review);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

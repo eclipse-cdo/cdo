@@ -26,6 +26,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class ResolveAction extends LMAction<Topic>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.ResolveTopic".intern();
+
   public ResolveAction(IWorkbenchPage page, Topic topic)
   {
     super(page, //
@@ -35,6 +37,12 @@ public class ResolveAction extends LMAction<Topic>
         null, //
         null, //
         topic);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

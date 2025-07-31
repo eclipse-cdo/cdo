@@ -209,6 +209,24 @@ public final class EMFUtil
   }
 
   /**
+   * @since 4.26
+   */
+  public static <T extends EObject> T getNearestObject(EObject object, Class<T> type)
+  {
+    while (object != null)
+    {
+      if (type.isInstance(object))
+      {
+        return type.cast(object);
+      }
+
+      object = object.eContainer();
+    }
+
+    return null;
+  }
+
+  /**
    * @since 4.2
    */
   public static URI getPositionalURI(InternalEObject internalEObject)
@@ -289,7 +307,7 @@ public final class EMFUtil
   public static EList<EAnnotation> getAnnotations(EClass eClass, String sourceURI)
   {
     EList<EAnnotation> annotations = new BasicEList<>();
-    getAnnotations(eClass, sourceURI, annotations, new HashSet<EClass>());
+    getAnnotations(eClass, sourceURI, annotations, new HashSet<>());
     return annotations;
   }
 

@@ -174,18 +174,6 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   }
 
   @Override
-  public String[] authorizeOperations(AuthorizableOperation... operations)
-  {
-    if (authorizationCache != null)
-    {
-      return authorizationCache.authorizeOperations(operations);
-    }
-
-    // No vetoes -> authorized.
-    return new String[operations.length];
-  }
-
-  @Override
   public OptionsImpl options()
   {
     return (OptionsImpl)super.options();
@@ -200,6 +188,15 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
   protected InternalCDOBranchManager createBranchManager()
   {
     return CDOBranchUtil.createBranchManager();
+  }
+
+  @Override
+  protected void authorizeOperationsRemote(AuthorizableOperation[] operations, String[] vetoes)
+  {
+    if (authorizationCache != null)
+    {
+      authorizationCache.authorizeOperations(operations, vetoes);
+    }
   }
 
   protected OpenSessionResult openSession()
@@ -466,7 +463,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
    */
   private static final class AuthorizationCache
   {
-    private static final String GRANTED = "";
+    private static final String GRANTED = new String("");
 
     private final Map<String, String> authorizations = new HashMap<>();
 
@@ -483,56 +480,58 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
       }
     }
 
-    public String[] authorizeOperations(AuthorizableOperation[] operations)
+    public void authorizeOperations(AuthorizableOperation[] operations, String[] vetoes)
     {
-      int length = operations.length;
-      String[] result = new String[length];
-      Map<AuthorizableOperation, Integer> operationsToLoad = new LinkedHashMap<>();
+      int count = operations.length;
+      Map<AuthorizableOperation, Integer> operationsToLoad = null;
 
       synchronized (authorizations)
       {
-        for (int i = 0; i < length; i++)
+        for (int i = 0; i < count; i++)
         {
           AuthorizableOperation operation = operations[i];
-          if (operation.getParameters().isEmpty())
+          if (operation != null && !operation.hasParameters())
           {
             String operationID = operation.getID();
 
             String authorization = authorizations.get(operationID);
             if (authorization != null)
             {
-              result[i] = authorization == GRANTED ? null : authorization;
+              vetoes[i] = authorization == GRANTED ? null : authorization;
             }
             else
             {
+              if (operationsToLoad == null)
+              {
+                operationsToLoad = new LinkedHashMap<>();
+              }
+
               operationsToLoad.put(operation, i);
             }
           }
         }
       }
 
-      int size = operationsToLoad.size();
+      int size = operationsToLoad == null ? 0 : operationsToLoad.size();
       if (size != 0)
       {
-        AuthorizableOperation[] load = operationsToLoad.keySet().toArray(new AuthorizableOperation[size]);
-        String[] loadResult = sessionProtocol.authorizeOperations(load);
+        AuthorizableOperation[] requestOperations = operationsToLoad.keySet().toArray(new AuthorizableOperation[size]);
+        String[] responseVetoes = sessionProtocol.authorizeOperations(requestOperations);
 
         synchronized (authorizations)
         {
-          for (int i = 0; i < loadResult.length; i++)
+          for (int i = 0; i < responseVetoes.length; i++)
           {
-            AuthorizableOperation operation = load[i];
-            String loadedAuthorization = loadResult[i];
+            AuthorizableOperation operation = requestOperations[i];
+            String veto = responseVetoes[i];
 
-            authorizations.put(operation.getID(), loadedAuthorization == null ? GRANTED : loadedAuthorization);
+            authorizations.put(operation.getID(), veto == null ? GRANTED : veto);
 
             int index = operationsToLoad.get(operation);
-            result[index] = loadedAuthorization;
+            vetoes[index] = veto;
           }
         }
       }
-
-      return result;
     }
   }
 

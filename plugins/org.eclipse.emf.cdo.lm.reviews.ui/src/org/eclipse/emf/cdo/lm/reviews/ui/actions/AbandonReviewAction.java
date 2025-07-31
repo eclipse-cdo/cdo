@@ -26,6 +26,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class AbandonReviewAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.AbandonReview".intern();
+
   public AbandonReviewAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -35,6 +37,12 @@ public class AbandonReviewAction extends AbstractReviewAction
         "Abandon the review.", //
         "icons/wizban/AbandonReview.png", //
         review);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

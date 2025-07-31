@@ -68,7 +68,7 @@ public final class EntryField extends Composite
 
   private Control control;
 
-  private Mode mode = new EditMode();
+  private Mode mode;
 
   private String initialEntry;
 
@@ -88,7 +88,7 @@ public final class EntryField extends Composite
     config.setEntryControlConfig(interceptModifyHandler(config.getEntryControlConfig()));
     this.config = config;
 
-    mode = config.isInitialPreviewMode() ? new PreviewMode() : new EditMode();
+    mode = config.isInitialPreviewMode() || config.isEditModeForbidden() ? new PreviewMode() : new EditMode();
     whiteColor = getDisplay().getSystemColor(SWT.COLOR_WHITE);
 
     addPaintListener(e -> {
@@ -176,6 +176,11 @@ public final class EntryField extends Composite
   public void setPreviewMode(boolean previewMode)
   {
     if (config.getPreviewProvider() == null || previewMode == isPreviewMode())
+    {
+      return;
+    }
+
+    if (!previewMode && config.isEditModeForbidden())
     {
       return;
     }
@@ -374,6 +379,8 @@ public final class EntryField extends Composite
 
     private boolean initialPreviewMode;
 
+    private boolean editModeForbidden;
+
     private ButtonAdvisor[] extraButtonAdvisors;
 
     private Consumer<EntryField> emptyHandler;
@@ -394,6 +401,7 @@ public final class EntryField extends Composite
       emptyHint = source.emptyHint;
       previewProvider = source.previewProvider;
       initialPreviewMode = source.initialPreviewMode;
+      editModeForbidden = source.editModeForbidden;
       extraButtonAdvisors = source.extraButtonAdvisors == null ? null : Arrays.copyOf(source.extraButtonAdvisors, source.extraButtonAdvisors.length);
       emptyHandler = source.emptyHandler;
       dirtyHandler = source.dirtyHandler;
@@ -458,6 +466,22 @@ public final class EntryField extends Composite
     public void setInitialPreviewMode(boolean initialPreviewMode)
     {
       this.initialPreviewMode = initialPreviewMode;
+    }
+
+    /**
+     * @since 3.21
+     */
+    public boolean isEditModeForbidden()
+    {
+      return editModeForbidden;
+    }
+
+    /**
+     * @since 3.21
+     */
+    public void setEditModeForbidden(boolean editModeForbidden)
+    {
+      this.editModeForbidden = editModeForbidden;
     }
 
     public ButtonAdvisor[] getExtraButtonAdvisors()

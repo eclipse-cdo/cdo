@@ -451,13 +451,53 @@ public class RepositoryConfigurator implements IManagedContainerProvider
           }
 
           String description = getAttribute(childElement, "description"); //$NON-NLS-1$
+          if (!StringUtil.isEmpty(description))
+          {
+            addOperationAuthorizer(repository, type, description);
+          }
+          else
+          {
+            String operations = getAttribute(childElement, "operations"); //$NON-NLS-1$
+            if (StringUtil.isEmpty(operations))
+            {
+              operations = getAttribute(childElement, "operation"); //$NON-NLS-1$
+            }
 
-          OperationAuthorizer<ISession> authorizer = getOperationAuthorizer(type, description);
-          OM.LOG.info("Adding operation authorizer " + type + ": " + description);
-          repository.addOperationAuthorizer(authorizer);
+            String values = null;
+            if (!StringUtil.isEmpty(operations))
+            {
+              values = getAttribute(childElement, "values"); //$NON-NLS-1$
+              if (StringUtil.isEmpty(values))
+              {
+                values = getAttribute(childElement, "value"); //$NON-NLS-1$
+              }
+
+              for (String operation : operations.split(","))
+              {
+                description = operation;
+
+                if (!StringUtil.isEmpty(values))
+                {
+                  description += ':' + values;
+                }
+
+                addOperationAuthorizer(repository, type, description);
+              }
+            }
+          }
         }
       }
     }
+  }
+
+  /**
+   * @since 4.24
+   */
+  protected void addOperationAuthorizer(InternalRepository repository, String type, String description) throws CoreException
+  {
+    OperationAuthorizer<ISession> authorizer = getOperationAuthorizer(type, description);
+    OM.LOG.info("Adding operation authorizer " + type + ": " + description);
+    repository.addOperationAuthorizer(authorizer);
   }
 
   /**

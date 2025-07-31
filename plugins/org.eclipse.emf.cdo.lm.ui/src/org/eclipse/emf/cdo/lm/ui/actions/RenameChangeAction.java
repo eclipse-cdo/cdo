@@ -36,6 +36,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RenameChangeAction extends LMAction<Change>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.RenameChange".intern();
+
   private ISystemDescriptor systemDescriptor;
 
   private Text labelText;
@@ -51,6 +53,12 @@ public class RenameChangeAction extends LMAction<Change>
         "Rename the change '" + change.getLabel() + "'.", //
         "icons/wizban/RenameChange.png", //
         change);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

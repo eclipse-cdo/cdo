@@ -39,6 +39,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewCommentAction extends LMAction.NewElement<TopicContainer>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateComment".intern();
+
   private String text;
 
   public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, TopicContainer container)
@@ -50,6 +52,12 @@ public class NewCommentAction extends LMAction.NewElement<TopicContainer>
         "Add a new comment.", //
         "icons/wizban/NewComment.png", //
         container);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

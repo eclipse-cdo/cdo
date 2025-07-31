@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.commit.CDOCommitInfo;
 import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.ReviewStatus;
+import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
@@ -31,7 +32,7 @@ import java.util.function.Consumer;
  * @author Eike Stepper
  * @noextend This class is not intended to be subclassed by clients.
  */
-public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteStateMachine<ReviewStatus, ReviewStatemachine.ReviewEvent, REVIEW>
+public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteStateMachine<ReviewStatus, ReviewEvent, REVIEW>
 {
   public static final String PROP_SUBMITTING = "org.eclipse.emf.cdo.lm.submitting";
 

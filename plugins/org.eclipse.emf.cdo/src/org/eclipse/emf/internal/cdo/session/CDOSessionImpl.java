@@ -112,6 +112,7 @@ import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.IRWOLockManager;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
+import org.eclipse.net4j.util.container.ContainerElementList;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
@@ -131,6 +132,7 @@ import org.eclipse.net4j.util.options.OptionsEvent;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
+import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.ecore.EPackage;
@@ -172,6 +174,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ExecutorService;
+import java.util.function.Supplier;
 
 /**
  * @author Eike Stepper
@@ -250,6 +253,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   private IPasswordCredentialsProvider credentialsProvider;
 
   private InternalCDORemoteSessionManager remoteSessionManager;
+
+  private SessionOperationAuthorizerRegistry operationAuthorizerRegistry;
 
   private Map<String, Entity> clientEntities = Collections.emptyMap();
 
@@ -743,6 +748,45 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   {
     return new OptionsImpl();
   }
+
+  @Override
+  public String[] authorizeOperations(AuthorizableOperation... operations)
+  {
+    int count = operations.length;
+    String[] vetoes = new String[count];
+    AuthorizableOperation[] remoteOperations = null;
+
+    for (int i = 0; i < operations.length; i++)
+    {
+      Object result = operationAuthorizerRegistry.authorizeOperation(operations[i]);
+      if (result == LocalOperationAuthorizer.GRANTED)
+      {
+        vetoes[i] = null;
+      }
+      else if (result instanceof String)
+      {
+        vetoes[i] = (String)result;
+      }
+      else if (result instanceof AuthorizableOperation)
+      {
+        if (remoteOperations == null)
+        {
+          remoteOperations = new AuthorizableOperation[count];
+        }
+
+        remoteOperations[i] = (AuthorizableOperation)result;
+      }
+    }
+
+    if (remoteOperations != null)
+    {
+      authorizeOperationsRemote(remoteOperations, vetoes);
+    }
+
+    return vetoes;
+  }
+
+  protected abstract void authorizeOperationsRemote(AuthorizableOperation[] operations, String[] vetoes);
 
   @Override
   public Object processPackage(Object value)
@@ -1751,6 +1795,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     setRemoteSessionManager(remoteSessionManager);
     remoteSessionManager.activate();
 
+    operationAuthorizerRegistry = new SessionOperationAuthorizerRegistry();
+    LifecycleUtil.activate(operationAuthorizerRegistry);
+
     checkState(sessionProtocol, "sessionProtocol"); //$NON-NLS-1$
     checkState(remoteSessionManager, "remoteSessionManager"); //$NON-NLS-1$
 
@@ -1770,6 +1817,8 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     super.doDeactivate();
 
     unhookSessionProtocol();
+
+    LifecycleUtil.deactivate(operationAuthorizerRegistry);
 
     CDORemoteSessionManager remoteSessionManager = getRemoteSessionManager();
     setRemoteSessionManager(null);
@@ -2421,6 +2470,57 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       {
         super(OptionsImpl.this);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class SessionOperationAuthorizerRegistry extends ContainerElementList<LocalOperationAuthorizer> implements Supplier<Entity>
+  {
+    private final Entity NO_USER_INFO = Entity.builder(SessionOperationAuthorizerRegistry.class.getSimpleName(), "NO_USER_INFO").build();
+
+    private Entity userInfo = NO_USER_INFO;
+
+    public SessionOperationAuthorizerRegistry()
+    {
+      super(LocalOperationAuthorizer.class, CDOSessionImpl.this.getContainer());
+      initContainerElements(LocalOperationAuthorizer.PRODUCT_GROUP);
+    }
+
+    @Override
+    public synchronized Entity get()
+    {
+      if (userInfo == NO_USER_INFO)
+      {
+        if (userInfoManager != null && userID != null)
+        {
+          userInfo = userInfoManager.getUserInfo(userID);
+        }
+        else
+        {
+          userInfo = null;
+        }
+      }
+
+      return userInfo;
+    }
+
+    /**
+     * @see org.eclipse.emf.cdo.session.CDOSession.LocalOperationAuthorizer#authorizeOperation(CDOSession, Supplier, AuthorizableOperation)
+     */
+    public Object authorizeOperation(AuthorizableOperation operation)
+    {
+      for (LocalOperationAuthorizer authorizer : getElements())
+      {
+        Object result = authorizer.authorizeOperation(CDOSessionImpl.this, this, operation);
+        if (result != null)
+        {
+          return result;
+        }
+      }
+
+      return operation.stripParameters();
     }
   }
 

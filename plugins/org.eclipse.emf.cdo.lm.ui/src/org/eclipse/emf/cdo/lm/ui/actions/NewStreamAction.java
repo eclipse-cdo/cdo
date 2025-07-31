@@ -43,6 +43,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewStreamAction extends LMAction.NewElement<Module>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateStream".intern();
+
   private static final int INVALID_VERSION = -1;
 
   private final AdapterFactory adapterFactory;
@@ -69,6 +71,12 @@ public class NewStreamAction extends LMAction.NewElement<Module>
         "icons/wizban/NewStream.png", //
         module);
     this.adapterFactory = adapterFactory;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

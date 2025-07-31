@@ -47,6 +47,8 @@ import java.util.List;
  */
 public class NewModuleAction extends LMAction.NewElement<System>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateModule".intern();
+
   private static final ModuleType NO_MODULE_TYPE = LMFactory.eINSTANCE.createModuleType("");
 
   private ISystemDescriptor systemDescriptor;
@@ -66,6 +68,12 @@ public class NewModuleAction extends LMAction.NewElement<System>
         "Add a new module to system '" + system.getName() + "'.", //
         "icons/wizban/NewModule.png", //
         system);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

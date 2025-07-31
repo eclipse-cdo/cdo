@@ -26,6 +26,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class AttachFingerPrintAction extends LMAction.NewElement<FixedBaseline>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.AttachFingerprint".intern();
+
   public AttachFingerPrintAction(IWorkbenchPage page, StructuredViewer viewer, FixedBaseline fixedBaseline)
   {
     super(page, viewer, //
@@ -35,6 +37,12 @@ public class AttachFingerPrintAction extends LMAction.NewElement<FixedBaseline>
         "Attach a new fingerprint to baseline '" + fixedBaseline.getName() + "'.", //
         "icons/wizban/FingerPrint.png", //
         fixedBaseline);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

@@ -45,6 +45,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDeliveryAction extends LMAction.NewElement<Stream>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateDelivery".intern();
+
   private static final LMMerger2 MERGER = new InteractiveDeliveryMerger();
 
   private boolean changeWasNull;
@@ -72,6 +74,12 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
         stream);
     this.change = change;
     changeWasNull = change == null;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

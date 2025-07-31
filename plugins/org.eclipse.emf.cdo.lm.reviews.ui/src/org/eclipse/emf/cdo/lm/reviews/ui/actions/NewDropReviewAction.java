@@ -46,6 +46,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDropReviewAction extends LMAction.NewElement<Delivery>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateDropReview".intern();
+
   private final DropType dropType;
 
   private String dropLabel;
@@ -63,6 +65,12 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
         dropType.isRelease() ? "icons/wizban/NewRelease.png" : "icons/wizban/NewDrop.png", //
         delivery);
     this.dropType = dropType;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

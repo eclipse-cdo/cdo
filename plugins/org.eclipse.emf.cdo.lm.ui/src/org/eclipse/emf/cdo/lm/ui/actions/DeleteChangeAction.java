@@ -30,6 +30,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteChangeAction extends LMAction<Change>
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.DeleteChange".intern();
+
   private ISystemDescriptor systemDescriptor;
 
   public DeleteChangeAction(IWorkbenchPage page, Change change)
@@ -41,6 +43,12 @@ public class DeleteChangeAction extends LMAction<Change>
         "Delete the change '" + change.getLabel() + "'.", //
         "icons/wizban/Delete.png", //
         change);
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

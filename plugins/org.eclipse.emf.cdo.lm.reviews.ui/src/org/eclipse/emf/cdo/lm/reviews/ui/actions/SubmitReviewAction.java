@@ -57,6 +57,8 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class SubmitReviewAction extends AbstractReviewAction
 {
+  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.SubmitReview".intern();
+
   private final StructuredViewer viewer;
 
   private IAssemblyDescriptor[] assemblyDescriptors = {};
@@ -73,6 +75,12 @@ public class SubmitReviewAction extends AbstractReviewAction
         "icons/wizban/SubmitReview.png", //
         review);
     this.viewer = viewer;
+  }
+
+  @Override
+  public String getAuthorizableOperationID()
+  {
+    return OPERATION_ID;
   }
 
   @Override

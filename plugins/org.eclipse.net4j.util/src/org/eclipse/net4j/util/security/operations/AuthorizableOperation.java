@@ -55,6 +55,22 @@ public final class AuthorizableOperation
     return Collections.unmodifiableMap(parameters);
   }
 
+  /**
+   * @since 3.28
+   */
+  public boolean hasParameters()
+  {
+    return !parameters.isEmpty();
+  }
+
+  /**
+   * @since 3.28
+   */
+  public AuthorizableOperation stripParameters()
+  {
+    return parameters.isEmpty() ? this : build(id);
+  }
+
   @Override
   public int hashCode()
   {

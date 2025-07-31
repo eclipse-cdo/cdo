@@ -906,6 +906,7 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
     configuration.setSignalTimeout(Integer.MAX_VALUE);
 
     CDONet4jSession session = configuration.openNet4jSession();
+    session.options().setGeneratedPackageEmulationEnabled(true);
     session.options().setCommitTimeout(Integer.MAX_VALUE);
     return session;
   }

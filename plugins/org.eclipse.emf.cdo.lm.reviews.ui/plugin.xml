@@ -35,9 +35,6 @@
          <type value="org.eclipse.emf.cdo.lm.reviews.ui.CreateComment"/>
          <type value="org.eclipse.emf.cdo.lm.reviews.ui.DeleteComment"/>
        </factories>
-       <!--
-       -->
-       <simpleFactory productGroup="org.eclipse.emf.cdo.session.localOperationAuthorizers" type="test" productClass="org.eclipse.emf.cdo.lm.reviews.ui.TestAuthorizer"/>
     </extension>
 
 </plugin>

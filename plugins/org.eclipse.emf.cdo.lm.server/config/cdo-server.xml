@@ -73,8 +73,10 @@
       -->
     </protector>
 
+    <!-- 
     <operationAuthorizer type="fileRequireUser" operation="org.eclipse.emf.cdo.lm.ui.CreateChange" values="bilbo"/>
     <operationAuthorizer type="fileRequireUser" operation="org.eclipse.emf.cdo.lm.reviews.ui.CreateTopic" values="bilbo"/>
+     -->
     
     <store type="db">
       <property name="connectionKeepAlivePeriod" value="60"/>

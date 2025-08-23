@@ -2611,7 +2611,7 @@ public class Repository extends Container<Object> implements InternalRepository
       idGenerationLocation = IDGenerationLocation.STORE;
     }
 
-    lobDigestAlgorithm = properties.get(Props.ID_GENERATION_LOCATION);
+    lobDigestAlgorithm = properties.get(Props.LOB_DIGEST_ALGORITHM);
     if (StringUtil.isEmpty(lobDigestAlgorithm))
     {
       lobDigestAlgorithm = CDOLobStoreImpl.DEFAULT_DIGEST_ALGORITHM;

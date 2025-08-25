@@ -12,56 +12,44 @@ package org.eclipse.emf.cdo.lm.util;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.lm.Baseline;
-import org.eclipse.emf.cdo.session.CDOSession.LocalOperationAuthorizer;
+import org.eclipse.emf.cdo.util.ContextOperationAuthorization;
 
 import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 
 /**
  * @author Eike Stepper
  * @since 1.4
  */
-public abstract class LMLocalOperationAuthorizer implements LocalOperationAuthorizer
+public abstract class LMOperationAuthorizer implements CDOOperationAuthorizer, LMOperations
 {
-  public static final String CONTEXT_PARAMETER = "context";
-
-  public LMLocalOperationAuthorizer()
+  public LMOperationAuthorizer()
   {
-  }
-
-  public static EObject getContext(AuthorizableOperation operation)
-  {
-    Object context = operation.getParameter(CONTEXT_PARAMETER);
-    if (context instanceof EObject)
-    {
-      return (EObject)context;
-    }
-
-    return null;
   }
 
   public static Baseline getContextBaseline(AuthorizableOperation operation)
   {
-    EObject object = getContext(operation);
+    EObject object = ContextOperationAuthorization.getContext(operation);
     return EMFUtil.getNearestObject(object, Baseline.class);
   }
 
   public static org.eclipse.emf.cdo.lm.Stream getContextStream(AuthorizableOperation operation)
   {
-    EObject object = getContext(operation);
+    EObject object = ContextOperationAuthorization.getContext(operation);
     return EMFUtil.getNearestObject(object, org.eclipse.emf.cdo.lm.Stream.class);
   }
 
   public static org.eclipse.emf.cdo.lm.Module getContextModule(AuthorizableOperation operation)
   {
-    EObject object = getContext(operation);
+    EObject object = ContextOperationAuthorization.getContext(operation);
     return EMFUtil.getNearestObject(object, org.eclipse.emf.cdo.lm.Module.class);
   }
 
   public static org.eclipse.emf.cdo.lm.System getContextSystem(AuthorizableOperation operation)
   {
-    EObject object = getContext(operation);
+    EObject object = ContextOperationAuthorization.getContext(operation);
     return EMFUtil.getNearestObject(object, org.eclipse.emf.cdo.lm.System.class);
   }
 }

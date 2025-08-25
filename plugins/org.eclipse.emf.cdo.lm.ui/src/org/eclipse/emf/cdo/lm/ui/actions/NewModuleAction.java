@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.actions.NewStreamAction.CommonStreamParameters;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.emf.edit.ui.provider.ExtendedImageRegistry;
 
@@ -47,8 +48,6 @@ import java.util.List;
  */
 public class NewModuleAction extends LMAction.NewElement<System>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateModule".intern();
-
   private static final ModuleType NO_MODULE_TYPE = LMFactory.eINSTANCE.createModuleType("");
 
   private ISystemDescriptor systemDescriptor;
@@ -73,7 +72,7 @@ public class NewModuleAction extends LMAction.NewElement<System>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.CREATE_MODULE;
   }
 
   @Override

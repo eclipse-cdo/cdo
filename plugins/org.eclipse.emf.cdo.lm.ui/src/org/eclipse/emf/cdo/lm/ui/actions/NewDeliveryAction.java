@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.widgets.BaselineComposite;
 import org.eclipse.emf.cdo.lm.util.LMMerger2;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.emf.common.util.BasicEList;
 import org.eclipse.emf.common.util.EList;
@@ -45,8 +46,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDeliveryAction extends LMAction.NewElement<Stream>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateDelivery".intern();
-
   private static final LMMerger2 MERGER = new InteractiveDeliveryMerger();
 
   private boolean changeWasNull;
@@ -79,7 +78,7 @@ public class NewDeliveryAction extends LMAction.NewElement<Stream>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.CREATE_DELIVERY;
   }
 
   @Override

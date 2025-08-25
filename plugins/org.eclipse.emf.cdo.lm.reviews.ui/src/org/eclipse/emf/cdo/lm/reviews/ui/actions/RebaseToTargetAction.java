@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.RebaseToTargetResu
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.util.LMMerger2;
 import org.eclipse.emf.cdo.lm.util.LMMerger2.LMMergeInfos;
@@ -39,8 +40,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RebaseToTargetAction extends AbstractReviewAction
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.RebaseToTargetReview".intern();
-
   public RebaseToTargetAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -55,7 +54,7 @@ public class RebaseToTargetAction extends AbstractReviewAction
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.REBASE_TO_TARGET_REVIEW;
   }
 
   @Override

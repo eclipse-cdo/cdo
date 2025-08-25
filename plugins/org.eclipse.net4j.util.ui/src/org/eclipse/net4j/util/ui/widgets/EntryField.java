@@ -27,7 +27,6 @@ import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.ScrollBar;
@@ -65,6 +64,8 @@ public final class EntryField extends Composite
   private final ImageButton[] extraButtons;
 
   private final ImageButton modeButton;
+
+  private boolean modeButtonVisible = true;
 
   private Control control;
 
@@ -210,11 +211,27 @@ public final class EntryField extends Composite
   {
     if (visible != isExtraButtonVisible(index))
     {
-      GridData gridData = (GridData)extraButtons[index].getLayoutData();
-      gridData.exclude = !visible;
-
       extraButtons[index].setVisible(visible);
-      layout(true);
+    }
+  }
+
+  /**
+   * @since 3.21
+   */
+  public boolean isModeButtonVisible()
+  {
+    return modeButtonVisible;
+  }
+
+  /**
+   * @since 3.21
+   */
+  public void setModeButtonVisible(boolean visible)
+  {
+    if (visible != modeButtonVisible)
+    {
+      modeButtonVisible = visible;
+      mode.updateModeButtonVisibility();
     }
   }
 
@@ -616,7 +633,11 @@ public final class EntryField extends Composite
     @Override
     public void updateModeButtonVisibility()
     {
-      modeButton.setVisible(!empty);
+      boolean visible = modeButtonVisible && !empty;
+      if (visible != modeButton.isVisible())
+      {
+        modeButton.setVisible(visible);
+      }
     }
 
     @Override
@@ -719,7 +740,11 @@ public final class EntryField extends Composite
     @Override
     public void updateModeButtonVisibility()
     {
-      modeButton.setVisible(true);
+      boolean visible = modeButtonVisible;
+      if (visible != modeButton.isVisible())
+      {
+        modeButton.setVisible(visible);
+      }
     }
 
     @Override

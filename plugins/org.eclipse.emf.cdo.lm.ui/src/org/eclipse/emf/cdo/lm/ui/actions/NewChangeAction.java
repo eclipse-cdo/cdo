@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.lm.internal.client.LMNamingStrategy;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
 import org.eclipse.emf.cdo.lm.ui.widgets.BaselineComposite;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -47,8 +48,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewChangeAction extends LMAction.NewElement<Stream>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateChange".intern();
-
   private ISystemDescriptor systemDescriptor;
 
   private EList<Baseline> possibleBases;
@@ -82,7 +81,7 @@ public class NewChangeAction extends LMAction.NewElement<Stream>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.CREATE_CHANGE;
   }
 
   @Override

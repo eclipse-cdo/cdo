@@ -12,11 +12,8 @@ package org.eclipse.emf.cdo.lm.ui.actions;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
-import org.eclipse.emf.cdo.lm.util.LMLocalOperationAuthorizer;
-import org.eclipse.emf.cdo.session.CDOSession;
-import org.eclipse.emf.cdo.util.CDOUtil;
+import org.eclipse.emf.cdo.util.ContextOperationAuthorization;
 
-import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 import org.eclipse.net4j.util.ui.UIUtil;
 import org.eclipse.net4j.util.ui.actions.LongRunningAction;
 
@@ -63,11 +60,16 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
     this.bannerMessage = bannerMessage;
     this.context = context;
 
-    String veto = authorize(getAuthorizableOperationID(), context);
-    if (veto != null)
+    String operationID = getAuthorizableOperationID();
+    if (operationID != null)
     {
-      setEnabled(false);
-      setToolTipText(veto + ": " + getToolTipText());
+      ContextOperationAuthorization authorization = new ContextOperationAuthorization(context, operationID);
+      String veto = authorization.getVeto(operationID);
+      if (veto != null)
+      {
+        setEnabled(false);
+        setToolTipText(veto + ": " + getToolTipText());
+      }
     }
   }
 
@@ -213,24 +215,6 @@ public abstract class LMAction<CONTEXT extends CDOObject> extends LongRunningAct
         }
       });
     }
-  }
-
-  public static String authorize(String operationID, CDOObject context)
-  {
-    if (operationID != null)
-    {
-      CDOSession session = CDOUtil.getSession(context);
-      if (session != null)
-      {
-        AuthorizableOperation operation = AuthorizableOperation.builder(operationID) //
-            .parameter(LMLocalOperationAuthorizer.CONTEXT_PARAMETER, context) //
-            .build();
-
-        return session.authorizeOperations(operation)[0];
-      }
-    }
-
-    return null;
   }
 
   /**

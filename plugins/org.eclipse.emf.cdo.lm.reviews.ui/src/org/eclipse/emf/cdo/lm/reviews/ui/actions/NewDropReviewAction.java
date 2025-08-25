@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.lm.reviews.DropReview;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.actions.CheckoutAction;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
@@ -46,8 +47,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDropReviewAction extends LMAction.NewElement<Delivery>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateDropReview".intern();
-
   private final DropType dropType;
 
   private String dropLabel;
@@ -70,7 +69,7 @@ public class NewDropReviewAction extends LMAction.NewElement<Delivery>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.CREATE_DROP_REVIEW;
   }
 
   @Override

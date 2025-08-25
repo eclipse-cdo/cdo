@@ -233,7 +233,7 @@ public final class AuthorizableOperation
       }
 
       Builder other = (Builder)obj;
-      return Objects.equals(id, other.id);
+      return id == other.id; // IDs are interned.
     }
 
     @Override

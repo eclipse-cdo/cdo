@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -39,8 +40,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewCommentAction extends LMAction.NewElement<TopicContainer>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateComment".intern();
-
   private String text;
 
   public NewCommentAction(IWorkbenchPage page, StructuredViewer viewer, TopicContainer container)
@@ -57,7 +56,7 @@ public class NewCommentAction extends LMAction.NewElement<TopicContainer>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.CREATE_COMMENT;
   }
 
   @Override

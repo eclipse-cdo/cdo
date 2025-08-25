@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.lm.StreamSpec;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.emf.common.notify.AdapterFactory;
 import org.eclipse.emf.common.util.BasicEList;
@@ -43,8 +44,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewStreamAction extends LMAction.NewElement<Module>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateStream".intern();
-
   private static final int INVALID_VERSION = -1;
 
   private final AdapterFactory adapterFactory;
@@ -76,7 +75,7 @@ public class NewStreamAction extends LMAction.NewElement<Module>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.CREATE_STREAM;
   }
 
   @Override

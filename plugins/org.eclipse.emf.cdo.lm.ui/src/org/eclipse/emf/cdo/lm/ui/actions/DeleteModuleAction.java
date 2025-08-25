@@ -14,6 +14,7 @@ import org.eclipse.emf.cdo.lm.Module;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
@@ -27,8 +28,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteModuleAction extends LMAction<Module>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.DeleteModule".intern();
-
   private ISystemDescriptor systemDescriptor;
 
   public DeleteModuleAction(IWorkbenchPage page, Module module)
@@ -45,7 +44,7 @@ public class DeleteModuleAction extends LMAction<Module>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.DELETE_MODULE;
   }
 
   @Override

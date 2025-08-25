@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -26,8 +27,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class AbandonReviewAction extends AbstractReviewAction
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.AbandonReview".intern();
-
   public AbandonReviewAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -42,7 +41,7 @@ public class AbandonReviewAction extends AbstractReviewAction
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.ABANDON_REVIEW;
   }
 
   @Override

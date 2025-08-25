@@ -29,13 +29,14 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
-import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.Input;
 import org.eclipse.emf.cdo.ui.compare.CDOCompareEditorUtil.InputHolder;
 import org.eclipse.emf.cdo.ui.shared.SharedIcons;
+import org.eclipse.emf.cdo.util.ContextOperationAuthorization;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.ReflectUtil;
@@ -242,9 +243,9 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private static final String TOPIC_IMAGE = IMAGE_FOLDER + "Topic.png";
 
-    private static final Field NAVIGATABLE_FIELD;
+    private static final Field NAVIGATABLE_FIELD = ReflectUtil.getFieldOrNullSafe(EMFCompareStructureMergeViewer.class, "navigatable");
 
-    private static final Field SELECTION_LISTENERS_FIELD;
+    private static final Field SELECTION_LISTENERS_FIELD = ReflectUtil.getFieldOrNullSafe(CompareEditorSelectionProvider.class, "fSelectionChangedListeners");
 
     private static final String UNRESOLVE_ACTION = "unresolve";
 
@@ -266,6 +267,13 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private static final String ENTRY_CONTROL_ADVISOR_DESCRIPTION = OMPlatform.INSTANCE.getProperty("ENTRY_CONTROL_ADVISOR_DESCRIPTION", "Markdown");
 
+    private static final String[] OPERATION_IDS = { //
+        ReviewsOperations.CREATE_TOPIC, //
+        ReviewsOperations.MODIFY_TOPIC, //
+        ReviewsOperations.RESOLVE_TOPIC, //
+        ReviewsOperations.UNRESOLVE_TOPIC, //
+        ReviewsOperations.CREATE_COMMENT };
+
     private final DefaultTopicProvider remoteTopicProvider = new DefaultTopicProvider();
 
     private final CDOTopicProvider.Topic remoteReviewTopic;
@@ -276,13 +284,15 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private final ISystemDescriptor systemDescriptor;
 
-    private final boolean permissionToCreateTopic;
-
     private final Image topicImage = OM.getImage(TOPIC_IMAGE);
 
     private final Image topicImageUnresolved = OM.getOverlayImage(TOPIC_IMAGE, IMAGE_FOLDER + "Unresolved.png", 18, 2);
 
     private final Image topicImageResolved = OM.getOverlayImage(TOPIC_IMAGE, IMAGE_FOLDER + "Resolved.png", 14, 2);
+
+    private final CDOAuthorCache authorCache;
+
+    private ContextOperationAuthorization authorization = new ContextOperationAuthorization(OPERATION_IDS);
 
     private Topic firstTopic;
 
@@ -304,37 +314,6 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private ChatComposite chatComposite;
 
-    private final CDOAuthorCache authorCache;
-
-    static
-    {
-      Field navigableField = null;
-
-      try
-      {
-        navigableField = ReflectUtil.getField(EMFCompareStructureMergeViewer.class, "navigatable");
-      }
-      catch (Throwable ex)
-      {
-        OM.LOG.error(ex);
-      }
-
-      NAVIGATABLE_FIELD = navigableField;
-
-      Field selectionListenersField = null;
-
-      try
-      {
-        selectionListenersField = ReflectUtil.getField(CompareEditorSelectionProvider.class, "fSelectionChangedListeners");
-      }
-      catch (Throwable ex)
-      {
-        OM.LOG.error(ex);
-      }
-
-      SELECTION_LISTENERS_FIELD = selectionListenersField;
-    }
-
     public ReviewEditorHandler(DeliveryReview review, Topic firstTopic, ISystemDescriptor systemDescriptor)
     {
       this.review = review;
@@ -343,7 +322,6 @@ public class OpenReviewAction extends AbstractReviewAction
 
       review.cdoPrefetch(CDORevision.DEPTH_INFINITE);
 
-      permissionToCreateTopic = LMAction.authorize(NewTopicAction.OPERATION_ID, review) == null;
       authorCache = initializeAuthorCache(review);
       remoteReviewTopic = createRemoteTopic(review);
     }
@@ -595,7 +573,7 @@ public class OpenReviewAction extends AbstractReviewAction
             }, monitor);
 
             EList<Topic> topics = review.getTopics();
-            currentTopic = topics.get(topics.size() - 1);
+            setCurrentTopic(topics.get(topics.size() - 1));
           }
           else
           {
@@ -616,9 +594,9 @@ public class OpenReviewAction extends AbstractReviewAction
         }
       }
 
+      topicStatus = null;
       topicEntryField.resetDirty();
       topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
-      topicStatus = null;
       updateDirtyness();
       setChatCompositeVisible(true);
     }
@@ -632,12 +610,23 @@ public class OpenReviewAction extends AbstractReviewAction
 
     private boolean isCurrentTopicDirty()
     {
-      if (currentTopic == null)
+      return topicEntryField.isDirty() || topicStatus != null;
+    }
+
+    private boolean setCurrentTopic(Topic topic)
+    {
+      if (topic != currentTopic)
       {
-        return false;
+        currentTopic = topic;
+
+        TopicContainer context = getTopicContainer();
+        authorization = new ContextOperationAuthorization(context, OPERATION_IDS);
+
+        chatComposite.setEntryFieldVisible(authorization.isGranted(ReviewsOperations.CREATE_COMMENT));
+        return true;
       }
 
-      return topicEntryField.isDirty() || topicStatus != null;
+      return false;
     }
 
     private Object getDiffElement(Topic topic)
@@ -662,6 +651,11 @@ public class OpenReviewAction extends AbstractReviewAction
       }
 
       return result[0];
+    }
+
+    private TopicContainer getTopicContainer()
+    {
+      return currentTopic == null ? review : currentTopic;
     }
 
     private EntryField createTopicEntryField(Composite parent, Color entryBackgroundColor, EntryControlAdvisor entryControlAdvisor)
@@ -706,14 +700,21 @@ public class OpenReviewAction extends AbstractReviewAction
     private void selectTopic(ModelReference modelReference)
     {
       Topic topic = review.getTopic(modelReference);
+      if (!setCurrentTopic(topic))
+      {
+        return;
+      }
+
       if (topic == null)
       {
-        if (permissionToCreateTopic)
+        if (authorization.isGranted(ReviewsOperations.CREATE_TOPIC))
         {
           topicContainer.setVisible(true);
+          topicEntryField.setModeButtonVisible(true);
 
           topic = ReviewsFactory.eINSTANCE.createTopic();
           topic.setModelReference(modelReference);
+          setCurrentTopic(topic);
         }
         else
         {
@@ -725,30 +726,27 @@ public class OpenReviewAction extends AbstractReviewAction
       else
       {
         topicContainer.setVisible(true);
+        topicEntryField.setModeButtonVisible(authorization.isGranted(ReviewsOperations.MODIFY_TOPIC));
         setChatCompositeVisible(true);
       }
 
-      if (topic != currentTopic)
+      topicStatus = null;
+
+      String entry = currentTopic == null ? null : currentTopic.getText();
+      topicEntryField.setEntry(entry);
+
+      topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
+
+      refreshTopicUI();
+      chatComposite.refreshMessageBrowser();
+
+      if (currentTopic == null || currentTopic.cdoState() == CDOState.TRANSIENT)
       {
-        currentTopic = topic;
-        topicStatus = null;
-
-        String entry = currentTopic == null ? null : currentTopic.getText();
-        topicEntryField.setEntry(entry);
-
-        topicEntryField.setPreviewMode(!topicEntryField.isEmpty());
-
-        refreshTopicUI();
-        chatComposite.refreshMessageBrowser();
-
-        if (currentTopic == null || currentTopic.cdoState() == CDOState.TRANSIENT)
-        {
-          remoteTopicProvider.setTopics(remoteReviewTopic);
-        }
-        else
-        {
-          remoteTopicProvider.setTopics(remoteReviewTopic, createRemoteTopic(currentTopic));
-        }
+        remoteTopicProvider.setTopics(remoteReviewTopic);
+      }
+      else
+      {
+        remoteTopicProvider.setTopics(remoteReviewTopic, createRemoteTopic(currentTopic));
       }
     }
 
@@ -776,23 +774,47 @@ public class OpenReviewAction extends AbstractReviewAction
         status = currentTopic.getStatus();
       }
 
-      switch (Objects.requireNonNullElse(status, TopicStatus.NONE))
+      if (status == null)
+      {
+        status = TopicStatus.NONE;
+      }
+
+      switch (status)
       {
       case NONE:
         topicIcon.setImage(topicImage);
-        topicActionLine.setText(createTopicActionText(UNRESOLVE_ACTION, UNRESOLVE_LABEL));
         break;
 
       case UNRESOLVED:
         topicIcon.setImage(topicImageUnresolved);
-        topicActionLine.setText(createTopicActionText(RESOLVE_ACTION, RESOLVE_LABEL));
         break;
 
       case RESOLVED:
         topicIcon.setImage(topicImageResolved);
-        topicActionLine.setText(createTopicActionText(UNRESOLVE_ACTION, UNRESOLVE_LABEL));
         break;
       }
+
+      String actionLineText = "";
+
+      switch (status)
+      {
+      case NONE:
+      case RESOLVED:
+        if (authorization.isGranted(ReviewsOperations.UNRESOLVE_TOPIC))
+        {
+          actionLineText = createTopicActionText(UNRESOLVE_ACTION, UNRESOLVE_LABEL);
+        }
+        break;
+
+      case UNRESOLVED:
+        if (authorization.isGranted(ReviewsOperations.RESOLVE_TOPIC))
+        {
+          actionLineText = createTopicActionText(RESOLVE_ACTION, RESOLVE_LABEL);
+        }
+        break;
+      }
+
+      topicActionLine.setText(actionLineText);
     }
 
     private boolean topicNeedsSave()
@@ -828,7 +850,7 @@ public class OpenReviewAction extends AbstractReviewAction
     private ChatMessage[] computeMessages()
     {
       List<ChatMessage> messages = new ArrayList<>();
-      review.cdoView().syncExec(() -> addMessages(messages, currentTopic == null ? review : currentTopic));
+      review.cdoView().syncExec(() -> addMessages(messages, getTopicContainer()));
       return messages.toArray(new ChatMessage[messages.size()]);
     }
 
@@ -837,7 +859,8 @@ public class OpenReviewAction extends AbstractReviewAction
       Comment comment = ReviewsFactory.eINSTANCE.createComment();
       comment.setText(markup);
 
-      TopicContainer container = currentTopic == null ? review : currentTopic;
+      TopicContainer container = getTopicContainer();
+
       try
       {
         systemDescriptor.modify(container, c -> {
@@ -867,16 +890,27 @@ public class OpenReviewAction extends AbstractReviewAction
           Topic topic = getTopic(element);
           if (topic != null)
           {
+            String decoration = "[Topic " + topic.getId();
+            Styler styler;
+
             TopicStatus status = topic == currentTopic && topicStatus != null ? topicStatus : topic.getStatus();
             if (status == TopicStatus.UNRESOLVED)
             {
-              styledText.append("  ").append("[Unresolved]", UNRESOLVED_STYLER);
-
+              decoration += " Unresolved]";
+              styler = UNRESOLVED_STYLER;
             }
             else if (status == TopicStatus.RESOLVED)
             {
-              styledText.append("  ").append("[Resolved]", RESOLVED_STYLER);
+              decoration += " Resolved]";
+              styler = RESOLVED_STYLER;
             }
+            else
+            {
+              decoration += "]";
+              styler = null;
+            }
+
+            styledText.append("  ").append(decoration, styler);
           }
 
           return styledText;
@@ -1113,7 +1147,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
               if (!topicNeedsSave() && Objects.equals(currentTopic.getModelReference(), newTopic.getModelReference()))
               {
-                currentTopic = newTopic;
+                setCurrentTopic(newTopic);
                 topicStatus = null;
 
                 topicUIUpdate = true;
@@ -1133,7 +1167,7 @@ public class OpenReviewAction extends AbstractReviewAction
 
               if (oldTopic == currentTopic)
               {
-                currentTopic = firstTopic;
+                setCurrentTopic(currentTopic);
                 topicStatus = null;
 
                 topicUIUpdate = true;

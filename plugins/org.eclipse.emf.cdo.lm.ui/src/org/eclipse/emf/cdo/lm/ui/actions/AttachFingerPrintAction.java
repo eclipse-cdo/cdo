@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.lm.FixedBaseline;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.viewers.StructuredViewer;
@@ -26,8 +27,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class AttachFingerPrintAction extends LMAction.NewElement<FixedBaseline>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.AttachFingerprint".intern();
-
   public AttachFingerPrintAction(IWorkbenchPage page, StructuredViewer viewer, FixedBaseline fixedBaseline)
   {
     super(page, viewer, //
@@ -42,7 +41,7 @@ public class AttachFingerPrintAction extends LMAction.NewElement<FixedBaseline>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.ATTACH_FINGERPRINT;
   }
 
   @Override

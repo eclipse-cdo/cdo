@@ -33,6 +33,7 @@ import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.util.CoreDeliveryMerger;
 import org.eclipse.emf.cdo.lm.util.LMMerger;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -57,8 +58,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class SubmitReviewAction extends AbstractReviewAction
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.SubmitReview".intern();
-
   private final StructuredViewer viewer;
 
   private IAssemblyDescriptor[] assemblyDescriptors = {};
@@ -80,7 +79,7 @@ public class SubmitReviewAction extends AbstractReviewAction
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.SUBMIT_REVIEW;
   }
 
   @Override

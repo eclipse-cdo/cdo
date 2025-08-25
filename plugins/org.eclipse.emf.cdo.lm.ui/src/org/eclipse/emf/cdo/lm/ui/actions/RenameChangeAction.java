@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.internal.client.LMNamingStrategy;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -36,8 +37,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class RenameChangeAction extends LMAction<Change>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.RenameChange".intern();
-
   private ISystemDescriptor systemDescriptor;
 
   private Text labelText;
@@ -58,7 +57,7 @@ public class RenameChangeAction extends LMAction<Change>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.RENAME_CHANGE;
   }
 
   @Override

@@ -132,6 +132,23 @@ public final class ReflectUtil
     }
   }
 
+  /**
+   * @since 3.28
+   */
+  public static Method getMethodOrNullSafe(Class<?> c, String methodName, Class<?>... parameterTypes)
+  {
+    try
+    {
+      return getMethodOrNull(c, methodName, parameterTypes);
+    }
+    catch (Throwable ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    return null;
+  }
+
   private static Method doGetMethod(Class<?> c, String methodName, Class<?>... parameterTypes) throws NoSuchMethodException
   {
     try
@@ -192,9 +209,68 @@ public final class ReflectUtil
   {
     try
     {
-      try
+      return doGetField(c, fieldName);
+    }
+    catch (Exception ex)
+    {
+      throw ReflectionException.wrap(ex);
+    }
+  }
+
+  /**
+   * @since 3.28
+   */
+  public static Field getFieldOrNull(Class<?> c, String fieldName)
+  {
+    try
+    {
+      return doGetField(c, fieldName);
+    }
+    catch (NoSuchFieldException ex)
+    {
+      return null;
+    }
+    catch (Exception ex)
+    {
+      throw ReflectionException.wrap(ex);
+    }
+  }
+
+  /**
+   * @since 3.28
+   */
+  public static Field getFieldOrNullSafe(Class<?> c, String fieldName)
+  {
+    try
+    {
+      return getFieldOrNull(c, fieldName);
+    }
+    catch (Throwable ex)
+    {
+      OM.LOG.error(ex);
+    }
+
+    return null;
+  }
+
+  private static Field doGetField(Class<?> c, String fieldName) throws NoSuchFieldException
+  {
+    try
+    {
+      Field field = c.getDeclaredField(fieldName);
+      if (field != null)
       {
-        Field field = c.getDeclaredField(fieldName);
+        makeAccessible(field);
+      }
+
+      return field;
+    }
+    catch (NoSuchFieldException ex)
+    {
+      Class<?> superclass = c.getSuperclass();
+      if (superclass != null)
+      {
+        Field field = getField(superclass, fieldName);
         if (field != null)
         {
           makeAccessible(field);
@@ -202,26 +278,8 @@ public final class ReflectUtil
 
         return field;
       }
-      catch (NoSuchFieldException ex)
-      {
-        Class<?> superclass = c.getSuperclass();
-        if (superclass != null)
-        {
-          Field field = getField(superclass, fieldName);
-          if (field != null)
-          {
-            makeAccessible(field);
-          }
 
-          return field;
-        }
-
-        return null;
-      }
-    }
-    catch (Exception ex)
-    {
-      throw ReflectionException.wrap(ex);
+      throw ex;
     }
   }
 

@@ -15,14 +15,12 @@
 package org.eclipse.emf.cdo.session;
 
 import org.eclipse.emf.cdo.CDOLock;
-import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.commit.CDOChangeSetData;
 import org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager;
-import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDGenerator;
 import org.eclipse.emf.cdo.common.lob.CDOBlob;
 import org.eclipse.emf.cdo.common.lob.CDOClob;
@@ -42,10 +40,8 @@ import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
-import org.eclipse.net4j.util.container.ContainerElementList.Prioritized;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
-import org.eclipse.net4j.util.security.operations.AuthorizableOperation;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.ecore.EObject;
@@ -57,11 +53,9 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol.RefreshSessionResult;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.ObjectOutputStream;
 import java.io.Reader;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
-import java.util.function.Supplier;
 
 /**
  * Represents and controls the connection to a model repository in addition to the inherited {@link CDOView view}
@@ -465,51 +459,5 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public interface ExceptionHandler
   {
     public void handleException(CDOSession session, int attempt, Exception exception) throws Exception;
-  }
-
-  /**
-   * @author Eike Stepper
-   * @since 4.28
-   */
-  public interface LocalOperationAuthorizer extends Prioritized
-  {
-    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.session.localOperationAuthorizers";
-
-    public static final Object GRANTED = new Object()
-    {
-      @Override
-      public String toString()
-      {
-        return "GRANTED";
-      }
-    };
-
-    @Override
-    public default int getPriority()
-    {
-      return 0;
-    }
-
-    /**
-     * Authorizes the given {@link AuthorizableOperation operation} in the context of the given {@link CDOSession session}.
-     *
-     * @return One of the following values:
-     * <ul>
-     * <li> <code>null</code> to indicate that this authorizer declines to vote.
-     * <li> The special value {@link #GRANTED} to indicate that authorization is granted.
-     * <li> Any non-<code>null</code> String value to indicate that authorization is vetoed.
-     * The String value represents the reason for the veto.
-     * <li> An {@link AuthorizableOperation authorizable operation} to indicate that the repository
-     * shall be asked to authorize the returned operation on behalf of the operation that is passed to this method.
-     * The returned operation can be identical to the passed operation, have different
-     * {@link AuthorizableOperation#getParameters() parameters} than the passed operation, or an entirely different operation.
-     * <b>Care should be taken</b> to ask for repository authorization of operations with complex parameter types,
-     * as Object {@link ObjectOutputStream serialization} is used to send the parameters to the repository.
-     * For example, a {@link CDOID} should be preferred over an entire {@link CDOObject}.
-     * </ul>
-     *
-     * @see AuthorizableOperation#stripParameters()
-     */
-    public Object authorizeOperation(CDOSession session, Supplier<Entity> userInfoSupplier, AuthorizableOperation operation);
   }
 }

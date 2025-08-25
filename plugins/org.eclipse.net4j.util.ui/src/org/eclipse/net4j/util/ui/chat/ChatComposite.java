@@ -139,10 +139,47 @@ public final class ChatComposite extends Composite
     return sendButton;
   }
 
+  /**
+   * @since 3.21
+   */
+  public boolean isEntryFieldVisible()
+  {
+    return entryField != null && entryField.isVisible();
+  }
+
+  /**
+   * @since 3.21
+   */
+  public void setEntryFieldVisible(boolean visible)
+  {
+    boolean layout = false;
+
+    if (entryField != null)
+    {
+      entryField.setVisible(visible);
+      GridData gridData = (GridData)entryField.getLayoutData();
+      gridData.exclude = !visible;
+      layout = true;
+    }
+
+    if (sendButton != null)
+    {
+      sendButton.setVisible(visible);
+      GridData gridData = (GridData)sendButton.getLayoutData();
+      gridData.exclude = !visible;
+      layout = true;
+    }
+
+    if (layout)
+    {
+      layout(true);
+    }
+  }
+
   @Override
   public boolean setFocus()
   {
-    return entryField == null ? messageBrowser.setFocus() : entryField.setFocus();
+    return isEntryFieldVisible() ? entryField.setFocus() : messageBrowser.setFocus();
   }
 
   public void refreshMessageBrowser()

@@ -141,6 +141,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOLockStateCache;
+import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater2;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
@@ -759,7 +760,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
     for (int i = 0; i < operations.length; i++)
     {
       Object result = operationAuthorizerRegistry.authorizeOperation(operations[i]);
-      if (result == LocalOperationAuthorizer.GRANTED)
+      if (result == CDOOperationAuthorizer.GRANTED)
       {
         vetoes[i] = null;
       }
@@ -2476,44 +2477,47 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   /**
    * @author Eike Stepper
    */
-  private final class SessionOperationAuthorizerRegistry extends ContainerElementList<LocalOperationAuthorizer> implements Supplier<Entity>
+  private final class SessionOperationAuthorizerRegistry extends ContainerElementList<CDOOperationAuthorizer>
   {
-    private final Entity NO_USER_INFO = Entity.builder(SessionOperationAuthorizerRegistry.class.getSimpleName(), "NO_USER_INFO").build();
+    private final Supplier<Entity> userInfoSupplier = new Supplier<Entity>()
+    {
+      private final Entity NO_USER_INFO = Entity.builder(SessionOperationAuthorizerRegistry.class.getSimpleName(), "NO_USER_INFO").build();
 
-    private Entity userInfo = NO_USER_INFO;
+      private Entity userInfo = NO_USER_INFO;
+
+      @Override
+      public Entity get()
+      {
+        if (userInfo == NO_USER_INFO)
+        {
+          if (userInfoManager != null && userID != null)
+          {
+            userInfo = userInfoManager.getUserInfo(userID);
+          }
+          else
+          {
+            userInfo = null;
+          }
+        }
+
+        return userInfo;
+      }
+    };
 
     public SessionOperationAuthorizerRegistry()
     {
-      super(LocalOperationAuthorizer.class, CDOSessionImpl.this.getContainer());
-      initContainerElements(LocalOperationAuthorizer.PRODUCT_GROUP);
-    }
-
-    @Override
-    public synchronized Entity get()
-    {
-      if (userInfo == NO_USER_INFO)
-      {
-        if (userInfoManager != null && userID != null)
-        {
-          userInfo = userInfoManager.getUserInfo(userID);
-        }
-        else
-        {
-          userInfo = null;
-        }
-      }
-
-      return userInfo;
+      super(CDOOperationAuthorizer.class, CDOSessionImpl.this.getContainer());
+      initContainerElements(CDOOperationAuthorizer.PRODUCT_GROUP);
     }
 
     /**
-     * @see org.eclipse.emf.cdo.session.CDOSession.LocalOperationAuthorizer#authorizeOperation(CDOSession, Supplier, AuthorizableOperation)
+     * @see org.eclipse.emf.spi.cdo.CDOOperationAuthorizer#authorizeOperation(CDOSession, Supplier, AuthorizableOperation)
      */
     public Object authorizeOperation(AuthorizableOperation operation)
     {
-      for (LocalOperationAuthorizer authorizer : getElements())
+      for (CDOOperationAuthorizer authorizer : getElements())
       {
-        Object result = authorizer.authorizeOperation(CDOSessionImpl.this, this, operation);
+        Object result = authorizer.authorizeOperation(CDOSessionImpl.this, userInfoSupplier, operation);
         if (result != null)
         {
           return result;

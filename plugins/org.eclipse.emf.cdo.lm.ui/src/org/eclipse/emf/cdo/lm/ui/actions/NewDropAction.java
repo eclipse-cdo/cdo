@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.provider.LMEditPlugin;
 import org.eclipse.emf.cdo.lm.ui.widgets.TimeStampComposite;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.net4j.util.ui.UIUtil;
 
@@ -46,8 +47,6 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class NewDropAction extends LMAction.NewElement<Stream>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.CreateDrop".intern();
-
   private static final long INVALID_DATE = CDOBranchPoint.INVALID_DATE;
 
   private final DropType dropType;
@@ -85,7 +84,7 @@ public class NewDropAction extends LMAction.NewElement<Stream>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.CREATE_DROP;
   }
 
   @Override

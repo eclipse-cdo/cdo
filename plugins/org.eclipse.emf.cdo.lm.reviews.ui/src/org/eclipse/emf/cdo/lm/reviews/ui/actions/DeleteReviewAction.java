@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.lm.reviews.Review;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
@@ -25,8 +26,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteReviewAction extends AbstractReviewAction
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.DeleteReview".intern();
-
   public DeleteReviewAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -41,7 +40,7 @@ public class DeleteReviewAction extends AbstractReviewAction
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.DELETE_REVIEW;
   }
 
   @Override

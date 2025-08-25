@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.lm.reviews.ReviewsFactory;
 import org.eclipse.emf.cdo.lm.reviews.ReviewsPackage;
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.MergeFromSourceResult;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.InteractiveDeliveryMerger;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 import org.eclipse.emf.cdo.lm.ui.widgets.BaselineComposite;
@@ -51,8 +52,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateDeliveryReview".intern();
-
   private boolean changeWasNull;
 
   private EList<Baseline> possibleChanges;
@@ -75,7 +74,7 @@ public class NewDeliveryReviewAction extends LMAction.NewElement<Stream>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.CREATE_DELIVERY_REVIEW;
   }
 
   @Override

@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemManager;
 import org.eclipse.emf.cdo.lm.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.util.LMOperations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.SWT;
@@ -30,8 +31,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class DeleteChangeAction extends LMAction<Change>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.ui.DeleteChange".intern();
-
   private ISystemDescriptor systemDescriptor;
 
   public DeleteChangeAction(IWorkbenchPage page, Change change)
@@ -48,7 +47,7 @@ public class DeleteChangeAction extends LMAction<Change>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return LMOperations.DELETE_CHANGE;
   }
 
   @Override

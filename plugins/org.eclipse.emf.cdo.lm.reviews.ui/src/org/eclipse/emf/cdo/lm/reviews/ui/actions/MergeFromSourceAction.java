@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.MergeFromSourceRes
 import org.eclipse.emf.cdo.lm.reviews.impl.ReviewStatemachine.ReviewEvent;
 import org.eclipse.emf.cdo.lm.reviews.ui.ClientReviewStatemachine;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.swt.widgets.Composite;
@@ -27,8 +28,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class MergeFromSourceAction extends AbstractReviewAction
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.MergeFromSourceReview".intern();
-
   public MergeFromSourceAction(IWorkbenchPage page, Review review)
   {
     super(page, //
@@ -43,7 +42,7 @@ public class MergeFromSourceAction extends AbstractReviewAction
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.MERGE_FROM_SOURCE_REVIEW;
   }
 
   @Override

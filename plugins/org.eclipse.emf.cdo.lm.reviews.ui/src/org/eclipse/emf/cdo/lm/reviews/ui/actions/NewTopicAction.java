@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.lm.reviews.TopicContainer;
 import org.eclipse.emf.cdo.lm.reviews.TopicStatus;
 import org.eclipse.emf.cdo.lm.reviews.provider.ReviewsEditPlugin;
 import org.eclipse.emf.cdo.lm.reviews.ui.bundle.OM;
+import org.eclipse.emf.cdo.lm.reviews.util.ReviewsOperations;
 import org.eclipse.emf.cdo.lm.ui.actions.LMAction;
 
 import org.eclipse.net4j.util.StringUtil;
@@ -43,8 +44,6 @@ import org.eclipse.ui.IWorkbenchPage;
  */
 public class NewTopicAction extends LMAction.NewElement<TopicContainer>
 {
-  public static final String OPERATION_ID = "org.eclipse.emf.cdo.lm.reviews.ui.CreateTopic".intern();
-
   private String text;
 
   private boolean heading;
@@ -65,7 +64,7 @@ public class NewTopicAction extends LMAction.NewElement<TopicContainer>
   @Override
   public String getAuthorizableOperationID()
   {
-    return OPERATION_ID;
+    return ReviewsOperations.CREATE_TOPIC;
   }
 
   @Override

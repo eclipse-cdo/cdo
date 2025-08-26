@@ -39,6 +39,7 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -58,7 +59,7 @@ import java.util.function.Function;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface ISystemDescriptor extends Comparable<ISystemDescriptor>
+public interface ISystemDescriptor extends IPropertiesContainer, Comparable<ISystemDescriptor>
 {
   public CDORepository getSystemRepository();
 

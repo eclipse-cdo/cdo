@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFactory;
 import org.eclipse.emf.internal.cdo.view.CDOViewSetImpl;
 
 import org.eclipse.net4j.util.container.IContainer;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
@@ -34,7 +35,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOViewSet extends Notifier, IContainer<CDOView>
+public interface CDOViewSet extends Notifier, IContainer<CDOView>, IPropertiesContainer
 {
   /**
    * @since 4.24

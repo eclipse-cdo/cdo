@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.event.IEvent;
+import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IAssemblyDescriptor extends IContainer<AssemblyModule>
+public interface IAssemblyDescriptor extends IPropertiesContainer, IContainer<AssemblyModule>
 {
   public String getName();
 

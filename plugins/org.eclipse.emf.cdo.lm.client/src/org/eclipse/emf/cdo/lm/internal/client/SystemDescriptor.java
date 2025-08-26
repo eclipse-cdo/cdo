@@ -98,6 +98,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleEventAdapter;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OSGiUtil;
 import org.eclipse.net4j.util.om.monitor.EclipseMonitor;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 import org.eclipse.net4j.util.security.IPasswordCredentials;
 
@@ -171,6 +172,8 @@ public final class SystemDescriptor implements ISystemDescriptor
   private static final String JVM_ACCEPTOR_TYPE = Net4jUtil.LOCAL_ACCEPTOR_TYPE;
 
   private static final String JVM_ACCEPTOR_NAME = Net4jUtil.LOCAL_ACCEPTOR_DESCRIPTION;
+
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
   private final IListener systemListener = new CDOViewCommitInfoListener()
   {
@@ -406,6 +409,12 @@ public final class SystemDescriptor implements ISystemDescriptor
     {
       SystemManager.INSTANCE.fireDescriptorStateEvent(this, oldSystem, false);
     }
+  }
+
+  @Override
+  public IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   @Override

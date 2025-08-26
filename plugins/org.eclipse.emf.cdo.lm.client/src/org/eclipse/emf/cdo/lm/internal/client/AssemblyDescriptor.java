@@ -42,6 +42,8 @@ import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.event.Event;
 import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.registry.HashMapRegistry;
+import org.eclipse.net4j.util.registry.IRegistry;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.util.BasicEList;
@@ -69,6 +71,8 @@ import java.util.Set;
  */
 public final class AssemblyDescriptor extends Container<AssemblyModule> implements IAssemblyDescriptor
 {
+  private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
+
   private final IListener checkoutViewListener = new CDOViewCommitInfoListener()
   {
     @Override
@@ -246,6 +250,12 @@ public final class AssemblyDescriptor extends Container<AssemblyModule> implemen
   {
     EList<AssemblyModule> modules = assembly.getModules();
     return modules.isEmpty();
+  }
+
+  @Override
+  public IRegistry<String, Object> properties()
+  {
+    return properties;
   }
 
   public void addResourceSet(LMResourceSetConfigurer.CheckoutResult lmResourceSetConfigurerResult)

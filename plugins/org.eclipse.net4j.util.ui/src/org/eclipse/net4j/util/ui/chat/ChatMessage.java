@@ -328,6 +328,11 @@ public interface ChatMessage extends Comparable<ChatMessage>
 
       public Author getAuthor(String userID)
       {
+        if (userID == null)
+        {
+          return null;
+        }
+
         Author author = authors.get(userID);
         if (author == null)
         {

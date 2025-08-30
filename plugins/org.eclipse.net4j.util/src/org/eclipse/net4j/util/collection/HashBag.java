@@ -44,6 +44,14 @@ public final class HashBag<T> implements Set<T>
   }
 
   /**
+   * @since 3.28
+   */
+  public HashBag(HashBag<? extends T> hb)
+  {
+    this(hb.map);
+  }
+
+  /**
    * @since 3.0
    */
   public int getCounterFor(T o)

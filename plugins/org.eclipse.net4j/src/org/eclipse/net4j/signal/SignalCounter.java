@@ -53,6 +53,17 @@ public final class SignalCounter implements IListener
   }
 
   /**
+   * @since 4.21
+   */
+  public HashBag<Class<? extends Signal>> getSignals()
+  {
+    synchronized (signals)
+    {
+      return new HashBag<>(signals);
+    }
+  }
+
+  /**
    * Get the number of different signal counted.
    *
    * @since 4.4

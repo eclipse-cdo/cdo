@@ -132,6 +132,15 @@ public class ModulesFactoryImpl extends EFactoryImpl implements ModulesFactory
     return moduleDefinition;
   }
 
+  @Override
+  public ModuleDefinition createModuleDefinition(String name, Version version)
+  {
+    ModuleDefinition moduleDefinition = createModuleDefinition();
+    moduleDefinition.setName(name);
+    moduleDefinition.setVersion(version);
+    return moduleDefinition;
+  }
+
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated

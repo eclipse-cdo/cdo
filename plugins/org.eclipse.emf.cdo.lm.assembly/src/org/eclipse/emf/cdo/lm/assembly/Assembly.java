@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.lm.assembly;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -80,6 +81,11 @@ public interface Assembly extends ModelElement
   public void forEachDependency(Consumer<AssemblyModule> consumer);
 
   public boolean compareTo(Assembly newAssembly, DeltaHandler handler);
+
+  /**
+   * @since 1.1
+   */
+  public ModuleDefinition toModuleDefinition();
 
   default void sortModules()
   {

@@ -15,6 +15,9 @@ import org.eclipse.emf.cdo.etypes.impl.ModelElementImpl;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyPackage;
+import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
+import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
+import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
@@ -25,6 +28,9 @@ import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.InternalEObject;
 import org.eclipse.emf.ecore.util.EcoreUtil.EqualityHelper;
 import org.eclipse.emf.ecore.util.InternalEList;
+
+import org.eclipse.equinox.p2.metadata.Version;
+import org.eclipse.equinox.p2.metadata.VersionRange;
 
 import java.util.Collection;
 import java.util.List;
@@ -264,6 +270,32 @@ public class AssemblyImpl extends ModelElementImpl implements Assembly
         consumer.accept(module);
       }
     }
+  }
+
+  @Override
+  public ModuleDefinition toModuleDefinition()
+  {
+    AssemblyModule rootModule = getRootModule();
+
+    ModuleDefinition moduleDefinition = ModulesFactory.eINSTANCE.createModuleDefinition(rootModule.getName(), rootModule.getVersion());
+    EList<DependencyDefinition> dependencies = moduleDefinition.getDependencies();
+
+    for (AssemblyModule assemblyModule : getModules())
+    {
+      if (assemblyModule != rootModule)
+      {
+        String name = assemblyModule.getName();
+        Version version = assemblyModule.getVersion();
+        VersionRange versionRange = new VersionRange(version, true, version, true);
+
+        DependencyDefinition dependencyDefinition = ModulesFactory.eINSTANCE.createDependencyDefinition();
+        dependencyDefinition.setTargetName(name);
+        dependencyDefinition.setVersionRange(versionRange);
+        dependencies.add(dependencyDefinition);
+      }
+    }
+
+    return moduleDefinition;
   }
 
   @Override

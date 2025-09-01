@@ -522,6 +522,14 @@ public final class SystemDescriptor implements ISystemDescriptor
     return moduleRepository;
   }
 
+  public boolean unregisterModuleRepository(CDORepository moduleRepository)
+  {
+    synchronized (this)
+    {
+      return moduleRepositories.values().removeIf(repo -> repo == moduleRepository);
+    }
+  }
+
   private CDORepository connectModuleRepository(String moduleName)
   {
     // TODO Move to NamingStrategy.

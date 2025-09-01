@@ -255,7 +255,21 @@ public final class SystemManager extends LMManager<CDORepository, CDORepositoryM
   @Override
   protected void explorerElementRemoved(CDORepository repository)
   {
-    removeDescriptor(repository);
+    RepositoryType repositoryType = RepositoryType.of(repository);
+    if (repositoryType == RepositoryType.SYSTEM)
+    {
+      removeDescriptor(repository);
+    }
+    else if (repositoryType == RepositoryType.MODULE)
+    {
+      for (ISystemDescriptor descriptor : getDescriptors())
+      {
+        if (((SystemDescriptor)descriptor).unregisterModuleRepository(repository))
+        {
+          break;
+        }
+      }
+    }
   }
 
   protected void repositoryConnected(CDORepository repository)

@@ -815,7 +815,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     ModuleDefinition rootDefinition = extractModuleDefinition(primaryView);
     if (rootDefinition != null)
     {
-      Assembly assembly = createEmptyAssembly();
+      Assembly assembly = createModuleAssembly(rootDefinition);
 
       try
       {
@@ -864,18 +864,11 @@ public final class SystemDescriptor implements ISystemDescriptor
   @Override
   public Assembly resolve(ModuleDefinition rootDefinition, Baseline rootBaseline, IProgressMonitor monitor) throws ResolutionException
   {
-    Assembly assembly = createEmptyAssembly();
+    Assembly assembly = createModuleAssembly(rootDefinition);
+    AssemblyModule rootModule = assembly.getRootModule();
 
-    String rootModuleName = rootDefinition.getName();
-    Version rootModuleVersion = rootDefinition.getVersion();
     CDOBranchPointRef rootBranchPoint = rootBaseline.getBranchPoint();
-
-    AssemblyModule rootModule = AssemblyFactory.eINSTANCE.createAssemblyModule();
-    rootModule.setAssembly(assembly);
-    rootModule.setName(rootModuleName);
-    rootModule.setVersion(rootModuleVersion);
     rootModule.setBranchPoint(rootBranchPoint);
-    rootModule.setRoot(true);
     addAnnotation(rootModule, rootBaseline, rootDefinition);
 
     try
@@ -891,6 +884,10 @@ public final class SystemDescriptor implements ISystemDescriptor
     return assembly;
   }
 
+  /**
+   * Uses p2 to add AssemblyModules for all dependencies of the given rootDefinition to the given assembly.
+   * No AssemblyModule is added for the given rootDefinition itself!
+   */
   private void resolveDependencies(ModuleDefinition rootDefinition, Assembly assembly, IProgressMonitor monitor) throws ResolutionException, ProvisionException
   {
     List<FixedBaseline> baselines = new ArrayList<>();
@@ -1376,6 +1373,18 @@ public final class SystemDescriptor implements ISystemDescriptor
     }
 
     return fingerPrinterEntity;
+  }
+
+  private Assembly createModuleAssembly(ModuleDefinition moduleDefinition)
+  {
+    AssemblyModule rootModule = AssemblyFactory.eINSTANCE.createAssemblyModule();
+    rootModule.setName(moduleDefinition.getName());
+    rootModule.setVersion(moduleDefinition.getVersion());
+    rootModule.setRoot(true);
+  
+    Assembly assembly = createEmptyAssembly();
+    assembly.getModules().add(rootModule);
+    return assembly;
   }
 
   public Assembly createEmptyAssembly()

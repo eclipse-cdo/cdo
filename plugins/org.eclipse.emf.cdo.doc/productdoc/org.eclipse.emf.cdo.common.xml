@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="org.eclipse.emf.cdo.common" label="CDO Model Repository Common">
+	<productGroup id="org.eclipse.emf.cdo.common.util.fingerPrinters" name="Finger Printers" description="" deprecated="false">
+		<factory type="digest" class="org.eclipse.emf.cdo.internal.common.util.DigestFingerPrinter$Factory" contributor="org.eclipse.emf.cdo.common"/>
+	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.common.ResourceSetConfigurers" name="Resource Set Configurers" description="" deprecated="false">
 		<factory type="lm" class="org.eclipse.emf.cdo.lm.internal.client.LMResourceSetConfigurer$Factory" contributor="org.eclipse.emf.cdo.lm.client"/>
 	</productGroup>

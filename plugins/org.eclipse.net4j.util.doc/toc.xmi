@@ -67,6 +67,7 @@
     <productGroups id="org.eclipse.net4j.util.ui.introspectionProviders" name="Introspection Providers" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.menuFillers" name="Menu Fillers" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.openHandlers" name="Open Handlers" description=""/>
+    <productGroups id="org.eclipse.net4j.util.ui.propertyExtenders" name="Property Extenders" description=""/>
     <productGroups id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.net4j.util.ui.mylyn" label="Net4j Utilities UI Mylyn Support"/>

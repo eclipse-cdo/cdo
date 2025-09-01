@@ -241,6 +241,7 @@
       <topic label="CDO Model Repository Client" href="productdoc/org.eclipse.emf.cdo.annotationValidators.html" icon="plugin">
         <topic label="CDO Annotation Validators" href="productdoc/org.eclipse.emf.cdo.annotationValidators.html" icon="productgroup" />
         <topic label="CDO Conflict Handlers" href="productdoc/org.eclipse.emf.cdo.conflictHandlers.html" icon="productgroup" />
+        <topic label="CDO Operation Authorizers" href="productdoc/org.eclipse.emf.cdo.operationAuthorizers.html" icon="productgroup" />
         <topic label="CDO Resource Set Class Name Providers" href="productdoc/org.eclipse.emf.cdo.resourceSetClassNameProviders.html" icon="productgroup" />
       </topic>
       <topic label="CDO Model Repository Client Edit Support" href="productdoc/org.eclipse.emf.cdo.edit.annotationItemProviderAdapterFactories.html" icon="plugin">
@@ -257,7 +258,8 @@
       <topic label="CDO Model Repository Client Workspace" href="productdoc/org.eclipse.emf.cdo.workspace.bases.html" icon="plugin">
         <topic label="CDO Workspace Bases" href="productdoc/org.eclipse.emf.cdo.workspace.bases.html" icon="productgroup" />
       </topic>
-      <topic label="CDO Model Repository Common" href="productdoc/org.eclipse.emf.cdo.common.ResourceSetConfigurers.html" icon="plugin">
+      <topic label="CDO Model Repository Common" href="productdoc/org.eclipse.emf.cdo.common.util.fingerPrinters.html" icon="plugin">
+        <topic label="Finger Printers" href="productdoc/org.eclipse.emf.cdo.common.util.fingerPrinters.html" icon="productgroup" />
         <topic label="Resource Set Configurers" href="productdoc/org.eclipse.emf.cdo.common.ResourceSetConfigurers.html" icon="productgroup" />
         <topic label="Type Handlers" href="productdoc/org.eclipse.emf.cdo.common.model.typeHandlers.html" icon="productgroup" />
         <topic label="URI Handlers" href="productdoc/org.eclipse.emf.cdo.common.util.uriHandlers.html" icon="productgroup" />
@@ -271,7 +273,8 @@
       <topic label="CDO Model Repository Lifecycle Management Reviews Server" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="plugin">
         <topic label="CDO Review Managers" href="productdoc/org.eclipse.emf.cdo.lm.reviews.server.reviewManagers.html" icon="productgroup" />
       </topic>
-      <topic label="CDO Model Repository Lifecycle Management Server" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="plugin">
+      <topic label="CDO Model Repository Lifecycle Management Server" href="productdoc/org.eclipse.emf.cdo.lm.server.baselineBranchPointProviders.html" icon="plugin">
+        <topic label="CDO Baseline Branch-Point Providers " href="productdoc/org.eclipse.emf.cdo.lm.server.baselineBranchPointProviders.html" icon="productgroup" />
         <topic label="CDO Lifecycle Managers" href="productdoc/org.eclipse.emf.cdo.lm.server.lifecycleManagers.html" icon="productgroup" />
       </topic>
       <topic label="CDO Model Repository Server" href="productdoc/org.eclipse.emf.cdo.server.browserPages.html" icon="plugin">

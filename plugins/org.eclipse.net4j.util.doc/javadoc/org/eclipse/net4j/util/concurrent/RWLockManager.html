@@ -10,56 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/RWLockManager.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/RWLockManager.html">Verwendung</a></li>
+<li><a href="../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li><a href="#nested-class-summary">Verschachtelt</a></li>
+<li><a href="#field-summary">Feld</a></li>
+<li><a href="#constructor-summary">Konstruktor</a></li>
+<li><a href="#method-summary">Methode</a></li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li>Feld</li>
+<li><a href="#constructor-detail">Konstruktor</a></li>
+<li><a href="#method-detail">Methode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li><a href="#constructor-summary">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
+<li>Übersicht:&nbsp;</li>
+<li><a href="#nested-class-summary">Verschachtelt</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
+<li><a href="#constructor-summary">Konstruktor</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li><a href="#constructor-detail">Constr</a>&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
+<li>Details:&nbsp;</li>
+<li>Feld&nbsp;|&nbsp;</li>
+<li><a href="#constructor-detail">Konstruktor</a>&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Methode</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -70,35 +84,35 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.util.concurrent</a></div>
-<h1 title="Class RWLockManager" class="title">Class RWLockManager&lt;OBJECT,<wbr>CONTEXT&gt;</h1>
+<h1 title="Klasse RWLockManager" class="title">Klasse RWLockManager&lt;OBJECT,<wbr>CONTEXT&gt;</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a>
-<div class="inheritance"><a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a>
+<div class="inheritance" title="Vererbungsbaum"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance"><a href="../event/Notifier.html" title="Klasse in org.eclipse.net4j.util.event">org.eclipse.net4j.util.event.Notifier</a>
+<div class="inheritance"><a href="../lifecycle/Lifecycle.html" title="Klasse in org.eclipse.net4j.util.lifecycle">org.eclipse.net4j.util.lifecycle.Lifecycle</a>
 <div class="inheritance">org.eclipse.net4j.util.concurrent.RWLockManager&lt;OBJECT,<wbr>CONTEXT&gt;</div>
 </div>
 </div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Implemented Interfaces:</dt>
-<dd><code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;OBJECT,<wbr>CONTEXT&gt;</code>, <code><a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../lifecycle/IDeactivateable.html" title="interface in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></dd>
+<dt>Alle implementierten Schnittstellen:</dt>
+<dd><code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;OBJECT,<wbr>CONTEXT&gt;</code>, <code><a href="../event/INotifier.html" title="Schnittstelle in org.eclipse.net4j.util.event">INotifier</a></code>, <code><a href="../event/INotifier.INotifier2.html" title="Schnittstelle in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code>, <code><a href="../lifecycle/IDeactivateable.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">IDeactivateable</a></code>, <code><a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">ILifecycle</a></code>, <code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="type-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
 </span><span class="modifiers">public class </span><span class="element-name type-name-label">RWLockManager&lt;OBJECT,<wbr>CONTEXT&gt;</span>
-<span class="extends-implements">extends <a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
-implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;OBJECT,<wbr>CONTEXT&gt;</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">As of 3.2 use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a>.</div>
+<span class="extends-implements">extends <a href="../lifecycle/Lifecycle.html" title="Klasse in org.eclipse.net4j.util.lifecycle">Lifecycle</a>
+implements <a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;OBJECT,<wbr>CONTEXT&gt;</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 3.2 use <a href="RWOLockManager.html" title="Klasse in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a>.</div>
 </div>
 <div class="block">Support Multiple reads/no write and upgrade lock from read to write. Many context could request
  <a href="IRWLockManager.LockType.html#WRITE"><code>write</code></a> lock at the same time. It will privileges first context that has already
  a <a href="IRWLockManager.LockType.html#READ"><code>read</code></a> lock. If no one has any read lock, it's "first come first serve".</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>2.0</dd>
-<dt>Author:</dt>
+<dt>Autor:</dt>
 <dd>Simon McDuff</dd>
 </dl>
 </section>
@@ -107,68 +121,68 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
+<h2>Verschachtelte Klassen - Übersicht</h2>
+<div class="caption"><span>Verschachtelte Klassen</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Class</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Klasse</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>protected static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="RWLockManager.LockEntry.html" class="type-name-link" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="type parameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="RWLockManager.LockEntry.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.LockEntry.html" title="Typparameter in RWLockManager.LockEntry">OBJECT</a>,<wbr><a href="RWLockManager.LockEntry.html" title="Typparameter in RWLockManager.LockEntry">CONTEXT</a>&gt;</code></div>
 <div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="Klasse in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
 </div>
 <div class="col-first odd-row-color"><code>protected static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="RWLockManager.LockEntryHandler.html" class="type-name-link" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.LockEntryHandler.html" title="type parameter in RWLockManager.LockEntryHandler">OBJECT</a>,<wbr><a href="RWLockManager.LockEntryHandler.html" title="type parameter in RWLockManager.LockEntryHandler">CONTEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color"><code><a href="RWLockManager.LockEntryHandler.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.LockEntryHandler.html" title="Typparameter in RWLockManager.LockEntryHandler">OBJECT</a>,<wbr><a href="RWLockManager.LockEntryHandler.html" title="Typparameter in RWLockManager.LockEntryHandler">CONTEXT</a>&gt;</code></div>
 <div class="col-last odd-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="Klasse in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
 </div>
 <div class="col-first even-row-color"><code>protected static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="RWLockManager.LockStrategy.html" class="type-name-link" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;<a href="RWLockManager.LockStrategy.html" title="type parameter in RWLockManager.LockStrategy">OBJECT</a>,<wbr><a href="RWLockManager.LockStrategy.html" title="type parameter in RWLockManager.LockStrategy">CONTEXT</a>&gt;</code></div>
+<div class="col-second even-row-color"><code><a href="RWLockManager.LockStrategy.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;<a href="RWLockManager.LockStrategy.html" title="Typparameter in RWLockManager.LockStrategy">OBJECT</a>,<wbr><a href="RWLockManager.LockStrategy.html" title="Typparameter in RWLockManager.LockStrategy">CONTEXT</a>&gt;</code></div>
 <div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
-<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="class in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">Use <a href="RWOLockManager.html" title="Klasse in org.eclipse.net4j.util.concurrent"><code>RWOLockManager</code></a></div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h2>
-<code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="interface in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></div>
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">ILifecycle</a></h2>
+<code><a href="../lifecycle/ILifecycle.DeferrableActivation.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">ILifecycle.DeferrableActivation</a></code></div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h2>
-<code><a href="../event/INotifier.INotifier2.html" title="interface in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></div>
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="Schnittstelle in org.eclipse.net4j.util.event">INotifier</a></h2>
+<code><a href="../event/INotifier.INotifier2.html" title="Schnittstelle in org.eclipse.net4j.util.event">INotifier.INotifier2</a></code></div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.concurrent.IRWLockManager">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.concurrent.<a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a></h2>
-<code><a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></code></div>
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.concurrent.IRWLockManager">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.concurrent.<a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a></h2>
+<code><a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a></code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
+<h2>Feldübersicht</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Fields inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<h3 id="fields-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Von Klasse geerbte Felder&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="Klasse in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
 <code><a href="../lifecycle/Lifecycle.html#USE_LABEL">USE_LABEL</a></code></div>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.eclipse.net4j.util.concurrent.IRWLockManager">Fields inherited from interface&nbsp;org.eclipse.net4j.util.concurrent.<a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a></h3>
+<h3 id="fields-inherited-from-class-org.eclipse.net4j.util.concurrent.IRWLockManager">Von Schnittstelle geerbte Felder&nbsp;org.eclipse.net4j.util.concurrent.<a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a></h3>
 <code><a href="IRWLockManager.html#NO_WAIT">NO_WAIT</a>, <a href="IRWLockManager.html#WAIT">WAIT</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
-<h2>Constructor Summary</h2>
-<div class="caption"><span>Constructors</span></div>
+<h2>Konstruktorübersicht</h2>
+<div class="caption"><span>Konstruktoren</span></div>
 <div class="summary-table two-column-summary">
-<div class="table-header col-first">Constructor</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Konstruktor</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">RWLockManager</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 </div>
 </section>
@@ -176,94 +190,94 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Method Summary</h2>
+<h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Konkrete Methoden</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Veraltete Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#changeContext(CONTEXT,CONTEXT)" class="member-name-link">changeContext</a><wbr>(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;oldContext,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;newContext)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#changeContext(CONTEXT,CONTEXT)" class="member-name-link">changeContext</a><wbr>(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;oldContext,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;newContext)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected <a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getLockEntry(OBJECT)" class="member-name-link">getLockEntry</a><wbr>(<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected <a href="RWLockManager.LockEntry.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a><wbr>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getLockEntry(OBJECT)" class="member-name-link">getLockEntry</a><wbr>(<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected <a href="RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getLockingStrategy(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">getLockingStrategy</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected <a href="RWLockManager.LockStrategy.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a><wbr>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getLockingStrategy(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">getLockingStrategy</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#handleLockEntries(CONTEXT,org.eclipse.net4j.util.concurrent.RWLockManager.LockEntryHandler)" class="member-name-link">handleLockEntries</a><wbr>(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.LockEntryHandler.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;&nbsp;handler)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#handleLockEntries(CONTEXT,org.eclipse.net4j.util.concurrent.RWLockManager.LockEntryHandler)" class="member-name-link">handleLockEntries</a><wbr>(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.LockEntryHandler.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;&nbsp;handler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLock</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)" class="member-name-link">hasLockByOthers</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
  long&nbsp;timeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)" class="member-name-link">lock</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#unlock(CONTEXT)" class="member-name-link">unlock</a><wbr>(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#unlock(CONTEXT)" class="member-name-link">unlock</a><wbr>(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 <div class="block">Attempts to release all locks(read and write) for a given context.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)" class="member-name-link">unlock</a><wbr>(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 </div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Methods inherited from class&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="class in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.lifecycle.Lifecycle">Von Klasse geerbte Methoden&nbsp;org.eclipse.net4j.util.lifecycle.<a href="../lifecycle/Lifecycle.html" title="Klasse in org.eclipse.net4j.util.lifecycle">Lifecycle</a></h3>
 <code><a href="../lifecycle/Lifecycle.html#activate()">activate</a>, <a href="../lifecycle/Lifecycle.html#checkActive()">checkActive</a>, <a href="../lifecycle/Lifecycle.html#checkArg(boolean,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkArg(java.lang.Object,java.lang.String)">checkArg</a>, <a href="../lifecycle/Lifecycle.html#checkInactive()">checkInactive</a>, <a href="../lifecycle/Lifecycle.html#checkNull(java.lang.Object,java.lang.String)">checkNull</a>, <a href="../lifecycle/Lifecycle.html#checkState(boolean,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#checkState(java.lang.Object,java.lang.String)">checkState</a>, <a href="../lifecycle/Lifecycle.html#deactivate()">deactivate</a>, <a href="../lifecycle/Lifecycle.html#deferredActivate(boolean)">deferredActivate</a>, <a href="../lifecycle/Lifecycle.html#doActivate()">doActivate</a>, <a href="../lifecycle/Lifecycle.html#doAfterActivate()">doAfterActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeActivate()">doBeforeActivate</a>, <a href="../lifecycle/Lifecycle.html#doBeforeDeactivate()">doBeforeDeactivate</a>, <a href="../lifecycle/Lifecycle.html#doDeactivate()">doDeactivate</a>, <a href="../lifecycle/Lifecycle.html#dump()">dump</a>, <a href="../lifecycle/Lifecycle.html#getLifecycleState()">getLifecycleState</a>, <a href="../lifecycle/Lifecycle.html#isActive()">isActive</a>, <a href="../lifecycle/Lifecycle.html#isDeferredActivation()">isDeferredActivation</a>, <a href="../lifecycle/Lifecycle.html#toString()">toString</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Methods inherited from class&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="class in org.eclipse.net4j.util.event">Notifier</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Von Klasse geerbte Methoden&nbsp;org.eclipse.net4j.util.event.<a href="../event/Notifier.html" title="Klasse in org.eclipse.net4j.util.event">Notifier</a></h3>
 <code><a href="../event/Notifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/Notifier.html#addUniqueListener(org.eclipse.net4j.util.event.IListener)">addUniqueListener</a>, <a href="../event/Notifier.html#fireEvent()">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)">fireEvent</a>, <a href="../event/Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)">fireEvent</a>, <a href="../event/Notifier.html#fireThrowable(java.lang.Throwable)">fireThrowable</a>, <a href="../event/Notifier.html#firstListenerAdded()">firstListenerAdded</a>, <a href="../event/Notifier.html#getListeners()">getListeners</a>, <a href="../event/Notifier.html#getNotificationService()">getNotificationService</a>, <a href="../event/Notifier.html#hasListener(org.eclipse.net4j.util.event.IListener)">hasListener</a>, <a href="../event/Notifier.html#hasListeners()">hasListeners</a>, <a href="../event/Notifier.html#lastListenerRemoved()">lastListenerRemoved</a>, <a href="../event/Notifier.html#listenerAdded(org.eclipse.net4j.util.event.IListener)">listenerAdded</a>, <a href="../event/Notifier.html#listenerRemoved(org.eclipse.net4j.util.event.IListener)">listenerRemoved</a>, <a href="../event/Notifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Von Klasse geerbte Methoden&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="Klasse oder Schnittstelle in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="Klasse oder Schnittstelle in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="Klasse oder Schnittstelle in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="Klasse oder Schnittstelle in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="Klasse oder Schnittstelle in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="interface in org.eclipse.net4j.util.event">INotifier</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.net4j.util.event.<a href="../event/INotifier.html" title="Schnittstelle in org.eclipse.net4j.util.event">INotifier</a></h3>
 <code><a href="../event/INotifier.html#addListener(org.eclipse.net4j.util.event.IListener)">addListener</a>, <a href="../event/INotifier.html#getListeners()">getListeners</a>, <a href="../event/INotifier.html#hasListeners()">hasListeners</a>, <a href="../event/INotifier.html#removeListener(org.eclipse.net4j.util.event.IListener)">removeListener</a></code></div>
 </section>
 </li>
@@ -274,13 +288,13 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <!-- ========= CONSTRUCTOR DETAIL ======== -->
 <li>
 <section class="constructor-details" id="constructor-detail">
-<h2>Constructor Details</h2>
+<h2>Konstruktordetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>RWLockManager</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">RWLockManager</span>()</div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 </section>
 </li>
 </ul>
@@ -289,23 +303,23 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Method Details</h2>
+<h2>Methodendetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)">
 <h3 id="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection,long)">lock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToLock,
  long&nbsp;timeout)</span>
-          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)">lock</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
-<dt>Since:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection,long)">lock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -313,18 +327,18 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)">
 <h3 id="lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object,long)">lock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">lock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock,
  long&nbsp;timeout)</span>
-          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">InterruptedException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)">lock</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="class or interface in java.lang" class="external-link">InterruptedException</a></code></dd>
-<dt>Since:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT,long)">lock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/InterruptedException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">InterruptedException</a></code></dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -332,17 +346,17 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)">
 <h3 id="unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.util.Collection)">unlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unlock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unlock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&gt;&nbsp;objectsToUnlock)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <div class="block">Attempts to release for a given locktype, context and objects.</div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)">unlock</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalMonitorStateException.html" title="class or interface in java.lang" class="external-link">IllegalMonitorStateException</a></code> - Unlocking objects without lock.</dd>
-<dt>Since:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,java.util.Collection)">unlock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalMonitorStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalMonitorStateException</a></code> - Unlocking objects without lock.</dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -350,26 +364,26 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="unlock(CONTEXT)">
 <h3 id="unlock(java.lang.Object)">unlock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unlock</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unlock</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <div class="block">Attempts to release all locks(read and write) for a given context.</div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#unlock(CONTEXT)">unlock</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#unlock(CONTEXT)">unlock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">
 <h3 id="hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object)">hasLock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLock</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLock</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
-<dt>Since:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#hasLock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -377,14 +391,14 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">
 <h3 id="hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.lang.Object,java.lang.Object)">hasLockByOthers</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLockByOthers</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">hasLockByOthers</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="IRWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLockByOthers</a></code>&nbsp;in interface&nbsp;<code><a href="IRWLockManager.html" title="interface in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
-<dt>Since:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IRWLockManager.html#hasLockByOthers(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,CONTEXT,OBJECT)">hasLockByOthers</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IRWLockManager.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IRWLockManager</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</code></dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -392,11 +406,11 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="handleLockEntries(CONTEXT,org.eclipse.net4j.util.concurrent.RWLockManager.LockEntryHandler)">
 <h3 id="handleLockEntries(java.lang.Object,org.eclipse.net4j.util.concurrent.RWLockManager.LockEntryHandler)">handleLockEntries</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleLockEntries</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;context,
- <a href="RWLockManager.LockEntryHandler.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;&nbsp;handler)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleLockEntries</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;context,
+ <a href="RWLockManager.LockEntryHandler.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntryHandler</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;&nbsp;handler)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.1</dd>
 </dl>
 </section>
@@ -404,10 +418,10 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="getLockEntry(OBJECT)">
 <h3 id="getLockEntry(java.lang.Object)">getLockEntry</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="RWLockManager.LockEntry.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">getLockEntry</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="RWLockManager.LockEntry.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockEntry</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">getLockEntry</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>&nbsp;objectToLock)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.1</dd>
 </dl>
 </section>
@@ -415,10 +429,10 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="getLockingStrategy(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)">
 <h3>getLockingStrategy</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="RWLockManager.LockStrategy.html" title="interface in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;<a href="RWLockManager.html" title="type parameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">getLockingStrategy</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="enum class in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="RWLockManager.LockStrategy.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">RWLockManager.LockStrategy</a>&lt;<a href="RWLockManager.html" title="Typparameter in RWLockManager">OBJECT</a>,<wbr><a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&gt;</span>&nbsp;<span class="element-name">getLockingStrategy</span><wbr><span class="parameters">(<a href="IRWLockManager.LockType.html" title="Enum-Klasse in org.eclipse.net4j.util.concurrent">IRWLockManager.LockType</a>&nbsp;type)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.1</dd>
 </dl>
 </section>
@@ -426,11 +440,11 @@ implements <a href="IRWLockManager.html" title="interface in org.eclipse.net4j.u
 <li>
 <section class="detail" id="changeContext(CONTEXT,CONTEXT)">
 <h3 id="changeContext(java.lang.Object,java.lang.Object)">changeContext</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changeContext</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;oldContext,
- <a href="RWLockManager.html" title="type parameter in RWLockManager">CONTEXT</a>&nbsp;newContext)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span></div>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">changeContext</span><wbr><span class="parameters">(<a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;oldContext,
+ <a href="RWLockManager.html" title="Typparameter in RWLockManager">CONTEXT</a>&nbsp;newContext)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.1</dd>
 </dl>
 </section>

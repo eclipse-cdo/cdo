@@ -81,6 +81,7 @@
       <topic label="Introspection Providers" href="productdoc/org.eclipse.net4j.util.ui.introspectionProviders.html" icon="productgroup" />
       <topic label="Menu Fillers" href="productdoc/org.eclipse.net4j.util.ui.menuFillers.html" icon="productgroup" />
       <topic label="Open Handlers" href="productdoc/org.eclipse.net4j.util.ui.openHandlers.html" icon="productgroup" />
+      <topic label="Property Extenders" href="productdoc/org.eclipse.net4j.util.ui.propertyExtenders.html" icon="productgroup" />
       <topic label="Value Formatters" href="productdoc/org.eclipse.net4j.util.ui.valueFormatters.html" icon="productgroup" />
     </topic>
   </topic>

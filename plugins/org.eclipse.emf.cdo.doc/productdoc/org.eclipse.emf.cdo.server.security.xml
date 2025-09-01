@@ -5,6 +5,9 @@
 		<factory type="home" class="org.eclipse.emf.cdo.server.spi.security.HomeFolderHandler$Factory" contributor="org.eclipse.emf.cdo.server.security"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.security.operationAuthorizers" name="CDO Operation Authorizers" description="" deprecated="false">
+		<factory type="fileRequireAdmin" class="org.eclipse.emf.cdo.internal.server.FileOperationAuthorizer$RequireAdmin$Factory" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="fileRequireGroup" class="org.eclipse.emf.cdo.internal.server.FileOperationAuthorizer$RequireGroup$Factory" contributor="org.eclipse.emf.cdo.server"/>
+		<factory type="fileRequireUser" class="org.eclipse.emf.cdo.internal.server.FileOperationAuthorizer$RequireUser$Factory" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="ldapRequireGroup" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireGroup$Factory" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="ldapRequireUser" class="org.eclipse.emf.cdo.internal.server.LDAPOperationAuthorizer$RequireUser$Factory" contributor="org.eclipse.emf.cdo.server"/>
 		<factory type="requireGroup" class="org.eclipse.emf.cdo.server.internal.security.RealmOperationAuthorizer$RequireGroup$Factory" contributor="org.eclipse.emf.cdo.server.security"/>

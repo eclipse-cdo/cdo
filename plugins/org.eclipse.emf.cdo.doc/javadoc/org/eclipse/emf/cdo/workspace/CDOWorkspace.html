@@ -10,56 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/CDOWorkspace.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/CDOWorkspace.html">Verwendung</a></li>
+<li><a href="../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li><a href="#nested-class-summary">Verschachtelt</a></li>
+<li>Feld</li>
+<li>Konstruktor</li>
+<li><a href="#method-summary">Methode</a></li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li>Feld</li>
+<li>Konstruktor</li>
+<li><a href="#method-detail">Methode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
+<li>Übersicht:&nbsp;</li>
+<li><a href="#nested-class-summary">Verschachtelt</a>&nbsp;|&nbsp;</li>
+<li>Feld&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
+<li>Details:&nbsp;</li>
+<li>Feld&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Methode</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -70,23 +84,23 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.workspace</a></div>
-<h1 title="Interface CDOWorkspace" class="title">Interface CDOWorkspace</h1>
+<h1 title="Schnittstelle CDOWorkspace" class="title">Schnittstelle CDOWorkspace</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Superinterfaces:</dt>
-<dd><code><a href="../CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a></code>, <code><a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
+<dt>Alle Superschnittstellen:</dt>
+<dd><code><a href="../CDOElement.StateProvider.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOElement.StateProvider</a></code>, <code><a href="../common/revision/CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code>, <code>org.eclipse.net4j.util.collection.Closeable</code>, <code>org.eclipse.net4j.util.event.INotifier</code></dd>
 </dl>
 <dl class="notes">
-<dt>All Known Subinterfaces:</dt>
-<dd><code><a href="../spi/workspace/InternalCDOWorkspace.html" title="interface in org.eclipse.emf.cdo.spi.workspace">InternalCDOWorkspace</a></code></dd>
+<dt>Alle bekannten Unterschnittstellen:</dt>
+<dd><code><a href="../spi/workspace/InternalCDOWorkspace.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.workspace">InternalCDOWorkspace</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOWorkspace</span><span class="extends-implements">
-extends <a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a>, org.eclipse.net4j.util.collection.Closeable, org.eclipse.net4j.util.event.INotifier</span></div>
+extends <a href="../common/revision/CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>, <a href="../CDOElement.StateProvider.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOElement.StateProvider</a>, org.eclipse.net4j.util.collection.Closeable, org.eclipse.net4j.util.event.INotifier</span></div>
 <div class="block">Represents a local <a href="CDOWorkspaceConfiguration.html#checkout()"><code>checkout</code></a> from a remote repository.</div>
 <dl class="notes">
-<dt>Author:</dt>
+<dt>Autor:</dt>
 <dd>Eike Stepper</dd>
 <dt>No Implement</dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
@@ -99,62 +113,62 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
+<h2>Verschachtelte Klassen - Übersicht</h2>
+<div class="caption"><span>Verschachtelte Klassen</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Interface</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Schnittstelle</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="CDOWorkspace.DirtyStateChangedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace.DirtyStateChangedEvent</a></code></div>
+<div class="col-second even-row-color"><code><a href="CDOWorkspace.DirtyStateChangedEvent.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.workspace">CDOWorkspace.DirtyStateChangedEvent</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">An <code>event</code> fired when the overall state of the <a href="CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> changes between <i>dirty</i> and <i>clean</i>.</div>
+<div class="block">An <code>event</code> fired when the overall state of the <a href="CDOWorkspace.html" title="Schnittstelle in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> changes between <i>dirty</i> and <i>clean</i>.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="CDOWorkspace.ObjectStatesChangedEvent.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspace.ObjectStatesChangedEvent</a></code></div>
+<div class="col-second odd-row-color"><code><a href="CDOWorkspace.ObjectStatesChangedEvent.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.workspace">CDOWorkspace.ObjectStatesChangedEvent</a></code></div>
 <div class="col-last odd-row-color">
-<div class="block">An <code>event</code> fired when the state of objects in the <a href="CDOWorkspace.html" title="interface in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> change between <i>new</i>, <i>dirty</i> and <i>clean</i>.</div>
+<div class="block">An <code>event</code> fired when the state of objects in the <a href="CDOWorkspace.html" title="Schnittstelle in org.eclipse.emf.cdo.workspace"><code>workspace</code></a> change between <i>new</i>, <i>dirty</i> and <i>clean</i>.</div>
 </div>
 </div>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.event.INotifier</h2>
 <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
 </section>
 </li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Method Summary</h2>
+<h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#checkin()" class="member-name-link">checkin</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#checkin(java.lang.String)" class="member-name-link">checkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#checkin(java.lang.String)" class="member-name-link">checkin</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;comment)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#compare(java.lang.String)" class="member-name-link">compare</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#compare(java.lang.String)" class="member-name-link">compare</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#compare(java.lang.String,long)" class="member-name-link">compare</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#compare(java.lang.String,long)" class="member-name-link">compare</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOWorkspaceBase.html" title="Schnittstelle in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBase()" class="member-name-link">getBase</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBranchID()" class="member-name-link">getBranchID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBranchPath()" class="member-name-link">getBranchPath</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLocalChanges()" class="member-name-link">getLocalChanges</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
@@ -166,51 +180,51 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#isFixed()" class="member-name-link">isFixed</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String)" class="member-name-link">merge</a><wbr>(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String)" class="member-name-link">merge</a><wbr>(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String,long)" class="member-name-link">merge</a><wbr>(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String,long)" class="member-name-link">merge</a><wbr>(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction()" class="member-name-link">openTransaction</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">openTransaction</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">openTransaction</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView()" class="member-name-link">openView</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">openView</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">openView</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#replace(java.lang.String,long)" class="member-name-link">replace</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#replace(java.lang.String,long)" class="member-name-link">replace</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#revert()" class="member-name-link">revert</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#update(org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">update</a><wbr>(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#update(org.eclipse.emf.cdo.transaction.CDOMerger)" class="member-name-link">update</a><wbr>(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.CDOElement.StateProvider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.<a href="../CDOElement.StateProvider.html" title="interface in org.eclipse.emf.cdo">CDOElement.StateProvider</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.CDOElement.StateProvider">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.cdo.<a href="../CDOElement.StateProvider.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOElement.StateProvider</a></h3>
 <code><a href="../CDOElement.StateProvider.html#getState(java.lang.Object)">getState</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDORevisionProvider">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../common/revision/CDORevisionProvider.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.common.revision.CDORevisionProvider">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.cdo.common.revision.<a href="../common/revision/CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></h3>
 <code><a href="../common/revision/CDORevisionProvider.html#getRevision(org.eclipse.emf.cdo.common.id.CDOID)">getRevision</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.collection.Closeable">Methods inherited from interface&nbsp;org.eclipse.net4j.util.collection.Closeable</h3>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.collection.Closeable">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.net4j.util.collection.Closeable</h3>
 <code>close, isClosed</code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Methods inherited from interface&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
+<h3 id="methods-inherited-from-class-org.eclipse.net4j.util.event.INotifier">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.net4j.util.event.INotifier</h3>
 <code>addListener, getListeners, hasListeners, removeListener</code></div>
 </section>
 </li>
@@ -221,14 +235,14 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Method Details</h2>
+<h2>Methodendetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="getBranchID()">
 <h3>getBranchID</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getBranchID</span>()</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
 </dl>
 </section>
@@ -236,7 +250,7 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <li>
 <section class="detail" id="getBranchPath()">
 <h3>getBranchPath</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBranchPath</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getBranchPath</span>()</div>
 </section>
 </li>
 <li>
@@ -254,99 +268,99 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <li>
 <section class="detail" id="getBase()">
 <h3>getBase</h3>
-<div class="member-signature"><span class="return-type"><a href="CDOWorkspaceBase.html" title="interface in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a></span>&nbsp;<span class="element-name">getBase</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="CDOWorkspaceBase.html" title="Schnittstelle in org.eclipse.emf.cdo.workspace">CDOWorkspaceBase</a></span>&nbsp;<span class="element-name">getBase</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="openView()">
 <h3>openView</h3>
-<div class="member-signature"><span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="openView(org.eclipse.emf.ecore.resource.ResourceSet)">
 <h3>openView</h3>
-<div class="member-signature"><span class="return-type"><a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
+<div class="member-signature"><span class="return-type"><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></span>&nbsp;<span class="element-name">openView</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="openTransaction()">
 <h3>openTransaction</h3>
-<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">openTransaction</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">openTransaction</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="openTransaction(org.eclipse.emf.ecore.resource.ResourceSet)">
 <h3>openTransaction</h3>
-<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">openTransaction</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
+<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">openTransaction</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="update(org.eclipse.emf.cdo.transaction.CDOMerger)">
 <h3>update</h3>
-<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</span></div>
+<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String)">
 <h3>merge</h3>
-<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath)</span></div>
+<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="merge(org.eclipse.emf.cdo.transaction.CDOMerger,java.lang.String,long)">
 <h3>merge</h3>
-<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="interface in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="member-signature"><span class="return-type"><a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a></span>&nbsp;<span class="element-name">merge</span><wbr><span class="parameters">(<a href="../transaction/CDOMerger.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOMerger</a>&nbsp;merger,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="checkin()">
 <h3>checkin</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">checkin</span>()
-               throws <span class="exceptions"><a href="../util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></span></div>
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">checkin</span>()
+               throws <span class="exceptions"><a href="../util/CommitException.html" title="Klasse in org.eclipse.emf.cdo.util">CommitException</a></span></div>
 <dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="../util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></code></dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="../util/CommitException.html" title="Klasse in org.eclipse.emf.cdo.util">CommitException</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="checkin(java.lang.String)">
 <h3>checkin</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOCommitInfo.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">checkin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;comment)</span>
-               throws <span class="exceptions"><a href="../util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></span></div>
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">checkin</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;comment)</span>
+               throws <span class="exceptions"><a href="../util/CommitException.html" title="Klasse in org.eclipse.emf.cdo.util">CommitException</a></span></div>
 <dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="../util/CommitException.html" title="class in org.eclipse.emf.cdo.util">CommitException</a></code></dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="../util/CommitException.html" title="Klasse in org.eclipse.emf.cdo.util">CommitException</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(java.lang.String)">
 <h3>compare</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath)</span></div>
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="compare(java.lang.String,long)">
 <h3>compare</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">compare</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getLocalChanges()">
 <h3>getLocalChanges</h3>
-<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">getLocalChanges</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="../common/commit/CDOChangeSetData.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOChangeSetData</a></span>&nbsp;<span class="element-name">getLocalChanges</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="replace(java.lang.String,long)">
 <h3>replace</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">replace</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;branchPath,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">replace</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;branchPath,
  long&nbsp;timeStamp)</span></div>
 </section>
 </li>
@@ -361,7 +375,7 @@ extends <a href="../common/revision/CDORevisionProvider.html" title="interface i
 <h3>isDirty</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isDirty</span>()</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
 </dl>
 </section>

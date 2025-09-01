@@ -10,56 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/CDOResource.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/CDOResource.html">Verwendung</a></li>
+<li><a href="../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li><a href="#nested-class-summary">Verschachtelt</a></li>
+<li><a href="#field-summary">Feld</a></li>
+<li>Konstruktor</li>
+<li><a href="#method-summary">Methode</a></li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li><a href="#field-detail">Feld</a></li>
+<li>Konstruktor</li>
+<li><a href="#method-detail">Methode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
+<li>Übersicht:&nbsp;</li>
+<li><a href="#nested-class-summary">Verschachtelt</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
+<li>Details:&nbsp;</li>
+<li><a href="#field-detail">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Methode</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -70,30 +84,30 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.eresource</a></div>
-<h1 title="Interface CDOResource" class="title">Interface CDOResource</h1>
+<h1 title="Schnittstelle CDOResource" class="title">Schnittstelle CDOResource</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Superinterfaces:</dt>
-<dd><code><a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a></code>, <code><a href="CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code>, <code><a href="../common/id/CDOWithID.html" title="interface in org.eclipse.emf.cdo.common.id">CDOWithID</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Notifier</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Alle Superschnittstellen:</dt>
+<dd><code><a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a></code>, <code><a href="CDOResourceLeaf.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a></code>, <code><a href="CDOResourceNode.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code>, <code><a href="../common/id/CDOWithID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOWithID</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">Notifier</a></code>, <code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
 </dl>
 <dl class="notes">
-<dt>All Known Subinterfaces:</dt>
-<dd><code><a href="../../spi/cdo/InternalCDOResource.html" title="interface in org.eclipse.emf.spi.cdo">InternalCDOResource</a></code></dd>
+<dt>Alle bekannten Unterschnittstellen:</dt>
+<dd><code><a href="../../spi/cdo/InternalCDOResource.html" title="Schnittstelle in org.eclipse.emf.spi.cdo">InternalCDOResource</a></code></dd>
 </dl>
 <dl class="notes">
-<dt>All Known Implementing Classes:</dt>
-<dd><code><a href="impl/CDOResourceImpl.html" title="class in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a></code></dd>
+<dt>Alle bekannten Implementierungsklassen:</dt>
+<dd><code><a href="impl/CDOResourceImpl.html" title="Klasse in org.eclipse.emf.cdo.eresource.impl">CDOResourceImpl</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOResource</span><span class="extends-implements">
-extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></span></div>
+extends <a href="CDOResourceLeaf.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceLeaf</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></span></div>
 <div class="block"><!-- begin-user-doc -->
  A representation of the model object '<em><b>CDO Resource</b></em>'.</div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="EresourcePackage.html#getCDOResource()"><code>EresourcePackage.getCDOResource()</code></a></li>
 </ul>
 </dd>
@@ -128,64 +142,64 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
+<h2>Verschachtelte Klassen - Übersicht</h2>
 <div class="inherited-list">
-<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Nested classes/interfaces inherited from interface&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h2>
-<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Factory.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Factory</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Internal.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Internal</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.IOWrappedException.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.IOWrappedException</a></code></div>
+<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h2>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Factory.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Factory</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Internal.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Internal</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.IOWrappedException.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.IOWrappedException</a></code></div>
 </section>
 </li>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
+<h2>Feldübersicht</h2>
+<div class="caption"><span>Felder</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#OPTION_SAVE_BASE_URI" class="member-name-link">OPTION_SAVE_BASE_URI</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#OPTION_SAVE_OVERRIDE_TRANSACTION" class="member-name-link">OPTION_SAVE_OVERRIDE_TRANSACTION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#OPTION_SAVE_PROGRESS_MONITOR" class="member-name-link">OPTION_SAVE_PROGRESS_MONITOR</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#PREFETCH_PARAMETER" class="member-name-link">PREFETCH_PARAMETER</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.eclipse.emf.cdo.eresource.CDOResourceNode">Fields inherited from interface&nbsp;org.eclipse.emf.cdo.eresource.<a href="CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></h3>
+<h3 id="fields-inherited-from-class-org.eclipse.emf.cdo.eresource.CDOResourceNode">Von Schnittstelle geerbte Felder&nbsp;org.eclipse.emf.cdo.eresource.<a href="CDOResourceNode.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></h3>
 <code><a href="CDOResourceNode.html#ROOT_NAME">ROOT_NAME</a>, <a href="CDOResourceNode.html#ROOT_PATH">ROOT_PATH</a></code></div>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Fields inherited from interface&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h3>
-<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_CIPHER" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_CIPHER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_LINE_DELIMITER" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_LINE_DELIMITER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_LINE_DELIMITER_UNSPECIFIED" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_LINE_DELIMITER_UNSPECIFIED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED_FILE_BUFFER" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED_FILE_BUFFER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_ZIP" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">OPTION_ZIP</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__CONTENTS" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__CONTENTS</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__ERRORS" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__ERRORS</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_LOADED" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_LOADED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_MODIFIED" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_MODIFIED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_TRACKING_MODIFICATION" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_TRACKING_MODIFICATION</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__RESOURCE_SET" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__RESOURCE_SET</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__TIME_STAMP" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__TIME_STAMP</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__URI" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__URI</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__WARNINGS" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__WARNINGS</a></code></div>
+<h3 id="fields-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Von Schnittstelle geerbte Felder&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h3>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_CIPHER" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_CIPHER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_LINE_DELIMITER" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_LINE_DELIMITER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_LINE_DELIMITER_UNSPECIFIED" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_LINE_DELIMITER_UNSPECIFIED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED_FILE_BUFFER" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED_FILE_BUFFER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_SAVE_ONLY_IF_CHANGED_MEMORY_BUFFER</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#OPTION_ZIP" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">OPTION_ZIP</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__CONTENTS" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__CONTENTS</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__ERRORS" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__ERRORS</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_LOADED" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_LOADED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_MODIFIED" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_MODIFIED</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__IS_TRACKING_MODIFICATION" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__IS_TRACKING_MODIFICATION</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__RESOURCE_SET" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__RESOURCE_SET</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__TIME_STAMP" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__TIME_STAMP</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__URI" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__URI</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#RESOURCE__WARNINGS" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">RESOURCE__WARNINGS</a></code></div>
 </section>
 </li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Method Summary</h2>
+<h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</code></div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContents()" class="member-name-link">getContents</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>Contents</b></em>' containment reference list.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getErrors()" class="member-name-link">getErrors</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>Errors</b></em>' attribute list.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResourceSet()" class="member-name-link">getResourceSet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>Resource Set</b></em>' attribute.</div>
@@ -195,12 +209,12 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>Time Stamp</b></em>' attribute.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">URI</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getURI()" class="member-name-link">getURI</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>URI</b></em>' attribute.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getWarnings()" class="member-name-link">getWarnings</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the value of the '<em><b>Warnings</b></em>' attribute list.</div>
@@ -229,7 +243,7 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <div class="block">Sets the value of the '<a href="#isModified()"><code><em>Modified</em></code></a>' attribute.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">setResourceSet</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;value)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)" class="member-name-link">setResourceSet</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets the value of the '<a href="#getResourceSet()"><code><em>Resource Set</em></code></a>' attribute.</div>
 </div>
@@ -244,7 +258,7 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <div class="block">Sets the value of the '<a href="#isTrackingModification()"><code><em>Tracking Modification</em></code></a>' attribute.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setURI(org.eclipse.emf.common.util.URI)" class="member-name-link">setURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">URI</a>&nbsp;value)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setURI(org.eclipse.emf.common.util.URI)" class="member-name-link">setURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets the value of the '<a href="#getURI()"><code><em>URI</em></code></a>' attribute.</div>
 </div>
@@ -252,20 +266,20 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.CDOObject">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.<a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo">CDOObject</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.CDOObject">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.cdo.<a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a></h3>
 <code><a href="../CDOObject.html#cdoConflict()">cdoConflict</a>, <a href="../CDOObject.html#cdoDirectResource()">cdoDirectResource</a>, <a href="../CDOObject.html#cdoHistory()">cdoHistory</a>, <a href="../CDOObject.html#cdoID()">cdoID</a>, <a href="../CDOObject.html#cdoInvalid()">cdoInvalid</a>, <a href="../CDOObject.html#cdoLockState()">cdoLockState</a>, <a href="../CDOObject.html#cdoPermission()">cdoPermission</a>, <a href="../CDOObject.html#cdoPrefetch(int)">cdoPrefetch</a>, <a href="../CDOObject.html#cdoReadLock()">cdoReadLock</a>, <a href="../CDOObject.html#cdoReload()">cdoReload</a>, <a href="../CDOObject.html#cdoResource()">cdoResource</a>, <a href="../CDOObject.html#cdoRevision()">cdoRevision</a>, <a href="../CDOObject.html#cdoRevision(boolean)">cdoRevision</a>, <a href="../CDOObject.html#cdoState()">cdoState</a>, <a href="../CDOObject.html#cdoView()">cdoView</a>, <a href="../CDOObject.html#cdoWriteLock()">cdoWriteLock</a>, <a href="../CDOObject.html#cdoWriteOption()">cdoWriteOption</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.eresource.CDOResourceNode">Methods inherited from interface&nbsp;org.eclipse.emf.cdo.eresource.<a href="CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></h3>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.eresource.CDOResourceNode">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.cdo.eresource.<a href="CDOResourceNode.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></h3>
 <code><a href="CDOResourceNode.html#delete(java.util.Map)">delete</a>, <a href="CDOResourceNode.html#getBasename()">getBasename</a>, <a href="CDOResourceNode.html#getExtension()">getExtension</a>, <a href="CDOResourceNode.html#getFolder()">getFolder</a>, <a href="CDOResourceNode.html#getName()">getName</a>, <a href="CDOResourceNode.html#getPath()">getPath</a>, <a href="CDOResourceNode.html#isRoot()">isRoot</a>, <a href="CDOResourceNode.html#setBasename(java.lang.String)">setBasename</a>, <a href="CDOResourceNode.html#setExtension(java.lang.String)">setExtension</a>, <a href="CDOResourceNode.html#setFolder(org.eclipse.emf.cdo.eresource.CDOResourceFolder)">setFolder</a>, <a href="CDOResourceNode.html#setName(java.lang.String)">setName</a>, <a href="CDOResourceNode.html#setPath(java.lang.String)">setPath</a>, <a href="CDOResourceNode.html#trimExtension()">trimExtension</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.ecore.EObject">Methods inherited from interface&nbsp;org.eclipse.emf.ecore.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a></h3>
-<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eAllContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eClass()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eClass</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainer()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eContainer</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainingFeature()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eContainingFeature</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainmentFeature()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eContainmentFeature</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContents()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eCrossReferences()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eCrossReferences</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eGet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet(org.eclipse.emf.ecore.EStructuralFeature,boolean)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eGet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eInvoke(org.eclipse.emf.ecore.EOperation,org.eclipse.emf.common.util.EList)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eInvoke</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eIsProxy()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eIsProxy</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eIsSet(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eIsSet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eResource()" title="class or interface in org.eclipse.emf.ecore" class="external-link">eResource</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eSet(org.eclipse.emf.ecore.EStructuralFeature,java.lang.Object)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eSet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eUnset(org.eclipse.emf.ecore.EStructuralFeature)" title="class or interface in org.eclipse.emf.ecore" class="external-link">eUnset</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.ecore.EObject">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.ecore.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a></h3>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eAllContents--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eAllContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eClass--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eClass</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainer--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eContainer</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainingFeature--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eContainingFeature</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainmentFeature--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eContainmentFeature</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContents--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eCrossReferences--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eCrossReferences</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet-org.eclipse.emf.ecore.EStructuralFeature-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eGet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eGet-org.eclipse.emf.ecore.EStructuralFeature-boolean-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eGet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eInvoke-org.eclipse.emf.ecore.EOperation-org.eclipse.emf.common.util.EList-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eInvoke</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eIsProxy--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eIsProxy</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eIsSet-org.eclipse.emf.ecore.EStructuralFeature-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eIsSet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eResource--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eResource</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eSet-org.eclipse.emf.ecore.EStructuralFeature-java.lang.Object-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eSet</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eUnset-org.eclipse.emf.ecore.EStructuralFeature-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">eUnset</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.common.notify.Notifier">Methods inherited from interface&nbsp;org.eclipse.emf.common.notify.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link">Notifier</a></h3>
-<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eAdapters()" title="class or interface in org.eclipse.emf.common.notify" class="external-link">eAdapters</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eDeliver()" title="class or interface in org.eclipse.emf.common.notify" class="external-link">eDeliver</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eNotify(org.eclipse.emf.common.notify.Notification)" title="class or interface in org.eclipse.emf.common.notify" class="external-link">eNotify</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eSetDeliver(boolean)" title="class or interface in org.eclipse.emf.common.notify" class="external-link">eSetDeliver</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.common.notify.Notifier">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.common.notify.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">Notifier</a></h3>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eAdapters--" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">eAdapters</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eDeliver--" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">eDeliver</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eNotify-org.eclipse.emf.common.notify.Notification-" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">eNotify</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html#eSetDeliver-boolean-" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">eSetDeliver</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Methods inherited from interface&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h3>
-<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#delete(java.util.Map)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">delete</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getAllContents()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getAllContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getEObject(java.lang.String)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getEObject</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getURIFragment(org.eclipse.emf.ecore.EObject)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getURIFragment</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#load(java.io.InputStream,java.util.Map)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">load</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#load(java.util.Map)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">load</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#save(java.io.OutputStream,java.util.Map)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">save</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#save(java.util.Map)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">save</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#unload()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">unload</a></code></div>
+<h3 id="methods-inherited-from-class-org.eclipse.emf.ecore.resource.Resource">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.ecore.resource.<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></h3>
+<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#delete-java.util.Map-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">delete</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getAllContents--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getAllContents</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getEObject-java.lang.String-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getEObject</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getURIFragment-org.eclipse.emf.ecore.EObject-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getURIFragment</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#load-java.io.InputStream-java.util.Map-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">load</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#load-java.util.Map-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">load</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#save-java.io.OutputStream-java.util.Map-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">save</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#save-java.util.Map-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">save</a>, <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#unload--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">unload</a></code></div>
 </section>
 </li>
 </ul>
@@ -275,14 +289,14 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <!-- ============ FIELD DETAIL =========== -->
 <li>
 <section class="field-details" id="field-detail">
-<h2>Field Details</h2>
+<h2>Felddetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="OPTION_SAVE_PROGRESS_MONITOR">
 <h3>OPTION_SAVE_PROGRESS_MONITOR</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_PROGRESS_MONITOR</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_PROGRESS_MONITOR</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>2.0</dd>
 <dt>Added</dt>
 </dl>
@@ -291,9 +305,9 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="OPTION_SAVE_OVERRIDE_TRANSACTION">
 <h3>OPTION_SAVE_OVERRIDE_TRANSACTION</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_OVERRIDE_TRANSACTION</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_OVERRIDE_TRANSACTION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 <dt>Added</dt>
 </dl>
@@ -302,14 +316,14 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="OPTION_SAVE_BASE_URI">
 <h3>OPTION_SAVE_BASE_URI</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_BASE_URI</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">OPTION_SAVE_BASE_URI</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.CDOResource.OPTION_SAVE_BASE_URI">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.CDOResource.OPTION_SAVE_BASE_URI">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 <dt>Added</dt>
@@ -319,14 +333,14 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="PREFETCH_PARAMETER">
 <h3>PREFETCH_PARAMETER</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREFETCH_PARAMETER</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PREFETCH_PARAMETER</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.CDOResource.PREFETCH_PARAMETER">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.emf.cdo.eresource.CDOResource.PREFETCH_PARAMETER">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 <dt>Added</dt>
@@ -339,23 +353,23 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Method Details</h2>
+<h2>Methodendetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="getResourceSet()">
 <h3>getResourceSet</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></span>&nbsp;<span class="element-name">getResourceSet</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a></span>&nbsp;<span class="element-name">getResourceSet</span>()</div>
 <div class="block">Returns the value of the '<em><b>Resource Set</b></em>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getResourceSet()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getResourceSet</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getResourceSet--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getResourceSet</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Resource Set</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="#setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)"><code>setResourceSet(ResourceSet)</code></a></li>
 <li><a href="EresourcePackage.html#getCDOResource_ResourceSet()"><code>EresourcePackage.getCDOResource_ResourceSet()</code></a></li>
 </ul>
@@ -369,16 +383,16 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="setResourceSet(org.eclipse.emf.ecore.resource.ResourceSet)">
 <h3>setResourceSet</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setResourceSet</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;value)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setResourceSet</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;value)</span></div>
 <div class="block">Sets the value of the '<a href="#getResourceSet()"><code><em>Resource Set</em></code></a>' attribute.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>value</code> - the new value of the '<em>Resource Set</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#getResourceSet()"><code>getResourceSet()</code></a></li>
 </ul>
 </dd>
@@ -389,21 +403,21 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="getURI()">
 <h3>getURI</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">URI</a></span>&nbsp;<span class="element-name">getURI</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a></span>&nbsp;<span class="element-name">getURI</span>()</div>
 <div class="block">Returns the value of the '<em><b>URI</b></em>' attribute.
  <!-- begin-user-doc -->
- The URI format is explained in <a href="../util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a> and <a href="../util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIData</code></a>.
+ The URI format is explained in <a href="../util/CDOURIUtil.html" title="Klasse in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a> and <a href="../util/CDOURIData.html" title="Klasse in org.eclipse.emf.cdo.util"><code>CDOURIData</code></a>.
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="CDOResourceNode.html#getURI()">getURI</a></code>&nbsp;in interface&nbsp;<code><a href="CDOResourceNode.html" title="interface in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code></dd>
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getURI()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getURI</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="CDOResourceNode.html#getURI()">getURI</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="CDOResourceNode.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResourceNode</a></code></dd>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getURI--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getURI</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>URI</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="#setURI(org.eclipse.emf.common.util.URI)"><code>setURI(URI)</code></a></li>
 <li><a href="EresourcePackage.html#getCDOResource_URI()"><code>EresourcePackage.getCDOResource_URI()</code></a></li>
 </ul>
@@ -417,19 +431,19 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="setURI(org.eclipse.emf.common.util.URI)">
 <h3>setURI</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setURI</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">URI</a>&nbsp;value)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setURI</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a>&nbsp;value)</span></div>
 <div class="block">Sets the value of the '<a href="#getURI()"><code><em>URI</em></code></a>' attribute.
  <!-- begin-user-doc -->
- The URI format is explained in <a href="../util/CDOURIUtil.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a> and <a href="../util/CDOURIData.html" title="class in org.eclipse.emf.cdo.util"><code>CDOURIData</code></a>.
+ The URI format is explained in <a href="../util/CDOURIUtil.html" title="Klasse in org.eclipse.emf.cdo.util"><code>CDOURIUtil</code></a> and <a href="../util/CDOURIData.html" title="Klasse in org.eclipse.emf.cdo.util"><code>CDOURIData</code></a>.
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setURI(org.eclipse.emf.common.util.URI)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">setURI</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Parameters:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setURI-org.eclipse.emf.common.util.URI-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">setURI</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Parameter:</dt>
 <dd><code>value</code> - the new value of the '<em>URI</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#getURI()"><code>getURI()</code></a></li>
 </ul>
 </dd>
@@ -440,19 +454,19 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="getContents()">
 <h3>getContents</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</span>&nbsp;<span class="element-name">getContents</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</span>&nbsp;<span class="element-name">getContents</span>()</div>
 <div class="block">Returns the value of the '<em><b>Contents</b></em>' containment reference list.
- The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>.
+ The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getContents()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getContents</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getContents--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getContents</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Contents</em>' containment reference list.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="EresourcePackage.html#getCDOResource_Contents()"><code>EresourcePackage.getCDOResource_Contents()</code></a></li>
 </ul>
 </dd>
@@ -470,13 +484,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isModified()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">isModified</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isModified--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">isModified</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Modified</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="#setModified(boolean)"><code>setModified(boolean)</code></a></li>
 <li><a href="EresourcePackage.html#getCDOResource_Modified()"><code>EresourcePackage.getCDOResource_Modified()</code></a></li>
 </ul>
@@ -495,13 +509,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setModified(boolean)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">setModified</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Parameters:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setModified-boolean-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">setModified</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Parameter:</dt>
 <dd><code>value</code> - the new value of the '<em>Modified</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#isModified()"><code>isModified()</code></a></li>
 </ul>
 </dd>
@@ -518,13 +532,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isLoaded()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">isLoaded</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isLoaded--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">isLoaded</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Loaded</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="EresourcePackage.html#getCDOResource_Loaded()"><code>EresourcePackage.getCDOResource_Loaded()</code></a></li>
 </ul>
 </dd>
@@ -542,13 +556,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isTrackingModification()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">isTrackingModification</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#isTrackingModification--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">isTrackingModification</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Tracking Modification</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="#setTrackingModification(boolean)"><code>setTrackingModification(boolean)</code></a></li>
 <li><a href="EresourcePackage.html#getCDOResource_TrackingModification()"><code>EresourcePackage.getCDOResource_TrackingModification()</code></a></li>
 </ul>
@@ -567,13 +581,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setTrackingModification(boolean)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">setTrackingModification</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Parameters:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setTrackingModification-boolean-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">setTrackingModification</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Parameter:</dt>
 <dd><code>value</code> - the new value of the '<em>Tracking Modification</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#isTrackingModification()"><code>isTrackingModification()</code></a></li>
 </ul>
 </dd>
@@ -584,19 +598,19 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="getErrors()">
 <h3>getErrors</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</span>&nbsp;<span class="element-name">getErrors</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</span>&nbsp;<span class="element-name">getErrors</span>()</div>
 <div class="block">Returns the value of the '<em><b>Errors</b></em>' attribute list.
- The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>Resource.Diagnostic</code></a>.
+ The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link"><code>Resource.Diagnostic</code></a>.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getErrors()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getErrors</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getErrors--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getErrors</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Errors</em>' attribute list.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="EresourcePackage.html#getCDOResource_Errors()"><code>EresourcePackage.getCDOResource_Errors()</code></a></li>
 </ul>
 </dd>
@@ -609,19 +623,19 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <li>
 <section class="detail" id="getWarnings()">
 <h3>getWarnings</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="class or interface in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</span>&nbsp;<span class="element-name">getWarnings</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource.Diagnostic</a>&gt;</span>&nbsp;<span class="element-name">getWarnings</span>()</div>
 <div class="block">Returns the value of the '<em><b>Warnings</b></em>' attribute list.
- The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>Resource.Diagnostic</code></a>.
+ The list contents are of type <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.Diagnostic.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link"><code>Resource.Diagnostic</code></a>.
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getWarnings()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getWarnings</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getWarnings--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getWarnings</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Warnings</em>' attribute list.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="EresourcePackage.html#getCDOResource_Warnings()"><code>EresourcePackage.getCDOResource_Warnings()</code></a></li>
 </ul>
 </dd>
@@ -639,13 +653,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getTimeStamp()" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">getTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Returns:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#getTimeStamp--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">getTimeStamp</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Gibt zurück:</dt>
 <dd>the value of the '<em>Time Stamp</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list-long">
+<ul class="tag-list-long">
 <li><a href="#setTimeStamp(long)"><code>setTimeStamp(long)</code></a></li>
 <li><a href="EresourcePackage.html#getCDOResource_TimeStamp()"><code>EresourcePackage.getCDOResource_TimeStamp()</code></a></li>
 </ul>
@@ -664,13 +678,13 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
  <!-- begin-user-doc -->
  <!-- end-user-doc --></div>
 <dl class="notes">
-<dt>Specified by:</dt>
-<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setTimeStamp(long)" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">setTimeStamp</a></code>&nbsp;in interface&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
-<dt>Parameters:</dt>
+<dt>Angegeben von:</dt>
+<dd><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html#setTimeStamp-long-" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">setTimeStamp</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">Resource</a></code></dd>
+<dt>Parameter:</dt>
 <dd><code>value</code> - the new value of the '<em>Time Stamp</em>' attribute.</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#getTimeStamp()"><code>getTimeStamp()</code></a></li>
 </ul>
 </dd>
@@ -683,7 +697,7 @@ extends <a href="CDOResourceLeaf.html" title="interface in org.eclipse.emf.cdo.e
 <h3>isExisting</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isExisting</span>()</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>2.0</dd>
 <dt>Added</dt>
 </dl>

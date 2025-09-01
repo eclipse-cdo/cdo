@@ -10,56 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/CDOCommonUtil.html">Use</a></li>
-<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/CDOCommonUtil.html">Verwendung</a></li>
+<li><a href="../../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li>Verschachtelt</li>
+<li><a href="#field-summary">Feld</a></li>
+<li>Konstruktor</li>
+<li><a href="#method-summary">Methode</a></li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li><a href="#field-detail">Feld</a></li>
+<li>Konstruktor</li>
+<li><a href="#method-detail">Methode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li>Nested&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
+<li>Übersicht:&nbsp;</li>
+<li>Verschachtelt&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
+<li>Details:&nbsp;</li>
+<li><a href="#field-detail">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Methode</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -70,20 +84,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.util</a></div>
-<h1 title="Class CDOCommonUtil" class="title">Class CDOCommonUtil</h1>
+<h1 title="Klasse CDOCommonUtil" class="title">Klasse CDOCommonUtil</h1>
 </div>
-<div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
+<div class="inheritance" title="Vererbungsbaum"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">java.lang.Object</a>
 <div class="inheritance">org.eclipse.emf.cdo.common.util.CDOCommonUtil</div>
 </div>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDOCommonUtil</span>
-<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span></div>
+<span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></span></div>
 <div class="block">Various static methods that may help with I/O and time stamps.</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>Author:</dt>
+<dt>Autor:</dt>
 <dd>Eike Stepper</dd>
 </dl>
 </section>
@@ -92,28 +106,28 @@ loadScripts(document, 'script');</script>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
+<h2>Feldübersicht</h2>
+<div class="caption"><span>Felder</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/SimpleDateFormat.html" title="class or interface in java.text" class="external-link">SimpleDateFormat</a></code></div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/SimpleDateFormat.html" title="Klasse oder Schnittstelle in java.text" class="external-link">SimpleDateFormat</a></code></div>
 <div class="col-second even-row-color"><code><a href="#DATE_FORMAT" class="member-name-link">DATE_FORMAT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html" title="Klasse oder Schnittstelle in java.util.regex" class="external-link">Pattern</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#DATE_PATTERN" class="member-name-link">DATE_PATTERN</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a>&lt;<a href="CDONameProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDONameProvider</a>&gt;</code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Comparator</a><wbr>&lt;<a href="CDONameProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDONameProvider</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#NAME_COMPARATOR" class="member-name-link">NAME_COMPARATOR</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#SYSTEM_USER_ID" class="member-name-link">SYSTEM_USER_ID</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a>&lt;<a href="CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&gt;</code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Comparator</a><wbr>&lt;<a href="CDOTimeProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&gt;</code></div>
 <div class="col-second even-row-color"><code><a href="#TIME_COMPARATOR" class="member-name-link">TIME_COMPARATOR</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#UNSPECIFIED_DATE_STRING" class="member-name-link">UNSPECIFIED_DATE_STRING</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
@@ -122,46 +136,46 @@ loadScripts(document, 'script');</script>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Method Summary</h2>
+<h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Static Methods</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Concrete Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab1" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab1', 3)" class="table-tab">Statische Methoden</button><button id="method-summary-table-tab4" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab4', 3)" class="table-tab">Konkrete Methoden</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Veraltete Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#compareTimeStamps(long,long)" class="member-name-link">compareTimeStamps</a><wbr>(long&nbsp;t1,
  long&nbsp;t2)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../protocol/CDODataInput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCDODataInput(org.eclipse.net4j.util.io.ExtendedDataInputStream,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.branch.CDOBranchManager,org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager,org.eclipse.emf.cdo.common.revision.CDORevisionFactory,org.eclipse.emf.cdo.common.revision.CDOListFactory,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">createCDODataInput</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataInputStream&nbsp;inputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager,
- <a href="../commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;commitManager,
- <a href="../revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;revisionFactory,
- <a href="../revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a>&nbsp;listFactory,
- <a href="../lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobStore)</code></div>
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../branch/CDOBranchManager.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager,
+ <a href="../commit/CDOCommitInfoManager.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;commitManager,
+ <a href="../revision/CDORevisionFactory.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;revisionFactory,
+ <a href="../revision/CDOListFactory.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDOListFactory</a>&nbsp;listFactory,
+ <a href="../lob/CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobStore)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider)" class="member-name-link">createCDODataOutput</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</code></div>
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../id/CDOIDProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.3 use <a href="#createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker)"><code>createCDODataOutput(ExtendedDataOutput, CDOPackageRegistry, CDOIDProvider, CDORevisionUnchunker)</code></a>.</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker)" class="member-name-link">createCDODataOutput</a><wbr>(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
- <a href="../../spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a>&nbsp;unchunker)</code></div>
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../id/CDOIDProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+ <a href="../../spi/common/revision/CDORevisionUnchunker.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a>&nbsp;unchunker)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#formatTimeStamp()" class="member-name-link">formatTimeStamp</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#formatTimeStamp(long)" class="member-name-link">formatTimeStamp</a><wbr>(long&nbsp;timeStamp)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
@@ -170,24 +184,27 @@ loadScripts(document, 'script');</script>
  long&nbsp;endTime)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isWellFormedURI(java.lang.String)" class="member-name-link">isWellFormedURI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isWellFormedURI(java.lang.String)" class="member-name-link">isWellFormedURI</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">A well formed URI string must have a non-zero length, and must encode any special characters such as the space character.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parseTimeStamp(java.lang.String)" class="member-name-link">parseTimeStamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;timeStamp)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#parseTimeStamp(java.lang.String)" class="member-name-link">parseTimeStamp</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;timeStamp)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#waitWhileInitial(org.eclipse.emf.cdo.common.CDOCommonRepository,org.eclipse.net4j.util.event.INotifier,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">waitWhileInitial</a><wbr>(<a href="../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository,
- org.eclipse.net4j.util.event.INotifier&nbsp;notifier,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#waitWhileInitial(org.eclipse.emf.cdo.common.CDOCommonRepository,org.eclipse.net4j.util.event.INotifier,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">waitWhileInitial</a><wbr>(<a href="../CDOCommonRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository,
+ org.eclipse.net4j.util.event.INotifier&nbsp;notifier,
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
-<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="class or interface in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="class or interface in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
+<h3 id="methods-inherited-from-class-java.lang.Object">Von Klasse geerbte Methoden&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#clone()" title="Klasse oder Schnittstelle in java.lang" class="external-link">clone</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="Klasse oder Schnittstelle in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#finalize()" title="Klasse oder Schnittstelle in java.lang" class="external-link">finalize</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="Klasse oder Schnittstelle in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="Klasse oder Schnittstelle in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="Klasse oder Schnittstelle in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="Klasse oder Schnittstelle in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="Klasse oder Schnittstelle in java.lang" class="external-link">wait</a></code></div>
 </section>
 </li>
 </ul>
@@ -197,19 +214,19 @@ loadScripts(document, 'script');</script>
 <!-- ============ FIELD DETAIL =========== -->
 <li>
 <section class="field-details" id="field-detail">
-<h2>Field Details</h2>
+<h2>Felddetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="UNSPECIFIED_DATE_STRING">
 <h3>UNSPECIFIED_DATE_STRING</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">UNSPECIFIED_DATE_STRING</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">UNSPECIFIED_DATE_STRING</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.5</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.util.CDOCommonUtil.UNSPECIFIED_DATE_STRING">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.util.CDOCommonUtil.UNSPECIFIED_DATE_STRING">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -218,9 +235,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="DATE_FORMAT">
 <h3>DATE_FORMAT</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/SimpleDateFormat.html" title="class or interface in java.text" class="external-link">SimpleDateFormat</a></span>&nbsp;<span class="element-name">DATE_FORMAT</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/SimpleDateFormat.html" title="Klasse oder Schnittstelle in java.text" class="external-link">SimpleDateFormat</a></span>&nbsp;<span class="element-name">DATE_FORMAT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -228,9 +245,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="DATE_PATTERN">
 <h3>DATE_PATTERN</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html" title="class or interface in java.util.regex" class="external-link">Pattern</a></span>&nbsp;<span class="element-name">DATE_PATTERN</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/regex/Pattern.html" title="Klasse oder Schnittstelle in java.util.regex" class="external-link">Pattern</a></span>&nbsp;<span class="element-name">DATE_PATTERN</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.4</dd>
 </dl>
 </section>
@@ -238,14 +255,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="SYSTEM_USER_ID">
 <h3>SYSTEM_USER_ID</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SYSTEM_USER_ID</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">SYSTEM_USER_ID</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.util.CDOCommonUtil.SYSTEM_USER_ID">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.util.CDOCommonUtil.SYSTEM_USER_ID">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -254,9 +271,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="NAME_COMPARATOR">
 <h3>NAME_COMPARATOR</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a>&lt;<a href="CDONameProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDONameProvider</a>&gt;</span>&nbsp;<span class="element-name">NAME_COMPARATOR</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Comparator</a>&lt;<a href="CDONameProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDONameProvider</a>&gt;</span>&nbsp;<span class="element-name">NAME_COMPARATOR</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.4</dd>
 </dl>
 </section>
@@ -264,9 +281,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="TIME_COMPARATOR">
 <h3>TIME_COMPARATOR</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="class or interface in java.util" class="external-link">Comparator</a>&lt;<a href="CDOTimeProvider.html" title="interface in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&gt;</span>&nbsp;<span class="element-name">TIME_COMPARATOR</span></div>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Comparator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Comparator</a>&lt;<a href="CDOTimeProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a>&gt;</span>&nbsp;<span class="element-name">TIME_COMPARATOR</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.4</dd>
 </dl>
 </section>
@@ -277,23 +294,33 @@ loadScripts(document, 'script');</script>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Method Details</h2>
+<h2>Methodendetails</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)">
+<h3>prepareContainer</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">prepareContainer</span><wbr><span class="parameters">(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.26</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="createCDODataInput(org.eclipse.net4j.util.io.ExtendedDataInputStream,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.branch.CDOBranchManager,org.eclipse.emf.cdo.common.commit.CDOCommitInfoManager,org.eclipse.emf.cdo.common.revision.CDORevisionFactory,org.eclipse.emf.cdo.common.revision.CDOListFactory,org.eclipse.emf.cdo.common.lob.CDOLobStore)">
 <h3>createCDODataInput</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataInput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></span>&nbsp;<span class="element-name">createCDODataInput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataInputStream&nbsp;inputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../branch/CDOBranchManager.html" title="interface in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager,
- <a href="../commit/CDOCommitInfoManager.html" title="interface in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;commitManager,
- <a href="../revision/CDORevisionFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;revisionFactory,
- <a href="../revision/CDOListFactory.html" title="interface in org.eclipse.emf.cdo.common.revision">CDOListFactory</a>&nbsp;listFactory,
- <a href="../lob/CDOLobStore.html" title="interface in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobStore)</span>
-                                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataInput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataInput</a></span>&nbsp;<span class="element-name">createCDODataInput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataInputStream&nbsp;inputStream,
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../branch/CDOBranchManager.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchManager</a>&nbsp;branchManager,
+ <a href="../commit/CDOCommitInfoManager.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfoManager</a>&nbsp;commitManager,
+ <a href="../revision/CDORevisionFactory.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionFactory</a>&nbsp;revisionFactory,
+ <a href="../revision/CDOListFactory.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDOListFactory</a>&nbsp;listFactory,
+ <a href="../lob/CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;lobStore)</span>
+                                       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
-<dt>Since:</dt>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code></dd>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -301,15 +328,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider)">
 <h3>createCDODataOutput</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
-</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span>&nbsp;<span class="element-name">createCDODataOutput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span>&nbsp;<span class="element-name">createCDODataOutput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../id/CDOIDProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.3 use <a href="#createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker)"><code>createCDODataOutput(ExtendedDataOutput, CDOPackageRegistry, CDOIDProvider, CDORevisionUnchunker)</code></a>.</div>
 </div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -317,12 +344,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createCDODataOutput(org.eclipse.net4j.util.io.ExtendedDataOutput,org.eclipse.emf.cdo.common.model.CDOPackageRegistry,org.eclipse.emf.cdo.common.id.CDOIDProvider,org.eclipse.emf.cdo.spi.common.revision.CDORevisionUnchunker)">
 <h3>createCDODataOutput</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataOutput.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span>&nbsp;<span class="element-name">createCDODataOutput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
- <a href="../model/CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
- <a href="../id/CDOIDProvider.html" title="interface in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
- <a href="../../spi/common/revision/CDORevisionUnchunker.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a>&nbsp;unchunker)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a></span>&nbsp;<span class="element-name">createCDODataOutput</span><wbr><span class="parameters">(org.eclipse.net4j.util.io.ExtendedDataOutput&nbsp;extendedDataOutputStream,
+ <a href="../model/CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry,
+ <a href="../id/CDOIDProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOIDProvider</a>&nbsp;idProvider,
+ <a href="../../spi/common/revision/CDORevisionUnchunker.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">CDORevisionUnchunker</a>&nbsp;unchunker)</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
 </dl>
 </section>
@@ -330,16 +357,16 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="isWellFormedURI(java.lang.String)">
 <h3>isWellFormedURI</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isWellFormedURI</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isWellFormedURI</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
 <div class="block">A well formed URI string must have a non-zero length, and must encode any special characters such as the space character.
- As such, creating a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html#createURI(java.lang.String,boolean)" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>, ignoring the properly encoded characters, and converting
- that to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link"><code>string</code></a>, must yield this URI string itself.</div>
+ As such, creating a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html#createURI-java.lang.String-boolean-" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>, ignoring the properly encoded characters, and converting
+ that to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="Klasse oder Schnittstelle in java.lang" class="external-link"><code>string</code></a>, must yield this URI string itself.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>uri</code> - the URI string in question.</dd>
-<dt>Returns:</dt>
+<dt>Gibt zurück:</dt>
 <dd>whether the URI is well formed.</dd>
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.21</dd>
 </dl>
 </section>
@@ -362,24 +389,24 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="formatTimeStamp()">
 <h3>formatTimeStamp</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatTimeStamp</span>()</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatTimeStamp</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="formatTimeStamp(long)">
 <h3>formatTimeStamp</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatTimeStamp</span><wbr><span class="parameters">(long&nbsp;timeStamp)</span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatTimeStamp</span><wbr><span class="parameters">(long&nbsp;timeStamp)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="parseTimeStamp(java.lang.String)">
 <h3>parseTimeStamp</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">parseTimeStamp</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;timeStamp)</span>
-                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/ParseException.html" title="class or interface in java.text" class="external-link">ParseException</a></span></div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">parseTimeStamp</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;timeStamp)</span>
+                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/ParseException.html" title="Klasse oder Schnittstelle in java.text" class="external-link">ParseException</a></span></div>
 <dl class="notes">
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/ParseException.html" title="class or interface in java.text" class="external-link">ParseException</a></code></dd>
-<dt>Since:</dt>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/text/ParseException.html" title="Klasse oder Schnittstelle in java.text" class="external-link">ParseException</a></code></dd>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -387,11 +414,11 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="waitWhileInitial(org.eclipse.emf.cdo.common.CDOCommonRepository,org.eclipse.net4j.util.event.INotifier,org.eclipse.core.runtime.IProgressMonitor)">
 <h3>waitWhileInitial</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">waitWhileInitial</span><wbr><span class="parameters">(<a href="../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository,
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">waitWhileInitial</span><wbr><span class="parameters">(<a href="../CDOCommonRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.common">CDOCommonRepository</a>&nbsp;repository,
  org.eclipse.net4j.util.event.INotifier&nbsp;notifier,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="class or interface in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</span></div>
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
 </dl>
 </section>

@@ -10,52 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
 <script type="text/javascript">var pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/CDOProtocolConstants.html">Use</a></li>
-<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/CDOProtocolConstants.html">Verwendung</a></li>
+<li><a href="../../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li><a href="#nested-class-summary">Verschachtelt</a></li>
+<li><a href="#field-summary">Feld</a></li>
+<li>Konstruktor</li>
+<li>Methode</li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li><a href="#field-detail">Feld</a></li>
+<li>Konstruktor</li>
+<li>Methode</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li>Übersicht:&nbsp;</li>
+<li><a href="#nested-class-summary">Verschachtelt</a>&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li>Methode</li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li>Method</li>
+<li>Details:&nbsp;</li>
+<li><a href="#field-detail">Feld</a>&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li>Methode</li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -66,20 +84,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.common.protocol</a></div>
-<h1 title="Interface CDOProtocolConstants" class="title">Interface CDOProtocolConstants</h1>
+<h1 title="Schnittstelle CDOProtocolConstants" class="title">Schnittstelle CDOProtocolConstants</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Known Subinterfaces:</dt>
-<dd><code><a href="CDOProtocol.html" title="interface in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a></code>, <code><a href="../../../spi/cdo/CDOSessionProtocol.html" title="interface in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code>, <code><a href="../../spi/server/ISessionProtocol.html" title="interface in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></code></dd>
+<dt>Alle bekannten Unterschnittstellen:</dt>
+<dd><code><a href="CDOProtocol.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDOProtocol</a></code>, <code><a href="../../../spi/cdo/CDOSessionProtocol.html" title="Schnittstelle in org.eclipse.emf.spi.cdo">CDOSessionProtocol</a></code>, <code><a href="../../spi/server/ISessionProtocol.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">ISessionProtocol</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">CDOProtocolConstants</span></div>
 <div class="block">Symbolic protocol constants commonly used in CDO.</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>2.0</dd>
-<dt>Author:</dt>
+<dt>Autor:</dt>
 <dd>Eike Stepper</dd>
 <dt>No Implement</dt>
 <dd>This interface is not intended to be implemented by clients.</dd>
@@ -92,14 +110,14 @@ loadScripts(document, 'script');</script>
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
+<h2>Verschachtelte Klassen - Übersicht</h2>
+<div class="caption"><span>Verschachtelte Klassen</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Interface</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Schnittstelle</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="CDOProtocolConstants.UnitOpcode.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a></code></div>
+<div class="col-second even-row-color"><code><a href="CDOProtocolConstants.UnitOpcode.html" class="type-name-link" title="Enum-Klasse in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">Enumerates the possible opcodes for <a href="#SIGNAL_UNIT"><code>unit requests</code></a>.</div>
 </div>
@@ -109,349 +127,358 @@ loadScripts(document, 'script');</script>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
-<h2>Field Summary</h2>
-<div class="caption"><span>Fields</span></div>
+<h2>Feldübersicht</h2>
+<div class="caption"><span>Felder</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Field</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static final long</code></div>
 <div class="col-second even-row-color"><code><a href="#DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT" class="member-name-link">DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final int</code></div>
 <div class="col-second odd-row-color"><code><a href="#NO_MORE_REMOTE_SESSIONS" class="member-name-link">NO_MORE_REMOTE_SESSIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color"><code><a href="#PROTOCOL_NAME" class="member-name-link">PROTOCOL_NAME</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final int</code></div>
 <div class="col-second odd-row-color"><code><a href="#PROTOCOL_VERSION" class="member-name-link">PROTOCOL_VERSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES" class="member-name-link">QUERY_LANGUAGE_INSTANCES</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_FINGER_PRINT" class="member-name-link">QUERY_LANGUAGE_FINGER_PRINT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES_EXACT" class="member-name-link">QUERY_LANGUAGE_INSTANCES_EXACT</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_FINGER_PRINT_PARAM" class="member-name-link">QUERY_LANGUAGE_FINGER_PRINT_PARAM</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES_TYPE" class="member-name-link">QUERY_LANGUAGE_INSTANCES_TYPE</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_FINGER_PRINT_TYPE" class="member-name-link">QUERY_LANGUAGE_FINGER_PRINT_TYPE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES" class="member-name-link">QUERY_LANGUAGE_RESOURCES</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES" class="member-name-link">QUERY_LANGUAGE_INSTANCES</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES_EXACT_MATCH" class="member-name-link">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES_EXACT" class="member-name-link">QUERY_LANGUAGE_INSTANCES_EXACT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES_FOLDER_ID" class="member-name-link">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_INSTANCES_TYPE" class="member-name-link">QUERY_LANGUAGE_INSTANCES_TYPE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_XREFS" class="member-name-link">QUERY_LANGUAGE_XREFS</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES" class="member-name-link">QUERY_LANGUAGE_RESOURCES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES" class="member-name-link">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES_EXACT_MATCH" class="member-name-link">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_RESULT_EXCEPTION" class="member-name-link">QUERY_RESULT_EXCEPTION</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_RESOURCES_FOLDER_ID" class="member-name-link">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_LANGUAGE_XREFS" class="member-name-link">QUERY_LANGUAGE_XREFS</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES" class="member-name-link">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#QUERY_RESULT_PRIMITIVE" class="member-name-link">QUERY_RESULT_PRIMITIVE</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_RESULT_EXCEPTION" class="member-name-link">QUERY_RESULT_EXCEPTION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#QUERY_RESULT_REVISION" class="member-name-link">QUERY_RESULT_REVISION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#QUERY_RESULT_PRIMITIVE" class="member-name-link">QUERY_RESULT_PRIMITIVE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REFRESH_CHANGED_OBJECT" class="member-name-link">REFRESH_CHANGED_OBJECT</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#QUERY_RESULT_REVISION" class="member-name-link">QUERY_RESULT_REVISION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REFRESH_DETACHED_OBJECT" class="member-name-link">REFRESH_DETACHED_OBJECT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REFRESH_CHANGED_OBJECT" class="member-name-link">REFRESH_CHANGED_OBJECT</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REFRESH_FINISHED" class="member-name-link">REFRESH_FINISHED</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REFRESH_DETACHED_OBJECT" class="member-name-link">REFRESH_DETACHED_OBJECT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REFRESH_PACKAGE_UNIT" class="member-name-link">REFRESH_PACKAGE_UNIT</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final int</code></div>
-<div class="col-second odd-row-color"><code><a href="#RELEASE_ALL_LOCKS" class="member-name-link">RELEASE_ALL_LOCKS</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REMOTE_SESSION_CLOSED" class="member-name-link">REMOTE_SESSION_CLOSED</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REFRESH_FINISHED" class="member-name-link">REFRESH_FINISHED</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REMOTE_SESSION_CUSTOM_DATA" class="member-name-link">REMOTE_SESSION_CUSTOM_DATA</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REFRESH_PACKAGE_UNIT" class="member-name-link">REFRESH_PACKAGE_UNIT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REMOTE_SESSION_OPENED" class="member-name-link">REMOTE_SESSION_OPENED</a></code></div>
+<div class="col-first even-row-color"><code>static final int</code></div>
+<div class="col-second even-row-color"><code><a href="#RELEASE_ALL_LOCKS" class="member-name-link">RELEASE_ALL_LOCKS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REMOTE_SESSION_SUBSCRIBED" class="member-name-link">REMOTE_SESSION_SUBSCRIBED</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REMOTE_SESSION_CLOSED" class="member-name-link">REMOTE_SESSION_CLOSED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REMOTE_SESSION_UNSUBSCRIBED" class="member-name-link">REMOTE_SESSION_UNSUBSCRIBED</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REMOTE_SESSION_CUSTOM_DATA" class="member-name-link">REMOTE_SESSION_CUSTOM_DATA</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REPLICATE_BRANCH" class="member-name-link">REPLICATE_BRANCH</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REMOTE_SESSION_OPENED" class="member-name-link">REMOTE_SESSION_OPENED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REPLICATE_COMMIT" class="member-name-link">REPLICATE_COMMIT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REMOTE_SESSION_SUBSCRIBED" class="member-name-link">REMOTE_SESSION_SUBSCRIBED</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REPLICATE_FINISHED" class="member-name-link">REPLICATE_FINISHED</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REMOTE_SESSION_UNSUBSCRIBED" class="member-name-link">REMOTE_SESSION_UNSUBSCRIBED</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#REPLICATE_LOCKAREA" class="member-name-link">REPLICATE_LOCKAREA</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REPLICATE_BRANCH" class="member-name-link">REPLICATE_BRANCH</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#REVISION_DOES_NOT_EXIST" class="member-name-link">REVISION_DOES_NOT_EXIST</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REPLICATE_COMMIT" class="member-name-link">REPLICATE_COMMIT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_COMMIT_CONFLICT" class="member-name-link">ROLLBACK_REASON_COMMIT_CONFLICT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REPLICATE_FINISHED" class="member-name-link">REPLICATE_FINISHED</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_CONTAINMENT_CYCLE" class="member-name-link">ROLLBACK_REASON_CONTAINMENT_CYCLE</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#REPLICATE_LOCKAREA" class="member-name-link">REPLICATE_LOCKAREA</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_OPTIMISTIC_LOCKING" class="member-name-link">ROLLBACK_REASON_OPTIMISTIC_LOCKING</a></code></div>
+<div class="col-second even-row-color"><code><a href="#REVISION_DOES_NOT_EXIST" class="member-name-link">REVISION_DOES_NOT_EXIST</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_REFERENTIAL_INTEGRITY" class="member-name-link">ROLLBACK_REASON_REFERENTIAL_INTEGRITY</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_COMMIT_CONFLICT" class="member-name-link">ROLLBACK_REASON_COMMIT_CONFLICT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_UNIT_INTEGRITY" class="member-name-link">ROLLBACK_REASON_UNIT_INTEGRITY</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_CONTAINMENT_CYCLE" class="member-name-link">ROLLBACK_REASON_CONTAINMENT_CYCLE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final byte</code></div>
-<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_UNKNOWN" class="member-name-link">ROLLBACK_REASON_UNKNOWN</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_OPTIMISTIC_LOCKING" class="member-name-link">ROLLBACK_REASON_OPTIMISTIC_LOCKING</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final byte</code></div>
-<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_VALIDATION_ERROR" class="member-name-link">ROLLBACK_REASON_VALIDATION_ERROR</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_REFERENTIAL_INTEGRITY" class="member-name-link">ROLLBACK_REASON_REFERENTIAL_INTEGRITY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_AUTHENTICATION" class="member-name-link">SIGNAL_AUTHENTICATION</a></code></div>
+<div class="col-first odd-row-color"><code>static final byte</code></div>
+<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_UNIT_INTEGRITY" class="member-name-link">ROLLBACK_REASON_UNIT_INTEGRITY</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final byte</code></div>
+<div class="col-second even-row-color"><code><a href="#ROLLBACK_REASON_UNKNOWN" class="member-name-link">ROLLBACK_REASON_UNKNOWN</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final byte</code></div>
+<div class="col-second odd-row-color"><code><a href="#ROLLBACK_REASON_VALIDATION_ERROR" class="member-name-link">ROLLBACK_REASON_VALIDATION_ERROR</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_AUTHORIZE_OPERATIONS" class="member-name-link">SIGNAL_AUTHORIZE_OPERATIONS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_AUTHENTICATION" class="member-name-link">SIGNAL_AUTHENTICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_BRANCH_NOTIFICATION" class="member-name-link">SIGNAL_BRANCH_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_AUTHORIZE_OPERATIONS" class="member-name-link">SIGNAL_AUTHORIZE_OPERATIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_CHANGE_CREDENTIALS" class="member-name-link">SIGNAL_CHANGE_CREDENTIALS</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="#SIGNAL_BRANCH_NOTIFICATION" class="member-name-link">SIGNAL_BRANCH_NOTIFICATION</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final short</code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_CHANGE_CREDENTIALS" class="member-name-link">SIGNAL_CHANGE_CREDENTIALS</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Client's request to the server to initiate a change-credentials operation.</div>
 </div>
-<div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_CHANGE_SUBSCRIPTION" class="member-name-link">SIGNAL_CHANGE_SUBSCRIPTION</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_CHANGE_TAG" class="member-name-link">SIGNAL_CHANGE_TAG</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_CHANGE_SUBSCRIPTION" class="member-name-link">SIGNAL_CHANGE_SUBSCRIPTION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_CLOSE_VIEW" class="member-name-link">SIGNAL_CLOSE_VIEW</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_CHANGE_TAG" class="member-name-link">SIGNAL_CHANGE_TAG</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_COMMIT_DELEGATION" class="member-name-link">SIGNAL_COMMIT_DELEGATION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_CLOSE_VIEW" class="member-name-link">SIGNAL_CLOSE_VIEW</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_COMMIT_NOTIFICATION" class="member-name-link">SIGNAL_COMMIT_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_COMMIT_DELEGATION" class="member-name-link">SIGNAL_COMMIT_DELEGATION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_COMMIT_TRANSACTION" class="member-name-link">SIGNAL_COMMIT_TRANSACTION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_COMMIT_NOTIFICATION" class="member-name-link">SIGNAL_COMMIT_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_CREATE_BRANCH" class="member-name-link">SIGNAL_CREATE_BRANCH</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_COMMIT_TRANSACTION" class="member-name-link">SIGNAL_COMMIT_TRANSACTION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_CREDENTIALS_CHALLENGE" class="member-name-link">SIGNAL_CREDENTIALS_CHALLENGE</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-second even-row-color"><code><a href="#SIGNAL_CREATE_BRANCH" class="member-name-link">SIGNAL_CREATE_BRANCH</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final short</code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_CREDENTIALS_CHALLENGE" class="member-name-link">SIGNAL_CREDENTIALS_CHALLENGE</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Server's request to the client for new credentials.</div>
 </div>
+<div class="col-first even-row-color"><code>static final short</code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_DELETE_BRANCH" class="member-name-link">SIGNAL_DELETE_BRANCH</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_DELETE_BRANCH" class="member-name-link">SIGNAL_DELETE_BRANCH</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_DISABLE_PASSIVE_UPDATE" class="member-name-link">SIGNAL_DISABLE_PASSIVE_UPDATE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_DISABLE_PASSIVE_UPDATE" class="member-name-link">SIGNAL_DISABLE_PASSIVE_UPDATE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_ENABLE_LOCK_NOTIFICATION" class="member-name-link">SIGNAL_ENABLE_LOCK_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_ENABLE_LOCK_NOTIFICATION" class="member-name-link">SIGNAL_ENABLE_LOCK_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_GET_REMOTE_SESSIONS" class="member-name-link">SIGNAL_GET_REMOTE_SESSIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_GET_REMOTE_SESSIONS" class="member-name-link">SIGNAL_GET_REMOTE_SESSIONS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_HANDLE_REVISIONS" class="member-name-link">SIGNAL_HANDLE_REVISIONS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_HANDLE_REVISIONS" class="member-name-link">SIGNAL_HANDLE_REVISIONS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_BRANCH" class="member-name-link">SIGNAL_LOAD_BRANCH</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_BRANCH" class="member-name-link">SIGNAL_LOAD_BRANCH</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_BRANCHES" class="member-name-link">SIGNAL_LOAD_BRANCHES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_BRANCHES" class="member-name-link">SIGNAL_LOAD_BRANCHES</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_CHANGE_SETS" class="member-name-link">SIGNAL_LOAD_CHANGE_SETS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_CHANGE_SETS" class="member-name-link">SIGNAL_LOAD_CHANGE_SETS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_CHUNK" class="member-name-link">SIGNAL_LOAD_CHUNK</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_CHUNK" class="member-name-link">SIGNAL_LOAD_CHUNK</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_COMMIT_DATA" class="member-name-link">SIGNAL_LOAD_COMMIT_DATA</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_COMMIT_DATA" class="member-name-link">SIGNAL_LOAD_COMMIT_DATA</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_COMMIT_INFOS" class="member-name-link">SIGNAL_LOAD_COMMIT_INFOS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_COMMIT_INFOS" class="member-name-link">SIGNAL_LOAD_COMMIT_INFOS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_LOB" class="member-name-link">SIGNAL_LOAD_LOB</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_LOB" class="member-name-link">SIGNAL_LOAD_LOB</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_MERGE_DATA" class="member-name-link">SIGNAL_LOAD_MERGE_DATA</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_MERGE_DATA" class="member-name-link">SIGNAL_LOAD_MERGE_DATA</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_OBJECT_LIFETIME" class="member-name-link">SIGNAL_LOAD_OBJECT_LIFETIME</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_OBJECT_LIFETIME" class="member-name-link">SIGNAL_LOAD_OBJECT_LIFETIME</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_PACKAGES" class="member-name-link">SIGNAL_LOAD_PACKAGES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_PACKAGES" class="member-name-link">SIGNAL_LOAD_PACKAGES</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_PERMISSIONS" class="member-name-link">SIGNAL_LOAD_PERMISSIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_PERMISSIONS" class="member-name-link">SIGNAL_LOAD_PERMISSIONS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_REVISION_BY_VERSION" class="member-name-link">SIGNAL_LOAD_REVISION_BY_VERSION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_REVISION_BY_VERSION" class="member-name-link">SIGNAL_LOAD_REVISION_BY_VERSION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_REVISIONS" class="member-name-link">SIGNAL_LOAD_REVISIONS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_REVISIONS" class="member-name-link">SIGNAL_LOAD_REVISIONS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_SUB_BRANCHES" class="member-name-link">SIGNAL_LOAD_SUB_BRANCHES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_SUB_BRANCHES" class="member-name-link">SIGNAL_LOAD_SUB_BRANCHES</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOAD_TAGS" class="member-name-link">SIGNAL_LOAD_TAGS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOAD_TAGS" class="member-name-link">SIGNAL_LOAD_TAGS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_AREA" class="member-name-link">SIGNAL_LOCK_AREA</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_AREA" class="member-name-link">SIGNAL_LOCK_AREA</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_DELEGATION" class="member-name-link">SIGNAL_LOCK_DELEGATION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_DELEGATION" class="member-name-link">SIGNAL_LOCK_DELEGATION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_NOTIFICATION" class="member-name-link">SIGNAL_LOCK_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_NOTIFICATION" class="member-name-link">SIGNAL_LOCK_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_OBJECTS" class="member-name-link">SIGNAL_LOCK_OBJECTS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_OBJECTS" class="member-name-link">SIGNAL_LOCK_OBJECTS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION" class="member-name-link">SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION" class="member-name-link">SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_LOCK_STATE" class="member-name-link">SIGNAL_LOCK_STATE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_LOCK_STATE" class="member-name-link">SIGNAL_LOCK_STATE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_OBJECT_LOCKED" class="member-name-link">SIGNAL_OBJECT_LOCKED</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_OBJECT_LOCKED" class="member-name-link">SIGNAL_OBJECT_LOCKED</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_OPEN_SESSION" class="member-name-link">SIGNAL_OPEN_SESSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_OPEN_SESSION" class="member-name-link">SIGNAL_OPEN_SESSION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_OPEN_VIEW" class="member-name-link">SIGNAL_OPEN_VIEW</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_OPEN_VIEW" class="member-name-link">SIGNAL_OPEN_VIEW</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_OPENED_SESSION" class="member-name-link">SIGNAL_OPENED_SESSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_OPENED_SESSION" class="member-name-link">SIGNAL_OPENED_SESSION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_QUERY" class="member-name-link">SIGNAL_QUERY</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_QUERY" class="member-name-link">SIGNAL_QUERY</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_QUERY_CANCEL" class="member-name-link">SIGNAL_QUERY_CANCEL</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_QUERY_CANCEL" class="member-name-link">SIGNAL_QUERY_CANCEL</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_QUERY_LOBS" class="member-name-link">SIGNAL_QUERY_LOBS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_QUERY_LOBS" class="member-name-link">SIGNAL_QUERY_LOBS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REFRESH_SESSION" class="member-name-link">SIGNAL_REFRESH_SESSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REFRESH_SESSION" class="member-name-link">SIGNAL_REFRESH_SESSION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_REMOTE_MESSAGE" class="member-name-link">SIGNAL_REMOTE_MESSAGE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_REMOTE_MESSAGE" class="member-name-link">SIGNAL_REMOTE_MESSAGE</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REMOTE_MESSAGE_NOTIFICATION" class="member-name-link">SIGNAL_REMOTE_MESSAGE_NOTIFICATION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REMOTE_MESSAGE_NOTIFICATION" class="member-name-link">SIGNAL_REMOTE_MESSAGE_NOTIFICATION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_REMOTE_SESSION_NOTIFICATION" class="member-name-link">SIGNAL_REMOTE_SESSION_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_REMOTE_SESSION_NOTIFICATION" class="member-name-link">SIGNAL_REMOTE_SESSION_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REMOTE_TOPIC" class="member-name-link">SIGNAL_REMOTE_TOPIC</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REMOTE_TOPIC" class="member-name-link">SIGNAL_REMOTE_TOPIC</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_RENAME_BRANCH" class="member-name-link">SIGNAL_RENAME_BRANCH</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_RENAME_BRANCH" class="member-name-link">SIGNAL_RENAME_BRANCH</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REPLICATE_REPOSITORY" class="member-name-link">SIGNAL_REPLICATE_REPOSITORY</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REPLICATE_REPOSITORY" class="member-name-link">SIGNAL_REPLICATE_REPOSITORY</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_REPLICATE_REPOSITORY_RAW" class="member-name-link">SIGNAL_REPLICATE_REPOSITORY_RAW</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_REPLICATE_REPOSITORY_RAW" class="member-name-link">SIGNAL_REPLICATE_REPOSITORY_RAW</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REPOSITORY_STATE_NOTIFICATION" class="member-name-link">SIGNAL_REPOSITORY_STATE_NOTIFICATION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REPOSITORY_STATE_NOTIFICATION" class="member-name-link">SIGNAL_REPOSITORY_STATE_NOTIFICATION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_REPOSITORY_TIME" class="member-name-link">SIGNAL_REPOSITORY_TIME</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_REPOSITORY_TIME" class="member-name-link">SIGNAL_REPOSITORY_TIME</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_REPOSITORY_TYPE_NOTIFICATION" class="member-name-link">SIGNAL_REPOSITORY_TYPE_NOTIFICATION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_REPOSITORY_TYPE_NOTIFICATION" class="member-name-link">SIGNAL_REPOSITORY_TYPE_NOTIFICATION</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_RESET_TRANSACTION" class="member-name-link">SIGNAL_RESET_TRANSACTION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_RESET_TRANSACTION" class="member-name-link">SIGNAL_RESET_TRANSACTION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_SET_LOCK_NOTIFICATION_MODE" class="member-name-link">SIGNAL_SET_LOCK_NOTIFICATION_MODE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_SET_LOCK_NOTIFICATION_MODE" class="member-name-link">SIGNAL_SET_LOCK_NOTIFICATION_MODE</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_SET_PASSIVE_UPDATE_MODE" class="member-name-link">SIGNAL_SET_PASSIVE_UPDATE_MODE</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_SET_PASSIVE_UPDATE_MODE" class="member-name-link">SIGNAL_SET_PASSIVE_UPDATE_MODE</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_SWITCH_TARGET" class="member-name-link">SIGNAL_SWITCH_TARGET</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_SWITCH_TARGET" class="member-name-link">SIGNAL_SWITCH_TARGET</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_TAG_NOTIFICATION" class="member-name-link">SIGNAL_TAG_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_TAG_NOTIFICATION" class="member-name-link">SIGNAL_TAG_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_UNIT" class="member-name-link">SIGNAL_UNIT</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_UNIT" class="member-name-link">SIGNAL_UNIT</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_UNLOCK_DELEGATION" class="member-name-link">SIGNAL_UNLOCK_DELEGATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_UNLOCK_DELEGATION" class="member-name-link">SIGNAL_UNLOCK_DELEGATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_UNLOCK_OBJECTS" class="member-name-link">SIGNAL_UNLOCK_OBJECTS</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_UNLOCK_OBJECTS" class="member-name-link">SIGNAL_UNLOCK_OBJECTS</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS" class="member-name-link">SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS" class="member-name-link">SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_USER_OFFSET" class="member-name-link">SIGNAL_USER_OFFSET</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_USER_OFFSET" class="member-name-link">SIGNAL_USER_OFFSET</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_VIEW_CLOSED_NOTIFICATION" class="member-name-link">SIGNAL_VIEW_CLOSED_NOTIFICATION</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_VIEW_CLOSED_NOTIFICATION" class="member-name-link">SIGNAL_VIEW_CLOSED_NOTIFICATION</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_CANCEL" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_CANCEL" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE1" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE1" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE2" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static final short</code></div>
-<div class="col-second even-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE2" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</a></code></div>
+<div class="col-second even-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE3" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final short</code></div>
-<div class="col-second odd-row-color"><code><a href="#SIGNAL_XA_COMMIT_TRANSACTION_PHASE3" class="member-name-link">SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</a></code></div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#USER_INFO_NAMESPACE" class="member-name-link">USER_INFO_NAMESPACE</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><code><a href="#USER_INFO_NAMESPACE" class="member-name-link">USER_INFO_NAMESPACE</a></code></div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color"><code><a href="#USER_INFO_PROPERTIES" class="member-name-link">USER_INFO_PROPERTIES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color"><code><a href="#USER_INFO_PROPERTIES" class="member-name-link">USER_INFO_PROPERTIES</a></code></div>
+<div class="col-first odd-row-color"><code>static final boolean</code></div>
+<div class="col-second odd-row-color"><code><a href="#X_COMPRESSION" class="member-name-link">X_COMPRESSION</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static final boolean</code></div>
-<div class="col-second even-row-color"><code><a href="#X_COMPRESSION" class="member-name-link">X_COMPRESSION</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -462,17 +489,17 @@ loadScripts(document, 'script');</script>
 <!-- ============ FIELD DETAIL =========== -->
 <li>
 <section class="field-details" id="field-detail">
-<h2>Field Details</h2>
+<h2>Felddetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="PROTOCOL_NAME">
 <h3>PROTOCOL_NAME</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROTOCOL_NAME</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PROTOCOL_NAME</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.PROTOCOL_NAME">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.PROTOCOL_NAME">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -483,7 +510,7 @@ loadScripts(document, 'script');</script>
 <h3>PROTOCOL_VERSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">PROTOCOL_VERSION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
 </dl>
 </section>
@@ -493,7 +520,7 @@ loadScripts(document, 'script');</script>
 <h3>X_COMPRESSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">X_COMPRESSION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.6</dd>
 </dl>
 </section>
@@ -503,10 +530,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_OPEN_SESSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_OPEN_SESSION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPEN_SESSION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPEN_SESSION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -517,10 +544,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_AUTHENTICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_AUTHENTICATION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_AUTHENTICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_AUTHENTICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -531,12 +558,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_OPEN_VIEW</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_OPEN_VIEW</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPEN_VIEW">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPEN_VIEW">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -547,12 +574,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_SWITCH_TARGET</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_SWITCH_TARGET</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SWITCH_TARGET">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SWITCH_TARGET">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -563,12 +590,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_CLOSE_VIEW</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CLOSE_VIEW</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CLOSE_VIEW">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CLOSE_VIEW">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -579,10 +606,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_PACKAGES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_PACKAGES</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_PACKAGES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_PACKAGES">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -593,12 +620,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_REVISIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_REVISIONS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_REVISIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_REVISIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -609,10 +636,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_REVISION_BY_VERSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_REVISION_BY_VERSION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_REVISION_BY_VERSION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -623,10 +650,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_CHUNK</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_CHUNK</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_CHUNK">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_CHUNK">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -637,10 +664,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_COMMIT_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_COMMIT_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -651,10 +678,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_COMMIT_TRANSACTION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_COMMIT_TRANSACTION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_TRANSACTION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -665,12 +692,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_COMMIT_DELEGATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_COMMIT_DELEGATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_COMMIT_DELEGATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -681,12 +708,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_XA_COMMIT_TRANSACTION_PHASE1</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE1">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -697,12 +724,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_XA_COMMIT_TRANSACTION_PHASE2</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE2">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -713,12 +740,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_XA_COMMIT_TRANSACTION_PHASE3</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_PHASE3">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -729,12 +756,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_XA_COMMIT_TRANSACTION_CANCEL</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_XA_COMMIT_TRANSACTION_CANCEL">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -745,10 +772,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_QUERY</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_QUERY</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -759,10 +786,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_QUERY_CANCEL</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_QUERY_CANCEL</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY_CANCEL">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY_CANCEL">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -773,12 +800,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REFRESH_SESSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REFRESH_SESSION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REFRESH_SESSION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REFRESH_SESSION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -789,12 +816,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_DISABLE_PASSIVE_UPDATE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_DISABLE_PASSIVE_UPDATE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_DISABLE_PASSIVE_UPDATE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_DISABLE_PASSIVE_UPDATE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -805,12 +832,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_SET_PASSIVE_UPDATE_MODE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_SET_PASSIVE_UPDATE_MODE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SET_PASSIVE_UPDATE_MODE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SET_PASSIVE_UPDATE_MODE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -821,10 +848,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_CHANGE_SUBSCRIPTION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CHANGE_SUBSCRIPTION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_SUBSCRIPTION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -835,10 +862,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REPOSITORY_TIME</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REPOSITORY_TIME</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_TIME">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_TIME">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -849,10 +876,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_OBJECTS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_OBJECTS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_OBJECTS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_OBJECTS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -863,10 +890,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_UNLOCK_OBJECTS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_UNLOCK_OBJECTS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_OBJECTS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -877,10 +904,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_OBJECT_LOCKED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_OBJECT_LOCKED</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OBJECT_LOCKED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OBJECT_LOCKED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -891,12 +918,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_AREA</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_AREA</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_AREA">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_AREA">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -907,10 +934,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_GET_REMOTE_SESSIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_GET_REMOTE_SESSIONS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_GET_REMOTE_SESSIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -921,12 +948,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REMOTE_MESSAGE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REMOTE_MESSAGE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -937,12 +964,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REMOTE_MESSAGE_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REMOTE_MESSAGE_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_MESSAGE_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -953,10 +980,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNSUBSCRIBE_REMOTE_SESSIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -967,10 +994,10 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REMOTE_SESSION_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REMOTE_SESSION_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_SESSION_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -981,12 +1008,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_CREATE_BRANCH</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CREATE_BRANCH</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CREATE_BRANCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CREATE_BRANCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -997,12 +1024,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_BRANCH</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_BRANCH</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_BRANCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_BRANCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1013,12 +1040,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_SUB_BRANCHES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_SUB_BRANCHES</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_SUB_BRANCHES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_SUB_BRANCHES">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1029,12 +1056,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_BRANCHES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_BRANCHES</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_BRANCHES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_BRANCHES">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1045,12 +1072,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REPOSITORY_TYPE_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REPOSITORY_TYPE_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_TYPE_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_TYPE_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1061,12 +1088,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REPOSITORY_STATE_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REPOSITORY_STATE_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPOSITORY_STATE_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1077,12 +1104,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_BRANCH_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_BRANCH_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_BRANCH_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1093,12 +1120,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_COMMIT_INFOS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_COMMIT_INFOS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_COMMIT_INFOS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1109,12 +1136,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_COMMIT_DATA</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_COMMIT_DATA</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_COMMIT_DATA">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_COMMIT_DATA">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1125,12 +1152,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REPLICATE_REPOSITORY</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REPLICATE_REPOSITORY</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1141,12 +1168,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REPLICATE_REPOSITORY_RAW</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REPLICATE_REPOSITORY_RAW</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REPLICATE_REPOSITORY_RAW">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1157,12 +1184,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_CHANGE_SETS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_CHANGE_SETS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_CHANGE_SETS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1173,12 +1200,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_MERGE_DATA</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_MERGE_DATA</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_MERGE_DATA">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1189,12 +1216,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_QUERY_LOBS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_QUERY_LOBS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY_LOBS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_QUERY_LOBS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1205,12 +1232,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_LOB</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_LOB</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_LOB">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_LOB">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1221,12 +1248,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_HANDLE_REVISIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_HANDLE_REVISIONS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_HANDLE_REVISIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_HANDLE_REVISIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1237,12 +1264,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_DELEGATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_DELEGATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_DELEGATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_DELEGATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1253,12 +1280,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_UNLOCK_DELEGATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_UNLOCK_DELEGATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNLOCK_DELEGATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1269,12 +1296,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1285,12 +1312,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_STATE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_STATE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_STATE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_STATE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1301,12 +1328,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_ENABLE_LOCK_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_ENABLE_LOCK_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_ENABLE_LOCK_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1317,12 +1344,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_SET_LOCK_NOTIFICATION_MODE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_SET_LOCK_NOTIFICATION_MODE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SET_LOCK_NOTIFICATION_MODE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_SET_LOCK_NOTIFICATION_MODE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1333,12 +1360,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_PERMISSIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_PERMISSIONS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_PERMISSIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_PERMISSIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1350,13 +1377,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CHANGE_CREDENTIALS</span></div>
 <div class="block">Client's request to the server to initiate a change-credentials operation.</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#SIGNAL_CREDENTIALS_CHALLENGE"><code>SIGNAL_CREDENTIALS_CHALLENGE</code></a></li>
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS">Constant Field Values</a></li>
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_CREDENTIALS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1368,13 +1395,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CREDENTIALS_CHALLENGE</span></div>
 <div class="block">Server's request to the client for new credentials.</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
+<ul class="tag-list">
 <li><a href="#SIGNAL_CHANGE_CREDENTIALS"><code>SIGNAL_CHANGE_CREDENTIALS</code></a></li>
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE">Constant Field Values</a></li>
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CREDENTIALS_CHALLENGE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1385,12 +1412,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_RENAME_BRANCH</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_RENAME_BRANCH</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_RENAME_BRANCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_RENAME_BRANCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1401,12 +1428,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_OBJECT_LIFETIME</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_OBJECT_LIFETIME</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.4</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_OBJECT_LIFETIME">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_OBJECT_LIFETIME">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1417,12 +1444,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_OPENED_SESSION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_OPENED_SESSION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.5</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPENED_SESSION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_OPENED_SESSION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1433,12 +1460,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_RESET_TRANSACTION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_RESET_TRANSACTION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.5</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_RESET_TRANSACTION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_RESET_TRANSACTION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1449,12 +1476,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_UNIT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_UNIT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.5</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNIT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_UNIT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1465,12 +1492,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOAD_TAGS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOAD_TAGS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.11</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_TAGS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOAD_TAGS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1481,12 +1508,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_CHANGE_TAG</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_CHANGE_TAG</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.11</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_TAG">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_CHANGE_TAG">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1497,12 +1524,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_TAG_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_TAG_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.11</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_TAG_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_TAG_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1513,12 +1540,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_DELETE_BRANCH</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_DELETE_BRANCH</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.15</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_DELETE_BRANCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_DELETE_BRANCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1529,12 +1556,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_VIEW_CLOSED_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_VIEW_CLOSED_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.15</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_VIEW_CLOSED_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_VIEW_CLOSED_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1545,12 +1572,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_AUTHORIZE_OPERATIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_AUTHORIZE_OPERATIONS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.15</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_AUTHORIZE_OPERATIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_AUTHORIZE_OPERATIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1561,12 +1588,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_REMOTE_TOPIC</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_REMOTE_TOPIC</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.17</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_TOPIC">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_REMOTE_TOPIC">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1577,12 +1604,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.20</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_LOCK_OWNER_REMAPPED_NOTIFICATION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1593,12 +1620,12 @@ loadScripts(document, 'script');</script>
 <h3>SIGNAL_USER_OFFSET</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">SIGNAL_USER_OFFSET</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.20</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_USER_OFFSET">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.SIGNAL_USER_OFFSET">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1609,12 +1636,12 @@ loadScripts(document, 'script');</script>
 <h3>REFRESH_FINISHED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REFRESH_FINISHED</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_FINISHED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_FINISHED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1625,12 +1652,12 @@ loadScripts(document, 'script');</script>
 <h3>REFRESH_PACKAGE_UNIT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REFRESH_PACKAGE_UNIT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_PACKAGE_UNIT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_PACKAGE_UNIT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1641,12 +1668,12 @@ loadScripts(document, 'script');</script>
 <h3>REFRESH_CHANGED_OBJECT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REFRESH_CHANGED_OBJECT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_CHANGED_OBJECT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_CHANGED_OBJECT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1657,12 +1684,12 @@ loadScripts(document, 'script');</script>
 <h3>REFRESH_DETACHED_OBJECT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REFRESH_DETACHED_OBJECT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_DETACHED_OBJECT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REFRESH_DETACHED_OBJECT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1673,12 +1700,12 @@ loadScripts(document, 'script');</script>
 <h3>QUERY_RESULT_EXCEPTION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">QUERY_RESULT_EXCEPTION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_EXCEPTION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_EXCEPTION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1689,12 +1716,12 @@ loadScripts(document, 'script');</script>
 <h3>QUERY_RESULT_PRIMITIVE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">QUERY_RESULT_PRIMITIVE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_PRIMITIVE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_PRIMITIVE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1705,12 +1732,12 @@ loadScripts(document, 'script');</script>
 <h3>QUERY_RESULT_REVISION</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">QUERY_RESULT_REVISION</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_REVISION">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_RESULT_REVISION">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1719,12 +1746,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_RESOURCES">
 <h3>QUERY_LANGUAGE_RESOURCES</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1733,12 +1760,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_RESOURCES_FOLDER_ID">
 <h3>QUERY_LANGUAGE_RESOURCES_FOLDER_ID</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES_FOLDER_ID</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_FOLDER_ID">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1747,12 +1774,12 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">
 <h3>QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_RESOURCES_EXACT_MATCH</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_RESOURCES_EXACT_MATCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1761,14 +1788,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_INSTANCES">
 <h3>QUERY_LANGUAGE_INSTANCES</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1777,14 +1804,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_INSTANCES_TYPE">
 <h3>QUERY_LANGUAGE_INSTANCES_TYPE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES_TYPE</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES_TYPE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_TYPE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1793,14 +1820,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_INSTANCES_EXACT">
 <h3>QUERY_LANGUAGE_INSTANCES_EXACT</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES_EXACT</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_INSTANCES_EXACT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_EXACT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_INSTANCES_EXACT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1809,14 +1836,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_XREFS">
 <h3>QUERY_LANGUAGE_XREFS</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_XREFS</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_XREFS</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_XREFS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_XREFS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1825,14 +1852,62 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">
 <h3>QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_XREFS_SOURCE_REFERENCES">Konstantenfeldwerte</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="QUERY_LANGUAGE_FINGER_PRINT">
+<h3>QUERY_LANGUAGE_FINGER_PRINT</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_FINGER_PRINT</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.26</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT">Konstantenfeldwerte</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="QUERY_LANGUAGE_FINGER_PRINT_TYPE">
+<h3>QUERY_LANGUAGE_FINGER_PRINT_TYPE</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_FINGER_PRINT_TYPE</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.26</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT_TYPE">Konstantenfeldwerte</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="QUERY_LANGUAGE_FINGER_PRINT_PARAM">
+<h3>QUERY_LANGUAGE_FINGER_PRINT_PARAM</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">QUERY_LANGUAGE_FINGER_PRINT_PARAM</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.26</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.QUERY_LANGUAGE_FINGER_PRINT_PARAM">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1843,10 +1918,10 @@ loadScripts(document, 'script');</script>
 <h3>RELEASE_ALL_LOCKS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">RELEASE_ALL_LOCKS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.RELEASE_ALL_LOCKS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.RELEASE_ALL_LOCKS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1857,12 +1932,12 @@ loadScripts(document, 'script');</script>
 <h3>DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.15</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.DEFAULT_OPTIMISTIC_LOCKING_TIMEOUT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1873,10 +1948,10 @@ loadScripts(document, 'script');</script>
 <h3>NO_MORE_REMOTE_SESSIONS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">NO_MORE_REMOTE_SESSIONS</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.NO_MORE_REMOTE_SESSIONS">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.NO_MORE_REMOTE_SESSIONS">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1887,10 +1962,10 @@ loadScripts(document, 'script');</script>
 <h3>REMOTE_SESSION_OPENED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REMOTE_SESSION_OPENED</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_OPENED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_OPENED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1901,10 +1976,10 @@ loadScripts(document, 'script');</script>
 <h3>REMOTE_SESSION_CLOSED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REMOTE_SESSION_CLOSED</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_CLOSED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_CLOSED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1915,10 +1990,10 @@ loadScripts(document, 'script');</script>
 <h3>REMOTE_SESSION_SUBSCRIBED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REMOTE_SESSION_SUBSCRIBED</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_SUBSCRIBED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1929,10 +2004,10 @@ loadScripts(document, 'script');</script>
 <h3>REMOTE_SESSION_UNSUBSCRIBED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REMOTE_SESSION_UNSUBSCRIBED</span></div>
 <dl class="notes">
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_UNSUBSCRIBED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1943,12 +2018,12 @@ loadScripts(document, 'script');</script>
 <h3>REMOTE_SESSION_CUSTOM_DATA</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REMOTE_SESSION_CUSTOM_DATA</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_CUSTOM_DATA">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REMOTE_SESSION_CUSTOM_DATA">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1959,12 +2034,12 @@ loadScripts(document, 'script');</script>
 <h3>REPLICATE_FINISHED</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REPLICATE_FINISHED</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_FINISHED">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_FINISHED">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1975,12 +2050,12 @@ loadScripts(document, 'script');</script>
 <h3>REPLICATE_BRANCH</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REPLICATE_BRANCH</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_BRANCH">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_BRANCH">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -1991,12 +2066,12 @@ loadScripts(document, 'script');</script>
 <h3>REPLICATE_COMMIT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REPLICATE_COMMIT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_COMMIT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_COMMIT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2007,12 +2082,12 @@ loadScripts(document, 'script');</script>
 <h3>REPLICATE_LOCKAREA</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REPLICATE_LOCKAREA</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.1</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_LOCKAREA">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REPLICATE_LOCKAREA">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2023,12 +2098,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_UNKNOWN</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_UNKNOWN</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_UNKNOWN">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2039,12 +2114,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_OPTIMISTIC_LOCKING</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_OPTIMISTIC_LOCKING</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_OPTIMISTIC_LOCKING">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2055,12 +2130,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_COMMIT_CONFLICT</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_COMMIT_CONFLICT</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_COMMIT_CONFLICT">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2071,12 +2146,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_CONTAINMENT_CYCLE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_CONTAINMENT_CYCLE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_CONTAINMENT_CYCLE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2087,12 +2162,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_REFERENTIAL_INTEGRITY</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_REFERENTIAL_INTEGRITY</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.2</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_REFERENTIAL_INTEGRITY">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2103,12 +2178,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_VALIDATION_ERROR</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_VALIDATION_ERROR</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_VALIDATION_ERROR">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2119,12 +2194,12 @@ loadScripts(document, 'script');</script>
 <h3>ROLLBACK_REASON_UNIT_INTEGRITY</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">ROLLBACK_REASON_UNIT_INTEGRITY</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.5</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_UNIT_INTEGRITY">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.ROLLBACK_REASON_UNIT_INTEGRITY">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2135,12 +2210,12 @@ loadScripts(document, 'script');</script>
 <h3>REVISION_DOES_NOT_EXIST</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">byte</span>&nbsp;<span class="element-name">REVISION_DOES_NOT_EXIST</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.3</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REVISION_DOES_NOT_EXIST">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.REVISION_DOES_NOT_EXIST">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2149,14 +2224,14 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="USER_INFO_NAMESPACE">
 <h3>USER_INFO_NAMESPACE</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">USER_INFO_NAMESPACE</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">USER_INFO_NAMESPACE</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.24</dd>
-<dt>See Also:</dt>
+<dt>Siehe auch:</dt>
 <dd>
-<ul class="see-list">
-<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.USER_INFO_NAMESPACE">Constant Field Values</a></li>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.USER_INFO_NAMESPACE">Konstantenfeldwerte</a></li>
 </ul>
 </dd>
 </dl>
@@ -2165,9 +2240,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="USER_INFO_PROPERTIES">
 <h3>USER_INFO_PROPERTIES</h3>
-<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">USER_INFO_PROPERTIES</span></div>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</span>&nbsp;<span class="element-name">USER_INFO_PROPERTIES</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.24</dd>
 </dl>
 </section>

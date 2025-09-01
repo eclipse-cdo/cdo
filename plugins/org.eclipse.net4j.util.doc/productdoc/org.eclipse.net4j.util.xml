@@ -4,6 +4,32 @@
 		<factory type="file" class="org.eclipse.net4j.util.security.FileAuthenticatorFactory" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="Authorizable Operations" description="" deprecated="false">
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.AbandonReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.CreateComment" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.CreateDeliveryReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.CreateDropReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.CreateReleaseReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.CreateTopic" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.DeleteComment" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.DeleteReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.DeleteTopic" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.MergeFromSourceReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.ModifyTopic" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.RebaseToTargetReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.ResolveTopic" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.RestoreReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.SubmitReview" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.reviews.ui.UnresolveTopic" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.AttachFingerprint" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateChange" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateDelivery" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateDrop" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateModule" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateRelease" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.CreateStream" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.DeleteChange" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.DeleteModule" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+		<factory type="org.eclipse.emf.cdo.lm.ui.RenameChange" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.lm.ui"/>
 		<factory type="org.eclipse.emf.cdo.ui.DeleteBranches" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.ui"/>
 		<factory type="org.eclipse.emf.cdo.ui.RenameBranches" class="org.eclipse.net4j.util.security.operations.AuthorizableOperationFactory" contributor="org.eclipse.emf.cdo.ui"/>
 	</productGroup>
@@ -35,6 +61,7 @@
 		<factory type="gzip" class="org.eclipse.net4j.util.io.GZIPStreamWrapper$Factory" contributor="org.eclipse.net4j"/>
 	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.stringConverters" name="String Converters" description="" deprecated="false">
+		<factory type="base64" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.BASE64" contributor="org.eclipse.net4j.util"/>
 		<factory type="cap" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP" contributor="org.eclipse.net4j.util"/>
 		<factory type="cap_all" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CAP_ALL" contributor="org.eclipse.net4j.util"/>
 		<factory type="cdo.lm.server.lifecycle_manager" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
@@ -44,6 +71,7 @@
 		<factory type="cdo.lm.server.system_name" class="org.eclipse.emf.cdo.lm.internal.server.LMStringConverter$Factory" contributor="org.eclipse.emf.cdo.lm.server"/>
 		<factory type="chars" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.CHARS" contributor="org.eclipse.net4j.util"/>
 		<factory type="escape" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.ESCAPE" contributor="org.eclipse.net4j.util"/>
+		<factory type="hex" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.HEX" contributor="org.eclipse.net4j.util"/>
 		<factory type="identity" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.IDENTITY" contributor="org.eclipse.net4j.util"/>
 		<factory type="lower" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.LOWER" contributor="org.eclipse.net4j.util"/>
 		<factory type="net4j_config_path" class="org.eclipse.net4j.internal.util.factory.ConstantFactory" info="constant=org.eclipse.net4j.util.StringConverter.NET4J_CONFIG_PATH" contributor="org.eclipse.net4j.util"/>

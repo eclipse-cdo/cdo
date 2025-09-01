@@ -10,49 +10,54 @@
 <meta name="generator" content="javadoc/PackageWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../index.html">Überblick</a></li>
 <li class="nav-bar-cell1-rev">Package</li>
-<li>Class</li>
-<li><a href="package-use.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li>Klasse</li>
+<li><a href="package-use.html">Verwendung</a></li>
+<li><a href="../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html#package">Help</a></li>
+<li><a href="../../../../../help-doc.html#package">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Package:</p>
+<ul>
+<li><a href="#package-description">Beschreibung</a></li>
+<li><a href="#related-package-summary">Zugehörige Packages</a></li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Package:&nbsp;</li>
-<li><a href="#package-description">Description</a>&nbsp;|&nbsp;</li>
-<li><a href="#related-package-summary">Related Packages</a>&nbsp;|&nbsp;</li>
-<li><a href="#class-summary">Classes and Interfaces</a></li>
+<li><a href="#package-description">Beschreibung</a>&nbsp;|&nbsp;</li>
+<li><a href="#related-package-summary">Zugehörige Packages</a>&nbsp;|&nbsp;</li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -72,10 +77,10 @@ loadScripts(document, 'script');</script>
 <ul class="summary-list">
 <li>
 <div id="related-package-summary">
-<div class="caption"><span>Related Packages</span></div>
+<div class="caption"><span>Zugehörige Packages</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><a href="../package-summary.html">org.eclipse.net4j.util</a></div>
 <div class="col-last even-row-color">
 <div class="block">Utility classes.</div>
@@ -85,154 +90,154 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Exceptions</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">Alle Klassen und Schnittstellen</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Schnittstellen</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Klassen</button><button id="class-summary-tab5" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab5', 2)" class="table-tab">Ausnahmeklassen</button></div>
 <div id="class-summary.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
-<div class="table-header col-first">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractCloseableIterator</a>&lt;E&gt;</div>
+<div class="table-header col-first">Klasse</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractCloseableIterator.html" title="Klasse in org.eclipse.net4j.util.collection">AbstractCloseableIterator</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractFilteredIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractFilteredIterator.html" title="Klasse in org.eclipse.net4j.util.collection">AbstractFilteredIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for custom iterators that <a href="AbstractFilteredIterator.html#isValid(T)"><code>filter</code></a> the elements of a delegate iterator.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection">AbstractFilteredIterator.Predicated</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractFilteredIterator.Predicated.html" title="Klasse in org.eclipse.net4j.util.collection">AbstractFilteredIterator.Predicated</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractIterator.html" title="Klasse in org.eclipse.net4j.util.collection">AbstractIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for custom iterators that only requires to implement a single <a href="AbstractIterator.html#computeNextElement()"><code>AbstractIterator.computeNextElement()</code></a> method.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractListIterator.html" title="class in org.eclipse.net4j.util.collection">AbstractListIterator</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractListIterator.html" title="Klasse in org.eclipse.net4j.util.collection">AbstractListIterator</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for custom list iterators that only requires to implement the <a href="AbstractIterator.html#computeNextElement()"><code>AbstractIterator.computeNextElement()</code></a> and <a href="AbstractListIterator.html#computePreviousElement()"><code>AbstractListIterator.computePreviousElement()</code></a> methods.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ArrayIterator.html" title="class in org.eclipse.net4j.util.collection">ArrayIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ArrayIterator.html" title="Klasse in org.eclipse.net4j.util.collection">ArrayIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An object that iterates over the elements of an array</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BidiMap.html" title="class in org.eclipse.net4j.util.collection">BidiMap</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BidiMap.html" title="Klasse in org.eclipse.net4j.util.collection">BidiMap</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BidiMapper.html" title="class in org.eclipse.net4j.util.collection">BidiMapper</a>&lt;T1,<wbr>T2&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">Deprecated.
-<div class="deprecation-comment">As of 3.6 use <a href="BidiMap.html" title="class in org.eclipse.net4j.util.collection"><code>BidiMap</code></a>.</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="BidiMapper.html" title="Klasse in org.eclipse.net4j.util.collection">BidiMapper</a>&lt;T1,<wbr>T2&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">Veraltet.
+<div class="deprecation-comment">As of 3.6 use <a href="BidiMap.html" title="Klasse in org.eclipse.net4j.util.collection"><code>BidiMap</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BidirectionalIterator.html" title="class in org.eclipse.net4j.util.collection">BidirectionalIterator</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="BidirectionalIterator.html" title="Klasse in org.eclipse.net4j.util.collection">BidirectionalIterator</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ByteArrayWrapper.html" title="class in org.eclipse.net4j.util.collection">ByteArrayWrapper</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ByteArrayWrapper.html" title="Klasse in org.eclipse.net4j.util.collection">ByteArrayWrapper</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CaseInsensitiveStringSet.html" title="class in org.eclipse.net4j.util.collection">CaseInsensitiveStringSet</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CaseInsensitiveStringSet.html" title="Klasse in org.eclipse.net4j.util.collection">CaseInsensitiveStringSet</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Closeable.html" title="interface in org.eclipse.net4j.util.collection">Closeable</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Closeable.html" title="Schnittstelle in org.eclipse.net4j.util.collection">Closeable</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CloseableIterator.html" title="interface in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CloseableIterator.html" title="Schnittstelle in org.eclipse.net4j.util.collection">CloseableIterator</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A closeable iterator.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CollectionUtil.html" title="class in org.eclipse.net4j.util.collection">CollectionUtil</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CollectionUtil.html" title="Klasse in org.eclipse.net4j.util.collection">CollectionUtil</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Various static helper methods.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab5"><a href="CollectionUtil.KeepMappedValue.html" title="class in org.eclipse.net4j.util.collection">CollectionUtil.KeepMappedValue</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab5"><a href="CollectionUtil.KeepMappedValue.html" title="Klasse in org.eclipse.net4j.util.collection">CollectionUtil.KeepMappedValue</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab5">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ComposedIterator.html" title="class in org.eclipse.net4j.util.collection">ComposedIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ComposedIterator.html" title="Klasse in org.eclipse.net4j.util.collection">ComposedIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An iterator that is composed of multiple delegate iterators.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.html" title="Klasse in org.eclipse.net4j.util.collection">ConcurrentArray</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.DuplicateCounter.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.DuplicateCounter</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.DuplicateCounter.html" title="Klasse in org.eclipse.net4j.util.collection">ConcurrentArray.DuplicateCounter</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.Unique.html" title="class in org.eclipse.net4j.util.collection">ConcurrentArray.Unique</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="ConcurrentArray.Unique.html" title="Klasse in org.eclipse.net4j.util.collection">ConcurrentArray.Unique</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DelegatingCloseableIterator.html" title="class in org.eclipse.net4j.util.collection">DelegatingCloseableIterator</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DelegatingCloseableIterator.html" title="Klasse in org.eclipse.net4j.util.collection">DelegatingCloseableIterator</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DynamicArray.html" title="class in org.eclipse.net4j.util.collection">DynamicArray</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DynamicArray.html" title="Klasse in org.eclipse.net4j.util.collection">DynamicArray</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.html" title="class in org.eclipse.net4j.util.collection">Entity</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.html" title="Klasse in org.eclipse.net4j.util.collection">Entity</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.Builder.html" title="class in org.eclipse.net4j.util.collection">Entity.Builder</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.Builder.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.Builder</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.ComposedStore.html" title="class in org.eclipse.net4j.util.collection">Entity.ComposedStore</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.ComposedStore.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.ComposedStore</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.ConcurrentStore.html" title="class in org.eclipse.net4j.util.collection">Entity.ConcurrentStore</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.ConcurrentStore.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.ConcurrentStore</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespace.html" title="class in org.eclipse.net4j.util.collection">Entity.SingleNamespace</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespace.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.SingleNamespace</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespaceComputer.html" title="class in org.eclipse.net4j.util.collection">Entity.SingleNamespaceComputer</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespaceComputer.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.SingleNamespaceComputer</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespaceStore.html" title="class in org.eclipse.net4j.util.collection">Entity.SingleNamespaceStore</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Entity.SingleNamespaceStore.html" title="Klasse in org.eclipse.net4j.util.collection">Entity.SingleNamespaceStore</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Entity.Store.html" title="interface in org.eclipse.net4j.util.collection">Entity.Store</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Entity.Store.html" title="Schnittstelle in org.eclipse.net4j.util.collection">Entity.Store</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Entity.Store.Provider.html" title="interface in org.eclipse.net4j.util.collection">Entity.Store.Provider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Entity.Store.Provider.html" title="Schnittstelle in org.eclipse.net4j.util.collection">Entity.Store.Provider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FastList.html" title="class in org.eclipse.net4j.util.collection">FastList</a>&lt;E&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
-<div class="deprecation-comment">As of 3.2 use <a href="ConcurrentArray.html" title="class in org.eclipse.net4j.util.collection"><code>ConcurrentArray</code></a>.</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="FastList.html" title="Klasse in org.eclipse.net4j.util.collection">FastList</a>&lt;E&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">Veraltet.
+<div class="deprecation-comment">As of 3.2 use <a href="ConcurrentArray.html" title="Klasse in org.eclipse.net4j.util.collection"><code>ConcurrentArray</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GrowingRandomAccessList.html" title="class in org.eclipse.net4j.util.collection">GrowingRandomAccessList</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="GrowingRandomAccessList.html" title="Klasse in org.eclipse.net4j.util.collection">GrowingRandomAccessList</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HashBag.html" title="class in org.eclipse.net4j.util.collection">HashBag</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HashBag.html" title="Klasse in org.eclipse.net4j.util.collection">HashBag</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="History.html" title="class in org.eclipse.net4j.util.collection">History</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="History.html" title="Klasse in org.eclipse.net4j.util.collection">History</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HistoryElement.html" title="class in org.eclipse.net4j.util.collection">HistoryElement</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="HistoryElement.html" title="Klasse in org.eclipse.net4j.util.collection">HistoryElement</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HistoryUtil.html" title="class in org.eclipse.net4j.util.collection">HistoryUtil</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="HistoryUtil.html" title="Klasse in org.eclipse.net4j.util.collection">HistoryUtil</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IHistory.html" title="interface in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IHistory.html" title="Schnittstelle in org.eclipse.net4j.util.collection">IHistory</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IHistoryChangeEvent.html" title="interface in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="IHistoryChangeEvent.html" title="Schnittstelle in org.eclipse.net4j.util.collection">IHistoryChangeEvent</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IHistoryElement.html" title="interface in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="IHistoryElement.html" title="Schnittstelle in org.eclipse.net4j.util.collection">IHistoryElement</a>&lt;T&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IndexedList.html" title="class in org.eclipse.net4j.util.collection">IndexedList</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="IndexedList.html" title="Klasse in org.eclipse.net4j.util.collection">IndexedList</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IndexedList.ArrayBacked.html" title="class in org.eclipse.net4j.util.collection">IndexedList.ArrayBacked</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="IndexedList.ArrayBacked.html" title="Klasse in org.eclipse.net4j.util.collection">IndexedList.ArrayBacked</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LimitedIterator.html" title="class in org.eclipse.net4j.util.collection">LimitedIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="LimitedIterator.html" title="Klasse in org.eclipse.net4j.util.collection">LimitedIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapEntry.html" title="class in org.eclipse.net4j.util.collection">MapEntry</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MapEntry.html" title="Klasse in org.eclipse.net4j.util.collection">MapEntry</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MoveableArrayList.html" title="class in org.eclipse.net4j.util.collection">MoveableArrayList</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MoveableArrayList.html" title="Klasse in org.eclipse.net4j.util.collection">MoveableArrayList</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A list with O(1) effort for random access.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="MoveableList.html" title="interface in org.eclipse.net4j.util.collection">MoveableList</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="MoveableList.html" title="Schnittstelle in org.eclipse.net4j.util.collection">MoveableList</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MultiMap.html" title="class in org.eclipse.net4j.util.collection">MultiMap</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="MultiMap.html" title="Klasse in org.eclipse.net4j.util.collection">MultiMap</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MultiMap.ListBased.html" title="class in org.eclipse.net4j.util.collection">MultiMap.ListBased</a>&lt;K,<wbr>V&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="MultiMap.ListBased.html" title="Klasse in org.eclipse.net4j.util.collection">MultiMap.ListBased</a>&lt;K,<wbr>V&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Pair.html" title="class in org.eclipse.net4j.util.collection">Pair</a>&lt;T1,<wbr>T2&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Pair.html" title="Klasse in org.eclipse.net4j.util.collection">Pair</a>&lt;T1,<wbr>T2&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="PositionProvider.html" title="interface in org.eclipse.net4j.util.collection">PositionProvider</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="PositionProvider.html" title="Schnittstelle in org.eclipse.net4j.util.collection">PositionProvider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Predicate.html" title="interface in org.eclipse.net4j.util.collection">Predicate</a>&lt;T&gt;</div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">Deprecated.
-<div class="deprecation-comment">As of 3.5 use <a href="../Predicate.html" title="interface in org.eclipse.net4j.util"><code>Predicate</code></a>.</div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Predicate.html" title="Schnittstelle in org.eclipse.net4j.util.collection">Predicate</a>&lt;T&gt;</div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">Veraltet.
+<div class="deprecation-comment">As of 3.5 use <a href="../Predicate.html" title="Schnittstelle in org.eclipse.net4j.util"><code>Predicate</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PredicateIterator.html" title="class in org.eclipse.net4j.util.collection">PredicateIterator</a>&lt;T&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
-<div class="deprecation-comment">As of 3.10 use <a href="AbstractFilteredIterator.Predicated.html" title="class in org.eclipse.net4j.util.collection"><code>AbstractFilteredIterator.Predicated</code></a>.</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PredicateIterator.html" title="Klasse in org.eclipse.net4j.util.collection">PredicateIterator</a>&lt;T&gt;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">Veraltet.
+<div class="deprecation-comment">As of 3.10 use <a href="AbstractFilteredIterator.Predicated.html" title="Klasse in org.eclipse.net4j.util.collection"><code>AbstractFilteredIterator.Predicated</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PreferenceHistory.html" title="class in org.eclipse.net4j.util.collection">PreferenceHistory</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PreferenceHistory.html" title="Klasse in org.eclipse.net4j.util.collection">PreferenceHistory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RoundRobinBlockingQueue.html" title="class in org.eclipse.net4j.util.collection">RoundRobinBlockingQueue</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="RoundRobinBlockingQueue.html" title="Klasse in org.eclipse.net4j.util.collection">RoundRobinBlockingQueue</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RoundRobinIterator.html" title="class in org.eclipse.net4j.util.collection">RoundRobinIterator</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="RoundRobinIterator.html" title="Klasse in org.eclipse.net4j.util.collection">RoundRobinIterator</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Tree.html" title="Klasse in org.eclipse.net4j.util.collection">Tree</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Tree.Builder.html" title="class in org.eclipse.net4j.util.collection">Tree.Builder</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Tree.Builder.html" title="Klasse in org.eclipse.net4j.util.collection">Tree.Builder</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Tree.Dumper.html" title="class in org.eclipse.net4j.util.collection">Tree.Dumper</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Tree.Dumper.html" title="Klasse in org.eclipse.net4j.util.collection">Tree.Dumper</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Tree.XMLConverter.html" title="class in org.eclipse.net4j.util.collection">Tree.XMLConverter</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Tree.XMLConverter.html" title="Klasse in org.eclipse.net4j.util.collection">Tree.XMLConverter</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Triplet.html" title="class in org.eclipse.net4j.util.collection">Triplet</a>&lt;T1,<wbr>T2,<wbr>T3&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Triplet.html" title="Klasse in org.eclipse.net4j.util.collection">Triplet</a>&lt;T1,<wbr>T2,<wbr>T3&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UnionSet.html" title="class in org.eclipse.net4j.util.collection">UnionSet</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UnionSet.html" title="Klasse in org.eclipse.net4j.util.collection">UnionSet</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 </div>
 </div>

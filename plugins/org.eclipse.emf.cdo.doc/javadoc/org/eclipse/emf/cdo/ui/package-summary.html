@@ -10,49 +10,54 @@
 <meta name="generator" content="javadoc/PackageWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../index.html">Überblick</a></li>
 <li class="nav-bar-cell1-rev">Package</li>
-<li>Class</li>
-<li><a href="package-use.html">Use</a></li>
-<li><a href="../../../../../deprecated-list.html">Deprecated</a></li>
+<li>Klasse</li>
+<li><a href="package-use.html">Verwendung</a></li>
+<li><a href="../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../help-doc.html#package">Help</a></li>
+<li><a href="../../../../../help-doc.html#package">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Package:</p>
+<ul>
+<li><a href="#package-description">Beschreibung</a></li>
+<li><a href="#related-package-summary">Zugehörige Packages</a></li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Package:&nbsp;</li>
-<li><a href="#package-description">Description</a>&nbsp;|&nbsp;</li>
-<li><a href="#related-package-summary">Related Packages</a>&nbsp;|&nbsp;</li>
-<li><a href="#class-summary">Classes and Interfaces</a></li>
+<li><a href="#package-description">Beschreibung</a>&nbsp;|&nbsp;</li>
+<li><a href="#related-package-summary">Zugehörige Packages</a>&nbsp;|&nbsp;</li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -72,13 +77,13 @@ loadScripts(document, 'script');</script>
 <ul class="summary-list">
 <li>
 <div id="related-package-summary">
-<div class="caption"><span>Related Packages</span></div>
+<div class="caption"><span>Zugehörige Packages</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><a href="../package-summary.html">org.eclipse.emf.cdo</a></div>
 <div class="col-last even-row-color">
-<div class="block">Client concepts like <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../CDOState.html" title="enum class in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
+<div class="block">Client concepts like <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>CDOObject</code></a> and <a href="../CDOState.html" title="Enum-Klasse in org.eclipse.emf.cdo"><code>CDOState</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><a href="compare/package-summary.html">org.eclipse.emf.cdo.ui.compare</a></div>
 <div class="col-last odd-row-color">
@@ -93,212 +98,212 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">Alle Klassen und Schnittstellen</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Schnittstellen</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Klassen</button></div>
 <div id="class-summary.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
-<div class="table-header col-first">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingDialog.html" title="class in org.eclipse.emf.cdo.ui">AbstractAuthorizingDialog</a>&lt;E&gt;</div>
+<div class="table-header col-first">Klasse</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingDialog.html" title="Klasse in org.eclipse.emf.cdo.ui">AbstractAuthorizingDialog</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for <code>dialogs</code> that asynchronously update their UI with
  <a href="Authorizer.html#getAuthorization(E)"><code>authorization</code></a> information.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingHandler.html" title="class in org.eclipse.emf.cdo.ui">AbstractAuthorizingHandler</a>&lt;T&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="AbstractAuthorizingHandler.html" title="Klasse in org.eclipse.emf.cdo.ui">AbstractAuthorizingHandler</a>&lt;T&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for <code>handlers</code> that automatically update their
  <a href="AbstractAuthorizingHandler.html#isEnabled()"><code>enablement</code></a> based on an <code>authorizable operation</code>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractResourceSelectionDialog.html" title="class in org.eclipse.emf.cdo.ui">AbstractResourceSelectionDialog</a>&lt;INPUT&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="AbstractResourceSelectionDialog.html" title="Klasse in org.eclipse.emf.cdo.ui">AbstractResourceSelectionDialog</a>&lt;INPUT&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An abstract base class for resource selection <code>dialogs</code> that can be used with
- <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+ <a href="CDOLoadResourceProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Authorizer.html" title="class in org.eclipse.emf.cdo.ui">Authorizer</a>&lt;E&gt;</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="Authorizer.html" title="Klasse in org.eclipse.emf.cdo.ui">Authorizer</a>&lt;E&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Asynchronously authorizes <code>authorizable operations</code> and caches the authorization results.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Authorizer.AuthorizerContext.html" title="interface in org.eclipse.emf.cdo.ui">Authorizer.AuthorizerContext</a>&lt;E&gt;</div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Authorizer.AuthorizerContext.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">Authorizer.AuthorizerContext</a>&lt;E&gt;</div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">An <a href="Authorizer.html" title="class in org.eclipse.emf.cdo.ui"><code>authorizer's</code></a> context.</div>
+<div class="block">An <a href="Authorizer.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>authorizer's</code></a> context.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Attaches to a given <a href="../transaction/CDOTransaction.html" title="interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and pops up a <a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a>
+<div class="block">Attaches to a given <a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> and pops up a <a href="CDOCommitCommentPrompter.CommentDialog.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>dialog</code></a>
  for a commit comment whenever this transaction is <a href="../transaction/CDOUserTransaction.html#commit()"><code>committed</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.CommentDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOCommitCommentPrompter.CommentDialog.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOCommitCommentPrompter.CommentDialog</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A dialog for commit comments.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOEditorInput.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOEditorInput</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">A specialized <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html" title="class or interface in org.eclipse.ui" class="external-link"><code>IEditorInput</code></a> for the CDO editor.</div>
+<div class="block">A specialized <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorInput.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link"><code>IEditorInput</code></a> for the CDO editor.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOEditorInput2.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOEditorInput2.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOEditorInput2</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">An extension to <a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides input object information.</div>
+<div class="block">An extension to <a href="CDOEditorInput.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides input object information.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOEditorInput3.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorInput3</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOEditorInput3.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOEditorInput3</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">An extension to <a href="CDOEditorInput.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides long-running <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> opening.</div>
+<div class="block">An extension to <a href="CDOEditorInput.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>CDOEditorInput</code></a> that provides long-running <a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>CDOView</code></a> opening.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOEditorOpener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOEditorOpener</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Opens an <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor</code></a> for a given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="class or interface in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>.</div>
+<div class="block">Opens an <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorPart.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link"><code>editor</code></a> for a given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link"><code>URI</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Default.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Default.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOEditorOpener.Default</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An abstract default <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>CDOEditorOpener</code></a> implementation.</div>
+<div class="block">An abstract default <a href="CDOEditorOpener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>CDOEditorOpener</code></a> implementation.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A registry for <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor openers</code></a>.</div>
+<div class="block">A registry for <a href="CDOEditorOpener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>editor openers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEditorOpener.Registry.EditorOpenerDescriptor.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOEditorOpener.Registry.EditorOpenerDescriptor</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An <a href="CDOEditorOpener.html" title="interface in org.eclipse.emf.cdo.ui"><code>editor opener</code></a> descriptor registered with the <a href="CDOEditorOpener.Registry.html" title="class in org.eclipse.emf.cdo.ui"><code>registry</code></a>
+<div class="block">An <a href="CDOEditorOpener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>editor opener</code></a> descriptor registered with the <a href="CDOEditorOpener.Registry.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>registry</code></a>
  for contributions to the <code>"org.eclipse.emf.cdo.ui.editorOpeners"</code> extension point.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorUtil.html" title="class in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOEditorUtil.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOEditorUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Some utility methods to cope with CDOEditor and CDOEditorInput</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEventHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOEventHandler</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOEventHandler.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOEventHandler</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A class that handles <code>events</code> on
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>TreeViewer</code></a>-based editors or views.</div>
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>TreeViewer</code></a>-based editors or views.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOInteractiveExceptionHandler.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOInteractiveExceptionHandler.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A <code>CDOSession</code> <a href="../session/CDOSession.ExceptionHandler.html" title="interface in org.eclipse.emf.cdo.session"><code>ExceptionHandler</code></a>
- implementation that shows exception information on a UI <a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui"><code>dialog</code></a></div>
+<div class="block">A <code>CDOSession</code> <a href="../session/CDOSession.ExceptionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.session"><code>ExceptionHandler</code></a>
+ implementation that shows exception information on a UI <a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>dialog</code></a></div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="class in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler.ExceptionDialog</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOInteractiveExceptionHandler.ExceptionDialog.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOInteractiveExceptionHandler.ExceptionDialog</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">A dialog that shows CDO related exceptions in a convenient manner.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOInvalidRootAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOInvalidRootAgent</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOInvalidRootAgent.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOInvalidRootAgent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Listens to <a href="../view/CDOViewTargetChangedEvent.html" title="interface in org.eclipse.emf.cdo.view"><code>view target changed events</code></a> from the given <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a> and
- adjusts the <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html#setInput(java.lang.Object)" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>input</code></a> of a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Tree.html" title="class or interface in org.eclipse.swt.widgets" class="external-link"><code>tree-based</code></a> UI accordingly.</div>
+<div class="block">Listens to <a href="../view/CDOViewTargetChangedEvent.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>view target changed events</code></a> from the given <a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>view</code></a> and
+ adjusts the <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/StructuredViewer.html#setInput-java.lang.Object-" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>input</code></a> of a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Tree.html" title="Klasse oder Schnittstelle in org.eclipse.swt.widgets" class="external-link"><code>tree-based</code></a> UI accordingly.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOItemProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOItemProvider.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOItemProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Implements multiple functionality related with UI representation of basic CDO concepts on
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>TreeViewer</code></a>-based editors and views.</div>
+ <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>TreeViewer</code></a>-based editors and views.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOItemProvider.EditorRegistryListener.html" title="class in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOItemProvider.EditorRegistryListener.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOItemProvider.EditorRegistryListener</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html" title="class or interface in org.eclipse.ui" class="external-link"><code>listener</code></a> on the platform's <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html" title="class or interface in org.eclipse.ui" class="external-link"><code>editor registry</code></a> that fires <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>label events</code></a>
- from the associated <a href="CDOItemProvider.EditorRegistryListener.html#getItemProvider()"><code>item provider</code></a> when <a href="../transfer/CDOTransferElement.html" title="class in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
+<div class="block">A <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IPropertyListener.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link"><code>listener</code></a> on the platform's <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorRegistry.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link"><code>editor registry</code></a> that fires <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/LabelProviderChangedEvent.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>label events</code></a>
+ from the associated <a href="CDOItemProvider.EditorRegistryListener.html#getItemProvider()"><code>item provider</code></a> when <a href="../transfer/CDOTransferElement.html" title="Klasse in org.eclipse.emf.cdo.transfer"><code>element</code></a> labels need to be updated.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOLabelDecorator.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelDecorator</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOLabelDecorator.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOLabelDecorator</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Decorates labels of <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>CDO objects</code></a> according to a pattern.</div>
+<div class="block">Decorates labels of <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>CDO objects</code></a> according to a pattern.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOLabelProvider.html" title="class in org.eclipse.emf.cdo.ui">CDOLabelProvider</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOLabelProvider.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOLabelProvider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html" title="class or interface in org.eclipse.emf.edit.ui.provider" class="external-link"><code>AdapterFactoryLabelProvider</code></a> specialization
- that decorates <a href="../CDOObject.html" title="interface in org.eclipse.emf.cdo"><code>objects</code></a> with a color/font code according to their current
- <a href="../CDOState.html" title="enum class in org.eclipse.emf.cdo"><code>state</code></a>.</div>
+<div class="block">A <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/edit/ui/provider/AdapterFactoryLabelProvider.html" title="Klasse oder Schnittstelle in org.eclipse.emf.edit.ui.provider" class="external-link"><code>AdapterFactoryLabelProvider</code></a> specialization
+ that decorates <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a> with a color/font code according to their current
+ <a href="../CDOState.html" title="Enum-Klasse in org.eclipse.emf.cdo"><code>state</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">A <a href="CDOLoadResourceProvider.Factory.html" title="class in org.eclipse.emf.cdo.ui"><code>contributable</code></a> provider for <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="class or interface in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> that can be loaded into a resource set.</div>
+<div class="block">A <a href="CDOLoadResourceProvider.Factory.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>contributable</code></a> provider for <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/Resource.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link"><code>resources</code></a> that can be loaded into a resource set.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOLoadResourceProvider.Factory.html" title="class in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.Factory</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOLoadResourceProvider.Factory.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.Factory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Creates <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+<div class="block">Creates <a href="CDOLoadResourceProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.ImageProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.ImageProvider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOLoadResourceProvider.ImageProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOLoadResourceProvider.ImageProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">An optional <a href="CDOLoadResourceProvider.ImageProvider.html#getButtonImage(org.eclipse.emf.ecore.resource.ResourceSet)"><code>button image</code></a> provider interface
- for <a href="CDOLoadResourceProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
+ for <a href="CDOLoadResourceProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>load resource providers</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui">CDOTopicProvider</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOTopicProvider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Provides an array of <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topics</code></a> and supports the registration of <a href="CDOTopicProvider.Listener.html" title="interface in org.eclipse.emf.cdo.ui"><code>listeners</code></a>
+<div class="block">Provides an array of <a href="CDOTopicProvider.Topic.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>topics</code></a> and supports the registration of <a href="CDOTopicProvider.Listener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>listeners</code></a>
  that are notified about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
  <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from this array.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.Listener.html" title="interface in org.eclipse.emf.cdo.ui">CDOTopicProvider.Listener</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOTopicProvider.Listener.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">CDOTopicProvider.Listener</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Notifies about <a href="CDOTopicProvider.Listener.html#topicAdded(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>additions</code></a> to and
- <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from the array of topics of a <a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
+ <a href="CDOTopicProvider.Listener.html#topicRemoved(org.eclipse.emf.cdo.ui.CDOTopicProvider,org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic)"><code>removals</code></a> from the array of topics of a <a href="CDOTopicProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">An <a href="CDOTopicProvider.Topic.html#getId()"><code>identifiable</code></a> topic in the scope of a <a href="CDOTopicProvider.Topic.html#getSession()"><code>session</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.TopicChangedEvent.html" title="class in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic.TopicChangedEvent</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOTopicProvider.Topic.TopicChangedEvent.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOTopicProvider.Topic.TopicChangedEvent</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An <code>event</code> fired from a <a href="CDOTopicProvider.Topic.html" title="class in org.eclipse.emf.cdo.ui"><code>topic</code></a> when the <a href="CDOTopicProvider.Topic.html#getImage()"><code>image</code></a>, the <a href="CDOTopicProvider.Topic.html#getText()"><code>text</code></a> (label),
+<div class="block">An <code>event</code> fired from a <a href="CDOTopicProvider.Topic.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>topic</code></a> when the <a href="CDOTopicProvider.Topic.html#getImage()"><code>image</code></a>, the <a href="CDOTopicProvider.Topic.html#getText()"><code>text</code></a> (label),
  or the <a href="CDOTopicProvider.Topic.html#getDescription()"><code>description</code></a> attribute of the topic were changed.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTreeExpansionAgent.html" title="class in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOTreeExpansionAgent.html" title="Klasse in org.eclipse.emf.cdo.ui">CDOTreeExpansionAgent</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Automatically preserves a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>tree viewer's</code></a> item expansion states across
+<div class="block">Automatically preserves a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/TreeViewer.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>tree viewer's</code></a> item expansion states across
  multiple <a href="../view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranch,long)"><code>target changes</code></a>
- of the underlying <a href="../view/CDOView.html" title="interface in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+ of the underlying <a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DecoratingStyledLabelProvider.html" title="class in org.eclipse.emf.cdo.ui">DecoratingStyledLabelProvider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DecoratingStyledLabelProvider.html" title="Klasse in org.eclipse.emf.cdo.ui">DecoratingStyledLabelProvider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An exception-tolerant <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DecoratingLabelProvider.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>DecoratingLabelProvider</code></a> with support for <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html" title="class or interface in org.eclipse.jface.viewers" class="external-link"><code>styled labels</code></a>
+<div class="block">An exception-tolerant <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DecoratingLabelProvider.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>DecoratingLabelProvider</code></a> with support for <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/viewers/DelegatingStyledCellLabelProvider.IStyledLabelProvider.html" title="Klasse oder Schnittstelle in org.eclipse.jface.viewers" class="external-link"><code>styled labels</code></a>
  and <code>lazy loading</code>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultTopicProvider.html" title="class in org.eclipse.emf.cdo.ui">DefaultTopicProvider</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="DefaultTopicProvider.html" title="Klasse in org.eclipse.emf.cdo.ui">DefaultTopicProvider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashSet.html" title="class or interface in java.util" class="external-link"><code>hash set</code></a>-based <a href="CDOTopicProvider.html" title="interface in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
+<div class="block">A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/HashSet.html" title="Klasse oder Schnittstelle in java.util" class="external-link"><code>hash set</code></a>-based <a href="CDOTopicProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>topic provider</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OverlayImage.html" title="class in org.eclipse.emf.cdo.ui">OverlayImage</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="OverlayImage.html" title="Klasse in org.eclipse.emf.cdo.ui">OverlayImage</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block"><a href="OverlayImage.html#compose()"><code>Composes</code></a> an image by overlaying one image on top of another image.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Support.html" title="class in org.eclipse.emf.cdo.ui">Support</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">Deprecated.
-<div class="deprecation-comment">As of 4.15 use <a href="../common/util/Support.html" title="class in org.eclipse.emf.cdo.common.util"><code>Support</code></a>.</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="Support.html" title="Klasse in org.eclipse.emf.cdo.ui">Support</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">Veraltet.
+<div class="deprecation-comment">As of 4.15 use <a href="../common/util/Support.html" title="Klasse in org.eclipse.emf.cdo.common.util"><code>Support</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.html" title="class in org.eclipse.emf.cdo.ui">UserInfo</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Encapsulates <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>serializable</code></a> information about a user, namely her <a href="UserInfo.html#getFirstName()"><code>first</code></a>,
+<div class="block">Encapsulates <a href="UserInfo.Manager.UserInfoStorage.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>serializable</code></a> information about a user, namely her <a href="UserInfo.html#getFirstName()"><code>first</code></a>,
  <a href="UserInfo.html#getLastName()"><code>last</code></a>, and <a href="UserInfo.html#getDisplayName()"><code>display</code></a> names.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Manages the <a href="UserInfo.html" title="class in org.eclipse.emf.cdo.ui"><code>user info</code></a> of the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a> and maintains a user info cache for
+<div class="block">Manages the <a href="UserInfo.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>user info</code></a> of the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a> and maintains a user info cache for
  <a href="UserInfo.Manager.html#getRemoteUser(org.eclipse.emf.cdo.session.remote.CDORemoteSession)"><code>remote users</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
  in the file "${user.home}/.eclipse/org.eclipse.emf.cdo.ui/user.properties" .</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage.Factory</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.HomeUserInfoStorage.Factory.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager.HomeUserInfoStorage.Factory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Creates <a href="UserInfo.Manager.HomeUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui"><code>home user info storages</code></a>.</div>
+<div class="block">Creates <a href="UserInfo.Manager.HomeUserInfoStorage.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>home user info storages</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
- in the Eclipse <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html" title="class or interface in org.eclipse.jface.preference" class="external-link"><code>IPreferenceStore</code></a> of the "org.eclipse.emf.cdo.ui" bundle.</div>
+<div class="block">A <a href="UserInfo.Manager.UserInfoStorage.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>user info storage</code></a> that persists the local user info
+ in the Eclipse <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/jface/preference/IPreferenceStore.html" title="Klasse oder Schnittstelle in org.eclipse.jface.preference" class="external-link"><code>IPreferenceStore</code></a> of the "org.eclipse.emf.cdo.ui" bundle.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage.Factory</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.PreferencesUserInfoStorage.Factory.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager.PreferencesUserInfoStorage.Factory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Creates <a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="class in org.eclipse.emf.cdo.ui"><code>preference user info storages</code></a>.</div>
+<div class="block">Creates <a href="UserInfo.Manager.PreferencesUserInfoStorage.html" title="Klasse in org.eclipse.emf.cdo.ui"><code>preference user info storages</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Provides a method to load the user info object for the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.UserInfoStorage.Factory.html" title="class in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Factory</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="UserInfo.Manager.UserInfoStorage.Factory.html" title="Klasse in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Factory</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Creates <a href="UserInfo.Manager.UserInfoStorage.html" title="interface in org.eclipse.emf.cdo.ui"><code>user info storages</code></a>.</div>
+<div class="block">Creates <a href="UserInfo.Manager.UserInfoStorage.html" title="Schnittstelle in org.eclipse.emf.cdo.ui"><code>user info storages</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.Writable.html" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Writable</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="UserInfo.Manager.UserInfoStorage.Writable.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">UserInfo.Manager.UserInfoStorage.Writable</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Provides a method to save the user info object for the <a href="UserInfo.Manager.html#getLocalUser()"><code>local user</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="UserInfo.Provider.html" title="interface in org.eclipse.emf.cdo.ui">UserInfo.Provider</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="UserInfo.Provider.html" title="Schnittstelle in org.eclipse.emf.cdo.ui">UserInfo.Provider</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">&nbsp;</div>
 </div>
 </div>

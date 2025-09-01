@@ -15,56 +15,6 @@ function windowTitle()
     }
 }
 </script>
-
-<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
-
-<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-
-<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
-
-<script>
-$(function() {
-$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
-});
-</script>
-
-<script type="text/javascript">
-function maximize(id)
-{
-  e = document.getElementById('max_' + id);
-  c1 = document.getElementById('editor_content_1_' + id);
-  c2 = document.getElementById('editor_content_2_' + id);
-  pv = document.getElementById('max_pv_' + id);
-  if (e.className == 'max')
-  {
-    e.className = 'rst';
-    e.setAttribute('title', 'Restore');
-    c1.setAttribute('style_orig', c1.getAttribute('style'));
-    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
-    c2.setAttribute('style', '');
-    if (pv != null)
-    {
-      pv.setAttribute('width_orig', pv.getAttribute('width'));
-      pv.setAttribute('width', '');
-    }
-  }
-  else
-  {
-    e.className = 'max';
-    e.setAttribute('title', 'Maximize');
-    c1.setAttribute('style', c1.getAttribute('style_orig'));
-    c1.setAttribute('style_orig', '');
-    c2.setAttribute('style', 'overflow:scroll; width:100%; height:100%;');
-    if (pv != null)
-    {
-      pv.setAttribute('width', pv.getAttribute('width_orig'));
-      pv.setAttribute('width_orig', '');
-    }
-  }
-}
-</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -104,119 +54,14 @@ function maximize(id)
  The example below shows a simple implementation that opens a <b>new</b> <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a> to a local
  server and a <b>new</b> <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransaction.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>transaction</code></a> on that session.
  <p>
- 
-
-<div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ProviderImplementation_1"></a>
-  <table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ExampleViewProvider.java</font></td>
-      <td width="1px"><img src="../../../images/editor-3.png"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ProviderImplementation_1')" id="max_ProviderImplementation_1" class="max" title="Maximize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
-      <td width="6px"><img src="../../../images/editor-5.png"></td>
-    </tr>
-    <tr>
-      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ProviderImplementation_1" class="ui-widget-content resizable" style="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ProviderImplementation_1" style="overflow:scroll; width:100%; height:100%;">
-            <code>
-            <a name="callout_ProviderImplementation_1_1_code" href="#callout_ProviderImplementation_1_1" alt="The example provider catches all URIs with shape &quot;cdo.local:&quot;." title="The example provider catches all URIs with shape &quot;cdo.local:&quot;."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>AbstractCDOViewProvider(<font color="#2a00ff">&#34;cdo\\.local:.*&#34;</font>,&nbsp;<font color="#990000">100</font>)<br/>
-            {<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>private&nbsp;</b></font>IManagedContainer&nbsp;container;<br/>
-            <br/>
-            &nbsp;&nbsp;<a name="callout_ProviderImplementation_1_2_code" href="#callout_ProviderImplementation_1_2" alt="Register the provider with CDOViewProviderRegistry." title="Register the provider with CDOViewProviderRegistry."><img src="../../../images/callout-2.png" width="16" height="16" border="0" align="top"></a>&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>CDOView&nbsp;getView(URI&nbsp;uri,&nbsp;ResourceSet&nbsp;resourceSet)<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(container&nbsp;==&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ManagedContainer();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Net4jUtil.prepareContainer(container);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;TCPUtil.prepareContainer(container);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;container.activate();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>int&nbsp;</b></font>startIndex&nbsp;=&nbsp;uri.toString().indexOf(<font color="#990000">':'</font>);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;String&nbsp;repoName&nbsp;=&nbsp;uri.toString().substring(startIndex);<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;IConnector&nbsp;connector&nbsp;=&nbsp;(IConnector)container.getElement(<font color="#2a00ff">&#34;org.eclipse.net4j.connectors&#34;</font>,&nbsp;<font color="#2a00ff">&#34;tcp&#34;</font>,&nbsp;<font color="#2a00ff">&#34;localhost&#34;</font>);<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;CDONet4jSessionConfiguration&nbsp;config&nbsp;=&nbsp;CDONet4jUtil.createNet4jSessionConfiguration();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;config.setConnector(connector);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;config.setRepositoryName(repoName);<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;CDOSession&nbsp;session&nbsp;=&nbsp;config.openNet4jSession();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>session.openTransaction();<br/>
-            &nbsp;&nbsp;}<br/>
-            };            </code>
-
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-<p>
-<div style="margin-left:24px;">
-<a name="callout_ProviderImplementation_1_1" href="#callout_ProviderImplementation_1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;The example provider catches all URIs with shape "cdo.local:<repoName>".
-
-</div>
-<div style="margin-left:24px;">
-<a name="callout_ProviderImplementation_1_2" href="#callout_ProviderImplementation_1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../../images/callout-2.png" width="16" height="16" border="0" align="top"></a>&nbsp;Register the provider with <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProviderRegistry</code></a>.
-
-</div>
-</p>
-<p>
-
+ <a href="" title="Chapter in CDO Model Repository Documentation">ExampleViewProvider.java</a>
 
 <h2><a name="ContributeProviderProgrammatically"></a>2&nbsp;&nbsp;Contributing View Providers Programmatically</h2>
 <p>
  A client's view provider implementation can be contributed programmatically to the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProviderRegistry</code></a>,
  as the following example suggests:
  <p>
- 
-
-<div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ContributeProviderProgrammatically_1"></a>
-  <table border="0" cellspacing="0" cellpadding="0">
-    <tr>
-      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ProviderContribution.java</font></td>
-      <td width="1px"><img src="../../../images/editor-3.png"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ContributeProviderProgrammatically_1')" id="max_ContributeProviderProgrammatically_1" class="max" title="Maximize">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
-      <td width="6px"><img src="../../../images/editor-5.png"></td>
-    </tr>
-    <tr>
-      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ContributeProviderProgrammatically_1" class="ui-widget-content resizable" style="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ContributeProviderProgrammatically_1" style="overflow:scroll; width:100%; height:100%;">
-            <code>
-            <font color="#3f7f5f">//&nbsp;Instantiate&nbsp;your&nbsp;view&nbsp;provider</font><br/>
-            CDOViewProvider&nbsp;viewProvider&nbsp;=&nbsp;<a name="callout_ContributeProviderProgrammatically_1_1_code" href="#callout_ContributeProviderProgrammatically_1_1" alt="Get the target CDOViewProvider implementation." title="Get the target CDOViewProvider implementation."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;org.eclipse.emf.internal.cdo.view.PluginContainerViewProvider.INSTANCE;<br/>
-            <br/>
-            <font color="#3f7f5f">//&nbsp;Add&nbsp;the&nbsp;instance&nbsp;to&nbsp;the&nbsp;registry</font><br/>
-            <a name="callout_ContributeProviderProgrammatically_1_2_code" href="#callout_ContributeProviderProgrammatically_1_2" alt="Add the provider instance to CDOViewProviderRegistry." title="Add the provider instance to CDOViewProviderRegistry."><img src="../../../images/callout-2.png" width="16" height="16" border="0" align="top"></a>&nbsp;CDOViewProviderRegistry.INSTANCE.addViewProvider(viewProvider);            </code>
-
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>
-</div>
-<p>
-<div style="margin-left:24px;">
-<a name="callout_ContributeProviderProgrammatically_1_1" href="#callout_ContributeProviderProgrammatically_1_1_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../../images/callout-1.png" width="16" height="16" border="0" align="top"></a>&nbsp;Get the target <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProvider.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProvider</code></a> implementation.
-
-</div>
-<div style="margin-left:24px;">
-<a name="callout_ContributeProviderProgrammatically_1_2" href="#callout_ContributeProviderProgrammatically_1_2_code" alt="Jump to snippet..." title="Jump to snippet..."><img src="../../../images/callout-2.png" width="16" height="16" border="0" align="top"></a>&nbsp;Add the provider instance to <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewProviderRegistry.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewProviderRegistry</code></a>.
-
-</div>
-</p>
-<p>
-
+ <a href="" title="Chapter in CDO Model Repository Documentation">ProviderContribution.java</a>
 
 <h2><a name="ContributeProviderUsingExtensionPoint"></a>3&nbsp;&nbsp;Contributing View Providers Using Extension Points</h2>
 <p>

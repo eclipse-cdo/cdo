@@ -30,6 +30,9 @@
 	<productGroup id="org.eclipse.net4j.util.ui.openHandlers" name="Open Handlers" description="" deprecated="false">
 		<factory type="lm.reviews" class="org.eclipse.emf.cdo.lm.reviews.ui.ReviewsOpenHandler$Factory" contributor="org.eclipse.emf.cdo.lm.reviews.ui"/>
 	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.ui.propertyExtenders" name="Property Extenders" description="" deprecated="false">
+		<factory type="lm" class="org.eclipse.emf.cdo.lm.ui.LMPropertyExtender$Factory" contributor="org.eclipse.emf.cdo.lm.ui"/>
+	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.ui.valueFormatters" name="Value Formatters" description="" deprecated="false">
 		<factory type="org.eclipse.emf.ecore.ENamedElement" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.emf.cdo.internal.ui.EMFValueFormatter" contributor="org.eclipse.emf.cdo.ui"/>
 	</productGroup>

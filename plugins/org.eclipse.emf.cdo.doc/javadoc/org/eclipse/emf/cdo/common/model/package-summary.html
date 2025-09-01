@@ -10,49 +10,54 @@
 <meta name="generator" content="javadoc/PackageWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="package-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../../index.html">Überblick</a></li>
 <li class="nav-bar-cell1-rev">Package</li>
-<li>Class</li>
-<li><a href="package-use.html">Use</a></li>
-<li><a href="../../../../../../deprecated-list.html">Deprecated</a></li>
+<li>Klasse</li>
+<li><a href="package-use.html">Verwendung</a></li>
+<li><a href="../../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../help-doc.html#package">Help</a></li>
+<li><a href="../../../../../../help-doc.html#package">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Package:</p>
+<ul>
+<li><a href="#package-description">Beschreibung</a></li>
+<li><a href="#related-package-summary">Zugehörige Packages</a></li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
 <li>Package:&nbsp;</li>
-<li><a href="#package-description">Description</a>&nbsp;|&nbsp;</li>
-<li><a href="#related-package-summary">Related Packages</a>&nbsp;|&nbsp;</li>
-<li><a href="#class-summary">Classes and Interfaces</a></li>
+<li><a href="#package-description">Beschreibung</a>&nbsp;|&nbsp;</li>
+<li><a href="#related-package-summary">Zugehörige Packages</a>&nbsp;|&nbsp;</li>
+<li><a href="#class-summary">Klassen und Schnittstellen</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -72,10 +77,10 @@ loadScripts(document, 'script');</script>
 <ul class="summary-list">
 <li>
 <div id="related-package-summary">
-<div class="caption"><span>Related Packages</span></div>
+<div class="caption"><span>Zugehörige Packages</span></div>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Package</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><a href="../package-summary.html">org.eclipse.emf.cdo.common</a></div>
 <div class="col-last even-row-color">
 <div class="block">Common concepts that are differently extended in clients and servers.</div>
@@ -85,103 +90,103 @@ loadScripts(document, 'script');</script>
 </li>
 <li>
 <div id="class-summary">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">All Classes and Interfaces</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Interfaces</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Classes</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum Classes</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="class-summary-tab0" role="tab" aria-selected="true" aria-controls="class-summary.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary', 2)" class="active-table-tab">Alle Klassen und Schnittstellen</button><button id="class-summary-tab1" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab1', 2)" class="table-tab">Schnittstellen</button><button id="class-summary-tab2" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab2', 2)" class="table-tab">Klassen</button><button id="class-summary-tab3" role="tab" aria-selected="false" aria-controls="class-summary.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('class-summary', 'class-summary-tab3', 2)" class="table-tab">Enum-Klassen</button></div>
 <div id="class-summary.tabpanel" role="tabpanel">
 <div class="summary-table two-column-summary" aria-labelledby="class-summary-tab0">
-<div class="table-header col-first">Class</div>
-<div class="table-header col-last">Description</div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></div>
+<div class="table-header col-first">Klasse</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOClassifierRef.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">References an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EClassifier</code></a>.</div>
+<div class="block">References an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EClassifier</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOClassifierRef.Provider.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassifierRef.Provider</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOClassifierRef.Provider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOClassifierRef.Provider</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">Provides <a href="CDOClassifierRef.html" title="class in org.eclipse.emf.cdo.common.model"><code>classifier references</code></a>.</div>
+<div class="block">Provides <a href="CDOClassifierRef.html" title="Klasse in org.eclipse.emf.cdo.common.model"><code>classifier references</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOClassInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOClassInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOClassInfo</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">An EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="class or interface in org.eclipse.emf.common.notify" class="external-link"><code>adapter</code></a> that encapsulates CDO specific information about an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EClass</code></a>.</div>
+<div class="block">An EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link"><code>adapter</code></a> that encapsulates CDO specific information about an <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EClass</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="CDOFeatureType.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOFeatureType</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="CDOFeatureType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.model">CDOFeatureType</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">
-<div class="block">Enumerates the possible types of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>features</code></a>.</div>
+<div class="block">Enumerates the possible types of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>features</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOModelConstants.html" title="interface in org.eclipse.emf.cdo.common.model">CDOModelConstants</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOModelConstants.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOModelConstants</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">Symbolic model constants commonly used in CDO.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOModelUtil.html" title="class in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOModelUtil.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOModelUtil</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Various static helper methods for dealing with CDO meta models.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOPackageInfo.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOPackageInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Describes a single <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>package</code></a> instance of the nested package tree strucure represented by the
- containing <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
+<div class="block">Describes a single <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>package</code></a> instance of the nested package tree strucure represented by the
+ containing <a href="CDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
-<div class="block">An EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>package registry</code></a> that is used by CDO <a href="../CDOCommonRepository.html" title="interface in org.eclipse.emf.cdo.common"><code>repositories</code></a> and
- <a href="../CDOCommonSession.html" title="interface in org.eclipse.emf.cdo.common"><code>sessions</code></a>.</div>
+<div class="block">An EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>package registry</code></a> that is used by CDO <a href="../CDOCommonRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.common"><code>repositories</code></a> and
+ <a href="../CDOCommonSession.html" title="Schnittstelle in org.eclipse.emf.cdo.common"><code>sessions</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOPackageRegistryPopulator.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOPackageRegistryPopulator.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Populates a <a href="CDOPackageRegistryPopulator.html#getTarget()"><code>target</code></a> package registry by asynchronously polling a <a href="CDOPackageRegistryPopulator.html#getSource()"><code>source</code></a>
- package registry for new <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>EPackage</code></a> registrations.</div>
+ package registry for new <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EPackage</code></a> registrations.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOPackageRegistryPopulator.Descriptor.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator.Descriptor</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOPackageRegistryPopulator.Descriptor.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOPackageRegistryPopulator.Descriptor</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">A package <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Descriptor.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>descriptor</code></a> that resolves <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> from
+<div class="block">A package <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Descriptor.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>descriptor</code></a> that resolves <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> from
  a <a href="CDOPackageRegistryPopulator.Descriptor.html#getSource()"><code>source</code></a> package registry.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOPackageTypeRegistry.html" title="class in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOPackageTypeRegistry.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A <a href="CDOPackageTypeRegistry.html#INSTANCE"><code>singleton</code></a> registry for the <a href="CDOPackageUnit.Type.html" title="enum class in org.eclipse.emf.cdo.common.model"><code>package unit types</code></a> of EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a>.</div>
+<div class="block">A <a href="CDOPackageTypeRegistry.html#INSTANCE"><code>singleton</code></a> registry for the <a href="CDOPackageUnit.Type.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.model"><code>package unit types</code></a> of EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOPackageTypeRegistry.CDOObjectMarker.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry.CDOObjectMarker</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOPackageTypeRegistry.CDOObjectMarker.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageTypeRegistry.CDOObjectMarker</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">A common marker interface for CDO (native) objects.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="CDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab1">
-<div class="block">Represents a tree structure of nested <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> that are registered with a <a href="CDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> and that can only be serialized as a whole.</div>
+<div class="block">Represents a tree structure of nested <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>packages</code></a> that are registered with a <a href="CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model"><code>package registry</code></a> and that can only be serialized as a whole.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="CDOPackageUnit.State.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="CDOPackageUnit.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.model">CDOPackageUnit.State</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab3">
-<div class="block">Describes the possible states a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> may be in during its lifecycle.</div>
+<div class="block">Describes the possible states a <a href="CDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model"><code>package unit</code></a> may be in during its lifecycle.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="CDOPackageUnit.Type.html" title="enum class in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="CDOPackageUnit.Type.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab3">
-<div class="block">Describes the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>instances</code></a> of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>classes</code></a> of a <a href="CDOPackageUnit.html" title="interface in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
+<div class="block">Describes the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>instances</code></a> of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>classes</code></a> of a <a href="CDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model"><code>package unit</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model">CDOType</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CDOType.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOType</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Provides access to all CDO-supported data types.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.html" title="class in org.eclipse.emf.cdo.common.model">CDOType.Handler</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOType.Handler</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A <a href="CDOType.Handler.html#writeValue(org.eclipse.emf.cdo.common.protocol.CDODataOutput,java.lang.Object)"><code>serialization</code></a> and <a href="CDOType.Handler.html#readValue(org.eclipse.emf.cdo.common.protocol.CDODataInput)"><code>deserialization</code></a>
- strategy for values of custom <a href="CDOType.html" title="interface in org.eclipse.emf.cdo.common.model"><code>types</code></a>.</div>
+ strategy for values of custom <a href="CDOType.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model"><code>types</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.Factory.html" title="class in org.eclipse.emf.cdo.common.model">CDOType.Handler.Factory</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.Factory.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOType.Handler.Factory</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Creates <a href="CDOType.Handler.html" title="class in org.eclipse.emf.cdo.common.model"><code>type handlers</code></a>.</div>
+<div class="block">Creates <a href="CDOType.Handler.html" title="Klasse in org.eclipse.emf.cdo.common.model"><code>type handlers</code></a>.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.Registry.html" title="class in org.eclipse.emf.cdo.common.model">CDOType.Handler.Registry</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CDOType.Handler.Registry.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOType.Handler.Registry</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">A global registry for <a href="CDOType.Handler.html" title="class in org.eclipse.emf.cdo.common.model"><code>type handlers</code></a>.</div>
+<div class="block">A global registry for <a href="CDOType.Handler.html" title="Klasse in org.eclipse.emf.cdo.common.model"><code>type handlers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EMFPredicates.html" title="class in org.eclipse.emf.cdo.common.model">EMFPredicates</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EMFPredicates.html" title="Klasse in org.eclipse.emf.cdo.common.model">EMFPredicates</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">Predefined <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="class or interface in java.util.function" class="external-link"><code>predicates</code></a> to test for various <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a> types.</div>
+<div class="block">Predefined <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link"><code>predicates</code></a> to test for various <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>feature</code></a> types.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EMFUtil.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="EMFUtil.html" title="Klasse in org.eclipse.emf.cdo.common.model">EMFUtil</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Various static helper methods for dealing with EMF meta models.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EMFUtil.ExtResourceSet.html" title="class in org.eclipse.emf.cdo.common.model">EMFUtil.ExtResourceSet</a></div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="EMFUtil.ExtResourceSet.html" title="Klasse in org.eclipse.emf.cdo.common.model">EMFUtil.ExtResourceSet</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
-<div class="block">An extension of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/impl/ResourceSetImpl.html" title="class or interface in org.eclipse.emf.ecore.resource.impl" class="external-link"><code>ResourceSetImpl</code></a> that allows demandLoading of resources and delegation of resource lookups,
+<div class="block">An extension of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/impl/ResourceSetImpl.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource.impl" class="external-link"><code>ResourceSetImpl</code></a> that allows demandLoading of resources and delegation of resource lookups,
  to be switched on/off as desired.</div>
 </div>
 </div>

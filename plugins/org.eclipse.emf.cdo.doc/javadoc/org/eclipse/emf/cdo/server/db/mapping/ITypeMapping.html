@@ -10,56 +10,70 @@
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../../../../../../../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../../../../../../../script-dir/jquery-ui.min.css" title="Style">
-<link rel="stylesheet" type="text/css" href="../../../../../../../jquery-ui.overrides.css" title="Style">
 <script type="text/javascript" src="../../../../../../../script.js"></script>
-<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.0.min.js"></script>
+<script type="text/javascript" src="../../../../../../../script-dir/jquery-3.6.1.min.js"></script>
 <script type="text/javascript" src="../../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var evenRowColor = "even-row-color";
-var oddRowColor = "odd-row-color";
-var tableTab = "table-tab";
-var activeTableTab = "active-table-tab";
-var pathtoroot = "../../../../../../../";
+<script type="text/javascript">var pathtoroot = "../../../../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript is disabled on your browser.</div>
+<div>JavaScript ist im Browser deaktiviert.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top">
-<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../../../../index.html">Overview</a></li>
+<li><a href="../../../../../../../index.html">Überblick</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Class</li>
-<li><a href="class-use/ITypeMapping.html">Use</a></li>
-<li><a href="../../../../../../../deprecated-list.html">Deprecated</a></li>
+<li class="nav-bar-cell1-rev">Klasse</li>
+<li><a href="class-use/ITypeMapping.html">Verwendung</a></li>
+<li><a href="../../../../../../../deprecated-list.html">Veraltet</a></li>
 <li><a href="../../../../../../../index-all.html">Index</a></li>
-<li><a href="../../../../../../../help-doc.html#class">Help</a></li>
+<li><a href="../../../../../../../help-doc.html#class">Hilfe</a></li>
+</ul>
+<ul class="sub-nav-list-small">
+<li>
+<p>Übersicht:</p>
+<ul>
+<li><a href="#nested-class-summary">Verschachtelt</a></li>
+<li>Feld</li>
+<li>Konstruktor</li>
+<li><a href="#method-summary">Methode</a></li>
+</ul>
+</li>
+<li>
+<p>Details:</p>
+<ul>
+<li>Feld</li>
+<li>Konstruktor</li>
+<li><a href="#method-detail">Methode</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="sub-nav">
-<div>
+<div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Summary:&nbsp;</li>
-<li><a href="#nested-class-summary">Nested</a>&nbsp;|&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Method</a></li>
+<li>Übersicht:&nbsp;</li>
+<li><a href="#nested-class-summary">Verschachtelt</a>&nbsp;|&nbsp;</li>
+<li>Feld&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Detail:&nbsp;</li>
-<li>Field&nbsp;|&nbsp;</li>
-<li>Constr&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Method</a></li>
+<li>Details:&nbsp;</li>
+<li>Feld&nbsp;|&nbsp;</li>
+<li>Konstruktor&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Methode</a></li>
 </ul>
 </div>
-<div class="nav-list-search"><label for="search-input">SEARCH:</label>
-<input type="text" id="search-input" value="search" disabled="disabled">
-<input type="reset" id="reset-button" value="reset" disabled="disabled">
+<div class="nav-list-search"><a href="../../../../../../../search.html">SEARCH</a>
+<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
 <!-- ========= END OF TOP NAVBAR ========= -->
@@ -70,20 +84,20 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.emf.cdo.server.db.mapping</a></div>
-<h1 title="Interface ITypeMapping" class="title">Interface ITypeMapping</h1>
+<h1 title="Schnittstelle ITypeMapping" class="title">Schnittstelle ITypeMapping</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>All Known Implementing Classes:</dt>
-<dd><code><a href="AbstractTypeMapping.html" title="class in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMapping</a></code>, <code><a href="DelegatingTypeMapping.html" title="class in org.eclipse.emf.cdo.server.db.mapping">DelegatingTypeMapping</a></code></dd>
+<dt>Alle bekannten Implementierungsklassen:</dt>
+<dd><code><a href="AbstractTypeMapping.html" title="Klasse in org.eclipse.emf.cdo.server.db.mapping">AbstractTypeMapping</a></code>, <code><a href="DelegatingTypeMapping.html" title="Klasse in org.eclipse.emf.cdo.server.db.mapping">DelegatingTypeMapping</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ITypeMapping</span></div>
 <div class="block">Mapping of single values to and from the database.</div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>2.0</dd>
-<dt>Author:</dt>
+<dt>Autor:</dt>
 <dd>Eike Stepper, Stefan Winkler</dd>
 </dl>
 </section>
@@ -92,29 +106,29 @@ loadScripts(document, 'script');</script>
 <!-- ======== NESTED CLASS SUMMARY ======== -->
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
-<h2>Nested Class Summary</h2>
-<div class="caption"><span>Nested Classes</span></div>
+<h2>Verschachtelte Klassen - Übersicht</h2>
+<div class="caption"><span>Verschachtelte Klassen</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Interface</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Schnittstelle</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ITypeMapping.Descriptor.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</a></code></div>
+<div class="col-second even-row-color"><code><a href="ITypeMapping.Descriptor.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">A descriptor which describes one type mapping class.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ITypeMapping.Factory.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Factory</a></code></div>
+<div class="col-second odd-row-color"><code><a href="ITypeMapping.Factory.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Factory</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">A factory for typeMappings.</div>
 </div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ITypeMapping.Provider.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a></code></div>
+<div class="col-second even-row-color"><code><a href="ITypeMapping.Provider.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a></code></div>
 <div class="col-last even-row-color">
 <div class="block">A provider for type mapping information.</div>
 </div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ITypeMapping.Registry.html" class="type-name-link" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Registry</a></code></div>
+<div class="col-second odd-row-color"><code><a href="ITypeMapping.Registry.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Registry</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">A global (singleton) registry which collects all available type mappings which are either available in the CDO
  core, as declared extensions, or registered manually.</div>
@@ -125,51 +139,51 @@ loadScripts(document, 'script');</script>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Method Summary</h2>
+<h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Deprecated Methods</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Veraltete Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifier and Type</div>
-<div class="table-header col-second">Method</div>
-<div class="table-header col-last">Description</div>
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#createDBField(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">createDBField</a><wbr>(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.2 use <a href="#createDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</div>
 </div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">createDBField</a><wbr>(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Creates the DBField and adds it to the given table.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.DBType</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBType()" class="member-name-link">getDBType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFeature()" class="member-name-link">getFeature</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.ddl.IDBField</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getField()" class="member-name-link">getField</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValue(java.sql.ResultSet)" class="member-name-link">readValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValue(java.sql.ResultSet)" class="member-name-link">readValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Read the value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link"><code>ResultSet</code></a> and convert it from the DB to the CDO representation.</div>
+<div class="block">Read the value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a> and convert it from the DB to the CDO representation.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValueToRevision(java.sql.ResultSet,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">readValueToRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#readValueToRevision(java.sql.ResultSet,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">readValueToRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Read a value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
+<div class="block">Read a value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
  of the revision.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">setDBField</a><wbr>(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Sets the DBField.</div>
 </div>
@@ -177,29 +191,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDBType(org.eclipse.net4j.db.DBType)" class="member-name-link">setDBType</a><wbr>(org.eclipse.net4j.db.DBType&nbsp;dbType)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFeature(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">setFeature</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setFeature(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">setFeature</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setValue(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">setValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setValue(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">setValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set the given value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code> method.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setValueFromRevision(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">setValueFromRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setValueFromRevision(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">setValueFromRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;value)</code></div>
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set a value of the given revision to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
@@ -216,14 +230,14 @@ loadScripts(document, 'script');</script>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Method Details</h2>
+<h2>Methodendetails</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="getFeature()">
 <h3>getFeature</h3>
-<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a></span>&nbsp;<span class="element-name">getFeature</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a></span>&nbsp;<span class="element-name">getFeature</span>()</div>
 <dl class="notes">
-<dt>Returns:</dt>
+<dt>Gibt zurück:</dt>
 <dd>The feature which is associated with this mapping.</dd>
 </dl>
 </section>
@@ -233,7 +247,7 @@ loadScripts(document, 'script');</script>
 <h3>getField</h3>
 <div class="member-signature"><span class="return-type">org.eclipse.net4j.db.ddl.IDBField</span>&nbsp;<span class="element-name">getField</span>()</div>
 <dl class="notes">
-<dt>Returns:</dt>
+<dt>Gibt zurück:</dt>
 <dd>The db field which is associated with this mapping.</dd>
 </dl>
 </section>
@@ -243,9 +257,9 @@ loadScripts(document, 'script');</script>
 <h3>getDBType</h3>
 <div class="member-signature"><span class="return-type">org.eclipse.net4j.db.DBType</span>&nbsp;<span class="element-name">getDBType</span>()</div>
 <dl class="notes">
-<dt>Returns:</dt>
+<dt>Gibt zurück:</dt>
 <dd>The db type which is associated with this mapping.</dd>
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -253,9 +267,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)">
 <h3>setMappingStrategy</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setMappingStrategy</span><wbr><span class="parameters">(<a href="IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setMappingStrategy</span><wbr><span class="parameters">(<a href="IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -263,9 +277,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setFeature(org.eclipse.emf.ecore.EStructuralFeature)">
 <h3>setFeature</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setFeature</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setFeature</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -275,7 +289,7 @@ loadScripts(document, 'script');</script>
 <h3>setDBType</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDBType</span><wbr><span class="parameters">(org.eclipse.net4j.db.DBType&nbsp;dbType)</span></div>
 <dl class="notes">
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
 </section>
@@ -283,9 +297,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="createDBField(org.eclipse.net4j.db.ddl.IDBTable)">
 <h3>createDBField</h3>
-<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="class or interface in java.lang" class="external-link">@Deprecated</a>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
 </span><span class="return-type">void</span>&nbsp;<span class="element-name">createDBField</span><wbr><span class="parameters">(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table)</span></div>
-<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.2 use <a href="#createDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)"><code>createDBField(IDBTable, String)</code></a>.</div>
 </div>
 </section>
@@ -294,11 +308,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="createDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)">
 <h3>createDBField</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">createDBField</span><wbr><span class="parameters">(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
 <div class="block">Creates the DBField and adds it to the given table. The name of the DBField is explicitly determined by the
  corresponding parameter.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>table</code> - the table to add this field to.</dd>
 <dd><code>fieldName</code> - the name for the DBField.</dd>
 </dl>
@@ -308,13 +322,13 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="setDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)">
 <h3>setDBField</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDBField</span><wbr><span class="parameters">(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
 <div class="block">Sets the DBField. The name of the DBField is explicitly determined by the corresponding parameter.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>table</code> - the table to add this field to.</dd>
 <dd><code>fieldName</code> - the name for the DBField.</dd>
-<dt>Since:</dt>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -322,36 +336,36 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setValue(java.sql.PreparedStatement,int,java.lang.Object)">
 <h3>setValue</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;value)</span>
-       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value)</span>
+       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Set the given value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code> method.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>stmt</code> - the prepared statement to set the value</dd>
 <dd><code>index</code> - the index to use for the <code>setXxx</code> method.</dd>
 <dd><code>value</code> - the value to set.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="setDefaultValue(java.sql.PreparedStatement,int)">
 <h3>setDefaultValue</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDefaultValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setDefaultValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index)</span>
-              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>stmt</code> - the prepared statement to set the value</dd>
 <dd><code>index</code> - the index to use for the <code>setXxx</code> method.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
-<dt>Since:</dt>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -359,37 +373,37 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="setValueFromRevision(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">
 <h3>setValueFromRevision</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setValueFromRevision</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="class or interface in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setValueFromRevision</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;value)</span>
-                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;value)</span>
+                   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Set a value of the given revision to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method. The feature from which the value is taken is determined by <a href="#getFeature()"><code>getFeature()</code></a>.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>stmt</code> - the prepared statement to set the value</dd>
 <dd><code>index</code> - the index to use for the <code>setXxx</code> method.</dd>
 <dd><code>value</code> - the revision to get the value to set from.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if the <code>setXxx</code> throws it.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="readValue(java.sql.ResultSet)">
 <h3>readValue</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">readValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</span>
-          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
-<div class="block">Read the value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link"><code>ResultSet</code></a> and convert it from the DB to the CDO representation. The resultSet field
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">readValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</span>
+          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
+<div class="block">Read the value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a> and convert it from the DB to the CDO representation. The resultSet field
  to read from is determined automatically by the internal <a href="#getField()"><code>getField()</code></a> name.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>resultSet</code> - the result set to read from</dd>
-<dt>Returns:</dt>
+<dt>Gibt zurück:</dt>
 <dd>the read value</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if reading the value throws an SQLException</dd>
-<dt>Since:</dt>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if reading the value throws an SQLException</dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>
@@ -397,19 +411,19 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="readValueToRevision(java.sql.ResultSet,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">
 <h3>readValueToRevision</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">readValueToRevision</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="interface in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</span>
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
-<div class="block">Read a value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="class or interface in java.sql" class="external-link"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">readValueToRevision</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</span>
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
+<div class="block">Read a value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
  of the revision. The feature is determined by getFeature() The resultSet field to read from is determined
  automatically by the internal <a href="#getField()"><code>getField()</code></a> name.</div>
 <dl class="notes">
-<dt>Parameters:</dt>
+<dt>Parameter:</dt>
 <dd><code>resultSet</code> - the result set to read from</dd>
 <dd><code>revision</code> - the revision to which the value should be set.</dd>
-<dt>Throws:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></code> - if reading the value throws an SQLException</dd>
-<dt>Since:</dt>
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if reading the value throws an SQLException</dd>
+<dt>Seit:</dt>
 <dd>3.0</dd>
 </dl>
 </section>

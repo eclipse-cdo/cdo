@@ -59,6 +59,7 @@ import org.eclipse.emf.cdo.lm.System;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyFactory;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
+import org.eclipse.emf.cdo.lm.assembly.impl.AssemblyImpl;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException.Reason.Conflicting;
@@ -838,6 +839,8 @@ public final class SystemDescriptor implements ISystemDescriptor
   public Map<String, CDOView> configureModuleResourceSet(ResourceSet resourceSet, Assembly assembly)
   {
     CDOView primaryView = CDOUtil.getView(resourceSet);
+    ((AssemblyImpl)assembly).associateView(primaryView);
+
     Map<String, CDOView> moduleViews = new HashMap<>();
 
     assembly.forEachDependency(module -> {
@@ -1381,7 +1384,7 @@ public final class SystemDescriptor implements ISystemDescriptor
     rootModule.setName(moduleDefinition.getName());
     rootModule.setVersion(moduleDefinition.getVersion());
     rootModule.setRoot(true);
-  
+
     Assembly assembly = createEmptyAssembly();
     assembly.getModules().add(rootModule);
     return assembly;

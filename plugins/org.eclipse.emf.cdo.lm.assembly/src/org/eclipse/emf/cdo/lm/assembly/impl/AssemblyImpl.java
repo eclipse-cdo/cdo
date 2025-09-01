@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.lm.assembly.AssemblyPackage;
 import org.eclipse.emf.cdo.lm.modules.DependencyDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
 import org.eclipse.emf.cdo.lm.modules.ModulesFactory;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.common.util.BasicEList;
@@ -54,6 +55,11 @@ import java.util.function.Consumer;
  */
 public class AssemblyImpl extends ModelElementImpl implements Assembly
 {
+  /**
+   * @since 1.1
+   */
+  public static final String PROP_ASSEMBLY = "org.eclipse.emf.cdo.lm.assembly.Assembly";
+
   /**
    * The default value of the '{@link #getSystemName() <em>System Name</em>}' attribute.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -296,6 +302,14 @@ public class AssemblyImpl extends ModelElementImpl implements Assembly
     }
 
     return moduleDefinition;
+  }
+
+  /**
+   * @since 1.1
+   */
+  public void associateView(CDOView view)
+  {
+    view.properties().put(PROP_ASSEMBLY, this);
   }
 
   @Override

@@ -11,7 +11,9 @@
 package org.eclipse.emf.cdo.lm.assembly;
 
 import org.eclipse.emf.cdo.etypes.ModelElement;
+import org.eclipse.emf.cdo.lm.assembly.impl.AssemblyImpl;
 import org.eclipse.emf.cdo.lm.modules.ModuleDefinition;
+import org.eclipse.emf.cdo.view.CDOView;
 
 import org.eclipse.emf.common.util.ECollections;
 import org.eclipse.emf.common.util.EList;
@@ -90,6 +92,14 @@ public interface Assembly extends ModelElement
   default void sortModules()
   {
     ECollections.sort(getModules(), AssemblyModule.COMPARATOR);
+  }
+
+  /**
+   * @since 1.1
+   */
+  public static Assembly of(CDOView view)
+  {
+    return view == null ? null : (Assembly)view.properties().get(AssemblyImpl.PROP_ASSEMBLY);
   }
 
   /**

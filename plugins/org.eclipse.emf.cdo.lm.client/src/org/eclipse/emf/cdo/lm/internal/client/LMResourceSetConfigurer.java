@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.explorer.CDOExplorerUtil;
 import org.eclipse.emf.cdo.explorer.checkouts.CDOCheckout;
 import org.eclipse.emf.cdo.lm.assembly.Assembly;
 import org.eclipse.emf.cdo.lm.assembly.AssemblyModule;
+import org.eclipse.emf.cdo.lm.assembly.impl.AssemblyImpl;
 import org.eclipse.emf.cdo.lm.client.IAssemblyDescriptor;
 import org.eclipse.emf.cdo.lm.client.IAssemblyManager;
 import org.eclipse.emf.cdo.lm.client.ISystemDescriptor;
@@ -25,6 +26,7 @@ import org.eclipse.emf.cdo.lm.client.ISystemDescriptor.ResolutionException;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewSet;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
@@ -241,7 +243,7 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
     public static CDOView openDependencyView(ISystemDescriptor systemDescriptor, AssemblyModule module, ResourceSet resourceSet)
     {
       bypassConfigure(true);
-      
+
       try
       {
         URI viewURI = LMViewProvider.createViewURI(module);
@@ -283,8 +285,14 @@ public class LMResourceSetConfigurer extends ViewResourceSetConfigurer
       this.assemblyDescriptor = assemblyDescriptor;
       ((AssemblyDescriptor)assemblyDescriptor).addResourceSet(this);
 
-      Assembly assembly = getAssembly();
+      AssemblyImpl assembly = (AssemblyImpl)getAssembly();
       assembly.forEachDependency(this::addDependencyView);
+
+      CDOViewSet viewSet = CDOUtil.getViewSet(getResourceSet());
+      if (viewSet != null)
+      {
+        assembly.associateView(viewSet.getViews()[0]);
+      }
 
       CDOCheckout checkout = getCheckout();
       checkout.waitUntilPrefetched();

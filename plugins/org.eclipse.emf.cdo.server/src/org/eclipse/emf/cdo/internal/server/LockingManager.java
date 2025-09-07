@@ -49,6 +49,7 @@ import org.eclipse.emf.cdo.spi.server.InternalView;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.concurrent.Access;
 import org.eclipse.net4j.util.concurrent.RWOLockManager;
@@ -160,6 +161,12 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   public void setRepository(InternalRepository repository)
   {
     this.repository = repository;
+  }
+
+  @Override
+  public Object getLockKey(CDOID id)
+  {
+    return getLockKey(id, null);
   }
 
   @Override
@@ -506,16 +513,16 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   {
     super.doActivate();
 
+    InternalCDOBranch mainBranch = repository.getBranchManager().getMainBranch();
+
     if (repository.isSupportingBranches())
     {
-      lockKeyCreator = (id, branch) -> CDOIDUtil.createIDAndBranch(id, branch);
+      lockKeyCreator = (id, branch) -> CDOIDUtil.createIDAndBranch(id, branch == null ? mainBranch : branch);
       lockIDExtractor = key -> ((CDOIDAndBranch)key).getID();
       lockBranchExtractor = key -> ((CDOIDAndBranch)key).getBranch();
     }
     else
     {
-      InternalCDOBranch mainBranch = repository.getBranchManager().getMainBranch();
-
       lockKeyCreator = (id, branch) -> id;
       lockIDExtractor = key -> (CDOID)key;
       lockBranchExtractor = key -> mainBranch;
@@ -566,6 +573,43 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     }
 
     throw new IllegalStateException("Store does not implement " + DurableLocking2.class.getSimpleName());
+  }
+
+  @Override
+  public Set<IView> getLockOwners(Object key, LockType... lockTypes)
+  {
+    LockState<Object, IView> lockState = getLockState(key);
+    if (lockState == null)
+    {
+      return Collections.emptySet();
+    }
+
+    Set<IView> result = new HashSet<>();
+
+    if (lockTypes.length == 0)
+    {
+      lockTypes = ALL_LOCK_TYPES;
+    }
+
+    for (LockType lockType : lockTypes)
+    {
+      switch (lockType)
+      {
+      case READ:
+        result.addAll(lockState.getReadLockOwners());
+        break;
+
+      case WRITE:
+        CollectionUtil.addNotNull(result, lockState.getWriteLockOwner());
+        break;
+
+      case OPTION:
+        CollectionUtil.addNotNull(result, lockState.getWriteOptionOwner());
+        break;
+      }
+    }
+
+    return result;
   }
 
   @Override

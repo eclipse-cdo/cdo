@@ -15,6 +15,7 @@ import static org.junit.Assume.assumeNotNull;
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.CDOCommonSession;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
+import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
@@ -442,6 +443,30 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     restart(durableLockingID);
 
     assertEquals(true, gotCalled[0]);
+  }
+
+  public void testGetLockAreaForLockedObject() throws Exception
+  {
+    Company company = getModel1Factory().createCompany();
+    resource.getContents().add(company);
+    transaction.commit();
+
+    String durableLockingID = transaction.enableDurableLocking();
+    lockWrite(company);
+
+    ISession serverSession = CDOServerUtil.getServerSession(session);
+    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+
+    CDOServerUtil.execute(serverSession, () -> {
+      LockArea lockArea = lm.getLockArea(durableLockingID);
+      assertEquals(durableLockingID, lockArea.getDurableLockingID());
+
+      CDOID id = CDOUtil.getCDOObject(company).cdoID();
+      Object lockKey = lm.getLockKey(id);
+
+      Set<IView> lockOwners = lm.getLockOwners(lockKey);
+      assertEquals(durableLockingID, lockOwners.iterator().next().getDurableLockingID());
+    });
   }
 
   public void _testClearLocksOnServer() throws Exception

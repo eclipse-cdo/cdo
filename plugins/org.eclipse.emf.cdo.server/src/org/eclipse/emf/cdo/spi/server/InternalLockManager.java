@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.concurrent.TimeoutRuntimeException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
@@ -50,17 +51,33 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public void setRepository(InternalRepository repository);
 
   /**
+   * Same as calling {@link #getLockKey(CDOID, CDOBranch)} with <code>null</code> as branch.
+   *
+   * @since 4.24
+   */
+  public Object getLockKey(CDOID id);
+
+  /**
+   * Returns the lock key for the given ID. If the repository supports branching, the returned key is of type {@link CDOIDAndBranch},
+   * otherwise it is of type {@link CDOID}.
+   *
+   * @param id     the ID of the object to be locked.
+   * @param branch the branch on which the object to be locked resides. May be <code>null</code> to indicate the main branch (for example if the repository does not support branching).
    * @since 4.0
    */
   public Object getLockKey(CDOID id, CDOBranch branch);
 
   /**
    * @since 4.0
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
    */
   public CDOID getLockKeyID(Object key);
 
   /**
    * @since 4.15
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
    */
   public CDOBranch getLockKeyBranch(Object key);
 
@@ -107,16 +124,22 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
 
   /**
    * @since 4.1
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
    */
   public LockGrade getLockGrade(Object key);
 
   /**
    * @since 4.1
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
    */
   public LockState<Object, IView> getLockState(Object key);
 
   /**
    * @since 4.15
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
    */
   public void getLockStates(Collection<Object> keys, BiConsumer<Object, LockState<Object, IView>> consumer);
 
@@ -124,6 +147,17 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * @since 4.15
    */
   public void getLockStates(Consumer<LockState<Object, IView>> consumer);
+
+  /**
+   * Returns the set of views that own a lock of one of the specified types on the given key.
+   * If no lock types are specified, all lock types are considered.
+   * If no view owns a lock of the specified types, an empty set is returned.
+   *
+   * @since 4.24
+   * @see #getLockKey(CDOID)
+   * @see #getLockKey(CDOID, CDOBranch)
+   */
+  public Set<IView> getLockOwners(Object key, LockType... lockTypes);
 
   /**
    * @since 4.1

@@ -613,6 +613,23 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
   }
 
   @Override
+  public IView getLockOwner(String durableLockingID)
+  {
+    IView view;
+    synchronized (openDurableViews)
+    {
+      view = openDurableViews.get(durableLockingID);
+    }
+
+    if (view == null)
+    {
+      view = durableViews.get(durableLockingID);
+    }
+
+    return view;
+  }
+
+  @Override
   public void reloadLocks()
   {
     DurableLockLoader handler = new DurableLockLoader();
@@ -954,23 +971,12 @@ public class LockingManager extends RWOLockManager<Object, IView> implements Int
     {
     }
 
-    private IView getView(String lockAreaID)
-    {
-      IView view = openDurableViews.get(lockAreaID);
-      if (view == null)
-      {
-        view = durableViews.get(lockAreaID);
-      }
-
-      return view;
-    }
-
     @Override
     public boolean handleLockArea(LockArea area)
     {
       String durableLockingID = area.getDurableLockingID();
 
-      IView view = getView(durableLockingID);
+      IView view = getLockOwner(durableLockingID);
       if (view != null)
       {
         LockingManager.super.unlock(view, null, null, ALL_LOCKS, null, null);

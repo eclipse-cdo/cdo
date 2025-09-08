@@ -583,7 +583,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
         return;
       }
 
-      if (lockChangeInfo.getLockOwner() == lockOwner)
+      if (lockChangeInfo.getLockOwner() == lockOwner && !lockChangeInfo.isAdministrative())
       {
         return;
       }

@@ -341,8 +341,9 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     CDOLockOwner lockOwner = readCDOLockOwner();
     List<CDOLockDelta> lockDeltas = readCDOLockDeltas();
     List<CDOLockState> lockStates = readCDOLockStates();
+    boolean isAdministrative = readBoolean();
 
-    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+    return CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, isAdministrative);
   }
 
   @Override

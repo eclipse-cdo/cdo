@@ -307,6 +307,7 @@ public class CDODataOutputImpl extends ExtendedDataOutput.Delegating implements 
     writeCDOLockOwner(lockChangeInfo.getLockOwner());
     writeCDOLockDeltas(Arrays.asList(lockChangeInfo.getLockDeltas()), filter == null ? null : delta -> filter.contains(delta.getID()));
     writeCDOLockStates(Arrays.asList(lockChangeInfo.getLockStates()), filter == null ? null : state -> filter.contains(state.getID()));
+    writeBoolean(lockChangeInfo.isAdministrative());
   }
 
   @Override

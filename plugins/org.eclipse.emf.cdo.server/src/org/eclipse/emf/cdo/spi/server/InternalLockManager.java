@@ -160,6 +160,11 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   public Set<IView> getLockOwners(Object key, LockType... lockTypes);
 
   /**
+   * @since 4.24
+   */
+  public IView getLockOwner(String durableLockingID);
+
+  /**
    * @since 4.1
    */
   public void reloadLocks();

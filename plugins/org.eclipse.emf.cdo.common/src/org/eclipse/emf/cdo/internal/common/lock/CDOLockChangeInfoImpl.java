@@ -42,15 +42,19 @@ public final class CDOLockChangeInfoImpl extends AbstractCDOLockChangeInfo imple
 
   private final CDOLockState[] lockStates;
 
+  private final boolean isAdministrative;
+
   private final boolean isInvalidateAll;
 
-  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates)
+  public CDOLockChangeInfoImpl(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas, Collection<CDOLockState> lockStates,
+      boolean isAdministrative)
   {
     super(SOURCE);
     this.branchPoint = branchPoint;
     this.lockOwner = lockOwner;
     this.lockDeltas = lockDeltas.toArray(new CDOLockDelta[lockDeltas.size()]);
     this.lockStates = lockStates.toArray(new CDOLockState[lockStates.size()]);
+    this.isAdministrative = isAdministrative;
     isInvalidateAll = false;
   }
 
@@ -60,6 +64,7 @@ public final class CDOLockChangeInfoImpl extends AbstractCDOLockChangeInfo imple
     lockOwner = null;
     lockDeltas = null;
     lockStates = null;
+    isAdministrative = false;
     isInvalidateAll = true;
   }
 
@@ -111,6 +116,12 @@ public final class CDOLockChangeInfoImpl extends AbstractCDOLockChangeInfo imple
   public boolean isInvalidateAll()
   {
     return isInvalidateAll;
+  }
+
+  @Override
+  public boolean isAdministrative()
+  {
+    return isAdministrative;
   }
 
   @Override

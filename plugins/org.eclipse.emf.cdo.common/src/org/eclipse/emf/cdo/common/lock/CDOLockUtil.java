@@ -191,7 +191,16 @@ public final class CDOLockUtil
   public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas,
       Collection<CDOLockState> lockStates)
   {
-    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockDeltas, lockStates);
+    return createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, false);
+  }
+
+  /**
+   * @since 4.26
+   */
+  public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas,
+      Collection<CDOLockState> lockStates, boolean isAdministrative)
+  {
+    return new CDOLockChangeInfoImpl(branchPoint, lockOwner, lockDeltas, lockStates, isAdministrative);
   }
 
   public static CDOLockChangeInfo createLockChangeInfo()

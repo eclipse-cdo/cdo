@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
+import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
@@ -307,7 +308,14 @@ public class CDOCommandProvider implements CommandProvider
     public void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception
     {
       String areaID = args[0];
-      repository.getLockingManager().deleteLockArea(areaID);
+
+      IView view = repository.getLockingManager().getLockOwner(areaID);
+      if (view == null)
+      {
+        throw new CommandException("No view with durable locking ID " + areaID);
+      }
+
+      repository.unlockAdministratively((InternalView)view);
     }
   };
 

@@ -106,13 +106,6 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
-  @Deprecated
-  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public Response sendAuthenticationChallenge(Challenge challenge) throws Exception
   {
     return new AuthenticationRequest(this, CDOProtocolConstants.SIGNAL_AUTHENTICATION, challenge).send(negotiationTimeout, new Monitor());
@@ -131,30 +124,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
-  @Deprecated
-  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
-  {
-    sendRepositoryStateNotification(oldState, newState, null);
-  }
-
-  @Override
   public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState, CDOID rootResourceID) throws Exception
   {
     send(new RepositoryStateNotificationRequest(this, oldState, newState, rootResourceID));
-  }
-
-  @Override
-  @Deprecated
-  public void sendBranchNotification(InternalCDOBranch branch) throws Exception
-  {
-    sendBranchNotification(branch, ChangeKind.CREATED);
-  }
-
-  @Deprecated
-  @Override
-  public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
-  {
-    sendBranchNotification(changeKind, branch);
   }
 
   @Override
@@ -170,30 +142,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
-  @Deprecated
-  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
-  @Deprecated
-  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
-  {
-    throw new UnsupportedOperationException();
-  }
-
-  @Override
   public void sendCommitNotification(CommitNotificationInfo info) throws Exception
   {
     send(new CommitNotificationRequest(this, info));
-  }
-
-  @Override
-  @Deprecated
-  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
-  {
-    sendRemoteSessionNotification(sender, null, opcode);
   }
 
   @Override
@@ -203,23 +154,9 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
   }
 
   @Override
-  @Deprecated
-  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
-  {
-    sendRemoteMessageNotification(sender, null, message);
-  }
-
-  @Override
   public void sendRemoteMessageNotification(InternalSession sender, InternalTopic topic, CDORemoteSessionMessage message) throws Exception
   {
     send(new RemoteMessageNotificationRequest(this, sender, topic, message));
-  }
-
-  @Deprecated
-  @Override
-  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
-  {
-    sendLockNotification(lockChangeInfo, null);
   }
 
   @Override
@@ -453,5 +390,68 @@ public class CDOServerProtocol extends SignalProtocol<InternalSession> implement
     {
       TRACER.trace("Session channel is inactive: " + this); //$NON-NLS-1$
     }
+  }
+
+  @Override
+  @Deprecated
+  public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult sendAuthenticationChallenge(byte[] randomToken) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void sendRepositoryStateNotification(CDOCommonRepository.State oldState, CDOCommonRepository.State newState) throws Exception
+  {
+    sendRepositoryStateNotification(oldState, newState, null);
+  }
+
+  @Override
+  @Deprecated
+  public void sendBranchNotification(InternalCDOBranch branch) throws Exception
+  {
+    sendBranchNotification(branch, ChangeKind.CREATED);
+  }
+
+  @Deprecated
+  @Override
+  public void sendBranchNotification(InternalCDOBranch branch, ChangeKind changeKind) throws Exception
+  {
+    sendBranchNotification(changeKind, branch);
+  }
+
+  @Override
+  @Deprecated
+  public void sendCommitNotification(CDOCommitInfo commitInfo) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void sendCommitNotification(CDOCommitInfo commitInfo, boolean clearResourcePathCache) throws Exception
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public void sendRemoteSessionNotification(InternalSession sender, byte opcode) throws Exception
+  {
+    sendRemoteSessionNotification(sender, null, opcode);
+  }
+
+  @Override
+  @Deprecated
+  public void sendRemoteMessageNotification(InternalSession sender, CDORemoteSessionMessage message) throws Exception
+  {
+    sendRemoteMessageNotification(sender, null, message);
+  }
+
+  @Deprecated
+  @Override
+  public void sendLockNotification(CDOLockChangeInfo lockChangeInfo) throws Exception
+  {
+    sendLockNotification(lockChangeInfo, null);
   }
 }

@@ -1378,9 +1378,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
       }
       else
       {
-        CDOLockDelta[] lockDeltas = lockChangeInfo.getLockDeltas();
-        CDOLockState[] lockStates = lockChangeInfo.getLockStates();
-        lockStateCache.updateLockStates(branch, Arrays.asList(lockDeltas), Arrays.asList(lockStates), null);
+        List<CDOLockDelta> lockDeltas = Arrays.asList(lockChangeInfo.getLockDeltas());
+        List<CDOLockState> lockStates = Arrays.asList(lockChangeInfo.getLockStates());
+        lockStateCache.updateLockStates(branch, lockDeltas, lockStates, null);
       }
     }
 

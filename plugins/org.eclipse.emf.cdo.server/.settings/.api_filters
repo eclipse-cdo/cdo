@@ -321,6 +321,14 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/ILockingManager.java" type="org.eclipse.emf.cdo.server.ILockingManager">
+        <filter id="403804204">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.ILockingManager"/>
+                <message_argument value="getLockOwner(String)"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/IQueryContext.java" type="org.eclipse.emf.cdo.server.IQueryContext">
         <filter id="571473929">
             <message_arguments>

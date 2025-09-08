@@ -83,6 +83,12 @@ public abstract class AbstractLocksChangedEvent extends AbstractCDOLockChangeInf
   }
 
   @Override
+  public boolean isAdministrative()
+  {
+    return lockChangeInfo.isAdministrative();
+  }
+
+  @Override
   protected String formatAdditionalParameters()
   {
     return "sender=" + sender + ", " + lockChangeInfo;

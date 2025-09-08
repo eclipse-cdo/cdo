@@ -2410,13 +2410,13 @@ public class Repository extends Container<Object> implements InternalRepository
     return staleRevisionsArray;
   }
 
-  private void sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates)
+  private void sendLockNotifications(IView view, List<CDOLockDelta> lockDeltas, List<CDOLockState> lockStates, boolean administrative)
   {
     CDOBranchPoint branchPoint = view.getBranch().getPoint(getTimeStamp());
     CDOLockOwner lockOwner = view.getLockOwner();
-    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates);
+    CDOLockChangeInfo lockChangeInfo = CDOLockUtil.createLockChangeInfo(branchPoint, lockOwner, lockDeltas, lockStates, administrative);
 
-    InternalSession sender = (InternalSession)view.getSession();
+    InternalSession sender = administrative ? null : (InternalSession)view.getSession();
     sessionManager.sendLockNotification(sender, lockChangeInfo);
   }
 
@@ -2470,7 +2470,7 @@ public class Repository extends Container<Object> implements InternalRepository
       return new LockObjectsResult(false, false, false, requiredTimestamp[0], staleRevisionsArray, NO_LOCK_DELTAS, NO_LOCK_STATES, getTimeStamp());
     }
 
-    sendLockNotifications(view, lockDeltas, lockStates);
+    sendLockNotifications(view, lockDeltas, lockStates, false);
 
     boolean waitForUpdate = staleRevisionsArray.length > 0;
     return new LockObjectsResult(true, false, waitForUpdate, requiredTimestamp[0], staleRevisionsArray, lockDeltas, lockStates, getTimeStamp());
@@ -2493,23 +2493,30 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    return doUnlock(view, lockType, unlockables, recursive, 1);
+    return doUnlock(view, lockType, unlockables, recursive, 1, false);
   }
 
   @Override
   public UnlockObjectsResult unlock(InternalView view)
   {
-    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS);
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, false);
   }
 
-  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count)
+  @Override
+  public UnlockObjectsResult unlockAdministratively(InternalView view)
+  {
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, true);
+  }
+
+  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count,
+      boolean notifyAllSessions)
   {
     LockDeltaCollector lockDeltas = new LockDeltaCollector(Operation.UNLOCK);
     LockStateCollector lockStates = new LockStateCollector();
 
     lockingManager.unlock(view, unlockables, lockType, count, recursive, true, lockDeltas, lockStates);
 
-    sendLockNotifications(view, lockDeltas, lockStates);
+    sendLockNotifications(view, lockDeltas, lockStates, notifyAllSessions);
 
     long timestamp = getTimeStamp();
     return new UnlockObjectsResult(timestamp, lockDeltas, lockStates);

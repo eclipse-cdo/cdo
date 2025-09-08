@@ -79,6 +79,11 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
   public boolean isInvalidateAll();
 
   /**
+   * @since 4.26
+   */
+  public boolean isAdministrative();
+
+  /**
    * @return the type of lock operation that caused the lock changes
    * @deprecated As of 4.15 use {@link #getOperations()}.
    */

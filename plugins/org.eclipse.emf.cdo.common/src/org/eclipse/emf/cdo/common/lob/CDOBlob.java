@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.lob;
 
-import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
-
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -32,7 +30,7 @@ public final class CDOBlob extends CDOLob<InputStream>
 {
   public CDOBlob(InputStream contents) throws IOException
   {
-    super(contents, CDOLobStoreImpl.INSTANCE);
+    this(contents, DEFAULT_STORE);
   }
 
   public CDOBlob(InputStream contents, CDOLobStore store) throws IOException
@@ -41,11 +39,27 @@ public final class CDOBlob extends CDOLob<InputStream>
   }
 
   /**
+   * @since 4.27
+   */
+  public CDOBlob(byte[] contents) throws IOException
+  {
+    this(contents, DEFAULT_STORE);
+  }
+
+  /**
    * @since 4.13
    */
   public CDOBlob(byte[] contents, CDOLobStore store) throws IOException
   {
     super(new ByteArrayInputStream(contents), store);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public CDOBlob(String contentsHexString) throws IOException
+  {
+    this(contentsHexString, DEFAULT_STORE);
   }
 
   /**

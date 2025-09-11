@@ -156,7 +156,7 @@ public class LobTest extends AbstractCDOTest
       Image image = getModel3Factory().createImage();
       image.setWidth(320);
       image.setHeight(200);
-      image.setData(new CDOBlob(("Very big blob number " + i).getBytes(), CDOLobStoreImpl.INSTANCE));
+      image.setData(new CDOBlob(("Very big blob number " + i).getBytes()));
 
       resource.getContents().add(image);
     }
@@ -167,7 +167,7 @@ public class LobTest extends AbstractCDOTest
     for (int i = 0; i < 5; i++)
     {
       Image image = (Image)resource.getContents().get(i);
-      image.setData(new CDOBlob(("Even much bigger blob number " + i).getBytes(), CDOLobStoreImpl.INSTANCE));
+      image.setData(new CDOBlob(("Even much bigger blob number " + i).getBytes()));
     }
 
     transaction.commit();
@@ -185,7 +185,7 @@ public class LobTest extends AbstractCDOTest
     {
       File file = getModel3Factory().createFile();
       file.setName("Unnamed");
-      file.setData(new CDOClob("Very big clob number " + i, CDOLobStoreImpl.INSTANCE));
+      file.setData(new CDOClob("Very big clob number " + i));
 
       resource.getContents().add(file);
     }
@@ -196,7 +196,7 @@ public class LobTest extends AbstractCDOTest
     for (int i = 0; i < 5; i++)
     {
       File file = (File)resource.getContents().get(i);
-      file.setData(new CDOClob("Even much bigger clob number " + i, CDOLobStoreImpl.INSTANCE));
+      file.setData(new CDOClob("Even much bigger clob number " + i));
     }
 
     transaction.commit();
@@ -218,8 +218,8 @@ public class LobTest extends AbstractCDOTest
 
       for (int j = 0; j < 4; j++)
       {
-        multi.getBlobs().add(new CDOBlob(("Very big blob number " + i + "/" + j).getBytes(), CDOLobStoreImpl.INSTANCE));
-        multi.getClobs().add(new CDOClob("Very big clob number " + i + "/" + j, CDOLobStoreImpl.INSTANCE));
+        multi.getBlobs().add(new CDOBlob(("Very big blob number " + i + "/" + j).getBytes()));
+        multi.getClobs().add(new CDOClob("Very big clob number " + i + "/" + j));
       }
 
       resource.getContents().add(multi);
@@ -235,8 +235,8 @@ public class LobTest extends AbstractCDOTest
 
       for (int j = 0; j < 2; j++)
       {
-        multi.getBlobs().set(j, new CDOBlob(("Even much bigger blob number " + i + "/" + j).getBytes(), CDOLobStoreImpl.INSTANCE));
-        multi.getClobs().set(j, new CDOClob("Even much bigger clob number " + i + "/" + j, CDOLobStoreImpl.INSTANCE));
+        multi.getBlobs().set(j, new CDOBlob(("Even much bigger blob number " + i + "/" + j).getBytes()));
+        multi.getClobs().set(j, new CDOClob("Even much bigger clob number " + i + "/" + j));
       }
     }
 

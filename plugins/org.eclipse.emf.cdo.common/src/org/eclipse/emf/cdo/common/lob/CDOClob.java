@@ -10,8 +10,6 @@
  */
 package org.eclipse.emf.cdo.common.lob;
 
-import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
-
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
 
@@ -31,12 +29,20 @@ public final class CDOClob extends CDOLob<Reader>
 {
   public CDOClob(Reader contents) throws IOException
   {
-    super(contents, CDOLobStoreImpl.INSTANCE);
+    this(contents, DEFAULT_STORE);
   }
 
   public CDOClob(Reader contents, CDOLobStore store) throws IOException
   {
     super(contents, store);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public CDOClob(String contents) throws IOException
+  {
+    this(contents, DEFAULT_STORE);
   }
 
   /**

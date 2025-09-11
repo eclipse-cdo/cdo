@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.lob;
 
+import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
+
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.ExtendedDataOutput;
 
@@ -27,6 +29,11 @@ import java.util.Objects;
  */
 public abstract class CDOLob<IO> extends CDOLobInfo
 {
+  /**
+   * @since 4.27
+   */
+  public static final CDOLobStore DEFAULT_STORE = CDOLobStoreImpl.INSTANCE;
+
   private CDOLobStore store;
 
   CDOLob(byte[] id, long size)

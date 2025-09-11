@@ -156,8 +156,6 @@ public class BackupTest extends AbstractCDOTest
     CDOServerExporter<?> exporter = createExporter(repo1);
     exporter.exportRepository(baos);
 
-    System.out.println(baos);
-
     // Test bug 552512.
     assertEquals(sessionsBeforeExport, repo1.getSessionManager().getSessions().length);
 

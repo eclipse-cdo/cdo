@@ -51,9 +51,9 @@ public final class CDOBlob extends CDOLob<InputStream>
   /**
    * @since 4.13
    */
-  public CDOBlob(String contents, CDOLobStore store) throws IOException
+  public CDOBlob(String contentsHexString, CDOLobStore store) throws IOException
   {
-    super(new ByteArrayInputStream(HexUtil.hexToBytes(contents)), store);
+    super(new ByteArrayInputStream(HexUtil.hexToBytes(contentsHexString)), store);
   }
 
   CDOBlob(byte[] id, long size)

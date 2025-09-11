@@ -48,6 +48,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 
@@ -88,7 +89,8 @@ import java.util.List;
  * @author Stefan Winkler
  * @author Lothar Werzinger
  */
-public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping implements IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4
+public class AuditListTableMappingWithRanges extends AbstractBasicListTableMapping
+    implements IListMappingDeltaSupport, IListMappingUnitSupport, IListMapping4, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AuditListTableMappingWithRanges.class);
 
@@ -352,7 +354,8 @@ public class AuditListTableMappingWithRanges extends AbstractBasicListTableMappi
     return table;
   }
 
-  protected final ITypeMapping getTypeMapping()
+  @Override
+  public final ITypeMapping getTypeMapping()
   {
     return typeMapping;
   }

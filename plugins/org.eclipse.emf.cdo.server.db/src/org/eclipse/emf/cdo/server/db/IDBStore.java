@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.ILobCleanup;
 import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IStore;
@@ -35,7 +36,7 @@ import java.util.Map;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IDBStore extends IStore, IDBConnectionProvider, CanHandleClientAssignedIDs
+public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, CanHandleClientAssignedIDs
 {
   /**
    * @since 2.0

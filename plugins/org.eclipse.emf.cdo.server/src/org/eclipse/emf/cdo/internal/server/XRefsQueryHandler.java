@@ -111,21 +111,7 @@ public class XRefsQueryHandler implements IQueryHandler
 
     for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
     {
-      // System.out.println();
-      // System.out.println();
-      // System.out.println(packageInfo);
       collectSourceCandidates(packageInfo, concreteTypes, sourceCandidates);
-      // for (Map.Entry<EClass, List<EReference>> entry : sourceCandidates.entrySet())
-      // {
-      // System.out.println(" ---> " + entry.getKey().getName());
-      // for (EReference eReference : entry.getValue())
-      // {
-      // System.out.println(" ---> " + eReference.getName());
-      // }
-      // }
-      //
-      // System.out.println();
-      // System.out.println();
     }
   }
 

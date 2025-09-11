@@ -577,19 +577,6 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
     return valueMappings;
   }
 
-  public final ITypeMapping getValueMapping(EStructuralFeature feature)
-  {
-    for (ITypeMapping mapping : valueMappings)
-    {
-      if (mapping.getFeature() == feature)
-      {
-        return mapping;
-      }
-    }
-
-    return null;
-  }
-
   @Override
   public final List<IListMapping> getListMappings()
   {
@@ -599,6 +586,11 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
   @Override
   public final IListMapping getListMapping(EStructuralFeature feature)
   {
+    if (!isMapped())
+    {
+      return null;
+    }
+
     for (IListMapping mapping : listMappings)
     {
       if (mapping.getFeature() == feature)

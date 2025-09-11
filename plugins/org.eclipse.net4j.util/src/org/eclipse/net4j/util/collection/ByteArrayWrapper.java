@@ -17,6 +17,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * A wrapper for byte arrays that implements {@link #equals(Object)} and {@link #hashCode()} based on the array's contents.
+ *
  * @author Eike Stepper
  * @since 3.2
  */

@@ -30,6 +30,8 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater.LobRefsUpdateNotSupportedException;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
@@ -80,14 +82,20 @@ import java.util.Timer;
 import java.util.function.Consumer;
 
 /**
+ * The DBStore class is a core implementation of a database-backed store for the Eclipse CDO (Connected Data Objects) framework.
+ * It manages connections, schema versioning, object IDs, metadata, and persistent properties for a CDO repository.
+ * The class handles database activation, deactivation, schema migration, crash recovery, and provides accessors for reading and writing data.
+ * It also supports configuration via properties and adapts to different ID generation strategies and schema requirements.
+ *
  * @author Eike Stepper
  */
 public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider, PostActivateable
 {
   public static final String TYPE = "db"; //$NON-NLS-1$
 
-  public static final int SCHEMA_VERSION = 4;
+  public static final int SCHEMA_VERSION = 5; // Issue xxx: Provide a large object cleanup mechanism
 
+  // public static final int SCHEMA_VERSION = 4; // Bug 344232: CDODBSchema uses "size" as an column name.
   // public static final int SCHEMA_VERSION = 3; // Bug 404047: Indexed columns must be NOT NULL.
   // public static final int SCHEMA_VERSION = 2; // Bug 344232: Rename cdo_lobs.size to cdo_lobs.lsize.
   // public static final int SCHEMA_VERSION = 1; // Bug 351068: Delete detached objects from non-auditing stores.
@@ -495,6 +503,51 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   protected DBStoreAccessor createWriter(ITransaction transaction) throws DBException
   {
     return new DBStoreAccessor(this, transaction);
+  }
+
+  @Override
+  public synchronized int cleanupLobs(boolean dryRun)
+  {
+    if (mappingStrategy instanceof ILobRefsUpdater)
+    {
+      ILobRefsUpdater lobRefsUpdater = (ILobRefsUpdater)mappingStrategy;
+      LobsTable lobs = tables.lobs();
+      Connection connection = getConnection();
+
+      try
+      {
+        // Step 1: Reset all LOB references.
+        lobs.resetRefs(connection);
+
+        // Step 2: Let the mapping strategy update all LOB references.
+        lobRefsUpdater.updateLobRefs(connection);
+
+        // Step 3: Delete all LOBs without references.
+        int deleted = lobs.deleteOrphans(connection, dryRun);
+
+        // Step 4: Commit.
+        if (deleted > 0 && !dryRun)
+        {
+          connection.commit();
+        }
+
+        return deleted;
+      }
+      catch (SQLException ex)
+      {
+        throw new DBException(ex);
+      }
+      catch (LobRefsUpdateNotSupportedException ex)
+      {
+        throw new LobCleanupNotSupportedException(ex);
+      }
+      finally
+      {
+        DBUtil.close(connection);
+      }
+    }
+
+    throw new LobCleanupNotSupportedException();
   }
 
   @Override
@@ -1202,6 +1255,19 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private abstract class SchemaMigrator
   {
     public abstract void migrateSchema(Connection connection) throws Exception;
+
+    protected final IDBSchema createFakeSchema(Connection connection)
+    {
+      String schemaName = getSchemaName(connection);
+      if (schemaName != null)
+      {
+        boolean caseSensitive = dbAdapter.isCaseSensitive();
+        boolean prependSchemaName = isPrependSchemaName();
+        return DBUtil.createSchema(schemaName, caseSensitive, prependSchemaName);
+      }
+
+      return null;
+    }
   }
 
   private static final int FIRST_VERSION_WITH_NULLABLE_CHECKS = 4;
@@ -1221,21 +1287,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
           @Override
           public void visitTable(Connection connection, String name) throws SQLException
           {
-            Statement statement = null;
-
-            try
-            {
-              statement = connection.createStatement();
-
-              String from = " FROM " + name + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "<" + CDOBranchVersion.FIRST_VERSION;
-              statement.executeUpdate("DELETE FROM " + DBUtil.quoted(MappingNames.CDO_OBJECTS) + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID)
-                  + " IN (SELECT " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + from + ")");
-              statement.executeUpdate("DELETE" + from);
-            }
-            finally
-            {
-              DBUtil.close(statement);
-            }
+            String from = " FROM " + name + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_VERSION) + "<" + CDOBranchVersion.FIRST_VERSION;
+            DBUtil.execute(connection, "DELETE FROM " + DBUtil.quoted(MappingNames.CDO_OBJECTS) + " WHERE " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID)
+                + " IN (SELECT " + DBUtil.quoted(MappingNames.ATTRIBUTES_ID) + from + ")");
+            DBUtil.execute(connection, "DELETE" + from);
           }
         });
       }
@@ -1247,41 +1302,35 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     @Override
     public void migrateSchema(Connection connection) throws Exception
     {
-      Statement statement = null;
+      // Create a fake DBField.
+      DBTable table = new DBTable(createFakeSchema(connection), LobsTable.tableName());
+      IDBField field = new DBField(table, LobsTable.sizeName(), DBType.INTEGER, 0, 0, false, 0);
 
-      try
-      {
-        statement = connection.createStatement();
-
-        // Create a fake DBField because the DBSchema is not yet initialized at this point.
-        IDBSchema schema = null;
-
-        String schemaName = getSchemaName(connection);
-        if (schemaName != null)
-        {
-          schema = DBUtil.createSchema(schemaName, dbAdapter.isCaseSensitive(), isPrependSchemaName());
-        }
-
-        DBTable table = new DBTable(schema, LobsTable.tableName());
-        IDBField field = new DBField(table, LobsTable.sizeName(), DBType.INTEGER, 0, 0, false, 0);
-
-        String sql = dbAdapter.sqlRenameField(field, DBUtil.quoted("size"));
-        statement.execute(sql);
-      }
-      finally
-      {
-        DBUtil.close(statement);
-      }
+      String sql = dbAdapter.sqlRenameField(field, DBUtil.quoted("size"));
+      DBUtil.execute(connection, sql);
     }
   };
 
   private final SchemaMigrator NULLABLE_COLUMNS_MIGRATION = null;
 
+  private final SchemaMigrator LOB_CLEANUP_MIGRATION = new SchemaMigrator()
+  {
+    @Override
+    public void migrateSchema(Connection connection) throws Exception
+    {
+      // Create a fake DBTable.
+      DBTable table = new DBTable(createFakeSchema(connection), LobsTable.tableName());
+      String sql = "ALTER TABLE " + table + " ADD " + DBUtil.quoted(LobsTable.refsName()) + " INTEGER";
+      DBUtil.execute(connection, sql);
+    }
+  };
+
   private final SchemaMigrator[] SCHEMA_MIGRATORS = { //
       NO_MIGRATION_NEEDED, //
       NON_AUDIT_MIGRATION, //
       LOB_SIZE_MIGRATION, //
-      NULLABLE_COLUMNS_MIGRATION };
+      NULLABLE_COLUMNS_MIGRATION, //
+      LOB_CLEANUP_MIGRATION };
 
   {
     if (SCHEMA_MIGRATORS.length != SCHEMA_VERSION)

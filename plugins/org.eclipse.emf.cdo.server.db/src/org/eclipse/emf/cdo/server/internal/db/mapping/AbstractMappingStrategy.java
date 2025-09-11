@@ -21,6 +21,10 @@ import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.common.model.CDOFeatureType;
+import org.eclipse.emf.cdo.common.model.CDOPackageInfo;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit.State;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
 import org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext;
@@ -30,6 +34,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBAnnotation;
@@ -58,6 +63,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EModelElement;
@@ -85,7 +91,7 @@ import java.util.concurrent.ConcurrentMap;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy
+public abstract class AbstractMappingStrategy extends Lifecycle implements IMappingStrategy, ILobRefsUpdater
 {
   // --------- database name generation strings --------------
   protected static final String NAME_SEPARATOR = "_"; //$NON-NLS-1$
@@ -723,6 +729,66 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
   public abstract IListMapping doCreateListMapping(EClass containingClass, EStructuralFeature feature);
 
   @Override
+  public void updateLobRefs(Connection connection)
+  {
+    InternalRepository repository = (InternalRepository)store.getRepository();
+    CDOPackageRegistry packageRegistry = repository.getPackageRegistry(false);
+
+    for (CDOPackageInfo packageInfo : packageRegistry.getPackageInfos())
+    {
+      updateLobRefs(connection, packageInfo);
+    }
+  }
+
+  private void updateLobRefs(Connection connection, CDOPackageInfo packageInfo)
+  {
+    State state = packageInfo.getPackageUnit().getState();
+    if (state == CDOPackageUnit.State.LOADED || state == CDOPackageUnit.State.PROXY)
+    {
+      EPackage ePackage = packageInfo.getEPackage();
+      for (EClassifier eClassifier : ePackage.getEClassifiers())
+      {
+        if (eClassifier instanceof EClass)
+        {
+          updateLobRefs(connection, (EClass)eClassifier);
+        }
+      }
+    }
+  }
+
+  private void updateLobRefs(Connection connection, EClass eClass)
+  {
+    for (EAttribute eAttribute : getPersistentLobAttributes(eClass))
+    {
+      IClassMapping classMapping = getClassMapping(eClass);
+      if (classMapping.isMapped())
+      {
+        ILobRefsUpdater featureUpdater;
+
+        if (eAttribute.isMany())
+        {
+          IListMapping listMapping = classMapping.getListMapping(eAttribute);
+          featureUpdater = getLobRefsUpdater(listMapping);
+        }
+        else
+        {
+          ITypeMapping valueMapping = classMapping.getValueMapping(eAttribute);
+          featureUpdater = getLobRefsUpdater(valueMapping);
+        }
+
+        if (featureUpdater == null)
+        {
+          throw new LobRefsUpdateNotSupportedException();
+        }
+
+        featureUpdater.updateLobRefs(connection);
+      }
+    }
+  }
+
+  protected abstract EAttribute[] getPersistentLobAttributes(EClass eClass);
+
+  @Override
   protected void doBeforeActivate() throws Exception
   {
     super.doBeforeActivate();
@@ -754,6 +820,16 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
         OM.LOG.warn(exception);
       }
     }
+  }
+
+  private static ILobRefsUpdater getLobRefsUpdater(Object object)
+  {
+    if (object instanceof ILobRefsUpdater)
+    {
+      return (ILobRefsUpdater)object;
+    }
+
+    return null;
   }
 
   private static Set<CDOFeatureType> doGetForceIndexes(IMappingStrategy mappingStrategy)

@@ -64,6 +64,11 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//File/name"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//File/data"/>
     </genClasses>
+    <genClasses ecoreClass="model3.ecore#//MultiLob">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//MultiLob/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//MultiLob/blobs"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//MultiLob/clobs"/>
+    </genClasses>
     <genClasses ecoreClass="model3.ecore#//ClassWithIDAttribute">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute model3.ecore#//ClassWithIDAttribute/id"/>
     </genClasses>

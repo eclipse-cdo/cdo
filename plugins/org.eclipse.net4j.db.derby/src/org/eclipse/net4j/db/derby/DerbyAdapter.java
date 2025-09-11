@@ -141,4 +141,10 @@ public abstract class DerbyAdapter extends DBAdapter
     String sqlState = ex.getSQLState();
     return "42X04".equals(sqlState) || super.isColumnNotFoundException(ex);
   }
+
+  @Override
+  protected String sqlCharIndexFunction()
+  {
+    return "LOCATE";
+  }
 }

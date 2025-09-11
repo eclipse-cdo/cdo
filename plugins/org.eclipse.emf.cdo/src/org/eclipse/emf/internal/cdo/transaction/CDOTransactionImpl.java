@@ -5340,11 +5340,31 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
     {
       for (EAttribute lobAttribute : revision.getClassInfo().getAllPersistentLobAttributes())
       {
-        CDOLob<?> lob = (CDOLob<?>)revision.getValue(lobAttribute);
-        if (lob != null)
+        if (lobAttribute.isMany())
         {
-          lobs.put(new ByteArrayWrapper(lob.getID()), lob);
+          @SuppressWarnings("unchecked")
+          List<CDOLob<?>> list = (List<CDOLob<?>>)revision.getValue(lobAttribute);
+          if (list != null)
+          {
+            for (CDOLob<?> lob : list)
+            {
+              collectLob(lob, lobs);
+            }
+          }
         }
+        else
+        {
+          CDOLob<?> lob = (CDOLob<?>)revision.getValue(lobAttribute);
+          collectLob(lob, lobs);
+        }
+      }
+    }
+
+    private void collectLob(CDOLob<?> lob, Map<ByteArrayWrapper, CDOLob<?>> lobs)
+    {
+      if (lob != null)
+      {
+        lobs.put(new ByteArrayWrapper(lob.getID()), lob);
       }
     }
 

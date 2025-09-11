@@ -29,6 +29,7 @@ import org.eclipse.net4j.db.Batch;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
 import org.eclipse.net4j.db.DBUtil;
+import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
@@ -1042,6 +1043,8 @@ public class DBStoreTables extends Lifecycle
 
     private IDBField cdata;
 
+    private IDBField refs;
+
     private String sqlQueryLobs;
 
     private String sqlHandleLobs;
@@ -1051,6 +1054,10 @@ public class DBStoreTables extends Lifecycle
     private String sqlWriteBlob;
 
     private String sqlWriteClob;
+
+    private String sqlResetRefs;
+
+    private String sqlDeleteOrphans;
 
     public LobsTable(IDBStore store)
     {
@@ -1228,6 +1235,34 @@ public class DBStoreTables extends Lifecycle
       }
     }
 
+    public void resetRefs(Connection connection)
+    {
+      DBUtil.execute(connection, sqlResetRefs);
+    }
+
+    public int updateRefs(Connection connection, IDBField dataField)
+    {
+      IDBTable dataTable = dataField.getTable();
+      IDBTable lobsTable = table();
+
+      IDBAdapter dbAdapter = store().getDBAdapter();
+      String sql = "UPDATE " + lobsTable + " SET " + refs + "=" + refs + //
+          "+(SELECT COUNT(*) FROM " + dataTable + " WHERE " //
+          + dataField + " LIKE " + lobsTable + "." + dbAdapter.sqlConcat(id, "'-%'") + ")";
+
+      return DBUtil.update(connection, sql);
+    }
+
+    public int deleteOrphans(Connection connection, boolean dryRun)
+    {
+      if (dryRun)
+      {
+        return DBUtil.getRowCount(connection, table() + " WHERE " + refs + "=0");
+      }
+
+      return DBUtil.update(connection, sqlDeleteOrphans);
+    }
+
     @Override
     protected void firstActivate(IDBTable table)
     {
@@ -1235,6 +1270,7 @@ public class DBStoreTables extends Lifecycle
       size = table.addField(NAMES.SIZE, DBType.BIGINT);
       bdata = table.addField(NAMES.BDATA, DBType.BLOB);
       cdata = table.addField(NAMES.CDATA, DBType.CLOB);
+      refs = table.addField(NAMES.REFS, DBType.INTEGER);
 
       table.addIndex(IDBIndex.Type.PRIMARY_KEY, id);
     }
@@ -1246,6 +1282,7 @@ public class DBStoreTables extends Lifecycle
       size = table.getField(NAMES.SIZE);
       bdata = table.getField(NAMES.BDATA);
       cdata = table.getField(NAMES.CDATA);
+      refs = table.getField(NAMES.REFS);
     }
 
     @Override
@@ -1256,6 +1293,8 @@ public class DBStoreTables extends Lifecycle
       sqlLoadLob = "SELECT " + size + ", " + bdata + ", " + cdata + " FROM " + table + " WHERE " + id + "=?";
       sqlWriteBlob = "INSERT INTO " + table + "(" + id + ", " + size + ", " + bdata + ") VALUES(?, ?, ?)";
       sqlWriteClob = "INSERT INTO " + table + "(" + id + ", " + size + ", " + cdata + ") VALUES(?, ?, ?)";
+      sqlResetRefs = "UPDATE " + table + " SET " + refs + "=0";
+      sqlDeleteOrphans = "DELETE FROM " + table + " WHERE " + refs + "=0";
     }
 
     public static String tableName()
@@ -1263,9 +1302,19 @@ public class DBStoreTables extends Lifecycle
       return NAMES.LOBS;
     }
 
+    public static String idName()
+    {
+      return NAMES.ID;
+    }
+
     public static String sizeName()
     {
       return NAMES.SIZE;
+    }
+
+    public static String refsName()
+    {
+      return NAMES.REFS;
     }
 
     /**
@@ -1282,6 +1331,8 @@ public class DBStoreTables extends Lifecycle
       private static final String BDATA = name("bdata");
 
       private static final String CDATA = name("cdata");
+
+      private static final String REFS = name("nrefs");
 
       private static String name(String name)
       {

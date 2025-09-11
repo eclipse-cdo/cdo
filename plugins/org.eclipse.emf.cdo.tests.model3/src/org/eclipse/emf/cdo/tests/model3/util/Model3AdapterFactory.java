@@ -23,6 +23,7 @@ import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
 import org.eclipse.emf.cdo.tests.model3.Model3Package;
+import org.eclipse.emf.cdo.tests.model3.MultiLob;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
@@ -158,6 +159,12 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
     public Adapter caseFile(File object)
     {
       return createFileAdapter();
+    }
+
+    @Override
+    public Adapter caseMultiLob(MultiLob object)
+    {
+      return createMultiLobAdapter();
     }
 
     @Override
@@ -376,6 +383,21 @@ public class Model3AdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createFileAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.eclipse.emf.cdo.tests.model3.MultiLob <em>Multi Lob</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.eclipse.emf.cdo.tests.model3.MultiLob
+   * @generated
+   */
+  public Adapter createMultiLobAdapter()
   {
     return null;
   }

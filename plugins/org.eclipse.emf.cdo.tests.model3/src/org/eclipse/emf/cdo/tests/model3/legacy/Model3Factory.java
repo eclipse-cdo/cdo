@@ -21,6 +21,7 @@ import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.MultiLob;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
@@ -148,6 +149,16 @@ public interface Model3Factory extends EFactory, org.eclipse.emf.cdo.tests.model
    * @generated
    */
   File createFile();
+
+  @Override
+  /**
+   * Returns a new object of class '<em>Multi Lob</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Multi Lob</em>'.
+   * @generated
+   */
+  MultiLob createMultiLob();
 
   @Override
   /**

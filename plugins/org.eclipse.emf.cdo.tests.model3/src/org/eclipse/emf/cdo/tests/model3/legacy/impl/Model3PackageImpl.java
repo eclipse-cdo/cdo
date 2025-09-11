@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.MultiLob;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
@@ -117,6 +118,13 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
    * @generated
    */
   private EClass fileEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass multiLobEClass = null;
 
   /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
@@ -680,6 +688,50 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
   }
 
   /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMultiLob()
+  {
+    return multiLobEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMultiLob_Name()
+  {
+    return (EAttribute)multiLobEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMultiLob_Blobs()
+  {
+    return (EAttribute)multiLobEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMultiLob_Clobs()
+  {
+    return (EAttribute)multiLobEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @generated
    */
@@ -1013,6 +1065,11 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
     createEAttribute(fileEClass, FILE__NAME);
     createEAttribute(fileEClass, FILE__DATA);
 
+    multiLobEClass = createEClass(MULTI_LOB);
+    createEAttribute(multiLobEClass, MULTI_LOB__NAME);
+    createEAttribute(multiLobEClass, MULTI_LOB__BLOBS);
+    createEAttribute(multiLobEClass, MULTI_LOB__CLOBS);
+
     classWithIDAttributeEClass = createEClass(CLASS_WITH_ID_ATTRIBUTE);
     createEAttribute(classWithIDAttributeEClass, CLASS_WITH_ID_ATTRIBUTE__ID);
 
@@ -1171,6 +1228,14 @@ public class Model3PackageImpl extends EPackageImpl implements Model3Package
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFile_Data(), theEtypesPackage.getClob(), "data", null, 0, 1, File.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE,
         !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(multiLobEClass, MultiLob.class, "MultiLob", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMultiLob_Name(), theEcorePackage.getEString(), "name", null, 0, 1, MultiLob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMultiLob_Blobs(), theEtypesPackage.getBlob(), "blobs", null, 0, -1, MultiLob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMultiLob_Clobs(), theEtypesPackage.getClob(), "clobs", null, 0, -1, MultiLob.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE,
+        !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(classWithIDAttributeEClass, ClassWithIDAttribute.class, "ClassWithIDAttribute", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getClassWithIDAttribute_Id(), theEcorePackage.getEString(), "id", null, 0, 1, ClassWithIDAttribute.class, !IS_TRANSIENT, !IS_VOLATILE,

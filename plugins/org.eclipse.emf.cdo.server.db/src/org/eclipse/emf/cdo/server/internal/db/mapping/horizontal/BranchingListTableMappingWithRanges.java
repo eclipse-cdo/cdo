@@ -45,6 +45,7 @@ import org.eclipse.emf.cdo.server.db.mapping.IListMappingDeltaSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionManager;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
@@ -90,7 +91,7 @@ import java.util.List;
  * @author Lothar Werzinger
  */
 public class BranchingListTableMappingWithRanges extends AbstractBasicListTableMapping
-    implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport
+    implements IListMappingDeltaSupport, IListMapping4, IBranchDeletionSupport, ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, BranchingListTableMappingWithRanges.class);
 
@@ -345,7 +346,8 @@ public class BranchingListTableMappingWithRanges extends AbstractBasicListTableM
     return table;
   }
 
-  protected final ITypeMapping getTypeMapping()
+  @Override
+  public final ITypeMapping getTypeMapping()
   {
     return typeMapping;
   }

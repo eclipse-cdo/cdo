@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.tests.model3.EdgeTarget;
 import org.eclipse.emf.cdo.tests.model3.File;
 import org.eclipse.emf.cdo.tests.model3.Image;
 import org.eclipse.emf.cdo.tests.model3.MetaRef;
+import org.eclipse.emf.cdo.tests.model3.MultiLob;
 import org.eclipse.emf.cdo.tests.model3.NodeA;
 import org.eclipse.emf.cdo.tests.model3.NodeB;
 import org.eclipse.emf.cdo.tests.model3.NodeC;
@@ -110,6 +111,8 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
       return createImage();
     case Model3Package.FILE:
       return createFile();
+    case Model3Package.MULTI_LOB:
+      return createMultiLob();
     case Model3Package.CLASS_WITH_ID_ATTRIBUTE:
       return createClassWithIDAttribute();
     case Model3Package.CLASS_WITH_JAVA_CLASS_ATTRIBUTE:
@@ -283,6 +286,18 @@ public class Model3FactoryImpl extends EFactoryImpl implements Model3Factory
   {
     FileImpl file = new FileImpl();
     return file;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public MultiLob createMultiLob()
+  {
+    MultiLobImpl multiLob = new MultiLobImpl();
+    return multiLob;
   }
 
   /**

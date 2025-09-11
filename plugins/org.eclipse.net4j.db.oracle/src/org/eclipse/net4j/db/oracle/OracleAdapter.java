@@ -184,6 +184,12 @@ public class OracleAdapter extends DBAdapter
   }
 
   @Override
+  public String sqlCharIndex(Object substring, Object string)
+  {
+    return "INSTR(" + string + ", " + substring + ")";
+  }
+
+  @Override
   protected ResultSet readTables(Connection connection, DatabaseMetaData metaData, String schemaName) throws SQLException
   {
     String catalog = connection.getCatalog();

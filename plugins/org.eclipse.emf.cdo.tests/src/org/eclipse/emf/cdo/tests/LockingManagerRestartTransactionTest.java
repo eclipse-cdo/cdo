@@ -25,11 +25,11 @@ import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.ILockingManager;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.spi.common.branch.CDOBranchUtil;
 import org.eclipse.emf.cdo.spi.server.InternalLockManager;
+import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.tests.model1.Company;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -454,8 +454,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
     String durableLockingID = transaction.enableDurableLocking();
     lockWrite(company);
 
-    ISession serverSession = CDOServerUtil.getServerSession(session);
-    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+    InternalSession serverSession = serverSession(session);
+    InternalLockManager lm = serverSession.getRepository().getLockingManager();
 
     CDOServerUtil.execute(serverSession, () -> {
       LockArea lockArea = lm.getLockArea(durableLockingID);
@@ -471,8 +471,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
 
   public void _testClearLocksOnServer() throws Exception
   {
-    ISession serverSession = CDOServerUtil.getServerSession(session);
-    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+    InternalSession serverSession = serverSession(session);
+    InternalLockManager lm = serverSession.getRepository().getLockingManager();
 
     transaction.commit();
     transaction.options().setLockNotificationEnabled(true);
@@ -529,8 +529,8 @@ public class LockingManagerRestartTransactionTest extends AbstractLockingTest
   {
     transaction.commit();
 
-    ISession serverSession = CDOServerUtil.getServerSession(session);
-    InternalLockManager lm = (InternalLockManager)serverSession.getRepository().getLockingManager();
+    InternalSession serverSession = serverSession(session);
+    InternalLockManager lm = serverSession.getRepository().getLockingManager();
 
     CDOView localView = session.openView();
     localView.options().setLockNotificationEnabled(true);

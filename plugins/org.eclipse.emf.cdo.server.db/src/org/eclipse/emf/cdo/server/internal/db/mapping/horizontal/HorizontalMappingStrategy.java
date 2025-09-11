@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
@@ -48,7 +49,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy
+public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy, ILobRefsUpdater
 {
   private Map<String, String> properties;
 
@@ -236,6 +237,19 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
     return delegate.readChangeSet(accessor, monitor, segments);
+  }
+
+  @Override
+  public void updateLobRefs(Connection connection)
+  {
+    if (delegate instanceof ILobRefsUpdater)
+    {
+      ((ILobRefsUpdater)delegate).updateLobRefs(connection);
+    }
+    else
+    {
+      throw new LobRefsUpdateNotSupportedException();
+    }
   }
 
   @Override

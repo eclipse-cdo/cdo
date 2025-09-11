@@ -26,6 +26,7 @@ import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
+import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.AbstractBasicListTableMapping.ListLobRefsUpdater;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.net4j.db.DBException;
@@ -60,7 +61,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractListTableMapping extends AbstractBasicListTableMapping
+public abstract class AbstractListTableMapping extends AbstractBasicListTableMapping implements ListLobRefsUpdater
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractListTableMapping.class);
 
@@ -265,7 +266,8 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
     return table;
   }
 
-  protected final ITypeMapping getTypeMapping()
+  @Override
+  public final ITypeMapping getTypeMapping()
   {
     return typeMapping;
   }

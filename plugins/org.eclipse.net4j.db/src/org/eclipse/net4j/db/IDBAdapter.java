@@ -159,6 +159,26 @@ public interface IDBAdapter
   public String sqlModifyField(IDBField field);
 
   /**
+   * @since 4.12
+   */
+  public String sqlCharIndex(Object substring, Object string);
+
+  /**
+   * @since 4.12
+   */
+  public String sqlSubstring(Object string, Object startIndex, Object length);
+
+  /**
+   * @since 4.12
+   */
+  public String sqlSubstring(Object string, Object startIndex);
+
+  /**
+   * @since 4.12
+   */
+  public String sqlConcat(Object... strings);
+
+  /**
    * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
    */
   @Deprecated

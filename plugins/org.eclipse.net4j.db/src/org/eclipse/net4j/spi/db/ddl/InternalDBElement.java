@@ -20,5 +20,4 @@ import org.eclipse.net4j.db.ddl.IDBElement;
  */
 public interface InternalDBElement extends IDBElement
 {
-
 }

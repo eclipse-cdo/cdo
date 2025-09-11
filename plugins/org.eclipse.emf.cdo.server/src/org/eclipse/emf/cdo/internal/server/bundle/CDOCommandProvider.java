@@ -16,8 +16,8 @@ import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.CDOServerExporter;
 import org.eclipse.emf.cdo.server.CDOServerImporter;
 import org.eclipse.emf.cdo.server.CDOServerUtil;
+import org.eclipse.emf.cdo.server.ILobCleanup.LobCleanupNotSupportedException;
 import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.spi.common.branch.InternalCDOBranch;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
@@ -277,10 +277,10 @@ public class CDOCommandProvider implements CommandProvider
     }
   };
 
-  private static final CDOCommand locks = new CDOCommand.WithAccessor("locks", "list the locks of a repository", CDOCommand.optional("username-prefix"))
+  private static final CDOCommand locks = new CDOCommand.WithRepository("locks", "list the locks of a repository", CDOCommand.optional("username-prefix"))
   {
     @Override
-    public void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception
+    public void execute(InternalRepository repository, String[] args) throws Exception
     {
       String usernamePrefix = args[0];
 
@@ -290,22 +290,22 @@ public class CDOCommandProvider implements CommandProvider
         public boolean handleLockArea(IDurableLockingManager.LockArea area)
         {
           println(area.getDurableLockingID());
-          println(CDOCommand.INDENT + "userID = " + area.getUserID());
-          println(CDOCommand.INDENT + "branch = " + area.getBranch());
-          println(CDOCommand.INDENT + "timeStamp = " + CDOCommonUtil.formatTimeStamp(area.getTimeStamp()));
-          println(CDOCommand.INDENT + "readOnly = " + area.isReadOnly());
-          println(CDOCommand.INDENT + "locks = " + area.getLocks());
+          println(INDENT + "userID = " + area.getUserID());
+          println(INDENT + "branch = " + area.getBranch());
+          println(INDENT + "timeStamp = " + CDOCommonUtil.formatTimeStamp(area.getTimeStamp()));
+          println(INDENT + "readOnly = " + area.isReadOnly());
+          println(INDENT + "locks = " + area.getLocks());
           return true;
         }
       });
     }
   };
 
-  private static final CDOCommand deletelocks = new CDOCommand.WithAccessor("deletelocks", "delete a durable locking area of a repository",
+  private static final CDOCommand deletelocks = new CDOCommand.WithRepository("deletelocks", "delete a durable locking area of a repository",
       CDOCommand.parameter("area-id"))
   {
     @Override
-    public void execute(InternalRepository repository, IStoreAccessor accessor, String[] args) throws Exception
+    public void execute(InternalRepository repository, String[] args) throws Exception
     {
       String areaID = args[0];
 
@@ -316,6 +316,34 @@ public class CDOCommandProvider implements CommandProvider
       }
 
       repository.unlockAdministratively((InternalView)view);
+    }
+  };
+
+  private static final CDOCommand cleanuplobs = new CDOCommand.WithRepository("cleanuplobs", "clean up unreferenced LOBs in a repository",
+      CDOCommand.parameter("dry-run", true).literal())
+  {
+    @Override
+    public void execute(InternalRepository repository, String[] args) throws Exception
+    {
+      boolean dryRun = "dry-run".equalsIgnoreCase(args[0]);
+
+      try
+      {
+        int deleted = repository.cleanupLobs(dryRun);
+
+        if (dryRun)
+        {
+          println("Dry run: " + deleted + " unreferenced LOBs would be deleted");
+        }
+        else
+        {
+          println(deleted + " unreferenced LOBs deleted");
+        }
+      }
+      catch (LobCleanupNotSupportedException ex)
+      {
+        println(ex.getMessage());
+      }
     }
   };
 
@@ -414,6 +442,7 @@ public class CDOCommandProvider implements CommandProvider
     addCommand(commands, branches);
     addCommand(commands, deletelocks);
     addCommand(commands, locks);
+    addCommand(commands, cleanuplobs);
     addCommand(commands, packages);
     addCommand(commands, sessions);
 

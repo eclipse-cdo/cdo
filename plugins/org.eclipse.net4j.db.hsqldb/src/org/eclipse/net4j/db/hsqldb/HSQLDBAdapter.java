@@ -107,4 +107,10 @@ public class HSQLDBAdapter extends DBAdapter
     String sqlState = ex.getSQLState();
     return "42501".equals(sqlState);
   }
+
+  @Override
+  protected String sqlCharIndexFunction()
+  {
+    return "LOCATE";
+  }
 }

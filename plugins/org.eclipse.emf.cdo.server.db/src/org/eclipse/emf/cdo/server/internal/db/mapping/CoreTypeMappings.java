@@ -25,10 +25,13 @@ import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping;
 import org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMappingFactory;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
+import org.eclipse.emf.cdo.server.internal.db.DBStore;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
+import org.eclipse.emf.cdo.server.internal.db.LobRefHandler;
 
 import org.eclipse.net4j.db.DBType;
-import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import org.eclipse.emf.common.util.Enumerator;
@@ -40,6 +43,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -152,7 +156,7 @@ public class CoreTypeMappings
   /**
    * @author Eike Stepper
    */
-  public static class TMBlob extends AbstractTypeMapping
+  public static class TMBlob extends AbstractTypeMapping implements ILobRefsUpdater
   {
     public static final Factory FACTORY_VARCHAR = new Factory(
         TypeMappingUtil.createDescriptor(ID_PREFIX + ".BlobStream", EtypesPackage.eINSTANCE.getBlob(), DBType.VARCHAR));
@@ -164,7 +168,7 @@ public class CoreTypeMappings
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
       CDOBlob blob = (CDOBlob)value;
-      stmt.setString(index, HexUtil.bytesToHex(blob.getID()) + "-" + blob.getSize());
+      stmt.setString(index, LobRefHandler.format(blob));
     }
 
     @Override
@@ -176,11 +180,14 @@ public class CoreTypeMappings
         return null;
       }
 
-      int pos = str.indexOf('-');
+      return LobRefHandler.parse(str, CDOLobUtil::createBlob);
+    }
 
-      byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
-      long size = Long.parseLong(str.substring(pos + 1));
-      return CDOLobUtil.createBlob(id, size);
+    @Override
+    public void updateLobRefs(Connection connection)
+    {
+      LobsTable lobs = ((DBStore)getMappingStrategy().getStore()).tables().lobs();
+      lobs.updateRefs(connection, getField());
     }
 
     /**
@@ -204,7 +211,7 @@ public class CoreTypeMappings
   /**
    * @author Eike Stepper
    */
-  public static class TMClob extends AbstractTypeMapping
+  public static class TMClob extends AbstractTypeMapping implements ILobRefsUpdater
   {
     public static final Factory FACTORY_VARCHAR = new Factory(
         TypeMappingUtil.createDescriptor(ID_PREFIX + ".ClobStream", EtypesPackage.eINSTANCE.getClob(), DBType.VARCHAR));
@@ -216,7 +223,7 @@ public class CoreTypeMappings
     protected void doSetValue(PreparedStatement stmt, int index, Object value) throws SQLException
     {
       CDOClob clob = (CDOClob)value;
-      stmt.setString(index, HexUtil.bytesToHex(clob.getID()) + "-" + clob.getSize());
+      stmt.setString(index, LobRefHandler.format(clob));
     }
 
     @Override
@@ -228,11 +235,14 @@ public class CoreTypeMappings
         return null;
       }
 
-      int pos = str.indexOf('-');
+      return LobRefHandler.parse(str, CDOLobUtil::createClob);
+    }
 
-      byte[] id = HexUtil.hexToBytes(str.substring(0, pos));
-      long size = Long.parseLong(str.substring(pos + 1));
-      return CDOLobUtil.createClob(id, size);
+    @Override
+    public void updateLobRefs(Connection connection)
+    {
+      LobsTable lobs = ((DBStore)getMappingStrategy().getStore()).tables().lobs();
+      lobs.updateRefs(connection, getField());
     }
 
     /**

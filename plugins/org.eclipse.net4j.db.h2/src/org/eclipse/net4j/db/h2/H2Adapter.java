@@ -135,6 +135,12 @@ public class H2Adapter extends DBAdapter
     return "ALTER TABLE " + field.getTable() + " ALTER COLUMN " + oldName + " RENAME TO " + field;
   }
 
+  @Override
+  protected String sqlCharIndexFunction()
+  {
+    return "LOCATE";
+  }
+
   /**
    * @since 4.2
    */

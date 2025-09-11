@@ -117,6 +117,15 @@ public interface Model3Factory extends EFactory
   File createFile();
 
   /**
+   * Returns a new object of class '<em>Multi Lob</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Multi Lob</em>'.
+   * @generated
+   */
+  MultiLob createMultiLob();
+
+  /**
    * Returns a new object of class '<em>Class With ID Attribute</em>'.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @return a new object of class '<em>Class With ID Attribute</em>'.

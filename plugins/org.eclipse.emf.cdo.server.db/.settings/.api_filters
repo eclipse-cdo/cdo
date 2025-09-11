@@ -40,6 +40,20 @@
             </message_arguments>
         </filter>
     </resource>
+    <resource path="src/org/eclipse/emf/cdo/server/db/mapping/IClassMapping.java" type="org.eclipse.emf.cdo.server.db.mapping.IClassMapping">
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IClassMapping"/>
+                <message_argument value="getValueMapping(EStructuralFeature)"/>
+            </message_arguments>
+        </filter>
+        <filter id="404000815">
+            <message_arguments>
+                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IClassMapping"/>
+                <message_argument value="isMapped()"/>
+            </message_arguments>
+        </filter>
+    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.java" type="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy">
         <filter id="403767336">
             <message_arguments>

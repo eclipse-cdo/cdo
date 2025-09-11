@@ -515,13 +515,59 @@ public interface Model3Package extends EPackage
   int FILE_FEATURE_COUNT = 2;
 
   /**
+   * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.MultiLobImpl <em>Multi Lob</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.eclipse.emf.cdo.tests.model3.impl.MultiLobImpl
+   * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getMultiLob()
+   * @generated
+   */
+  int MULTI_LOB = 11;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTI_LOB__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Blobs</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTI_LOB__BLOBS = 1;
+
+  /**
+   * The feature id for the '<em><b>Clobs</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTI_LOB__CLOBS = 2;
+
+  /**
+   * The number of structural features of the '<em>Multi Lob</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MULTI_LOB_FEATURE_COUNT = 3;
+
+  /**
    * The meta object id for the '{@link org.eclipse.emf.cdo.tests.model3.impl.ClassWithIDAttributeImpl <em>Class With ID Attribute</em>}' class.
    * <!-- begin-user-doc --> <!-- end-user-doc -->
    * @see org.eclipse.emf.cdo.tests.model3.impl.ClassWithIDAttributeImpl
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClassWithIDAttribute()
    * @generated
    */
-  int CLASS_WITH_ID_ATTRIBUTE = 11;
+  int CLASS_WITH_ID_ATTRIBUTE = 12;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -548,7 +594,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClassWithJavaClassAttribute()
    * @generated
    */
-  int CLASS_WITH_JAVA_CLASS_ATTRIBUTE = 12;
+  int CLASS_WITH_JAVA_CLASS_ATTRIBUTE = 13;
 
   /**
    * The feature id for the '<em><b>Java Class</b></em>' attribute.
@@ -576,7 +622,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClassWithJavaObjectAttribute()
    * @generated
    */
-  int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE = 13;
+  int CLASS_WITH_JAVA_OBJECT_ATTRIBUTE = 14;
 
   /**
    * The feature id for the '<em><b>Java Object</b></em>' attribute.
@@ -604,7 +650,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getClassWithTransientContainment()
    * @generated
    */
-  int CLASS_WITH_TRANSIENT_CONTAINMENT = 14;
+  int CLASS_WITH_TRANSIENT_CONTAINMENT = 15;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -668,7 +714,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getEdgeTarget()
    * @generated
    */
-  int EDGE_TARGET = 15;
+  int EDGE_TARGET = 16;
 
   /**
    * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
@@ -705,7 +751,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getNodeF()
    * @generated
    */
-  int NODE_F = 16;
+  int NODE_F = 17;
 
   /**
    * The feature id for the '<em><b>Outgoing Edges</b></em>' reference list.
@@ -742,7 +788,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getEdge()
    * @generated
    */
-  int EDGE = 17;
+  int EDGE = 18;
 
   /**
    * The feature id for the '<em><b>Source Node</b></em>' reference.
@@ -779,7 +825,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getDiagram()
    * @generated
    */
-  int DIAGRAM = 18;
+  int DIAGRAM = 19;
 
   /**
    * The feature id for the '<em><b>Edges</b></em>' containment reference list.
@@ -815,7 +861,7 @@ public interface Model3Package extends EPackage
    * @see org.eclipse.emf.cdo.tests.model3.impl.Model3PackageImpl#getPoint()
    * @generated
    */
-  int POINT = 19;
+  int POINT = 20;
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.Class1 <em>Class1</em>}'. <!--
@@ -1244,6 +1290,49 @@ public interface Model3Package extends EPackage
    * @generated
    */
   EAttribute getFile_Data();
+
+  /**
+   * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.MultiLob <em>Multi Lob</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Multi Lob</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MultiLob
+   * @generated
+   */
+  EClass getMultiLob();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.eclipse.emf.cdo.tests.model3.MultiLob#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MultiLob#getName()
+   * @see #getMultiLob()
+   * @generated
+   */
+  EAttribute getMultiLob_Name();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model3.MultiLob#getBlobs <em>Blobs</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Blobs</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MultiLob#getBlobs()
+   * @see #getMultiLob()
+   * @generated
+   */
+  EAttribute getMultiLob_Blobs();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.eclipse.emf.cdo.tests.model3.MultiLob#getClobs <em>Clobs</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Clobs</em>'.
+   * @see org.eclipse.emf.cdo.tests.model3.MultiLob#getClobs()
+   * @see #getMultiLob()
+   * @generated
+   */
+  EAttribute getMultiLob_Clobs();
 
   /**
    * Returns the meta object for class '{@link org.eclipse.emf.cdo.tests.model3.ClassWithIDAttribute <em>Class With ID Attribute</em>}'.

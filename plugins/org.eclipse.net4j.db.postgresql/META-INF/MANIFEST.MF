@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: %pluginName
 Bundle-SymbolicName: org.eclipse.net4j.db.postgresql;singleton:=true
-Bundle-Version: 4.4.5.qualifier
+Bundle-Version: 4.4.6.qualifier
 Bundle-Vendor: %providerName
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
@@ -14,7 +14,7 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)",
 Import-Package: org.postgresql;version="[9.0.0,10.0.0)";resolution:=optional;x-installation:=greedy,
  org.postgresql.ds;version="[9.0.0,10.0.0)";resolution:=optional;x-installation:=greedy,
  org.postgresql.ds.common;version="[9.0.0,10.0.0)";resolution:=optional;x-installation:=greedy
-Export-Package: org.eclipse.net4j.db.internal.postgresql.bundle;version="4.4.5";x-internal:=true,
- org.eclipse.net4j.db.postgresql;version="4.4.5"
+Export-Package: org.eclipse.net4j.db.internal.postgresql.bundle;version="4.4.6";x-internal:=true,
+ org.eclipse.net4j.db.postgresql;version="4.4.6"
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Automatic-Module-Name: org.eclipse.net4j.db.postgresql

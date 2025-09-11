@@ -43,7 +43,7 @@ import java.util.Set;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface IRepository extends CDOCommonRepository, CDOLobLoader, IQueryHandlerProvider, IPropertiesContainer, IContainer<Object>, ILifecycle
+public interface IRepository extends CDOCommonRepository, CDOLobLoader, IQueryHandlerProvider, ILobCleanup, IPropertiesContainer, IContainer<Object>, ILifecycle
 {
   /**
    * @since 3.0

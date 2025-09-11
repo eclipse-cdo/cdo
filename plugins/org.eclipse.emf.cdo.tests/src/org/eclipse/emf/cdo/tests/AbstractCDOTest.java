@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.net4j.CDONet4jUtil;
+import org.eclipse.emf.cdo.server.CDOServerUtil;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.session.CDORepositoryInfo;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -131,9 +132,7 @@ public abstract class AbstractCDOTest extends ConfigTest
 
   public InternalSession serverSession(CDOSession session)
   {
-    String repositoryName = session.getRepositoryInfo().getName();
-    InternalRepository repository = getRepository(repositoryName);
-    return repository.getSessionManager().getSession(session.getSessionID());
+    return (InternalSession)CDOServerUtil.getServerSession(session);
   }
 
   public InternalView serverView(CDOView view)

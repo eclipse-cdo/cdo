@@ -55,6 +55,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.StringJoiner;
 
 /**
  * A useful base class for implementing custom {@link IDBAdapter DB adapters}.
@@ -1235,6 +1236,63 @@ public abstract class DBAdapter implements IDBAdapter
   protected String sqlModifyField(String tableName, String fieldName, String definition)
   {
     return "ALTER TABLE " + tableName + " ALTER COLUMN " + fieldName + " " + definition;
+  }
+
+  @Override
+  public String sqlCharIndex(Object substring, Object string)
+  {
+    return sqlCharIndexFunction() + "(" + substring + ", " + string + ")";
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected String sqlCharIndexFunction()
+  {
+    return "CHARINDEX";
+  }
+
+  @Override
+  public String sqlSubstring(Object string, Object startIndex, Object length)
+  {
+    String sql = sqlSubstringFunction() + "(" + string + ", " + startIndex;
+
+    if (length != null)
+    {
+      sql += ", " + length;
+    }
+
+    return sql + ")";
+  }
+
+  @Override
+  public String sqlSubstring(Object string, Object startIndex)
+  {
+    return sqlSubstring(string, startIndex, null);
+  }
+
+  /**
+   * @since 4.12
+   */
+  protected String sqlSubstringFunction()
+  {
+    return "SUBSTRING";
+  }
+
+  @Override
+  public String sqlConcat(Object... strings)
+  {
+    StringJoiner joiner = new StringJoiner(" || ");
+
+    for (Object string : strings)
+    {
+      if (string != null)
+      {
+        joiner.add(string.toString());
+      }
+    }
+
+    return joiner.toString();
   }
 
   /**

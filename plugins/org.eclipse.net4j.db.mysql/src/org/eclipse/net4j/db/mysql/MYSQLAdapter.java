@@ -174,6 +174,12 @@ public class MYSQLAdapter extends DBAdapter
   }
 
   @Override
+  protected String sqlCharIndexFunction()
+  {
+    return "LOCATE";
+  }
+
+  @Override
   public Connection modifyConnection(Connection connection)
   {
     if (connection instanceof ConnectionProperties)

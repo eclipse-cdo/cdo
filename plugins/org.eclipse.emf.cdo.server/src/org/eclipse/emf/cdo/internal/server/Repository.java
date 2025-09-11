@@ -62,6 +62,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockDeltaCollector;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
+import org.eclipse.emf.cdo.server.ILobCleanup;
 import org.eclipse.emf.cdo.server.IQueryHandler;
 import org.eclipse.emf.cdo.server.IQueryHandlerProvider;
 import org.eclipse.emf.cdo.server.IRepositoryProtector;
@@ -2330,6 +2331,17 @@ public class Repository extends Container<Object> implements InternalRepository
   public void loadLob(CDOLobInfo info, Object outputStream) throws IOException
   {
     loadLob(info.getID(), (OutputStream)outputStream);
+  }
+
+  @Override
+  public int cleanupLobs(boolean dryRun)
+  {
+    if (store instanceof ILobCleanup)
+    {
+      return ((ILobCleanup)store).cleanupLobs(dryRun);
+    }
+
+    throw new LobCleanupNotSupportedException();
   }
 
   @Override

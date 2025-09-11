@@ -10,6 +10,7 @@
  */
 package org.eclipse.emf.cdo.tests.models;
 
+import org.eclipse.emf.cdo.etypes.EtypesPackage;
 import org.eclipse.emf.cdo.tests.mango.MangoPackage;
 import org.eclipse.emf.cdo.tests.model1.Model1Package;
 import org.eclipse.emf.cdo.tests.model2.Model2Package;
@@ -19,10 +20,12 @@ import org.eclipse.emf.cdo.tests.model4interfaces.model4interfacesPackage;
 import org.eclipse.emf.cdo.tests.model5.Model5Package;
 import org.eclipse.emf.cdo.tests.model6.Model6Package;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
 
 /**
  * @author Eike Stepper
@@ -48,11 +51,11 @@ public class ReflectOnTestModels
     }
   }
 
-  public static String fqn(EReference eReference)
+  public static String fqn(EStructuralFeature eFeature)
   {
-    EClass eClass = eReference.getEContainingClass();
+    EClass eClass = eFeature.getEContainingClass();
     EPackage ePackage = eClass.getEPackage();
-    return ePackage.getName() + "::" + eClass.getName() + "::" + eReference.getName();
+    return ePackage.getName() + "::" + eClass.getName() + "::" + eFeature.getName();
   }
 
   private static void reflectPackage(EPackage ePackage)
@@ -77,18 +80,43 @@ public class ReflectOnTestModels
 
   private static void reflectClass(EClass eClass)
   {
+    for (EAttribute eAttribute : eClass.getEAllAttributes())
+    {
+      reflectAttribute(eAttribute);
+    }
+
     for (EReference eReference : eClass.getEAllReferences())
     {
       reflectReference(eReference);
     }
   }
 
+  private static void reflectAttribute(EAttribute eAttribute)
+  {
+    dumpLobAttribute(eAttribute);
+  }
+
   private static void reflectReference(EReference eReference)
   {
     // dumpUniDirectionalCrossReference(eReference);
     // dumpSingleValuedContainmentReference(eReference);
-    dumpManyValuedCrossReference(eReference);
+    // dumpManyValuedCrossReference(eReference);
     // dumpSingleValuedCrossReference(eReference);
+  }
+
+  protected static void dumpLobAttribute(EAttribute eAttribute)
+  {
+    EClassifier eType = eAttribute.getEType();
+    String many = eAttribute.isMany() ? "  -->  MANY" : "";
+
+    if (eType == EtypesPackage.Literals.BLOB)
+    {
+      System.out.println("BLOB " + fqn(eAttribute) + many);
+    }
+    else if (eType == EtypesPackage.Literals.CLOB)
+    {
+      System.out.println("CLOB " + fqn(eAttribute) + many);
+    }
   }
 
   protected static void dumpUniDirectionalCrossReference(EReference eReference)

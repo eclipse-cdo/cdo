@@ -182,4 +182,10 @@ public class PostgreSQLAdapter extends DBAdapter
       throw ex;
     }
   }
+
+  @Override
+  public String sqlCharIndex(Object substring, Object string)
+  {
+    return "STRPOS(" + string + ", " + substring + ")";
+  }
 }

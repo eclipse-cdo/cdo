@@ -14,6 +14,7 @@ package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -41,6 +42,7 @@ import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
+import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 
 import java.io.IOException;
@@ -66,6 +68,8 @@ import java.util.List;
 public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
+
+  private static final EAttribute[] NO_PERSISTENT_LOB_ATTRIBUTES = {};
 
   private ObjectTypeTable objects;
 
@@ -410,6 +414,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   protected Collection<EClass> getClassesWithObjectInfo()
   {
     return getClassMappings().keySet();
+  }
+
+  @Override
+  protected EAttribute[] getPersistentLobAttributes(EClass eClass)
+  {
+    if (!eClass.isAbstract() && !eClass.isInterface())
+    {
+      return CDOModelUtil.getClassInfo(eClass).getAllPersistentLobAttributes();
+    }
+
+    return NO_PERSISTENT_LOB_ATTRIBUTES;
   }
 
   @Override

@@ -28,6 +28,7 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping3;
+import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.DBIndexAnnotation;
@@ -43,6 +44,7 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.MessageFormat;
@@ -1021,5 +1023,27 @@ public abstract class AbstractBasicListTableMapping implements IListMapping3
         return "Shift[" + startIndex + ".." + endIndex + ", offset=" + offset + "]";
       }
     }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  public interface ListLobRefsUpdater extends ILobRefsUpdater
+  {
+    @Override
+    public default void updateLobRefs(Connection connection) throws LobRefsUpdateNotSupportedException
+    {
+      ITypeMapping typeMapping = getTypeMapping();
+      if (typeMapping instanceof ILobRefsUpdater)
+      {
+        ((ILobRefsUpdater)typeMapping).updateLobRefs(connection);
+      }
+      else
+      {
+        throw new LobRefsUpdateNotSupportedException();
+      }
+    }
+
+    public ITypeMapping getTypeMapping();
   }
 }

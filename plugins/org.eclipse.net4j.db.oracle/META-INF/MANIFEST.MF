@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.db.oracle;singleton:=true
-Bundle-Version: 1.3.6.qualifier
+Bundle-Version: 1.3.7.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -14,7 +14,7 @@ Import-Package: oracle.jdbc;resolution:=optional;x-installation:=greedy,
  oracle.jdbc.driver;resolution:=optional;x-installation:=greedy,
  oracle.jdbc.pool;resolution:=optional;x-installation:=greedy,
  org.osgi.framework;version="[1.0.0,2.0.0)"
-Export-Package: org.eclipse.net4j.db.oracle;version="1.3.6",
- org.eclipse.net4j.db.oracle.internal.bundle;version="1.3.6";x-internal:=true
+Export-Package: org.eclipse.net4j.db.oracle;version="1.3.7",
+ org.eclipse.net4j.db.oracle.internal.bundle;version="1.3.7";x-internal:=true
 Eclipse-RegisterBuddy: org.eclipse.net4j.db
 Automatic-Module-Name: org.eclipse.net4j.db.oracle

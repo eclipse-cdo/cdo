@@ -18,6 +18,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,7 @@ import java.sql.SQLException;
  * @author Eike Stepper
  * @since 4.10
  */
-public abstract class DelegatingTypeMapping implements ITypeMapping
+public abstract class DelegatingTypeMapping implements ITypeMapping, ILobRefsUpdater
 {
   public abstract AbstractTypeMapping getDelegate();
 
@@ -118,6 +119,20 @@ public abstract class DelegatingTypeMapping implements ITypeMapping
   {
     Object decoded = readValue(resultSet);
     revision.setValue(getFeature(), decoded);
+  }
+
+  @Override
+  public void updateLobRefs(Connection connection)
+  {
+    AbstractTypeMapping delegate = getDelegate();
+    if (delegate instanceof ILobRefsUpdater)
+    {
+      ((ILobRefsUpdater)delegate).updateLobRefs(connection);
+    }
+    else
+    {
+      throw new LobRefsUpdateNotSupportedException();
+    }
   }
 
   protected Object encode(Object value)

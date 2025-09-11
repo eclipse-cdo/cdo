@@ -71,6 +71,35 @@ public interface IClassMapping
   public List<IListMapping> getListMappings();
 
   /**
+   * @since 4.13
+   */
+  public default ITypeMapping getValueMapping(EStructuralFeature feature)
+  {
+    if (!isMapped())
+    {
+      return null;
+    }
+
+    for (ITypeMapping valueMapping : getValueMappings())
+    {
+      if (valueMapping.getFeature() == feature)
+      {
+        return valueMapping;
+      }
+    }
+
+    return null;
+  }
+
+  /**
+   * @since 4.13
+   */
+  public default boolean isMapped()
+  {
+    return getValueMappings() != null && getListMappings() != null;
+  }
+
+  /**
    * @since 4.0
    */
   public List<ITypeMapping> getValueMappings();

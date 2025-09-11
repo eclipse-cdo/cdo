@@ -16,7 +16,7 @@ import org.eclipse.emf.cdo.common.util.CDOException;
  * Supports the cleanup of LOBs (Large OBjects) that are no longer referenced by any revisions.
  *
  * @author Eike Stepper
- * @since 4.24
+ * @since 4.25
  */
 public interface ILobCleanup
 {

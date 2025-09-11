@@ -159,22 +159,22 @@ public interface IDBAdapter
   public String sqlModifyField(IDBField field);
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   public String sqlCharIndex(Object substring, Object string);
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   public String sqlSubstring(Object string, Object startIndex, Object length);
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   public String sqlSubstring(Object string, Object startIndex);
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   public String sqlConcat(Object... strings);
 

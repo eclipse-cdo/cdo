@@ -79,7 +79,7 @@ public interface CDOLockChangeInfo extends CDOBranchPoint
   public boolean isInvalidateAll();
 
   /**
-   * @since 4.26
+   * @since 4.27
    */
   public boolean isAdministrative();
 

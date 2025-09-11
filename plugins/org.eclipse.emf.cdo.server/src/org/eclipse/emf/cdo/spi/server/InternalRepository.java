@@ -342,7 +342,7 @@ public interface InternalRepository extends IRepository, //
   public UnlockObjectsResult unlock(InternalView view);
 
   /**
-   * @since 4.24
+   * @since 4.25
    */
   public UnlockObjectsResult unlockAdministratively(InternalView view);
 

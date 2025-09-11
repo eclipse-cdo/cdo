@@ -195,7 +195,7 @@ public final class CDOLockUtil
   }
 
   /**
-   * @since 4.26
+   * @since 4.27
    */
   public static CDOLockChangeInfo createLockChangeInfo(CDOBranchPoint branchPoint, CDOLockOwner lockOwner, Collection<CDOLockDelta> lockDeltas,
       Collection<CDOLockState> lockStates, boolean isAdministrative)

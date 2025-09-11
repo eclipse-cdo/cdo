@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.emf.cdo.server;singleton:=true
-Bundle-Version: 4.24.1.qualifier
+Bundle-Version: 4.25.0.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -10,16 +10,16 @@ Bundle-Activator: org.eclipse.emf.cdo.internal.server.bundle.OM$Activator
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ClassPath: .
 Require-Bundle: org.eclipse.emf.cdo;bundle-version="[4.0.0,5.0.0)";visibility:=reexport
-Export-Package: org.eclipse.emf.cdo.internal.server;version="4.24.1";
+Export-Package: org.eclipse.emf.cdo.internal.server;version="4.25.0";
   x-friends:="org.eclipse.emf.cdo.server.db,
    org.eclipse.emf.cdo.server.net4j,
    org.eclipse.emf.cdo.tests,
    org.eclipse.emf.cdo.workspace,
    org.eclipse.emf.cdo.server.embedded",
- org.eclipse.emf.cdo.internal.server.bundle;version="4.24.1";x-internal:=true,
- org.eclipse.emf.cdo.internal.server.mem;version="4.24.1";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.internal.server.syncing;version="4.24.1";x-friends:="org.eclipse.emf.cdo.tests",
- org.eclipse.emf.cdo.server;version="4.24.1",
- org.eclipse.emf.cdo.server.mem;version="4.24.1",
- org.eclipse.emf.cdo.spi.server;version="4.24.1"
+ org.eclipse.emf.cdo.internal.server.bundle;version="4.25.0";x-internal:=true,
+ org.eclipse.emf.cdo.internal.server.mem;version="4.25.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.internal.server.syncing;version="4.25.0";x-friends:="org.eclipse.emf.cdo.tests",
+ org.eclipse.emf.cdo.server;version="4.25.0",
+ org.eclipse.emf.cdo.server.mem;version="4.25.0",
+ org.eclipse.emf.cdo.spi.server;version="4.25.0"
 Automatic-Module-Name: org.eclipse.emf.cdo.server

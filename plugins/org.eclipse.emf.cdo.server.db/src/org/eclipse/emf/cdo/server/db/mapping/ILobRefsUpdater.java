@@ -16,7 +16,7 @@ import java.sql.Connection;
 
 /**
  * @author Eike Stepper
- * @since 4.13
+ * @since 4.14
  */
 public interface ILobRefsUpdater
 {

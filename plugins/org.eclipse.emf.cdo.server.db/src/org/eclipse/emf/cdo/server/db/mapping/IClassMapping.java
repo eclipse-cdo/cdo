@@ -71,7 +71,7 @@ public interface IClassMapping
   public List<IListMapping> getListMappings();
 
   /**
-   * @since 4.13
+   * @since 4.14
    */
   public default ITypeMapping getValueMapping(EStructuralFeature feature)
   {
@@ -92,7 +92,7 @@ public interface IClassMapping
   }
 
   /**
-   * @since 4.13
+   * @since 4.14
    */
   public default boolean isMapped()
   {

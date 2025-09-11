@@ -53,7 +53,7 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
   /**
    * Same as calling {@link #getLockKey(CDOID, CDOBranch)} with <code>null</code> as branch.
    *
-   * @since 4.24
+   * @since 4.25
    */
   public Object getLockKey(CDOID id);
 
@@ -153,14 +153,14 @@ public interface InternalLockManager extends IRWOLockManager<Object, IView>, ILo
    * If no lock types are specified, all lock types are considered.
    * If no view owns a lock of the specified types, an empty set is returned.
    *
-   * @since 4.24
+   * @since 4.25
    * @see #getLockKey(CDOID)
    * @see #getLockKey(CDOID, CDOBranch)
    */
   public Set<IView> getLockOwners(Object key, LockType... lockTypes);
 
   /**
-   * @since 4.24
+   * @since 4.25
    */
   public IView getLockOwner(String durableLockingID);
 

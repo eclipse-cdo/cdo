@@ -1245,7 +1245,7 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   protected String sqlCharIndexFunction()
   {
@@ -1272,7 +1272,7 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.12
+   * @since 4.13
    */
   protected String sqlSubstringFunction()
   {

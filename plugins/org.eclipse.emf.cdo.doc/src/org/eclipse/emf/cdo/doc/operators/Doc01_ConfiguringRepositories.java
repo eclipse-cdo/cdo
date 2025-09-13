@@ -47,7 +47,7 @@ import java.sql.Connection;
 public class Doc01_ConfiguringRepositories
 {
   /**
-   * @snippet xml cdo-server-repository.xml
+   * @snip xml cdo-server-repository.xml
    */
   public void cdoServerXML()
   {

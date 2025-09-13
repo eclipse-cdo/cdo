@@ -45,7 +45,7 @@ public class Doc02_PreparingModels
   public class Doc_CreatingEcore
   {
     /**
-     * @snippet xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.ecore
+     * @snip xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.ecore
      */
     public void companyEcoreModel()
     {
@@ -119,7 +119,7 @@ public class Doc02_PreparingModels
   public class Doc_MigratingManually
   {
     /**
-     * @snippet xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.genmodel
+     * @snip xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.genmodel
      */
     public void companyGenModel()
     {

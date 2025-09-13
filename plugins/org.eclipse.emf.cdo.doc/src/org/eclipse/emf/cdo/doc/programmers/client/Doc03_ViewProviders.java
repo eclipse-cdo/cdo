@@ -63,7 +63,7 @@ public class Doc03_ViewProviders
   public class ProviderImplementation
   {
     /**
-     * @snippet
+     * @snip
      * @callout The example provider catches all URIs with shape "cdo.local:<repoName>".
      * @callout Register the provider with {@link CDOViewProviderRegistry}.
      */
@@ -111,7 +111,7 @@ public class Doc03_ViewProviders
   public class ContributeProviderProgrammatically
   {
     /**
-     * @snippet
+     * @snip
      * @callout Get the target {@link CDOViewProvider} implementation.
      * @callout Add the provider instance to {@link CDOViewProviderRegistry}.
      */

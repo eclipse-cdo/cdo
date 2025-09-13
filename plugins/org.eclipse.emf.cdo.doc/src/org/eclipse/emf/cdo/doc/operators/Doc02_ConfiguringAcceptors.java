@@ -31,7 +31,7 @@ import org.eclipse.net4j.ws.IWSAcceptor;
 public class Doc02_ConfiguringAcceptors
 {
   /**
-   * @snippet xml cdo-server-acceptor.xml
+   * @snip xml cdo-server-acceptor.xml
    */
   public void cdoServerXML()
   {

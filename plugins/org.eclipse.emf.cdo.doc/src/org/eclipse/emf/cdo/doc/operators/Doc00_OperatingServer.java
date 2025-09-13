@@ -55,7 +55,7 @@ public class Doc00_OperatingServer
   public class Doc_ServerDeploy
   {
     /**
-    * @snippet xml cdo-server.xml
+    * @snip xml cdo-server.xml
     */
     public void cdoServerXML()
     {

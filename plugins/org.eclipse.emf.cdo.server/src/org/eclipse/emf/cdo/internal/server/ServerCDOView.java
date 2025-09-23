@@ -813,6 +813,27 @@ public class ServerCDOView extends AbstractCDOView implements org.eclipse.emf.cd
       return repository.getClientEntities();
     }
 
+    @Override
+    public Map<String, Entity> requestEntities(String namespace, String... names)
+    {
+      Map<String, Entity> entities = new HashMap<>();
+
+      Entity.Store entityProvider = repository.getEntityStore();
+      if (entityProvider != null)
+      {
+        for (String name : names)
+        {
+          Entity entity = entityProvider.entity(namespace, name);
+          if (entity != null)
+          {
+            entities.put(name, entity);
+          }
+        }
+      }
+
+      return entities;
+    }
+
     /**
      * Server sessions may not be used to change the user's credentials: it must
      * be done client-side by interaction with the user.

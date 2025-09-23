@@ -258,6 +258,11 @@ public interface CDOSession extends CDOCommonSession, CDOUpdatable, CDOTransacti
   public Map<String, Entity> clientEntities();
 
   /**
+   * @since 4.29
+   */
+  public Map<String, Entity> requestEntities(String namespace, String... names);
+
+  /**
    * Returns the {@link Options options} of this session.
    */
   @Override

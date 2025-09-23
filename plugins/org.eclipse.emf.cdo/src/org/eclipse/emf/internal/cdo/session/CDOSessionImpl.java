@@ -582,6 +582,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
+  public Map<String, Entity> requestEntities(String namespace, String... names)
+  {
+    return sessionProtocol.requestEntities(namespace, names);
+  }
+
+  @Override
   public CDOClob newClob(Reader contents) throws IOException
   {
     return new CDOClob(contents, getLobStore());

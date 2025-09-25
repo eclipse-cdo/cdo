@@ -75,6 +75,13 @@
                 <message_argument value="CDOCommonView"/>
             </message_arguments>
         </filter>
+        <filter id="574668824">
+            <message_arguments>
+                <message_argument value="InternalView"/>
+                <message_argument value="DurableView"/>
+                <message_argument value="CDOCommonView"/>
+            </message_arguments>
+        </filter>
     </resource>
     <resource path="src/org/eclipse/emf/cdo/internal/server/QueryManager.java" type="org.eclipse.emf.cdo.internal.server.QueryManager$QueryContext">
         <filter id="574660632">

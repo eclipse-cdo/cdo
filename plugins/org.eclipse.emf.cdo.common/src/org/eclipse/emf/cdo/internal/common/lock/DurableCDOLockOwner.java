@@ -12,6 +12,7 @@ package org.eclipse.emf.cdo.internal.common.lock;
 
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.ref.Interner;
 
 /**
@@ -20,6 +21,9 @@ import org.eclipse.net4j.util.ref.Interner;
 public final class DurableCDOLockOwner implements CDOLockOwner
 {
   private static final DurableInterner INTERNER = new DurableInterner();
+
+  private static final boolean SHOW_DURABLE_LOCKING_ID = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.internal.common.lock.DurableCDOLockOwner.SHOW_DURABLE_LOCKING_ID");
 
   private final int sessionID;
 
@@ -78,7 +82,7 @@ public final class DurableCDOLockOwner implements CDOLockOwner
     builder.append(':');
     builder.append(viewID);
     builder.append(':');
-    builder.append(durableLockingID);
+    builder.append(SHOW_DURABLE_LOCKING_ID ? durableLockingID : "durable");
     builder.append(']');
     return builder.toString();
   }
@@ -90,7 +94,6 @@ public final class DurableCDOLockOwner implements CDOLockOwner
 
   private static int getHashCode(int sessionID, int viewID, String durableLockingID)
   {
-
     return 31 * (31 * (31 + sessionID) + viewID + durableLockingID.hashCode());
   }
 

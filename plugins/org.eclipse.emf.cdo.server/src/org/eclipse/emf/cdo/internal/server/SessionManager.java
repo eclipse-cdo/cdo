@@ -353,6 +353,13 @@ public class SessionManager extends Container<ISession> implements InternalSessi
       userID = authenticateUser(sessionProtocol);
     }
 
+    // If this is a reconnect, close the previous session first.
+    InternalSession previousSession = getSession(id);
+    if (previousSession != null)
+    {
+      previousSession.close();
+    }
+
     InternalSession session = createSession(id, userID, sessionProtocol);
 
     if (sessionInitializer != null)

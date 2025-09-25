@@ -2491,6 +2491,29 @@ public class Repository extends Container<Object> implements InternalRepository
   @Override
   public UnlockObjectsResult unlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
+    return doUnlock(view, lockType, objectIDs, recursive, false);
+  }
+
+  @Override
+  public UnlockObjectsResult unlock(InternalView view)
+  {
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, false);
+  }
+
+  @Override
+  public UnlockObjectsResult unlockAdministratively(InternalView view, LockType type, List<CDOID> ids, boolean recursive)
+  {
+    return null;
+  }
+
+  @Override
+  public UnlockObjectsResult unlockAdministratively(InternalView view)
+  {
+    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, true);
+  }
+
+  protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive, boolean notifyAllSessions)
+  {
     List<Object> unlockables = null;
 
     if (objectIDs != null)
@@ -2505,19 +2528,7 @@ public class Repository extends Container<Object> implements InternalRepository
       }
     }
 
-    return doUnlock(view, lockType, unlockables, recursive, 1, false);
-  }
-
-  @Override
-  public UnlockObjectsResult unlock(InternalView view)
-  {
-    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, false);
-  }
-
-  @Override
-  public UnlockObjectsResult unlockAdministratively(InternalView view)
-  {
-    return doUnlock(view, null, null, false, IRWOLockManager.ALL_LOCKS, true);
+    return doUnlock(view, lockType, unlockables, recursive, 1, notifyAllSessions);
   }
 
   protected UnlockObjectsResult doUnlock(InternalView view, LockType lockType, List<Object> unlockables, boolean recursive, int count,

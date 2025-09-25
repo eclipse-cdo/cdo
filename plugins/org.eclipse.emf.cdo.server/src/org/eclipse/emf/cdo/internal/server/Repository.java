@@ -2501,9 +2501,9 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  public UnlockObjectsResult unlockAdministratively(InternalView view, LockType type, List<CDOID> ids, boolean recursive)
+  public UnlockObjectsResult unlockAdministratively(InternalView view, LockType lockType, List<CDOID> objectIDs, boolean recursive)
   {
-    return null;
+    return doUnlock(view, lockType, objectIDs, recursive, true);
   }
 
   @Override

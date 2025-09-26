@@ -64,7 +64,6 @@ import org.eclipse.net4j.util.security.SecurityUtil;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -560,7 +559,7 @@ public class DefaultRepositoryProtector extends Container<UserInfo>
   protected void doActivate() throws Exception
   {
     IStore store = repository.getStore();
-    Map<String, String> properties = store.getPersistentProperties(Collections.singleton(PROP_PROTECTOR_INITIALIZED));
+    Map<String, String> properties = store.getPersistentProperties(PROP_PROTECTOR_INITIALIZED);
     firstTime = !Boolean.parseBoolean(properties.get(PROP_PROTECTOR_INITIALIZED));
 
     init(firstTime);

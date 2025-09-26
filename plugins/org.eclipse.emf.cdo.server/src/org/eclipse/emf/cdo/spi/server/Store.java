@@ -483,7 +483,7 @@ public abstract class Store extends Lifecycle implements InternalStore, Entity.S
       Map<String, String> persistentProperties = getPersistentProperties(null);
       return entityBuilder().name(ENTITY_NAME_PERSISTENT_PROPERTIES).properties(persistentProperties).build();
     }
-  
+
     return null;
   }
 

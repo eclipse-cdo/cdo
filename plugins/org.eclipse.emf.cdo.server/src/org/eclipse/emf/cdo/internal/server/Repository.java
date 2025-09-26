@@ -196,6 +196,8 @@ public class Repository extends Container<Object> implements InternalRepository
 
   private static final String PROP_UUID = "org.eclipse.emf.cdo.server.repositoryUUID"; //$NON-NLS-1$
 
+  private static final String PROP_MODE = "org.eclipse.emf.cdo.server.repositoryMode"; //$NON-NLS-1$
+
   private static final Map<String, Repository> REPOSITORIES = new HashMap<>();
 
   private static final String ENTITY_NAMESPACE = "cdo/repo";
@@ -2991,7 +2993,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     LifecycleUtil.activate(store);
 
-    Map<String, String> persistentProperties = store.getPersistentProperties(Collections.singleton(PROP_UUID));
+    Map<String, String> persistentProperties = store.getPersistentProperties(PROP_UUID, PROP_MODE);
     String persistentUUID = persistentProperties.get(PROP_UUID);
 
     if (uuid == null)
@@ -3035,6 +3037,10 @@ public class Repository extends Container<Object> implements InternalRepository
       timeStampAuthority.setLastFinishedTimeStamp(lastCommitTime);
       commitInfoManager.setLastCommitOfBranch(null, lastCommitTime);
 
+      persistentProperties.remove(PROP_UUID); // No longer needed
+      String mode = getMode().name();
+      boolean modeChecked = false;
+
       if (store.isFirstStart())
       {
         initSystemPackages(true);
@@ -3042,8 +3048,25 @@ public class Repository extends Container<Object> implements InternalRepository
       }
       else
       {
+        String persistentMode = persistentProperties.get(PROP_MODE);
+        if (persistentMode != null)
+        {
+          if (!persistentMode.equalsIgnoreCase(mode))
+          {
+            throw new CDOException("Repository mode changed from " + persistentMode + " to " + mode);
+          }
+
+          modeChecked = true;
+        }
+
         initSystemPackages(false);
         readRootResource();
+      }
+
+      if (!modeChecked)
+      {
+        persistentProperties.put(PROP_MODE, mode);
+        store.setPersistentProperties(persistentProperties);
       }
 
       branchManager.setTagModCount(0);

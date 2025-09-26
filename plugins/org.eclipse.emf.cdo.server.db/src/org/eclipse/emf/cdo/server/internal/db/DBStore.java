@@ -854,10 +854,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       return true;
     }
 
-    Set<String> names = new HashSet<>();
-    names.add(PROP_REPOSITORY_CREATED);
-
-    Map<String, String> map = getPersistentProperties(names);
+    Map<String, String> map = getPersistentProperties(PROP_REPOSITORY_CREATED);
     return map.get(PROP_REPOSITORY_CREATED) == null;
   }
 

@@ -49,6 +49,15 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public String getUUID();
 
   /**
+   * Returns the mode of this repository.
+   * @since 4.27
+   */
+  public default Mode getMode()
+  {
+    return isSupportingBranches() ? Mode.BRANCHING : isSupportingAudits() ? Mode.AUDITING : Mode.NORMAL;
+  }
+
+  /**
    * Returns the type of this repository.
    */
   public Type getType();
@@ -224,6 +233,77 @@ public interface CDOCommonRepository extends CDOTimeProvider, IAdaptable
   public enum CommitInfoStorage
   {
     NO, YES, WITH_MERGE_SOURCE
+  }
+
+  /**
+   * Enumerates the possible {@link CDOCommonRepository#getType() types} of a CDO repository.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public enum Mode
+  {
+    NORMAL
+    {
+      @Override
+      public boolean isSupportingAudits()
+      {
+        return false;
+      }
+
+      @Override
+      public boolean isSupportingBranches()
+      {
+        return false;
+      }
+    },
+
+    AUDITING
+    {
+      @Override
+      public boolean isSupportingAudits()
+      {
+        return true;
+      }
+
+      @Override
+      public boolean isSupportingBranches()
+      {
+        return false;
+      }
+    },
+
+    BRANCHING
+    {
+      @Override
+      public boolean isSupportingAudits()
+      {
+        return true;
+      }
+
+      @Override
+      public boolean isSupportingBranches()
+      {
+        return true;
+      }
+    };
+
+    public abstract boolean isSupportingAudits();
+
+    public abstract boolean isSupportingBranches();
+
+    public static Mode parse(String name)
+    {
+      for (Mode mode : values())
+      {
+        if (mode.name().equalsIgnoreCase(name))
+        {
+          return mode;
+        }
+      }
+
+      return null;
+    }
   }
 
   /**

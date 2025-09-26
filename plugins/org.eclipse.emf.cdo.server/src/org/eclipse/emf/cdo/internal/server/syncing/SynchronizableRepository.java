@@ -612,7 +612,7 @@ public abstract class SynchronizableRepository extends Repository.Default implem
     InternalStore store = getStore();
     if (!store.isFirstStart())
     {
-      Map<String, String> map = store.getPersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+      Map<String, String> map = store.getPersistentProperties(PROP_GRACEFULLY_SHUT_DOWN);
       if (!map.containsKey(PROP_GRACEFULLY_SHUT_DOWN))
       {
         setReplicationCountersToLatest();

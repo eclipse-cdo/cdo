@@ -168,18 +168,12 @@ public class CDOLobStoreImpl implements CDOLobStore
     MessageDigest digest = createDigest();
     digest.update(ID_PREFIX_BINARY);
 
-    FileOutputStream fos = null;
     long size;
 
-    try
+    try (FileOutputStream fos = new FileOutputStream(tempFile))
     {
-      fos = new FileOutputStream(tempFile);
       DigestOutputStream dos = new DigestOutputStream(fos, digest);
       size = IOUtil.copyBinary(contents, dos);
-    }
-    finally
-    {
-      IOUtil.close(fos);
     }
 
     byte[] id = digest.digest();
@@ -210,18 +204,12 @@ public class CDOLobStoreImpl implements CDOLobStore
     MessageDigest digest = createDigest();
     digest.update(ID_PREFIX_CHARACTER);
 
-    FileWriter fw = null;
     long size;
 
-    try
+    try (FileWriter fw = new FileWriter(tempFile))
     {
-      fw = new FileWriter(tempFile);
       DigestWriter dw = new DigestWriter(fw, digest);
       size = IOUtil.copyCharacter(contents, dw);
-    }
-    finally
-    {
-      IOUtil.close(fw);
     }
 
     byte[] id = digest.digest();

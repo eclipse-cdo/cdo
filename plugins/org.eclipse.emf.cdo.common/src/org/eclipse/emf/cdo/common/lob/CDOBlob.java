@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.common.lob;
 
+import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
+
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.io.ExtendedDataInput;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -19,9 +21,23 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 /**
  * An identifiable binary large object with streaming support.
+ * <p>
+ * CDOBlobs are immutable. Once created, their {@link #getID() ID} and {@link #getSize() size} do not change.
+ * The ID is a digest of the content of the blob, SHA-1 by default (see {@link CDOLobStoreImpl#DEFAULT_DIGEST_ALGORITHM}).
+ * <p>
+ * CDOBlobs can be created from an {@link InputStream}, a <code>byte[]</code>, or a hex-encoded {@link String}.
+ * On the client side, CDOBlobs are created with a reference to a {@link CDOLobStore}, which is used to store and retrieve
+ * the blob's content. On the server side, CDOBlobs are created without a store reference and are always retrieved from
+ * the repository's <code>IStore</code>.
+ * <p>
+ * The default <code>CDOLobStore</code> implementation is {@link CDOLobStoreImpl#INSTANCE}, which stores blobs in the local file system.
+ * But on the client side, it's often more efficient to use a dedicated <code>CDOLobStore</code> instance that stores blobs in
+ * a <code>CDOSession</code>-specific cache location. See <code>CDOSession.Options.setLobCache(CDOLobStore)</code> for details.
+ * See also <code>CDOSession.newBlob(InputStream)</code> and <code>CDOSession.newBlob(byte[])</code> for convenient ways to create CDOBlobs.
  *
  * @author Eike Stepper
  * @since 4.0
@@ -97,19 +113,11 @@ public final class CDOBlob extends CDOLob<InputStream>
    */
   public byte[] getBytes() throws IOException
   {
-    InputStream inputStream = null;
-
-    try
+    try (InputStream inputStream = getContents())
     {
-      inputStream = getContents();
-
       ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
       IOUtil.copy(inputStream, outputStream);
       return outputStream.toByteArray();
-    }
-    finally
-    {
-      IOUtil.close(inputStream);
     }
   }
 
@@ -120,6 +128,17 @@ public final class CDOBlob extends CDOLob<InputStream>
   public String getString() throws IOException
   {
     return HexUtil.bytesToHex(getBytes());
+  }
+
+  /**
+   * @since 4.27
+   */
+  public void copyTo(OutputStream out) throws IOException
+  {
+    try (InputStream in = getContents())
+    {
+      IOUtil.copy(in, out);
+    }
   }
 
   @Override

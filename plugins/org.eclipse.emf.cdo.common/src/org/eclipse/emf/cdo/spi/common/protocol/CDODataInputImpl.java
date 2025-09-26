@@ -598,7 +598,8 @@ public abstract class CDODataInputImpl extends ExtendedDataInput.Delegating impl
     if (value instanceof CDOLob<?>)
     {
       CDOLob<?> lob = (CDOLob<?>)value;
-      CDOLobUtil.setStore(getLobStore(), lob);
+      CDOLobStore lobStore = getLobStore();
+      CDOLobUtil.setStore(lobStore, lob);
     }
 
     return value;

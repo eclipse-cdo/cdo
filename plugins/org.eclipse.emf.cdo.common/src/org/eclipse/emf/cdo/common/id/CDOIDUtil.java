@@ -44,8 +44,10 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -135,6 +137,25 @@ public final class CDOIDUtil
     }
 
     return null;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static List<CDOID> getCDOIDs(Collection<?> objects)
+  {
+    List<CDOID> list = new ArrayList<>();
+  
+    for (Object object : objects)
+    {
+      CDOID id = getCDOID(object);
+      if (id != null)
+      {
+        list.add(id);
+      }
+    }
+  
+    return list;
   }
 
   /**
@@ -613,7 +634,6 @@ public final class CDOIDUtil
     }
 
     return null;
-
   }
 
   /**

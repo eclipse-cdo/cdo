@@ -115,11 +115,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void unset(EStructuralFeature feature);
 
-  /**
-   * Should never return {@link InternalCDORevision#NIL}
-   */
-  public Object getValue(EStructuralFeature feature);
-
   public Object setValue(EStructuralFeature feature, Object value);
 
   public void setList(EStructuralFeature feature, InternalCDOList list);
@@ -135,11 +130,6 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    */
   @Deprecated
   public CDOList getList(EStructuralFeature feature, int initialCapacity);
-
-  /**
-   * @since 4.7
-   */
-  public CDOList getListOrNull(EStructuralFeature feature);
 
   /**
    * Same as {@link #getOrCreateList(EStructuralFeature, int) getOrCreateList(feature, 0)}.

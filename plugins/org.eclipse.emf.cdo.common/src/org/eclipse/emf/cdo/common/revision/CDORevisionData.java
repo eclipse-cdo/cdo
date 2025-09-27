@@ -11,6 +11,7 @@
 package org.eclipse.emf.cdo.common.revision;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EClass;
@@ -85,6 +86,17 @@ public interface CDORevisionData
     EClass eClass = revision().getEClass();
     return calculateContainingReference(containingFeatureID, eClass, containerClass);
   }
+
+  /**
+   * Should never return {@link InternalCDORevision#NIL}
+   * @since 4.27
+   */
+  public Object getValue(EStructuralFeature feature);
+
+  /**
+   * @since 4.27
+   */
+  public CDOList getListOrNull(EStructuralFeature feature);
 
   /**
    * @since 2.0

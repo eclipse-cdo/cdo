@@ -23,7 +23,7 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  *
  * @author Eike Stepper
  */
-public class Doc02_PreparingModels
+public class Doc02b_PreparingModels
 {
   /**
    * Creating an Ecore Model

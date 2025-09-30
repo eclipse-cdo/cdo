@@ -1,0 +1,80 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Locking (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Locking (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Locking</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc05_WorkingWithTransactions.html" title="Backward to Working with Transactions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc07_LargeObjects.html" title="Forward to Large Objects"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+ This chapter describes the locking mechanisms available in CDO client applications, including lock types and
+ strategies for managing concurrent access to model data. Locking is essential for ensuring data integrity and
+ consistency in collaborative environments.
+
+<h2><a name="LockTypes"></a>1&nbsp;&nbsp;Lock Types</h2>
+<p>
+ CDO supports several types of locks to control access to model objects. This section explains the differences
+ between read locks, write locks, and write option locks, and how to use them to prevent conflicts and ensure safe
+ modifications.
+
+<h3><a name="ReadLocks"></a>1.1&nbsp;&nbsp;Read Locks</h3>
+<p>
+ Read locks allow multiple clients to access model objects concurrently for reading, while preventing
+ modifications. Learn how to acquire and release read locks to enable safe, concurrent navigation of repository
+ data.
+
+<h3><a name="WriteLocks"></a>1.2&nbsp;&nbsp;Write Locks</h3>
+<p>
+ Write locks provide exclusive access to model objects for modification. This section covers how to obtain write
+ locks, handle lock contention, and release locks after changes are committed.
+
+<h3><a name="WriteOptionLocks"></a>1.3&nbsp;&nbsp;Write Option Locks</h3>
+<p>
+ Write option locks are a specialized form of locking that allow clients to prepare for future write operations.
+ Learn how to use write option locks to optimize transaction workflows and reduce lock contention.
+
+<h2><a name="OptimisticLocking"></a>2&nbsp;&nbsp;Optimistic Locking</h2>
+<p>
+ Optimistic locking assumes that conflicts are rare and allows clients to proceed with changes without acquiring
+ locks up front. This section explains how optimistic locking works in CDO, how to detect and resolve conflicts at
+ commit time, and best practices for using optimistic strategies.
+
+<h2><a name="PessimisticLocking"></a>3&nbsp;&nbsp;Pessimistic Locking</h2>
+<p>
+ Pessimistic locking requires clients to acquire locks before making changes, preventing other clients from
+ modifying the same objects concurrently. Learn how to implement pessimistic locking in CDO, manage lock lifecycles,
+ and avoid deadlocks.
+
+<h2><a name="DurableLocking"></a>4&nbsp;&nbsp;Durable Locking</h2>
+<p>
+ Durable locks persist across client disconnects and server restarts, ensuring long-term protection of model
+ objects. This section covers how to create, manage, and release durable locks, and when to use them in your
+ application.
+
+<p align="right">
+<a href="Doc05_WorkingWithTransactions.html" title="Backward to Working with Transactions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc07_LargeObjects.html" title="Forward to Large Objects"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

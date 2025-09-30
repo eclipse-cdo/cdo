@@ -1,0 +1,82 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Setting Up the CDO Client Environment (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Setting Up the CDO Client Environment (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Setting Up the CDO Client Environment</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_IntroductionToCDOClientProgramming.html" title="Backward to Introduction to CDO Client Programming"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02b_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+ This chapter guides you through the process of preparing your development environment for CDO client applications.
+ It covers the necessary prerequisites, workspace configuration, and how to establish a connection to a CDO server.
+ <p>
+ Proper setup ensures that your application can communicate securely and efficiently with CDO repositories,
+ leveraging the full capabilities of the platform.
+
+<h2><a name="PrerequisitesAndDependencies"></a>1&nbsp;&nbsp;Prerequisites and Dependencies</h2>
+<p>
+ Before developing a CDO client application, ensure that all required libraries and dependencies are available. This
+ includes the CDO client libraries, EMF runtime, Net4j transport, and any additional plugins for authentication or
+ custom protocols. Review the compatibility matrix and version requirements to avoid integration issues.
+ <p>
+ Typical prerequisites:
+ <ul>
+   <li>Eclipse Modeling Framework (EMF)</li>
+   <li>CDO Client Libraries</li>
+   <li>Net4j Transport Libraries</li>
+   <li>Any custom or third-party plugins</li>
+ </ul>
+
+<h2><a name="ConfiguringTheClientWorkspace"></a>2&nbsp;&nbsp;Configuring the Client Workspace</h2>
+<p>
+ Setting up your workspace involves importing the necessary projects, configuring build paths, and ensuring that all
+ dependencies are resolved. Use Eclipse or your preferred IDE to manage plugins and update project settings. This
+ section provides best practices for organizing your workspace and troubleshooting common setup issues.
+ <p>
+ Key steps:
+ <ul>
+   <li>Import CDO and EMF projects</li>
+   <li>Configure build and runtime dependencies</li>
+   <li>Set up launch configurations for testing</li>
+ </ul>
+
+<h2><a name="ConnectingToACDOServer"></a>3&nbsp;&nbsp;Connecting to a CDO Server</h2>
+<p>
+ Establishing a connection to a CDO server is a critical step in client application development. This section
+ explains how to configure Net4j connectors, specify repository URIs, and authenticate with the server. It also
+ covers troubleshooting connection issues and best practices for secure communication.
+ <p>
+ Topics include:
+ <ul>
+   <li>Configuring TCP, JVM, and SSL connectors</li>
+   <li>Setting repository URIs and connection parameters</li>
+   <li>Authentication and security considerations</li>
+ </ul>
+
+<p align="right">
+<a href="Doc01_IntroductionToCDOClientProgramming.html" title="Backward to Introduction to CDO Client Programming"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc02b_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

@@ -23,8 +23,19 @@
   <topic label="Programmer's Guide" href="html/programmers/index.html">
     <topic label="Developing Client Applications" href="html/programmers/client/index.html">
       <topic label="Understanding the Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" />
-      <topic label="Preparing EMF Models for CDO" href="html/programmers/client/Doc02_PreparingModels.html" />
-      <topic label="View Providers" href="html/programmers/client/Doc03_ViewProviders.html" />
+      <topic label="Introduction to CDO Client Programming" href="html/programmers/client/Doc01_IntroductionToCDOClientProgramming.html" />
+      <topic label="Setting Up the CDO Client Environment" href="html/programmers/client/Doc02_SettingUpTheCDOClientEnvironment.html" />
+      <topic label="Preparing EMF Models for CDO" href="html/programmers/client/Doc02b_PreparingModels.html" />
+      <topic label="Working with Sessions" href="html/programmers/client/Doc03_WorkingWithSessions.html" />
+      <topic label="Working with Views" href="html/programmers/client/Doc04_WorkingWithViews.html" />
+      <topic label="Working with Transactions" href="html/programmers/client/Doc05_WorkingWithTransactions.html" />
+      <topic label="Locking" href="html/programmers/client/Doc06_Locking.html" />
+      <topic label="Large Objects" href="html/programmers/client/Doc07_LargeObjects.html" />
+      <topic label="Branching and Versioning" href="html/programmers/client/Doc08_BranchingAndVersioning.html" />
+      <topic label="Notifications and Event Handling" href="html/programmers/client/Doc09_NotificationsAndEventHandling.html" />
+      <topic label="Integrating with EMF and Other Frameworks" href="html/programmers/client/Doc10_IntegratingWithEMFAndOtherFrameworks.html" />
+      <topic label="Advanced Topics" href="html/programmers/client/Doc11_AdvancedTopics.html" />
+      <topic label="Best Practices and Patterns" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html" />
     </topic>
     <topic label="Dealing with Servers" href="html/programmers/server/index.html">
       <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" />

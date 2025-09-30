@@ -1,0 +1,139 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Working with Views (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Working with Views (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Working with Views</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc03_WorkingWithSessions.html" title="Backward to Working with Sessions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_WorkingWithTransactions.html" title="Forward to Working with Transactions"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+ This chapter covers view management, resource handling, querying, transactions, and related options in CDO client
+ applications. Views are central to accessing and interacting with model data in a CDO repository. Understanding how
+ to use views effectively is key to building responsive and scalable applications.
+
+<h2><a name="UnderstandingViewsAndTheirTypes"></a>1&nbsp;&nbsp;Understanding Views and Their Types</h2>
+<p>
+ CDO provides several types of views, including read-only views and transactional views. Read-only views allow safe
+ navigation of repository data without risk of modification, while transactional views enable changes and commits.
+ This section explains the differences, use cases, and lifecycle of each view type.
+
+<h2><a name="ThreadSafety"></a>2&nbsp;&nbsp;Thread Safety</h2>
+<p>
+ Views in CDO are not inherently thread-safe. This section discusses best practices for managing concurrent access,
+ synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+
+<h2><a name="OpeningAndClosingViews"></a>3&nbsp;&nbsp;Opening and Closing Views</h2>
+<p>
+ Learn how to open views to access repository data and close them to release resources. Proper management of view
+ lifecycles helps prevent memory leaks and ensures efficient resource usage.
+
+<h2><a name="UnderstandingTheCDOFileSystem"></a>4&nbsp;&nbsp;Understanding the CDO File System</h2>
+<p>
+ The CDO repository exposes a virtual file system for organizing model resources. This section describes the
+ structure and usage of the file system, including root resources, folders, and different resource types.
+
+<h3><a name="TheRootResource"></a>4.1&nbsp;&nbsp;The Root Resource</h3>
+<p>
+ The root resource is the entry point to the CDO file system. It contains all top-level folders and resources,
+ providing a hierarchical view of the repository's contents.
+
+<h3><a name="ResourceFolders"></a>4.2&nbsp;&nbsp;Resource Folders</h3>
+<p>
+ Resource folders organize model resources into logical groups. Learn how to create, navigate, and manage folders
+ to structure your repository effectively.
+
+<h3><a name="ModelResources"></a>4.3&nbsp;&nbsp;Model Resources</h3>
+<p>
+ Model resources store EMF model data in the repository. This section explains how to load, save, and query model
+ resources, and how they relate to EMF ResourceSet.
+
+<h3><a name="BinaryResources"></a>4.4&nbsp;&nbsp;Binary Resources</h3>
+<p>
+ Binary resources allow storage of non-model data, such as images or files, within the CDO repository. Learn how
+ to manage binary resources and integrate them with your application.
+
+<h3><a name="TextResources"></a>4.5&nbsp;&nbsp;Text Resources</h3>
+<p>
+ Text resources store textual data, such as configuration files or documentation, in the repository. This section
+ covers reading, writing, and organizing text resources.
+
+<h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage</h2>
+<p>
+ Resource sets are collections of resources managed together. Learn how to use EMF ResourceSet with CDO, manage
+ resource lifecycles, and optimize performance for large models.
+
+<h2><a name="NavigatingModels"></a>6&nbsp;&nbsp;Navigating Models</h2>
+<p>
+ This section provides techniques for traversing and querying model objects within views, including use of EMF APIs
+ and CDO-specific features for efficient navigation.
+
+<h2><a name="WaitingForUpdates"></a>7&nbsp;&nbsp;Waiting For Updates</h2>
+<p>
+ Learn how to synchronize your client with repository changes, block for updates, and react to notifications to keep
+ your application state current.
+
+<h2><a name="QueryingResources"></a>8&nbsp;&nbsp;Querying Resources</h2>
+<p>
+ CDO supports querying resources using various criteria. This section explains how to construct and execute queries
+ to locate resources and model objects efficiently.
+
+<h2><a name="QueryingModelObjects"></a>9&nbsp;&nbsp;Querying Model Objects</h2>
+<p>
+ Learn how to query model objects using CDO's query APIs, including support for OCL, custom queries, and
+ cross-references.
+
+<h2><a name="QueryingCrossReferences"></a>10&nbsp;&nbsp;Querying Cross References</h2>
+<p>
+ Cross references allow navigation between related model objects. This section covers techniques for querying and
+ resolving cross references in CDO models.
+
+<h2><a name="CustomQueries"></a>11&nbsp;&nbsp;Custom Queries</h2>
+<p>
+ Extend CDO's querying capabilities with custom query implementations. Learn how to define, register, and execute
+ custom queries for advanced use cases.
+
+<h2><a name="Units"></a>12&nbsp;&nbsp;Units</h2>
+<p>
+ Units are disjunct subtrees of model objects that can be managed independently. This section explains how to
+ create, open, and close units, and how they can improve performance and consistency in your application.
+
+<h2><a name="ViewEvents"></a>13&nbsp;&nbsp;View Events</h2>
+<p>
+ Views emit events for changes, updates, and errors. This section explains how to listen for and handle view events
+ to build responsive applications.
+
+<h2><a name="ViewOptions"></a>14&nbsp;&nbsp;View Options</h2>
+<p>
+ Configure view options to customize behavior, such as passive updates, notification handling, and more.
+
+<h2><a name="ViewProperties"></a>15&nbsp;&nbsp;View Properties</h2>
+<p>
+ Access and modify view properties to store custom metadata and configuration values.
+
+<p align="right">
+<a href="Doc03_WorkingWithSessions.html" title="Backward to Working with Sessions"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc05_WorkingWithTransactions.html" title="Forward to Working with Transactions"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

@@ -46,8 +46,9 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
  * <b>Table of Contents</b> {@toc}
  *
  * @author Victor Roldan Betancort
+ * @ignore
  */
-public class Doc03_ViewProviders
+public class Doc99_ViewProviders
 {
   /**
    * Implementing a View Provider

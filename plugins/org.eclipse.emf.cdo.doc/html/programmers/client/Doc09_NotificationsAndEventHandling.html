@@ -1,0 +1,61 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Notifications and Event Handling (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Notifications and Event Handling (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Notifications and Event Handling</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc08_BranchingAndVersioning.html" title="Backward to Branching and Versioning"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Forward to Integrating with EMF and Other Frameworks"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p>
+ This chapter describes how to handle notifications and events in CDO client applications. Notifications are
+ essential for building responsive applications that react to changes in the repository, whether triggered locally or
+ remotely.
+ <p>
+ CDO provides APIs for listening to model changes, handling remote updates, and implementing custom event processing
+ logic. Understanding these mechanisms enables you to synchronize application state, update user interfaces, and
+ coordinate collaborative workflows.
+
+<h2><a name="ListeningForModelChanges"></a>1&nbsp;&nbsp;Listening for Model Changes</h2>
+<p>
+ CDO emits notifications when model objects are created, modified, or deleted. This section explains how to register
+ listeners, process change events, and update your application in response to model changes. Learn best practices for
+ efficient event handling and minimizing performance impact.
+
+<h2><a name="HandlingRemoteUpdates"></a>2&nbsp;&nbsp;Handling Remote Updates</h2>
+<p>
+ Remote updates occur when changes are made to the repository by other clients or processes. This section covers how
+ to detect and respond to remote updates, synchronize local state, and resolve conflicts that may arise from
+ concurrent modifications.
+
+<h2><a name="CustomEventProcessing"></a>3&nbsp;&nbsp;Custom Event Processing</h2>
+<p>
+ Extend CDO's event handling capabilities with custom logic. Learn how to implement custom event processors, filter
+ events, and integrate notifications with external systems or workflows.
+
+<p align="right">
+<a href="Doc08_BranchingAndVersioning.html" title="Backward to Branching and Versioning"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc10_IntegratingWithEMFAndOtherFrameworks.html" title="Forward to Integrating with EMF and Other Frameworks"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

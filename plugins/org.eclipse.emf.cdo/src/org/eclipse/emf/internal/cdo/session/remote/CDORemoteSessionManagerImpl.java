@@ -37,6 +37,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 
@@ -80,15 +81,6 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
   }
 
   @Override
-  public InternalCDORemoteSession getRemoteSession(int sessionID)
-  {
-    synchronized (this)
-    {
-      return remoteSessions.get(sessionID);
-    }
-  }
-
-  @Override
   public InternalCDORemoteSession[] getRemoteSessions()
   {
     synchronized (this)
@@ -106,6 +98,34 @@ public class CDORemoteSessionManagerImpl extends Container<CDORemoteSession> imp
       }
 
       return NO_REMOTE_SESSIONS;
+    }
+  }
+
+  @Override
+  public InternalCDORemoteSession[] getRemoteSessions(String userID)
+  {
+    List<InternalCDORemoteSession> result = new ArrayList<>();
+
+    synchronized (this)
+    {
+      for (InternalCDORemoteSession remoteSession : getRemoteSessions())
+      {
+        if (Objects.equals(remoteSession.getUserID(), userID))
+        {
+          result.add(remoteSession);
+        }
+      }
+    }
+
+    return result.toArray(new InternalCDORemoteSession[result.size()]);
+  }
+
+  @Override
+  public InternalCDORemoteSession getRemoteSession(int sessionID)
+  {
+    synchronized (this)
+    {
+      return remoteSessions.get(sessionID);
     }
   }
 

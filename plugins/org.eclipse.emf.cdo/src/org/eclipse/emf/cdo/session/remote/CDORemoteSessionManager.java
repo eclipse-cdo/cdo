@@ -63,6 +63,27 @@ public interface CDORemoteSessionManager extends IContainer<CDORemoteSession>
   public CDORemoteSession[] getRemoteSessions();
 
   /**
+   * Returns the set of {@link CDORemoteSession remote sessions} that are connected to the same repository as the
+   * {@link #getLocalSession() local session} and have the given <code>userID</code>. If this
+   * CDORemoteSessionManager itself is {@link #isSubscribed() subscribed} the result is returned from a local
+   * cache for remote sessions, otherwise it is requested from the server each time this method is called.
+   *
+   * @since 4.29
+   */
+  public CDORemoteSession[] getRemoteSessions(String userID);
+
+  /**
+   * Returns the {@link CDORemoteSession remote session} with the given <code>sessionID</code>, if it is currently
+   * connected to the same repository as the {@link #getLocalSession() local session}, <code>null</code>
+   * otherwise. If this CDORemoteSessionManager itself is {@link #isSubscribed() subscribed} the result is
+   * returned from a local cache for remote sessions, otherwise it is requested from the server each time this
+   * method is called.
+   *
+   * @since 4.29
+   */
+  public CDORemoteSession getRemoteSession(int sessionID);
+
+  /**
    * Returns <code>true</code> if this CDORemoteSessionManager is subscribed to changes in the set of remote sessions
    * and delivers {@link MessageReceived custom data events}, <code>false</code> otherwise. It is subscribed if at least
    * one is true:

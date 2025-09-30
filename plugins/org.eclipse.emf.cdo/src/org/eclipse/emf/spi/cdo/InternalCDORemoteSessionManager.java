@@ -44,8 +44,15 @@ public interface InternalCDORemoteSessionManager extends CDORemoteSessionManager
   public InternalCDORemoteSession[] getRemoteSessions();
 
   /**
+   * @since 4.29
+   */
+  @Override
+  public InternalCDORemoteSession[] getRemoteSessions(String userID);
+
+  /**
    * @since 4.17
    */
+  @Override
   public InternalCDORemoteSession getRemoteSession(int sessionID);
 
   /**

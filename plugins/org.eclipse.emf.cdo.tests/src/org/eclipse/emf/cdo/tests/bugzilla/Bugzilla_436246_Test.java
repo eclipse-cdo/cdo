@@ -17,6 +17,7 @@ import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.internal.net4j.protocol.LoadRevisionsRequest;
+import org.eclipse.emf.cdo.net4j.CDONet4jSession;
 import org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -63,15 +64,18 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   public void setUp() throws Exception
   {
     super.setUp();
+
     CDOSession session = openSession();
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.createResource(getResourcePath(RESOURCE_NAME));
     Company company = getModel1Factory().createCompany();
+
     for (int i = 0; i < NB_CATEGORY; i++)
     {
       Category category = getModel1Factory().createCategory();
       company.getCategories().add(category);
     }
+
     resource.getContents().add(company);
     transaction.commit();
     transaction.close();
@@ -88,7 +92,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
 
     // Test
     CDOSession session = openSession();
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
@@ -116,7 +120,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     InternalCDOSession internalCDOSession = (InternalCDOSession)session;
     CDOFetchRuleManager fetchRuleManager = new CustomCDOFetchRuleManager(companyCDOID);
     internalCDOSession.setFetchRuleManager(fetchRuleManager);
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
 
     CDOBranch currentBranch = session.getBranchManager().getMainBranch();
@@ -178,6 +182,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     {
       company.getCategories().add(getModel1Factory().createCategory());
     }
+
     transaction.commit();
     transaction.close();
 
@@ -190,6 +195,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     {
       company.getCategories().add(getModel1Factory().createCategory());
     }
+
     transaction.commit();
     transaction.close();
     session.close();
@@ -221,7 +227,7 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   private void testCDORevisionPrefetchOnBranch(CDOSession session, CDOBranch cdoBranch) throws Exception
   {
     CDOTransaction view = session.openTransaction(cdoBranch);
-    ISignalProtocol<?> protocol = ((org.eclipse.emf.cdo.net4j.CDONet4jSession)session).options().getNet4jProtocol();
+    ISignalProtocol<?> protocol = ((CDONet4jSession)session).options().getNet4jProtocol();
     SignalCounter signalCounter = new SignalCounter(protocol);
     assertEquals(0, signalCounter.getCountFor(LoadRevisionsRequest.class));
 
@@ -249,9 +255,9 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
   /**
    * @author Eike Stepper
    */
-  private class CustomCDOFetchRuleManager implements CDOFetchRuleManager
+  private final class CustomCDOFetchRuleManager implements CDOFetchRuleManager
   {
-    private CDOID companyCDOID;
+    private final CDOID companyCDOID;
 
     public CustomCDOFetchRuleManager(CDOID companyCDOID)
     {
@@ -267,20 +273,14 @@ public class Bugzilla_436246_Test extends AbstractCDOTest
     @Override
     public List<CDOFetchRule> getFetchRules(Collection<CDOID> ids)
     {
-      List<CDOFetchRule> fetchRules = null;
       if (ids.contains(companyCDOID))
       {
         CDOFetchRule fetchRule = new CDOFetchRule(getModel1Package().getCompany());
         fetchRule.addFeature(getModel1Package().getCompany_Categories());
-        fetchRules = Collections.singletonList(fetchRule);
+        return Collections.singletonList(fetchRule);
       }
-      return fetchRules;
-    }
 
-    @Override
-    public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
-    {
-      return CDOUtil.createCollectionLoadingPolicy(Integer.MAX_VALUE, Integer.MAX_VALUE);
+      return null;
     }
   }
 }

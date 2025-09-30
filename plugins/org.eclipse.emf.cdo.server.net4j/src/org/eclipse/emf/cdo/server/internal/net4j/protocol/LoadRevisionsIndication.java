@@ -32,7 +32,6 @@ import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo.Type;
 import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 
-import org.eclipse.net4j.util.collection.MoveableList;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -60,7 +59,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
   private int prefetchDepth;
 
-  private Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
+  private final Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
 
   private CDOID contextID = CDOID.NULL;
 
@@ -84,7 +83,6 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     revisionManager = repository.getRevisionManager();
 
     branchPoint = in.readCDOBranchPoint();
-
     referenceChunk = in.readXInt();
 
     boolean prefetchLockStates = in.readBoolean();
@@ -125,7 +123,7 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
       loadRevisionCollectionChunkSize = in.readXInt();
       if (loadRevisionCollectionChunkSize < 1)
       {
-        loadRevisionCollectionChunkSize = 1;
+        loadRevisionCollectionChunkSize = Integer.MAX_VALUE;
       }
 
       contextID = in.readCDOID();
@@ -157,9 +155,9 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
     Set<CDOFetchRule> visitedFetchRules = new HashSet<>();
     if (!CDOIDUtil.isNull(contextID) && fetchRules.size() > 0)
     {
-      RevisionInfo info = createRevisionInfo(contextID);
-      InternalCDORevision revisionContext = info.getResult();
-      collectRevisions(revisionContext, revisionIDs, additionalInfos, additionalRevisions, visitedFetchRules);
+      RevisionInfo contextRevisionInfo = createRevisionInfo(contextID);
+      InternalCDORevision contextRevision = contextRevisionInfo.getResult();
+      collectRevisions(contextRevision, revisionIDs, additionalInfos, additionalRevisions, visitedFetchRules);
     }
 
     InternalCDORevision[] revisions = new InternalCDORevision[size];
@@ -291,53 +289,25 @@ public class LoadRevisionsIndication extends CDOServerReadIndication
 
     for (EStructuralFeature feature : fetchRule.getFeatures())
     {
-      if (feature.isMany())
-      {
-        MoveableList<Object> list = revision.getListOrNull(feature);
-        if (list != null)
-        {
-          int toIndex = Math.min(loadRevisionCollectionChunkSize, list.size()) - 1;
-          for (int i = 0; i <= toIndex; i++)
-          {
-            Object value = list.get(i);
-            if (value instanceof CDOID)
-            {
-              CDOID id = (CDOID)value;
-              if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
-              {
-                RevisionInfo info = createRevisionInfo(id);
-                InternalCDORevision containedRevision = info.getResult();
-                if (containedRevision != null)
-                {
-                  additionalInfos.add(info);
-                  revisions.add(containedRevision.getID());
-                  additionalRevisions.add(containedRevision);
-                  collectRevisions(containedRevision, revisions, additionalInfos, additionalRevisions, visitedFetchRules);
-                }
-              }
-            }
-          }
-        }
-      }
-      else
-      {
-        Object value = revision.getValue(feature);
+      CDORevisionUtil.forEachValue(revision, feature, loadRevisionCollectionChunkSize, value -> {
         if (value instanceof CDOID)
         {
           CDOID id = (CDOID)value;
-          if (!id.isNull() && !revisions.contains(id))
+
+          if (!CDOIDUtil.isNull(id) && !revisions.contains(id))
           {
             RevisionInfo info = createRevisionInfo(id);
             InternalCDORevision containedRevision = info.getResult();
             if (containedRevision != null)
             {
+              additionalInfos.add(info);
               revisions.add(containedRevision.getID());
               additionalRevisions.add(containedRevision);
               collectRevisions(containedRevision, revisions, additionalInfos, additionalRevisions, visitedFetchRules);
             }
           }
         }
-      }
+      });
     }
 
     visitedFetchRules.remove(fetchRule);

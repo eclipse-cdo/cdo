@@ -30,9 +30,9 @@ import java.util.List;
  */
 public final class CDOFetchRule
 {
-  private EClass eClass;
+  private final EClass eClass;
 
-  private List<EStructuralFeature> features = new ArrayList<>(0);
+  private final List<EStructuralFeature> features = new ArrayList<>(0);
 
   public CDOFetchRule(EClass eClass)
   {
@@ -43,6 +43,7 @@ public final class CDOFetchRule
   {
     eClass = (EClass)in.readCDOClassifierRefAndResolve();
     int size = in.readXInt();
+
     for (int i = 0; i < size; i++)
     {
       int featureID = in.readXInt();
@@ -55,6 +56,7 @@ public final class CDOFetchRule
   {
     out.writeCDOClassifierRef(eClass);
     out.writeXInt(features.size());
+
     for (EStructuralFeature feature : features)
     {
       out.writeXInt(feature.getFeatureID());

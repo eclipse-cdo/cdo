@@ -14,27 +14,31 @@ package org.eclipse.emf.internal.cdo.analyzer;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.Objects;
+
 /**
  * @author Simon McDuff
  */
-public class CDOFetchFeatureInfo
+public final class CDOFetchFeatureInfo
 {
-  private long timeBeforeUsed;
+  private static final long INITIAL_TIME_BEFORE_USED = 0;
 
-  private long latencyTime;
+  private static final long INITIAL_LATENCY_TIME = -1;
+
+  private final EClass eClass;
+
+  private final EStructuralFeature feature;
+
+  private long timeBeforeUsed = INITIAL_TIME_BEFORE_USED;
+
+  private long latencyTime = INITIAL_LATENCY_TIME;
 
   private boolean active;
-
-  private EClass eClass;
-
-  private EStructuralFeature feature;
 
   public CDOFetchFeatureInfo(EClass eClass, EStructuralFeature feature)
   {
     this.eClass = eClass;
     this.feature = feature;
-    active = false;
-    latencyTime = -1;
   }
 
   public EClass getEClass()
@@ -47,6 +51,16 @@ public class CDOFetchFeatureInfo
     return feature;
   }
 
+  public long getTimeBeforeUsed()
+  {
+    return timeBeforeUsed;
+  }
+
+  public long getLatencyTime()
+  {
+    return latencyTime;
+  }
+
   public boolean isActive()
   {
     return active;
@@ -57,54 +71,26 @@ public class CDOFetchFeatureInfo
     this.active = active;
   }
 
-  public long getTimeBeforeUsed()
+  public void updateTimeInfo(long elapseTimeBeforeLastRequest)
   {
-    return timeBeforeUsed;
-  }
-
-  public void setTimeBeforeUsed(long timeBeforeUsed)
-  {
-    this.timeBeforeUsed = timeBeforeUsed;
-  }
-
-  public long getLatencyTime()
-  {
-    return latencyTime;
-  }
-
-  public void setLatencyTime(long latencyTime)
-  {
-    this.latencyTime = latencyTime;
+    long oldTimeBeforeUsed = timeBeforeUsed;
+    timeBeforeUsed = oldTimeBeforeUsed == INITIAL_TIME_BEFORE_USED //
+        ? elapseTimeBeforeLastRequest //
+        : (oldTimeBeforeUsed + elapseTimeBeforeLastRequest) / 2;
   }
 
   public void updateLatencyTime(long latencyTime)
   {
-    if (getLatencyTime() == -1)
-    {
-      setLatencyTime(latencyTime);
-    }
-    else
-    {
-      setLatencyTime((latencyTime + getLatencyTime()) / 2);
-    }
-  }
-
-  public void updateTimeInfo(long elapseTimeBeforeLastRequest)
-  {
-    if (getTimeBeforeUsed() == 0)
-    {
-      setTimeBeforeUsed(elapseTimeBeforeLastRequest);
-    }
-    else
-    {
-      setTimeBeforeUsed((getTimeBeforeUsed() + elapseTimeBeforeLastRequest) / 2);
-    }
+    long oldLatencyTime = this.latencyTime;
+    this.latencyTime = oldLatencyTime == INITIAL_LATENCY_TIME //
+        ? latencyTime //
+        : (latencyTime + oldLatencyTime) / 2;
   }
 
   @Override
   public int hashCode()
   {
-    return eClass.hashCode() ^ feature.hashCode();
+    return Objects.hash(eClass, feature);
   }
 
   @Override

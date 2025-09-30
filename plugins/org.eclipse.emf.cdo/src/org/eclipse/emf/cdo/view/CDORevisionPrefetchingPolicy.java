@@ -49,7 +49,7 @@ public interface CDORevisionPrefetchingPolicy
    *          {@link CDORevisionManager#containsRevision(CDOID, CDOBranchPoint)}.
    * @param targetObject
    *          Container of the list
-   * @return Should return a list of id's to be fetch.
+   * @return Should return a list of id's to fetch.
    * @since 3.0
    */
   public List<CDOID> loadAhead(CDORevisionManager revisionManager, CDOBranchPoint branchPoint, EObject targetObject, EStructuralFeature feature, CDOList list,

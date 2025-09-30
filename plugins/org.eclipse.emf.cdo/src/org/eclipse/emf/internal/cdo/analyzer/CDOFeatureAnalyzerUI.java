@@ -94,7 +94,7 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
         return null;
       }
 
-      Collection<CDOFetchRule> fetchRules = fetchOfRule.getFeatureInfo().getRules(null, null);
+      Collection<CDOFetchRule> fetchRules = fetchOfRule.getFeatureInfo().getFetchRules(null, null);
 
       for (CDOFetchRule fetchRule : fetchRules)
       {
@@ -111,9 +111,8 @@ public class CDOFeatureAnalyzerUI extends CDOAbstractFeatureRuleAnalyzer
   @Override
   protected void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
-    // Don`t handle containment relationship
+    // Don't handle containment relationship
     // TODO Simon: Do you really mean containment here? The check is different...
-    // TODO Clarify feature maps
     if (feature instanceof EReference)
     {
       if (lastElapseTimeBetweenOperations > maxTimeBetweenOperation || currentClusterOfFetchRule == null)

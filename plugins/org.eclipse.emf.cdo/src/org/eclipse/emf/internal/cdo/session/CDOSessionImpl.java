@@ -296,6 +296,12 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   }
 
   @Override
+  public ExecutorService getExecutorService()
+  {
+    return ConcurrencyUtil.getExecutorService(sessionProtocol);
+  }
+
+  @Override
   public CDORepositoryInfo getRepositoryInfo()
   {
     return repositoryInfo;
@@ -471,12 +477,6 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
   public CDOFetchRuleManager getFetchRuleManager()
   {
     return fetchRuleManager;
-  }
-
-  @Override
-  public ExecutorService getExecutorService()
-  {
-    return ConcurrencyUtil.getExecutorService(sessionProtocol);
   }
 
   /**

@@ -197,8 +197,8 @@ public final class CDOStoreImpl implements CDOStore
         }
 
         CDOFeatureAnalyzer featureAnalyzer = view.options().getFeatureAnalyzer();
-
         featureAnalyzer.preTraverseFeature(cdoObject, feature, index);
+
         InternalCDORevision revision = readRevision(cdoObject);
 
         Object value = revision.get(feature, index);

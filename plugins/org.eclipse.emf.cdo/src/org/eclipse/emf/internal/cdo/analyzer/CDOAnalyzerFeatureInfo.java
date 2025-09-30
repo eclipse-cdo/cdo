@@ -27,93 +27,85 @@ import java.util.Map;
 /**
  * @author Simon McDuff
  */
-public class CDOAnalyzerFeatureInfo
+public final class CDOAnalyzerFeatureInfo
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, CDOAnalyzerFeatureInfo.class);
 
-  private Map<CDOFetchFeatureInfo, CDOFetchFeatureInfo> featureStats = new HashMap<>();
+  private final Map<CDOFetchFeatureInfo, CDOFetchFeatureInfo> featureStats = new HashMap<>();
 
-  private Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
+  private final Map<EClass, CDOFetchRule> fetchRules = new HashMap<>();
 
   public CDOAnalyzerFeatureInfo()
   {
   }
 
-  public Collection<CDOFetchRule> getRules(EClass eClass, EStructuralFeature feature)
+  public Collection<CDOFetchRule> getFetchRules(EClass eClass, EStructuralFeature feature)
   {
     return fetchRules.values();
   }
 
-  public synchronized CDOFetchFeatureInfo getFeatureStat(EClass eClass, EStructuralFeature feature)
+  public synchronized CDOFetchFeatureInfo getFeatureInfo(EClass eClass, EStructuralFeature feature)
   {
     CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(eClass, feature);
+
     CDOFetchFeatureInfo featureRule = featureStats.get(search);
-    if (featureRule == null)
+    if (featureRule != null)
     {
-      featureRule = search;
-      featureStats.put(search, featureRule);
+      return featureRule;
     }
 
-    return featureRule;
+    featureStats.put(search, search);
+    return search;
   }
 
-  public boolean isActive(EClass eClass, EStructuralFeature feature)
+  public synchronized boolean isActive(EClass eClass, EStructuralFeature feature)
   {
     CDOFetchFeatureInfo search = new CDOFetchFeatureInfo(eClass, feature);
     CDOFetchFeatureInfo featureRule = featureStats.get(search);
     return featureRule != null && featureRule.isActive();
   }
 
-  public void activate(EClass eClass, EStructuralFeature feature)
+  public synchronized void activate(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo info = getFeatureStat(eClass, feature);
+    CDOFetchFeatureInfo info = getFeatureInfo(eClass, feature);
     if (!info.isActive())
     {
       info.setActive(true);
-      addRule(eClass, feature);
+      addFetchRule(eClass, feature);
     }
   }
 
-  public void deactivate(EClass eClass, EStructuralFeature feature)
+  public synchronized void deactivate(EClass eClass, EStructuralFeature feature)
   {
-    CDOFetchFeatureInfo info = getFeatureStat(eClass, feature);
+    CDOFetchFeatureInfo info = getFeatureInfo(eClass, feature);
     if (info.isActive())
     {
       info.setActive(false);
-      removeRule(eClass, feature);
+      removeFetchRule(eClass, feature);
     }
   }
 
-  private void addRule(EClass eClass, EStructuralFeature feature)
+  private void addFetchRule(EClass eClass, EStructuralFeature feature)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Adding rule : {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
+      TRACER.format("Adding fetch rule: {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
     }
 
-    CDOFetchRule fetchRule = fetchRules.get(eClass);
-    if (fetchRule == null)
-    {
-      fetchRule = new CDOFetchRule(eClass);
-      fetchRules.put(eClass, fetchRule);
-    }
-
-    fetchRule.addFeature(feature);
+    fetchRules.computeIfAbsent(eClass, CDOFetchRule::new).addFeature(feature);
   }
 
-  private void removeRule(EClass eClass, EStructuralFeature feature)
+  private void removeFetchRule(EClass eClass, EStructuralFeature feature)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("Removing rule : {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
+      TRACER.format("Removing fetch rule: {0}.{1}", eClass.getName(), feature.getName()); //$NON-NLS-1$
     }
 
     CDOFetchRule fetchRule = fetchRules.get(eClass);
-    if (fetchRule == null)
+    if (fetchRule != null)
     {
-      return;
+      fetchRule.removeFeature(feature);
     }
-
-    fetchRule.removeFeature(feature);
   }
 }

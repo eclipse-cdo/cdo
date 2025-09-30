@@ -26,7 +26,7 @@ import java.util.List;
  */
 public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
 {
-  CDOAnalyzerFeatureInfo featureInfos = new CDOAnalyzerFeatureInfo();
+  private final CDOAnalyzerFeatureInfo featureInfos = new CDOAnalyzerFeatureInfo();
 
   public CDOFeatureAnalyzerModelBased()
   {
@@ -35,6 +35,7 @@ public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
   @Override
   public void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
+    // Do nothing.
   }
 
   @Override
@@ -57,10 +58,12 @@ public class CDOFeatureAnalyzerModelBased extends CDOAbstractFeatureRuleAnalyzer
   {
     fetchData();
     List<CDOFetchRule> rules = new ArrayList<>();
+
     if (lastTraverseCDOObject != null)
     {
-      rules.addAll(featureInfos.getRules(lastTraverseCDOObject.eClass(), lastTraverseFeature));
+      rules.addAll(featureInfos.getFetchRules(lastTraverseCDOObject.eClass(), lastTraverseFeature));
     }
+
     return rules;
   }
 }

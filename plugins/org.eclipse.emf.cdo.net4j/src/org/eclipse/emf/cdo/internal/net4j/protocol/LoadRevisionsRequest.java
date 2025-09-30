@@ -27,6 +27,7 @@ import org.eclipse.emf.cdo.spi.common.revision.PointerCDORevision;
 import org.eclipse.emf.cdo.spi.common.revision.RevisionInfo;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.Worker.Terminate;
 import org.eclipse.net4j.util.io.IORuntimeException;
 
@@ -145,15 +146,12 @@ public class LoadRevisionsRequest extends CDOClientRequest<List<RevisionInfo>>
 
     CDOFetchRuleManager ruleManager = session.getFetchRuleManager();
     List<CDOFetchRule> fetchRules = ruleManager.getFetchRules(ids);
-    if (fetchRules == null || fetchRules.size() <= 0)
-    {
-      out.writeXInt(0);
-    }
-    else
-    {
-      int fetchRulesCount = fetchRules.size();
-      out.writeXInt(fetchRulesCount);
 
+    int fetchRulesCount = ObjectUtil.size(fetchRules);
+    out.writeXInt(fetchRulesCount);
+
+    if (fetchRulesCount > 0)
+    {
       CDOCollectionLoadingPolicy collectionLoadingPolicy = ruleManager.getCollectionLoadingPolicy();
       out.writeXInt(collectionLoadingPolicy != null ? collectionLoadingPolicy.getInitialChunkSize() : CDORevision.UNCHUNKED);
 

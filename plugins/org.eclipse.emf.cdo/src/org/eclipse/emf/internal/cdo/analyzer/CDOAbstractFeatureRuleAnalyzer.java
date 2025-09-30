@@ -22,6 +22,8 @@ import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
 
+import java.util.Collection;
+
 /**
  * @author Simon McDuff
  */
@@ -41,7 +43,7 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
 
   protected long lastLatencyTime;
 
-  protected CDOCollectionLoadingPolicy loadCollectionPolicy;
+  private CDOCollectionLoadingPolicy loadCollectionPolicy;
 
   private boolean didFetch;
 
@@ -51,31 +53,33 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   {
   }
 
-  public int getFetchCount()
+  public final int getFetchCount()
   {
     return fetchCount;
   }
 
   @Override
-  public CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
+  public final CDOCollectionLoadingPolicy getCollectionLoadingPolicy()
   {
     return loadCollectionPolicy;
   }
 
   @Override
-  public void preTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
+  public final void preTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("preTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
+      TRACER.format("preTraverseFeature: {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
     }
 
     loadCollectionPolicy = cdoObject.cdoView().getSession().options().getCollectionLoadingPolicy();
     lastTraverseFeature = feature;
     lastTraverseCDOObject = cdoObject;
     lastTraverseIndex = index;
-    lastElapseTimeBetweenOperations = System.currentTimeMillis() - lastAccessTime;
-    lastAccessTime = System.currentTimeMillis();
+
+    long now = System.currentTimeMillis();
+    lastElapseTimeBetweenOperations = now - lastAccessTime;
+    lastAccessTime = now;
     didFetch = false;
 
     CDOFetchRuleManagerThreadLocal.join(this);
@@ -83,11 +87,11 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
   }
 
   @Override
-  public void postTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value)
+  public final void postTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value)
   {
     if (TRACER.isEnabled())
     {
-      TRACER.format("postTraverseFeature : {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
+      TRACER.format("postTraverseFeature: {0}.{1}", cdoObject.eClass(), feature.getName()); //$NON-NLS-1$
     }
 
     try
@@ -101,21 +105,30 @@ public abstract class CDOAbstractFeatureRuleAnalyzer implements CDOFeatureAnalyz
     }
   }
 
-  protected void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index)
-  {
-  }
+  /**
+   * Called before a feature is traversed.
+   */
+  protected abstract void doPreTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index);
 
-  protected void doPostTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value)
-  {
-  }
+  /**
+   * Called after a feature has been traversed.
+   */
+  protected abstract void doPostTraverseFeature(CDOObject cdoObject, EStructuralFeature feature, int index, Object value);
 
-  protected void fetchData()
+  /**
+   * Indicates that a fetch operation occurred during the traversal of the current feature.
+   * <p>
+   * Subclasses must call this method when a fetch occurs.
+   * This is usually done in implementations of {@link CDOFetchRuleManager#getFetchRules(Collection)}, which is called from
+   * <code>LoadRevisionsRequest.requesting(CDODataOutput)</code>.
+   */
+  protected final void fetchData()
   {
     didFetch = true;
     fetchCount++;
   }
 
-  protected boolean didFetch()
+  protected final boolean didFetch()
   {
     return didFetch;
   }

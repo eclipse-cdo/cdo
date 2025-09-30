@@ -310,6 +310,46 @@ public final class CDORevisionUtil
   }
 
   /**
+   * @since 4.27
+   */
+  public static void forEachValue(CDORevision revision, EStructuralFeature feature, Consumer<Object> consumer)
+  {
+    forEachValue(revision, feature, Integer.MAX_VALUE, consumer);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static void forEachValue(CDORevision revision, EStructuralFeature feature, int maxValues, Consumer<Object> consumer)
+  {
+    if (maxValues < 1)
+    {
+      return;
+    }
+
+    CDORevisionData data = revision.data();
+
+    if (feature.isMany())
+    {
+      CDOList list = data.getListOrNull(feature);
+      if (list != null)
+      {
+        int toIndex = Math.min(maxValues, list.size()) - 1;
+        for (int i = 0; i <= toIndex; i++)
+        {
+          Object value = list.get(i);
+          consumer.accept(value);
+        }
+      }
+    }
+    else
+    {
+      Object value = data.getValue(feature);
+      consumer.accept(value);
+    }
+  }
+
+  /**
    * @since 4.5
    */
   public static boolean isTreeRestructuring(InternalCDORevisionDelta[] deltas)

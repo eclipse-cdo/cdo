@@ -15,6 +15,10 @@
 		<equals arg1="${skip.tests}" arg2="true"/>
 	</condition>
 	
+	<condition property="skip.archive.condition">
+		<equals arg1="${skip.archive}" arg2="true"/>
+	</condition>
+	
   <!-- ==== -->
   <!-- Init -->
   <!-- ==== -->
@@ -186,9 +190,9 @@
     </java>
   </target>
 
-  <!-- ==================== -->
+  <!-- ===================== -->
   <!-- Generate Test Reports -->
-  <!-- ==================== -->
+  <!-- ===================== -->
 
   <target name="generate-testreports" depends="clean" unless="skip.tests.condition">
     <property name="tests" location="${build.root}/tests" />
@@ -222,10 +226,34 @@
   	<move file="${tests}/TESTS-TestSuites.xml" tofile="${tests}/test-report.xml" />
   </target>
 
+  <!-- ==================== -->
+  <!-- Generate Test Reports -->
+  <!-- ==================== -->
+
+  <target name="generate-archive" depends="clean" unless="skip.archive.condition">
+    <zip destfile="build-results.zip">
+      <fileset dir=".">
+        <include name="binary/**" />
+        <include name="features/**" />
+        <include name="plugins/**" />
+        <include name="zips/**" />
+        <include name="tests/**" />
+        <include name="help/**" />
+        <include name="*.jar" />
+        <include name="*.html" />
+        <include name="*.xml" />
+        <include name="*.index" />
+        <include name="*.css" />
+        <include name="*.txt" />
+        <include name="*.properties" />
+      </fileset>
+    </zip>
+  </target>
+
   <!-- ======== -->
   <!-- Generate -->
   <!-- ======== -->
 
-  <target name="generate" depends="generate-site,generate-help,generate-bookmarks,generate-dropins,generate-apireports,generate-testreports" />
+  <target name="generate" depends="generate-site,generate-help,generate-bookmarks,generate-dropins,generate-apireports,generate-testreports,generate-archive" />
 
 </project>

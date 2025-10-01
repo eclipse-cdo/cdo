@@ -173,47 +173,63 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockGrade(java.lang.Object)" class="member-name-link">getLockGrade</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">getLockKey</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getLockKey</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Same as calling <a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a> with <code>null</code> as branch.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">getLockKey</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the lock key for the given ID.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKeyBranch(java.lang.Object)" class="member-name-link">getLockKeyBranch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKeyBranch(java.lang.Object)" class="member-name-link">getLockKeyBranch</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKeyID(java.lang.Object)" class="member-name-link">getLockKeyID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockKeyID(java.lang.Object)" class="member-name-link">getLockKeyID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockOwner(java.lang.String)" class="member-name-link">getLockOwner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../common/lock/IDurableLockingManager.LockGrade.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLocks(org.eclipse.emf.cdo.server.IView)" class="member-name-link">getLocks</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockOwners(java.lang.Object,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType...)" class="member-name-link">getLockOwners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType...&nbsp;lockTypes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the set of views that own a lock of one of the specified types on the given key.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a><wbr>&lt;<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../common/lock/IDurableLockingManager.LockGrade.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLocks(org.eclipse.emf.cdo.server.IView)" class="member-name-link">getLocks</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockState(java.lang.Object)" class="member-name-link">getLockState</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.util.concurrent.RWOLockManager.LockState<wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockState(java.lang.Object)" class="member-name-link">getLockState</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getLockStates()" class="member-name-link">getLockStates</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#getLockStates()" class="member-name-link">getLockStates</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockStates(java.util.Collection,java.util.function.BiConsumer)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;keys,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr>org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockStates(java.util.function.Consumer)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockStates(java.util.Collection,java.util.function.BiConsumer)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;keys,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr>org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLockStates(java.util.function.Consumer)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(boolean&nbsp;explicit,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(boolean&nbsp;explicit,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  long&nbsp;timeout)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  int&nbsp;count,
@@ -222,101 +238,101 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
  boolean&nbsp;explicit,
  org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,long,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">lock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  int&nbsp;count,
  long&nbsp;timeout,
  org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Veraltet.</span></div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.lang.Object,long)" class="member-name-link">lock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;objectToLock,
- long&nbsp;timeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.lang.Object,long)" class="member-name-link">lock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToLock,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;objectToLock,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean,long)" class="member-name-link">lock2</a><wbr>(boolean&nbsp;explicit,
- org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
- boolean&nbsp;recursive,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToLock,
  long&nbsp;timeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock2</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToLock,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean,long)" class="member-name-link">lock2</a><wbr>(boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
+ boolean&nbsp;recursive,
  long&nbsp;timeout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,int,boolean,java.lang.String)" class="member-name-link">openView</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
- int&nbsp;viewID,
- boolean&nbsp;readOnly,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#lock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,long)" class="member-name-link">lock2</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToLock,
+ long&nbsp;timeout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,int,boolean,java.lang.String,java.util.function.Consumer,java.util.function.BiConsumer)" class="member-name-link">openView</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,int,boolean,java.lang.String)" class="member-name-link">openView</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
+ int&nbsp;viewID,
+ boolean&nbsp;readOnly,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#openView(org.eclipse.emf.cdo.server.ISession,int,boolean,java.lang.String,java.util.function.Consumer,java.util.function.BiConsumer)" class="member-name-link">openView</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
  int&nbsp;viewID,
  boolean&nbsp;readOnly,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;durableLockingID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;viewConsumer,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/BiConsumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">BiConsumer</a>&lt;<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr><a href="../../common/lock/IDurableLockingManager.LockGrade.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockGrade</a>&gt;&nbsp;lockConsumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#reloadLocks()" class="member-name-link">reloadLocks</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#reloadLocks()" class="member-name-link">reloadLocks</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#setLockState(java.lang.Object,org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)" class="member-name-link">setLockState</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key,
- org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;lockState)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Veraltet.</span></div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)" class="member-name-link">setRepository</a><wbr>(<a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(boolean,org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock</a><wbr>(boolean&nbsp;explicit,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Veraltet.</span></div>
-</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock</a><wbr>(boolean&nbsp;explicit,
- org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#setLockState(java.lang.Object,org.eclipse.net4j.util.concurrent.RWOLockManager.LockState)" class="member-name-link">setLockState</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key,
+ org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;lockState)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setRepository(org.eclipse.emf.cdo.spi.server.InternalRepository)" class="member-name-link">setRepository</a><wbr>(<a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&nbsp;repository)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(boolean,org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock</a><wbr>(boolean&nbsp;explicit,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock</a><wbr>(boolean&nbsp;explicit,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,boolean,boolean,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  int&nbsp;count,
@@ -324,60 +340,60 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
  boolean&nbsp;explicit,
  org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>long</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>long</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.emf.cdo.server.IView,java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,int,org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler,java.util.function.Consumer)" class="member-name-link">unlock</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  int&nbsp;count,
  org.eclipse.net4j.util.concurrent.IRWOLockManager.LockDeltaHandler&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&nbsp;deltaHandler,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;&nbsp;stateHandler)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Veraltet.</span></div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(boolean,org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock2</a><wbr>(boolean&nbsp;explicit,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean)" class="member-name-link">unlock2</a><wbr>(boolean&nbsp;explicit,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(boolean,org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock2</a><wbr>(boolean&nbsp;explicit,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(boolean,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection,boolean)" class="member-name-link">unlock2</a><wbr>(boolean&nbsp;explicit,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objects,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
-<div class="block"><span class="deprecated-label">Veraltet.</span></div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock2</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToUnlock)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.emf.cdo.server.IView)" class="member-name-link">unlock2</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
- <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToUnlock)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#updateLockArea(org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea)" class="member-name-link">updateLockArea</a><wbr>(<a href="../../common/lock/IDurableLockingManager.LockArea.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a>&nbsp;lockArea)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;org.eclipse.net4j.util.concurrent.RWOLockManager.LockState&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>,<wbr><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#unlock2(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.server.IView,java.util.Collection)" class="member-name-link">unlock2</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;context,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;objectsToUnlock)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#updateLockArea(org.eclipse.emf.cdo.common.lock.IDurableLockingManager.LockArea)" class="member-name-link">updateLockArea</a><wbr>(<a href="../../common/lock/IDurableLockingManager.LockArea.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">IDurableLockingManager.LockArea</a>&nbsp;lockArea)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -417,11 +433,27 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
 </section>
 </li>
 <li>
+<section class="detail" id="getLockKey(org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>getLockKey</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getLockKey</span><wbr><span class="parameters">(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<div class="block">Same as calling <a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a> with <code>null</code> as branch.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)">
 <h3>getLockKey</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></span>&nbsp;<span class="element-name">getLockKey</span><wbr><span class="parameters">(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</span></div>
+<div class="block">Returns the lock key for the given ID. If the repository supports branching, the returned key is of type <a href="../../common/revision/CDOIDAndBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>CDOIDAndBranch</code></a>,
+ otherwise it is of type <a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a>.</div>
 <dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>id</code> - the ID of the object to be locked.</dd>
+<dd><code>branch</code> - the branch on which the object to be locked resides. May be <code>null</code> to indicate the main branch (for example if the repository does not support branching).</dd>
 <dt>Seit:</dt>
 <dd>4.0</dd>
 </dl>
@@ -434,6 +466,13 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.0</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>
@@ -444,6 +483,13 @@ extends org.eclipse.net4j.util.concurrent.IRWOLockManager&lt;<a href="https://do
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.15</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>
@@ -550,6 +596,13 @@ org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.1</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>
@@ -560,6 +613,13 @@ org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.1</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>
@@ -571,6 +631,13 @@ org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.15</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 </li>
@@ -581,6 +648,37 @@ org.eclipse.net4j.util.concurrent.TimeoutRuntimeException</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.15</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLockOwners(java.lang.Object,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType...)">
+<h3>getLockOwners</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a>&lt;<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&gt;</span>&nbsp;<span class="element-name">getLockOwners</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;key,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType...&nbsp;lockTypes)</span></div>
+<div class="block">Returns the set of views that own a lock of one of the specified types on the given key.
+ If no lock types are specified, all lock types are considered.
+ If no view owns a lock of the specified types, an empty set is returned.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)"><code>getLockKey(CDOID)</code></a></li>
+<li><a href="#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>getLockKey(CDOID, CDOBranch)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getLockOwner(java.lang.String)">
+<h3>getLockOwner</h3>
+<div class="member-signature"><span class="return-type"><a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a></span>&nbsp;<span class="element-name">getLockOwner</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;durableLockingID)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
 </dl>
 </section>
 </li>

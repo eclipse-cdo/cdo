@@ -249,6 +249,17 @@ loadScripts(document, 'script');</script>
  boolean&nbsp;onlyProperContents,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forEachValue(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.util.function.Consumer)" class="member-name-link">forEachValue</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;maxValues,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#forEachValue(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,java.util.function.Consumer)" class="member-name-link">forEachValue</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#formatRevisionKey(org.eclipse.emf.cdo.common.revision.CDORevisionKey)" class="member-name-link">formatRevisionKey</a><wbr>(<a href="CDORevisionKey.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionKey</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -559,6 +570,31 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="forEachValue(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,java.util.function.Consumer)">
+<h3>forEachValue</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEachValue</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="forEachValue(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.util.function.Consumer)">
+<h3>forEachValue</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEachValue</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ int&nbsp;maxValues,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;&nbsp;consumer)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>

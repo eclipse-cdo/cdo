@@ -147,11 +147,15 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOCommitInfoManager.</span><code><a href="../CDOCommitInfoManager.html#getCommitInfo(long)" class="member-name-link">getCommitInfo</a><wbr>(long&nbsp;timeStamp)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Same as calling <a href="../CDOCommitInfoManager.html#getCommitInfo(long,boolean)"><code>getCommitInfo(timeStamp, true)</code></a>.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOCommitInfoManager.</span><code><a href="../CDOCommitInfoManager.html#getCommitInfo(long,boolean)" class="member-name-link">getCommitInfo</a><wbr>(long&nbsp;timeStamp,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the commit info for the given time stamp.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOCommitInfoManager.</span><code><a href="../CDOCommitInfoManager.html#getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean)" class="member-name-link">getCommitInfo</a><wbr>(<a href="../../branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;startTime,
@@ -483,37 +487,37 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commit(java.lang.Runnable,int,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  int&nbsp;attempts,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commit(java.lang.Runnable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Long</a>&gt;&nbsp;retry,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  org.eclipse.net4j.util.Predicate&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Long</a>&gt;&nbsp;retry,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#commit(java.lang.Runnable,int,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  int&nbsp;attempts,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#commit(java.lang.Runnable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Predicate</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Long</a>&gt;&nbsp;retry,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#commit(java.lang.Runnable,org.eclipse.net4j.util.Predicate,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable,
  org.eclipse.net4j.util.Predicate&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Long.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Long</a>&gt;&nbsp;retry,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.9 use <a href="../../../transaction/CDOTransaction.html#commit(java.lang.Runnable,java.util.function.Predicate,org.eclipse.core.runtime.IProgressMonitor)"><code>CDOTransaction.commit(Runnable, java.util.function.Predicate, IProgressMonitor)</code></a>.</div>
@@ -525,16 +529,16 @@ loadScripts(document, 'script');</script>
 <div class="block">Same as <a href="../../../transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)"><code>commit(null)</code></a>.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOUserTransaction.</span><code><a href="../../../transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOUserTransaction.</span><code><a href="../../../transaction/CDOUserTransaction.html#commit(org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Commits the modifications of this transaction to the repository and returns a <a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit"><code>commit info</code></a> object if successful.</div>
 </div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commitAndClose(org.eclipse.core.runtime.IProgressMonitor,boolean)" class="member-name-link">commitAndClose</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor,
+<div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#commitAndClose(org.eclipse.core.runtime.IProgressMonitor,boolean)" class="member-name-link">commitAndClose</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor,
  boolean&nbsp;keepOpenAfterCommitProblem)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#commitAndClose(org.eclipse.core.runtime.IProgressMonitor,boolean)" class="member-name-link">commitAndClose</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor,
+<div class="col-second odd-row-color"><span class="type-name-label">CDOTransaction.</span><code><a href="../../../transaction/CDOTransaction.html#commitAndClose(org.eclipse.core.runtime.IProgressMonitor,boolean)" class="member-name-link">commitAndClose</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor,
  boolean&nbsp;keepOpenAfterCommitProblem)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
@@ -681,7 +685,7 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code><a href="../CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOTransactionStrategy.</span><code><a href="../../../../spi/cdo/CDOTransactionStrategy.html#commit(org.eclipse.emf.spi.cdo.InternalCDOTransaction,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">commit</a><wbr>(<a href="../../../../spi/cdo/InternalCDOTransaction.html" title="Schnittstelle in org.eclipse.emf.spi.cdo">InternalCDOTransaction</a>&nbsp;transaction,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;progressMonitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;progressMonitor)</code></div>
 <div class="col-last even-row-color">
 <div class="block">TODO Better use an <code>OMMonitor</code>?</div>
 </div>

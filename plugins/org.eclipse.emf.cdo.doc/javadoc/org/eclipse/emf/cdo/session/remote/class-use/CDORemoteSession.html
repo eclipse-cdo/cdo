@@ -83,15 +83,28 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDORemoteSessionEvent.</span><code><a href="../CDORemoteSessionEvent.html#getRemoteSession()" class="member-name-link">getRemoteSession</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDORemoteTopicEvent.</span><code><a href="../CDORemoteTopicEvent.html#getRemoteSession()" class="member-name-link">getRemoteSession</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORemoteSessionManager.</span><code><a href="../CDORemoteSessionManager.html#getRemoteSession(int)" class="member-name-link">getRemoteSession</a><wbr>(int&nbsp;sessionID)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Returns the <a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a> with the given <code>sessionID</code>, if it is currently
+ connected to the same repository as the <a href="../CDORemoteSessionManager.html#getLocalSession()"><code>local session</code></a>, <code>null</code>
+ otherwise.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORemoteTopicEvent.</span><code><a href="../CDORemoteTopicEvent.html#getRemoteSession()" class="member-name-link">getRemoteSession</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns the remote session that caused this event, i.e., the sender.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDORemoteSessionManager.</span><code><a href="../CDORemoteSessionManager.html#getRemoteSessions()" class="member-name-link">getRemoteSessions</a>()</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDORemoteSessionManager.</span><code><a href="../CDORemoteSessionManager.html#getRemoteSessions()" class="member-name-link">getRemoteSessions</a>()</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Returns the set of <a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
  <a href="../CDORemoteSessionManager.html#getLocalSession()"><code>local session</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDORemoteSessionManager.</span><code><a href="../CDORemoteSessionManager.html#getRemoteSessions(java.lang.String)" class="member-name-link">getRemoteSessions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the set of <a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
+ <a href="../CDORemoteSessionManager.html#getLocalSession()"><code>local session</code></a> and have the given <code>userID</code>.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORemoteTopic.</span><code><a href="../CDORemoteTopic.html#getRemoteSessions()" class="member-name-link">getRemoteSessions</a>()</code></div>

@@ -197,21 +197,28 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;&nbsp;lockDeltas,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOLockState.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;lockStates)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../CDOLockUtil.html#createLockDelta(java.lang.Object,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">createLockDelta</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;target,
+<div class="col-first odd-row-color"><code>static <a href="../CDOLockChangeInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.Collection,java.util.Collection,boolean)" class="member-name-link">createLockChangeInfo</a><wbr>(<a href="../../branch/CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;&nbsp;lockDeltas,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOLockState.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;lockStates,
+ boolean&nbsp;isAdministrative)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="../CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../CDOLockUtil.html#createLockDelta(java.lang.Object,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.common.lock.CDOLockOwner,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">createLockDelta</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;target,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;oldOwner,
  <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;newOwner)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>static int</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../CDOLockUtil.html#indexOf(org.eclipse.emf.cdo.common.lock.CDOLockOwner%5B%5D,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">indexOf</a><wbr>(<a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>[]&nbsp;lockOwners,
- <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOLockState.</span><code><a href="../CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.common.lock.CDOLockOwner,boolean)" class="member-name-link">isLocked</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+<div class="col-first odd-row-color"><code>static int</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../CDOLockUtil.html#indexOf(org.eclipse.emf.cdo.common.lock.CDOLockOwner%5B%5D,org.eclipse.emf.cdo.common.lock.CDOLockOwner)" class="member-name-link">indexOf</a><wbr>(<a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>[]&nbsp;lockOwners,
+ <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOLockState.</span><code><a href="../CDOLockState.html#isLocked(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,org.eclipse.emf.cdo.common.lock.CDOLockOwner,boolean)" class="member-name-link">isLocked</a><wbr>(org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
  <a href="../CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;by,
  boolean&nbsp;others)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">If the 'others' argument is <code>false</code>, this method returns <code>true</code> if this lock is currently
  held by the <i>requesting</i> CDOView, <code>false</code> otherwise.</div>
 </div>

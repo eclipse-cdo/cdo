@@ -2,10 +2,13 @@ package org.eclipse.emf.cdo.doc.programmers.client;
 
 import org.eclipse.emf.cdo.common.CDOCommonRepository;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
+import org.eclipse.emf.cdo.common.CDOCommonRepository.Mode;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.State;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.StateChangedEvent;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.Type;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.TypeChangedEvent;
+import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
 import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchManager;
@@ -40,10 +43,12 @@ import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOSetFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDOUnsetFeatureDelta;
 import org.eclipse.emf.cdo.common.util.CDOFetchRule;
+import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions.CreatingAndConfiguringSessions.PassiveUpdatesAndRefreshing;
 import org.eclipse.emf.cdo.doc.programmers.client.Doc03_WorkingWithSessions.SessionFacilities.RevisionManager.PrefetchingRevisions;
+import org.eclipse.emf.cdo.doc.programmers.server.Architecture;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.explorer.repositories.CDORepositoryManager;
@@ -84,6 +89,7 @@ import org.eclipse.emf.cdo.util.ContextOperationAuthorization;
 import org.eclipse.emf.cdo.view.CDOFeatureAnalyzer;
 import org.eclipse.emf.cdo.view.CDOFetchRuleManager;
 import org.eclipse.emf.cdo.view.CDOPrefetcherManager;
+import org.eclipse.emf.cdo.view.CDOPrefetcherManager.Prefetcher;
 import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOUnit;
 import org.eclipse.emf.cdo.view.CDOUnitManager;
@@ -117,6 +123,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -210,7 +217,7 @@ public class Doc03_WorkingWithSessions
      * connectors, refer to the {@link Net4jConnectors} section or the {@link Overview Net4j documentation}.
      * <p>
      * Also note that the repository must already exist on the server. For more information about
-     * repositories, refer to the {@link Repositories} section.
+     * repositories, refer to the {@link Architecture Server Programming} section.
      * <p>
      * Once a session is opened, you can still change various options on it, such as enabling or
      * disabling passive updates. For more information about session options, refer to the
@@ -604,7 +611,7 @@ public class Doc03_WorkingWithSessions
    * <p>
    * <b>Listening for View Events</b>
    * <p>
-   * A session is an {@link IContainer IContainer<CDOView>}and, hence, emits events when views are opened or closed. You can listen for these events by registering an
+   * A session is an {@link IContainer IContainer<CDOView>} and, hence, emits events when views are opened or closed. You can listen for these events by registering an
    * {@link IContainerEvent} listener with the session. This allows your
    * application to react to changes in the set of open views, such as updating UI components or managing resources.
    * Example:
@@ -838,34 +845,37 @@ public class Doc03_WorkingWithSessions
      * <p>
      * The {@code CDORepositoryInfo} interface provides access to repository metadata and status. It extends
      * {@code CDOCommonRepository}, so it inherits all of its methods. Key methods include:
-     * <ul>
-     *   <li>{@code CDOSession getSession()} – Returns the session.</li>
-     *   <li>{@code String getName()} – Returns the repository name.</li>
-     *   <li>{@code String getUUID()} – Returns the repository UUID.</li>
-     *   <li>{@code Type getType()} – Returns the repository type (e.g., MASTER, BACKUP, CLONE).</li>
-     *   <li>{@code State getState()} – Returns the current repository state (e.g., ONLINE, OFFLINE, SYNCING).</li>
-     *   <li>{@code long getCreationTime()} – Returns the creation time.</li>
-     *   <li>{@code String getStoreType()} – Returns the store type (e.g., "db").</li>
-     *   <li>{@code Set<CDOID.ObjectType> getObjectIDTypes()} – Returns supported object ID types.</li>
-     *   <li>{@code IDGenerationLocation getIDGenerationLocation()} – Returns where object IDs are generated.</li>
-     *   <li>{@code String getLobDigestAlgorithm()} – Returns the LOB digest algorithm.</li>
-     *   <li>{@code CommitInfoStorage getCommitInfoStorage()} – Returns the commit info storage type.</li>
-     *   <li>{@code CDOID getRootResourceID()} – Returns the root resource ID.</li>
-     *   <li>{@code boolean isAuthenticating()} – Returns whether authentication is required.</li>
-     *   <li>{@code boolean isSupportingLoginPeeks()} – Returns whether login peeking is supported.</li>
-     *   <li>{@code boolean isSupportingAudits()} – Returns whether audit views are supported.</li>
-     *   <li>{@code boolean isSupportingBranches()} – Returns whether branching is supported.</li>
-     *   <li>{@code boolean isSupportingUnits()} – Returns whether units are supported.</li>
-     *   <li>{@code boolean isSerializingCommits()} – Returns whether commits are serialized.</li>
-     *   <li>{@code boolean isEnsuringReferentialIntegrity()} – Returns whether referential integrity is enforced.</li>
-     *   <li>{@code boolean isAuthorizingOperations()} – Returns whether operations are authorized.</li>
-     *   <li>{@code boolean waitWhileInitial(IProgressMonitor monitor)} – Waits while the repository is initializing.</li>
-     *   <li>{@code long getTime()} – Returns the current repository time.</li>
-     *   <li>{@code <T> T getAdapter(Class<T> adapter)} – Returns an associated adapter object.</li>
-     * </ul>
+     * <p>
+     * <table border="1" cellspacing="0" cellpadding="4">
+     *   <tr><th>Method</th><th>Return Type</th><th>Description</th></tr>
+     *   <tr><td>{@link CDORepositoryInfo#getSession() getSession()}</td><td>{@link CDOSession}</td><td>Returns the session.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getName() getName()}</td><td><code>String</code></td><td>Returns the repository name.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getUUID() getUUID()}</td><td><code>String</code></td><td>Returns the repository UUID.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getType() getType()}</td><td>{@link Type}</td><td>Returns the repository type (e.g., MASTER, BACKUP, CLONE).</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getState() getState()}</td><td>{@link State}</td><td>Returns the current repository state (e.g., ONLINE, OFFLINE, SYNCING).</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getCreationTime() getCreationTime()}</td><td><code>long</code></td><td>Returns the creation time.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getStoreType() getStoreType()}</td><td><code>String</code></td><td>Returns the store type (e.g., "db").</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getObjectIDTypes() getObjectIDTypes()}</td><td>{@link Set}&lt;{@link CDOID.ObjectType}&gt;</td><td>Returns supported object ID types.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getIDGenerationLocation() getIDGenerationLocation()}</td><td>{@link IDGenerationLocation}</td><td>Returns where object IDs are generated.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getLobDigestAlgorithm() getLobDigestAlgorithm()}</td><td><code>String</code></td><td>Returns the LOB digest algorithm.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getCommitInfoStorage() getCommitInfoStorage()}</td><td>{@link CommitInfoStorage}</td><td>Returns the commit info storage type.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#getRootResourceID() getRootResourceID()}</td><td>{@link CDOID}</td><td>Returns the root resource ID.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isAuthenticating() isAuthenticating()}</td><td><code>boolean</code></td><td>Returns whether authentication is required.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isSupportingLoginPeeks() isSupportingLoginPeeks()}</td><td><code>boolean</code></td><td>Returns whether login peeking is supported.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isSupportingAudits() isSupportingAudits()}</td><td><code>boolean</code></td><td>Returns whether audit views are supported.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isSupportingBranches() isSupportingBranches()}</td><td><code>boolean</code></td><td>Returns whether branching is supported.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isSupportingUnits() isSupportingUnits()}</td><td><code>boolean</code></td><td>Returns whether units are supported.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isSerializingCommits() isSerializingCommits()}</td><td><code>boolean</code></td><td>Returns whether commits are serialized.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isEnsuringReferentialIntegrity() isEnsuringReferentialIntegrity()}</td><td><code>boolean</code></td><td>Returns whether referential integrity is enforced.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#isAuthorizingOperations() isAuthorizingOperations()}</td><td><code>boolean</code></td><td>Returns whether operations are authorized.</td></tr>
+     *   <tr><td>{@link CDOCommonRepository#waitWhileInitial(IProgressMonitor) waitWhileInitial(IProgressMonitor)}</td><td><code>boolean</code></td><td>Waits while the repository is initializing.</td></tr>
+     *   <tr><td>{@link CDOTimeProvider#getTimeStamp() getTimeStamp()}</td><td><code>long</code></td><td>Returns the current repository time.</td></tr>
+     *   <tr><td>{@link CDORepositoryInfo#getTimeStamp(boolean) getTimeStamp(boolean)}</td><td><code>long</code></td><td>Returns the current repository time, optionally refreshing it from the server.</td></tr>
+     *   <tr><td><code>IAdaptable.getAdapter(Class&lt;T&gt;)</code></td><td><code>&lt;T&gt; T</code></td><td>Returns an associated adapter object.</td></tr>
+     * </table>
      * These methods allow you to query all relevant metadata and capabilities of the repository. In addition a repository
      * can make arbitrary information available to client sessions in the form of entities. For more information about entities, refer to
-     * {@link ClientEntities}.
+     * {@link ClientAndServerEntities}.
      * <p>
      * The {@code CDORepositoryInfo} (via {@code CDOCommonRepository}) can fire two important events:
      * <ul>
@@ -1083,7 +1093,7 @@ public class Doc03_WorkingWithSessions
        * A new revision is always created and stored when a new model object is created or an existing model object is modified.
        * Revisions are never modified after they are created. Instead, new revisions are created to represent
        * new states of model objects. This immutability ensures that historical states of model objects are preserved
-       * and can be accessed at any time (if the repository mode is at least {@link CDOCommonRepository.Mode#AUDITING AUDITING}).
+       * and can be accessed at any time (if the repository mode is at least {@link Mode#AUDITING AUDITING}).
        * <p>
        * Revisions are identified by:
        * <ol>
@@ -1220,7 +1230,6 @@ public class Doc03_WorkingWithSessions
        *      For example, a prefetch depth of 1 means that all directly contained objects will be pre-fetched,
        *      and a prefetch depth of 2 means that all directly contained objects and their directly contained objects will be pre-fetched, and so on.
        *      The prefetch depth can be set to {@link CDORevision#DEPTH_NONE DEPTH_NONE} (no pre-fetching),
-       *      {@link CDORevision#DEPTH_ONE DEPTH_ONE} (pre-fetch directly contained objects),
        *      {@link CDORevision#DEPTH_INFINITE DEPTH_INFINITE} (pre-fetch all contained objects recursively),
        *      or any positive integer value.
        * <li> A per-{@link CDOView} pre-fetching policy that defines which related revisions should be pre-fetched
@@ -1242,7 +1251,7 @@ public class Doc03_WorkingWithSessions
        *      and you want to load and work with a <b>complete</b> project or document (including all its contained objects) at once.
        *      For more information about units, refer to {@link Doc04_WorkingWithViews.Units}.
        * <li> And then there is a mighty {@link CDOPrefetcherManager} that can be used to manage the pre-fetching for an entire
-       *      {@link ResourseSet}. It automatically creates and manages {@link CDOPrefetcher pre-fetchers} for all {@link CDOView views}
+       *      {@link ResourceSet}. It automatically creates and manages {@link Prefetcher pre-fetchers} for all {@link CDOView views}
        *      that are associated with the resource set. Each pre-fetcher asynchronously pre-fetches the revisions of all objects of its view.
        *      The pre-fetching is performed in the background and does not block the main thread of the application. A pre-fetcher
        *      listens to changes of the view's target branch point and automatically adjusts its pre-fetching accordingly.
@@ -1301,13 +1310,13 @@ public class Doc03_WorkingWithSessions
        * {@link #getBranch(CDOSession) GetBranch.java}
        * <p>
        * Here is an example of how to retrieve all sub-branches of a given branch:
-       * {@link #getSubBranches(CDOSession) GetSubBranches.java}
+       * {@link #getSubBranches(CDOBranchManager) GetSubBranches.java}
        * <p>
        * Here is an example of how to create new branches:
-       * {@link #createBranch(CDOSession) CreateBranch.java}
+       * {@link #createBranch(CDOBranchManager) CreateBranch.java}
        * <p>
        * Here is an example of how to listen for branch changes:
-       * {@link #listenToBranchChanges(CDOSession) ListenToBranchChanges.java}
+       * {@link #listenToBranchChanges(CDOBranchManager) ListenToBranchChanges.java}
        * <p>
        * For more information about branches, refer to the {@link CDOBranch} interface.
        */
@@ -1744,7 +1753,7 @@ public class Doc03_WorkingWithSessions
      * To opt-in for remote session management, the client's remote session manager must be enabled by <b>subscribing</b> to remote session information.
      * This subscription can be done automatically when you add a listener via {@code addListener()} to the remote session manager.
      * Automatic subscription occurs when the first listener is added and is canceled when the last listener is removed.
-     * Subscription can also be forced, by calling {@link CDORemoteSessionManager#setForceSubscription() setForceSubscription(true)}.
+     * Subscription can also be forced, by calling {@link CDORemoteSessionManager#setForceSubscription(boolean) setForceSubscription(true)}.
      * Without subscription, the remote session manager will not receive updates about remote sessions.
      * <p>
      * Here is an example of how to subscribe to remote session events using the remote session manager:
@@ -2178,7 +2187,7 @@ public class Doc03_WorkingWithSessions
      * <p>
      * API: {@link CDOSession.Options#getPassiveUpdateMode()}, {@link CDOSession.Options#setPassiveUpdateMode(PassiveUpdateMode)}
      */
-    public class PassiveUpdateMode
+    public class Doc_PassiveUpdateMode
     {
     }
 
@@ -2208,7 +2217,7 @@ public class Doc03_WorkingWithSessions
      * <p>
      * API: {@link CDOSession.Options#getLockNotificationMode()}, {@link CDOSession.Options#setLockNotificationMode(LockNotificationMode)}
      */
-    public class LockNotificationMode
+    public class Doc_LockNotificationMode
     {
     }
 
@@ -2281,7 +2290,7 @@ public class Doc03_WorkingWithSessions
      * which uses {@link DelegateDetector}s that are contributed to {@link IPluginContainer#INSTANCE IPluginContainer.INSTANCE} in order
      * to decide whether a thread is allowed to delegate its lock to another thread.
      * The <code>org.eclipse.net4j.util.ui</code> plug-in contributes a
-     * {@link org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector DisplayDelegateDetector} that allows
+     * <code>org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector</code> that allows
      * delegation to SWT's UI thread. This is particularly useful when a background thread that holds the view lock
      * (such as a model change listener or EMF {@link Adapter}) needs to update the UI <b>synchronously</b> and
      * the update code (which is executed in the UI thread) needs to access the view.
@@ -2292,7 +2301,6 @@ public class Doc03_WorkingWithSessions
      * <p>
      * API: {@link CDOSession.Options#isDelegableViewLockEnabled()}, {@link CDOSession.Options#setDelegableViewLockEnabled(boolean)}
      */
-    @SuppressWarnings("restriction")
     public class DelegableViewLockEnabled
     {
     }

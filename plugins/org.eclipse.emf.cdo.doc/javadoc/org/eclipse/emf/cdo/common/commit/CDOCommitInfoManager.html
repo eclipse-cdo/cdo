@@ -128,11 +128,15 @@ extends <a href="CDOCommitInfoProvider.html" title="Schnittstelle in org.eclipse
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommitInfo(long)" class="member-name-link">getCommitInfo</a><wbr>(long&nbsp;timeStamp)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Same as calling <a href="#getCommitInfo(long,boolean)"><code>getCommitInfo(timeStamp, true)</code></a>.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommitInfo(long,boolean)" class="member-name-link">getCommitInfo</a><wbr>(long&nbsp;timeStamp,
  boolean&nbsp;loadOnDemand)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the commit info for the given time stamp.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCommitInfo(org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean)" class="member-name-link">getCommitInfo</a><wbr>(<a href="../branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;startTime,
@@ -202,6 +206,7 @@ extends <a href="CDOCommitInfoProvider.html" title="Schnittstelle in org.eclipse
 <section class="detail" id="getCommitInfo(long)">
 <h3>getCommitInfo</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">getCommitInfo</span><wbr><span class="parameters">(long&nbsp;timeStamp)</span></div>
+<div class="block">Same as calling <a href="#getCommitInfo(long,boolean)"><code>getCommitInfo(timeStamp, true)</code></a>.</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.0</dd>
@@ -213,7 +218,16 @@ extends <a href="CDOCommitInfoProvider.html" title="Schnittstelle in org.eclipse
 <h3>getCommitInfo</h3>
 <div class="member-signature"><span class="return-type"><a href="CDOCommitInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.commit">CDOCommitInfo</a></span>&nbsp;<span class="element-name">getCommitInfo</span><wbr><span class="parameters">(long&nbsp;timeStamp,
  boolean&nbsp;loadOnDemand)</span></div>
+<div class="block">Returns the commit info for the given time stamp. If no such commit info is locally available, it is loaded from
+ the repository if <code>loadOnDemand</code> is <code>true</code>.
+ Note that this method may return <code>null</code> even if <code>loadOnDemand</code> is <code>true</code> in case no
+ such commit info exists in the repository.</div>
 <dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>timeStamp</code> - the time stamp of the commit info to retrieve.</dd>
+<dd><code>loadOnDemand</code> - whether to load the commit info from the repository if not locally available.</dd>
+<dt>Gibt zurück:</dt>
+<dd>the commit info for the given time stamp or <code>null</code> if no such commit info exists.</dd>
 <dt>Seit:</dt>
 <dd>4.6</dd>
 </dl>

@@ -209,6 +209,14 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Persists the data that has been read by a <a href="CDOServerImporter.html" title="Klasse in org.eclipse.emf.cdo.server"><code>importer</code></a> into a new <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </div>
+<div class="col-first odd-row-color"><a href="class-use/ILobCleanup.html#org.eclipse.emf.cdo.server">ILobCleanup</a></div>
+<div class="col-last odd-row-color">
+<div class="block">Supports the cleanup of LOBs (Large OBjects) that are no longer referenced by any revisions.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/ILobCleanup.LobCleanupNotSupportedException.html#org.eclipse.emf.cdo.server">ILobCleanup.LobCleanupNotSupportedException</a></div>
+<div class="col-last even-row-color">
+<div class="block">Indicates that LOB cleanup is not supported.</div>
+</div>
 <div class="col-first odd-row-color"><a href="class-use/ILockingManager.html#org.eclipse.emf.cdo.server">ILockingManager</a></div>
 <div class="col-last odd-row-color">
 <div class="block">Manages all persistent aspects of durable CDO views and provides for vetoable
@@ -387,49 +395,53 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Klasse</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><a href="class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.server.db">IQueryHandlerProvider</a></div>
+<div class="col-first even-row-color"><a href="class-use/ILobCleanup.html#org.eclipse.emf.cdo.server.db">ILobCleanup</a></div>
 <div class="col-last even-row-color">
+<div class="block">Supports the cleanup of LOBs (Large OBjects) that are no longer referenced by any revisions.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.server.db">IQueryHandlerProvider</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides the consumer with <a href="IQueryHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../view/CDOQuery.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../common/util/CDOQueryInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ISession.html#org.eclipse.emf.cdo.server.db">ISession</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ISession.html#org.eclipse.emf.cdo.server.db">ISession</a></div>
+<div class="col-last even-row-color">
 <div class="block">The server-side representation of a client <a href="../session/CDOSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStore.html#org.eclipse.emf.cdo.server.db">IStore</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStore.html#org.eclipse.emf.cdo.server.db">IStore</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents the physical data storage back-end of a CDO <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
  system folder.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStore.CanHandleClientAssignedIDs.html#org.eclipse.emf.cdo.server.db">IStore.CanHandleClientAssignedIDs</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStore.CanHandleClientAssignedIDs.html#org.eclipse.emf.cdo.server.db">IStore.CanHandleClientAssignedIDs</a></div>
+<div class="col-last even-row-color">
 <div class="block">A marker interface for <a href="IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>stores</code></a> that can handle <a href="../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id"><code>IDs</code></a> assigned by a
  <a href="../common/CDOCommonRepository.IDGenerationLocation.html#CLIENT"><code>client</code></a>, typically <a href="../common/id/CDOID.ObjectType.html#UUID"><code>UUIDs</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.html#org.eclipse.emf.cdo.server.db">IStoreAccessor</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.html#org.eclipse.emf.cdo.server.db">IStoreAccessor</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.Raw.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.Raw</a></div>
-<div class="col-last odd-row-color">
-<div class="block">An extension interface for <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
- <a href="IRepositorySynchronizer.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="CDOServerImporter.html" title="Klasse in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
-</div>
-<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.Raw2.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.Raw2</a></div>
+<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.Raw.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.Raw</a></div>
 <div class="col-last even-row-color">
 <div class="block">An extension interface for <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
  <a href="IRepositorySynchronizer.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="CDOServerImporter.html" title="Klasse in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.UnitSupport.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.UnitSupport</a></div>
+<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.Raw2.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.Raw2</a></div>
 <div class="col-last odd-row-color">
+<div class="block">An extension interface for <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>raw data access</i> as needed by
+ <a href="IRepositorySynchronizer.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository synchronizers</code></a> or <a href="CDOServerImporter.html" title="Klasse in org.eclipse.emf.cdo.server"><code>server importers</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.UnitSupport.html#org.eclipse.emf.cdo.server.db">IStoreAccessor.UnitSupport</a></div>
+<div class="col-last even-row-color">
 <div class="block">An extension interface for <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.server.db">IStoreChunkReader</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.server.db">IStoreChunkReader</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Reads <a href="IStoreChunkReader.Chunk.html" title="Klasse in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
  <a href="../session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ITransaction.html#org.eclipse.emf.cdo.server.db">ITransaction</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ITransaction.html#org.eclipse.emf.cdo.server.db">ITransaction</a></div>
+<div class="col-last even-row-color">
 <div class="block">The server-side representation of a client <a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
 </div>
 </div>
@@ -659,131 +671,135 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Klasse</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><a href="class-use/ILockingManager.html#org.eclipse.emf.cdo.spi.server">ILockingManager</a></div>
+<div class="col-first even-row-color"><a href="class-use/ILobCleanup.html#org.eclipse.emf.cdo.spi.server">ILobCleanup</a></div>
 <div class="col-last even-row-color">
+<div class="block">Supports the cleanup of LOBs (Large OBjects) that are no longer referenced by any revisions.</div>
+</div>
+<div class="col-first odd-row-color"><a href="class-use/ILockingManager.html#org.eclipse.emf.cdo.spi.server">ILockingManager</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Manages all persistent aspects of durable CDO views and provides for vetoable
  <a href="ILockingManager.html#addDurableViewHandler(org.eclipse.emf.cdo.server.ILockingManager.DurableViewHandler)"><code>interception</code></a> of the durable view resumption
  process.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IPermissionManager.html#org.eclipse.emf.cdo.spi.server">IPermissionManager</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IPermissionManager.html#org.eclipse.emf.cdo.spi.server">IPermissionManager</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides the protection level of <a href="../common/revision/CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> in the context of a specific user.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IQueryHandler.html#org.eclipse.emf.cdo.spi.server">IQueryHandler</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IQueryHandler.html#org.eclipse.emf.cdo.spi.server">IQueryHandler</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A query language handler that is capable of executing a <a href="../view/CDOQuery.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>query</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.spi.server">IQueryHandlerProvider</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IQueryHandlerProvider.html#org.eclipse.emf.cdo.spi.server">IQueryHandlerProvider</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides the consumer with <a href="IQueryHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>query handlers</code></a> that are capable of executing <a href="../view/CDOQuery.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>queries</code></a> represented by specific <a href="../common/util/CDOQueryInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util"><code>query infos</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IRepository.html#org.eclipse.emf.cdo.spi.server">IRepository</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IRepository.html#org.eclipse.emf.cdo.spi.server">IRepository</a></div>
+<div class="col-last odd-row-color">
 <div class="block">A CDO repository.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IRepository.Handler.html#org.eclipse.emf.cdo.spi.server">IRepository.Handler</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IRepository.Handler.html#org.eclipse.emf.cdo.spi.server">IRepository.Handler</a></div>
+<div class="col-last even-row-color">
 <div class="block">A marker interface to indicate valid arguments to <a href="IRepository.html#addHandler(org.eclipse.emf.cdo.server.IRepository.Handler)"><code>IRepository.addHandler(Handler)</code></a> and
  <a href="IRepository.html#removeHandler(org.eclipse.emf.cdo.server.IRepository.Handler)"><code>IRepository.removeHandler(Handler)</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IRepository.WriteAccessHandler.html#org.eclipse.emf.cdo.spi.server">IRepository.WriteAccessHandler</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IRepository.WriteAccessHandler.html#org.eclipse.emf.cdo.spi.server">IRepository.WriteAccessHandler</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Provides a way to handle commits that are received from a client.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IRepositoryFactory.html#org.eclipse.emf.cdo.spi.server">IRepositoryFactory</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IRepositoryFactory.html#org.eclipse.emf.cdo.spi.server">IRepositoryFactory</a></div>
+<div class="col-last even-row-color">
 <div class="block">Creates CDO <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repositories</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IRepositoryProtector.html#org.eclipse.emf.cdo.spi.server">IRepositoryProtector</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IRepositoryProtector.html#org.eclipse.emf.cdo.spi.server">IRepositoryProtector</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Protects a <a href="IRepositoryProtector.html#getRepository()"><code>repository</code></a> by authenticating users and, optionally, authorizing read and write operations.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IRepositoryProvider.html#org.eclipse.emf.cdo.spi.server">IRepositoryProvider</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IRepositoryProvider.html#org.eclipse.emf.cdo.spi.server">IRepositoryProvider</a></div>
+<div class="col-last even-row-color">
 <div class="block">Provides the consumer with CDO <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repositories</code></a> specified by their name.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IRepositorySynchronizer.html#org.eclipse.emf.cdo.spi.server">IRepositorySynchronizer</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IRepositorySynchronizer.html#org.eclipse.emf.cdo.spi.server">IRepositorySynchronizer</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Synchronizes a <a href="ISynchronizableRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>synchronizable repository</code></a> with a master repository.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ISession.html#org.eclipse.emf.cdo.spi.server">ISession</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ISession.html#org.eclipse.emf.cdo.spi.server">ISession</a></div>
+<div class="col-last even-row-color">
 <div class="block">The server-side representation of a client <a href="../session/CDOSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session"><code>session</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ISessionManager.html#org.eclipse.emf.cdo.spi.server">ISessionManager</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/ISessionManager.html#org.eclipse.emf.cdo.spi.server">ISessionManager</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Manages the user <a href="ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>sessions</code></a> of a <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStore.html#org.eclipse.emf.cdo.spi.server">IStore</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStore.html#org.eclipse.emf.cdo.spi.server">IStore</a></div>
+<div class="col-last even-row-color">
 <div class="block">Represents the physical data storage back-end of a CDO <a href="IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>repository</code></a>, such as a database or a file
  system folder.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStore.ChangeFormat.html#org.eclipse.emf.cdo.spi.server">IStore.ChangeFormat</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStore.ChangeFormat.html#org.eclipse.emf.cdo.spi.server">IStore.ChangeFormat</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Enumerates the possible data formats a <a href="IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store</code></a> can accept for commit operations.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStore.RevisionParallelism.html#org.eclipse.emf.cdo.spi.server">IStore.RevisionParallelism</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStore.RevisionParallelism.html#org.eclipse.emf.cdo.spi.server">IStore.RevisionParallelism</a></div>
+<div class="col-last even-row-color">
 <div class="block">Enumerates the possible branching options a <a href="IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStore.RevisionTemporality.html#org.eclipse.emf.cdo.spi.server">IStore.RevisionTemporality</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStore.RevisionTemporality.html#org.eclipse.emf.cdo.spi.server">IStore.RevisionTemporality</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Enumerates the possible history recording options a <a href="IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store</code></a> can accept.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor</a></div>
+<div class="col-last even-row-color">
 <div class="block">Represents a <i>connection</i> to a physical data storage back-end.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.CommitContext.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.CommitContext</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.CommitContext.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.CommitContext</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents the state of a single, logical commit operation which is driven through multiple calls to several
  methods on the <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> API.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.NewIDSupport.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.NewIDSupport</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.NewIDSupport.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.NewIDSupport</a></div>
+<div class="col-last even-row-color">
 <div class="block">An extension interface for <a href="IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>store accessors</code></a> that support <i>units</i>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.QueryResourcesContext.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.QueryResourcesContext</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.QueryResourcesContext.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.QueryResourcesContext</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Represents the query execution state of a <a href="IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><code>resources
  query</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreAccessor.QueryResourcesContext.ExactMatch.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.QueryResourcesContext.ExactMatch</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStoreAccessor.QueryResourcesContext.ExactMatch.html#org.eclipse.emf.cdo.spi.server">IStoreAccessor.QueryResourcesContext.ExactMatch</a></div>
+<div class="col-last even-row-color">
 <div class="block">Represents the query execution state of a <a href="IStoreAccessor.html#queryResources(org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)"><code>resources
  query</code></a> that is supposed to deliver one exact resource, or <code>null</code>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.spi.server">IStoreChunkReader</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreChunkReader.html#org.eclipse.emf.cdo.spi.server">IStoreChunkReader</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Reads <a href="IStoreChunkReader.Chunk.html" title="Klasse in org.eclipse.emf.cdo.server"><code>chunks</code></a> of
  <a href="../session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)"><code>partially loaded</code></a> lists from a physical data storage backend.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IStoreChunkReader.Chunk.html#org.eclipse.emf.cdo.spi.server">IStoreChunkReader.Chunk</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/IStoreChunkReader.Chunk.html#org.eclipse.emf.cdo.spi.server">IStoreChunkReader.Chunk</a></div>
+<div class="col-last even-row-color">
 <div class="block">Represents a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html#subList(int,int)" title="Klasse oder Schnittstelle in java.util" class="external-link"><code>sublist</code></a> of consecutive elements that are subject to <i>partial
  collection loading</i>.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/IStoreFactory.html#org.eclipse.emf.cdo.spi.server">IStoreFactory</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="class-use/IStoreFactory.html#org.eclipse.emf.cdo.spi.server">IStoreFactory</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Creates <a href="IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>stores</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/ISynchronizableRepository.html#org.eclipse.emf.cdo.spi.server">ISynchronizableRepository</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="class-use/ISynchronizableRepository.html#org.eclipse.emf.cdo.spi.server">ISynchronizableRepository</a></div>
+<div class="col-last even-row-color">
 <div class="block">A repository with the ability to <a href="IRepositorySynchronizer.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>synchronize</code></a> its content with another repository.</div>
 </div>
-<div class="col-first even-row-color"><a href="class-use/ITopic.html#org.eclipse.emf.cdo.spi.server">ITopic</a></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><a href="class-use/ITopicManager.html#org.eclipse.emf.cdo.spi.server">ITopicManager</a></div>
+<div class="col-first odd-row-color"><a href="class-use/ITopic.html#org.eclipse.emf.cdo.spi.server">ITopic</a></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/ITransaction.html#org.eclipse.emf.cdo.spi.server">ITransaction</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/ITopicManager.html#org.eclipse.emf.cdo.spi.server">ITopicManager</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/ITransaction.html#org.eclipse.emf.cdo.spi.server">ITransaction</a></div>
+<div class="col-last odd-row-color">
 <div class="block">The server-side representation of a client <a href="../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction"><code>transaction</code></a>.</div>
 </div>
-<div class="col-first odd-row-color"><a href="class-use/IUnitManager.html#org.eclipse.emf.cdo.spi.server">IUnitManager</a></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><a href="class-use/IView.html#org.eclipse.emf.cdo.spi.server">IView</a></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><a href="class-use/IUnitManager.html#org.eclipse.emf.cdo.spi.server">IUnitManager</a></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><a href="class-use/IView.html#org.eclipse.emf.cdo.spi.server">IView</a></div>
+<div class="col-last odd-row-color">
 <div class="block">The server-side representation of a client <a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
 </div>
 </div>

@@ -419,6 +419,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static &lt;V&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a><wbr>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr>V&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOIDUtil.</span><code><a href="../CDOIDUtil.html#createMap(java.util.Map)" class="member-name-link">createMap</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;? extends <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>,<wbr>? extends V&gt;&nbsp;map)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOIDUtil.</span><code><a href="../CDOIDUtil.html#getCDOIDs(java.util.Collection)" class="member-name-link">getCDOIDs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;?&gt;&nbsp;objects)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methoden in <a href="../package-summary.html">org.eclipse.emf.cdo.common.id</a> mit Parametern vom Typ <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span></div>
 <div class="summary-table three-column-summary">
@@ -2177,71 +2180,78 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">LongIDStore.</span><code><a href="../../../spi/server/LongIDStore.html#ensureLastObjectID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">ensureLastObjectID</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../../spi/server/InternalLockManager.html#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">getLockKey</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../../spi/server/InternalLockManager.html#getLockKey(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getLockKey</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Same as calling <a href="../../../spi/server/InternalLockManager.html#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)"><code>InternalLockManager.getLockKey(CDOID, CDOBranch)</code></a> with <code>null</code> as branch.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalLockManager.</span><code><a href="../../../spi/server/InternalLockManager.html#getLockKey(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.branch.CDOBranch)" class="member-name-link">getLockKey</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  <a href="../../branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the lock key for the given ID.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">hasSubscription</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#hasSubscription(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">hasSubscription</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Store.</span><code><a href="../../../spi/server/Store.html#idToString(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">idToString</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#isInOpenUnit(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isInOpenUnit</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-first even-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Store.</span><code><a href="../../../spi/server/Store.html#idToString(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">idToString</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalStore.</span><code><a href="../../../spi/server/InternalStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isLocal</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-second odd-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#isInOpenUnit(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isInOpenUnit</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalStore.</span><code><a href="../../../spi/server/InternalStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isLocal</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color">
 <div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">Not used anymore.</div>
 </div>
 </div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">LongIDStore.</span><code><a href="../../../spi/server/LongIDStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isLocal</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LongIDStore.</span><code><a href="../../../spi/server/LongIDStore.html#isLocal(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isLocal</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color">
 <div class="block"><span class="deprecated-label">Veraltet.</span></div>
 </div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#openUnit(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">openUnit</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#openUnit(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants.UnitOpcode,org.eclipse.emf.cdo.common.revision.CDORevisionHandler,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">openUnit</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
  <a href="../../protocol/CDOProtocolConstants.UnitOpcode.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.protocol">CDOProtocolConstants.UnitOpcode</a>&nbsp;opcode,
  <a href="../../revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">StoreAccessorBase.</span><code><a href="../../../spi/server/StoreAccessorBase.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">readResourceID</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">StoreAccessorBase.</span><code><a href="../../../spi/server/StoreAccessorBase.html#readResourceID(org.eclipse.emf.cdo.common.id.CDOID,java.lang.String,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">readResourceID</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;folderID,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../../branch/CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../../../spi/server/InternalSession.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
- <a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
- <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
+<div class="col-second even-row-color"><span class="type-name-label">InternalSession.</span><code><a href="../../../spi/server/InternalSession.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
  <a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
  <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
+<div class="col-second odd-row-color"><span class="type-name-label">InternalSessionManager.</span><code><a href="../../../spi/server/InternalSessionManager.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
  <a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
  <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../../spi/server/InternalCommitContext.html#setDetachedObjects(org.eclipse.emf.cdo.common.id.CDOID%5B%5D)" class="member-name-link">setDetachedObjects</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>[]&nbsp;detachedObjects)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ISessionProtocol.</span><code><a href="../../../spi/server/ISessionProtocol.html#sendRepositoryStateNotification(org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.CDOCommonRepository.State,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">sendRepositoryStateNotification</a><wbr>(<a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;oldState,
+ <a href="../../CDOCommonRepository.State.html" title="Enum-Klasse in org.eclipse.emf.cdo.common">CDOCommonRepository.State</a>&nbsp;newState,
+ <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../../spi/server/InternalCommitContext.html#setIDsToUnlock(org.eclipse.emf.cdo.common.id.CDOID%5B%5D)" class="member-name-link">setIDsToUnlock</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>[]&nbsp;idsToUnlock)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../../spi/server/InternalCommitContext.html#setDetachedObjects(org.eclipse.emf.cdo.common.id.CDOID%5B%5D)" class="member-name-link">setDetachedObjects</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>[]&nbsp;detachedObjects)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../../../spi/server/InternalRepository.html#setRootResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setRootResourceID</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalCommitContext.</span><code><a href="../../../spi/server/InternalCommitContext.html#setIDsToUnlock(org.eclipse.emf.cdo.common.id.CDOID%5B%5D)" class="member-name-link">setIDsToUnlock</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>[]&nbsp;idsToUnlock)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#subscribe(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">subscribe</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../../../spi/server/InternalRepository.html#setRootResourceID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">setRootResourceID</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootResourceID)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#unsubscribe(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">unsubscribe</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#subscribe(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">subscribe</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalView.</span><code><a href="../../../spi/server/InternalView.html#unsubscribe(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">unsubscribe</a><wbr>(<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Methodenparameter in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> mit Typargumenten vom Typ <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span></div>
 <div class="summary-table three-column-summary">
@@ -2285,6 +2295,12 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
  boolean&nbsp;recursive)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../../../../spi/cdo/CDOSessionProtocol.UnlockObjectsResult.html" title="Klasse in org.eclipse.emf.spi.cdo">CDOSessionProtocol.UnlockObjectsResult</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">InternalRepository.</span><code><a href="../../../spi/server/InternalRepository.html#unlockAdministratively(org.eclipse.emf.cdo.spi.server.InternalView,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,java.util.List,boolean)" class="member-name-link">unlockAdministratively</a><wbr>(<a href="../../../spi/server/InternalView.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalView</a>&nbsp;view,
+ org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;type,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids,
+ boolean&nbsp;recursive)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Konstruktorparameter in <a href="../../../spi/server/package-summary.html">org.eclipse.emf.cdo.spi.server</a> mit Typargumenten vom Typ <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span></div>
 <div class="summary-table three-column-summary">
@@ -2506,8 +2522,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><code>static <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorReference.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link">IEditorReference</a>[]</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOEditorUtil.</span><code><a href="../../../ui/CDOEditorUtil.html#findEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.cdo.view.CDOView,java.lang.String,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">findEditor</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link">IWorkbenchPage</a>&nbsp;page,
+<div class="col-first even-row-color"><code>static <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IEditorReference.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link">IEditorReference</a>[]</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOEditorUtil.</span><code><a href="../../../ui/CDOEditorUtil.html#findEditor(org.eclipse.ui.IWorkbenchPage,org.eclipse.emf.cdo.view.CDOView,java.lang.String,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">findEditor</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/ui/IWorkbenchPage.html" title="Klasse oder Schnittstelle in org.eclipse.ui" class="external-link">IWorkbenchPage</a>&nbsp;page,
  <a href="../../../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;resourcePath,
  <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;objectID)</code></div>
@@ -2632,7 +2648,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code><a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOFetchRuleManager.</span><code><a href="../../../view/CDOFetchRuleManager.html#getContext()" class="member-name-link">getContext</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the context ID for which this fetch rule manager is collecting statistics.</div>
+</div>
 </div>
 <div class="caption"><span>Methoden in <a href="../../../view/package-summary.html">org.eclipse.emf.cdo.view</a>, die Typen mit Argumenten vom Typ <a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a> zurückgeben</span></div>
 <div class="summary-table three-column-summary">
@@ -2735,7 +2753,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="../../util/CDOFetchRule.html" title="Klasse in org.eclipse.emf.cdo.common.util">CDOFetchRule</a>&gt;</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOFetchRuleManager.</span><code><a href="../../../view/CDOFetchRuleManager.html#getFetchRules(java.util.Collection)" class="member-name-link">getFetchRules</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Returns the fetch rules for the given object IDs.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="../../lock/CDOLockState.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockState</a>[]</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOView.</span><code><a href="../../../view/CDOView.html#getLockStates(java.util.Collection)" class="member-name-link">getLockStates</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
 <div class="col-last odd-row-color">

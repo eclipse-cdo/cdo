@@ -109,21 +109,27 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Standardmethoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../session/CDOCollectionLoadingPolicy.html" title="Schnittstelle in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="../session/CDOCollectionLoadingPolicy.html" title="Schnittstelle in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getCollectionLoadingPolicy()" class="member-name-link">getCollectionLoadingPolicy</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Returns the collection loading policy that should be used when loading collections.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContext()" class="member-name-link">getContext</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the context ID for which this fetch rule manager is collecting statistics.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="../common/util/CDOFetchRule.html" title="Klasse in org.eclipse.emf.cdo.common.util">CDOFetchRule</a>&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getFetchRules(java.util.Collection)" class="member-name-link">getFetchRules</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the fetch rules for the given object IDs.</div>
+</div>
 </div>
 </div>
 </div>
@@ -142,18 +148,53 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getContext()">
 <h3>getContext</h3>
 <div class="member-signature"><span class="return-type"><a href="../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getContext</span>()</div>
+<div class="block">Returns the context ID for which this fetch rule manager is collecting statistics.
+ <p>
+ A context-specific fetch rule manager collects statistics only for the objects that are
+ associated with the given context ID.
+ A context ID is typically the ID of a root object.
+ A fetch rule manager that is not context-specific returns <a href="../common/id/CDOID.html#NULL"><code>CDOID.NULL</code></a>.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>the context ID, or <a href="../common/id/CDOID.html#NULL"><code>CDOID.NULL</code></a> if this fetch rule manager is not context-specific.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getFetchRules(java.util.Collection)">
 <h3>getFetchRules</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a>&lt;<a href="../common/util/CDOFetchRule.html" title="Klasse in org.eclipse.emf.cdo.common.util">CDOFetchRule</a>&gt;</span>&nbsp;<span class="element-name">getFetchRules</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;ids)</span></div>
+<div class="block">Returns the fetch rules for the given object IDs.
+ <p>
+ The fetch rules are usually based on statistics collected by one or more <a href="CDOFeatureAnalyzer.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>feature
+ analyzers</code></a>. The fetch rules may be context-specific, that is, they may be based only on statistics
+ collected for objects that are associated with the context ID returned by <a href="#getContext()"><code>getContext()</code></a>.
+ <p>
+ The returned list of fetch rules must not contain multiple rules for the same <a href="../common/util/CDOFetchRule.html#getEClass()"><code>EClass</code></a>. If multiple rules for the same EClass are applicable to an object, the first applicable
+ rule in the list is used.
+ <p>
+ If no fetch rules are applicable to an object, the view's default fetch rule is used.
+ <p>
+ The returned list must not be modified by the caller.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>ids</code> - the IDs of the objects for which fetch rules are requested; note that the objects may not
+ exist or be accessible.</dd>
+<dt>Gibt zurück:</dt>
+<dd>the fetch rules for the given object IDs, or <code>null</code> if no fetch rules are
+ applicable. The list may be empty.</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getCollectionLoadingPolicy()">
 <h3>getCollectionLoadingPolicy</h3>
-<div class="member-signature"><span class="return-type"><a href="../session/CDOCollectionLoadingPolicy.html" title="Schnittstelle in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></span>&nbsp;<span class="element-name">getCollectionLoadingPolicy</span>()</div>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="../session/CDOCollectionLoadingPolicy.html" title="Schnittstelle in org.eclipse.emf.cdo.session">CDOCollectionLoadingPolicy</a></span>&nbsp;<span class="element-name">getCollectionLoadingPolicy</span>()</div>
+<div class="block">Returns the collection loading policy that should be used when loading collections.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>the collection loading policy; or <code>null</code> to use <a href="../common/revision/CDORevision.html#UNCHUNKED"><code>CDORevision.UNCHUNKED</code></a>.</dd>
+</dl>
 </section>
 </li>
 </ul>

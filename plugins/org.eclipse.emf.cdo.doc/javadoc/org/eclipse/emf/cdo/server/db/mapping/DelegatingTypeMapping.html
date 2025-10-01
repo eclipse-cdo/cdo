@@ -92,12 +92,12 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Alle implementierten Schnittstellen:</dt>
-<dd><code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dd><code><a href="ILobRefsUpdater.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></code>, <code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">DelegatingTypeMapping</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>
-implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></span></div>
+implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a>, <a href="ILobRefsUpdater.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></span></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.10</dd>
@@ -111,6 +111,9 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <li>
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Verschachtelte Klassen - Übersicht</h2>
+<div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.emf.cdo.server.db.mapping.<a href="ILobRefsUpdater.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></h2>
+<code><a href="ILobRefsUpdater.LobRefsUpdateNotSupportedException.html" title="Klasse in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater.LobRefsUpdateNotSupportedException</a></code></div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.emf.cdo.server.db.mapping.<a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></h2>
 <code><a href="ITypeMapping.Descriptor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Descriptor</a>, <a href="ITypeMapping.Factory.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Factory</a>, <a href="ITypeMapping.Provider.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a>, <a href="ITypeMapping.Registry.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Registry</a></code></div>
@@ -216,6 +219,9 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <div class="block">Set a value of the given revision to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
 </div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateLobRefs(java.sql.Connection)" class="member-name-link">updateLobRefs</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -463,6 +469,16 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <dd><code>revision</code> - the revision to which the value should be set.</dd>
 <dt>Löst aus:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code> - if reading the value throws an SQLException</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="updateLobRefs(java.sql.Connection)">
+<h3>updateLobRefs</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateLobRefs</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</span></div>
+<dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="ILobRefsUpdater.html#updateLobRefs(java.sql.Connection)">updateLobRefs</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ILobRefsUpdater.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ILobRefsUpdater</a></code></dd>
 </dl>
 </section>
 </li>

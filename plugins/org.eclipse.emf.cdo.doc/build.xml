@@ -17,9 +17,9 @@
 
   <property file="${user.home}/org.eclipse.oomph.doc_1.0.properties" />
 
-  <property name="jdk.link" value="https://download.oracle.com/javase/1.5.0/docs/api" />
+	<property name="jdk.link" value="https://docs.oracle.com/javase/8/docs/api" />
   <property name="emf.link" value="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11" />
-  <property name="platform.link" value="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api" />
+  <property name="platform.link" value="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api" />
   <property name="platform.api" location="${releng.project}/package-lists/platform" />
 
   <property name="project.path" value="${plugins.dir}/org.eclipse.emf.cdo.doc" />

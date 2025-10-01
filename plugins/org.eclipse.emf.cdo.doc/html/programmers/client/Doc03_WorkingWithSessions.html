@@ -148,9 +148,9 @@ function maximize(id)
 <tr><td>7&nbsp;</td><td class="te" colspan="5"><a href="Doc03_WorkingWithSessions.html#SessionOptions" title="Chapter in CDO Model Repository Documentation">Session Options</a></td></tr>
 <tr><td></td><td>7.1&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#GeneratedPackageEmulation" title="Chapter in CDO Model Repository Documentation">Generated Package Emulation</a></td></tr>
 <tr><td></td><td>7.2&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PassiveUpdateEnabled" title="Chapter in CDO Model Repository Documentation">Passive Update Enabled</a></td></tr>
-<tr><td></td><td>7.3&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PassiveUpdateMode" title="Chapter in CDO Model Repository Documentation">Passive Update Mode</a></td></tr>
+<tr><td></td><td>7.3&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#Doc_PassiveUpdateMode" title="Chapter in CDO Model Repository Documentation">Passive Update Mode</a></td></tr>
 <tr><td></td><td>7.4&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#LockNotificationEnabled" title="Chapter in CDO Model Repository Documentation">Lock Notification Enabled</a></td></tr>
-<tr><td></td><td>7.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#LockNotificationMode" title="Chapter in CDO Model Repository Documentation">Lock Notification Mode</a></td></tr>
+<tr><td></td><td>7.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#Doc_LockNotificationMode" title="Chapter in CDO Model Repository Documentation">Lock Notification Mode</a></td></tr>
 <tr><td></td><td>7.6&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#CollectionLoadingPolicy" title="Chapter in CDO Model Repository Documentation">Collection Loading Policy</a></td></tr>
 <tr><td></td><td>7.7&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#LargeObjectCache" title="Chapter in CDO Model Repository Documentation">Large Object Cache</a></td></tr>
 <tr><td></td><td>7.8&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PermissionUpdater" title="Chapter in CDO Model Repository Documentation">Permission Updater</a></td></tr>
@@ -217,7 +217,7 @@ function maximize(id)
  connectors, refer to the <a href="Doc03_WorkingWithSessions.html#Net4jConnectors" title="Chapter in CDO Model Repository Documentation">Net4j Connectors</a> section or the <a href="../../../../org.eclipse.net4j.doc/html/Overview.html" title="Article in Net4j Signalling Platform Documentation">Net4j documentation</a>.
  <p>
  Also note that the repository must already exist on the server. For more information about
- repositories, refer to the Repositories section.
+ repositories, refer to the <a href="../server/Architecture.html" title="Article in CDO Model Repository Documentation">Server Programming</a> section.
  <p>
  Once a session is opened, you can still change various options on it, such as enabling or
  disabling passive updates. For more information about session options, refer to the
@@ -774,7 +774,7 @@ function maximize(id)
  <p>
  <b>Listening for View Events</b>
  <p>
- A session is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer<CDOView></code></a>and, hence, emits events when views are opened or closed. You can listen for these events by registering an
+ A session is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer<CDOView></code></a> and, hence, emits events when views are opened or closed. You can listen for these events by registering an
  <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainerEvent.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainerEvent</code></a> listener with the session. This allows your
  application to react to changes in the set of open views, such as updating UI components or managing resources.
  Example:
@@ -1091,34 +1091,37 @@ function maximize(id)
  <p>
  The CDORepositoryInfo interface provides access to repository metadata and status. It extends
  CDOCommonRepository, so it inherits all of its methods. Key methods include:
- <ul>
-   <li>CDOSession getSession() – Returns the session.</li>
-   <li>String getName() – Returns the repository name.</li>
-   <li>String getUUID() – Returns the repository UUID.</li>
-   <li>Type getType() – Returns the repository type (e.g., MASTER, BACKUP, CLONE).</li>
-   <li>State getState() – Returns the current repository state (e.g., ONLINE, OFFLINE, SYNCING).</li>
-   <li>long getCreationTime() – Returns the creation time.</li>
-   <li>String getStoreType() – Returns the store type (e.g., "db").</li>
-   <li>Set<CDOID.ObjectType> getObjectIDTypes() – Returns supported object ID types.</li>
-   <li>IDGenerationLocation getIDGenerationLocation() – Returns where object IDs are generated.</li>
-   <li>String getLobDigestAlgorithm() – Returns the LOB digest algorithm.</li>
-   <li>CommitInfoStorage getCommitInfoStorage() – Returns the commit info storage type.</li>
-   <li>CDOID getRootResourceID() – Returns the root resource ID.</li>
-   <li>boolean isAuthenticating() – Returns whether authentication is required.</li>
-   <li>boolean isSupportingLoginPeeks() – Returns whether login peeking is supported.</li>
-   <li>boolean isSupportingAudits() – Returns whether audit views are supported.</li>
-   <li>boolean isSupportingBranches() – Returns whether branching is supported.</li>
-   <li>boolean isSupportingUnits() – Returns whether units are supported.</li>
-   <li>boolean isSerializingCommits() – Returns whether commits are serialized.</li>
-   <li>boolean isEnsuringReferentialIntegrity() – Returns whether referential integrity is enforced.</li>
-   <li>boolean isAuthorizingOperations() – Returns whether operations are authorized.</li>
-   <li>boolean waitWhileInitial(IProgressMonitor monitor) – Waits while the repository is initializing.</li>
-   <li>long getTime() – Returns the current repository time.</li>
-   <li><T> T getAdapter(Class<T> adapter) – Returns an associated adapter object.</li>
- </ul>
+ <p>
+ <table border="1" cellspacing="0" cellpadding="4">
+   <tr><th>Method</th><th>Return Type</th><th>Description</th></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/session/CDORepositoryInfo.html#getSession()" title="Method in org.eclipse.emf.cdo.session.CDORepositoryInfo"><code>getSession()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a></td><td>Returns the session.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getName()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getName()</code></a></td><td><code>String</code></td><td>Returns the repository name.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getUUID()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getUUID()</code></a></td><td><code>String</code></td><td>Returns the repository UUID.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getType()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getType()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Type.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>Type</code></a></td><td>Returns the repository type (e.g., MASTER, BACKUP, CLONE).</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getState()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getState()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.State.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>State</code></a></td><td>Returns the current repository state (e.g., ONLINE, OFFLINE, SYNCING).</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCreationTime()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getCreationTime()</code></a></td><td><code>long</code></td><td>Returns the creation time.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getStoreType()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getStoreType()</code></a></td><td><code>String</code></td><td>Returns the store type (e.g., "db").</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getObjectIDTypes()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getObjectIDTypes()</code></a></td><td><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Set.html" target="_blank" title="Interface in java.util"><code>Set</code></a>&lt;<a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.ObjectType.html" title="Enum in org.eclipse.emf.cdo.common.id.CDOID"><code>CDOID.ObjectType</code></a>&gt;</td><td>Returns supported object ID types.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getIDGenerationLocation()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getIDGenerationLocation()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.IDGenerationLocation.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>IDGenerationLocation</code></a></td><td>Returns where object IDs are generated.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getLobDigestAlgorithm()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getLobDigestAlgorithm()</code></a></td><td><code>String</code></td><td>Returns the LOB digest algorithm.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getCommitInfoStorage()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getCommitInfoStorage()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>CommitInfoStorage</code></a></td><td>Returns the commit info storage type.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#getRootResourceID()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>getRootResourceID()</code></a></td><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a></td><td>Returns the root resource ID.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthenticating()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isAuthenticating()</code></a></td><td><code>boolean</code></td><td>Returns whether authentication is required.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingLoginPeeks()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isSupportingLoginPeeks()</code></a></td><td><code>boolean</code></td><td>Returns whether login peeking is supported.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingAudits()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isSupportingAudits()</code></a></td><td><code>boolean</code></td><td>Returns whether audit views are supported.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingBranches()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isSupportingBranches()</code></a></td><td><code>boolean</code></td><td>Returns whether branching is supported.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSupportingUnits()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isSupportingUnits()</code></a></td><td><code>boolean</code></td><td>Returns whether units are supported.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isSerializingCommits()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isSerializingCommits()</code></a></td><td><code>boolean</code></td><td>Returns whether commits are serialized.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isEnsuringReferentialIntegrity()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isEnsuringReferentialIntegrity()</code></a></td><td><code>boolean</code></td><td>Returns whether referential integrity is enforced.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#isAuthorizingOperations()" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>isAuthorizingOperations()</code></a></td><td><code>boolean</code></td><td>Returns whether operations are authorized.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.html#waitWhileInitial(org.eclipse.core.runtime.IProgressMonitor)" title="Method in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>waitWhileInitial(IProgressMonitor)</code></a></td><td><code>boolean</code></td><td>Waits while the repository is initializing.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/common/util/CDOTimeProvider.html#getTimeStamp()" title="Method in org.eclipse.emf.cdo.common.util.CDOTimeProvider"><code>getTimeStamp()</code></a></td><td><code>long</code></td><td>Returns the current repository time.</td></tr>
+   <tr><td><a href="../../../javadoc/org/eclipse/emf/cdo/session/CDORepositoryInfo.html#getTimeStamp(boolean)" title="Method in org.eclipse.emf.cdo.session.CDORepositoryInfo"><code>getTimeStamp(boolean)</code></a></td><td><code>long</code></td><td>Returns the current repository time, optionally refreshing it from the server.</td></tr>
+   <tr><td><code>IAdaptable.getAdapter(Class&lt;T&gt;)</code></td><td><code>&lt;T&gt; T</code></td><td>Returns an associated adapter object.</td></tr>
+ </table>
  These methods allow you to query all relevant metadata and capabilities of the repository. In addition a repository
  can make arbitrary information available to client sessions in the form of entities. For more information about entities, refer to
- ClientEntities.
+ <a href="Doc03_WorkingWithSessions.html#ClientAndServerEntities" title="Chapter in CDO Model Repository Documentation">Client and Server Entities</a>.
  <p>
  The CDORepositoryInfo (via CDOCommonRepository) can fire two important events:
  <ul>
@@ -1430,7 +1433,7 @@ function maximize(id)
  A new revision is always created and stored when a new model object is created or an existing model object is modified.
  Revisions are never modified after they are created. Instead, new revisions are created to represent
  new states of model objects. This immutability ensures that historical states of model objects are preserved
- and can be accessed at any time (if the repository mode is at least CDOCommonRepository.Mode#AUDITING AUDITING).
+ and can be accessed at any time (if the repository mode is at least <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html#AUDITING" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.Mode"><code>AUDITING</code></a>).
  <p>
  Revisions are identified by:
  <ol>
@@ -1601,7 +1604,6 @@ function maximize(id)
       For example, a prefetch depth of 1 means that all directly contained objects will be pre-fetched,
       and a prefetch depth of 2 means that all directly contained objects and their directly contained objects will be pre-fetched, and so on.
       The prefetch depth can be set to <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_NONE" title="Field in org.eclipse.emf.cdo.common.revision.CDORevision"><code>DEPTH_NONE</code></a> (no pre-fetching),
-      CDORevision#DEPTH_ONE DEPTH_ONE (pre-fetch directly contained objects),
       <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html#DEPTH_INFINITE" title="Field in org.eclipse.emf.cdo.common.revision.CDORevision"><code>DEPTH_INFINITE</code></a> (pre-fetch all contained objects recursively),
       or any positive integer value.
  <li> A per-<a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a> pre-fetching policy that defines which related revisions should be pre-fetched
@@ -1623,7 +1625,7 @@ function maximize(id)
       and you want to load and work with a <b>complete</b> project or document (including all its contained objects) at once.
       For more information about units, refer to <a href="Doc04_WorkingWithViews.html#Units" title="Chapter in CDO Model Repository Documentation">Units</a>.
  <li> And then there is a mighty <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOPrefetcherManager.html" title="Class in org.eclipse.emf.cdo.view"><code>CDOPrefetcherManager</code></a> that can be used to manage the pre-fetching for an entire
-      ResourseSet. It automatically creates and manages CDOPrefetcher pre-fetchers for all <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>views</code></a>
+      <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a>. It automatically creates and manages <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOPrefetcherManager.Prefetcher.html" title="Class in org.eclipse.emf.cdo.view.CDOPrefetcherManager"><code>pre-fetchers</code></a> for all <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>views</code></a>
       that are associated with the resource set. Each pre-fetcher asynchronously pre-fetches the revisions of all objects of its view.
       The pre-fetching is performed in the background and does not block the main thread of the application. A pre-fetcher
       listens to changes of the view's target branch point and automatically adjusts its pre-fetching accordingly.
@@ -1642,9 +1644,9 @@ function maximize(id)
  the same repository. Not all branches and tags may be immediately available in the branch manager.
  Branches and tags are loaded on demand when they are accessed for the first time.
  <p>
- Note that only the main branch is guaranteed to be available for all CDOCommonRepository.Mode repository modes.
- Sub-branches are only supported in CDOCommonRepository.Mode#BRANCHING branching. Tags are only supported in
- CDOCommonRepository.Mode#AUDITING auditing.
+ Note that only the main branch is guaranteed to be available for all <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>repository modes</code></a>.
+ Sub-branches are only supported in <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html#BRANCHING" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.Mode"><code>branching</code></a>. Tags are only supported in
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html#AUDITING" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.Mode"><code>auditing</code></a>.
  <p>
  For more information about branch management, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a> interface.
 
@@ -1703,13 +1705,120 @@ function maximize(id)
 
  <p>
  Here is an example of how to retrieve all sub-branches of a given branch:
- #getSubBranches(CDOSession) GetSubBranches.java
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_WorkingWithBranches_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetSubBranches.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('WorkingWithBranches_2')" id="max_WorkingWithBranches_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_WorkingWithBranches_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_WorkingWithBranches_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Get&nbsp;all&nbsp;direct&nbsp;and&nbsp;indirect&nbsp;sub-branches&nbsp;of&nbsp;the&nbsp;branch&nbsp;with&nbsp;ID&nbsp;815.</font><br/>
+            LinkedHashSet&lt;CDOBranch&gt;&nbsp;subBranches&nbsp;=&nbsp;branchManager.getBranches(<font color="#990000">815</font>);<br/>
+            subBranches.forEach(System.out::println);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
  <p>
  Here is an example of how to create new branches:
- #createBranch(CDOSession) CreateBranch.java
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_WorkingWithBranches_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateBranch.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('WorkingWithBranches_3')" id="max_WorkingWithBranches_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_WorkingWithBranches_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_WorkingWithBranches_3" style="padding:8px;">
+            <code>
+            CDOBranch&nbsp;mainBranch&nbsp;=&nbsp;branchManager.getMainBranch();<br/>
+            CDOBranch&nbsp;features&nbsp;=&nbsp;mainBranch.createBranch(<font color="#2a00ff">&#34;features&#34;</font>);<br/>
+            CDOBranch&nbsp;awesomeFeature&nbsp;=&nbsp;features.createBranch(<font color="#2a00ff">&#34;awesome-feature&#34;</font>);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Outputs&nbsp;&#34;MAIN/features/awesome-feature&#34;.</font><br/>
+            System.out.println(awesomeFeature.getPathName());            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
  <p>
  Here is an example of how to listen for branch changes:
- #listenToBranchChanges(CDOSession) ListenToBranchChanges.java
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_WorkingWithBranches_4"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ListenToBranchChanges.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('WorkingWithBranches_4')" id="max_WorkingWithBranches_4" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_WorkingWithBranches_4" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_WorkingWithBranches_4" style="padding:8px;">
+            <code>
+            branchManager.addListener(<font color="#7f0055"><b>new&nbsp;</b></font>CDOBranchManager.EventAdapter()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onBranchCreated(CDOBranch&nbsp;branch)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Handle&nbsp;branch&nbsp;creation.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onBranchRenamed(CDOBranch&nbsp;branch)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Handle&nbsp;branch&nbsp;renaming.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>onBranchesDeleted(CDOBranch&nbsp;rootBranch,&nbsp;<font color="#7f0055"><b>int</b></font>[]&nbsp;branchIDs)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Handle&nbsp;branch&nbsp;deletion.</font><br/>
+            &nbsp;&nbsp;}<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
  <p>
  For more information about branches, refer to the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranch.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranch</code></a> interface.
 
@@ -2040,8 +2149,8 @@ function maximize(id)
  the branch in which the commit was made, an optional commit message, and an optional <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>CDOCommitData</code></a> object, which
  provides detailed information about the <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>changes</code></a> made in the commit.
  <p>
- Whether a repository <b>stores</b> commit information depends on its CDOCommonRepository.Mode mode. Commit
- information is only available in CDOCommonRepository.Mode#AUDITING auditing mode or higher. In
+ Whether a repository <b>stores</b> commit information depends on its <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>mode</code></a>. Commit
+ information is only available in <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html#AUDITING" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.Mode"><code>auditing</code></a> mode or higher. In
  addition, the repository must be configured to store commit information, i.e., its
  <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.Props.html#COMMIT_INFO_STORAGE" title="Field in org.eclipse.emf.cdo.server.IRepository.Props"><code>IRepository.Props#COMMIT_INFO_STORAGE</code></a> property must not be set to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#YES" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage#YES</code></a> or
  <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#WITH_MERGE_SOURCE" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage#WITH_MERGE_SOURCE</code></a>.
@@ -2253,7 +2362,7 @@ function maximize(id)
  To opt-in for remote session management, the client's remote session manager must be enabled by <b>subscribing</b> to remote session information.
  This subscription can be done automatically when you add a listener via addListener() to the remote session manager.
  Automatic subscription occurs when the first listener is added and is canceled when the last listener is removed.
- Subscription can also be forced, by calling CDORemoteSessionManager#setForceSubscription() setForceSubscription(true).
+ Subscription can also be forced, by calling <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#setForceSubscription(boolean)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"><code>setForceSubscription(true)</code></a>.
  Without subscription, the remote session manager will not receive updates about remote sessions.
  <p>
  Here is an example of how to subscribe to remote session events using the remote session manager:
@@ -2740,18 +2849,18 @@ function maximize(id)
  <p>
  API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#isPassiveUpdateEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setPassiveUpdateEnabled(boolean)</code></a>
 
-<h3><a name="PassiveUpdateMode"></a>7.3&nbsp;&nbsp;Passive Update Mode</h3>
+<h3><a name="Doc_PassiveUpdateMode"></a>7.3&nbsp;&nbsp;Passive Update Mode</h3>
 <p>
  Specifies the mode for passive updates (INVALIDATIONS, CHANGES, ADDITIONS).
  The mode determines the type of updates the session receives from the server. By default, it is set to
- PassiveUpdateMode#INVALIDATIONS INVALIDATIONS. In this mode, the session receives invalidation notifications
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#INVALIDATIONS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode"><code>INVALIDATIONS</code></a>. In this mode, the session receives invalidation notifications
  for changes made by other sessions. This means that when another session commits changes to the repository,
  the session is notified that certain objects have changed, but it does not receive the actual changes.
- Other modes include PassiveUpdateMode#CHANGES CHANGES, where the session receives detailed change information,
- and PassiveUpdateMode#ADDITIONS ADDITIONS, where the session receives notifications about changes and new objects being added.
+ Other modes include <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#CHANGES" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode"><code>CHANGES</code></a>, where the session receives detailed change information,
+ and <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#ADDITIONS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode"><code>ADDITIONS</code></a>, where the session receives notifications about changes and new objects being added.
  The choice of mode depends on the application's requirements for data freshness and performance.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getPassiveUpdateMode()</code></a>, CDOSession.Options#setPassiveUpdateMode(PassiveUpdateMode)
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getPassiveUpdateMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setPassiveUpdateMode(PassiveUpdateMode)</code></a>
 
 <h3><a name="LockNotificationEnabled"></a>7.4&nbsp;&nbsp;Lock Notification Enabled</h3>
 <p>
@@ -2760,18 +2869,18 @@ function maximize(id)
  <p>
  API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#isLockNotificationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setLockNotificationEnabled(boolean)</code></a>
 
-<h3><a name="LockNotificationMode"></a>7.5&nbsp;&nbsp;Lock Notification Mode</h3>
+<h3><a name="Doc_LockNotificationMode"></a>7.5&nbsp;&nbsp;Lock Notification Mode</h3>
 <p>
- Controls the mode for lock notifications LockNotificationMode#OFF OFF,
- LockNotificationMode#IF_REQUIRED_BY_VIEWS IF_REQUIRED_BY_VIEWS, or LockNotificationMode#ALWAYS ALWAYS.
+ Controls the mode for lock notifications <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#OFF" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>OFF</code></a>,
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#IF_REQUIRED_BY_VIEWS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>IF_REQUIRED_BY_VIEWS</code></a>, or <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#ALWAYS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>ALWAYS</code></a>.
  The mode determines whether and when the session receives lock notifications from the server.
- By default, it is set to LockNotificationMode#IF_REQUIRED_BY_VIEWS IF_REQUIRED_BY_VIEWS, which means that
+ By default, it is set to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#IF_REQUIRED_BY_VIEWS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>IF_REQUIRED_BY_VIEWS</code></a>, which means that
  the session receives lock notifications only if it has views that require lock information. Other modes include
- LockNotificationMode#OFF OFF, where the session does not receive any lock notifications, and
- LockNotificationMode#ALWAYS ALWAYS, where the session receives all lock notifications regardless of its views.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#OFF" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>OFF</code></a>, where the session does not receive any lock notifications, and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#ALWAYS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>ALWAYS</code></a>, where the session receives all lock notifications regardless of its views.
  The choice of mode depends on the application's requirements for lock awareness and performance.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getLockNotificationMode()</code></a>, CDOSession.Options#setLockNotificationMode(LockNotificationMode)
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getLockNotificationMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setLockNotificationMode(LockNotificationMode)</code></a>
 
 <h3><a name="CollectionLoadingPolicy"></a>7.6&nbsp;&nbsp;Collection Loading Policy</h3>
 <p>
@@ -2815,7 +2924,7 @@ function maximize(id)
  returned by <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getViewLock()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView#getViewLock()</code></a>. This lock is reentrant, but it is not delegable. This means that if a thread
  holds the view lock and <b>calls</b> a method that tries to acquire the same view lock again, it will succeed. However,
  if the thread that holds the view lock schedules a task to be executed asynchronously (e.g., using
- Display#syncExec(Runnable) Display.syncExec(Runnable)) and waits for its completion, the task will not be able
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html#syncExec(java.lang.Runnable)" target="_blank" title="Method in org.eclipse.swt.widgets.Display"><code>Display.syncExec(Runnable)</code></a>) and waits for its completion, the task will not be able
  to acquire the view lock because it is executed in a different thread. This can lead to deadlocks.
  <p>
  To avoid such deadlocks, you can enable delegable view locks. They are based on fact that the thread that
@@ -2826,7 +2935,7 @@ function maximize(id)
  which uses <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Interface in org.eclipse.net4j.util.concurrent.DelegableReentrantLock"><code>DelegateDetector</code></a>s that are contributed to <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IPluginContainer.html#INSTANCE" title="Field in org.eclipse.net4j.util.container.IPluginContainer"><code>IPluginContainer.INSTANCE</code></a> in order
  to decide whether a thread is allowed to delegate its lock to another thread.
  The <code>org.eclipse.net4j.util.ui</code> plug-in contributes a
- org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector DisplayDelegateDetector that allows
+ <code>org.eclipse.net4j.util.internal.ui.DisplayDelegateDetector</code> that allows
  delegation to SWT's UI thread. This is particularly useful when a background thread that holds the view lock
  (such as a model change listener or EMF <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Adapter.html" target="_blank" title="Interface in org.eclipse.emf.common.notify"><code>Adapter</code></a>) needs to update the UI <b>synchronously</b> and
  the update code (which is executed in the UI thread) needs to access the view.

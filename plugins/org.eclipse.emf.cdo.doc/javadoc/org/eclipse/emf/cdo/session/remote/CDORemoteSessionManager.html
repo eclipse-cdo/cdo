@@ -175,11 +175,24 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="../CDOSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session"><code>local session</code></a> this CDORemoteSessionManager belongs to.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSessions()" class="member-name-link">getRemoteSessions</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSession(int)" class="member-name-link">getRemoteSession</a><wbr>(int&nbsp;sessionID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a> with the given <code>sessionID</code>, if it is currently
+ connected to the same repository as the <a href="#getLocalSession()"><code>local session</code></a>, <code>null</code>
+ otherwise.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSessions()" class="member-name-link">getRemoteSessions</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the set of <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
  <a href="#getLocalSession()"><code>local session</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getRemoteSessions(java.lang.String)" class="member-name-link">getRemoteSessions</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;userID)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the set of <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
+ <a href="#getLocalSession()"><code>local session</code></a> and have the given <code>userID</code>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORemoteTopic.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteTopic</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSubscribedTopic(java.lang.String)" class="member-name-link">getSubscribedTopic</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;id)</code></div>
@@ -262,6 +275,35 @@ extends org.eclipse.net4j.util.container.IContainer&lt;<a href="CDORemoteSession
 <div class="block">Returns the set of <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
  <a href="#getLocalSession()"><code>local session</code></a>. If this CDORemoteSessionManager itself is <a href="#isSubscribed()"><code>subscribed</code></a> the result is returned from a local cache for remote sessions, otherwise it is requested from the
  server each time this method is called.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="getRemoteSessions(java.lang.String)">
+<h3>getRemoteSessions</h3>
+<div class="member-signature"><span class="return-type"><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a>[]</span>&nbsp;<span class="element-name">getRemoteSessions</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;userID)</span></div>
+<div class="block">Returns the set of <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote sessions</code></a> that are connected to the same repository as the
+ <a href="#getLocalSession()"><code>local session</code></a> and have the given <code>userID</code>. If this
+ CDORemoteSessionManager itself is <a href="#isSubscribed()"><code>subscribed</code></a> the result is returned from a local
+ cache for remote sessions, otherwise it is requested from the server each time this method is called.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getRemoteSession(int)">
+<h3>getRemoteSession</h3>
+<div class="member-signature"><span class="return-type"><a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote">CDORemoteSession</a></span>&nbsp;<span class="element-name">getRemoteSession</span><wbr><span class="parameters">(int&nbsp;sessionID)</span></div>
+<div class="block">Returns the <a href="CDORemoteSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session.remote"><code>remote session</code></a> with the given <code>sessionID</code>, if it is currently
+ connected to the same repository as the <a href="#getLocalSession()"><code>local session</code></a>, <code>null</code>
+ otherwise. If this CDORemoteSessionManager itself is <a href="#isSubscribed()"><code>subscribed</code></a> the result is
+ returned from a local cache for remote sessions, otherwise it is requested from the server each time this
+ method is called.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.29</dd>
+</dl>
 </section>
 </li>
 <li>

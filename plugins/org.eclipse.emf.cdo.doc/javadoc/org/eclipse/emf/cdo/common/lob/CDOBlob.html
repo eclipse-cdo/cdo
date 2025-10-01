@@ -40,7 +40,7 @@ loadScripts(document, 'script');</script>
 <p>Übersicht:</p>
 <ul>
 <li>Verschachtelt</li>
-<li>Feld</li>
+<li><a href="#field-summary">Feld</a></li>
 <li><a href="#constructor-summary">Konstruktor</a></li>
 <li><a href="#method-summary">Methode</a></li>
 </ul>
@@ -60,7 +60,7 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Übersicht:&nbsp;</li>
 <li>Verschachtelt&nbsp;|&nbsp;</li>
-<li>Feld&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
 <li><a href="#constructor-summary">Konstruktor</a>&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Methode</a></li>
 </ul>
@@ -97,7 +97,20 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDOBlob</span>
 <span class="extends-implements">extends <a href="CDOLob.html" title="Klasse in org.eclipse.emf.cdo.common.lob">CDOLob</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&gt;</span></div>
-<div class="block">An identifiable binary large object with streaming support.</div>
+<div class="block">An identifiable binary large object with streaming support.
+ <p>
+ CDOBlobs are immutable. Once created, their <a href="CDOLobInfo.html#getID()"><code>ID</code></a> and <a href="CDOLobInfo.html#getSize()"><code>size</code></a> do not change.
+ The ID is a digest of the content of the blob, SHA-1 by default (see <a href="../../spi/common/CDOLobStoreImpl.html#DEFAULT_DIGEST_ALGORITHM"><code>CDOLobStoreImpl.DEFAULT_DIGEST_ALGORITHM</code></a>).
+ <p>
+ CDOBlobs can be created from an <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link"><code>InputStream</code></a>, a <code>byte[]</code>, or a hex-encoded <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link"><code>String</code></a>.
+ On the client side, CDOBlobs are created with a reference to a <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob"><code>CDOLobStore</code></a>, which is used to store and retrieve
+ the blob's content. On the server side, CDOBlobs are created without a store reference and are always retrieved from
+ the repository's <code>IStore</code>.
+ <p>
+ The default <code>CDOLobStore</code> implementation is <a href="../../spi/common/CDOLobStoreImpl.html#INSTANCE"><code>CDOLobStoreImpl.INSTANCE</code></a>, which stores blobs in the local file system.
+ But on the client side, it's often more efficient to use a dedicated <code>CDOLobStore</code> instance that stores blobs in
+ a <code>CDOSession</code>-specific cache location. See <code>CDOSession.Options.setLobCache(CDOLobStore)</code> for details.
+ See also <code>CDOSession.newBlob(InputStream)</code> and <code>CDOSession.newBlob(byte[])</code> for convenient ways to create CDOBlobs.</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.0</dd>
@@ -107,6 +120,15 @@ loadScripts(document, 'script');</script>
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Feldübersicht</h2>
+<div class="inherited-list">
+<h3 id="fields-inherited-from-class-org.eclipse.emf.cdo.common.lob.CDOLob">Von Klasse geerbte Felder&nbsp;org.eclipse.emf.cdo.common.lob.<a href="CDOLob.html" title="Klasse in org.eclipse.emf.cdo.common.lob">CDOLob</a></h3>
+<code><a href="CDOLob.html#DEFAULT_STORE">DEFAULT_STORE</a></code></div>
+</section>
+</li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
 <li>
 <section class="constructor-summary" id="constructor-summary">
@@ -115,15 +137,19 @@ loadScripts(document, 'script');</script>
 <div class="summary-table two-column-summary">
 <div class="table-header col-first">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(byte[]&nbsp;contents,
- <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D)" class="member-name-link">CDOBlob</a><wbr>(byte[]&nbsp;contents)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.io.InputStream)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents)</code></div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(byte%5B%5D,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(byte[]&nbsp;contents,
+ <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.io.InputStream,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents,
- <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</code></div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.io.InputStream)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contents,
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.io.InputStream,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents,
+ <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.lang.String)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contentsHexString)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.lang.String,org.eclipse.emf.cdo.common.lob.CDOLobStore)" class="member-name-link">CDOBlob</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contentsHexString,
  <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 </div>
@@ -140,21 +166,24 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBytes()" class="member-name-link">getBytes</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#copyTo(java.io.OutputStream)" class="member-name-link">copyTo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;out)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContents()" class="member-name-link">getContents</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getBytes()" class="member-name-link">getBytes</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="Klasse oder Schnittstelle in java.io" class="external-link">File</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStoreFile()" class="member-name-link">getStoreFile</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContents()" class="member-name-link">getContents</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getString()" class="member-name-link">getString</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="Klasse oder Schnittstelle in java.io" class="external-link">File</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStoreFile()" class="member-name-link">getStoreFile</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="CDOLobInfo.html" title="Klasse in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#put(java.io.InputStream)" class="member-name-link">put</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getString()" class="member-name-link">getString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="CDOLobInfo.html" title="Klasse in org.eclipse.emf.cdo.common.lob">CDOLobInfo</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#put(java.io.InputStream)" class="member-name-link">put</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">InputStream</a>&nbsp;contents)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -202,6 +231,19 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="&lt;init&gt;(byte[])">
+<h3>CDOBlob</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOBlob</span><wbr><span class="parameters">(byte[]&nbsp;contents)</span>
+        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(byte[],org.eclipse.emf.cdo.common.lob.CDOLobStore)">
 <h3>CDOBlob</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOBlob</span><wbr><span class="parameters">(byte[]&nbsp;contents,
@@ -216,9 +258,22 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="&lt;init&gt;(java.lang.String)">
+<h3>CDOBlob</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOBlob</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contentsHexString)</span>
+        throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="&lt;init&gt;(java.lang.String,org.eclipse.emf.cdo.common.lob.CDOLobStore)">
 <h3>CDOBlob</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOBlob</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contents,
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDOBlob</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;contentsHexString,
  <a href="CDOLobStore.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobStore</a>&nbsp;store)</span>
         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
 <dl class="notes">
@@ -285,6 +340,19 @@ loadScripts(document, 'script');</script>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code></dd>
 <dt>Seit:</dt>
 <dd>4.13</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="copyTo(java.io.OutputStream)">
+<h3>copyTo</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">copyTo</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;out)</span>
+            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>

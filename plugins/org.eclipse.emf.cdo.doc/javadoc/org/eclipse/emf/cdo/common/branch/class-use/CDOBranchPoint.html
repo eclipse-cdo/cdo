@@ -374,6 +374,13 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../../lock/CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;&nbsp;lockDeltas,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../../lock/CDOLockState.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;lockStates)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../../lock/CDOLockChangeInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockChangeInfo</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOLockUtil.</span><code><a href="../../lock/CDOLockUtil.html#createLockChangeInfo(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.lock.CDOLockOwner,java.util.Collection,java.util.Collection,boolean)" class="member-name-link">createLockChangeInfo</a><wbr>(<a href="../CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
+ <a href="../../lock/CDOLockOwner.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockOwner</a>&nbsp;lockOwner,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../../lock/CDOLockDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockDelta</a>&gt;&nbsp;lockDeltas,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="../../lock/CDOLockState.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lock">CDOLockState</a>&gt;&nbsp;lockStates,
+ boolean&nbsp;isAdministrative)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -1907,7 +1914,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPushTransaction.</span><code><a href="../../../transaction/CDOPushTransaction.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOTransactionCommentator.</span><code><a href="../../../transaction/CDOTransactionCommentator.html#setRevertComment(org.eclipse.emf.cdo.transaction.CDOTransaction,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">setRevertComment</a><wbr>(<a href="../../../transaction/CDOTransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.transaction">CDOTransaction</a>&nbsp;transaction,
@@ -2020,12 +2027,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../../../ui/widgets/ComposeBranchPointComposite.html#%3Cinit%3E(org.eclipse.swt.widgets.Composite,boolean,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">ComposeBranchPointComposite</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="Klasse oder Schnittstelle in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
+<div class="col-second even-row-color"><code><a href="../../../ui/widgets/ComposeBranchPointComposite.html#%3Cinit%3E(org.eclipse.swt.widgets.Composite,boolean,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">ComposeBranchPointComposite</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="Klasse oder Schnittstelle in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
  boolean&nbsp;allowTimeStamp,
  <a href="../CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../../../ui/widgets/ComposeBranchPointComposite.html#%3Cinit%3E(org.eclipse.swt.widgets.Composite,int,org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">ComposeBranchPointComposite</a><wbr>(<a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="Klasse oder Schnittstelle in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
+<div class="col-second odd-row-color"><code><a href="../../../ui/widgets/ComposeBranchPointComposite.html#%3Cinit%3E(org.eclipse.swt.widgets.Composite,int,org.eclipse.emf.cdo.session.CDOSession,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,boolean)" class="member-name-link">ComposeBranchPointComposite</a><wbr>(<a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Composite.html" title="Klasse oder Schnittstelle in org.eclipse.swt.widgets" class="external-link">Composite</a>&nbsp;parent,
  int&nbsp;style,
  <a href="../../../session/CDOSession.html" title="Schnittstelle in org.eclipse.emf.cdo.session">CDOSession</a>&nbsp;session,
  <a href="../CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
@@ -2145,9 +2152,9 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDOView.</span><code><a href="../../../view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.core.runtime.IProgressMonitor)" class="member-name-link">setBranchPoint</a><wbr>(<a href="../CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
- <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
+ <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link">IProgressMonitor</a>&nbsp;monitor)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Same as calling <a href="../../../view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>CDOView.setBranchPoint(CDOBranchPoint)</code></a> with a <a href="https://help.eclipse.org/topic//org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link"><code>IProgressMonitor</code></a> .</div>
+<div class="block">Same as calling <a href="../../../view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)"><code>CDOView.setBranchPoint(CDOBranchPoint)</code></a> with a <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link"><code>IProgressMonitor</code></a> .</div>
 </div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPrefetcherManager.</span><code><a href="../../../view/CDOPrefetcherManager.html#viewChanged(org.eclipse.emf.cdo.view.CDOView,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" class="member-name-link">viewChanged</a><wbr>(<a href="../../../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view,

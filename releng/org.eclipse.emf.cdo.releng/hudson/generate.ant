@@ -231,8 +231,8 @@
   <!-- ==================== -->
 
   <target name="generate-archive" depends="clean" unless="skip.archive.condition">
-    <zip destfile="build-results.zip">
-      <fileset dir=".">
+    <zip destfile="${build.root}/build-results.zip">
+      <fileset dir="${build.root}">
         <include name="binary/**" />
         <include name="features/**" />
         <include name="plugins/**" />

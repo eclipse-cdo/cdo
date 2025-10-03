@@ -4,8 +4,11 @@ information such as JavaDoc (API reference), and (extension point) schema refere
 
 Technically the task-oriented **documentation** is authored in the form of Java packages, classes, nested classes and methods:
 
-* A package represents a **category** for related documentation articles.
+* A package represents a **category** for related documentation articles. 
+  A category is documented in the package-info.java file of the package.
+  The ordering of categories within their parent category is specified with a @number JavaDoc block tag.
 * A top-level class represents an **article** in the documentation.
+  An article is a top-level chapter.
 * Nested classes represent a tree of documentation **chapters**.
 
 The JavaDoc of these structural elements represent the actual documentation text:
@@ -27,9 +30,10 @@ Here are some general rules for writing the documentation:
 * Wrap lines at column 120.
 * Classes are always public, non static, and non final.
 * Methods are always public void and non static.
-* All Java types in links and code examples are written with simple names.
+* All Java types in links and code examples are written with simple names (not qualified with package names).
   The required Java import statements are added at the top of the file under the package declaration.
-* The @snip tag comes last in a Java code example method.
+* The @snip block tag comes last in a Java code example method.
+  It's usually the only tag on a snippet.
 
 #Meta tags for Copilot#
 

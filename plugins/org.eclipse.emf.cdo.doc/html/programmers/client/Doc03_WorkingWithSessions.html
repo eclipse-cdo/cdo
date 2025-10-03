@@ -1444,7 +1444,7 @@ function maximize(id)
  <p>
  The CDORevision interface provides methods to access technical details about a revision, such as its <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EClass</code></a>,
  ID, branch, version, and timestamps. The actual model data of a revision, including attribute values and references,
- is accessed through the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionData</code></a> interface, which can be obtained by calling the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html#data()" title="Method in org.eclipse.emf.cdo.common.revision.CDORevision"><code>CDORevision#data()</code></a>
+ is accessed through the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevisionData.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevisionData</code></a> interface, which can be obtained by calling the <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html#data()" title="Method in org.eclipse.emf.cdo.common.revision.CDORevision"><code>CDORevision.data()</code></a>
  method. Here is an example of how to access revision data:
  
 
@@ -2152,8 +2152,8 @@ function maximize(id)
  Whether a repository <b>stores</b> commit information depends on its <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonRepository"><code>mode</code></a>. Commit
  information is only available in <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.Mode.html#AUDITING" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.Mode"><code>auditing</code></a> mode or higher. In
  addition, the repository must be configured to store commit information, i.e., its
- <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.Props.html#COMMIT_INFO_STORAGE" title="Field in org.eclipse.emf.cdo.server.IRepository.Props"><code>IRepository.Props#COMMIT_INFO_STORAGE</code></a> property must not be set to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#YES" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage#YES</code></a> or
- <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#WITH_MERGE_SOURCE" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage#WITH_MERGE_SOURCE</code></a>.
+ <a href="../../../javadoc/org/eclipse/emf/cdo/server/IRepository.Props.html#COMMIT_INFO_STORAGE" title="Field in org.eclipse.emf.cdo.server.IRepository.Props"><code>IRepository.Props.COMMIT_INFO_STORAGE</code></a> property must not be set to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#YES" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage.YES</code></a> or
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonRepository.CommitInfoStorage.html#WITH_MERGE_SOURCE" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonRepository.CommitInfoStorage"><code>CommitInfoStorage.WITH_MERGE_SOURCE</code></a>.
  <p>
  Whether a repository <b>provides</b> commit information with complete <a href="../../../javadoc/org/eclipse/emf/cdo/common/commit/CDOCommitData.html" title="Interface in org.eclipse.emf.cdo.common.commit"><code>change set data</code></a> to a client
  depends on the passive update mode of the client's <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>session</code></a>, see <a href="Doc03_WorkingWithSessions.html#PassiveUpdatesAndRefreshing" title="Chapter in CDO Model Repository Documentation">Passive Updates and Refreshing</a>.
@@ -2457,11 +2457,11 @@ function maximize(id)
  CDO does not impose any restrictions on the message content. You can use any serialization format you like,
  such as JSON, XML, Protocol Buffers, or custom binary formats.
  <p>
- You can send messages to a specific remote session by using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSession.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSession"><code>CDORemoteSession#sendMessage(CDORemoteSessionMessage)</code></a>.
+ You can send messages to a specific remote session by using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSession.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSession"><code>CDORemoteSession.sendMessage(CDORemoteSessionMessage)</code></a>.
  A message sent to a remote session is delivered only if the target session is subscribed to receive messages.
  You can also broadcast messages to all subscribed remote sessions using
- <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession[])" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"><code>CDORemoteSessionManager#sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a>,
- or <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic#sendMessage(CDORemoteSessionMessage)</code></a> (see <a href="Doc03_WorkingWithSessions.html#RemoteTopics" title="Chapter in CDO Model Repository Documentation">Collaborating on Shared Topics</a>).
+ <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage,org.eclipse.emf.cdo.session.remote.CDORemoteSession[])" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"><code>CDORemoteSessionManager.sendMessage(CDORemoteSessionMessage, CDORemoteSession...)</code></a>,
+ or <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.sendMessage(CDORemoteSessionMessage)</code></a> (see <a href="Doc03_WorkingWithSessions.html#RemoteTopics" title="Chapter in CDO Model Repository Documentation">Collaborating on Shared Topics</a>).
  These methods deliver the message to the target session(s) or topic subscribers.
  <p>
  Here is an example of how to send messages to other sessions using the remote session manager:
@@ -2565,19 +2565,19 @@ function maximize(id)
  documents, or activities. Topics provide a way to broadcast messages, track presence, and coordinate work.
  <p>
  The <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html" title="Interface in org.eclipse.emf.cdo.session.remote"><code>CDORemoteTopic</code></a> interface represents a collaboration topic. It emits events for topic subscription,
- message delivery, and presence changes. You can subscribe to a topic using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#subscribeTopic(java.lang.String)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"><code>CDORemoteSessionManager#subscribeTopic(String)</code></a>.
+ message delivery, and presence changes. You can subscribe to a topic using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteSessionManager.html#subscribeTopic(java.lang.String)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteSessionManager"><code>CDORemoteSessionManager.subscribeTopic(String)</code></a>.
  This adds your session to the topic and enables you to receive messages and presence updates.
  If the topic does not exist, it is created automatically.
  <p>
- The presence of remote sessions in a topic can be queried using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#getRemoteSessions()" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic#getRemoteSessions()</code></a>.
+ The presence of remote sessions in a topic can be queried using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#getRemoteSessions()" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.getRemoteSessions()</code></a>.
  As the <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html" title="Interface in org.eclipse.emf.cdo.session.remote"><code>CDORemoteTopic</code></a> is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer<CDORemoteSession></code></a>, you can also listen for presence changes.
  Changes in presence are notified via <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer</code></a> events.
  <p>
- To collaborate, send messages to a topic using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic#sendMessage(CDORemoteSessionMessage)</code></a>. These
+ To collaborate, send messages to a topic using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.sendMessage(CDORemoteSessionMessage)</code></a>. These
  messages are broadcast to all sessions that are subscribed to the topic.
  Subscribers receive messages via <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopicEvent.MessageReceived.html" title="Interface in org.eclipse.emf.cdo.session.remote.CDORemoteTopicEvent"><code>CDORemoteTopicEvent.MessageReceived</code></a> events.
  <p>
- To leave a topic, call <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#unsubscribe()" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic#unsubscribe()</code></a>. This removes the session from the topic and
+ To leave a topic, call <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#unsubscribe()" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.unsubscribe()</code></a>. This removes the session from the topic and
  stops further event notifications. Other sessions in the topic are notified of your departure.
  <p>
  Here is an example of how to collaborate on a shared topic using the remote session manager:
@@ -2840,14 +2840,14 @@ function maximize(id)
  missing generated packages. This is useful when working with models that have not been
  generated yet. Can be enabled or disabled. By default, it is disabled.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isGeneratedPackageEmulationEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#isGeneratedPackageEmulationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setGeneratedPackageEmulationEnabled(boolean)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isGeneratedPackageEmulationEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.isGeneratedPackageEmulationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setGeneratedPackageEmulationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setGeneratedPackageEmulationEnabled(boolean)</code></a>
 
 <h3><a name="PassiveUpdateEnabled"></a>7.2&nbsp;&nbsp;Passive Update Enabled</h3>
 <p>
  Controls whether the session receives passive updates from the server.
  Can be enabled or disabled. By default, it is enabled.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#isPassiveUpdateEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setPassiveUpdateEnabled(boolean)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isPassiveUpdateEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.isPassiveUpdateEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setPassiveUpdateEnabled(boolean)</code></a>
 
 <h3><a name="Doc_PassiveUpdateMode"></a>7.3&nbsp;&nbsp;Passive Update Mode</h3>
 <p>
@@ -2860,14 +2860,14 @@ function maximize(id)
  and <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html#ADDITIONS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode"><code>ADDITIONS</code></a>, where the session receives notifications about changes and new objects being added.
  The choice of mode depends on the application's requirements for data freshness and performance.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getPassiveUpdateMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setPassiveUpdateMode(PassiveUpdateMode)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getPassiveUpdateMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.getPassiveUpdateMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setPassiveUpdateMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setPassiveUpdateMode(PassiveUpdateMode)</code></a>
 
 <h3><a name="LockNotificationEnabled"></a>7.4&nbsp;&nbsp;Lock Notification Enabled</h3>
 <p>
  Controls whether the session receives lock notifications.
  Can be enabled or disabled. By default, it is disabled.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#isLockNotificationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setLockNotificationEnabled(boolean)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#isLockNotificationEnabled()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.isLockNotificationEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationEnabled(boolean)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setLockNotificationEnabled(boolean)</code></a>
 
 <h3><a name="Doc_LockNotificationMode"></a>7.5&nbsp;&nbsp;Lock Notification Mode</h3>
 <p>
@@ -2880,7 +2880,7 @@ function maximize(id)
  <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.LockNotificationMode.html#ALWAYS" title="Enum constant in org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode"><code>ALWAYS</code></a>, where the session receives all lock notifications regardless of its views.
  The choice of mode depends on the application's requirements for lock awareness and performance.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#getLockNotificationMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options#setLockNotificationMode(LockNotificationMode)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#getLockNotificationMode()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.getLockNotificationMode()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.html#setLockNotificationMode(org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>CDOSession.Options.setLockNotificationMode(LockNotificationMode)</code></a>
 
 <h3><a name="CollectionLoadingPolicy"></a>7.6&nbsp;&nbsp;Collection Loading Policy</h3>
 <p>
@@ -2895,7 +2895,7 @@ function maximize(id)
  more network round-trips. A larger chunk size improves performance but increases memory usage. The optimal chunk sizes
  depend on your application's access patterns and resource constraints.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getCollectionLoadingPolicy()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#getCollectionLoadingPolicy()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getCollectionLoadingPolicy()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getCollectionLoadingPolicy()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setCollectionLoadingPolicy(org.eclipse.emf.cdo.session.CDOCollectionLoadingPolicy)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setCollectionLoadingPolicy(CDOCollectionLoadingPolicy)</code></a>
 
 <h3><a name="LargeObjectCache"></a>7.7&nbsp;&nbsp;Large Object Cache</h3>
 <p>
@@ -2904,24 +2904,24 @@ function maximize(id)
  <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>Options.setLobCache(CDOLobStore)</code></a>, or you can use the built-in
  <a href="../../../javadoc/org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html" title="Class in org.eclipse.emf.cdo.spi.common"><code>CDOLobStoreImpl</code></a>, which provides a simple file-based cache. The built-in cache can be configured to
  store large objects in a specific directory on the file system. By default, the large object cache is
- set to <a href="../../../javadoc/org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#INSTANCE" title="Field in org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl"><code>CDOLobStoreImpl#INSTANCE</code></a>, which stores large objects in a temporary directory.
+ set to <a href="../../../javadoc/org/eclipse/emf/cdo/spi/common/CDOLobStoreImpl.html#INSTANCE" title="Field in org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl"><code>CDOLobStoreImpl.INSTANCE</code></a>, which stores large objects in a temporary directory.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getLobCache()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#getLobCache()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setLobCache(CDOLobStore)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getLobCache()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getLobCache()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setLobCache(org.eclipse.emf.cdo.common.lob.CDOLobStore)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setLobCache(CDOLobStore)</code></a>
 
 <h3><a name="PermissionUpdater"></a>7.8&nbsp;&nbsp;Permission Updater</h3>
 <p>
  Controls how to update permissions of <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>revisions</code></a> when
- passive updates are received or the <a href="../../../javadoc/org/eclipse/emf/spi/cdo/InternalCDOSession.html#updatePermissions()" title="Method in org.eclipse.emf.spi.cdo.InternalCDOSession"><code>InternalCDOSession#updatePermissions()</code></a> method is called.
- By default, the permission updater is set to <a href="../../../javadoc/org/eclipse/emf/spi/cdo/CDOPermissionUpdater3.html#SERVER" title="Field in org.eclipse.emf.spi.cdo.CDOPermissionUpdater3"><code>CDOPermissionUpdater3#SERVER</code></a>, which updates permissions
+ passive updates are received or the <a href="../../../javadoc/org/eclipse/emf/spi/cdo/InternalCDOSession.html#updatePermissions()" title="Method in org.eclipse.emf.spi.cdo.InternalCDOSession"><code>InternalCDOSession.updatePermissions()</code></a> method is called.
+ By default, the permission updater is set to <a href="../../../javadoc/org/eclipse/emf/spi/cdo/CDOPermissionUpdater3.html#SERVER" title="Field in org.eclipse.emf.spi.cdo.CDOPermissionUpdater3"><code>CDOPermissionUpdater3.SERVER</code></a>, which updates permissions
  from the server.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPermissionUpdater()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#getPermissionUpdater()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setPermissionUpdater(CDOPermissionUpdater3)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPermissionUpdater()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getPermissionUpdater()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPermissionUpdater(org.eclipse.emf.spi.cdo.CDOPermissionUpdater)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setPermissionUpdater(CDOPermissionUpdater3)</code></a>
 
 <h3><a name="DelegableViewLockEnabled"></a>7.9&nbsp;&nbsp;Delegable View Lock Enabled</h3>
 <p>
  Specifies whether the session supports delegable view locks. All view methods
  are protected from concurrent access by the view's <i>view lock</i>. By default, the view lock is the constant object
- returned by <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getViewLock()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView#getViewLock()</code></a>. This lock is reentrant, but it is not delegable. This means that if a thread
+ returned by <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getViewLock()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getViewLock()</code></a>. This lock is reentrant, but it is not delegable. This means that if a thread
  holds the view lock and <b>calls</b> a method that tries to acquire the same view lock again, it will succeed. However,
  if the thread that holds the view lock schedules a task to be executed asynchronously (e.g., using
  <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/swt/widgets/Display.html#syncExec(java.lang.Runnable)" target="_blank" title="Method in org.eclipse.swt.widgets.Display"><code>Display.syncExec(Runnable)</code></a>) and waits for its completion, the task will not be able
@@ -2944,7 +2944,7 @@ function maximize(id)
  <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> to set a specific delegable view lock
  for the next view that is created in the current thread.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isDelegableViewLockEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#isDelegableViewLockEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setDelegableViewLockEnabled(boolean)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#isDelegableViewLockEnabled()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.isDelegableViewLockEnabled()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setDelegableViewLockEnabled(boolean)</code></a>
 
 <h3><a name="PrefetchSendMaxRevisionKeys"></a>7.10&nbsp;&nbsp;Prefetch Send Max Revision Keys</h3>
 <p>
@@ -2958,7 +2958,7 @@ function maximize(id)
  the number of revision keys that are sent in a single prefetch request. The default value is 100.
  You can also change this default value by setting the system property <code>PREFETCH_SEND_MAX_REVISION_KEYS</code>.
  <p>
- API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPrefetchSendMaxRevisionKeys()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#getPrefetchSendMaxRevisionKeys()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPrefetchSendMaxRevisionKeys(int)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options#setPrefetchSendMaxRevisionKeys(int)</code></a>
+ API: <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#getPrefetchSendMaxRevisionKeys()" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.getPrefetchSendMaxRevisionKeys()</code></a>, <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setPrefetchSendMaxRevisionKeys(int)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>CDOSession.Options.setPrefetchSendMaxRevisionKeys(int)</code></a>
 
 <h2><a name="SessionProperties"></a>8&nbsp;&nbsp;Session Properties</h2>
 <p>
@@ -2980,7 +2980,7 @@ function maximize(id)
  It allows you to enumerate, find, and manage sessions. You can also register listeners
  to be notified of session lifecycle events, such as when sessions are opened or closed.
  <p>
- The session registry is a singleton and can be accessed via <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionRegistry.html#INSTANCE" title="Field in org.eclipse.emf.cdo.session.CDOSessionRegistry"><code>CDOSessionRegistry#INSTANCE</code></a>.
+ The session registry is a singleton and can be accessed via <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSessionRegistry.html#INSTANCE" title="Field in org.eclipse.emf.cdo.session.CDOSessionRegistry"><code>CDOSessionRegistry.INSTANCE</code></a>.
  It provides methods to get all active sessions and find sessions by their global ID.
  <p>
  Global IDs are assigned to each session when it is opened. They are unique within the application

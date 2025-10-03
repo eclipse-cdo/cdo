@@ -20,7 +20,10 @@
       <tocIcon id="package" altText="Package" openIcon="images/package.gif"/>
       <tocIcon id="extpoint" altText="Extension Point" openIcon="images/extpoint.gif"/>
       <tocIcon id="productgroup" altText="Product Group" openIcon="images/productgroup.gif"/>
+      <tocIcon id="category" altText="Category" openIcon="images/category.gif"/>
+      <tocIcon id="article" altText="Article" openIcon="images/article.gif"/>
       <tocIcon id="external" altText="External Article" openIcon="images/external.gif"/>
+      <tocIcon id="chapter" altText="Chapter" openIcon="images/chapter.gif"/>
    </extension>
 
   <extension

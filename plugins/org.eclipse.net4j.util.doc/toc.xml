@@ -2,7 +2,7 @@
 <?NLS TYPE="org.eclipse.help.toc"?>
 
 <toc label="Net4j Utilities Documentation" topic="html/Overview.html">
-  <topic label="Overview" href="html/Overview.html" />
+  <topic label="Overview" href="html/Overview.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j Utilities" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="plugin">
       <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="package" />

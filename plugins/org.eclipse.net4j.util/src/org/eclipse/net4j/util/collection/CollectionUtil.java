@@ -46,6 +46,23 @@ public final class CollectionUtil
   {
   }
 
+  /**
+   * @since 3.29
+   */
+  public static void close(Object... closeables)
+  {
+    if (closeables != null)
+    {
+      for (Object closeable : closeables)
+      {
+        if (closeable instanceof Closeable)
+        {
+          ((Closeable)closeable).close();
+        }
+      }
+    }
+  }
+
   public static <T> Iterator<T> dump(Iterator<T> it)
   {
     List<T> list = new ArrayList<>();

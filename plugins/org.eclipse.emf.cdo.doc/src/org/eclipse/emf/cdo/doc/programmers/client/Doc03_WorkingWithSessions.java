@@ -79,6 +79,7 @@ import org.eclipse.emf.cdo.session.remote.CDORemoteTopic;
 import org.eclipse.emf.cdo.session.remote.CDORemoteTopicEvent;
 import org.eclipse.emf.cdo.spi.common.CDOLobStoreImpl;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.transaction.CDOTransactionOpener;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider;
 import org.eclipse.emf.cdo.ui.CDOTopicProvider.Topic;
 import org.eclipse.emf.cdo.ui.DefaultTopicProvider;
@@ -94,10 +95,13 @@ import org.eclipse.emf.cdo.view.CDORevisionPrefetchingPolicy;
 import org.eclipse.emf.cdo.view.CDOUnit;
 import org.eclipse.emf.cdo.view.CDOUnitManager;
 import org.eclipse.emf.cdo.view.CDOView;
+import org.eclipse.emf.cdo.view.CDOViewContainer;
+import org.eclipse.emf.cdo.view.CDOViewOpener;
 
 import org.eclipse.net4j.connector.IConnector;
 import org.eclipse.net4j.doc.Overview;
 import org.eclipse.net4j.tcp.TCPUtil;
+import org.eclipse.net4j.util.collection.CollectionUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector;
@@ -124,6 +128,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.spi.cdo.CDOOperationAuthorizer;
 import org.eclipse.emf.spi.cdo.CDOPermissionUpdater3;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
@@ -141,6 +146,7 @@ import org.eclipse.ui.PartInitException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -438,8 +444,7 @@ public class Doc03_WorkingWithSessions
      * In this case, you can call the refresh() method on a view to manually refresh all stale objects.
      * <p>
      * Here is an example of how to enable/disable passive updates and manually refresh views:
-     * <p>
-     * {@link PassiveUpdatesAndRefreshing#passiveUpdatesAndRefreshing(IConnector, String) PassiveUpdatesAndRefreshing.java}
+     * {@link #passiveUpdatesAndRefreshing(IConnector, String) PassiveUpdatesAndRefreshing.java}
      * <p>
      * Note that passive updates are a session-wide setting that affects all views within the session.
      * When passive updates are re-enabled, a refresh is automatically performed to synchronize all views
@@ -457,10 +462,11 @@ public class Doc03_WorkingWithSessions
      *      This mode can be useful for clients that need to keep track of the overall state of the repository,
      *      but it is usually the least efficient.</li>
      * </ul>
-     * Here is an example of how to set the passive update mode:
      * <p>
+     * Here is an example of how to set the passive update mode:
      * {@link PassiveUpdatesAndRefreshing#passiveUpdateModes(CDOSession) PassiveUpdateModes.java}
      * <p>
+     * Note that the passive update mode can also be changed at any time on a session via the {@link Doc03_WorkingWithSessions.SessionOptions session options}.
      * For more information about passive update modes, refer to {@link PassiveUpdateMode}.
      */
     public class PassiveUpdatesAndRefreshing
@@ -558,117 +564,275 @@ public class Doc03_WorkingWithSessions
    * transactions, modify data. Understanding how to create, manage, and interact with views is essential for building
    * robust CDO client applications.
    * <p>
-   * <b>Purpose of Views and Transactions</b>
+   * Views are created from sessions and are associated with a specific branch point in the repository. This branch point
+   * determines the exact state of the repository that the view exposes. Views can be read-only or read-write (transactions),
+   * and they can also be configured to access historical states of the repository through audit views.
    * <p>
-   * A view represents a read-only or read-write window into the repository. Read-only views allow clients to
-   * navigate and query models without the risk of modifying data.
+   * This section covers the key aspects of view management, including the purpose of views and transactions,
+   * branch points and view targets, types of views, finding views by ID, listening for view-related events, and closing views.
+   * For more detailed information on working with views, refer to the {@link Doc04_WorkingWithViews} section.
    * <p>
-   * Transactions, on the other hand,
-   * are special types of views that enable clients to make changes to the repository. Changes made in a transaction
-   * are isolated from other views until the transaction is committed, ensuring data consistency and supporting
-   * concurrent development.
-   * <p>
-   * <b>Branch Points and the View Target</b>
-   * <p>
-   * Every view or transaction in CDO is associated with a specific {@link CDOBranchPoint branch point}, which determines the exact state of the
-   * repository that the view exposes. The branch point consists of a branch and a timestamp, together called the
-   * <b>view target</b>. This mechanism allows clients to access not only the latest state of the main branch, but also
-   * historical states (by specifying an earlier timestamp), or parallel lines of development (by specifying a different
-   * branch).
-   * <p>
-   * When you open a view or transaction without specifying a branch point, it defaults to the head of the main branch,
-   * showing the most recent state of the repository. To access a different branch or a historical state, you can
-   * explicitly specify a branch and/or timestamp when opening the view. This is useful for auditing, time-travel queries,
-   * or working with feature branches.
-   * <p>
-   * The branch point is immutable for the lifetime of a view, ensuring that the view always presents a consistent and
-   * isolated snapshot of the repository at the chosen target. Transactions always target a branch head, so changes are
-   * made to the latest state of the branch. Read-only and audit views can target any branch point, including historical
-   * states.
-   * <p>
-   * For more information about branches and branch points, see the {@link CDOBranchPoint}
-   * interface and the {@link CDOBranchManager} facility.
-   * <p>
-   * <b>Types of Views</b>
+   * Note that a {@link CDOSession} inherits most of the view management functionality through the following super interfaces:
    * <ul>
-   *   <li><b>Read-Only View:</b> Provides a consistent, immutable snapshot of the repository at a specific point in time.
-   *       Suitable for browsing and querying data without making modifications.</li>
-   *   <li><b>Transaction:</b> Extends the read-only view with the ability to create, modify, and delete objects.
-   *       Changes are local to the transaction until committed to the repository.</li>
-   *   <li><b>Audit View:</b> Allows access to historical states of the repository by specifying a past timestamp or
-   *       commit. Useful for auditing and time-travel queries.</li>
-   *   <li><b>Branch View:</b> Provides access to a specific branch of the repository, supporting parallel development
-   *       and versioning scenarios.</li>
+   * <li>{@link CDOViewContainer} and {@link IContainer IContainer&lt;CDOView&gt;}: Provide methods for managing a collection of
+   *      views within the session, including the ability to listen for view addition and removal events.</li>
+   * <li>{@link CDOViewOpener} and {@link CDOTransactionOpener}: Provide various methods for opening views and transactions.</li>
    * </ul>
-   * <p>
-   * <b>Finding Views by ID</b>
-   * <p>
-   * Each view in a session is assigned a unique integer ID. You can retrieve a view by its ID using the
-   * {@link CDOSession#getView(int) getView(int viewID)} method. This is useful for
-   * managing multiple views or for integrating with external systems that track view identifiers.
-   * Example:
-   * {@link ViewManagement#findViewByID(CDOSession, int) FindViewByID.java}
-   * <p>
-   * <b>Listening for View Events</b>
-   * <p>
-   * A session is an {@link IContainer IContainer<CDOView>} and, hence, emits events when views are opened or closed. You can listen for these events by registering an
-   * {@link IContainerEvent} listener with the session. This allows your
-   * application to react to changes in the set of open views, such as updating UI components or managing resources.
-   * Example:
-   * {@link ViewManagement#addViewsChangedListener(CDOSession) AddViewsChangedListener.java}
-   * <b>Closing Views</b>
-   * <p>
-   * It is important to close views when they are no longer needed to free up resources and avoid memory leaks.
-   * You can close a view by calling its {@link CDOView#close() close()} method.
-   * Example:
-   * {@link ViewManagement#closeView(CDOView) CloseView.java}
    */
   public class ViewManagement
   {
     /**
-     * @snip
+     * Purpose of Views and Transactions
+     * <p>
+     * A CDO repository can store many different versions of a model. Each time a change is committed to the repository,
+     * a new version of the model is created. These versions are organized into branches, allowing for parallel lines of development.
+     * Each version of the model is identified by a unique combination of a branch and a timestamp, known as a <i>branch point</i>.
+     * This multiplicity of versions and branches is the reason why a CDOSession alone is not sufficient to access a consistent
+     * model state of the repository. Instead, clients need views and transactions to specify which version of the model they want to work with.
+     * <p>
+     * A view represents a read-only window into the repository. Read-only views allow clients to
+     * navigate and query models without the risk of modifying data. For example, a client application
+     * might use a single read-only view to display a model in a different places of its user interface,
+     * allowing users to browse and inspect the data.
+     * <p>
+     * Transactions, on the other hand,
+     * are special types of views that enable clients to make changes to the repository. Changes made in a transaction
+     * are isolated from other views until the transaction is committed, ensuring data consistency and supporting
+     * concurrent development.
+     * <p>
+     * For more detailed information on working with views, refer to the {@link Doc04_WorkingWithViews} section.
      */
-    public void findViewByID(CDOSession session, int viewID)
+    public class PurposeOfViewsAndTransactions
     {
-      CDOView view = session.getView(viewID);
-      if (view != null)
+    }
+
+    /**
+     * Branch Points and the View Target
+     * <p>
+     * Every view or transaction in CDO is associated with a specific {@link CDOBranchPoint branch point}, which determines the exact state of the
+     * repository that the view exposes. The branch point consists of a {@link CDOBranchPoint#getBranch() branch} and a
+     * {@link CDOBranchPoint#getTimeStamp() timestamp}, together called the
+     * <b>view target</b>. This mechanism allows clients to access not only the latest state of the main branch, but also
+     * historical states (by specifying an earlier timestamp), or parallel lines of development (by specifying a different
+     * branch).
+     * <p>
+     * Normally, when you open a view or transaction, you specify the branch and/or timestamp that you want to target.
+     * Read-only views can target any branch point, including historical states, while transactions always target the
+     * head of a branch, allowing clients to make changes to the latest state of that branch.
+     * <p>
+     * When you open a view or transaction without specifying a branch point, it defaults to the head of the main branch,
+     * showing the most recent state of the repository. To access a different branch or a historical state, you can
+     * explicitly specify a branch and/or timestamp when opening the view. This is useful for auditing, time-travel queries,
+     * or working with feature branches.
+     * <p>
+     * For both views and transactions, the branch point is initially set when the view is created, but it can be changed
+     * later using the {@link CDOView#setBranchPoint(CDOBranchPoint) setBranchPoint()} method. Changing the branch point
+     * causes the view to refresh its contents to reflect the state of the repository at the new target branch point.
+     * All model objects in the view are updated to match the new branch point, ensuring that the view always presents a
+     * consistent snapshot of the repository. This process is automatic and absolutely transparent to the client application.
+     * It enables powerful scenarios such as switching between different branches or historical states on-the-fly,
+     * without needing to close and reopen views. The restriction is that transactions can only be switched to other branch heads,
+     * not to historical states.
+     * <p>
+     * The head of a branch is represented by a special timestamp value called {@link CDOBranchPoint#UNSPECIFIED_DATE UNSPECIFIED_DATE}.
+     * It ultimately represents a timestamp that is always greater than any other timestamp in the repository, effectively pointing to the
+     * latest commit on that branch. When a transaction is committed, it creates a new version of the model at the head of the branch,
+     * and all views targeting that branch head are automatically updated to reflect the new state. The head of a branch is
+     * always moving forward in time as new commits are made, while historical states remain fixed at their respective timestamps.
+     * As transactions always target the branch head, they are always working with the most recent state of the branch.
+     * <p>
+     * For more information about branches and branch points, see the {@link CDOBranchPoint}
+     * interface and the {@link CDOBranchManager} facility.
+     */
+    public class BranchPointsAndTheViewTarget
+    {
+    }
+
+    /**
+     * Opening Views and Transactions
+     * <p>
+     * Views and transactions are created from a session using the various {@link CDOSession#openView() openView()} and
+     * {@link CDOSession#openTransaction() openTransaction()} methods. These methods allow you to specify the initial branch and/or timestamp
+     * that you want to target, as well as a {@link ResourceSet} to use for loading model objects.
+     * <p>
+     * You can also omit the branch, timestamp, and/or ResourceSet, in which case the view or transaction starts with reasonable defaults
+     * as follows:
+     * <ul>
+     * <li>If no branch is specified, the main branch is used.</li>
+     * <li>If no timestamp is specified, the head of the branch is used.</li>
+     * <li>If no ResourceSet is specified, a new one is created automatically.</li>
+     * </ul>
+     * <p>
+     * Here is an example of how to open views and transactions with different configurations:
+     * {@link #openingViewsAndTransactions(CDOSession, ResourceSet) OpeningViewsAndTransactions.java}
+     * <p>
+     * Note that views and transactions are lightweight objects that can be created and disposed of as needed.
+     * They should be closed when no longer needed to free up resources.
+     * <p>
+     * Here is a summary of the various ways to open views and transactions:
+     * <ul>
+     * <li><b>openView():</b> Opens a read-only view targeting the head of the main branch with a new ResourceSet.</li>
+     * <li><b>openView(CDOBranch branch):</b> Opens a read-only view targeting the head of the specified branch with a new ResourceSet.</li>
+     * <li><b>openView(CDOBranch branch, long timeStamp):</b> Opens a read-only view targeting the specified branch and timestamp with a new ResourceSet.</li>
+     * <li><b>openView(ResourceSet resourceSet):</b> Opens a read-only view targeting the head of the main branch with the specified ResourceSet.</li>
+     * <li><b>openView(CDOBranch branch, ResourceSet resourceSet):</b> Opens a read-only view targeting the head of the specified branch with the specified ResourceSet.</li>
+     * <li><b>openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet):</b> Opens a read-only view targeting the specified branch and timestamp with the specified ResourceSet.</li>
+     * <li><b>openTransaction():</b> Opens a transaction targeting the head of the main branch with a new ResourceSet.</li>
+     * <li><b>openTransaction(CDOBranch branch):</b> Opens a transaction targeting the head of the specified branch with a new ResourceSet.</li>
+     * <li><b>openTransaction(ResourceSet resourceSet):</b> Opens a transaction targeting the head of the main branch with the specified ResourceSet.</li>
+     * <li><b>openTransaction(CDOBranch branch, ResourceSet resourceSet):</b> Opens a transaction targeting the head of the specified branch with the specified ResourceSet.</li>
+     * </ul>
+     * <p>
+     */
+    public class OpeningViewsAndTransactions
+    {
+      /**
+       * @snip
+       */
+      @SuppressWarnings("deprecation")
+      public void openingViewsAndTransactions(CDOSession session, ResourceSet resourceSet2)
       {
-        System.out.println("Found view with ID: " + viewID);
-      }
-      else
-      {
-        System.out.println("No view found with ID: " + viewID);
+        // Open a read-only view targeting the head of the main branch with a new ResourceSet.
+        CDOView view1 = session.openView();
+        ResourceSet resourceSet1 = view1.getResourceSet();
+        Assert.isNotNull(resourceSet1);
+
+        // Open a read-only view targeting a specific branch and timestamp with an existing ResourceSet.
+        CDOBranch branch = session.getBranchManager().getMainBranch().getBranch("feature");
+        long timeStamp = new Date(2021 - 1990, 6, 1).getTime();
+        CDOView view2 = session.openView(branch, timeStamp, resourceSet2);
+        System.out.println("Resources in resourceSet2: " + resourceSet2.getResources());
+
+        // Open a read-only view targeting the head of the main branch with an existing ResourceSet.
+        ResourceSet resourceSet3 = new ResourceSetImpl();
+        CDOView view3 = session.openView(resourceSet3);
+
+        // Open a transaction targeting the head of a specific branch with a new ResourceSet.
+        CDOTransaction transaction1 = session.openTransaction(branch);
+
+        // Open a transaction targeting the head of the main branch with an existing ResourceSet.
+        CDOTransaction transaction2 = session.openTransaction(resourceSet3);
+
+        // Use the views and transactions...
+
+        // Finally, close the views and transactions when done.
+        CollectionUtil.close(view1, view2, view3, transaction1, transaction2);
       }
     }
 
     /**
-     * @snip
+     * Accessing Open Views
+     * <p>
+     * A session maintains a collection of all currently open views and transactions. You can access this collection using the
+     * {@link CDOSession#getViews() getViews()} method, which returns an unmodifiable list of all open views.
+     * This allows you to iterate over the views, inspect their properties, or perform operations on them as needed.
+     * Example:
+     * {@link #accessOpenViews(CDOSession) AccessOpenViews.java}
      */
-    public void addViewsChangedListener(CDOSession session)
+    public class AccessingOpenViews
     {
-      session.addListener(new ContainerEventAdapter<CDOView>()
+      /**
+       * @snip
+       */
+      public void accessOpenViews(CDOSession session)
       {
-        @Override
-        protected void onAdded(IContainer<CDOView> container, CDOView view)
+        CDOView[] views = session.getViews();
+        for (CDOView view : views)
         {
-          System.out.println("View opened: " + view);
-        }
+          System.out.println("Open view: " + view.getViewID() //
+              + ", Branch: " + view.getBranch().getName() //
+              + ", Timestamp: " + view.getTimeStamp());
 
-        @Override
-        protected void onRemoved(IContainer<CDOView> container, CDOView view)
-        {
-          System.out.println("View closed: " + view);
+          if (view instanceof CDOTransaction)
+          {
+            CDOTransaction transaction = (CDOTransaction)view;
+            System.out.println("  is a transaction with " //
+                + transaction.getDirtyObjects().size() + " dirty objects.");
+          }
         }
-      });
+      }
     }
 
     /**
-     * @snip
+     * Finding Views by ID
+     * <p>
+     * Each view in a session is assigned a unique integer ID. You can retrieve a view by its ID using the
+     * {@link CDOSession#getView(int) getView(int viewID)} method. This is useful for
+     * managing multiple views or for integrating with external systems that track view identifiers.
+     * Example:
+     * {@link #findViewByID(CDOSession, int) FindViewByID.java}
      */
-    public void closeView(CDOView view)
+    public class FindingViewsByID
     {
-      view.close();
-      System.out.println("View closed.");
+      /**
+       * @snip
+       */
+      public void findViewByID(CDOSession session, int viewID)
+      {
+        CDOView view = session.getView(viewID);
+        if (view != null)
+        {
+          System.out.println("Found view with ID: " + viewID);
+        }
+        else
+        {
+          System.out.println("No view found with ID: " + viewID);
+        }
+      }
+    }
+
+    /**
+     * Listening for View-Related Events
+     * <p>
+     * A session is an {@link IContainer IContainer&lt;CDOView&gt;} and, hence, emits events when views are opened or closed.
+     * You can listen for these events by registering an
+     * {@link IContainerEvent} listener with the session. This allows your
+     * application to react to changes in the set of open views, such as updating UI components or managing resources.
+     * Example:
+     * {@link #addViewsChangedListener(CDOSession) AddViewsChangedListener.java}
+     */
+    public class ListeningForViewEvents
+    {
+      /**
+       * @snip
+       */
+      public void addViewsChangedListener(CDOSession session)
+      {
+        session.addListener(new ContainerEventAdapter<CDOView>()
+        {
+          @Override
+          protected void onAdded(IContainer<CDOView> container, CDOView view)
+          {
+            System.out.println("View opened: " + view);
+          }
+
+          @Override
+          protected void onRemoved(IContainer<CDOView> container, CDOView view)
+          {
+            System.out.println("View closed: " + view);
+          }
+        });
+      }
+    }
+
+    /**
+     * Closing Views
+     * <p>
+     * It is important to close views when they are no longer needed to free up resources and avoid memory leaks.
+     * You can close a view by calling its {@link CDOView#close() close()} method.
+     * Example:
+     * {@link #closeView(CDOView) CloseView.java}
+     */
+    public class ClosingViews
+    {
+      /**
+       * @snip
+       */
+      public void closeView(CDOView view)
+      {
+        view.close();
+        System.out.println("View closed.");
+      }
     }
   }
 
@@ -1924,7 +2088,7 @@ public class Doc03_WorkingWithSessions
        * If the topic does not exist, it is created automatically.
        * <p>
        * The presence of remote sessions in a topic can be queried using {@link CDORemoteTopic#getRemoteSessions()}.
-       * As the {@link CDORemoteTopic} is an {@link IContainer IContainer<CDORemoteSession>}, you can also listen for presence changes.
+       * As the {@link CDORemoteTopic} is an {@link IContainer IContainer&lt;CDORemoteSession&gt;}, you can also listen for presence changes.
        * Changes in presence are notified via {@link IContainer} events.
        * <p>
        * To collaborate, send messages to a topic using {@link CDORemoteTopic#sendMessage(CDORemoteSessionMessage)}. These

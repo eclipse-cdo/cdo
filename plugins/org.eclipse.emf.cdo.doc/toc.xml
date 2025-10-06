@@ -245,7 +245,15 @@
           <topic label="Passive Updates and Refreshing" href="html/programmers/client/Doc03_WorkingWithSessions.html#PassiveUpdatesAndRefreshing" icon="chapter" />
           <topic label="Waiting For Updates" href="html/programmers/client/Doc03_WorkingWithSessions.html#WaitingForUpdates" icon="chapter" />
         </topic>
-        <topic label="View Management" href="html/programmers/client/Doc03_WorkingWithSessions.html#ViewManagement" icon="chapter" />
+        <topic label="View Management" href="html/programmers/client/Doc03_WorkingWithSessions.html#ViewManagement" icon="chapter">
+          <topic label="Purpose of Views and Transactions" href="html/programmers/client/Doc03_WorkingWithSessions.html#PurposeOfViewsAndTransactions" icon="chapter" />
+          <topic label="Branch Points and the View Target" href="html/programmers/client/Doc03_WorkingWithSessions.html#BranchPointsAndTheViewTarget" icon="chapter" />
+          <topic label="Opening Views and Transactions" href="html/programmers/client/Doc03_WorkingWithSessions.html#OpeningViewsAndTransactions" icon="chapter" />
+          <topic label="Accessing Open Views" href="html/programmers/client/Doc03_WorkingWithSessions.html#AccessingOpenViews" icon="chapter" />
+          <topic label="Finding Views by ID" href="html/programmers/client/Doc03_WorkingWithSessions.html#FindingViewsByID" icon="chapter" />
+          <topic label="Listening for View-Related Events" href="html/programmers/client/Doc03_WorkingWithSessions.html#ListeningForViewEvents" icon="chapter" />
+          <topic label="Closing Views" href="html/programmers/client/Doc03_WorkingWithSessions.html#ClosingViews" icon="chapter" />
+        </topic>
         <topic label="Authorizable Operations" href="html/programmers/client/Doc03_WorkingWithSessions.html#AuthorizableOperations" icon="chapter" />
         <topic label="Client and Server Entities" href="html/programmers/client/Doc03_WorkingWithSessions.html#ClientAndServerEntities" icon="chapter" />
         <topic label="Session Facilities" href="html/programmers/client/Doc03_WorkingWithSessions.html#SessionFacilities" icon="chapter">

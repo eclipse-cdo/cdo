@@ -126,6 +126,13 @@ function maximize(id)
 <tr><td></td><td>1.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PassiveUpdatesAndRefreshing" title="Chapter in CDO Model Repository Documentation">Passive Updates and Refreshing</a></td></tr>
 <tr><td></td><td>1.6&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#WaitingForUpdates" title="Chapter in CDO Model Repository Documentation">Waiting For Updates</a></td></tr>
 <tr><td>2&nbsp;</td><td class="te" colspan="5"><a href="Doc03_WorkingWithSessions.html#ViewManagement" title="Chapter in CDO Model Repository Documentation">View Management</a></td></tr>
+<tr><td></td><td>2.1&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#PurposeOfViewsAndTransactions" title="Chapter in CDO Model Repository Documentation">Purpose of Views and Transactions</a></td></tr>
+<tr><td></td><td>2.2&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#BranchPointsAndTheViewTarget" title="Chapter in CDO Model Repository Documentation">Branch Points and the View Target</a></td></tr>
+<tr><td></td><td>2.3&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#OpeningViewsAndTransactions" title="Chapter in CDO Model Repository Documentation">Opening Views and Transactions</a></td></tr>
+<tr><td></td><td>2.4&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#AccessingOpenViews" title="Chapter in CDO Model Repository Documentation">Accessing Open Views</a></td></tr>
+<tr><td></td><td>2.5&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#FindingViewsByID" title="Chapter in CDO Model Repository Documentation">Finding Views by ID</a></td></tr>
+<tr><td></td><td>2.6&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#ListeningForViewEvents" title="Chapter in CDO Model Repository Documentation">Listening for View-Related Events</a></td></tr>
+<tr><td></td><td>2.7&nbsp;</td><td class="te" colspan="4"><a href="Doc03_WorkingWithSessions.html#ClosingViews" title="Chapter in CDO Model Repository Documentation">Closing Views</a></td></tr>
 <tr><td>3&nbsp;</td><td class="te" colspan="5"><a href="Doc03_WorkingWithSessions.html#AuthorizableOperations" title="Chapter in CDO Model Repository Documentation">Authorizable Operations</a></td></tr>
 <tr><td>4&nbsp;</td><td class="te" colspan="5"><a href="Doc03_WorkingWithSessions.html#ClientAndServerEntities" title="Chapter in CDO Model Repository Documentation">Client and Server Entities</a></td></tr>
 <tr><td>5&nbsp;</td><td class="te" colspan="5"><a href="Doc03_WorkingWithSessions.html#SessionFacilities" title="Chapter in CDO Model Repository Documentation">Session Facilities</a></td></tr>
@@ -518,7 +525,6 @@ function maximize(id)
  In this case, you can call the refresh() method on a view to manually refresh all stale objects.
  <p>
  Here is an example of how to enable/disable passive updates and manually refresh views:
- <p>
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -582,8 +588,8 @@ function maximize(id)
       This mode can be useful for clients that need to keep track of the overall state of the repository,
       but it is usually the least efficient.</li>
  </ul>
- Here is an example of how to set the passive update mode:
  <p>
+ Here is an example of how to set the passive update mode:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
@@ -621,6 +627,7 @@ function maximize(id)
 <p>
 
  <p>
+ Note that the passive update mode can also be changed at any time on a session via the <a href="Doc03_WorkingWithSessions.html#SessionOptions" title="Chapter in CDO Model Repository Documentation">session options</a>.
  For more information about passive update modes, refer to <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.Options.PassiveUpdateMode.html" title="Enum in org.eclipse.emf.cdo.common.CDOCommonSession.Options"><code>PassiveUpdateMode</code></a>.
 
 <h3><a name="WaitingForUpdates"></a>1.6&nbsp;&nbsp;Waiting For Updates</h3>
@@ -686,51 +693,214 @@ function maximize(id)
  transactions, modify data. Understanding how to create, manage, and interact with views is essential for building
  robust CDO client applications.
  <p>
- <b>Purpose of Views and Transactions</b>
+ Views are created from sessions and are associated with a specific branch point in the repository. This branch point
+ determines the exact state of the repository that the view exposes. Views can be read-only or read-write (transactions),
+ and they can also be configured to access historical states of the repository through audit views.
  <p>
- A view represents a read-only or read-write window into the repository. Read-only views allow clients to
- navigate and query models without the risk of modifying data.
+ This section covers the key aspects of view management, including the purpose of views and transactions,
+ branch points and view targets, types of views, finding views by ID, listening for view-related events, and closing views.
+ For more detailed information on working with views, refer to the <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> section.
+ <p>
+ Note that a <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.html" title="Interface in org.eclipse.emf.cdo.session"><code>CDOSession</code></a> inherits most of the view management functionality through the following super interfaces:
+ <ul>
+ <li><a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewContainer</code></a> and <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer&lt;CDOView&gt;</code></a>: Provide methods for managing a collection of
+      views within the session, including the ability to listen for view addition and removal events.</li>
+ <li><a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewOpener.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOViewOpener</code></a> and <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionOpener.html" title="Interface in org.eclipse.emf.cdo.transaction"><code>CDOTransactionOpener</code></a>: Provide various methods for opening views and transactions.</li>
+ </ul>
+
+<h3><a name="PurposeOfViewsAndTransactions"></a>2.1&nbsp;&nbsp;Purpose of Views and Transactions</h3>
+<p>
+ A CDO repository can store many different versions of a model. Each time a change is committed to the repository,
+ a new version of the model is created. These versions are organized into branches, allowing for parallel lines of development.
+ Each version of the model is identified by a unique combination of a branch and a timestamp, known as a <i>branch point</i>.
+ This multiplicity of versions and branches is the reason why a CDOSession alone is not sufficient to access a consistent
+ model state of the repository. Instead, clients need views and transactions to specify which version of the model they want to work with.
+ <p>
+ A view represents a read-only window into the repository. Read-only views allow clients to
+ navigate and query models without the risk of modifying data. For example, a client application
+ might use a single read-only view to display a model in a different places of its user interface,
+ allowing users to browse and inspect the data.
  <p>
  Transactions, on the other hand,
  are special types of views that enable clients to make changes to the repository. Changes made in a transaction
  are isolated from other views until the transaction is committed, ensuring data consistency and supporting
  concurrent development.
  <p>
- <b>Branch Points and the View Target</b>
- <p>
+ For more detailed information on working with views, refer to the <a href="Doc04_WorkingWithViews.html" title="Article in CDO Model Repository Documentation">Working with Views</a> section.
+
+<h3><a name="BranchPointsAndTheViewTarget"></a>2.2&nbsp;&nbsp;Branch Points and the View Target</h3>
+<p>
  Every view or transaction in CDO is associated with a specific <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>branch point</code></a>, which determines the exact state of the
- repository that the view exposes. The branch point consists of a branch and a timestamp, together called the
+ repository that the view exposes. The branch point consists of a <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getBranch()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>branch</code></a> and a
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#getTimeStamp()" title="Method in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>timestamp</code></a>, together called the
  <b>view target</b>. This mechanism allows clients to access not only the latest state of the main branch, but also
  historical states (by specifying an earlier timestamp), or parallel lines of development (by specifying a different
  branch).
+ <p>
+ Normally, when you open a view or transaction, you specify the branch and/or timestamp that you want to target.
+ Read-only views can target any branch point, including historical states, while transactions always target the
+ head of a branch, allowing clients to make changes to the latest state of that branch.
  <p>
  When you open a view or transaction without specifying a branch point, it defaults to the head of the main branch,
  showing the most recent state of the repository. To access a different branch or a historical state, you can
  explicitly specify a branch and/or timestamp when opening the view. This is useful for auditing, time-travel queries,
  or working with feature branches.
  <p>
- The branch point is immutable for the lifetime of a view, ensuring that the view always presents a consistent and
- isolated snapshot of the repository at the chosen target. Transactions always target a branch head, so changes are
- made to the latest state of the branch. Read-only and audit views can target any branch point, including historical
- states.
+ For both views and transactions, the branch point is initially set when the view is created, but it can be changed
+ later using the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#setBranchPoint(org.eclipse.emf.cdo.common.branch.CDOBranchPoint)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>setBranchPoint()</code></a> method. Changing the branch point
+ causes the view to refresh its contents to reflect the state of the repository at the new target branch point.
+ All model objects in the view are updated to match the new branch point, ensuring that the view always presents a
+ consistent snapshot of the repository. This process is automatic and absolutely transparent to the client application.
+ It enables powerful scenarios such as switching between different branches or historical states on-the-fly,
+ without needing to close and reopen views. The restriction is that transactions can only be switched to other branch heads,
+ not to historical states.
+ <p>
+ The head of a branch is represented by a special timestamp value called <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html#UNSPECIFIED_DATE" title="Field in org.eclipse.emf.cdo.common.branch.CDOBranchPoint"><code>UNSPECIFIED_DATE</code></a>.
+ It ultimately represents a timestamp that is always greater than any other timestamp in the repository, effectively pointing to the
+ latest commit on that branch. When a transaction is committed, it creates a new version of the model at the head of the branch,
+ and all views targeting that branch head are automatically updated to reflect the new state. The head of a branch is
+ always moving forward in time as new commits are made, while historical states remain fixed at their respective timestamps.
+ As transactions always target the branch head, they are always working with the most recent state of the branch.
  <p>
  For more information about branches and branch points, see the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchPoint.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchPoint</code></a>
  interface and the <a href="../../../javadoc/org/eclipse/emf/cdo/common/branch/CDOBranchManager.html" title="Interface in org.eclipse.emf.cdo.common.branch"><code>CDOBranchManager</code></a> facility.
+
+<h3><a name="OpeningViewsAndTransactions"></a>2.3&nbsp;&nbsp;Opening Views and Transactions</h3>
+<p>
+ Views and transactions are created from a session using the various <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOViewContainer.html#openView()" title="Method in org.eclipse.emf.cdo.view.CDOViewContainer"><code>openView()</code></a> and
+ <a href="../../../javadoc/org/eclipse/emf/cdo/transaction/CDOTransactionContainer.html#openTransaction()" title="Method in org.eclipse.emf.cdo.transaction.CDOTransactionContainer"><code>openTransaction()</code></a> methods. These methods allow you to specify the initial branch and/or timestamp
+ that you want to target, as well as a <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" target="_blank" title="Interface in org.eclipse.emf.ecore.resource"><code>ResourceSet</code></a> to use for loading model objects.
  <p>
- <b>Types of Views</b>
+ You can also omit the branch, timestamp, and/or ResourceSet, in which case the view or transaction starts with reasonable defaults
+ as follows:
  <ul>
-   <li><b>Read-Only View:</b> Provides a consistent, immutable snapshot of the repository at a specific point in time.
-       Suitable for browsing and querying data without making modifications.</li>
-   <li><b>Transaction:</b> Extends the read-only view with the ability to create, modify, and delete objects.
-       Changes are local to the transaction until committed to the repository.</li>
-   <li><b>Audit View:</b> Allows access to historical states of the repository by specifying a past timestamp or
-       commit. Useful for auditing and time-travel queries.</li>
-   <li><b>Branch View:</b> Provides access to a specific branch of the repository, supporting parallel development
-       and versioning scenarios.</li>
+ <li>If no branch is specified, the main branch is used.</li>
+ <li>If no timestamp is specified, the head of the branch is used.</li>
+ <li>If no ResourceSet is specified, a new one is created automatically.</li>
  </ul>
  <p>
- <b>Finding Views by ID</b>
+ Here is an example of how to open views and transactions with different configurations:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_OpeningViewsAndTransactions_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">OpeningViewsAndTransactions.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('OpeningViewsAndTransactions_1')" id="max_OpeningViewsAndTransactions_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_OpeningViewsAndTransactions_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_OpeningViewsAndTransactions_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Open&nbsp;a&nbsp;read-only&nbsp;view&nbsp;targeting&nbsp;the&nbsp;head&nbsp;of&nbsp;the&nbsp;main&nbsp;branch&nbsp;with&nbsp;a&nbsp;new&nbsp;ResourceSet.</font><br/>
+            CDOView&nbsp;view1&nbsp;=&nbsp;session.openView();<br/>
+            ResourceSet&nbsp;resourceSet1&nbsp;=&nbsp;view1.getResourceSet();<br/>
+            Assert.isNotNull(resourceSet1);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Open&nbsp;a&nbsp;read-only&nbsp;view&nbsp;targeting&nbsp;a&nbsp;specific&nbsp;branch&nbsp;and&nbsp;timestamp&nbsp;with&nbsp;an&nbsp;existing&nbsp;ResourceSet.</font><br/>
+            CDOBranch&nbsp;branch&nbsp;=&nbsp;session.getBranchManager().getMainBranch().getBranch(<font color="#2a00ff">&#34;feature&#34;</font>);<br/>
+            <font color="#7f0055"><b>long&nbsp;</b></font>timeStamp&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>Date(<font color="#990000">2021&nbsp;</font>-&nbsp;<font color="#990000">1990</font>,&nbsp;<font color="#990000">6</font>,&nbsp;<font color="#990000">1</font>).getTime();<br/>
+            CDOView&nbsp;view2&nbsp;=&nbsp;session.openView(branch,&nbsp;timeStamp,&nbsp;resourceSet2);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Resources&nbsp;in&nbsp;resourceSet2:&nbsp;&#34;&nbsp;</font>+&nbsp;resourceSet2.getResources());<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Open&nbsp;a&nbsp;read-only&nbsp;view&nbsp;targeting&nbsp;the&nbsp;head&nbsp;of&nbsp;the&nbsp;main&nbsp;branch&nbsp;with&nbsp;an&nbsp;existing&nbsp;ResourceSet.</font><br/>
+            ResourceSet&nbsp;resourceSet3&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ResourceSetImpl();<br/>
+            CDOView&nbsp;view3&nbsp;=&nbsp;session.openView(resourceSet3);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Open&nbsp;a&nbsp;transaction&nbsp;targeting&nbsp;the&nbsp;head&nbsp;of&nbsp;a&nbsp;specific&nbsp;branch&nbsp;with&nbsp;a&nbsp;new&nbsp;ResourceSet.</font><br/>
+            CDOTransaction&nbsp;transaction1&nbsp;=&nbsp;session.openTransaction(branch);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Open&nbsp;a&nbsp;transaction&nbsp;targeting&nbsp;the&nbsp;head&nbsp;of&nbsp;the&nbsp;main&nbsp;branch&nbsp;with&nbsp;an&nbsp;existing&nbsp;ResourceSet.</font><br/>
+            CDOTransaction&nbsp;transaction2&nbsp;=&nbsp;session.openTransaction(resourceSet3);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Use&nbsp;the&nbsp;views&nbsp;and&nbsp;transactions...</font><br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Finally,&nbsp;close&nbsp;the&nbsp;views&nbsp;and&nbsp;transactions&nbsp;when&nbsp;done.</font><br/>
+            CollectionUtil.close(view1,&nbsp;view2,&nbsp;view3,&nbsp;transaction1,&nbsp;transaction2);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
  <p>
+ Note that views and transactions are lightweight objects that can be created and disposed of as needed.
+ They should be closed when no longer needed to free up resources.
+ <p>
+ Here is a summary of the various ways to open views and transactions:
+ <ul>
+ <li><b>openView():</b> Opens a read-only view targeting the head of the main branch with a new ResourceSet.</li>
+ <li><b>openView(CDOBranch branch):</b> Opens a read-only view targeting the head of the specified branch with a new ResourceSet.</li>
+ <li><b>openView(CDOBranch branch, long timeStamp):</b> Opens a read-only view targeting the specified branch and timestamp with a new ResourceSet.</li>
+ <li><b>openView(ResourceSet resourceSet):</b> Opens a read-only view targeting the head of the main branch with the specified ResourceSet.</li>
+ <li><b>openView(CDOBranch branch, ResourceSet resourceSet):</b> Opens a read-only view targeting the head of the specified branch with the specified ResourceSet.</li>
+ <li><b>openView(CDOBranch branch, long timeStamp, ResourceSet resourceSet):</b> Opens a read-only view targeting the specified branch and timestamp with the specified ResourceSet.</li>
+ <li><b>openTransaction():</b> Opens a transaction targeting the head of the main branch with a new ResourceSet.</li>
+ <li><b>openTransaction(CDOBranch branch):</b> Opens a transaction targeting the head of the specified branch with a new ResourceSet.</li>
+ <li><b>openTransaction(ResourceSet resourceSet):</b> Opens a transaction targeting the head of the main branch with the specified ResourceSet.</li>
+ <li><b>openTransaction(CDOBranch branch, ResourceSet resourceSet):</b> Opens a transaction targeting the head of the specified branch with the specified ResourceSet.</li>
+ </ul>
+ <p>
+
+<h3><a name="AccessingOpenViews"></a>2.4&nbsp;&nbsp;Accessing Open Views</h3>
+<p>
+ A session maintains a collection of all currently open views and transactions. You can access this collection using the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.html#getViews()" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession"><code>getViews()</code></a> method, which returns an unmodifiable list of all open views.
+ This allows you to iterate over the views, inspect their properties, or perform operations on them as needed.
+ Example:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_AccessingOpenViews_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">AccessOpenViews.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('AccessingOpenViews_1')" id="max_AccessingOpenViews_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_AccessingOpenViews_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_AccessingOpenViews_1" style="padding:8px;">
+            <code>
+            CDOView[]&nbsp;views&nbsp;=&nbsp;session.getViews();<br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(CDOView&nbsp;view&nbsp;:&nbsp;views)<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Open&nbsp;view:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getViewID()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;<font color="#2a00ff">&#34;,&nbsp;Branch:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getBranch().getName()&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;<font color="#2a00ff">&#34;,&nbsp;Timestamp:&nbsp;&#34;&nbsp;</font>+&nbsp;view.getTimeStamp());<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(view&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOTransaction)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOTransaction&nbsp;transaction&nbsp;=&nbsp;(CDOTransaction)view;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;&nbsp;&nbsp;is&nbsp;a&nbsp;transaction&nbsp;with&nbsp;&#34;&nbsp;</font><font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+&nbsp;transaction.getDirtyObjects().size()&nbsp;+&nbsp;<font color="#2a00ff">&#34;&nbsp;dirty&nbsp;objects.&#34;</font>);<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+
+<h3><a name="FindingViewsByID"></a>2.5&nbsp;&nbsp;Finding Views by ID</h3>
+<p>
  Each view in a session is assigned a unique integer ID. You can retrieve a view by its ID using the
  <a href="../../../javadoc/org/eclipse/emf/cdo/common/CDOCommonSession.html#getView(int)" title="Method in org.eclipse.emf.cdo.common.CDOCommonSession"><code>getView(int viewID)</code></a> method. This is useful for
  managing multiple views or for integrating with external systems that track view identifiers.
@@ -738,20 +908,20 @@ function maximize(id)
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ViewManagement_1"></a>
+  <a name="snippet_FindingViewsByID_1"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
       <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">FindViewByID.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewManagement_1')" id="max_ViewManagement_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('FindingViewsByID_1')" id="max_FindingViewsByID_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
       <td width="6px"><img src="../../../images/editor-5.png"></td>
     </tr>
     <tr>
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ViewManagement_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ViewManagement_1" style="padding:8px;">
+        <div id="editor_content_1_FindingViewsByID_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_FindingViewsByID_1" style="padding:8px;">
             <code>
             CDOView&nbsp;view&nbsp;=&nbsp;session.getView(viewID);<br/>
             <font color="#7f0055"><b>if&nbsp;</b></font>(view&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
@@ -771,30 +941,31 @@ function maximize(id)
 </div>
 <p>
 
- <p>
- <b>Listening for View Events</b>
- <p>
- A session is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer<CDOView></code></a> and, hence, emits events when views are opened or closed. You can listen for these events by registering an
+
+<h3><a name="ListeningForViewEvents"></a>2.6&nbsp;&nbsp;Listening for View-Related Events</h3>
+<p>
+ A session is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer&lt;CDOView&gt;</code></a> and, hence, emits events when views are opened or closed.
+ You can listen for these events by registering an
  <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainerEvent.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainerEvent</code></a> listener with the session. This allows your
  application to react to changes in the set of open views, such as updating UI components or managing resources.
  Example:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ViewManagement_2"></a>
+  <a name="snippet_ListeningForViewEvents_1"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
       <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">AddViewsChangedListener.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewManagement_2')" id="max_ViewManagement_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ListeningForViewEvents_1')" id="max_ListeningForViewEvents_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
       <td width="6px"><img src="../../../images/editor-5.png"></td>
     </tr>
     <tr>
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ViewManagement_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ViewManagement_2" style="padding:8px;">
+        <div id="editor_content_1_ListeningForViewEvents_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ListeningForViewEvents_1" style="padding:8px;">
             <code>
             session.addListener(<font color="#7f0055"><b>new&nbsp;</b></font>ContainerEventAdapter&lt;CDOView&gt;()<br/>
             {<br/>
@@ -819,28 +990,29 @@ function maximize(id)
 </div>
 <p>
 
- <b>Closing Views</b>
- <p>
+
+<h3><a name="ClosingViews"></a>2.7&nbsp;&nbsp;Closing Views</h3>
+<p>
  It is important to close views when they are no longer needed to free up resources and avoid memory leaks.
  You can close a view by calling its <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/collection/Closeable.html#close()" title="Method in org.eclipse.net4j.util.collection.Closeable"><code>close()</code></a> method.
  Example:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ViewManagement_3"></a>
+  <a name="snippet_ClosingViews_1"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
       <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CloseView.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewManagement_3')" id="max_ViewManagement_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ClosingViews_1')" id="max_ClosingViews_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
       <td width="6px"><img src="../../../images/editor-5.png"></td>
     </tr>
     <tr>
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ViewManagement_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ViewManagement_3" style="padding:8px;">
+        <div id="editor_content_1_ClosingViews_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ClosingViews_1" style="padding:8px;">
             <code>
             view.close();<br/>
             System.out.println(<font color="#2a00ff">&#34;View&nbsp;closed.&#34;</font>);            </code>
@@ -2570,7 +2742,7 @@ function maximize(id)
  If the topic does not exist, it is created automatically.
  <p>
  The presence of remote sessions in a topic can be queried using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#getRemoteSessions()" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.getRemoteSessions()</code></a>.
- As the <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html" title="Interface in org.eclipse.emf.cdo.session.remote"><code>CDORemoteTopic</code></a> is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer<CDORemoteSession></code></a>, you can also listen for presence changes.
+ As the <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html" title="Interface in org.eclipse.emf.cdo.session.remote"><code>CDORemoteTopic</code></a> is an <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer&lt;CDORemoteSession&gt;</code></a>, you can also listen for presence changes.
  Changes in presence are notified via <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/container/IContainer.html" title="Interface in org.eclipse.net4j.util.container"><code>IContainer</code></a> events.
  <p>
  To collaborate, send messages to a topic using <a href="../../../javadoc/org/eclipse/emf/cdo/session/remote/CDORemoteTopic.html#sendMessage(org.eclipse.emf.cdo.session.remote.CDORemoteSessionMessage)" title="Method in org.eclipse.emf.cdo.session.remote.CDORemoteTopic"><code>CDORemoteTopic.sendMessage(CDORemoteSessionMessage)</code></a>. These

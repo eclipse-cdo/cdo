@@ -197,7 +197,17 @@ import java.util.stream.Collectors;
  * that while the API is designed to be flexible, all practical usage currently relies on
  * the Net4j session type for networked repository access.
  * <p>
+ * <b>Thread Safety</b>
+ * <p>
+ * Sessions in CDO are inherently thread-safe. This means that if multiple threads
+ * access the same session instance concurrently, the session ensures that its internal
+ * state remains consistent and that operations are executed in a thread-safe manner.
+ * This is particularly important in multi-threaded applications where different threads
+ * may need to perform operations on the same session simultaneously.
+ * <p>
  * <b>Table of Contents</b> {@toc}
+ *
+ * @author Eike Stepper
  */
 public class Doc03_WorkingWithSessions
 {

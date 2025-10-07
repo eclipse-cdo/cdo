@@ -13,6 +13,8 @@ import org.eclipse.emf.cdo.view.CDOViewInvalidationEvent;
  * CDO provides APIs for listening to model changes, handling remote updates, and implementing custom event processing
  * logic. Understanding these mechanisms enables you to synchronize application state, update user interfaces, and
  * coordinate collaborative workflows.
+ *
+ * @author Eike Stepper
  */
 public class Doc09_NotificationsAndEventHandling
 {

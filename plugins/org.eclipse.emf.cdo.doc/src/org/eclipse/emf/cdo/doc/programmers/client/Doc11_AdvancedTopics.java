@@ -12,6 +12,8 @@ import org.eclipse.emf.cdo.view.CDOViewProvider;
  * <p>
  * These topics are essential for developers who need to extend CDO, optimize resource usage, and resolve complex
  * issues in production environments.
+ *
+ * @author Eike Stepper
  */
 public class Doc11_AdvancedTopics
 {
@@ -31,7 +33,8 @@ public class Doc11_AdvancedTopics
      * @param session the CDOSession
      * @param provider the CDOViewProvider
      */
-    public void registerCustomViewProvider(CDOSession session, CDOViewProvider provider) {
+    public void registerCustomViewProvider(CDOSession session, CDOViewProvider provider)
+    {
       // Placeholder for extension point registration
       System.out.println("Custom view provider registered.");
     }
@@ -53,7 +56,8 @@ public class Doc11_AdvancedTopics
      * @param session the CDOSession
      * @param fetchRuleManager the CDOFetchRuleManager
      */
-    public void setFetchRuleManager(CDOSession session, org.eclipse.emf.cdo.view.CDOFetchRuleManager fetchRuleManager) {
+    public void setFetchRuleManager(CDOSession session, org.eclipse.emf.cdo.view.CDOFetchRuleManager fetchRuleManager)
+    {
       // Placeholder for fetch rule manager registration
       System.out.println("Fetch rule manager set for performance optimization.");
     }
@@ -74,7 +78,8 @@ public class Doc11_AdvancedTopics
      * Enables lazy loading for resources in a ResourceSet.
      * @param resourceSet the ResourceSet
      */
-    public void enableLazyLoading(org.eclipse.emf.ecore.resource.ResourceSet resourceSet) {
+    public void enableLazyLoading(org.eclipse.emf.ecore.resource.ResourceSet resourceSet)
+    {
       resourceSet.getLoadOptions().put("OPTION_LAZY_LOADING", Boolean.TRUE);
       System.out.println("Lazy loading enabled for ResourceSet.");
     }

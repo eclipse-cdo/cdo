@@ -10,8 +10,9 @@
  */
 
 /**
- * Dealing with Servers
+ * Developing CDO Server Applications
  *
- * @number 2
+ * @author Eike Stepper
+ * @number 20
  */
 package org.eclipse.emf.cdo.doc.programmers.server;

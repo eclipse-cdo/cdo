@@ -8,7 +8,7 @@
  * Contributors:
  *    Eike Stepper - initial API and implementation
  */
-package org.eclipse.emf.cdo.doc.programmers.client;
+package org.eclipse.emf.cdo.doc.programmers;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.doc.users.Doc01_UserInterface;
@@ -22,8 +22,9 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <b>Table of Contents</b> {@toc}
  *
  * @author Eike Stepper
+ * @number 3
  */
-public class Doc02b_PreparingModels
+public class Doc03_PreparingModels
 {
   /**
    * Creating an Ecore Model

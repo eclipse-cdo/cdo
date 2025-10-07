@@ -1,0 +1,65 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Installing a CDO Development Environment (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Installing a CDO Development Environment (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Installing a CDO Development Environment</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_IntroductionToCDO.html" title="Backward to Introduction to CDO Programming"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ This chapter guides you through the trivial process of preparing your development environment for CDO applications.
+ The installation is fully automated and will be performed by the
+ <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
+ Here are the four steps you need to follow:
+ <ol>
+  <li>Download and install a Java Development Kit (JDK) if you don't have one already. Version 21 or greater is required.
+      You can get it from <a href="https://adoptium.net/">Adoptium</a> or any other JDK provider of your choice.</li>
+  <li>Download and run the <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
+      You can use an existing Eclipse Installer installation if you have one.</li>
+  <li>Drag <a href="https://raw.githubusercontent.com/eclipse-cdo/cdo/master/releng/org.eclipse.emf.cdo.releng/CDOConfiguration.setup">this link</a>
+      and drop it on the installer's title area. Alternatively, copy the location of the that link and apply it to the Eclipse Installer either via
+      the menu in the upper right in simple mode or via the left-most toolbar button to the upper right in advanced mode.</li>
+  <li>Review and/or edit the variable values that the installer presents.</li>
+  <li>Click the Next/Finish buttons until the installation starts.</li>
+ </ol>
+ <p>
+ <img src="EclipseInstaller.png">
+
+ <p>
+ <img src="EclipseInstaller2.png">
+
+ <p>
+ The installer will download and install the required Eclipse IDE packages, CDO, and all its dependencies.
+ This may take a while depending on your internet connection speed.
+ Once the installation is complete, the installer will launch the new IDE.
+ Each time the IDE is started, it will check for updates and perform them automatically. Please refer to the
+ <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/index.md">Eclipse Installer documentation</a> for details.
+
+<p align="right">
+<a href="Doc01_IntroductionToCDO.html" title="Backward to Introduction to CDO Programming"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

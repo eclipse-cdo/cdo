@@ -44,7 +44,7 @@ import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
 
 /**
- * Understanding the Architecture of a Client Application
+ * Architecture of a Client Application
  * <p>
  * The architecture of a CDO application is characterized by its mandatory dependency on EMF, the Eclipse Modeling
  * Framework. Most of the time an application interacts with the object graph of the model through standard EMF APIs

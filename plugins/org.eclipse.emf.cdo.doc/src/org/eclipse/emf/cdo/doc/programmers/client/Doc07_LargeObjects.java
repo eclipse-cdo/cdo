@@ -31,6 +31,8 @@ import java.io.InputStream;
  *   <li>Performance considerations</li>
  *   <li>Integration with EMF ResourceSet</li>
  * </ul>
+ *
+ * @author Eike Stepper
  */
 public class Doc07_LargeObjects
 {

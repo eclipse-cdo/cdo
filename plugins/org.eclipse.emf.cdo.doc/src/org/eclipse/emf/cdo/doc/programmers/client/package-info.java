@@ -10,8 +10,9 @@
  */
 
 /**
- * Developing Client Applications
+ * Developing CDO Client Applications
  *
- * @number 1
+ * @author Eike Stepper
+ * @number 10
  */
 package org.eclipse.emf.cdo.doc.programmers.client;

@@ -15,10 +15,10 @@ import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocol;
 import org.eclipse.emf.cdo.doc.online.CDOScalability;
 import org.eclipse.emf.cdo.doc.online.EMFDeveloperGuide;
-import org.eclipse.emf.cdo.doc.programmers.client.Doc02b_PreparingModels;
-import org.eclipse.emf.cdo.doc.programmers.client.Doc02b_PreparingModels.Doc_CreatingEcore;
-import org.eclipse.emf.cdo.doc.programmers.client.Doc02b_PreparingModels.Doc_GeneratingModel;
-import org.eclipse.emf.cdo.doc.programmers.client.Doc02b_PreparingModels.Doc_MigratingManually;
+import org.eclipse.emf.cdo.doc.programmers.Doc03_PreparingModels;
+import org.eclipse.emf.cdo.doc.programmers.Doc03_PreparingModels.Doc_CreatingEcore;
+import org.eclipse.emf.cdo.doc.programmers.Doc03_PreparingModels.Doc_GeneratingModel;
+import org.eclipse.emf.cdo.doc.programmers.Doc03_PreparingModels.Doc_MigratingManually;
 import org.eclipse.emf.cdo.doc.users.Doc01_UserInterface.Doc_ProjectExplorerIntegration;
 import org.eclipse.emf.cdo.doc.users.Doc01_UserInterface.Doc_SessionsView;
 import org.eclipse.emf.cdo.doc.users.Doc02_ManagingRepositories.Doc_CreatingRepositories;
@@ -91,7 +91,7 @@ public class Doc09_TechnicalBackground
      * Technically native model elements are instances of the Java class {@link CDOObjectImpl}.
      *
      * @see CDOScalability
-     * @see Doc02b_PreparingModels
+     * @see Doc03_PreparingModels
      */
     public class Doc_BackgroundNativeModels
     {

@@ -13,6 +13,8 @@ import java.util.Collections;
  * This chapter describes the locking mechanisms available in CDO client applications, including lock types and
  * strategies for managing concurrent access to model data. Locking is essential for ensuring data integrity and
  * consistency in collaborative environments.
+ *
+ * @author Eike Stepper
  */
 public class Doc06_Locking
 {

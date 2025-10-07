@@ -15,6 +15,8 @@ package org.eclipse.emf.cdo.doc.programmers.client;
  * <p>
  * Transactions enable modifications to repository data. This section covers creating, managing, and committing
  * transactions, as well as handling conflicts and merging changes.
+ *
+ * @author Eike Stepper
  */
 public class Doc05_WorkingWithTransactions
 {

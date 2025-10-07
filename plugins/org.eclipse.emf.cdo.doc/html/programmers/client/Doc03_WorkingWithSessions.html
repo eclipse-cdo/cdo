@@ -68,14 +68,15 @@ function maximize(id)
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
-<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing CDO Client Applications</a></div> -->
 
 <table border="0">
 	<tr>
 		<td width="100%"><h1>Working with Sessions</h1></td>
-		<td align="right" valign="middle" nowrap><a href="Doc02b_PreparingModels.html" title="Backward to Preparing EMF Models for CDO"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_WorkingWithViews.html" title="Forward to Working with Views"><img src="../../../images/forward.png" border="0"></a></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_Architecture.html" title="Backward to Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_WorkingWithViews.html" title="Forward to Working with Views"><img src="../../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
+<p class="author">Author: Eike Stepper</p>
 <p>
  This chapter covers all aspects of session management in CDO client applications,
  including configuration, lifecycle, facilities, and events.
@@ -115,6 +116,14 @@ function maximize(id)
  as of now, only the Net4j implementation is available and supported in CDO. This means
  that while the API is designed to be flexible, all practical usage currently relies on
  the Net4j session type for networked repository access.
+ <p>
+ <b>Thread Safety</b>
+ <p>
+ Sessions in CDO are inherently thread-safe. This means that if multiple threads
+ access the same session instance concurrently, the session ensures that its internal
+ state remains consistent and that operations are executed in a thread-safe manner.
+ This is particularly important in multi-threaded applications where different threads
+ may need to perform operations on the same session simultaneously.
  <p>
  <b>Table of Contents</b> <p>
 <table border="0">
@@ -3196,8 +3205,8 @@ function maximize(id)
 
 
 <p align="right">
-<a href="Doc02b_PreparingModels.html" title="Backward to Preparing EMF Models for CDO"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_WorkingWithViews.html" title="Forward to Working with Views"><img src="../../../images/forward.png" border="0"></a></p>
-<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+<a href="Doc01_Architecture.html" title="Backward to Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc04_WorkingWithViews.html" title="Forward to Working with Views"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing CDO Client Applications</a></div> -->
 
 <div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
 </body>

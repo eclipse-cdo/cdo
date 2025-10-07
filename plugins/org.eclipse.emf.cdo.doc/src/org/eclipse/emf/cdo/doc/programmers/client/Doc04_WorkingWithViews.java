@@ -12,6 +12,8 @@ import org.eclipse.emf.cdo.util.ConcurrentAccessException;
  * This chapter covers view management, resource handling, querying, transactions, and related options in CDO client
  * applications. Views are central to accessing and interacting with model data in a CDO repository. Understanding how
  * to use views effectively is key to building responsive and scalable applications.
+ *
+ * @author Eike Stepper
  */
 public class Doc04_WorkingWithViews
 {
@@ -29,7 +31,7 @@ public class Doc04_WorkingWithViews
   /**
    * Thread Safety
    * <p>
-   * Views in CDO are not inherently thread-safe. This section discusses best practices for managing concurrent access,
+   * Views in CDO are inherently thread-safe. This section discusses best practices for managing concurrent access,
    * synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
    */
   public class ThreadSafety

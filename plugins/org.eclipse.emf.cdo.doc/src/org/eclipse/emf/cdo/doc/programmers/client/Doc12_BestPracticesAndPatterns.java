@@ -10,6 +10,8 @@ import org.eclipse.net4j.connector.IConnector;
  * <p>
  * This chapter covers best practices, recommended usage patterns, and common pitfalls for CDO client application
  * programmers. Following these guidelines will help you build robust, maintainable, and efficient CDO applications.
+ *
+ * @author Eike Stepper
  */
 public class Doc12_BestPracticesAndPatterns
 {

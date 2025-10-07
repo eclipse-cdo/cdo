@@ -15,6 +15,8 @@ import org.eclipse.emf.ecore.resource.Resource;
  * <p>
  * Learn how to use CDO in conjunction with EMF editors, model generators, and other Eclipse-based tools. Discover
  * extension points and customization options for adapting CDO to your application's requirements.
+ *
+ * @author Eike Stepper
  */
 public class Doc10_IntegratingWithEMFAndOtherFrameworks
 {

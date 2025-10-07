@@ -13,6 +13,8 @@ import org.eclipse.emf.cdo.session.CDOSession;
  * CDO provides powerful APIs for creating, navigating, and merging branches, as well as accessing and comparing
  * historical versions of model objects. Understanding these features enables advanced collaboration and data management
  * scenarios.
+ *
+ * @author Eike Stepper
  */
 public class Doc08_BranchingAndVersioning
 {

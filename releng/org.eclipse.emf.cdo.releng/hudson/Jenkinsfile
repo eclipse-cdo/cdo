@@ -142,7 +142,7 @@ pipeline {
       junit testResults: 'tests/test-report.xml', 
         allowEmptyResults: true
         
-      archiveArtifacts artifacts: 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties, build-results.*',
+      archiveArtifacts artifacts: 'binary/**, features/**, plugins/**, zips/**, tests/**, help/**, *.jar, *.html, *.xml, *.index, *.css, *.txt, *.properties, *.setup, build-results.*',
         allowEmptyArchive: true
     }
 

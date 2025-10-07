@@ -155,7 +155,7 @@
     <delete file="${bookmarks.tmp}" />
   	
     <xslt
-      style="xsl/extract-targlet-task" 
+      style="xsl/extract-targlet-task.xsl" 
       in="${releng.dir}/org.eclipse.emf.cdo.releng/CDO.setup" 
       out="${build.root}/tp-macro.setup" />
   </target>
@@ -251,6 +251,7 @@
         <include name="*.css" />
         <include name="*.txt" />
         <include name="*.properties" />
+        <include name="*.setup" />
       </fileset>
     </zip>
   </target>

@@ -3,7 +3,7 @@
 	<xsl:output method="xml" indent="yes" omit-xml-declaration="yes"/>
 	
 	<xsl:template match="/">
-		<xsl:apply-templates select="//repository"/>
+		<xsl:apply-templates select="//repository[not(contains(@location, 'download.oracle.com')) and not(contains(@location, 'tools/ajdt'))]"/>
 	</xsl:template>
 	
 	<xsl:template match="repository">

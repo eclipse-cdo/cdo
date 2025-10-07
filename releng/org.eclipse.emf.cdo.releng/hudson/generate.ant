@@ -153,6 +153,11 @@
 		</footer>
     </concat>
     <delete file="${bookmarks.tmp}" />
+  	
+    <xslt
+      style="xsl/extract-targlet-task" 
+      in="${releng.dir}/org.eclipse.emf.cdo.releng/CDO.setup" 
+      out="${build.root}/tp-macro.setup" />
   </target>
 
   <!-- ================ -->

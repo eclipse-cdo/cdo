@@ -217,7 +217,8 @@
       defaultValue="${eclipse.target.platform.latest}"
       storageURI="scope://Workspace"/>
   <setupTask
-      xsi:type="setup.targlets:TargletTask">
+      xsi:type="setup.targlets:TargletTask"
+      id="tp">
     <targlet
         name="CDO"
         activeRepositoryList="${eclipse.target.platform}"

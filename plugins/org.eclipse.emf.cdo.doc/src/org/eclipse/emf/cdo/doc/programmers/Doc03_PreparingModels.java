@@ -17,7 +17,7 @@ import org.eclipse.emf.cdo.doc.users.Doc07_UsingModels.Doc_EditingModelElementsE
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 /**
- * Preparing EMF Models for CDO
+ * Preparing EMF Models
  * <p>
  * <b>Table of Contents</b> {@toc}
  *

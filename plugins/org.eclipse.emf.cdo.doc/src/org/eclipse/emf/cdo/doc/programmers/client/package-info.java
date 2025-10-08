@@ -10,7 +10,7 @@
  */
 
 /**
- * Developing CDO Client Applications
+ * Developing Client Applications
  *
  * @author Eike Stepper
  * @number 10

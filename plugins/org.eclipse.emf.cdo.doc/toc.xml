@@ -209,9 +209,10 @@
     <topic label="Managing Security" href="https://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
   </topic>
   <topic label="Programmer's Guide" href="html/programmers/index.html">
-    <topic label="Introduction to CDO Programming" href="html/programmers/Doc01_IntroductionToCDO.html" icon="article" />
-    <topic label="Installing a CDO Development Environment" href="html/programmers/Doc02_InstallingTheDevelopmentEnvironment.html" icon="article" />
-    <topic label="Preparing EMF Models for CDO" href="html/programmers/Doc03_PreparingModels.html" icon="article">
+    <topic label="Introduction" href="html/programmers/Doc01_Introduction.html" icon="article">
+      <topic label="Preparing the Workspace" href="html/programmers/Doc01_Introduction.html#PreparingWorkspace" icon="chapter" />
+    </topic>
+    <topic label="Preparing EMF Models" href="html/programmers/Doc03_PreparingModels.html" icon="article">
       <topic label="Creating an Ecore Model" href="html/programmers/Doc03_PreparingModels.html#Doc_CreatingEcore" icon="chapter" />
       <topic label="Using the CDO Model Importer" href="html/programmers/Doc03_PreparingModels.html#Doc_UsingImporter" icon="chapter" />
       <topic label="Using the CDO Model Migrator" href="html/programmers/Doc03_PreparingModels.html#Doc_UsingMigrator" icon="chapter" />
@@ -219,7 +220,7 @@
       <topic label="Generating a Model" href="html/programmers/Doc03_PreparingModels.html#Doc_GeneratingModel" icon="chapter" />
       <topic label="Modifying Generated Getters and Setters" href="html/programmers/Doc03_PreparingModels.html#Doc_ModifyingGeneratedCode" icon="chapter" />
     </topic>
-    <topic label="Developing CDO Client Applications" href="html/programmers/client/index.html">
+    <topic label="Developing Client Applications" href="html/programmers/client/index.html">
       <topic label="Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" icon="article">
         <topic label="OSGi" href="html/programmers/client/Doc01_Architecture.html#OSGi" icon="chapter" />
         <topic label="EMF" href="html/programmers/client/Doc01_Architecture.html#EMF" icon="chapter" />
@@ -362,7 +363,7 @@
         <topic label="Common Pitfalls" href="html/programmers/client/Doc12_BestPracticesAndPatterns.html#CommonPitfalls" icon="chapter" />
       </topic>
     </topic>
-    <topic label="Developing CDO Server Applications" href="html/programmers/server/index.html">
+    <topic label="Developing Server Applications" href="html/programmers/server/index.html">
       <topic label="Understanding the Architecture of a Repository" href="html/programmers/server/Architecture.html" icon="article">
         <topic label="OSGi" href="html/programmers/server/Architecture.html#OSGi" icon="chapter" />
         <topic label="CDO Server Core" href="html/programmers/server/Architecture.html#Core" icon="chapter" />
@@ -373,6 +374,7 @@
         <topic label="Transport" href="html/programmers/server/Architecture.html#Transport" icon="chapter" />
       </topic>
     </topic>
+    <topic label="Installing the Sources" href="html/programmers/Doc30_InstallingTheSources.html" icon="article" />
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">

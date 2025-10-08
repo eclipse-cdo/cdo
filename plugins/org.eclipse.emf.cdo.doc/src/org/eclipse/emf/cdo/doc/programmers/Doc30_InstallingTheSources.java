@@ -1,9 +1,17 @@
 package org.eclipse.emf.cdo.doc.programmers;
 
+import org.eclipse.emf.cdo.doc.programmers.Doc01_Introduction.PreparingWorkspace;
+
 /**
- * Installing a CDO Development Environment
+ * Installing the Sources
  * <p>
- * This chapter guides you through the trivial process of preparing your development environment for CDO applications.
+ * For developing applications on top of CDO it is normally sufficient to have the CDO SDK installed in your Eclipse
+ * <a href="https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fconcepts%2Ftarget.htm">target platform</a>,
+ * which is described in section {@link PreparingWorkspace}.
+ * <p>
+ * However, if you want to work on CDO itself or want to analyze the commit history of CDO, you need to have the CDO sources available in your workspace.
+ * This chapter guides you through the trivial process of installing a development environment for the CDO sources.
+ * <p>
  * The installation is fully automated and will be performed by the
  * <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
  * Here are the four steps you need to follow:
@@ -30,8 +38,8 @@ package org.eclipse.emf.cdo.doc.programmers;
  * <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/index.md">Eclipse Installer documentation</a> for details.
  *
  * @author Eike Stepper
- * @number 2
+ * @number 30
  */
-public class Doc02_InstallingTheDevelopmentEnvironment
+public class Doc30_InstallingTheSources
 {
 }

@@ -10,7 +10,7 @@
  */
 
 /**
- * Developing CDO Server Applications
+ * Developing Server Applications
  *
  * @author Eike Stepper
  * @number 20

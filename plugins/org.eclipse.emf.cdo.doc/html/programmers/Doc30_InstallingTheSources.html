@@ -2,7 +2,7 @@
 <html>
 
 <head>
-<title>Installing a CDO Development Environment (CDO Model Repository Documentation)</title>
+<title>Installing the Sources (CDO Model Repository Documentation)</title>
 
 <link rel="stylesheet" href="../book.css" charset="UTF-8" type="text/css">
 
@@ -11,7 +11,7 @@
 function windowTitle()
 {
     if (location.href.indexOf('is-external=true') == -1) {
-        parent.document.title="Installing a CDO Development Environment (CDO Model Repository Documentation)";
+        parent.document.title="Installing the Sources (CDO Model Repository Documentation)";
     }
 }
 </script>
@@ -22,13 +22,19 @@ function windowTitle()
 
 <table border="0">
 	<tr>
-		<td width="100%"><h1>Installing a CDO Development Environment</h1></td>
-		<td align="right" valign="middle" nowrap><a href="Doc01_IntroductionToCDO.html" title="Backward to Introduction to CDO Programming"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../images/forward.png" border="0"></a></td>
+		<td width="100%"><h1>Installing the Sources</h1></td>
+		<td align="right" valign="middle" nowrap><a href="server/Architecture.html" title="Backward to Understanding the Architecture of a Repository"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../reference/index.html" title="Forward to Reference"><img src="../../images/forward.png" border="0"></a></td>
 	</tr>
 </table>
 <p class="author">Author: Eike Stepper</p>
 <p>
- This chapter guides you through the trivial process of preparing your development environment for CDO applications.
+ For developing applications on top of CDO it is normally sufficient to have the CDO SDK installed in your Eclipse
+ <a href="https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fconcepts%2Ftarget.htm">target platform</a>,
+ which is described in section <a href="Doc01_Introduction.html#PreparingWorkspace" title="Chapter in CDO Model Repository Documentation">Preparing the Workspace</a>.
+ <p>
+ However, if you want to work on CDO itself or want to analyze the commit history of CDO, you need to have the CDO sources available in your workspace.
+ This chapter guides you through the trivial process of installing a development environment for the CDO sources.
+ <p>
  The installation is fully automated and will be performed by the
  <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/Eclipse_Installer.md">Eclipse Installer</a>.
  Here are the four steps you need to follow:
@@ -57,7 +63,7 @@ function windowTitle()
  <a href="https://github.com/eclipse-oomph/oomph-website/blob/master/index.md">Eclipse Installer documentation</a> for details.
 
 <p align="right">
-<a href="Doc01_IntroductionToCDO.html" title="Backward to Introduction to CDO Programming"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_PreparingModels.html" title="Forward to Preparing EMF Models for CDO"><img src="../../images/forward.png" border="0"></a></p>
+<a href="server/Architecture.html" title="Backward to Understanding the Architecture of a Repository"><img src="../../images/backward.png" border="0"></a>&nbsp;<a href="../reference/index.html" title="Forward to Reference"><img src="../../images/forward.png" border="0"></a></p>
 <!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a></div> -->
 
 <div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>

@@ -3,8 +3,16 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xmi="http://www.omg.org/XMI"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:git="http://www.eclipse.org/oomph/setup/git/1.0" 
+  xmlns:jdt="http://www.eclipse.org/oomph/setup/jdt/1.0" 
+  xmlns:mylyn="http://www.eclipse.org/oomph/setup/mylyn/1.0" 
+  xmlns:pde="http://www.eclipse.org/oomph/setup/pde/1.0" 
+  xmlns:predicates="http://www.eclipse.org/oomph/predicates/1.0" 
+  xmlns:workingsets="http://www.eclipse.org/oomph/workingsets/1.0"
   xmlns:setup="http://www.eclipse.org/oomph/setup/1.0"
-  xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0">
+  xmlns:setup.p2="http://www.eclipse.org/oomph/setup/p2/1.0"
+  xmlns:setup.targlets="http://www.eclipse.org/oomph/setup/targlets/1.0"
+  xmlns:setup.workingsets="http://www.eclipse.org/oomph/setup/workingsets/1.0"> 
     
 	<xsl:output method="xml" indent="yes" omit-xml-declaration="no"/>
 

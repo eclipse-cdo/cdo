@@ -209,26 +209,49 @@
     <topic label="Managing Security" href="https://wiki.eclipse.org/CDO/Security_Manager" icon="external" />
   </topic>
   <topic label="Programmer's Guide" href="html/programmers/index.html">
-    <topic label="Introduction" href="html/programmers/Doc01_Introduction.html" icon="article">
-      <topic label="Preparing the Workspace" href="html/programmers/Doc01_Introduction.html#PreparingWorkspace" icon="chapter" />
+    <topic label="Introduction" href="html/programmers/Doc01_Introduction.html" icon="article" />
+    <topic label="Key Concepts of CDO" href="html/programmers/Doc02_KeyConcepts.html" icon="article">
+      <topic label="Models" href="html/programmers/Doc02_KeyConcepts.html#ConceptModels" icon="chapter" />
+      <topic label="Meta Models" href="html/programmers/Doc02_KeyConcepts.html#ConceptMetaModels" icon="chapter" />
+      <topic label="Model Objects" href="html/programmers/Doc02_KeyConcepts.html#ConceptModelObjects" icon="chapter" />
+      <topic label="Resources" href="html/programmers/Doc02_KeyConcepts.html#ConceptResources" icon="chapter" />
+      <topic label="Branches" href="html/programmers/Doc02_KeyConcepts.html#ConceptBranches" icon="chapter" />
+      <topic label="Branch Points" href="html/programmers/Doc02_KeyConcepts.html#ConceptBranchPoints" icon="chapter" />
+      <topic label="Commits" href="html/programmers/Doc02_KeyConcepts.html#ConceptCommits" icon="chapter" />
+      <topic label="Revisions" href="html/programmers/Doc02_KeyConcepts.html#ConceptRevisions" icon="chapter" />
+      <topic label="Revision Deltas" href="html/programmers/Doc02_KeyConcepts.html#ConceptRevisionDeltas" icon="chapter" />
+      <topic label="Repositories" href="html/programmers/Doc02_KeyConcepts.html#ConceptRepositories" icon="chapter" />
+      <topic label="Sessions" href="html/programmers/Doc02_KeyConcepts.html#ConceptSessions" icon="chapter" />
+      <topic label="Views" href="html/programmers/Doc02_KeyConcepts.html#ConceptViews" icon="chapter" />
+      <topic label="Transactions" href="html/programmers/Doc02_KeyConcepts.html#ConceptTransactions" icon="chapter" />
+      <topic label="Change Notifications" href="html/programmers/Doc02_KeyConcepts.html#ConceptChangeNotifications" icon="chapter" />
     </topic>
-    <topic label="Preparing EMF Models" href="html/programmers/Doc03_PreparingModels.html" icon="article">
-      <topic label="Creating an Ecore Model" href="html/programmers/Doc03_PreparingModels.html#Doc_CreatingEcore" icon="chapter" />
-      <topic label="Using the CDO Model Importer" href="html/programmers/Doc03_PreparingModels.html#Doc_UsingImporter" icon="chapter" />
-      <topic label="Using the CDO Model Migrator" href="html/programmers/Doc03_PreparingModels.html#Doc_UsingMigrator" icon="chapter" />
-      <topic label="Migrating a GenModel Manually" href="html/programmers/Doc03_PreparingModels.html#Doc_MigratingManually" icon="chapter" />
-      <topic label="Generating a Model" href="html/programmers/Doc03_PreparingModels.html#Doc_GeneratingModel" icon="chapter" />
-      <topic label="Modifying Generated Getters and Setters" href="html/programmers/Doc03_PreparingModels.html#Doc_ModifyingGeneratedCode" icon="chapter" />
+    <topic label="Preparing the Workspace" href="html/programmers/Doc03_PreparingWorkspace.html" icon="article">
+      <topic label="Using the Oomph Setup Engine" href="html/programmers/Doc03_PreparingWorkspace.html#UsingOomph" icon="chapter" />
+    </topic>
+    <topic label="Preparing EMF Models" href="html/programmers/Doc04_PreparingModels.html" icon="article">
+      <topic label="Creating an Ecore Model" href="html/programmers/Doc04_PreparingModels.html#Doc_CreatingEcore" icon="chapter" />
+      <topic label="Using the CDO Model Importer" href="html/programmers/Doc04_PreparingModels.html#Doc_UsingImporter" icon="chapter" />
+      <topic label="Using the CDO Model Migrator" href="html/programmers/Doc04_PreparingModels.html#Doc_UsingMigrator" icon="chapter" />
+      <topic label="Migrating a GenModel Manually" href="html/programmers/Doc04_PreparingModels.html#Doc_MigratingManually" icon="chapter" />
+      <topic label="Generating a Model" href="html/programmers/Doc04_PreparingModels.html#Doc_GeneratingModel" icon="chapter" />
+      <topic label="Modifying Generated Getters and Setters" href="html/programmers/Doc04_PreparingModels.html#Doc_ModifyingGeneratedCode" icon="chapter" />
     </topic>
     <topic label="Developing Client Applications" href="html/programmers/client/index.html">
-      <topic label="Architecture of a Client Application" href="html/programmers/client/Doc01_Architecture.html" icon="article">
-        <topic label="OSGi" href="html/programmers/client/Doc01_Architecture.html#OSGi" icon="chapter" />
-        <topic label="EMF" href="html/programmers/client/Doc01_Architecture.html#EMF" icon="chapter" />
-        <topic label="CDO Client" href="html/programmers/client/Doc01_Architecture.html#Client" icon="chapter" />
-        <topic label="Net4j Core" href="html/programmers/client/Doc01_Architecture.html#Net4j" icon="chapter" />
-        <topic label="Models" href="html/programmers/client/Doc01_Architecture.html#Models" icon="chapter" />
-        <topic label="Protocol" href="html/programmers/client/Doc01_Architecture.html#Protocol" icon="chapter" />
-        <topic label="Transport" href="html/programmers/client/Doc01_Architecture.html#Transport" icon="chapter" />
+      <topic label="Architecture of a Client Application" href="html/programmers/client/Doc01_ArchitectureClientApplication.html" icon="article">
+        <topic label="OSGi" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#OSGi" icon="chapter" />
+        <topic label="EMF" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#EMF" icon="chapter" />
+        <topic label="CDO Client" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#Client" icon="chapter" />
+        <topic label="Net4j Core" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#Net4j" icon="chapter" />
+        <topic label="Models" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#Models" icon="chapter" />
+        <topic label="Protocol" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#Protocol" icon="chapter" />
+        <topic label="Transport" href="html/programmers/client/Doc01_ArchitectureClientApplication.html#Transport" icon="chapter" />
+      </topic>
+      <topic label="Anatomy of a Model Object" href="html/programmers/client/Doc02_AnatomyModelObject.html" icon="article">
+        <topic label="CDOID" href="html/programmers/client/Doc02_AnatomyModelObject.html#DocID" icon="chapter" />
+        <topic label="CDORevision" href="html/programmers/client/Doc02_AnatomyModelObject.html#DocRevision" icon="chapter" />
+        <topic label="CDOView" href="html/programmers/client/Doc02_AnatomyModelObject.html#DocView" icon="chapter" />
+        <topic label="CDOState" href="html/programmers/client/Doc02_AnatomyModelObject.html#DocState" icon="chapter" />
       </topic>
       <topic label="Working with Sessions" href="html/programmers/client/Doc03_WorkingWithSessions.html" icon="article">
         <topic label="Creating and Configuring Sessions" href="html/programmers/client/Doc03_WorkingWithSessions.html#CreatingAndConfiguringSessions" icon="chapter">
@@ -374,7 +397,7 @@
         <topic label="Transport" href="html/programmers/server/Architecture.html#Transport" icon="chapter" />
       </topic>
     </topic>
-    <topic label="Installing the Sources" href="html/programmers/Doc30_InstallingTheSources.html" icon="article" />
+    <topic label="Installing the Sources" href="html/programmers/DocXX_InstallingSources.html" icon="article" />
   </topic>
   <topic label="Reference" href="html/reference/index.html">
     <topic label="API Reference" href="javadoc/overview-summary.html">

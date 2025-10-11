@@ -22,9 +22,9 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
  * <b>Table of Contents</b> {@toc}
  *
  * @author Eike Stepper
- * @number 3
+ * @number 4
  */
-public class Doc03_PreparingModels
+public class Doc04_PreparingModels
 {
   /**
    * Creating an Ecore Model

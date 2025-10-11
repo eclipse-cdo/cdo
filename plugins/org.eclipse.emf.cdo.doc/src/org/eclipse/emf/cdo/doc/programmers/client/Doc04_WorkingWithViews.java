@@ -53,6 +53,8 @@ public class Doc04_WorkingWithViews
    * <p>
    * The CDO repository exposes a virtual file system for organizing model resources. This section describes the
    * structure and usage of the file system, including root resources, folders, and different resource types.
+   * <p>
+   * <img src="FileSystem.png"/>
    */
   public class UnderstandingTheCDOFileSystem
   {

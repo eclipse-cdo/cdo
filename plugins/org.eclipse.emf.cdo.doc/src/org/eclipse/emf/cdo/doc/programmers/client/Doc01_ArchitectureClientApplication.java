@@ -56,7 +56,7 @@ import org.eclipse.emf.spi.cdo.CDOSessionProtocol;
  *
  * @author Eike Stepper
  */
-public class Doc01_Architecture
+public class Doc01_ArchitectureClientApplication
 {
   /**
    * OSGi

@@ -1,0 +1,123 @@
+<!doctype html public "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<title>Anatomy of a Model Object (CDO Model Repository Documentation)</title>
+
+<link rel="stylesheet" href="../../book.css" charset="UTF-8" type="text/css">
+
+<noscript></noscript>
+<script type="text/javascript">
+function windowTitle()
+{
+    if (location.href.indexOf('is-external=true') == -1) {
+        parent.document.title="Anatomy of a Model Object (CDO Model Repository Documentation)";
+    }
+}
+</script>
+</head>
+
+<body bgcolor="white" onload="windowTitle();">
+<!-- <div class="help_breadcrumbs breadcrumbs_top"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<table border="0">
+	<tr>
+		<td width="100%"><h1>Anatomy of a Model Object</h1></td>
+		<td align="right" valign="middle" nowrap><a href="Doc01_ArchitectureClientApplication.html" title="Backward to Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_WorkingWithSessions.html" title="Forward to Working with Sessions"><img src="../../../images/forward.png" border="0"></a></td>
+	</tr>
+</table>
+<p class="author">Author: Eike Stepper</p>
+<p>
+ EMF applications manipulate models as object graphs consisting of instances of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObjects</code></a>. The EMF framework and
+ various EMF-based technologies provide a rich set of features for working with these object graphs, such as change
+ notification, persistence, and validation. EObjects are the core building blocks of EMF models, and they provide a common
+ interface for working with models.
+ <p>
+ <img src="AnatomyEObject.png"/>
+ <p>
+ CDO extends the capabilities of EMF by providing a distributed shared model framework that enables collaborative editing
+ of EMF models in a distributed environment. CDO achieves this by introducing the concept of a CDO repository, which
+ is a central server that manages the storage and retrieval of EMF models. Clients connect to the repository to
+ access and manipulate the shared model. In a CDO client application, model objects are represented as instances of
+ <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html" title="Interface in org.eclipse.emf.cdo"><code>CDOObject</code></a>, which is a subclass of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" target="_blank" title="Interface in org.eclipse.emf.ecore"><code>EObject</code></a>. This article provides an overview of the anatomy of a CDOObject
+ and its key features.
+ <p>
+ A CDOObject is a specialized EObject that is designed to work with CDO's distributed shared model framework.
+ CDOObjects have several key features that distinguish them from regular EObjects. They are:
+ <ul>
+ <li><b>Persistent:</b> CDOObjects are persistent, meaning that they can be stored and retrieved from a CDO repository.
+ <li><b>Transactional:</b> CDOObjects support transactions, which allow multiple changes to be made to the model as a single atomic operation.
+ <li><b>Scalable:</b> CDOObjects are designed to be scalable, allowing large models to be managed efficiently in a distributed environment.
+ <li><b>Thread-safe:</b> CDOObjects are designed to be thread-safe, allowing multiple threads to access and modify the model concurrently.
+ <li><b>Identifiable:</b> CDOObjects have a unique identifier that is used to identify them in the repository.
+ <li><b>Versioned:</b> CDOObjects support versioning, which allows multiple versions of the same object to exist in the repository.
+ <li><b>Stateful:</b> CDOObjects maintain state information, such as whether they are new, dirty, or deleted.
+ </ul>
+ <p>
+ For these unique features to work, CDOObjects have a fundamentally different anatomy than regular EObjects. Especially,
+ to achieve scalability, CDOObjects do not contain their attributes and references directly. Instead, they delegate
+ the storage and retrieval of their data to a <a href="../../../javadoc/org/eclipse/emf/cdo/common/revision/CDORevision.html" title="Interface in org.eclipse.emf.cdo.common.revision"><code>CDORevision</code></a>.
+ <p>
+ <p>
+ <p>
+ <img src="AnatomyCDOObject.png"/>
+ <p>
+ In summary, a CDOObject is a specialized EObject that is designed to work with CDO's distributed shared model framework.
+ To turn a regular EMF model into a CDO model, the model must be migrated to use CDO and regenerated to produce CDOObject
+ subclasses. This is explained in the article <a href="../Doc04_PreparingModels.html" title="Article in CDO Model Repository Documentation">Preparing EMF Models</a>.
+ <p>
+ Note that CDOObjects and CDOViews are client-side concepts. On the server side, CDO uses only CDORevisions to
+ represent model objects. CDORevisions are also used as the unit of storage and retrieval in the CDO repository,
+ as well as the unit of data transfer between clients and the server.
+
+<h2><a name="DocID"></a>1&nbsp;&nbsp;CDOID</h2>
+<p>
+ A <a href="../../../javadoc/org/eclipse/emf/cdo/common/id/CDOID.html" title="Interface in org.eclipse.emf.cdo.common.id"><code>CDOID</code></a> is a unique identifier for a CDOObject within a CDO repository. It is used to identify and reference
+ CDOObjects in a distributed environment. CDOIDs are immutable and are assigned to CDOObjects when they are
+ created. CDOIDs can be of different types, such as long, string, or UUID, depending on the configuration of the
+ CDO repository.
+ <p>
+ The identifier of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoID()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoID()</code></a> method.
+
+<h2><a name="DocRevision"></a>2&nbsp;&nbsp;CDORevision</h2>
+<p>
+ A CDORevision is a lightweight representation of an object's state at a specific point in time. It contains the
+ attributes and references of the object, as well as metadata such as the object's identifier, branch and version.
+ <p>
+ CDORevisions are immutable and are created when an object is first loaded from the repository or when an object is
+ modified and committed to the repository. Each time an object is modified and committed, a new CDORevision is
+ created, allowing CDO to maintain a history of changes to the object over time.
+ <p>
+ A CDORevision references other model objects by their
+ CDOID, not by direct object references. This indirection allows CDO to manage large object graphs efficiently,
+ as it can load and unload objects from memory as needed. Also, it allows CDO to change the revision of an object
+ without affecting other objects that reference it. This is essential for supporting versioning and branching.
+ <p>
+ <img src="AnatomyRevision.png"/>
+ <p>
+ The revision of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoRevision()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoRevision()</code></a> method.
+
+<h2><a name="DocView"></a>3&nbsp;&nbsp;CDOView</h2>
+<p>
+ CDOObjects are managed by a <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html" title="Interface in org.eclipse.emf.cdo.view"><code>CDOView</code></a>, which provides a context for accessing and manipulating the model.
+ CDOViews are associated with a specific branch and, optionally, a specific point in time. They provide methods for
+ loading and unloading objects, as well as for managing the state of objects (e.g., marking them as dirty or
+ new).
+ <p>
+ The view of a CDOObject can be accessed using the <a href="../../../javadoc/org/eclipse/emf/cdo/CDOObject.html#cdoView()" title="Method in org.eclipse.emf.cdo.CDOObject"><code>CDOObject.cdoView()</code></a> method.
+
+<h2><a name="DocState"></a>4&nbsp;&nbsp;CDOState</h2>
+<p>
+ CDOObjects maintain state information that indicates their current status within the CDO framework. This state
+ is managed by a state machine that is part of the CDOView. The state machine tracks various states, such as:
+ <p>
+ <img src="StateMachine.png"/>
+ <p>
+
+<p align="right">
+<a href="Doc01_ArchitectureClientApplication.html" title="Backward to Architecture of a Client Application"><img src="../../../images/backward.png" border="0"></a>&nbsp;<a href="Doc03_WorkingWithSessions.html" title="Forward to Working with Sessions"><img src="../../../images/forward.png" border="0"></a></p>
+<!-- <div class="help_breadcrumbs breadcrumbs_bottom"><a href="../../Overview.html" title="CDO Model Repository Documentation">CDO Model Repository Documentation</a> > <a href="../index.html" title="Category in CDO Model Repository Documentation">Programmer's Guide</a> > <a href="index.html" title="Category in CDO Model Repository Documentation">Developing Client Applications</a></div> -->
+
+<div class="copyright">Copyright (c) 2004-2023 Eike Stepper (Loehne, Germany) and others.<br>All rights reserved. This program and the accompanying materials are made available under the terms of the Eclipse Public License v1.0 which accompanies this distribution, and is available at http://www.eclipse.org/legal/epl-v10.html</div>
+</body>
+</html>

@@ -7,43 +7,39 @@ package org.eclipse.emf.cdo.doc.programmers;
  * collaborative editing of EMF models in a distributed environment, providing features such as
  * transactions, versioning, and branching.
  * <p>
- * This document provides an introduction to CDO programming, covering the following topics:
+ * This documentation is intended for developers who want to use CDO in their applications.
+ * It assumes that you have a basic understanding of EMF, Net4j and Java development with Eclipse.
+ * Here are some pointers to other documentation that may be helpful:
+ * <ul>
+ * <li>The <a href="https://help.eclipse.org/latest/topic/org.eclipse.pde.doc.user/guide/intro/pde_overview.htm">Plug-in Development Environment Guide</a> provides information about developing Eclipse plug-ins.
+ * <li>The <a href="https://eclipse.dev/emf/docs.html">EMF Documentation</a> provides comprehensive information about EMF concepts and APIs.
+ * <li>The {@link org.eclipse.net4j.doc.Overview Net4j Signalling Platform Documentation} explains the underlying communication framework used by CDO.
+ * <li>The {@link org.eclipse.net4j.db.doc.Overview Net4j DB Framework Documentation} explains the database access framework used by CDO.
+ * <li>The {@link org.eclipse.net4j.util.doc.Overview Net4j Utilities Documentation} explains various utility classes used by CDO.
+ * </ul>
+ * <p>
+ * This documentation about CDO programming is split into two main parts:
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.doc.programmers.client}: A guide for developing client applications that use CDO to store and manage EMF models in a distributed environment.
+ * <li>{@link org.eclipse.emf.cdo.doc.programmers.server}: A guide for developing server applications that provide CDO repositories for client applications.
+ * </ul>
+ * <p>
+ * Before diving into CDO programming, it is essential to understand some key concepts that form the foundation of CDO.
+ * They are explained in {@link Doc02_KeyConcepts}.
+ * <p>
+ * Instructions for preparing your development environment are provided in {@link Doc03_PreparingWorkspace}.
+ * This includes setting up your Eclipse workspace with the necessary dependencies.
+ * <p>
+ * Instructions for preparing your EMF models for use with CDO are provided in {@link Doc04_PreparingModels}.
+ * This includes creating Ecore models and generating CDO-enabled code.
+ * <p>
+ * At the end of this Programmer's Guide, you find the chapter {@link DocXX_InstallingSources} with
+ * instructions for installing the CDO sources into your workspace. This is only necessary if you want to
+ * work on CDO itself or want to analyze the commit history of CDO.
  *
  * @author Eike Stepper
  * @number 1
  */
 public class Doc01_Introduction
 {
-  /**
-   * Preparing the Workspace
-   * <p>
-   * Before you start working with CDO, you need to set up your development environment. This documentation
-   * assumes that you have a basic understanding of EMF and Java development with Eclipse and that you have an
-   * Eclipse IDE installed and configured for your applications.
-   * <p>
-   * The following prerequisites must be installed into the
-   * <a href="https://help.eclipse.org/latest/index.jsp?topic=%2Forg.eclipse.pde.doc.user%2Fconcepts%2Ftarget.htm">target platform</a>
-   * of your workspace:
-   * <ul>
-   * <li>The CDO SDK and the Net4j SDK are both available from the <a href="https://download.eclipse.org/modeling/emf/cdo/updates/downloads.html">CDO Downloads</a> page.
-   *      There you find "Update Site" and  "Floating Update Site" buttons, which link to p2 repositories that contain the respective SDKs.
-   * <li>The EMF SDK is available from the <a href="https://download.eclipse.org/modeling/emf/emf/updates/">EMF Updates</a> page.
-   *      <a href="https://download.eclipse.org/modeling/emf/emf/builds"></a>contains the necessary libraries and tools for working with EMF models.
-   * <li>Depending on what subset of CDO you want to use, you may need additional dependencies, such as database drivers or networking libraries.
-   * </ul>
-   * <p>
-   * Make sure to include all necessary dependencies in your project's build path to avoid any runtime issues.
-   * <p>
-   * Note: If you are using an IDE other than Eclipse, you will need to manually download and include the required libraries in your project's build path.
-   * At the bottom of the CDO Downloads page, you find a link to <a href="https://download.eclipse.org/modeling/emf/cdo/updates">All Promoted Builds</a>,
-   * where you can download <code>emf-cdo-{qualifier}-Dropins.zip</code> archives containing all necessary libraries.
-   * <p>
-   * Note also that CDO and Net4j, as well as EMF, attach great importance to API and binary compatibility. Therefore, you can
-   * usually mix and match different versions of these libraries. However, it is recommended to use compatible versions to avoid any potential issues.
-   * On the CDO Downloads page mentioned above, you find version information about CDO and Net4j, as well as links to the corresponding EMF
-   * and Eclipse releases.
-   */
-  public class PreparingWorkspace
-  {
-  }
 }

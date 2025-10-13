@@ -1,10 +1,18 @@
 package org.eclipse.emf.cdo.doc.programmers.client;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.id.CDOIDUtil;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
+import org.eclipse.emf.cdo.view.CDOView;
+
+import org.eclipse.emf.spi.cdo.InternalCDOObject;
+import org.eclipse.emf.spi.cdo.InternalCDOView;
+
+import java.util.concurrent.locks.Lock;
 
 /**
  * Working with Views
@@ -33,9 +41,189 @@ public class Doc04_WorkingWithViews
    * <p>
    * Views in CDO are inherently thread-safe. This section discusses best practices for managing concurrent access,
    * synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+   * <p>
+   * Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
+   * views may be accessed by background threads for tasks such as asynchronous updates, notifications, and
+   * event handling. If a view were not thread-safe, these background operations could lead to data corruption,
+   * inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
+   * CDO allows developers to build robust applications that can safely handle concurrent operations without risking
+   * data integrity.
+   * <p>
+   * Of course, as always, the thread safety guarantees do not relieve developers from the responsibility of proper synchronization
+   * when accessing shared data structures or performing complex operations that involve multiple steps. Developers should still
+   * understand and use the synchronization mechanisms provided by CDO. They are explained in the following sections.
    */
+  @SuppressWarnings("deprecation")
   public class ThreadSafety
   {
+    /**
+     * View Lock and Monitor
+     * <p>
+     * Each CDO view provides a lock and a monitor object to facilitate synchronization. This section explains
+     * what they are and how to use them correctly to ensure thread-safe operations when accessing or modifying view data.
+     * <p>
+     * As mentioned earlier, CDO views are thread-safe. However, that applies only to single method calls on a view.
+     * The following code snippet shows how <code>AbstractCDOView</code> implements thread safety for single method calls
+     * by using a combination of a view monitor and the view lock. The example shows the implementation of the
+     * {@link CDOView#getObject(CDOID)} method:
+     * {@link #singleMethodCallsAreSafe() SingleMethodCallsAreSafe.java}
+     * <p>
+     *
+     *
+     */
+    public class ViewLockAndMonitor
+    {
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void singleMethodCallsAreSafe()
+      {
+        abstract class AbstractCDOView implements InternalCDOView
+        {
+          protected Lock viewLock;
+
+          @Override
+          public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
+          {
+            if (CDOIDUtil.isNull(id))
+            {
+              return null;
+            }
+
+            synchronized (getViewMonitor())
+            {
+              lockView();
+
+              try
+              {
+                return getObjectUnsynced(id, loadOnDemand);
+              }
+              finally
+              {
+                unlockView();
+              }
+            }
+          }
+
+          @Override
+          public final Object getViewMonitor()
+          {
+            if (viewLock != null)
+            {
+              return new NOOPMonitor();
+            }
+
+            return this;
+          }
+
+          @Override
+          public final Lock getViewLock()
+          {
+            return viewLock;
+          }
+
+          @Override
+          public final void lockView()
+          {
+            if (viewLock != null)
+            {
+              viewLock.lock();
+            }
+          }
+
+          @Override
+          public final void unlockView()
+          {
+            if (viewLock != null)
+            {
+              viewLock.unlock();
+            }
+          }
+        }
+      }
+
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void accessViewSafely(CDOView view, CDOID id1, CDOID id2)
+      {
+        synchronized (((InternalCDOView)view).getViewMonitor())
+        {
+          Lock viewLock = view.getViewLock();
+          if (viewLock != null)
+          {
+            viewLock.lock();
+          }
+
+          try
+          {
+            // Access the view safely here
+            CDOObject object1 = view.getObject(id1);
+            CDOObject object2 = view.getObject(id2);
+          }
+          finally
+          {
+            if (viewLock != null)
+            {
+              viewLock.unlock();
+            }
+          }
+        }
+      }
+
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void viewSyncExecWithRunnable(CDOView view, CDOID id1, CDOID id2)
+      {
+        view.syncExec(() -> {
+          // Access the view safely here
+          CDOObject object1 = view.getObject(id1);
+          CDOObject object2 = view.getObject(id2);
+        });
+      }
+
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void viewSyncExecWithCallable(CDOView view, CDOID id1, CDOID id2)
+      {
+        try
+        {
+          long maxTimeStamp = view.syncExec(() -> {
+            // Access the view safely here
+            long timeStamp1 = view.getObject(id1).cdoRevision().getTimeStamp();
+            long timeStamp2 = view.getObject(id2).cdoRevision().getTimeStamp();
+            return Math.max(timeStamp1, timeStamp2);
+          });
+        }
+        catch (Exception ex)
+        {
+          ex.printStackTrace();
+        }
+      }
+
+      InternalCDOObject getObjectUnsynced(CDOID id, boolean loadOnDemand)
+      {
+        return null;
+      }
+
+      class NOOPMonitor
+      {
+      }
+    }
+
+    /**
+     * Using a Delegable Lock
+     * <p>
+     */
+    public class UsingDelegableLock
+    {
+    }
   }
 
   /**

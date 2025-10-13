@@ -71,7 +71,7 @@ public class Doc02_KeyConcepts
    * and CDOTextResources to store binary large objects (LOBs) and text files, respectively.
    * <p>
    * All these resource types are subtypes of CDOResourceNode.
-   * CDOResourceNodes are regular CDOObjects and can, therefore, be part of the versioned and shared model themselves.
+   * CDOResourceNodes are regular CDOObjects and are, therefore, part of the versioned and shared model themselves.
    */
   public class ConceptResources
   {

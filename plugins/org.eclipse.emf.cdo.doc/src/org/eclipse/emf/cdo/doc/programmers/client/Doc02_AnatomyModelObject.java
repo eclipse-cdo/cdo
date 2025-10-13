@@ -62,6 +62,16 @@ import org.eclipse.emf.ecore.EObject;
  * Note that CDOObjects and CDOViews are client-side concepts. On the server side, CDO uses only CDORevisions to
  * represent model objects. CDORevisions are also used as the unit of storage and retrieval in the CDO repository,
  * as well as the unit of data transfer between clients and the server.
+ * <p>
+ * The internet provides a wealth of information about EMF and CDO, including tutorials, documentation, and forums.
+ * Here are some useful links:
+ * <ul>
+ * <li>The blog article <a href="https://thegordian.blogspot.com/2008/11/how-scalable-are-my-models.html">How Scalable are my Models?</a> provides
+ * an introduction to the concepts of scalability in EMF and CDO.
+ * <li>The blog article <a href="https://thegordian.blogspot.com/2011/07/concurrent-access-to-models.html">Concurrent Access to Models</a> provides
+ * an introduction to the concepts of concurrency in EMF and CDO.
+ * </ul>
+ *
  *
  * @author Eike Stepper
  */

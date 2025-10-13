@@ -15,6 +15,56 @@ function windowTitle()
     }
 }
 </script>
+
+<link rel="stylesheet" href="../../editor.css" charset="UTF-8" type="text/css">
+
+<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+<script>
+$(function() {
+$( ".resizable" ).resizable({ handles:"s,e,se", autoHide:true });
+});
+</script>
+
+<script type="text/javascript">
+function maximize(id)
+{
+  e = document.getElementById('max_' + id);
+  c1 = document.getElementById('editor_content_1_' + id);
+  c2 = document.getElementById('editor_content_2_' + id);
+  pv = document.getElementById('max_pv_' + id); // TreeFormatter
+  if (e.className == 'max')
+  {
+    e.className = 'rst';
+    e.setAttribute('title', 'Restore');
+    c1.setAttribute('style_orig', c1.getAttribute('style'));
+    c1.setAttribute('style', 'border:2px solid #99b4d1; border-top:none;');
+    c2.setAttribute('style', 'padding:8px;');
+    if (pv != null)
+    {
+      pv.setAttribute('width_orig', pv.getAttribute('width'));
+      pv.setAttribute('width', '');
+    }
+  }
+  else
+  {
+    e.className = 'max';
+    e.setAttribute('title', 'Maximize');
+    c1.setAttribute('style', c1.getAttribute('style_orig'));
+    c1.setAttribute('style_orig', '');
+    c2.setAttribute('style', 'padding:8px; overflow:scroll; width:100%; height:100%;');
+    if (pv != null)
+    {
+      pv.setAttribute('width', pv.getAttribute('width_orig'));
+      pv.setAttribute('width_orig', '');
+    }
+  }
+}
+</script>
 </head>
 
 <body bgcolor="white" onload="windowTitle();">
@@ -42,6 +92,120 @@ function windowTitle()
 <p>
  Views in CDO are inherently thread-safe. This section discusses best practices for managing concurrent access,
  synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+ <p>
+ Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
+ views may be accessed by background threads for tasks such as asynchronous updates, notifications, and
+ event handling. If a view were not thread-safe, these background operations could lead to data corruption,
+ inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
+ CDO allows developers to build robust applications that can safely handle concurrent operations without risking
+ data integrity.
+ <p>
+ Of course, as always, the thread safety guarantees do not relieve developers from the responsibility of proper synchronization
+ when accessing shared data structures or performing complex operations that involve multiple steps. Developers should still
+ understand and use the synchronization mechanisms provided by CDO. They are explained in the following sections.
+
+<h3><a name="ViewLockAndMonitor"></a>2.1&nbsp;&nbsp;View Lock and Monitor</h3>
+<p>
+ Each CDO view provides a lock and a monitor object to facilitate synchronization. This section explains
+ what they are and how to use them correctly to ensure thread-safe operations when accessing or modifying view data.
+ <p>
+ As mentioned earlier, CDO views are thread-safe. However, that applies only to single method calls on a view.
+ The following code snippet shows how <code>AbstractCDOView</code> implements thread safety for single method calls
+ by using a combination of a view monitor and the view lock. The example shows the implementation of the
+ <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getObject(CDOID)</code></a> method:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ViewLockAndMonitor_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SingleMethodCallsAreSafe.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewLockAndMonitor_1')" id="max_ViewLockAndMonitor_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ViewLockAndMonitor_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ViewLockAndMonitor_1" style="padding:8px;">
+            <code>
+            <font color="#7f0055"><b>abstract&nbsp;class&nbsp;</b></font>AbstractCDOView&nbsp;<font color="#7f0055"><b>implements&nbsp;</b></font>InternalCDOView<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font>Lock&nbsp;viewLock;<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>InternalCDOObject&nbsp;getObject(CDOID&nbsp;id,&nbsp;<font color="#7f0055"><b>boolean&nbsp;</b></font>loadOnDemand)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(CDOIDUtil.isNull(id))<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;null</b></font>;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>synchronized&nbsp;</b></font>(getViewMonitor())<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lockView();<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>getObjectUnsynced(id,&nbsp;loadOnDemand);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unlockView();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font>Object&nbsp;getViewMonitor()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>NOOPMonitor();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;this</b></font>;<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font>Lock&nbsp;getViewLock()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>viewLock;<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>lockView()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;viewLock.lock();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>unlockView()<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;viewLock.unlock();<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+
+<h3><a name="UsingDelegableLock"></a>2.2&nbsp;&nbsp;Using a Delegable Lock</h3>
+<p>
 
 <h2><a name="OpeningAndClosingViews"></a>3&nbsp;&nbsp;Opening and Closing Views</h2>
 <p>

@@ -14,6 +14,10 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 /**
+ * A simple holder for a single element that implements {@link Consumer} and {@link Supplier}.
+ * <p>
+ * This class is not thread-safe.
+ *
  * @author Eike Stepper
  * @since 3.16
  */

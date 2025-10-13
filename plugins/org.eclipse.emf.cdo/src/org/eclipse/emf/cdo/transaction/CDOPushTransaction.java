@@ -46,6 +46,7 @@ import org.eclipse.emf.internal.cdo.bundle.OM;
 
 import org.eclipse.net4j.util.AdapterUtil;
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
@@ -859,10 +860,17 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
     return delegate.getViewSet();
   }
 
+  @Override
+  public CriticalSection sync()
+  {
+    return delegate.sync();
+  }
+
   /**
    * @since 4.5
    */
   @Override
+  @Deprecated
   public Lock getViewLock()
   {
     return delegate.getViewLock();
@@ -872,6 +880,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
    * @since 4.5
    */
   @Override
+  @Deprecated
   public void syncExec(Runnable runnable)
   {
     delegate.syncExec(runnable);
@@ -881,6 +890,7 @@ public class CDOPushTransaction extends Notifier implements CDOTransaction
    * @since 4.5
    */
   @Override
+  @Deprecated
   public <V> V syncExec(Callable<V> callable) throws Exception
   {
     return delegate.syncExec(callable);

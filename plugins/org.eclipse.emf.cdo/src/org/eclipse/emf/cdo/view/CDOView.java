@@ -43,6 +43,7 @@ import org.eclipse.emf.cdo.util.ReadOnlyException;
 import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -135,18 +136,29 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}.
    */
+  @Deprecated
   public Lock getViewLock();
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}.
    */
+  @Deprecated
   public void syncExec(Runnable runnable);
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}.
    */
+  @Deprecated
   public <V> V syncExec(Callable<V> callable) throws Exception;
+
+  /**
+   * @since 4.29
+   */
+  public CriticalSection sync();
 
   /**
    * Returns the {@link ResourceSet resource set} this view is associated with.

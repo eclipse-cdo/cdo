@@ -199,7 +199,7 @@ public abstract class ReviewStatemachine<REVIEW extends Review> extends FiniteSt
 
       try
       {
-        transaction.syncExec(() -> {
+        transaction.sync().run(() -> {
           REVIEW transactionalReview = transaction.getObject(review);
           modifier.accept(transactionalReview);
 

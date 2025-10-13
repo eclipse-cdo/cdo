@@ -190,17 +190,23 @@ public interface InternalCDOView extends CDOView, CDOIDProvider, CDOLobLoader, I
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}
    */
+  @Deprecated
   public Object getViewMonitor();
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}
    */
+  @Deprecated
   public void lockView();
 
   /**
    * @since 4.5
+   * @deprecated As of 4.29 use {@link #sync()}
    */
+  @Deprecated
   public void unlockView();
 
   /**

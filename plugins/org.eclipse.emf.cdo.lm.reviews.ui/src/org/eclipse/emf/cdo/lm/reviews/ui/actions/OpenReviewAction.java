@@ -850,7 +850,7 @@ public class OpenReviewAction extends AbstractReviewAction
     private ChatMessage[] computeMessages()
     {
       List<ChatMessage> messages = new ArrayList<>();
-      review.cdoView().syncExec(() -> addMessages(messages, getTopicContainer()));
+      review.cdoView().sync().run(() -> addMessages(messages, getTopicContainer()));
       return messages.toArray(new ChatMessage[messages.size()]);
     }
 

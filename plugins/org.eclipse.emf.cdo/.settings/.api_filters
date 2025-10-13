@@ -1103,14 +1103,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOView.java" type="org.eclipse.emf.spi.cdo.InternalCDOView">
-        <filter id="404791350">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
-                <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockOwner"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/spi/cdo/InternalCDOXATransaction.java" type="org.eclipse.emf.spi.cdo.InternalCDOXATransaction$InternalCDOXACommitContext">
         <filter id="576725006">
             <message_arguments>

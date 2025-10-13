@@ -91,26 +91,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public InternalEObject getContainer(InternalEObject eObject)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("getContainer({0})", cdoObject); //$NON-NLS-1$
-        }
+        TRACER.format("getContainer({0})", cdoObject); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getContainerID());
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getContainerID());
+    });
   }
 
   /**
@@ -119,26 +109,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public int getContainingFeatureID(InternalEObject eObject)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("getContainingFeatureID({0})", cdoObject); //$NON-NLS-1$
-        }
+        TRACER.format("getContainingFeatureID({0})", cdoObject); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.getContainingFeatureID();
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.getContainingFeatureID();
+    });
   }
 
   /**
@@ -147,26 +127,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public InternalEObject getResource(InternalEObject eObject)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("getResource({0})", cdoObject); //$NON-NLS-1$
-        }
+        TRACER.format("getResource({0})", cdoObject); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getResourceID());
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return (InternalEObject)convertIDToObject(view, cdoObject, null, -1, revision.getResourceID());
+    });
   }
 
   /**
@@ -184,34 +154,24 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public Object get(InternalEObject eObject, EStructuralFeature feature, int index)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("get({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
-        }
-
-        CDOFeatureAnalyzer featureAnalyzer = view.options().getFeatureAnalyzer();
-        featureAnalyzer.preTraverseFeature(cdoObject, feature, index);
-
-        InternalCDORevision revision = readRevision(cdoObject);
-
-        Object value = revision.get(feature, index);
-        value = convertToEMFInternal(eObject, revision, feature, index, value);
-
-        featureAnalyzer.postTraverseFeature(cdoObject, feature, index, value);
-        return value;
+        TRACER.format("get({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      CDOFeatureAnalyzer featureAnalyzer = view.options().getFeatureAnalyzer();
+      featureAnalyzer.preTraverseFeature(cdoObject, feature, index);
+
+      InternalCDORevision revision = readRevision(cdoObject);
+
+      Object value = revision.get(feature, index);
+      value = convertToEMFInternal(eObject, revision, feature, index, value);
+
+      featureAnalyzer.postTraverseFeature(cdoObject, feature, index, value);
+      return value;
+    });
   }
 
   /**
@@ -220,10 +180,7 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public boolean isSet(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
+    return view.sync().supply(() -> {
       try
       {
         InternalCDOObject cdoObject = getCDOObject(eObject);
@@ -260,11 +217,7 @@ public final class CDOStoreImpl implements CDOStore
       {
         return false;
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+    });
   }
 
   /**
@@ -273,26 +226,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public int size(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("size({0}, {1})", cdoObject, feature); //$NON-NLS-1$
-        }
+        TRACER.format("size({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.size(feature);
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.size(feature);
+    });
   }
 
   /**
@@ -301,26 +244,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public boolean isEmpty(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("isEmpty({0}, {1})", cdoObject, feature); //$NON-NLS-1$
-        }
+        TRACER.format("isEmpty({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.isEmpty(feature);
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.isEmpty(feature);
+    });
   }
 
   /**
@@ -329,57 +262,47 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public boolean contains(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
+        TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
+      }
+
+      // Don't use CDORevision.contains() for EReference features because
+      // CDOIDExternal isn't converted to an EObject and, hence, fails to compare
+      // properly to an external EObject.
+
+      InternalCDORevision revision = readRevision(cdoObject);
+      int size = revision.size(feature);
+
+      if (value == null)
+      {
+        for (int i = 0; i < size; i++)
         {
-          TRACER.format("contains({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
-        }
-
-        // Don't use CDORevision.contains() for EReference features because
-        // CDOIDExternal isn't converted to an EObject and, hence, fails to compare
-        // properly to an external EObject.
-
-        InternalCDORevision revision = readRevision(cdoObject);
-        int size = revision.size(feature);
-
-        if (value == null)
-        {
-          for (int i = 0; i < size; i++)
+          Object element = revision.get(feature, i);
+          Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
+          if (emfElement == null)
           {
-            Object element = revision.get(feature, i);
-            Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
-            if (emfElement == null)
-            {
-              return true;
-            }
+            return true;
           }
         }
-        else
+      }
+      else
+      {
+        for (int i = 0; i < size; i++)
         {
-          for (int i = 0; i < size; i++)
+          Object element = revision.get(feature, i);
+          Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
+          if (value.equals(emfElement))
           {
-            Object element = revision.get(feature, i);
-            Object emfElement = convertToEMFInternal(eObject, revision, feature, i, element);
-            if (value.equals(emfElement))
-            {
-              return true;
-            }
+            return true;
           }
         }
+      }
 
-        return false;
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      return false;
+    });
   }
 
   /**
@@ -388,28 +311,18 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public int indexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
-        }
-
-        value = convertToCDOInternal(feature, value);
-
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.indexOf(feature, value);
+        TRACER.format("indexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object converted = convertToCDOInternal(feature, value);
+
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.indexOf(feature, converted);
+    });
   }
 
   /**
@@ -418,28 +331,18 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public int lastIndexOf(InternalEObject eObject, EStructuralFeature feature, Object value)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
-        }
-
-        value = convertToCDOInternal(feature, value);
-
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.lastIndexOf(feature, value);
+        TRACER.format("lastIndexOf({0}, {1}, {2})", cdoObject, feature, value); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object converted = convertToCDOInternal(feature, value);
+
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.lastIndexOf(feature, converted);
+    });
   }
 
   /**
@@ -448,26 +351,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public int hashCode(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("hashCode({0}, {1})", cdoObject, feature); //$NON-NLS-1$
-        }
+        TRACER.format("hashCode({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+      }
 
-        InternalCDORevision revision = readRevision(cdoObject);
-        return revision.hashCode(feature);
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      InternalCDORevision revision = readRevision(cdoObject);
+      return revision.hashCode(feature);
+    });
   }
 
   /**
@@ -476,32 +369,23 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public Object[] toArray(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("toArray({0}, {1})", cdoObject, feature); //$NON-NLS-1$
-        }
-
-        InternalCDORevision revision = readRevision(cdoObject);
-        Object[] result = revision.toArray(feature);
-        for (int i = 0; i < result.length; i++)
-        {
-          result[i] = convertToEMFInternal(eObject, revision, feature, i, result[i]);
-        }
-
-        return result;
+        TRACER.format("toArray({0}, {1})", cdoObject, feature); //$NON-NLS-1$
       }
-      finally
+
+      InternalCDORevision revision = readRevision(cdoObject);
+      Object[] result = revision.toArray(feature);
+
+      for (int i = 0; i < result.length; i++)
       {
-        view.unlockView();
+        result[i] = convertToEMFInternal(eObject, revision, feature, i, result[i]);
       }
-    }
+
+      return result;
+    });
   }
 
   /**
@@ -511,33 +395,20 @@ public final class CDOStoreImpl implements CDOStore
   @SuppressWarnings("unchecked")
   public <T> T[] toArray(InternalEObject eObject, EStructuralFeature feature, T[] a)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
+    return view.sync().supply(() -> {
+      Object[] array = toArray(eObject, feature);
+      int size = array.length;
 
-      try
+      T[] result = a.length < size ? (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size) : a;
+
+      System.arraycopy(array, 0, result, 0, size);
+      if (result.length > size)
       {
-        Object[] array = toArray(eObject, feature);
-        int size = array.length;
-
-        if (a.length < size)
-        {
-          a = (T[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
-        }
-
-        System.arraycopy(array, 0, a, 0, size);
-        if (a.length > size)
-        {
-          a[size] = null;
-        }
-
-        return a;
+        result[size] = null;
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      return a;
+    });
   }
 
   /**
@@ -546,30 +417,20 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer, int newContainerFeatureID)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    view.sync().run(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newEContainer, //$NON-NLS-1$
-              newContainerFeatureID);
-        }
-
-        Object newContainerID = newEContainer == null ? CDOID.NULL : view.convertObjectToID(newEContainer, true);
-        CDOID newResourceID = newResource == null ? CDOID.NULL : newResource.cdoID();
-
-        CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(newResourceID, newContainerID, newContainerFeatureID);
-        writeRevision(cdoObject, delta);
+        TRACER.format("setContainer({0}, {1}, {2}, {3})", cdoObject, newResource, newEContainer, //$NON-NLS-1$
+            newContainerFeatureID);
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object newContainerID = newEContainer == null ? CDOID.NULL : view.convertObjectToID(newEContainer, true);
+      CDOID newResourceID = newResource == null ? CDOID.NULL : newResource.cdoID();
+
+      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(newResourceID, newContainerID, newContainerFeatureID);
+      writeRevision(cdoObject, delta);
+    });
   }
 
   /**
@@ -578,35 +439,25 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public Object set(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
-        }
-
-        value = convertToCDOInternal(feature, value);
-
-        // TODO: Use writeRevision() result!!
-        InternalCDORevision oldRevision = readRevision(cdoObject);
-        Object oldValue = oldRevision.get(feature, index);
-        Object resultValue = convertToEMFInternal(eObject, oldRevision, feature, index, oldValue);
-
-        CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, value, oldValue);
-        writeRevision(cdoObject, delta);
-
-        return resultValue;
+        TRACER.format("set({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object converted = convertToCDOInternal(feature, value);
+
+      // TODO: Use writeRevision() result!!
+      InternalCDORevision oldRevision = readRevision(cdoObject);
+      Object oldValue = oldRevision.get(feature, index);
+      Object resultValue = convertToEMFInternal(eObject, oldRevision, feature, index, oldValue);
+
+      CDOFeatureDelta delta = new CDOSetFeatureDeltaImpl(feature, index, converted, oldValue);
+      writeRevision(cdoObject, delta);
+
+      return resultValue;
+    });
   }
 
   /**
@@ -615,41 +466,31 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public void unset(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    view.sync().run(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
+        TRACER.format("unset({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+      }
+
+      if (feature.isMany())
+      {
+        Object object = cdoObject.eGet(feature);
+        if (object instanceof List<?> && !CDOUtil.isLegacyObject(cdoObject))
         {
-          TRACER.format("unset({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+          List<?> list = (List<?>)object;
+          list.clear();
         }
 
-        if (feature.isMany())
+        if (!feature.isUnsettable())
         {
-          Object object = cdoObject.eGet(feature);
-          if (object instanceof List<?> && !CDOUtil.isLegacyObject(cdoObject))
-          {
-            List<?> list = (List<?>)object;
-            list.clear();
-          }
-
-          if (!feature.isUnsettable())
-          {
-            return;
-          }
+          return;
         }
+      }
 
-        CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
-        writeRevision(cdoObject, delta);
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      CDOFeatureDelta delta = new CDOUnsetFeatureDeltaImpl(feature);
+      writeRevision(cdoObject, delta);
+    });
   }
 
   /**
@@ -658,28 +499,18 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public void add(InternalEObject eObject, EStructuralFeature feature, int index, Object value)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    view.sync().run(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
-        }
-
-        value = convertToCDOInternal(feature, value);
-
-        CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, value);
-        writeRevision(cdoObject, delta);
+        TRACER.format("add({0}, {1}, {2}, {3})", cdoObject, feature, index, value); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object converted = convertToCDOInternal(feature, value);
+
+      CDOFeatureDelta delta = new CDOAddFeatureDeltaImpl(feature, index, converted);
+      writeRevision(cdoObject, delta);
+    });
   }
 
   /**
@@ -688,28 +519,18 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public Object remove(InternalEObject eObject, EStructuralFeature feature, int index)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
-        }
-
-        Object oldValue = getOldListValue(eObject, cdoObject, feature, index);
-
-        removeElement(cdoObject, feature, index);
-        return oldValue;
+        TRACER.format("remove({0}, {1}, {2})", cdoObject, feature, index); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object oldValue = getOldListValue(eObject, cdoObject, feature, index);
+
+      removeElement(cdoObject, feature, index);
+      return oldValue;
+    });
   }
 
   /**
@@ -718,30 +539,20 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public Object move(InternalEObject eObject, EStructuralFeature feature, int target, int source)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    return view.sync().supply(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, feature, target, source); //$NON-NLS-1$
-        }
-
-        Object oldValue = getOldListValue(eObject, cdoObject, feature, source);
-
-        CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, target, source);
-        writeRevision(cdoObject, delta);
-
-        return oldValue;
+        TRACER.format("move({0}, {1}, {2}, {3})", cdoObject, feature, target, source); //$NON-NLS-1$
       }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+
+      Object oldValue = getOldListValue(eObject, cdoObject, feature, source);
+
+      CDOFeatureDelta delta = new CDOMoveFeatureDeltaImpl(feature, target, source);
+      writeRevision(cdoObject, delta);
+
+      return oldValue;
+    });
   }
 
   /**
@@ -750,26 +561,16 @@ public final class CDOStoreImpl implements CDOStore
   @Override
   public void clear(InternalEObject eObject, EStructuralFeature feature)
   {
-    synchronized (view.getViewMonitor())
-    {
-      view.lockView();
-
-      try
+    view.sync().run(() -> {
+      InternalCDOObject cdoObject = getCDOObject(eObject);
+      if (TRACER.isEnabled())
       {
-        InternalCDOObject cdoObject = getCDOObject(eObject);
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("clear({0}, {1})", cdoObject, feature); //$NON-NLS-1$
-        }
+        TRACER.format("clear({0}, {1})", cdoObject, feature); //$NON-NLS-1$
+      }
 
-        CDOFeatureDelta delta = new CDOClearFeatureDeltaImpl(feature);
-        writeRevision(cdoObject, delta);
-      }
-      finally
-      {
-        view.unlockView();
-      }
-    }
+      CDOFeatureDelta delta = new CDOClearFeatureDeltaImpl(feature);
+      writeRevision(cdoObject, delta);
+    });
   }
 
   @Override
@@ -792,21 +593,11 @@ public final class CDOStoreImpl implements CDOStore
   {
     if (value instanceof CDOElementProxy)
     {
-      synchronized (view.getViewMonitor())
-      {
-        view.lockView();
-
-        try
-        {
-          // Resolve proxy
-          CDOElementProxy proxy = (CDOElementProxy)value;
-          value = view.getSession().resolveElementProxy(revision, feature, index, proxy.getIndex());
-        }
-        finally
-        {
-          view.unlockView();
-        }
-      }
+      return view.sync().supply(() -> {
+        // Resolve proxy
+        CDOElementProxy proxy = (CDOElementProxy)value;
+        return view.getSession().resolveElementProxy(revision, feature, index, proxy.getIndex());
+      });
     }
 
     return value;
@@ -855,19 +646,7 @@ public final class CDOStoreImpl implements CDOStore
   {
     if (value != null)
     {
-      synchronized (view.getViewMonitor())
-      {
-        view.lockView();
-
-        try
-        {
-          value = convertToCDOUnsynced(feature, value);
-        }
-        finally
-        {
-          view.unlockView();
-        }
-      }
+      return view.sync().supply(() -> convertToCDOUnsynced(feature, value));
     }
 
     return value;
@@ -909,19 +688,7 @@ public final class CDOStoreImpl implements CDOStore
   {
     if (value != null)
     {
-      synchronized (view.getViewMonitor())
-      {
-        view.lockView();
-
-        try
-        {
-          value = convertToEMFUnsynced(eObject, revision, feature, index, value);
-        }
-        finally
-        {
-          view.unlockView();
-        }
-      }
+      return view.sync().supply(() -> convertToEMFUnsynced(eObject, revision, feature, index, value));
     }
 
     return value;

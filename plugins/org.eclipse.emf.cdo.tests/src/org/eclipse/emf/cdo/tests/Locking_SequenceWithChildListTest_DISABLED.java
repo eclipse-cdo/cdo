@@ -169,70 +169,60 @@ public class Locking_SequenceWithChildListTest_DISABLED extends AbstractLockingT
 
           try
           {
-            synchronized (transaction.getViewMonitor())
-            {
-              transaction.lockView();
-
-              try
+            transaction.sync().run(() -> {
+              for (int retry = 0; retry < RETRIES; ++retry)
               {
-                for (int retry = 0; retry < RETRIES; ++retry)
-                {
-                  Company company = transaction.getObject(c);
-                  CDOObject cdoObject = CDOUtil.getCDOObject(company);
-                  CDOLock lock = cdoObject.cdoWriteLock();
+                Company company = transaction.getObject(c);
+                CDOObject cdoObject = CDOUtil.getCDOObject(company);
+                CDOLock lock = cdoObject.cdoWriteLock();
 
-                  TimerThread timerThread = new TimerThread(getName() + ": lock(" + LOCK_TIMEOUT + ")");
+                TimerThread timerThread = new TimerThread(getName() + ": lock(" + LOCK_TIMEOUT + ")");
+
+                try
+                {
+                  timerThread.start();
+                  lock.lock(LOCK_TIMEOUT);
+
+                  Category category = getModel1Factory().createCategory();
+                  company.getCategories().add(category);
 
                   try
                   {
-                    timerThread.start();
-                    lock.lock(LOCK_TIMEOUT);
+                    int version = cdoObject.cdoRevision().getVersion() + 1;
+                    System.out.println(getName() + ": committing version " + version);
 
-                    Category category = getModel1Factory().createCategory();
-                    company.getCategories().add(category);
+                    transaction.setCommitComment(getName() + ": version " + version);
+                    transaction.commit();
 
-                    try
-                    {
-                      int version = cdoObject.cdoRevision().getVersion() + 1;
-                      System.out.println(getName() + ": committing version " + version);
-
-                      transaction.setCommitComment(getName() + ": version " + version);
-                      transaction.commit();
-
-                      ++additions;
-                      msg("Category added " + getAdditions());
-                      break; // No more retries.
-                    }
-                    catch (Exception ex)
-                    {
-                      exception = ex;
-                      return;
-                    }
+                    ++additions;
+                    msg("Category added " + getAdditions());
+                    break; // No more retries.
                   }
-                  catch (TimeoutException ex)
+                  catch (Exception ex)
                   {
-                    msg("Lock timed out.");
-
                     exception = ex;
-                    if (retry == RETRIES - 1)
-                    {
-                      msg("Exhausted!");
-                      return;
-                    }
-
-                    msg("Trying again...");
-                  }
-                  finally
-                  {
-                    timerThread.done();
+                    return;
                   }
                 }
+                catch (TimeoutException ex)
+                {
+                  msg("Lock timed out.");
+
+                  exception = ex;
+                  if (retry == RETRIES - 1)
+                  {
+                    msg("Exhausted!");
+                    return;
+                  }
+
+                  msg("Trying again...");
+                }
+                finally
+                {
+                  timerThread.done();
+                }
               }
-              finally
-              {
-                transaction.unlockView();
-              }
-            }
+            });
           }
           finally
           {

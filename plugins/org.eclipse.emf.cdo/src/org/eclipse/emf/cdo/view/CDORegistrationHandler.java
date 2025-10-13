@@ -57,16 +57,9 @@ public interface CDORegistrationHandler
 
     private CDOView view;
 
-    public Default(final CDOView view)
+    public Default(CDOView view)
     {
-      view.syncExec(new Runnable()
-      {
-        @Override
-        public void run()
-        {
-          doInitialize(view);
-        }
-      });
+      view.sync().run(() -> doInitialize(view));
 
       this.view = view;
     }
@@ -88,14 +81,7 @@ public interface CDORegistrationHandler
         final CDOView finalView = view;
         view = null;
 
-        finalView.syncExec(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            doDispose(finalView);
-          }
-        });
+        finalView.sync().run(() -> doDispose(finalView));
       }
     }
 

@@ -90,6 +90,8 @@ import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.HashBag;
 import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.concurrent.CriticalSection.LockedCriticalSection;
+import org.eclipse.net4j.util.concurrent.Holder;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.concurrent.RunnableWithName;
 import org.eclipse.net4j.util.concurrent.SerializingExecutor;
@@ -275,84 +277,76 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   public boolean setBranchPoint(CDOBranchPoint branchPoint, IProgressMonitor progressMonitor)
   {
     checkActive();
-    synchronized (getViewMonitor())
-    {
-      lockView();
+
+    return sync.supply(() -> {
+      CDOBranchPoint effectiveBranchPoint = adjustBranchPoint(branchPoint);
+
+      long timeStamp = effectiveBranchPoint.getTimeStamp();
+      long creationTimeStamp = session.getRepositoryInfo().getCreationTime();
+      if (timeStamp != UNSPECIFIED_DATE && timeStamp < creationTimeStamp)
+      {
+        throw new IllegalArgumentException(MessageFormat.format("timeStamp ({0}) < repository creation time ({1})", //$NON-NLS-1$
+            CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp)));
+      }
+
+      CDOBranchPoint oldBranchPoint = CDOBranchUtil.copyBranchPoint(getBranchPoint());
+      if (effectiveBranchPoint.equals(oldBranchPoint))
+      {
+        return false;
+      }
+
+      if (TRACER.isEnabled())
+      {
+        TRACER.format("Changing view target to {0}", effectiveBranchPoint); //$NON-NLS-1$
+      }
+
+      Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
+      List<CDORevisionKey> allChangedObjects = new ArrayList<>();
+      List<CDOIDAndVersion> allDetachedObjects = new ArrayList<>();
+
+      List<InternalCDOObject> invalidObjects = getInvalidObjects(effectiveBranchPoint);
+      for (InternalCDOObject object : invalidObjects)
+      {
+        InternalCDORevision revision = object.cdoRevision();
+        if (revision != null)
+        {
+          oldRevisions.put(object.cdoID(), revision);
+        }
+      }
+
+      CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+      sessionProtocol.switchTarget(viewID, effectiveBranchPoint, invalidObjects, allChangedObjects, allDetachedObjects,
+          EclipseMonitor.convert(progressMonitor));
+
+      basicSetBranchPoint(effectiveBranchPoint);
 
       try
       {
-        branchPoint = adjustBranchPoint(branchPoint);
+        CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
 
-        long timeStamp = branchPoint.getTimeStamp();
-        long creationTimeStamp = session.getRepositoryInfo().getCreationTime();
-        if (timeStamp != UNSPECIFIED_DATE && timeStamp < creationTimeStamp)
-        {
-          throw new IllegalArgumentException(MessageFormat.format("timeStamp ({0}) < repository creation time ({1})", //$NON-NLS-1$
-              CDOCommonUtil.formatTimeStamp(timeStamp), CDOCommonUtil.formatTimeStamp(creationTimeStamp)));
-        }
+        ViewInvalidationData invalidationData = new ViewInvalidationData();
+        invalidationData.setLastUpdateTime(UNSPECIFIED_DATE);
+        invalidationData.setBranch(effectiveBranchPoint.getBranch());
+        invalidationData.setAllChangedObjects(allChangedObjects);
+        invalidationData.setAllDetachedObjects(allDetachedObjects);
+        invalidationData.setOldRevisions(oldRevisions);
+        invalidationData.setClearResourcePathCache(true);
 
-        CDOBranchPoint oldBranchPoint = CDOBranchUtil.copyBranchPoint(getBranchPoint());
-        if (branchPoint.equals(oldBranchPoint))
-        {
-          return false;
-        }
-
-        if (TRACER.isEnabled())
-        {
-          TRACER.format("Changing view target to {0}", branchPoint); //$NON-NLS-1$
-        }
-
-        Map<CDOID, InternalCDORevision> oldRevisions = CDOIDUtil.createMap();
-        List<CDORevisionKey> allChangedObjects = new ArrayList<>();
-        List<CDOIDAndVersion> allDetachedObjects = new ArrayList<>();
-
-        List<InternalCDOObject> invalidObjects = getInvalidObjects(branchPoint);
-        for (InternalCDOObject object : invalidObjects)
-        {
-          InternalCDORevision revision = object.cdoRevision();
-          if (revision != null)
-          {
-            oldRevisions.put(object.cdoID(), revision);
-          }
-        }
-
-        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-        sessionProtocol.switchTarget(viewID, branchPoint, invalidObjects, allChangedObjects, allDetachedObjects, EclipseMonitor.convert(progressMonitor));
-
-        basicSetBranchPoint(branchPoint);
-
-        try
-        {
-          CDOStateMachine.SWITCHING_TARGET.set(Boolean.TRUE);
-
-          ViewInvalidationData invalidationData = new ViewInvalidationData();
-          invalidationData.setLastUpdateTime(UNSPECIFIED_DATE);
-          invalidationData.setBranch(branchPoint.getBranch());
-          invalidationData.setAllChangedObjects(allChangedObjects);
-          invalidationData.setAllDetachedObjects(allDetachedObjects);
-          invalidationData.setOldRevisions(oldRevisions);
-          invalidationData.setClearResourcePathCache(true);
-
-          doInvalidate(invalidationData);
-        }
-        finally
-        {
-          CDOStateMachine.SWITCHING_TARGET.remove();
-        }
-
-        IListener[] listeners = getListeners();
-        if (listeners.length != 0)
-        {
-          fireViewTargetChangedEvent(oldBranchPoint, listeners);
-        }
-
-        return true;
+        doInvalidate(invalidationData);
       }
       finally
       {
-        unlockView();
+        CDOStateMachine.SWITCHING_TARGET.remove();
       }
-    }
+
+      IListener[] listeners = getListeners();
+      if (listeners.length != 0)
+      {
+        fireViewTargetChangedEvent(oldBranchPoint, listeners);
+      }
+
+      return true;
+    });
   }
 
   private List<InternalCDOObject> getInvalidObjects(CDOBranchPoint branchPoint)
@@ -404,115 +398,108 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     List<CDOLockDelta> newObjectLockDeltas = new ArrayList<>();
     List<CDOLockState> newObjectLockStates = new ArrayList<>();
 
-    List<CDOLockDelta> sessionLockDeltas = null;
-    List<CDOLockState> sessionLockStates = null;
+    Holder<List<CDOLockDelta>> sessionLockDeltas = new Holder<>();
+    Holder<List<CDOLockState>> sessionLockStates = new Holder<>();
 
-    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+    long timeStamp = sync.call(InterruptedException.class, () -> {
+      List<CDORevisionKey> revisionKeys = new ArrayList<>();
 
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+      // TODO For recursive locking consider local tree changes (NEW, DIRTY).
+      for (CDOObject object : CollectionUtil.setOf(objects))
       {
-        List<CDORevisionKey> revisionKeys = new ArrayList<>();
-
-        // TODO For recursive locking consider local tree changes (NEW, DIRTY).
-        for (CDOObject object : CollectionUtil.setOf(objects))
+        if (updateLockStateOfNewObject(object, lockType, true, newObjectLockDeltas, newObjectLockStates))
         {
-          if (updateLockStateOfNewObject(object, lockType, true, newObjectLockDeltas, newObjectLockStates))
+          if (recursive)
           {
-            if (recursive)
+            for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
             {
-              for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
-              {
-                CDOObject child = CDOUtil.getCDOObject(it.next());
-                updateLockStateOfNewObject(child, lockType, true, newObjectLockDeltas, newObjectLockStates);
-              }
-            }
-          }
-          else
-          {
-            InternalCDORevision revision = getRevision(object);
-            if (revision != null)
-            {
-              revisionKeys.add(revision);
+              CDOObject child = CDOUtil.getCDOObject(it.next());
+              updateLockStateOfNewObject(child, lockType, true, newObjectLockDeltas, newObjectLockStates);
             }
           }
         }
-
-        LockObjectsResult result = null;
-        if (!revisionKeys.isEmpty())
+        else
         {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, recursive, timeout);
-
-          if (!result.isSuccessful())
+          InternalCDORevision revision = getRevision(object);
+          if (revision != null)
           {
-            if (result.isTimedOut())
-            {
-              throw new LockTimeoutException();
-            }
-
-            CDORevisionKey[] staleRevisions = result.getStaleRevisions();
-            if (staleRevisions != null)
-            {
-              throw new StaleRevisionLockException(staleRevisions);
-            }
-
-            throw new AssertionError("Unexpected lock result state");
-          }
-
-          if (result.isWaitForUpdate())
-          {
-            if (!session.options().isPassiveUpdateEnabled())
-            {
-              throw new AssertionError("Lock result requires client to wait, but client does not have passiveUpdates enabled");
-            }
-
-            long requiredTimestamp = result.getRequiredTimestamp();
-            if (!waitForUpdate(requiredTimestamp, 10000L))
-            {
-              throw new IllegalStateException(
-                  "Lock result requires client to wait for commit " + requiredTimestamp + ", but client did not receive invalidations after " + lastUpdateTime);
-            }
-
-            InternalCDOSession session = this.session;
-            InternalCDORevisionManager revisionManager = session.getRevisionManager();
-
-            for (CDORevisionKey requiredKey : result.getStaleRevisions())
-            {
-              CDOID id = requiredKey.getID();
-              InternalCDOObject object = getObject(id);
-
-              CDORevision revision = object.cdoRevision(true);
-              if (!requiredKey.equals(revision))
-              {
-                InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey, CDORevision.UNCHUNKED, true);
-                InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
-                CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
-              }
-            }
-          }
-        }
-
-        if (result != null)
-        {
-          timeStamp = result.getTimestamp();
-
-          sessionLockDeltas = result.getLockDeltas();
-          if (!ObjectUtil.isEmpty(sessionLockDeltas))
-          {
-            sessionLockStates = result.getLockStates();
-            updateLockStates(sessionLockDeltas, sessionLockStates);
+            revisionKeys.add(revision);
           }
         }
       }
-      finally
+
+      LockObjectsResult result = null;
+      if (!revisionKeys.isEmpty())
       {
-        unlockView();
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        result = sessionProtocol.lockObjects2(revisionKeys, viewID, getBranch(), lockType, recursive, timeout);
+
+        if (!result.isSuccessful())
+        {
+          if (result.isTimedOut())
+          {
+            throw new LockTimeoutException();
+          }
+
+          CDORevisionKey[] staleRevisions = result.getStaleRevisions();
+          if (staleRevisions != null)
+          {
+            throw new StaleRevisionLockException(staleRevisions);
+          }
+
+          throw new AssertionError("Unexpected lock result state");
+        }
+
+        if (result.isWaitForUpdate())
+        {
+          if (!session.options().isPassiveUpdateEnabled())
+          {
+            throw new AssertionError("Lock result requires client to wait, but client does not have passiveUpdates enabled");
+          }
+
+          long requiredTimestamp = result.getRequiredTimestamp();
+          if (!waitForUpdate(requiredTimestamp, 10000L))
+          {
+            throw new IllegalStateException(
+                "Lock result requires client to wait for commit " + requiredTimestamp + ", but client did not receive invalidations after " + lastUpdateTime);
+          }
+
+          InternalCDOSession session = this.session;
+          InternalCDORevisionManager revisionManager = session.getRevisionManager();
+
+          for (CDORevisionKey requiredKey : result.getStaleRevisions())
+          {
+            CDOID id = requiredKey.getID();
+            InternalCDOObject object = getObject(id);
+
+            CDORevision revision = object.cdoRevision(true);
+            if (!requiredKey.equals(revision))
+            {
+              InternalCDORevision requiredRevision = revisionManager.getRevisionByVersion(id, requiredKey, CDORevision.UNCHUNKED, true);
+              InternalCDORevisionDelta revisionDelta = requiredRevision.compare(revision);
+              CDOStateMachine.INSTANCE.invalidate(object, revisionDelta);
+            }
+          }
+        }
       }
-    }
+
+      if (result != null)
+      {
+        List<CDOLockDelta> resultLockDeltas = result.getLockDeltas();
+        sessionLockDeltas.set(resultLockDeltas);
+
+        if (!ObjectUtil.isEmpty(resultLockDeltas))
+        {
+          List<CDOLockState> resultLockStates = result.getLockStates();
+          sessionLockStates.set(resultLockStates);
+          updateLockStates(resultLockDeltas, resultLockStates);
+        }
+
+        return result.getTimestamp();
+      }
+
+      return CDOBranchPoint.UNSPECIFIED_DATE;
+    });
 
     if (!newObjectLockDeltas.isEmpty())
     {
@@ -520,9 +507,10 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (!ObjectUtil.isEmpty(sessionLockDeltas))
+    List<CDOLockDelta> resultLockDeltas = sessionLockDeltas.get();
+    if (!ObjectUtil.isEmpty(resultLockDeltas))
     {
-      notifyLockChanges(timeStamp, sessionLockDeltas, sessionLockStates);
+      notifyLockChanges(timeStamp, resultLockDeltas, sessionLockStates.get());
     }
   }
 
@@ -634,79 +622,72 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     List<CDOLockDelta> newObjectLockDeltas = new ArrayList<>();
     List<CDOLockState> newObjectLockStates = new ArrayList<>();
 
-    List<CDOLockDelta> sessionLockDeltas = null;
-    List<CDOLockState> sessionLockStates = null;
+    Holder<List<CDOLockDelta>> sessionLockDeltas = new Holder<>();
+    Holder<List<CDOLockState>> sessionLockStates = new Holder<>();
 
-    long timeStamp = CDOBranchPoint.UNSPECIFIED_DATE;
+    long timeStamp = sync.supply(() -> {
+      List<CDOID> objectIDs = null;
 
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+      if (objects != null)
       {
-        List<CDOID> objectIDs = null;
+        objectIDs = new ArrayList<>();
 
-        if (objects != null)
+        for (CDOObject object : CollectionUtil.setOf(objects))
         {
-          objectIDs = new ArrayList<>();
-
-          for (CDOObject object : CollectionUtil.setOf(objects))
+          updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates);
+          if (updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates))
           {
-            updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates);
-            if (updateLockStateOfNewObject(object, lockType, false, newObjectLockDeltas, newObjectLockStates))
+            if (recursive)
             {
-              if (recursive)
+              for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
               {
-                for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
-                {
-                  CDOObject child = CDOUtil.getCDOObject(it.next());
-                  updateLockStateOfNewObject(child, lockType, false, newObjectLockDeltas, newObjectLockStates);
-                }
+                CDOObject child = CDOUtil.getCDOObject(it.next());
+                updateLockStateOfNewObject(child, lockType, false, newObjectLockDeltas, newObjectLockStates);
               }
-            }
-            else if (FSMUtil.isTransient(object))
-            {
-              CDOID id = getID((InternalCDOObject)object, true);
-              if (id != null)
-              {
-                objectIDs.add(id);
-              }
-            }
-            else
-            {
-              objectIDs.add(object.cdoID());
             }
           }
-        }
-        else
-        {
-          unlockAllNewObjects(newObjectLockDeltas, newObjectLockStates);
-        }
-
-        UnlockObjectsResult result = null;
-        if (objectIDs == null || !objectIDs.isEmpty())
-        {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          result = sessionProtocol.unlockObjects2(this, objectIDs, lockType, recursive);
-        }
-
-        if (result != null)
-        {
-          timeStamp = result.getTimestamp();
-          sessionLockDeltas = result.getLockDeltas();
-          if (!ObjectUtil.isEmpty(sessionLockDeltas))
+          else if (FSMUtil.isTransient(object))
           {
-            sessionLockStates = result.getLockStates();
-            updateLockStates(sessionLockDeltas, sessionLockStates);
+            CDOID id = getID((InternalCDOObject)object, true);
+            if (id != null)
+            {
+              objectIDs.add(id);
+            }
+          }
+          else
+          {
+            objectIDs.add(object.cdoID());
           }
         }
       }
-      finally
+      else
       {
-        unlockView();
+        unlockAllNewObjects(newObjectLockDeltas, newObjectLockStates);
       }
-    }
+
+      UnlockObjectsResult result = null;
+      if (objectIDs == null || !objectIDs.isEmpty())
+      {
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        result = sessionProtocol.unlockObjects2(this, objectIDs, lockType, recursive);
+      }
+
+      if (result != null)
+      {
+        List<CDOLockDelta> resultLockDeltas = result.getLockDeltas();
+        sessionLockDeltas.set(resultLockDeltas);
+        if (!ObjectUtil.isEmpty(resultLockDeltas))
+        {
+          List<CDOLockState> resultLockStates = result.getLockStates();
+          sessionLockStates.set(resultLockStates);
+          updateLockStates(resultLockDeltas, resultLockStates);
+        }
+
+        return result.getTimestamp();
+      }
+
+      return CDOBranchPoint.UNSPECIFIED_DATE;
+    });
 
     if (!newObjectLockDeltas.isEmpty())
     {
@@ -714,9 +695,10 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       fireLocksChangedEvent(this, lockChangeInfo);
     }
 
-    if (!ObjectUtil.isEmpty(sessionLockDeltas))
+    List<CDOLockDelta> resultLockDeltas = sessionLockDeltas.get();
+    if (!ObjectUtil.isEmpty(resultLockDeltas))
     {
-      notifyLockChanges(timeStamp, sessionLockDeltas, sessionLockStates);
+      notifyLockChanges(timeStamp, resultLockDeltas, sessionLockStates.get());
     }
   }
 
@@ -738,36 +720,27 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   public boolean isObjectLocked(CDOObject object, LockType lockType, boolean byOthers)
   {
     checkActive();
-    synchronized (getViewMonitor())
-    {
-      lockView();
 
-      try
+    return sync.supply(() -> {
+      CDOLockState[] result = { null };
+
+      if (FSMUtil.isNew(object))
       {
-        CDOLockState[] result = { null };
-
-        if (FSMUtil.isNew(object))
-        {
-          result[0] = getLockStateOfNewObject(object);
-        }
-        else
-        {
-          CDOLockStateCache lockStateCache = session.getLockStateCache();
-          CDOBranch branch = getBranch();
-          Collection<CDOID> ids = Collections.singleton(object.cdoID());
-
-          lockStateCache.getLockStates(branch, ids, true, lockState -> {
-            result[0] = lockState;
-          });
-        }
-
-        return result[0] == null ? false : result[0].isLocked(lockType, lockOwner, byOthers);
+        result[0] = getLockStateOfNewObject(object);
       }
-      finally
+      else
       {
-        unlockView();
+        CDOLockStateCache lockStateCache = session.getLockStateCache();
+        CDOBranch branch = getBranch();
+        Collection<CDOID> ids = Collections.singleton(object.cdoID());
+
+        lockStateCache.getLockStates(branch, ids, true, lockState -> {
+          result[0] = lockState;
+        });
       }
-    }
+
+      return result[0] == null ? false : result[0].isLocked(lockType, lockOwner, byOthers);
+    });
   }
 
   protected InternalCDOLockState getLockStateOfNewObject(CDOObject object)
@@ -784,88 +757,54 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public String getDurableLockingID()
   {
-    synchronized (getViewMonitor())
-    {
-      lockView(); // TODO ???
-
-      try
-      {
-        return durableLockingID;
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return sync.supply(() -> durableLockingID);
   }
 
   @Override
   public String enableDurableLocking()
   {
-    String oldID = null;
-    String newID = null;
+    Holder<String> oldID = new Holder<>();
 
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    String newID = sync.supply(() -> {
+      oldID.set(durableLockingID);
+      if (durableLockingID == null)
       {
-        oldID = durableLockingID;
-        if (oldID == null)
-        {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          newID = sessionProtocol.changeLockArea(this, true);
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        String id = sessionProtocol.changeLockArea(this, true);
 
-          durableLockingID = newID;
-          adjustLockOwner();
-        }
-        else
-        {
-          newID = oldID;
-        }
+        durableLockingID = id;
+        adjustLockOwner();
+        return id;
       }
-      finally
-      {
-        unlockView();
-      }
-    }
 
-    fireDurabilityChangedEvent(oldID, newID);
+      return durableLockingID;
+    });
+
+    fireDurabilityChangedEvent(oldID.get(), newID);
     return newID;
   }
 
   @Override
   public void disableDurableLocking(boolean releaseLocks)
   {
-    String oldID = null;
-
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    String oldID = sync.supply(() -> {
+      String id = durableLockingID;
+      if (id != null)
       {
-        oldID = durableLockingID;
-        if (oldID != null)
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        sessionProtocol.changeLockArea(this, false);
+
+        durableLockingID = null;
+        adjustLockOwner();
+
+        if (releaseLocks)
         {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          sessionProtocol.changeLockArea(this, false);
-
-          durableLockingID = null;
-          adjustLockOwner();
-
-          if (releaseLocks)
-          {
-            unlockObjects();
-          }
+          unlockObjects();
         }
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+
+      return id;
+    });
 
     fireDurabilityChangedEvent(oldID, null);
   }
@@ -912,22 +851,12 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public InternalCDORevision getRevision(CDOID id, boolean loadOnDemand)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        InternalCDORevisionManager revisionManager = session.getRevisionManager();
-        int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
-        CDOBranchPoint branchPoint = getBranchPointForID(id);
-        return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return sync.supply(() -> {
+      InternalCDORevisionManager revisionManager = session.getRevisionManager();
+      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
+      CDOBranchPoint branchPoint = getBranchPointForID(id);
+      return revisionManager.getRevision(id, branchPoint, initialChunkSize, CDORevision.DEPTH_NONE, loadOnDemand);
+    });
   }
 
   @Override
@@ -949,33 +878,23 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     checkActive();
     checkState(getTimeStamp() == UNSPECIFIED_DATE, "Locking not supported for historial views"); //$NON-NLS-1$
 
-    synchronized (getViewMonitor())
-    {
-      lockView();
+    sync.run(() -> {
+      List<CDOID> ids = new ArrayList<>();
 
-      try
+      CDOBranch branch = getBranch();
+      CDOLockStateCache lockStateCache = forEachLockState(branch, (object, lockState) -> ids.add(lockState.getID()));
+
+      if (!ids.isEmpty())
       {
-        List<CDOID> ids = new ArrayList<>();
+        CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
+        List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(viewID, ids, CDOLockState.DEPTH_NONE);
 
-        CDOBranch branch = getBranch();
-        CDOLockStateCache lockStateCache = forEachLockState(branch, (object, lockState) -> ids.add(lockState.getID()));
-
-        if (!ids.isEmpty())
+        if (!ObjectUtil.isEmpty(loadedLockStates))
         {
-          CDOSessionProtocol sessionProtocol = session.getSessionProtocol();
-          List<CDOLockState> loadedLockStates = sessionProtocol.getLockStates2(viewID, ids, CDOLockState.DEPTH_NONE);
-
-          if (!ObjectUtil.isEmpty(loadedLockStates))
-          {
-            lockStateCache.addLockStates(branch, loadedLockStates, null);
-          }
+          lockStateCache.addLockStates(branch, loadedLockStates, null);
         }
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+    });
   }
 
   @Override
@@ -987,22 +906,8 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public final CDOLockState[] getLockStates(Collection<CDOID> ids, boolean loadOnDemand)
   {
-    List<CDOLockState> result = new ArrayList<>();
-
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        collectLockStatesAndReturnMissingIDs(ids, loadOnDemand, result);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
-
+    List<CDOLockState> result = new ArrayList<>(0);
+    sync.run(() -> collectLockStatesAndReturnMissingIDs(ids, loadOnDemand, result));
     return result.toArray(new CDOLockState[result.size()]);
   }
 
@@ -1087,20 +992,10 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   {
     checkArg(depth != CDORevision.DEPTH_NONE, "Prefetch depth must not be zero"); //$NON-NLS-1$
 
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
-        prefetchRevisions(id, depth, initialChunkSize);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    sync.run(() -> {
+      int initialChunkSize = session.options().getCollectionLoadingPolicy().getInitialChunkSize();
+      prefetchRevisions(id, depth, initialChunkSize);
+    });
   }
 
   protected void prefetchRevisions(CDOID id, int depth, int initialChunkSize)
@@ -1132,19 +1027,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
     try
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          doInvalidateUnsynced(invalidationData);
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      sync.run(() -> doInvalidateUnsynced(invalidationData));
 
       commitInfoDistributor.distribute(timeStamp);
     }
@@ -1295,65 +1178,55 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
    */
   public void sendDeltaNotifications(Collection<CDORevisionDelta> deltas, Set<CDOObject> detachedObjects, Map<CDOID, InternalCDORevision> oldRevisions)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (deltas != null)
       {
-        if (deltas != null)
+        CDONotificationBuilder builder = new CDONotificationBuilder(this);
+        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
+        for (CDORevisionDelta delta : deltas)
         {
-          CDONotificationBuilder builder = new CDONotificationBuilder(this);
-          Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
-          for (CDORevisionDelta delta : deltas)
+          CDOID id = delta.getID();
+          InternalCDOObject object = objects.get(id);
+          if (object != null && object.eNotificationRequired())
           {
-            CDOID id = delta.getID();
-            InternalCDOObject object = objects.get(id);
-            if (object != null && object.eNotificationRequired())
+            // if (!isLocked(object))
+            {
+              InternalCDORevision oldRevision = null;
+              if (oldRevisions != null)
+              {
+                oldRevision = oldRevisions.get(id);
+              }
+
+              NotificationChain notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
+              if (notification != null)
+              {
+                notification.dispatch();
+              }
+            }
+          }
+        }
+      }
+
+      if (detachedObjects != null && !detachedObjects.isEmpty())
+      {
+        if (options().isDetachmentNotificationEnabled())
+        {
+          for (CDOObject detachedObject : detachedObjects)
+          {
+            InternalCDOObject object = (InternalCDOObject)detachedObject;
+            if (object.eNotificationRequired())
             {
               // if (!isLocked(object))
               {
-                InternalCDORevision oldRevision = null;
-                if (oldRevisions != null)
-                {
-                  oldRevision = oldRevisions.get(id);
-                }
-
-                NotificationChain notification = builder.buildNotification(object, oldRevision, delta, detachedObjects);
-                if (notification != null)
-                {
-                  notification.dispatch();
-                }
+                new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT, null, null, null).dispatch();
               }
             }
           }
         }
 
-        if (detachedObjects != null && !detachedObjects.isEmpty())
-        {
-          if (options().isDetachmentNotificationEnabled())
-          {
-            for (CDOObject detachedObject : detachedObjects)
-            {
-              InternalCDOObject object = (InternalCDOObject)detachedObject;
-              if (object.eNotificationRequired())
-              {
-                // if (!isLocked(object))
-                {
-                  new CDODeltaNotificationImpl(object, CDONotification.DETACH_OBJECT, null, null, null).dispatch();
-                }
-              }
-            }
-          }
-
-          changeSubscriptionManager.handleDetachedObjects(detachedObjects);
-        }
+        changeSubscriptionManager.handleDetachedObjects(detachedObjects);
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+    });
   }
 
   public void firePermissionsChangedEvent(Map<CDORevision, CDOPermission> oldPermissions)
@@ -1418,24 +1291,14 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public void handleAddAdapter(InternalCDOObject eObject, Adapter adapter)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (!FSMUtil.isNew(eObject))
       {
-        if (!FSMUtil.isNew(eObject))
-        {
-          subscribe(eObject, adapter);
-        }
+        subscribe(eObject, adapter);
+      }
 
-        adapterManager.attachAdapter(eObject, adapter);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+      adapterManager.attachAdapter(eObject, adapter);
+    });
   }
 
   /**
@@ -1444,24 +1307,14 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public void handleRemoveAdapter(InternalCDOObject eObject, Adapter adapter)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (!FSMUtil.isNew(eObject))
       {
-        if (!FSMUtil.isNew(eObject))
-        {
-          unsubscribe(eObject, adapter);
-        }
+        unsubscribe(eObject, adapter);
+      }
 
-        adapterManager.detachAdapter(eObject, adapter);
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+      adapterManager.detachAdapter(eObject, adapter);
+    });
   }
 
   /**
@@ -1470,22 +1323,12 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public void subscribe(EObject eObject, Adapter adapter)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (changeSubscriptionManager != null)
       {
-        if (changeSubscriptionManager != null)
-        {
-          changeSubscriptionManager.subscribe(eObject, adapter);
-        }
+        changeSubscriptionManager.subscribe(eObject, adapter);
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+    });
   }
 
   /**
@@ -1494,22 +1337,12 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public void unsubscribe(EObject eObject, Adapter adapter)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (changeSubscriptionManager != null)
       {
-        if (changeSubscriptionManager != null)
-        {
-          changeSubscriptionManager.unsubscribe(eObject, adapter);
-        }
+        changeSubscriptionManager.unsubscribe(eObject, adapter);
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+    });
   }
 
   /**
@@ -1518,24 +1351,14 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public boolean hasSubscription(CDOID id)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    return sync.supply(() -> {
+      if (changeSubscriptionManager != null)
       {
-        if (changeSubscriptionManager != null)
-        {
-          return changeSubscriptionManager.getSubcribeObject(id) != null;
-        }
+        return changeSubscriptionManager.getSubcribeObject(id) != null;
+      }
 
-        return false;
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+      return false;
+    });
   }
 
   /**
@@ -1613,7 +1436,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
       runnable.run();
     }
 
-    if (viewLock != null && Boolean.getBoolean("org.eclipse.emf.cdo.sync.tester"))
+    if (sync instanceof LockedCriticalSection && Boolean.getBoolean("org.eclipse.emf.cdo.sync.tester"))
     {
       new SyncTester().start();
     }
@@ -1698,32 +1521,23 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     }
     finally
     {
-      List<CDOLockDelta> lockDeltas = null;
-      List<CDOLockState> lockStates = new ArrayList<>();
+      List<CDOLockState> lockStates = new ArrayList<>(0);
 
-      synchronized (getViewMonitor())
+      List<CDOLockDelta> lockDeltas = sync.supply(() -> {
+        if (session.isActive())
+        {
+          CDOBranch branch = getBranch();
+          CDOLockStateCache lockStateCache = session.getLockStateCache();
+          return lockStateCache.removeOwner(branch, lockOwner, lockStates::add);
+        }
+
+        return null;
+      });
+
+      if (!ObjectUtil.isEmpty(lockDeltas))
       {
-        lockView();
-
-        try
-        {
-          if (session.isActive())
-          {
-            CDOBranch branch = getBranch();
-            CDOLockStateCache lockStateCache = session.getLockStateCache();
-            lockDeltas = lockStateCache.removeOwner(branch, lockOwner, lockStates::add);
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-
-        if (!ObjectUtil.isEmpty(lockDeltas))
-        {
-          long timeStamp = session.getLastUpdateTime();
-          notifyLockChanges(timeStamp, lockDeltas, lockStates);
-        }
+        long timeStamp = session.getLastUpdateTime();
+        notifyLockChanges(timeStamp, lockDeltas, lockStates);
       }
     }
 
@@ -1830,136 +1644,87 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
   @Override
   public long getLastUpdateTime()
   {
-    synchronized (getViewMonitor())
-    {
-      lockView(); // TODO ???
-
-      try
-      {
-        return lastUpdateTime;
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return sync.supply(() -> lastUpdateTime);
   }
 
   @Override
   public void setLastUpdateTime(long lastUpdateTime)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    sync.run(() -> {
+      if (this.lastUpdateTime < lastUpdateTime)
       {
-        if (this.lastUpdateTime < lastUpdateTime)
-        {
-          this.lastUpdateTime = lastUpdateTime;
-        }
+        this.lastUpdateTime = lastUpdateTime;
+      }
 
-        if (viewLockCondition != null)
-        {
-          viewLockCondition.signalAll();
-        }
-        else
-        {
-          notifyAll();
-        }
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+      viewLockCondition.signalAll();
+    });
   }
 
   @Override
   public boolean waitForUpdate(long updateTime, long timeoutMillis)
   {
     long end = timeoutMillis == NO_TIMEOUT ? Long.MAX_VALUE : System.currentTimeMillis() + timeoutMillis;
-    synchronized (getViewMonitor())
-    {
-      lockView();
 
-      try
+    return sync.supply(() -> {
+      for (;;)
       {
-        for (;;)
+        if (lastUpdateTime >= updateTime)
         {
-          if (lastUpdateTime >= updateTime)
-          {
-            return true;
-          }
+          return true;
+        }
 
-          long now = System.currentTimeMillis();
-          if (now >= end)
-          {
-            return false;
-          }
+        long now = System.currentTimeMillis();
+        if (now >= end)
+        {
+          return false;
+        }
 
-          try
-          {
-            long waitMillis = end - now;
-
-            if (viewLockCondition != null)
-            {
-              viewLockCondition.await(waitMillis, TimeUnit.MILLISECONDS);
-            }
-            else
-            {
-              wait(waitMillis);
-            }
-          }
-          catch (InterruptedException ex)
-          {
-            throw WrappedException.wrap(ex);
-          }
+        try
+        {
+          long waitMillis = end - now;
+          viewLockCondition.await(waitMillis, TimeUnit.MILLISECONDS);
+        }
+        catch (InterruptedException ex)
+        {
+          throw WrappedException.wrap(ex);
         }
       }
-      finally
-      {
-        unlockView();
-      }
-    }
+    });
   }
 
   @Override
   public boolean runAfterUpdate(long updateTime, Runnable runnable)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
+    boolean scheduled = sync.supply(() -> {
+      long lastUpdateTime = getLastUpdateTime();
+      if (lastUpdateTime < updateTime)
       {
-        long lastUpdateTime = getLastUpdateTime();
-        if (lastUpdateTime < updateTime)
+        addListener(new IListener()
         {
-          addListener(new IListener()
+          @Override
+          public void notifyEvent(IEvent event)
           {
-            @Override
-            public void notifyEvent(IEvent event)
+            if (event instanceof CDOViewInvalidationEvent)
             {
-              if (event instanceof CDOViewInvalidationEvent)
+              CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
+              if (e.getTimeStamp() >= updateTime)
               {
-                CDOViewInvalidationEvent e = (CDOViewInvalidationEvent)event;
-                if (e.getTimeStamp() >= updateTime)
-                {
-                  removeListener(this);
-                  runnable.run();
-                }
+                removeListener(this);
+                runnable.run();
               }
             }
-          });
+          }
+        });
 
-          return false;
-        }
+        return true;
       }
-      finally
-      {
-        unlockView();
-      }
+
+      return false;
+    });
+
+    if (scheduled)
+    {
+      return false;
     }
 
     runnable.run();
@@ -2137,19 +1902,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOUnit[] getElements()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return unitPerRoot.values().toArray(new CDOUnit[unitPerRoot.size()]);
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> unitPerRoot.values().toArray(new CDOUnit[unitPerRoot.size()]));
     }
 
     @Override
@@ -2161,19 +1914,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOUnit getOpenUnit(EObject object)
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return getOpenUnitUnsynced(object);
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> getOpenUnitUnsynced(object));
     }
 
     public CDOUnit getOpenUnitUnsynced(EObject object)
@@ -2342,10 +2083,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
     private CDOUnitImpl requestUnit(EObject root, UnitOpcode opcode, IProgressMonitor monitor)
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
+      return sync.supply(() -> {
         try
         {
           if (opcode.isCreate())
@@ -2421,9 +2159,8 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
         {
           openingUnit = null;
           openingIDs = null;
-          unlockView();
         }
-      }
+      });
     }
 
     private void initializeObjectsRecursively(CDORevision revision, CDORevisionProvider revisions)
@@ -2437,44 +2174,31 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
     private void closeUnit(CDOUnit unit, boolean resubscribe)
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      sync.run(() -> {
+        requestUnit(unit.getRoot(), UnitOpcode.CLOSE, null);
 
-        try
+        boolean effectiveResubscribe = resubscribe && !options.hasChangeSubscriptionPolicies() ? false : resubscribe;
+
+        for (Iterator<Map.Entry<EObject, CDOUnit>> it = unitPerObject.entrySet().iterator(); it.hasNext();)
         {
-          requestUnit(unit.getRoot(), UnitOpcode.CLOSE, null);
-
-          if (resubscribe && !options.hasChangeSubscriptionPolicies())
+          Map.Entry<EObject, CDOUnit> entry = it.next();
+          if (entry.getValue() == unit)
           {
-            resubscribe = false;
-          }
+            it.remove(); // Remove the object from its unit first, so that shouldSubscribe() can return true.
 
-          for (Iterator<Map.Entry<EObject, CDOUnit>> it = unitPerObject.entrySet().iterator(); it.hasNext();)
-          {
-            Map.Entry<EObject, CDOUnit> entry = it.next();
-            if (entry.getValue() == unit)
+            if (effectiveResubscribe)
             {
-              it.remove(); // Remove the object from its unit first, so that shouldSubscribe() can return true.
-
-              if (resubscribe)
+              EObject object = entry.getKey();
+              for (Adapter adapter : object.eAdapters())
               {
-                EObject object = entry.getKey();
-                for (Adapter adapter : object.eAdapters())
-                {
-                  changeSubscriptionManager.subscribe(object, adapter);
-                }
+                changeSubscriptionManager.subscribe(object, adapter);
               }
             }
           }
+        }
 
-          unitPerRoot.remove(unit.getRoot());
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        unitPerRoot.remove(unit.getRoot());
+      });
 
       fireElementRemovedEvent(unit);
     }
@@ -3353,19 +3077,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public boolean isLoadNotificationEnabled()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return loadNotificationEnabled;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> loadNotificationEnabled);
     }
 
     @Override
@@ -3373,24 +3085,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (loadNotificationEnabled != enabled)
+        {
+          loadNotificationEnabled = enabled;
+          return new LoadNotificationEventImpl();
+        }
 
-        try
-        {
-          if (loadNotificationEnabled != enabled)
-          {
-            loadNotificationEnabled = enabled;
-            event = new LoadNotificationEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3398,19 +3101,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public boolean isDetachmentNotificationEnabled()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return detachmentNotificationEnabled;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> detachmentNotificationEnabled);
     }
 
     @Override
@@ -3418,24 +3109,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (detachmentNotificationEnabled != enabled)
+        {
+          detachmentNotificationEnabled = enabled;
+          return new DetachmentNotificationEventImpl();
+        }
 
-        try
-        {
-          if (detachmentNotificationEnabled != enabled)
-          {
-            detachmentNotificationEnabled = enabled;
-            event = new DetachmentNotificationEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3443,19 +3125,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public boolean isInvalidationNotificationEnabled()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return invalidationNotificationEnabled;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> invalidationNotificationEnabled);
     }
 
     @Override
@@ -3463,24 +3133,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (invalidationNotificationEnabled != enabled)
+        {
+          invalidationNotificationEnabled = enabled;
+          return new InvalidationNotificationEventImpl();
+        }
 
-        try
-        {
-          if (invalidationNotificationEnabled != enabled)
-          {
-            invalidationNotificationEnabled = enabled;
-            event = new InvalidationNotificationEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3488,19 +3149,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOInvalidationPolicy getInvalidationPolicy()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return invalidationPolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> invalidationPolicy);
     }
 
     @Override
@@ -3508,24 +3157,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (invalidationPolicy != policy)
+        {
+          invalidationPolicy = policy;
+          return new InvalidationPolicyEventImpl();
+        }
 
-        try
-        {
-          if (invalidationPolicy != policy)
-          {
-            invalidationPolicy = policy;
-            event = new InvalidationPolicyEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3533,7 +3173,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public boolean isLockNotificationEnabled()
     {
-      return lockNotificationsEnabled;
+      return sync.supply(() -> lockNotificationsEnabled);
     }
 
     @Override
@@ -3541,27 +3181,18 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
+      IEvent event = sync.supply(() -> {
+        if (enabled != lockNotificationsEnabled)
         {
-          if (enabled != lockNotificationsEnabled)
-          {
-            CDOSessionProtocol protocol = session.getSessionProtocol();
-            protocol.enableLockNotifications(viewID, enabled);
+          CDOSessionProtocol protocol = session.getSessionProtocol();
+          protocol.enableLockNotifications(viewID, enabled);
 
-            lockNotificationsEnabled = enabled;
-            event = new LockNotificationEventImpl(enabled);
-          }
+          lockNotificationsEnabled = enabled;
+          return new LockNotificationEventImpl(enabled);
         }
-        finally
-        {
-          unlockView();
-        }
-      }
+
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3634,37 +3265,13 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
 
     public boolean hasChangeSubscriptionPolicies()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return !changeSubscriptionPolicies.isEmpty();
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> !changeSubscriptionPolicies.isEmpty());
     }
 
     @Override
     public CDOAdapterPolicy[] getChangeSubscriptionPolicies()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return changeSubscriptionPolicies.toArray(new CDOAdapterPolicy[changeSubscriptionPolicies.size()]);
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> changeSubscriptionPolicies.toArray(new CDOAdapterPolicy[changeSubscriptionPolicies.size()]));
     }
 
     @Override
@@ -3672,24 +3279,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (changeSubscriptionPolicies.add(policy))
+        {
+          changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
+          return new ChangeSubscriptionPoliciesEventImpl();
+        }
 
-        try
-        {
-          if (changeSubscriptionPolicies.add(policy))
-          {
-            changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
-            event = new ChangeSubscriptionPoliciesEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3699,24 +3297,15 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
+        {
+          changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
+          return new ChangeSubscriptionPoliciesEventImpl();
+        }
 
-        try
-        {
-          if (changeSubscriptionPolicies.remove(policy) && !changeSubscriptionPolicies.contains(policy))
-          {
-            changeSubscriptionManager.handleChangeSubcriptionPoliciesChanged();
-            event = new ChangeSubscriptionPoliciesEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3724,19 +3313,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOAdapterPolicy getStrongReferencePolicy()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return strongReferencePolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> strongReferencePolicy);
     }
 
     @Override
@@ -3744,30 +3321,18 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      if (adapterPolicy == null)
-      {
-        adapterPolicy = CDOAdapterPolicy.ALL;
-      }
+      CDOAdapterPolicy effectiveAdapterPolicy = ObjectUtil.requireNonNullElse(adapterPolicy, CDOAdapterPolicy.ALL);
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (strongReferencePolicy != effectiveAdapterPolicy)
+        {
+          strongReferencePolicy = effectiveAdapterPolicy;
+          adapterManager.reset();
+          return new ReferencePolicyEventImpl();
+        }
 
-        try
-        {
-          if (strongReferencePolicy != adapterPolicy)
-          {
-            strongReferencePolicy = adapterPolicy;
-            adapterManager.reset();
-            event = new ReferencePolicyEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3775,19 +3340,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDORevisionPrefetchingPolicy getRevisionPrefetchingPolicy()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return revisionPrefetchingPolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> revisionPrefetchingPolicy);
     }
 
     @Override
@@ -3795,29 +3348,17 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      if (prefetchingPolicy == null)
-      {
-        prefetchingPolicy = CDORevisionPrefetchingPolicy.NO_PREFETCHING;
-      }
+      CDORevisionPrefetchingPolicy effectivePrefetchingPolicy = ObjectUtil.requireNonNullElse(prefetchingPolicy, CDORevisionPrefetchingPolicy.NO_PREFETCHING);
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (revisionPrefetchingPolicy != effectivePrefetchingPolicy)
+        {
+          revisionPrefetchingPolicy = effectivePrefetchingPolicy;
+          return new RevisionPrefetchingPolicyEventImpl();
+        }
 
-        try
-        {
-          if (revisionPrefetchingPolicy != prefetchingPolicy)
-          {
-            revisionPrefetchingPolicy = prefetchingPolicy;
-            event = new RevisionPrefetchingPolicyEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3825,19 +3366,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOFeatureAnalyzer getFeatureAnalyzer()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return featureAnalyzer;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> featureAnalyzer);
     }
 
     @Override
@@ -3845,29 +3374,17 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      if (featureAnalyzer == null)
-      {
-        featureAnalyzer = CDOFeatureAnalyzer.NOOP;
-      }
+      CDOFeatureAnalyzer effectiveFeatureAnalyzer = ObjectUtil.requireNonNullElse(featureAnalyzer, CDOFeatureAnalyzer.NOOP);
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (this.featureAnalyzer != effectiveFeatureAnalyzer)
+        {
+          this.featureAnalyzer = effectiveFeatureAnalyzer;
+          return new FeatureAnalyzerEventImpl();
+        }
 
-        try
-        {
-          if (this.featureAnalyzer != featureAnalyzer)
-          {
-            this.featureAnalyzer = featureAnalyzer;
-            event = new FeatureAnalyzerEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3889,19 +3406,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public CDOStaleReferencePolicy getStaleReferencePolicy()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return staleReferencePolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> staleReferencePolicy);
     }
 
     @Override
@@ -3909,29 +3414,17 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      if (policy == null)
-      {
-        policy = CDOStaleReferencePolicy.DEFAULT;
-      }
+      CDOStaleReferencePolicy effectivePolicy = ObjectUtil.requireNonNullElse(policy, CDOStaleReferencePolicy.DEFAULT);
 
-      IEvent event = null;
-      synchronized (getViewMonitor())
-      {
-        lockView();
+      IEvent event = sync.supply(() -> {
+        if (staleReferencePolicy != effectivePolicy)
+        {
+          staleReferencePolicy = effectivePolicy;
+          return new StaleReferencePolicyEventImpl();
+        }
 
-        try
-        {
-          if (staleReferencePolicy != policy)
-          {
-            staleReferencePolicy = policy;
-            event = new StaleReferencePolicyEventImpl();
-          }
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+        return null;
+      });
 
       fireEvent(event);
     }
@@ -3939,35 +3432,25 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     @Override
     public ReferenceType getCacheReferenceType()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
+      return sync.supply(() -> {
+        Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
+        if (objects instanceof ReferenceValueMap.Strong<?, ?>)
         {
-          Map<CDOID, InternalCDOObject> objects = getModifiableObjects();
-          if (objects instanceof ReferenceValueMap.Strong<?, ?>)
-          {
-            return ReferenceType.STRONG;
-          }
-
-          if (objects instanceof ReferenceValueMap.Soft<?, ?>)
-          {
-            return ReferenceType.SOFT;
-          }
-
-          if (objects instanceof ReferenceValueMap.Weak<?, ?>)
-          {
-            return ReferenceType.WEAK;
-          }
-
-          throw new IllegalStateException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
+          return ReferenceType.STRONG;
         }
-        finally
+
+        if (objects instanceof ReferenceValueMap.Soft<?, ?>)
         {
-          unlockView();
+          return ReferenceType.SOFT;
         }
-      }
+
+        if (objects instanceof ReferenceValueMap.Weak<?, ?>)
+        {
+          return ReferenceType.WEAK;
+        }
+
+        throw new IllegalStateException(Messages.getString("CDOViewImpl.29")); //$NON-NLS-1$
+      });
     }
 
     @Override
@@ -3975,53 +3458,27 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      if (referenceType == null)
-      {
-        referenceType = ReferenceType.SOFT;
-      }
+      ReferenceType effectiveReferenceType = ObjectUtil.requireNonNullElse(referenceType, ReferenceType.SOFT);
 
-      synchronized (getViewMonitor())
+      boolean needEvent = sync.supply(() -> initObjectsMap(effectiveReferenceType));
+      if (needEvent)
       {
-        lockView();
-
-        try
+        IListener[] listeners = getListeners();
+        if (listeners.length != 0)
         {
-          if (!initObjectsMap(referenceType))
-          {
-            return false;
-          }
+          fireEvent(new CacheReferenceTypeEventImpl(), listeners);
         }
-        finally
-        {
-          unlockView();
-        }
+
+        return true;
       }
 
-      IListener[] listeners = getListeners();
-      if (listeners.length != 0)
-      {
-        fireEvent(new CacheReferenceTypeEventImpl(), listeners);
-      }
-
-      return true;
+      return false;
     }
 
     @Override
     public CDOAdapterPolicy getClearAdapterPolicy()
     {
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          return clearAdapterPolicy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      return sync.supply(() -> clearAdapterPolicy);
     }
 
     @Override
@@ -4029,19 +3486,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       checkActive();
 
-      synchronized (getViewMonitor())
-      {
-        lockView();
-
-        try
-        {
-          clearAdapterPolicy = policy;
-        }
-        finally
-        {
-          unlockView();
-        }
-      }
+      sync.run(() -> clearAdapterPolicy = policy);
 
       IListener[] listeners = getListeners();
       if (listeners.length != 0)

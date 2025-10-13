@@ -21,7 +21,6 @@ import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 
 /**
@@ -93,17 +92,12 @@ public class Bugzilla_390185_Test extends AbstractCDOTest
 
         try
         {
-          transaction.syncExec(new Callable<Object>()
-          {
-            @Override
-            public Object call() throws Exception
-            {
-              CDOResource res = transaction.getOrCreateResource(getResourcePath("/res-" + nr));
-              res.getContents().add(category);
-              transaction.commit();
+          transaction.sync().call(() -> {
+            CDOResource res = transaction.getOrCreateResource(getResourcePath("/res-" + nr));
+            res.getContents().add(category);
+            transaction.commit();
 
-              return null;
-            }
+            return null;
           });
 
           break;

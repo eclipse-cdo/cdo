@@ -48,6 +48,7 @@ import org.eclipse.emf.internal.cdo.object.CDONotificationBuilder;
 
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.fsm.FiniteStateMachine;
 import org.eclipse.net4j.util.fsm.ITransition;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
@@ -76,7 +77,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 /**
  * @author Eike Stepper
@@ -210,28 +210,18 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
    */
   public void attach(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
+    transaction.sync().run(() -> {
+      object.cdoInternalPreAttach();
 
-      try
+      List<InternalCDOObject> contents = new ArrayList<>();
+      prepare(object, Pair.create(transaction, contents));
+
+      attachOrReattach(object, transaction);
+      for (InternalCDOObject content : contents)
       {
-        object.cdoInternalPreAttach();
-
-        List<InternalCDOObject> contents = new ArrayList<>();
-        prepare(object, Pair.create(transaction, contents));
-
-        attachOrReattach(object, transaction);
-        for (InternalCDOObject content : contents)
-        {
-          attachOrReattach(content, transaction);
-        }
+        attachOrReattach(content, transaction);
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    });
   }
 
   private void attachOrReattach(InternalCDOObject object, InternalCDOTransaction transaction)
@@ -287,144 +277,76 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   public void detach(InternalCDOObject object)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    sync(object).run(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.DETACH);
       }
 
-      try
+      List<InternalCDOObject> objectsToDetach = new ArrayList<>();
+      InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
+
+      // Accumulate objects that needs to be detached
+      // If we have an error, we will keep the graph exactly like it was before.
+      process(object, CDOEvent.DETACH, objectsToDetach);
+
+      // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
+      for (InternalCDOObject content : objectsToDetach)
       {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.DETACH);
-        }
-
-        List<InternalCDOObject> objectsToDetach = new ArrayList<>();
-        InternalCDOTransaction transaction = (InternalCDOTransaction)object.cdoView();
-
-        // Accumulate objects that needs to be detached
-        // If we have an error, we will keep the graph exactly like it was before.
-        process(object, CDOEvent.DETACH, objectsToDetach);
-
-        // postDetach() requires the object to be TRANSIENT, but listeners must not be notified at this point!
-        for (InternalCDOObject content : objectsToDetach)
-        {
-          CDOState oldState = setStateQuietely(content, CDOState.TRANSIENT);
-          content.cdoInternalPostDetach(false, content == object);
-          setStateQuietely(content, oldState);
-        }
-
-        // detachObject() needs to know the state before we change the object to TRANSIENT
-        for (InternalCDOObject content : objectsToDetach)
-        {
-          transaction.detachObject(content);
-          content.cdoInternalSetState(CDOState.TRANSIENT);
-
-          content.cdoInternalSetView(null);
-          content.cdoInternalSetID(null);
-        }
+        CDOState oldState = setStateQuietely(content, CDOState.TRANSIENT);
+        content.cdoInternalPostDetach(false, content == object);
+        setStateQuietely(content, oldState);
       }
-      finally
+
+      // detachObject() needs to know the state before we change the object to TRANSIENT
+      for (InternalCDOObject content : objectsToDetach)
       {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
+        transaction.detachObject(content);
+        content.cdoInternalSetState(CDOState.TRANSIENT);
+
+        content.cdoInternalSetView(null);
+        content.cdoInternalSetID(null);
       }
-    }
+    });
   }
 
   public InternalCDORevision read(InternalCDOObject object)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    return sync(object).supply(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.READ);
       }
 
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.READ);
-        }
-
-        process(object, CDOEvent.READ, null);
-        return object.cdoRevision();
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      process(object, CDOEvent.READ, null);
+      return object.cdoRevision();
+    });
   }
 
   public InternalCDORevision readNoLoad(InternalCDOObject object)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    return sync(object).supply(() -> {
+      switch (object.cdoState())
       {
-        lock.lock();
+      case TRANSIENT:
+      case PREPARED:
+      case NEW:
+      case CONFLICT:
+      case INVALID_CONFLICT:
+      case INVALID:
+      case PROXY:
+        return null;
       }
 
-      try
-      {
-        switch (object.cdoState())
-        {
-        case TRANSIENT:
-        case PREPARED:
-        case NEW:
-        case CONFLICT:
-        case INVALID_CONFLICT:
-        case INVALID:
-        case PROXY:
-          return null;
-        }
-
-        return object.cdoRevision();
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      return object.cdoRevision();
+    });
   }
 
   public Object write(InternalCDOObject object, CDOFeatureDelta featureDelta)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
-      {
-        lock.lock();
-      }
-
-      try
-      {
-        return writeUnsynced(object, featureDelta);
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+    return sync(object).supply(() -> {
+      return writeUnsynced(object, featureDelta);
+    });
   }
 
   public Object writeUnsynced(InternalCDOObject object, CDOFeatureDelta featureDelta)
@@ -448,93 +370,42 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
       return;
     }
 
-    synchronized (getMonitor(objects[0]))
-    {
-      Lock lock = getLock(objects[0]);
-      if (lock != null)
+    sync(objects[0]).run(() -> {
+      for (InternalCDOObject object : objects)
       {
-        lock.lock();
-      }
-
-      try
-      {
-        for (InternalCDOObject object : objects)
+        CDOState state = object.cdoState();
+        if (state == CDOState.CLEAN || state == CDOState.PROXY)
         {
-          CDOState state = object.cdoState();
-          if (state == CDOState.CLEAN || state == CDOState.PROXY)
-          {
-            changeState(object, CDOState.PROXY);
-            object.cdoInternalSetRevision(null);
-            read(object);
-          }
+          changeState(object, CDOState.PROXY);
+          object.cdoInternalSetRevision(null);
+          read(object);
         }
       }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+    });
   }
 
   public void invalidate(InternalCDOObject object, CDORevisionKey key)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    sync(object).run(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.INVALIDATE);
       }
 
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.INVALIDATE);
-        }
-
-        process(object, CDOEvent.INVALIDATE, key);
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      process(object, CDOEvent.INVALIDATE, key);
+    });
   }
 
   public void detachRemote(InternalCDOObject object)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    sync(object).run(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.DETACH_REMOTE);
       }
 
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.DETACH_REMOTE);
-        }
-
-        process(object, CDOEvent.DETACH_REMOTE, null);
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      process(object, CDOEvent.DETACH_REMOTE, null);
+    });
   }
 
   public void commit(Map<CDOID, CDOObject> objects, CommitTransactionResult result)
@@ -552,60 +423,26 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
 
   private void commitObject(InternalCDOObject object, CommitTransactionResult result)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    sync(object).run(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.COMMIT);
       }
 
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.COMMIT);
-        }
-
-        process(object, CDOEvent.COMMIT, result);
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      process(object, CDOEvent.COMMIT, result);
+    });
   }
 
   public void rollback(InternalCDOObject object, InternalCDOTransaction transaction)
   {
-    synchronized (getMonitor(object))
-    {
-      Lock lock = getLock(object);
-      if (lock != null)
+    sync(object).run(() -> {
+      if (TRACER.isEnabled())
       {
-        lock.lock();
+        trace(object, CDOEvent.ROLLBACK);
       }
 
-      try
-      {
-        if (TRACER.isEnabled())
-        {
-          trace(object, CDOEvent.ROLLBACK);
-        }
-
-        process(object, CDOEvent.ROLLBACK, transaction);
-      }
-      finally
-      {
-        if (lock != null)
-        {
-          lock.unlock();
-        }
-      }
-    }
+      process(object, CDOEvent.ROLLBACK, transaction);
+    });
   }
 
   @Override
@@ -649,28 +486,16 @@ public final class CDOStateMachine extends FiniteStateMachine<CDOState, CDOEvent
     }
   }
 
-  private Lock getLock(InternalCDOObject object)
+  private CriticalSection sync(InternalCDOObject object)
   {
     InternalCDOView view = object.cdoView();
     if (view != null)
     {
-      return view.getViewLock();
+      return view.sync();
     }
 
     // In TRANSIENT and PREPARED the object is not yet attached to a view
-    return null;
-  }
-
-  private Object getMonitor(InternalCDOObject object)
-  {
-    InternalCDOView view = object.cdoView();
-    if (view != null)
-    {
-      return view.getViewMonitor();
-    }
-
-    // In TRANSIENT and PREPARED the object is not yet attached to a view
-    return object;
+    return CriticalSection.UNSYNCHRONIZED;
   }
 
   /**

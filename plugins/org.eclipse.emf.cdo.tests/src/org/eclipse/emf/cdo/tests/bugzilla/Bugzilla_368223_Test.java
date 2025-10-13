@@ -29,7 +29,6 @@ import org.eclipse.emf.ecore.EObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Callable;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
@@ -145,36 +144,31 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       int loop = 5;
       while (exception.get() == null && --loop != 0)
       {
-        transaction.syncExec(new Callable<Object>()
-        {
-          @Override
-          public Object call() throws Exception
+        transaction.sync().call(() -> {
+          for (int i = 0; i < 20; i++)
           {
-            for (int i = 0; i < 20; i++)
+            Company company = createCompanyWithCategories(resource);
+            listOfCompanies.add(company);
+          }
+
+          transaction.commit();
+
+          while (!listOfCompanies.isEmpty())
+          {
+            Company company = listOfCompanies.remove(0);
+
+            EList<Category> categories = company.getCategories();
+            while (!categories.isEmpty())
             {
-              Company company = createCompanyWithCategories(resource);
-              listOfCompanies.add(company);
-            }
-
-            transaction.commit();
-
-            while (!listOfCompanies.isEmpty())
-            {
-              Company company = listOfCompanies.remove(0);
-
-              EList<Category> categories = company.getCategories();
-              while (!categories.isEmpty())
-              {
-                categories.remove(0);
-                transaction.commit();
-              }
-
-              resource.getContents().remove(company);
+              categories.remove(0);
               transaction.commit();
             }
 
-            return null;
+            resource.getContents().remove(company);
+            transaction.commit();
           }
+
+          return null;
         });
       }
 
@@ -224,24 +218,19 @@ public class Bugzilla_368223_Test extends AbstractCDOTest
       {
         try
         {
-          transaction.syncExec(new Callable<Object>()
-          {
-            @Override
-            public Object call() throws Exception
+          transaction.sync().call(() -> {
+            for (EObject object : resource.getContents())
             {
-              for (EObject object : resource.getContents())
+              Company company = (Company)object;
+              EList<Category> categories = company.getCategories();
+              if (categories.size() > 0)
               {
-                Company company = (Company)object;
-                EList<Category> categories = company.getCategories();
-                if (categories.size() > 0)
-                {
-                  Category category = categories.get(0);
-                  msg(category);
-                }
+                Category category = categories.get(0);
+                msg(category);
               }
-
-              return null;
             }
+
+            return null;
           });
         }
         catch (InvalidObjectException ex)

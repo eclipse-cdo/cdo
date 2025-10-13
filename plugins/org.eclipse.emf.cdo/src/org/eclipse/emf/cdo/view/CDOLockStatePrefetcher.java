@@ -169,7 +169,7 @@ public class CDOLockStatePrefetcher
 
   private void updateLockStates(CDORevisionsLoadedEvent event)
   {
-    view.syncExec(() -> {
+    view.sync().run(() -> {
       try
       {
         Set<CDOID> ids = new HashSet<>();

@@ -111,14 +111,9 @@ public class CDOTransactionCommentator implements Closeable
     this.transaction = transaction;
     this.showMerges = showMerges;
 
-    transaction.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        transaction.addListener(transactionListener);
-        transaction.addTransactionHandler(transactionHandler);
-      }
+    transaction.sync().run(() -> {
+      transaction.addListener(transactionListener);
+      transaction.addTransactionHandler(transactionHandler);
     });
   }
 
@@ -140,14 +135,7 @@ public class CDOTransactionCommentator implements Closeable
    */
   public final void setShowMerges(final boolean showMerges)
   {
-    transaction.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        CDOTransactionCommentator.this.showMerges = showMerges;
-      }
-    });
+    transaction.sync().run(() -> CDOTransactionCommentator.this.showMerges = showMerges);
   }
 
   @Override
@@ -159,14 +147,9 @@ public class CDOTransactionCommentator implements Closeable
   @Override
   public void close()
   {
-    transaction.syncExec(new Runnable()
-    {
-      @Override
-      public void run()
-      {
-        transaction.removeTransactionHandler(transactionHandler);
-        transaction.removeListener(transactionListener);
-      }
+    transaction.sync().run(() -> {
+      transaction.removeTransactionHandler(transactionHandler);
+      transaction.removeListener(transactionListener);
     });
 
     transaction = null;

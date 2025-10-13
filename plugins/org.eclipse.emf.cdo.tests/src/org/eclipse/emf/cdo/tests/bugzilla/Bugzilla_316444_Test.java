@@ -32,7 +32,6 @@ import org.eclipse.emf.ecore.resource.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.Callable;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -593,22 +592,17 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     }
 
     CDOView view = CDOUtil.getView(node);
-    return view.syncExec(new Callable<NodeB>()
-    {
-      @Override
-      public NodeB call() throws Exception
+    return view.sync().call(() -> {
+      for (NodeB child : node.getChildren())
       {
-        for (NodeB child : node.getChildren())
+        NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
+        if (elementFromGraph != null)
         {
-          NodeB elementFromGraph = getElementFromGraphNodeB(child, name);
-          if (elementFromGraph != null)
-          {
-            return elementFromGraph;
-          }
+          return elementFromGraph;
         }
-
-        return null;
       }
+
+      return null;
     });
   }
 
@@ -621,22 +615,17 @@ public class Bugzilla_316444_Test extends AbstractCDOTest
     }
 
     CDOView view = CDOUtil.getView(node);
-    return view.syncExec(new Callable<NodeA>()
-    {
-      @Override
-      public NodeA call() throws Exception
+    return view.sync().call(() -> {
+      for (NodeA child : node.getChildren())
       {
-        for (NodeA child : node.getChildren())
+        NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
+        if (elementFromGraph != null)
         {
-          NodeA elementFromGraph = getElementFromGraphNodeA(child, name);
-          if (elementFromGraph != null)
-          {
-            return elementFromGraph;
-          }
+          return elementFromGraph;
         }
-
-        return null;
       }
+
+      return null;
     });
   }
 

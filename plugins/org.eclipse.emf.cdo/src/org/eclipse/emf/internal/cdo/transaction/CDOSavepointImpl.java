@@ -24,7 +24,9 @@ import org.eclipse.emf.cdo.common.revision.delta.CDOFeatureDelta;
 import org.eclipse.emf.cdo.common.revision.delta.CDORevisionDelta;
 import org.eclipse.emf.cdo.internal.common.commit.CDOChangeSetDataImpl;
 import org.eclipse.emf.cdo.internal.common.revision.delta.CDORevisionDeltaImpl;
+
 import org.eclipse.net4j.util.collection.MultiMap;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 
 import org.eclipse.emf.spi.cdo.CDOTransactionStrategy;
@@ -63,24 +65,14 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
     @Override
     public CDOObject put(CDOID key, CDOObject object)
     {
-      synchronized (transaction.getViewMonitor())
-      {
-        transaction.lockView();
-
-        try
-        {
-          baseNewObjects.remove(key);
-          newObjects.remove(key);
-          reattachedObjects.remove(key);
-          dirtyObjects.remove(key);
-          revisionDeltas.remove(key);
-          return super.put(key, object);
-        }
-        finally
-        {
-          transaction.unlockView();
-        }
-      }
+      return sync().supply(() -> {
+        baseNewObjects.remove(key);
+        newObjects.remove(key);
+        reattachedObjects.remove(key);
+        dirtyObjects.remove(key);
+        revisionDeltas.remove(key);
+        return super.put(key, object);
+      });
     }
   };
 
@@ -122,78 +114,32 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public InternalCDOSavepoint getFirstSavePoint()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        return (InternalCDOSavepoint)super.getFirstSavePoint();
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    return sync().supply(() -> (InternalCDOSavepoint)super.getFirstSavePoint());
   }
 
   @Override
   public InternalCDOSavepoint getPreviousSavepoint()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        return (InternalCDOSavepoint)super.getPreviousSavepoint();
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    return sync().supply(() -> (InternalCDOSavepoint)super.getPreviousSavepoint());
   }
 
   @Override
   public InternalCDOSavepoint getNextSavepoint()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        return (InternalCDOSavepoint)super.getNextSavepoint();
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    return sync().supply(() -> (InternalCDOSavepoint)super.getNextSavepoint());
   }
 
   @Override
   public void clear()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        newObjects.clear();
-        dirtyObjects.clear();
-        revisionDeltas.clear();
-        baseNewObjects.clear();
-        detachedObjects.clear();
-        reattachedObjects.clear();
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    sync().run(() -> {
+      newObjects.clear();
+      dirtyObjects.clear();
+      revisionDeltas.clear();
+      baseNewObjects.clear();
+      detachedObjects.clear();
+      reattachedObjects.clear();
+    });
   }
 
   @Override
@@ -366,37 +312,13 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public CDOChangeSetData getChangeSetData()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        return createChangeSetData(newObjects, revisionDeltas, detachedObjects);
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    return sync().supply(() -> createChangeSetData(newObjects, revisionDeltas, detachedObjects));
   }
 
   @Override
   public CDOChangeSetData getAllChangeSetData()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
-      {
-        return createChangeSetData(getAllNewObjects(), getAllRevisionDeltas(), getAllDetachedObjects());
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+    return sync().supply(() -> createChangeSetData(getAllNewObjects(), getAllRevisionDeltas(), getAllDetachedObjects()));
   }
 
   private CDOChangeSetData createChangeSetData(Map<CDOID, CDOObject> newObjects, Map<CDOID, CDORevisionDelta> revisionDeltas,
@@ -435,30 +357,20 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllDirtyObjects()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      if (getPreviousSavepoint() == null)
       {
-        if (getPreviousSavepoint() == null)
-        {
-          return Collections.unmodifiableMap(getDirtyObjects());
-        }
-
-        MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<>();
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-        {
-          dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
-        }
-
-        return dirtyObjects;
+        return Collections.unmodifiableMap(getDirtyObjects());
       }
-      finally
+
+      MultiMap.ListBased<CDOID, CDOObject> dirtyObjects = new MultiMap.ListBased<>();
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
-        transaction.unlockView();
+        dirtyObjects.getDelegates().add(savepoint.getDirtyObjects());
       }
-    }
+
+      return dirtyObjects;
+    });
   }
 
   /**
@@ -467,35 +379,25 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDOObject> getAllNewObjects()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      if (getPreviousSavepoint() == null)
       {
-        if (getPreviousSavepoint() == null)
-        {
-          return Collections.unmodifiableMap(getNewObjects());
-        }
-
-        Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
-        {
-          newObjects.putAll(savepoint.getNewObjects());
-
-          for (CDOID removedID : savepoint.getDetachedObjects().keySet())
-          {
-            newObjects.remove(removedID);
-          }
-        }
-
-        return newObjects;
+        return Collections.unmodifiableMap(getNewObjects());
       }
-      finally
+
+      Map<CDOID, CDOObject> newObjects = CDOIDUtil.createMap();
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
       {
-        transaction.unlockView();
+        newObjects.putAll(savepoint.getNewObjects());
+
+        for (CDOID removedID : savepoint.getDetachedObjects().keySet())
+        {
+          newObjects.remove(removedID);
+        }
       }
-    }
+
+      return newObjects;
+    });
   }
 
   /**
@@ -504,30 +406,20 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevision> getAllBaseNewObjects()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      if (getPreviousSavepoint() == null)
       {
-        if (getPreviousSavepoint() == null)
-        {
-          return Collections.unmodifiableMap(getBaseNewObjects());
-        }
-
-        MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<>();
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
-        {
-          newObjects.getDelegates().add(savepoint.getBaseNewObjects());
-        }
-
-        return newObjects;
+        return Collections.unmodifiableMap(getBaseNewObjects());
       }
-      finally
+
+      MultiMap.ListBased<CDOID, CDORevision> newObjects = new MultiMap.ListBased<>();
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
-        transaction.unlockView();
+        newObjects.getDelegates().add(savepoint.getBaseNewObjects());
       }
-    }
+
+      return newObjects;
+    });
   }
 
   /**
@@ -536,118 +428,98 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public Map<CDOID, CDORevisionDelta> getAllRevisionDeltas()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      if (getPreviousSavepoint() == null)
       {
-        if (getPreviousSavepoint() == null)
+        return Collections.unmodifiableMap(getRevisionDeltas2());
+      }
+
+      InternalCDOSavepoint firstSavePoint = getFirstSavePoint();
+      boolean multiSavepoint = firstSavePoint.getNextSavepoint() != null;
+      Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<>() : null;
+
+      // We need to combine the results for all deltas in different savepoints.
+      Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
+
+      for (InternalCDOSavepoint savepoint = firstSavePoint; savepoint != null; savepoint = savepoint.getNextSavepoint())
+      {
+        for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
         {
-          return Collections.unmodifiableMap(getRevisionDeltas2());
-        }
-
-        InternalCDOSavepoint firstSavePoint = getFirstSavePoint();
-        boolean multiSavepoint = firstSavePoint.getNextSavepoint() != null;
-        Set<CDOFeatureDelta> originalFeatureDeltas = multiSavepoint ? new HashSet<>() : null;
-
-        // We need to combine the results for all deltas in different savepoints.
-        Map<CDOID, CDORevisionDelta> allRevisionDeltas = CDOIDUtil.createMap();
-
-        for (InternalCDOSavepoint savepoint = firstSavePoint; savepoint != null; savepoint = savepoint.getNextSavepoint())
-        {
-          for (CDORevisionDelta revisionDelta : savepoint.getRevisionDeltas2().values())
+          CDOID id = revisionDelta.getID();
+          if (!isNewObject(id))
           {
-            CDOID id = revisionDelta.getID();
-            if (!isNewObject(id))
+            CDORevisionDeltaImpl oldRevisionDelta = (CDORevisionDeltaImpl)allRevisionDeltas.get(id);
+            if (oldRevisionDelta == null)
             {
-              CDORevisionDeltaImpl oldRevisionDelta = (CDORevisionDeltaImpl)allRevisionDeltas.get(id);
-              if (oldRevisionDelta == null)
-              {
-                if (multiSavepoint)
-                {
-                  for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
-                  {
-                    originalFeatureDeltas.add(featureDelta);
-                  }
-                }
-
-                allRevisionDeltas.put(id, revisionDelta.copy());
-              }
-              else
+              if (multiSavepoint)
               {
                 for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
                 {
-                  if (!multiSavepoint || originalFeatureDeltas.add(featureDelta))
-                  {
-                    CDOFeatureDelta copy = featureDelta.copy();
-                    oldRevisionDelta.addFeatureDelta(copy, null);
-                  }
+                  originalFeatureDeltas.add(featureDelta);
+                }
+              }
+
+              allRevisionDeltas.put(id, revisionDelta.copy());
+            }
+            else
+            {
+              for (CDOFeatureDelta featureDelta : revisionDelta.getFeatureDeltas())
+              {
+                if (!multiSavepoint || originalFeatureDeltas.add(featureDelta))
+                {
+                  CDOFeatureDelta copy = featureDelta.copy();
+                  oldRevisionDelta.addFeatureDelta(copy, null);
                 }
               }
             }
           }
-
-          Set<CDOID> reattachedObjects = savepoint.getReattachedObjects().keySet();
-          for (CDOID detachedID : savepoint.getDetachedObjects().keySet())
-          {
-            if (!reattachedObjects.contains(detachedID))
-            {
-              allRevisionDeltas.remove(detachedID);
-            }
-          }
         }
 
-        return Collections.unmodifiableMap(allRevisionDeltas);
+        Set<CDOID> reattachedObjects = savepoint.getReattachedObjects().keySet();
+        for (CDOID detachedID : savepoint.getDetachedObjects().keySet())
+        {
+          if (!reattachedObjects.contains(detachedID))
+          {
+            allRevisionDeltas.remove(detachedID);
+          }
+        }
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+
+      return Collections.unmodifiableMap(allRevisionDeltas);
+    });
   }
 
   @Override
   public Map<CDOID, CDOObject> getAllDetachedObjects()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      if (getPreviousSavepoint() == null && getReattachedObjects().isEmpty())
       {
-        if (getPreviousSavepoint() == null && getReattachedObjects().isEmpty())
-        {
-          return Collections.unmodifiableMap(getDetachedObjects());
-        }
+        return Collections.unmodifiableMap(getDetachedObjects());
+      }
 
-        Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
-        for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
+      Map<CDOID, CDOObject> detachedObjects = CDOIDUtil.createMap();
+      for (InternalCDOSavepoint savepoint = getFirstSavePoint(); savepoint != null; savepoint = savepoint.getNextSavepoint())
+      {
+        for (Map.Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
         {
-          for (Map.Entry<CDOID, CDOObject> entry : savepoint.getDetachedObjects().entrySet())
+          CDOID detachedID = entry.getKey();
+          if (!isNewObject(detachedID))
           {
-            CDOID detachedID = entry.getKey();
-            if (!isNewObject(detachedID))
-            {
-              CDOObject detachedObject = entry.getValue();
-              detachedObjects.put(detachedID, detachedObject);
-            }
-          }
-
-          Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
-          for (CDOID reattachedID : reattachedObjects.keySet())
-          {
-            detachedObjects.remove(reattachedID);
+            CDOObject detachedObject = entry.getValue();
+            detachedObjects.put(detachedID, detachedObject);
           }
         }
 
-        return detachedObjects;
+        Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
+        for (CDOID reattachedID : reattachedObjects.keySet())
+        {
+          detachedObjects.remove(reattachedID);
+        }
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+
+      return detachedObjects;
+    });
   }
 
   @Override
@@ -658,27 +530,17 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
       return true;
     }
 
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+        if (savepoint.getNewObjects().containsKey(id))
         {
-          if (savepoint.getNewObjects().containsKey(id))
-          {
-            return true;
-          }
+          return true;
         }
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
 
-    return false;
+      return false;
+    });
   }
 
   // TODO Not sure if this new implementation is needed. The existing one passes all tests.
@@ -719,94 +581,69 @@ public class CDOSavepointImpl extends CDOUserSavepointImpl implements InternalCD
   @Override
   public CDOObject getDetachedObject(CDOID id)
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+        Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
+        if (!reattachedObjects.isEmpty())
         {
-          Map<CDOID, CDOObject> reattachedObjects = savepoint.getReattachedObjects();
-          if (!reattachedObjects.isEmpty())
+          CDOObject object = reattachedObjects.get(id);
+          if (object != null)
           {
-            CDOObject object = reattachedObjects.get(id);
-            if (object != null)
-            {
-              return null;
-            }
+            return null;
           }
+        }
 
-          Map<CDOID, CDOObject> detachedObjects = savepoint.getDetachedObjects();
-          if (!detachedObjects.isEmpty())
+        Map<CDOID, CDOObject> detachedObjects = savepoint.getDetachedObjects();
+        if (!detachedObjects.isEmpty())
+        {
+          CDOObject object = detachedObjects.get(id);
+          if (object != null)
           {
-            CDOObject object = detachedObjects.get(id);
-            if (object != null)
-            {
-              return object;
-            }
+            return object;
           }
         }
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
 
-    return null;
+      return null;
+    });
   }
 
   @Override
   public CDOObject getDirtyObject(CDOID id)
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
-
-      try
+    return sync().supply(() -> {
+      for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
       {
-        for (InternalCDOSavepoint savepoint = this; savepoint != null; savepoint = savepoint.getPreviousSavepoint())
+        Map<CDOID, CDOObject> dirtyObjects = savepoint.getDirtyObjects();
+        if (!dirtyObjects.isEmpty())
         {
-          Map<CDOID, CDOObject> dirtyObjects = savepoint.getDirtyObjects();
-          if (!dirtyObjects.isEmpty())
+          CDOObject object = dirtyObjects.get(id);
+          if (object != null)
           {
-            CDOObject object = dirtyObjects.get(id);
-            if (object != null)
-            {
-              return object;
-            }
+            return object;
           }
         }
       }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
 
-    return null;
+      return null;
+    });
   }
 
   @Override
   public void rollback()
   {
-    synchronized (transaction.getViewMonitor())
-    {
-      transaction.lockView();
+    sync().run(() -> {
+      InternalCDOTransaction transaction = getTransaction();
+      LifecycleUtil.checkActive(transaction);
 
-      try
-      {
-        InternalCDOTransaction transaction = getTransaction();
-        LifecycleUtil.checkActive(transaction);
+      CDOTransactionStrategy transactionStrategy = transaction.getTransactionStrategy();
+      transactionStrategy.rollback(transaction, this);
+    });
+  }
 
-        CDOTransactionStrategy transactionStrategy = transaction.getTransactionStrategy();
-        transactionStrategy.rollback(transaction, this);
-      }
-      finally
-      {
-        transaction.unlockView();
-      }
-    }
+  private CriticalSection sync()
+  {
+    return transaction.sync();
   }
 }

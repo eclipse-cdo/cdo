@@ -177,7 +177,7 @@ public class Bugzilla_560280_Test extends AbstractCDOTest
       {
         await(reachedUpdatePermissions);
 
-        transactionUnderTest.syncExec(() -> {
+        transactionUnderTest.sync().run(() -> {
           allowUpdatePermissions.countDown();
 
           try

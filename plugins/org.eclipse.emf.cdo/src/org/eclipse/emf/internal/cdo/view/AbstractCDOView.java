@@ -95,6 +95,9 @@ import org.eclipse.net4j.util.collection.AbstractCloseableIterator;
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
+import org.eclipse.net4j.util.concurrent.CriticalSection.LockedCriticalSection;
+import org.eclipse.net4j.util.concurrent.CriticalSection.SynchronizedCriticalSection;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.container.IContainerDelta;
 import org.eclipse.net4j.util.container.IContainerEvent;
@@ -169,7 +172,7 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
 
   private final CDOURIHandler uriHandler = new CDOURIHandler(this);
 
-  protected final Lock viewLock;
+  protected final CriticalSection sync;
 
   protected final Condition viewLockCondition;
 
@@ -253,8 +256,8 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       lock = new DelegableReentrantLock();
     }
 
-    viewLock = lock;
-    viewLockCondition = viewLock != null ? viewLock.newCondition() : null;
+    sync = lock != null ? new LockedCriticalSection(lock) : new SynchronizedCriticalSection(this);
+    viewLockCondition = sync.newCondition();
 
     initObjectsMap(ReferenceType.SOFT);
   }
@@ -498,9 +501,16 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   @Override
+  public CriticalSection sync()
+  {
+    return sync;
+  }
+
+  @Override
+  @Deprecated
   public final Object getViewMonitor()
   {
-    if (viewLock != null)
+    if (sync instanceof LockedCriticalSection)
     {
       return new NOOPMonitor();
     }
@@ -509,63 +519,49 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   }
 
   @Override
+  @Deprecated
   public final Lock getViewLock()
   {
-    return viewLock;
+    if (sync instanceof LockedCriticalSection)
+    {
+      return ((LockedCriticalSection)sync).getLock();
+    }
+
+    return null;
   }
 
   @Override
+  @Deprecated
   public final void lockView()
   {
-    if (viewLock != null)
+    if (sync instanceof LockedCriticalSection)
     {
-      viewLock.lock();
+      ((LockedCriticalSection)sync).getLock().lock();
     }
   }
 
   @Override
+  @Deprecated
   public final void unlockView()
   {
-    if (viewLock != null)
+    if (sync instanceof LockedCriticalSection)
     {
-      viewLock.unlock();
+      ((LockedCriticalSection)sync).getLock().unlock();
     }
   }
 
   @Override
+  @Deprecated
   public void syncExec(Runnable runnable)
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        runnable.run();
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    sync.run(runnable);
   }
 
   @Override
+  @Deprecated
   public <V> V syncExec(Callable<V> callable) throws Exception
   {
-    synchronized (getViewMonitor())
-    {
-      lockView();
-
-      try
-      {
-        return callable.call();
-      }
-      finally
-      {
-        unlockView();
-      }
-    }
+    return sync.call(callable);
   }
 
   @Override
@@ -3213,7 +3209,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
   {
     super.doActivate();
 
-    LifecycleUtil.activate(viewLock);
+    if (sync instanceof LockedCriticalSection)
+    {
+      LifecycleUtil.activate(((LockedCriticalSection)sync).getLock());
+    }
 
     CDOBranchPoint bp = branchPoint;
     if (bp != null)
@@ -3234,7 +3233,10 @@ public abstract class AbstractCDOView extends CDOCommitHistoryProviderImpl<CDOOb
       }
     }
 
-    LifecycleUtil.deactivate(viewLock);
+    if (sync instanceof LockedCriticalSection)
+    {
+      LifecycleUtil.deactivate(((LockedCriticalSection)sync).getLock());
+    }
 
     viewSet = null;
     objects = null;

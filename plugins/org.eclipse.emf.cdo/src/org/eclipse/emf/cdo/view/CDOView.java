@@ -44,6 +44,8 @@ import org.eclipse.emf.internal.cdo.CDOObjectImpl;
 
 import org.eclipse.net4j.util.collection.CloseableIterator;
 import org.eclipse.net4j.util.concurrent.CriticalSection;
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector;
 import org.eclipse.net4j.util.concurrent.IRWLockManager.LockType;
 import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
@@ -65,6 +67,7 @@ import java.util.Set;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 /**
  * A read-only view to the state of the object graph in the repository of the underlying {@link CDOSession session} at a
@@ -84,6 +87,11 @@ import java.util.function.Consumer;
  *   CDOView view = session.openView();
  *   ...
  * </pre>
+ * <p>
+ * Views and their model objects are thread-safe. They can be used concurrently from different threads without
+ * additional synchronization. Note that this guarantee only applies to single accesses to the view or its objects. If
+ * multiple accesses need to be guarded against invalidation or other internal operations of the view, the
+ * {@link #sync() critical section} of the view must be used.
  *
  * @author Eike Stepper
  * @since 2.0
@@ -135,6 +143,75 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
   public CDOViewSet getViewSet();
 
   /**
+   * Returns a {@link CriticalSection critical section} that can be used to execute a block of code that
+   * needs to be synchronized with the internal operations of this view and its {@link CDOObject objects}.
+   * <p>
+   * Here is an example:
+   * <pre>
+   * CDOView view = ...;
+   * CriticalSection sync = view.sync();
+   *
+   * MyResult result = sync.call(() -&gt; {
+   *   // Access the view and its objects safely here.
+   *   CDOObject object1 = view.getObject(id1);
+   *   CDOObject object2 = view.getObject(id2);
+   *   CDOObject object3 = view.getObject(id3);
+   *   ...
+   *   return new MyResult(...);
+   * });
+   * </pre>
+   * The critical section ensures that no invalidation or other internal operation of the view can occur while
+   * the block of code is executed. This is particularly important if the block of code accesses the view or
+   * {@link CDOObject objects} of the view <b>multiple times</b>, because these objects can be
+   * {@link #isInvalidating() invalidated} by network threads at any time in between these accesses otherwise.
+   * This can lead to wrong computation results in the block of code being executed.
+   * <p>
+   * Note that single accesses to the view or its objects are always safe, even without using the critical section.
+   * <p>
+   * There are some other useful methods in CriticalSection that can be used to execute a block of code,
+   * such as {@link CriticalSection#run(Runnable) run(Runnable)} or {@link CriticalSection#supply(Supplier) supply(Supplier)}.
+   * <p>
+   * By default the critical section uses the monitor lock of this view to synchronize. If you need a different locking
+   * strategy you can override this by calling {@link CDOUtil#setNextViewLock(Lock)} before opening the view.
+   * <p>
+   * In particular you can use a {@link DelegableReentrantLock}, which allows to delegate the lock ownership to a
+   * different thread. This is useful in scenarios where you need to hold the lock while waiting for an
+   * asynchronous operation to complete in a different thread.
+   * <p>
+   * A typical example is the Display.syncExec() method in SWT/JFace UI applications. With the default locking
+   * strategy this can lead to deadlocks:
+   * <ol>
+   * <li>Thread A (not the UI thread) holds the view lock and calls <code>Display.syncExec()</code> to execute some code in the UI
+   *    thread.
+   * <li>The Runnable passed to syncExec() is scheduled for execution in the UI thread. Thread A waits for the Runnable to
+   *    complete.
+   * <li>The UI thread executes the Runnable, which tries to access the view or an object of the view. This requires
+   *    the view lock, which is already held by thread A.
+   * <li>Deadlock: Thread A waits for the Runnable to complete and the UI thread waits for the view lock to be released.
+   * </ol>
+   * <p>
+   * Note that, in this scenario, Thread A is holding the view lock while waiting for the Runnable to complete. This is kind
+   * of an anti-pattern, because it blocks other threads from accessing the view for an indeterminate amount of time. In
+   * addition, it is not necessary to hold the view lock while waiting for the Runnable to complete, because Thread A
+   * can not access the view in that time.
+   * <p>
+   * A {@link DelegableReentrantLock} can be used to avoid the deadlock. It uses so called <em>lock delegation</em> to
+   * temporarily transfer the ownership of the lock to a different thread. In the scenario described above,
+   * Thread A can delegate the lock ownership to the UI thread while waiting for the Runnable to complete.
+   * When the Runnable completes, the lock ownership is transferred back to Thread A. This way, the UI thread can
+   * access the view while executing the Runnable and no deadlock occurs.
+   * <p><code>DelegableReentrantLock</code>
+   * uses {@link DelegateDetector}s to determine whether the current thread is allowed to delegate the lock ownership
+   * to a different thread. A <code>DelegateDetector</code> can be registered with the lock by calling
+   * {@link DelegableReentrantLock#addDelegateDetector(DelegateDetector)}. The <code>org.eclipse.net4j.util.ui</code> plugin provides
+   * a <code>DisplayDelegateDetector</code> for the SWT/JFace UI thread that detects calls to
+   * <code>Display.syncExec()</code>.
+   *
+   * @since 4.29
+   */
+  public CriticalSection sync();
+
+  /**
    * @since 4.5
    * @deprecated As of 4.29 use {@link #sync()}.
    */
@@ -154,11 +231,6 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    */
   @Deprecated
   public <V> V syncExec(Callable<V> callable) throws Exception;
-
-  /**
-   * @since 4.29
-   */
-  public CriticalSection sync();
 
   /**
    * Returns the {@link ResourceSet resource set} this view is associated with.

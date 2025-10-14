@@ -354,6 +354,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab3"><a href="org/eclipse/net4j/util/security/CredentialsUpdateOperation.html" title="Enum-Klasse in org.eclipse.net4j.util.security">CredentialsUpdateOperation</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">CriticalSection</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab1">
+<div class="block">A critical section is a block of code that must be executed by only one thread at a time.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/CriticalSection.LockedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.LockedCriticalSection</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A <a href="org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that uses a given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link"><code>Lock</code></a> to synchronize access to the critical
+ section.</div>
+</div>
+<div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/CriticalSection.SynchronizedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.SynchronizedCriticalSection</a></div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A <a href="org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that uses a given mutex object to synchronize access to the critical
+ section.</div>
+</div>
+<div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/CriticalSection.UnsynchronizedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.UnsynchronizedCriticalSection</a></div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A <a href="org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that does not perform any synchronization.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/security/Crypter.html" title="Klasse in org.eclipse.net4j.util.security">Crypter</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/security/Crypter.MetaFactory.html" title="Klasse in org.eclipse.net4j.util.security">Crypter.MetaFactory</a></div>
@@ -383,7 +401,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/DelayingExecutor.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelayingExecutor</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelegableReentrantLock</a></div>
-<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-last odd-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A reentrant lock that can be delegated to other threads as detected by <a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.</div>
+</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a></div>
 <div class="col-last even-row-color all-classes-table all-classes-table-tab1">&nbsp;</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></div>
@@ -669,7 +689,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/collection/HistoryUtil.html" title="Klasse in org.eclipse.net4j.util.collection">HistoryUtil</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/concurrent/Holder.html" title="Klasse in org.eclipse.net4j.util.concurrent">Holder&lt;T&gt;</a></div>
-<div class="col-last even-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
+<div class="col-last even-row-color all-classes-table all-classes-table-tab2">
+<div class="block">A simple holder for a single element that implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link"><code>Consumer</code></a> and <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link"><code>Supplier</code></a>.</div>
+</div>
 <div class="col-first odd-row-color all-classes-table all-classes-table-tab2"><a href="org/eclipse/net4j/util/cache/HysteresisConditionPolicy.html" title="Klasse in org.eclipse.net4j.util.cache">HysteresisConditionPolicy</a></div>
 <div class="col-last odd-row-color all-classes-table all-classes-table-tab2">&nbsp;</div>
 <div class="col-first even-row-color all-classes-table all-classes-table-tab1"><a href="org/eclipse/net4j/util/security/IAuthenticator.html" title="Schnittstelle in org.eclipse.net4j.util.security">IAuthenticator</a></div>

@@ -2,17 +2,27 @@ package org.eclipse.emf.cdo.doc.programmers.client;
 
 import org.eclipse.emf.cdo.CDOObject;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.id.CDOIDUtil;
+import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+import org.eclipse.emf.cdo.util.CDOUtil;
 import org.eclipse.emf.cdo.util.CommitException;
 import org.eclipse.emf.cdo.util.ConcurrentAccessException;
 import org.eclipse.emf.cdo.view.CDOView;
 
-import org.eclipse.emf.spi.cdo.InternalCDOObject;
-import org.eclipse.emf.spi.cdo.InternalCDOView;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
+import org.eclipse.net4j.util.concurrent.CriticalSection.LockedCriticalSection;
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
+import org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector;
 
+import org.eclipse.emf.common.notify.Notification;
+import org.eclipse.emf.common.notify.impl.AdapterImpl;
+
+import org.eclipse.swt.widgets.Display;
+
+import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Working with Views
@@ -37,196 +47,6 @@ public class Doc04_WorkingWithViews
   }
 
   /**
-   * Thread Safety
-   * <p>
-   * Views in CDO are inherently thread-safe. This section discusses best practices for managing concurrent access,
-   * synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
-   * <p>
-   * Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
-   * views may be accessed by background threads for tasks such as asynchronous updates, notifications, and
-   * event handling. If a view were not thread-safe, these background operations could lead to data corruption,
-   * inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
-   * CDO allows developers to build robust applications that can safely handle concurrent operations without risking
-   * data integrity.
-   * <p>
-   * Of course, as always, the thread safety guarantees do not relieve developers from the responsibility of proper synchronization
-   * when accessing shared data structures or performing complex operations that involve multiple steps. Developers should still
-   * understand and use the synchronization mechanisms provided by CDO. They are explained in the following sections.
-   */
-  @SuppressWarnings("deprecation")
-  public class ThreadSafety
-  {
-    /**
-     * View Lock and Monitor
-     * <p>
-     * Each CDO view provides a lock and a monitor object to facilitate synchronization. This section explains
-     * what they are and how to use them correctly to ensure thread-safe operations when accessing or modifying view data.
-     * <p>
-     * As mentioned earlier, CDO views are thread-safe. However, that applies only to single method calls on a view.
-     * The following code snippet shows how <code>AbstractCDOView</code> implements thread safety for single method calls
-     * by using a combination of a view monitor and the view lock. The example shows the implementation of the
-     * {@link CDOView#getObject(CDOID)} method:
-     * {@link #singleMethodCallsAreSafe() SingleMethodCallsAreSafe.java}
-     * <p>
-     *
-     *
-     */
-    public class ViewLockAndMonitor
-    {
-      /**
-       * @snip
-       */
-      @SuppressWarnings("unused")
-      public void singleMethodCallsAreSafe()
-      {
-        abstract class AbstractCDOView implements InternalCDOView
-        {
-          protected Lock viewLock;
-
-          @Override
-          public InternalCDOObject getObject(CDOID id, boolean loadOnDemand)
-          {
-            if (CDOIDUtil.isNull(id))
-            {
-              return null;
-            }
-
-            synchronized (getViewMonitor())
-            {
-              lockView();
-
-              try
-              {
-                return getObjectUnsynced(id, loadOnDemand);
-              }
-              finally
-              {
-                unlockView();
-              }
-            }
-          }
-
-          @Override
-          public final Object getViewMonitor()
-          {
-            if (viewLock != null)
-            {
-              return new NOOPMonitor();
-            }
-
-            return this;
-          }
-
-          @Override
-          public final Lock getViewLock()
-          {
-            return viewLock;
-          }
-
-          @Override
-          public final void lockView()
-          {
-            if (viewLock != null)
-            {
-              viewLock.lock();
-            }
-          }
-
-          @Override
-          public final void unlockView()
-          {
-            if (viewLock != null)
-            {
-              viewLock.unlock();
-            }
-          }
-        }
-      }
-
-      /**
-       * @snip
-       */
-      @SuppressWarnings("unused")
-      public void accessViewSafely(CDOView view, CDOID id1, CDOID id2)
-      {
-        synchronized (((InternalCDOView)view).getViewMonitor())
-        {
-          Lock viewLock = view.getViewLock();
-          if (viewLock != null)
-          {
-            viewLock.lock();
-          }
-
-          try
-          {
-            // Access the view safely here
-            CDOObject object1 = view.getObject(id1);
-            CDOObject object2 = view.getObject(id2);
-          }
-          finally
-          {
-            if (viewLock != null)
-            {
-              viewLock.unlock();
-            }
-          }
-        }
-      }
-
-      /**
-       * @snip
-       */
-      @SuppressWarnings("unused")
-      public void viewSyncExecWithRunnable(CDOView view, CDOID id1, CDOID id2)
-      {
-        view.syncExec(() -> {
-          // Access the view safely here
-          CDOObject object1 = view.getObject(id1);
-          CDOObject object2 = view.getObject(id2);
-        });
-      }
-
-      /**
-       * @snip
-       */
-      @SuppressWarnings("unused")
-      public void viewSyncExecWithCallable(CDOView view, CDOID id1, CDOID id2)
-      {
-        try
-        {
-          long maxTimeStamp = view.syncExec(() -> {
-            // Access the view safely here
-            long timeStamp1 = view.getObject(id1).cdoRevision().getTimeStamp();
-            long timeStamp2 = view.getObject(id2).cdoRevision().getTimeStamp();
-            return Math.max(timeStamp1, timeStamp2);
-          });
-        }
-        catch (Exception ex)
-        {
-          ex.printStackTrace();
-        }
-      }
-
-      InternalCDOObject getObjectUnsynced(CDOID id, boolean loadOnDemand)
-      {
-        return null;
-      }
-
-      class NOOPMonitor
-      {
-      }
-    }
-
-    /**
-     * Using a Delegable Lock
-     * <p>
-     */
-    public class UsingDelegableLock
-    {
-    }
-  }
-
-  /**
    * Opening and Closing Views
    * <p>
    * Learn how to open views to access repository data and close them to release resources. Proper management of view
@@ -234,6 +54,241 @@ public class Doc04_WorkingWithViews
    */
   public class OpeningAndClosingViews
   {
+  }
+
+  /**
+   * Thread Safety
+   * <p>
+   * Views in CDO are inherently thread-safe, but this guarantee applies only to <b>individual</b> method calls. When performing
+   * <b>multiple</b> operations that need to be atomic or consistent, developers must use a {@link CriticalSection} to
+   * synchronize access to the view. A CDO view provides its critical section via the {@link CDOView#sync()}.
+   * <p>
+   * Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
+   * views are accessed by background threads for tasks such as asynchronous updates, notifications, and
+   * event handling. If a view were not thread-safe, these background operations could lead to data corruption,
+   * inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
+   * CDO allows developers to build robust applications that can safely handle concurrent operations without risking
+   * data integrity.
+   * <p>
+   * This section discusses best practices for managing concurrent access,
+   * synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+   */
+  public class ThreadSafety
+  {
+    /**
+     * Using Critical Sections
+     * <p>
+     * To ensure thread-safe access to a CDO view when performing multiple operations, use the view's critical section
+     * object. It is returned by the {@link CDOView#sync()} method. The critical section provides methods to execute code blocks
+     * safely, such as {@link CriticalSection#run(Runnable)} and {@link CriticalSection#call(Callable)}.
+     * <p>
+     * Here is an example of using a critical section with a callable to access multiple objects in a view atomically:
+     * {@link #crititicalSectionWithCallable(CDOView, CDOID, CDOID, CDOID) CrititicalSectionWithCallable.java}
+     * <p>
+     * The {@link CriticalSection} interface provides the following methods:
+     * <ul>
+     * <li>{@link CriticalSection#run(Runnable) run(Runnable)} - Executes a Runnable within the critical section.
+     * <li>{@link CriticalSection#call(Callable) call(Callable)} - Executes a Callable within the critical section and returns its result.
+     * <li>{@link CriticalSection#call(Class, Callable) call(Class, Callable)} - Executes a Callable within the critical section, specifying the exception type it may throw.
+     * <li>{@link CriticalSection#supply(java.util.function.Supplier) supply(Supplier)} - Executes a Supplier within the critical section and returns its result.
+     * <li>{@link CriticalSection#supply(java.util.function.BooleanSupplier) supply(BooleanSupplier)} - Executes a BooleanSupplier within the critical section and returns its boolean result.
+     * <li>{@link CriticalSection#supply(java.util.function.IntSupplier) supply(IntSupplier)} - Executes an IntSupplier within the critical section and returns its int result.
+     * <li>{@link CriticalSection#supply(java.util.function.LongSupplier) supply(LongSupplier)} - Executes a LongSupplier within the critical section and returns its long result.
+     * <li>{@link CriticalSection#supply(java.util.function.DoubleSupplier) supply(DoubleSupplier)} - Executes a DoubleSupplier within the critical section and returns its double result.
+     * <li>{@link CriticalSection#newCondition() newCondition()} - Creates a new Condition associated with the critical section.
+     * </ul>
+     * <p>
+     * By default the critical section of a view uses the monitor lock of that view to synchronize. If you need a different locking
+     * strategy you can override this by calling {@link CDOUtil#setNextViewLock(Lock)} before opening the view.
+     * <p>
+     * Here's an example of setting a custom lock for the next view to be opened:
+     * {@link #customLockForNextView(CDOSession) CustomLockForNextView.java}
+     * <p>
+     * The following chapter describes how to use a special kind of lock, a {@link DelegableReentrantLock}, that
+     * allows to delegate the lock ownership to a different thread.
+     */
+    public class UsingCriticalSections
+    {
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void crititicalSectionWithCallable(CDOView view, CDOID id1, CDOID id2, CDOID id3) throws Exception
+      {
+        CriticalSection sync = view.sync();
+
+        MyResult result = sync.call(() -> {
+          // Access the view and its objects safely here.
+          CDOObject object1 = view.getObject(id1);
+          CDOObject object2 = view.getObject(id2);
+          CDOObject object3 = view.getObject(id3);
+
+          // Return a result object.
+          return new MyResult();
+        });
+      }
+
+      class MyResult
+      {
+      }
+
+      /**
+       * @snip
+       */
+      public void customLockForNextView(CDOSession session) throws Exception
+      {
+        Lock customLock = new ReentrantLock();
+        CDOUtil.setNextViewLock(customLock);
+
+        CDOView view = session.openView();
+        CriticalSection sync = view.sync();
+
+        if (sync instanceof LockedCriticalSection)
+        {
+          Lock lock = ((LockedCriticalSection)sync).getLock();
+          assert lock == customLock;
+        }
+        else
+        {
+          throw new IllegalStateException();
+        }
+      }
+    }
+
+    /**
+     * Using a Delegable Lock
+     * <p>
+     * As an alternative to the default locking strategy of a view's critical section, you can use
+     * a {@link DelegableReentrantLock}, which allows to delegate the lock ownership to a
+     * different thread. This is useful in scenarios where you need to hold the lock while waiting for an
+     * asynchronous operation to complete in a different thread.
+     * <p>
+     * A typical example is the Display.syncExec() method in SWT/JFace UI applications. With the default locking
+     * strategy this can lead to deadlocks:
+     * <ol>
+     * <li>Thread A (not the UI thread) holds the view lock and calls <code>Display.syncExec()</code> to execute some code in the UI
+     *    thread.
+     * <li>The Runnable passed to syncExec() is scheduled for execution in the UI thread. Thread A waits for the Runnable to
+     *    complete.
+     * <li>The UI thread executes the Runnable, which tries to access the view or an object of the view. This requires
+     *    the view lock, which is already held by thread A.
+     * <li>Deadlock: Thread A waits for the Runnable to complete and the UI thread waits for the view lock to be released.
+     * </ol>
+     * <p>
+     * Here is an example that illustrates this scenario:
+     * {@link #deadlockExample(CDOView, CDOID) DeadlockExample.java}
+     * <p>
+     * Note that, in this scenario, Thread A is holding the view lock while waiting for the Runnable to complete. This is kind
+     * of an anti-pattern, because it blocks other threads from accessing the view for an indeterminate amount of time. In
+     * addition, it is not necessary to hold the view lock while waiting for the Runnable to complete, because Thread A
+     * can not access the view in that time.
+     * <p>
+     * A {@link DelegableReentrantLock} can be used to avoid the deadlock. It uses so called <em>lock delegation</em> to
+     * temporarily transfer the ownership of the lock to a different thread. In the scenario described above,
+     * Thread A can delegate the lock ownership to the UI thread while waiting for the Runnable to complete.
+     * When the Runnable completes, the lock ownership is transferred back to Thread A. This way, the UI thread can
+     * access the view while executing the Runnable and no deadlock occurs.
+     * <p>
+     * <code>DelegableReentrantLock</code>
+     * uses {@link DelegateDetector}s to determine whether the current thread is allowed to delegate the lock ownership
+     * to a different thread. A <code>DelegateDetector</code> can be registered with the lock by calling
+     * {@link DelegableReentrantLock#addDelegateDetector(DelegateDetector)}. The <code>org.eclipse.net4j.util.ui</code> plugin provides
+     * a <code>DisplayDelegateDetector</code> for the SWT/JFace UI thread that detects calls to
+     * <code>Display.syncExec()</code>.
+     * <p>
+     * There are two ways to use a <code>DelegableReentrantLock</code> with a CDO view:
+     * <ol>
+     * <li>Set the lock as the next view lock by calling {@link CDOUtil#setNextViewLock(Lock)} before opening the view.
+     *    This way, the view will use the lock for its critical section. Here's an example:
+     *    <p>
+     *    {@link #individualViewLock(CDOSession) IndividualViewLock.java}
+     *    <p>
+     * <li>Set {@link CDOSession.Options#setDelegableViewLockEnabled(boolean) delegableViewLockEnabled} to <code>true</code> on the session.
+     *    This way, all views opened from the session will use a <code>DelegableReentrantLock</code> for their critical section.
+     *    The lock is created automatically and configured with all <code>DelegateDetector</code>s that are registered.
+     *    Example:
+     *    <p>
+     *    {@link #setDelegableViewLockEnabled(CDOSession) SetDelegableViewLockEnabled.java}
+     *    <p>
+     * </ol>
+     */
+    public class UsingDelegableLock
+    {
+      /**
+       * @snip
+       */
+      @SuppressWarnings("unused")
+      public void deadlockExample(CDOView view, CDOID id)
+      {
+        CDOObject object = view.getObject(id);
+        object.eAdapters().add(new AdapterImpl()
+        {
+          @Override
+          public void notifyChanged(Notification msg)
+          {
+            // This code is executed in a non-UI thread and holds the view lock.
+
+            // The following call to Display.syncExec() will execute the Runnable in the UI thread
+            // and make the current thread wait for it to complete. During that time the view lock
+            // is still held by the current thread.
+            Display.getDefault().syncExec(() -> {
+              // This code is executed in the UI thread.
+              // It tries to access the view while the view lock is held by the non-UI thread.
+              // The result is a deadlock.
+              CDOResource resource = view.getResource("/my/resource");
+            });
+          }
+        });
+      }
+
+      /**
+       * @snip
+       */
+      public void individualViewLock(CDOSession session) throws Exception
+      {
+        CDOUtil.setNextViewLock(new DelegableReentrantLock());
+
+        CDOView view = session.openView();
+        CriticalSection sync = view.sync();
+
+        // Acquire the view lock.
+        sync.run(() -> {
+          // This code is executed in a non-UI thread and holds the view lock.
+
+          // The following call to Display.syncExec() will execute the Runnable in the UI thread
+          Display.getDefault().syncExec(() -> {
+            // This code is executed in the UI thread.
+            // It can access the view because the lock ownership has been delegated to the UI thread.
+            CDOResource resource = view.getResource("/my/resource");
+            System.out.println("Resource: " + resource.getURI());
+          });
+        });
+      }
+
+      /**
+       * @snip
+       */
+      public void setDelegableViewLockEnabled(CDOSession session) throws Exception
+      {
+        session.options().setDelegableViewLockEnabled(true);
+
+        CDOView view = session.openView();
+        CriticalSection sync = view.sync();
+
+        // Acquire the view lock.
+        sync.run(() -> {
+          // This code is executed in a non-UI thread and holds the view lock.
+
+          // The following call to Display.syncExec() will execute the Runnable in the UI thread
+          Display.getDefault().syncExec(() -> {
+            // This code is executed in the UI thread.
+            // It can access the view because the lock ownership has been delegated to the UI thread.
+            CDOResource resource = view.getResource("/my/resource");
+            System.out.println("Resource: " + resource.getURI());
+          });
+        });
+      }
+    }
   }
 
   /**

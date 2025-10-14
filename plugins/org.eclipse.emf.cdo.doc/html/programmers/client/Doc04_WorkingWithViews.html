@@ -88,110 +88,122 @@ function maximize(id)
  navigation of repository data without risk of modification, while transactional views enable changes and commits.
  This section explains the differences, use cases, and lifecycle of each view type.
 
-<h2><a name="ThreadSafety"></a>2&nbsp;&nbsp;Thread Safety</h2>
+<h2><a name="OpeningAndClosingViews"></a>2&nbsp;&nbsp;Opening and Closing Views</h2>
 <p>
- Views in CDO are inherently thread-safe. This section discusses best practices for managing concurrent access,
- synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
+ Learn how to open views to access repository data and close them to release resources. Proper management of view
+ lifecycles helps prevent memory leaks and ensures efficient resource usage.
+
+<h2><a name="ThreadSafety"></a>3&nbsp;&nbsp;Thread Safety</h2>
+<p>
+ Views in CDO are inherently thread-safe, but this guarantee applies only to <b>individual</b> method calls. When performing
+ <b>multiple</b> operations that need to be atomic or consistent, developers must use a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Interface in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> to
+ synchronize access to the view. A CDO view provides its critical section via the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a>.
  <p>
  Thread safety of CDO views is absolutely essential, even in single-threaded applications. The reason is that CDO
- views may be accessed by background threads for tasks such as asynchronous updates, notifications, and
+ views are accessed by background threads for tasks such as asynchronous updates, notifications, and
  event handling. If a view were not thread-safe, these background operations could lead to data corruption,
  inconsistent states, and unpredictable behavior in the application. By ensuring that views are thread-safe,
  CDO allows developers to build robust applications that can safely handle concurrent operations without risking
  data integrity.
  <p>
- Of course, as always, the thread safety guarantees do not relieve developers from the responsibility of proper synchronization
- when accessing shared data structures or performing complex operations that involve multiple steps. Developers should still
- understand and use the synchronization mechanisms provided by CDO. They are explained in the following sections.
+ This section discusses best practices for managing concurrent access,
+ synchronizing operations, and avoiding race conditions when working with views in multi-threaded environments.
 
-<h3><a name="ViewLockAndMonitor"></a>2.1&nbsp;&nbsp;View Lock and Monitor</h3>
+<h3><a name="UsingCriticalSections"></a>3.1&nbsp;&nbsp;Using Critical Sections</h3>
 <p>
- Each CDO view provides a lock and a monitor object to facilitate synchronization. This section explains
- what they are and how to use them correctly to ensure thread-safe operations when accessing or modifying view data.
+ To ensure thread-safe access to a CDO view when performing multiple operations, use the view's critical section
+ object. It is returned by the <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#sync()" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.sync()</code></a> method. The critical section provides methods to execute code blocks
+ safely, such as <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#run(java.lang.Runnable)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>CriticalSection.run(Runnable)</code></a> and <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#call(java.util.concurrent.Callable<V>)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>CriticalSection.call(Callable)</code></a>.
  <p>
- As mentioned earlier, CDO views are thread-safe. However, that applies only to single method calls on a view.
- The following code snippet shows how <code>AbstractCDOView</code> implements thread safety for single method calls
- by using a combination of a view monitor and the view lock. The example shows the implementation of the
- <a href="../../../javadoc/org/eclipse/emf/cdo/view/CDOView.html#getObject(org.eclipse.emf.cdo.common.id.CDOID)" title="Method in org.eclipse.emf.cdo.view.CDOView"><code>CDOView.getObject(CDOID)</code></a> method:
+ Here is an example of using a critical section with a callable to access multiple objects in a view atomically:
  
 
 <div class="snippet" style="margin-left:24px;" align="left">
-  <a name="snippet_ViewLockAndMonitor_1"></a>
+  <a name="snippet_UsingCriticalSections_1"></a>
   <table border="0" cellspacing="0" cellpadding="0">
     <tr>
       <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
-      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SingleMethodCallsAreSafe.java</font></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CrititicalSectionWithCallable.java</font></td>
       <td width="1px"><img src="../../../images/editor-3.png"></td>
       <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
-      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ViewLockAndMonitor_1')" id="max_ViewLockAndMonitor_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingCriticalSections_1')" id="max_UsingCriticalSections_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
       <td width="6px"><img src="../../../images/editor-5.png"></td>
     </tr>
     <tr>
       <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
-        <div id="editor_content_1_ViewLockAndMonitor_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
-          <div id="editor_content_2_ViewLockAndMonitor_1" style="padding:8px;">
+        <div id="editor_content_1_UsingCriticalSections_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UsingCriticalSections_1" style="padding:8px;">
             <code>
-            <font color="#7f0055"><b>abstract&nbsp;class&nbsp;</b></font>AbstractCDOView&nbsp;<font color="#7f0055"><b>implements&nbsp;</b></font>InternalCDOView<br/>
+            CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
+            <br/>
+            MyResult&nbsp;result&nbsp;=&nbsp;sync.call(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Access&nbsp;the&nbsp;view&nbsp;and&nbsp;its&nbsp;objects&nbsp;safely&nbsp;here.</font><br/>
+            &nbsp;&nbsp;CDOObject&nbsp;object1&nbsp;=&nbsp;view.getObject(id1);<br/>
+            &nbsp;&nbsp;CDOObject&nbsp;object2&nbsp;=&nbsp;view.getObject(id2);<br/>
+            &nbsp;&nbsp;CDOObject&nbsp;object3&nbsp;=&nbsp;view.getObject(id3);<br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Return&nbsp;a&nbsp;result&nbsp;object.</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>MyResult();<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ The <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html" title="Interface in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> interface provides the following methods:
+ <ul>
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#run(java.lang.Runnable)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>run(Runnable)</code></a> - Executes a Runnable within the critical section.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#call(java.util.concurrent.Callable<V>)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>call(Callable)</code></a> - Executes a Callable within the critical section and returns its result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#call(java.lang.Class<E>,java.util.concurrent.Callable<V>)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>call(Class, Callable)</code></a> - Executes a Callable within the critical section, specifying the exception type it may throw.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#supply(java.util.function.Supplier<V>)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>supply(Supplier)</code></a> - Executes a Supplier within the critical section and returns its result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#supply(java.util.function.BooleanSupplier)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>supply(BooleanSupplier)</code></a> - Executes a BooleanSupplier within the critical section and returns its boolean result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#supply(java.util.function.IntSupplier)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>supply(IntSupplier)</code></a> - Executes an IntSupplier within the critical section and returns its int result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#supply(java.util.function.LongSupplier)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>supply(LongSupplier)</code></a> - Executes a LongSupplier within the critical section and returns its long result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#supply(java.util.function.DoubleSupplier)" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>supply(DoubleSupplier)</code></a> - Executes a DoubleSupplier within the critical section and returns its double result.
+ <li><a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html#newCondition()" title="Method in org.eclipse.net4j.util.concurrent.CriticalSection"><code>newCondition()</code></a> - Creates a new Condition associated with the critical section.
+ </ul>
+ <p>
+ By default the critical section of a view uses the monitor lock of that view to synchronize. If you need a different locking
+ strategy you can override this by calling <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> before opening the view.
+ <p>
+ Here's an example of setting a custom lock for the next view to be opened:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UsingCriticalSections_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CustomLockForNextView.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingCriticalSections_2')" id="max_UsingCriticalSections_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UsingCriticalSections_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UsingCriticalSections_2" style="padding:8px;">
+            <code>
+            Lock&nbsp;customLock&nbsp;=&nbsp;<font color="#7f0055"><b>new&nbsp;</b></font>ReentrantLock();<br/>
+            CDOUtil.setNextViewLock(customLock);<br/>
+            <br/>
+            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
+            <br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(sync&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>LockedCriticalSection)<br/>
             {<br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>protected&nbsp;</b></font>Lock&nbsp;viewLock;<br/>
-            <br/>
-            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font>InternalCDOObject&nbsp;getObject(CDOID&nbsp;id,&nbsp;<font color="#7f0055"><b>boolean&nbsp;</b></font>loadOnDemand)<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(CDOIDUtil.isNull(id))<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;null</b></font>;<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>synchronized&nbsp;</b></font>(getViewMonitor())<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;lockView();<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>try</b></font><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>getObjectUnsynced(id,&nbsp;loadOnDemand);<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>finally</b></font><br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;unlockView();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font>Object&nbsp;getViewMonitor()<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;new&nbsp;</b></font>NOOPMonitor();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;this</b></font>;<br/>
-            &nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font>Lock&nbsp;getViewLock()<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>return&nbsp;</b></font>viewLock;<br/>
-            &nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>lockView()<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;viewLock.lock();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;}<br/>
-            <br/>
-            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
-            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;final&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>unlockView()<br/>
-            &nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(viewLock&nbsp;!=&nbsp;<font color="#7f0055"><b>null</b></font>)<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;{<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;viewLock.unlock();<br/>
-            &nbsp;&nbsp;&nbsp;&nbsp;}<br/>
-            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;Lock&nbsp;lock&nbsp;=&nbsp;((LockedCriticalSection)sync).getLock();<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>assert&nbsp;</b></font>lock&nbsp;==&nbsp;customLock;<br/>
+            }<br/>
+            <font color="#7f0055"><b>else</b></font><br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>throw&nbsp;new&nbsp;</b></font>IllegalStateException();<br/>
             }            </code>
 
           </div>
@@ -203,14 +215,195 @@ function maximize(id)
 <p>
 
  <p>
+ The following chapter describes how to use a special kind of lock, a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a>, that
+ allows to delegate the lock ownership to a different thread.
 
-<h3><a name="UsingDelegableLock"></a>2.2&nbsp;&nbsp;Using a Delegable Lock</h3>
+<h3><a name="UsingDelegableLock"></a>3.2&nbsp;&nbsp;Using a Delegable Lock</h3>
+<p>
+ As an alternative to the default locking strategy of a view's critical section, you can use
+ a <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a>, which allows to delegate the lock ownership to a
+ different thread. This is useful in scenarios where you need to hold the lock while waiting for an
+ asynchronous operation to complete in a different thread.
+ <p>
+ A typical example is the Display.syncExec() method in SWT/JFace UI applications. With the default locking
+ strategy this can lead to deadlocks:
+ <ol>
+ <li>Thread A (not the UI thread) holds the view lock and calls <code>Display.syncExec()</code> to execute some code in the UI
+    thread.
+ <li>The Runnable passed to syncExec() is scheduled for execution in the UI thread. Thread A waits for the Runnable to
+    complete.
+ <li>The UI thread executes the Runnable, which tries to access the view or an object of the view. This requires
+    the view lock, which is already held by thread A.
+ <li>Deadlock: Thread A waits for the Runnable to complete and the UI thread waits for the view lock to be released.
+ </ol>
+ <p>
+ Here is an example that illustrates this scenario:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UsingDelegableLock_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">DeadlockExample.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingDelegableLock_1')" id="max_UsingDelegableLock_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UsingDelegableLock_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UsingDelegableLock_1" style="padding:8px;">
+            <code>
+            CDOObject&nbsp;object&nbsp;=&nbsp;view.getObject(id);<br/>
+            object.eAdapters().add(<font color="#7f0055"><b>new&nbsp;</b></font>AdapterImpl()<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#646464">@Override</font><br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>public&nbsp;</b></font><font color="#7f0055"><b>void&nbsp;</b></font>notifyChanged(Notification&nbsp;msg)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;a&nbsp;non-UI&nbsp;thread&nbsp;and&nbsp;holds&nbsp;the&nbsp;view&nbsp;lock.</font><br/>
+            <br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;following&nbsp;call&nbsp;to&nbsp;Display.syncExec()&nbsp;will&nbsp;execute&nbsp;the&nbsp;Runnable&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;and&nbsp;make&nbsp;the&nbsp;current&nbsp;thread&nbsp;wait&nbsp;for&nbsp;it&nbsp;to&nbsp;complete.&nbsp;During&nbsp;that&nbsp;time&nbsp;the&nbsp;view&nbsp;lock</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;is&nbsp;still&nbsp;held&nbsp;by&nbsp;the&nbsp;current&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;Display.getDefault().syncExec(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;It&nbsp;tries&nbsp;to&nbsp;access&nbsp;the&nbsp;view&nbsp;while&nbsp;the&nbsp;view&nbsp;lock&nbsp;is&nbsp;held&nbsp;by&nbsp;the&nbsp;non-UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;result&nbsp;is&nbsp;a&nbsp;deadlock.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDOResource&nbsp;resource&nbsp;=&nbsp;view.getResource(<font color="#2a00ff">&#34;/my/resource&#34;</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;});<br/>
+            &nbsp;&nbsp;}<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
 
-<h2><a name="OpeningAndClosingViews"></a>3&nbsp;&nbsp;Opening and Closing Views</h2>
+ <p>
+ Note that, in this scenario, Thread A is holding the view lock while waiting for the Runnable to complete. This is kind
+ of an anti-pattern, because it blocks other threads from accessing the view for an indeterminate amount of time. In
+ addition, it is not necessary to hold the view lock while waiting for the Runnable to complete, because Thread A
+ can not access the view in that time.
+ <p>
+ A <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" title="Class in org.eclipse.net4j.util.concurrent"><code>DelegableReentrantLock</code></a> can be used to avoid the deadlock. It uses so called <em>lock delegation</em> to
+ temporarily transfer the ownership of the lock to a different thread. In the scenario described above,
+ Thread A can delegate the lock ownership to the UI thread while waiting for the Runnable to complete.
+ When the Runnable completes, the lock ownership is transferred back to Thread A. This way, the UI thread can
+ access the view while executing the Runnable and no deadlock occurs.
+ <p>
+ <code>DelegableReentrantLock</code>
+ uses <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" title="Interface in org.eclipse.net4j.util.concurrent.DelegableReentrantLock"><code>DelegateDetector</code></a>s to determine whether the current thread is allowed to delegate the lock ownership
+ to a different thread. A <code>DelegateDetector</code> can be registered with the lock by calling
+ <a href="../../../../org.eclipse.net4j.util.doc/javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html#addDelegateDetector(org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector)" title="Method in org.eclipse.net4j.util.concurrent.DelegableReentrantLock"><code>DelegableReentrantLock.addDelegateDetector(DelegateDetector)</code></a>. The <code>org.eclipse.net4j.util.ui</code> plugin provides
+ a <code>DisplayDelegateDetector</code> for the SWT/JFace UI thread that detects calls to
+ <code>Display.syncExec()</code>.
+ <p>
+ There are two ways to use a <code>DelegableReentrantLock</code> with a CDO view:
+ <ol>
+ <li>Set the lock as the next view lock by calling <a href="../../../javadoc/org/eclipse/emf/cdo/util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)" title="Method in org.eclipse.emf.cdo.util.CDOUtil"><code>CDOUtil.setNextViewLock(Lock)</code></a> before opening the view.
+    This way, the view will use the lock for its critical section. Here's an example:
+    <p>
+    
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UsingDelegableLock_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">IndividualViewLock.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingDelegableLock_2')" id="max_UsingDelegableLock_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UsingDelegableLock_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UsingDelegableLock_2" style="padding:8px;">
+            <code>
+            CDOUtil.setNextViewLock(<font color="#7f0055"><b>new&nbsp;</b></font>DelegableReentrantLock());<br/>
+            <br/>
+            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Acquire&nbsp;the&nbsp;view&nbsp;lock.</font><br/>
+            sync.run(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;a&nbsp;non-UI&nbsp;thread&nbsp;and&nbsp;holds&nbsp;the&nbsp;view&nbsp;lock.</font><br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;following&nbsp;call&nbsp;to&nbsp;Display.syncExec()&nbsp;will&nbsp;execute&nbsp;the&nbsp;Runnable&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread</font><br/>
+            &nbsp;&nbsp;Display.getDefault().syncExec(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;It&nbsp;can&nbsp;access&nbsp;the&nbsp;view&nbsp;because&nbsp;the&nbsp;lock&nbsp;ownership&nbsp;has&nbsp;been&nbsp;delegated&nbsp;to&nbsp;the&nbsp;UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOResource&nbsp;resource&nbsp;=&nbsp;view.getResource(<font color="#2a00ff">&#34;/my/resource&#34;</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Resource:&nbsp;&#34;&nbsp;</font>+&nbsp;resource.getURI());<br/>
+            &nbsp;&nbsp;});<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
 <p>
- Learn how to open views to access repository data and close them to release resources. Proper management of view
- lifecycles helps prevent memory leaks and ensures efficient resource usage.
+
+    <p>
+ <li>Set <a href="../../../javadoc/org/eclipse/emf/cdo/session/CDOSession.Options.html#setDelegableViewLockEnabled(boolean)" title="Method in org.eclipse.emf.cdo.session.CDOSession.Options"><code>delegableViewLockEnabled</code></a> to <code>true</code> on the session.
+    This way, all views opened from the session will use a <code>DelegableReentrantLock</code> for their critical section.
+    The lock is created automatically and configured with all <code>DelegateDetector</code>s that are registered.
+    Example:
+    <p>
+    
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_UsingDelegableLock_3"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">SetDelegableViewLockEnabled.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('UsingDelegableLock_3')" id="max_UsingDelegableLock_3" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_UsingDelegableLock_3" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_UsingDelegableLock_3" style="padding:8px;">
+            <code>
+            session.options().setDelegableViewLockEnabled(<font color="#7f0055"><b>true</b></font>);<br/>
+            <br/>
+            CDOView&nbsp;view&nbsp;=&nbsp;session.openView();<br/>
+            CriticalSection&nbsp;sync&nbsp;=&nbsp;view.sync();<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Acquire&nbsp;the&nbsp;view&nbsp;lock.</font><br/>
+            sync.run(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;a&nbsp;non-UI&nbsp;thread&nbsp;and&nbsp;holds&nbsp;the&nbsp;view&nbsp;lock.</font><br/>
+            <br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;The&nbsp;following&nbsp;call&nbsp;to&nbsp;Display.syncExec()&nbsp;will&nbsp;execute&nbsp;the&nbsp;Runnable&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread</font><br/>
+            &nbsp;&nbsp;Display.getDefault().syncExec(()&nbsp;-&gt;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;This&nbsp;code&nbsp;is&nbsp;executed&nbsp;in&nbsp;the&nbsp;UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;It&nbsp;can&nbsp;access&nbsp;the&nbsp;view&nbsp;because&nbsp;the&nbsp;lock&nbsp;ownership&nbsp;has&nbsp;been&nbsp;delegated&nbsp;to&nbsp;the&nbsp;UI&nbsp;thread.</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOResource&nbsp;resource&nbsp;=&nbsp;view.getResource(<font color="#2a00ff">&#34;/my/resource&#34;</font>);<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Resource:&nbsp;&#34;&nbsp;</font>+&nbsp;resource.getURI());<br/>
+            &nbsp;&nbsp;});<br/>
+            });            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+    <p>
+ </ol>
 
 <h2><a name="UnderstandingTheCDOFileSystem"></a>4&nbsp;&nbsp;Understanding the CDO File System</h2>
 <p>

@@ -515,9 +515,11 @@ implements <a href="CDOTransaction.html" title="Schnittstelle in org.eclipse.emf
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewID()" class="member-name-link">getViewID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link">Lock</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewLock()" class="member-name-link">getViewLock</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link">Lock</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getViewLock()" class="member-name-link">getViewLock</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../view/CDOViewSet.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOViewSet</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getViewSet()" class="member-name-link">getViewSet</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -796,40 +798,50 @@ implements <a href="CDOTransaction.html" title="Schnittstelle in org.eclipse.emf
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Same as <a href="../view/CDOView.html#setTimeStamp(long)"><code>CDOView.setTimeStamp(long)</code></a> with <a href="https://help.eclipse.org/latest/topic/org.eclipse.platform.doc.isv/reference/api/org/eclipse/core/runtime/IProgressMonitor.html" title="Klasse oder Schnittstelle in org.eclipse.core.runtime" class="external-link"><code>IProgressMonitor</code></a>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#syncExec(java.lang.Runnable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>&lt;V&gt;&nbsp;V</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#syncExec(java.util.concurrent.Callable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html" title="Klasse oder Schnittstelle in java.util.concurrent" class="external-link">Callable</a>&lt;V&gt;&nbsp;callable)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.concurrent.CriticalSection</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sync()" class="member-name-link">sync</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of this view and its <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#syncExec(java.lang.Runnable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>&lt;V&gt;&nbsp;V</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#syncExec(java.util.concurrent.Callable)" class="member-name-link">syncExec</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html" title="Klasse oder Schnittstelle in java.util.concurrent" class="external-link">Callable</a>&lt;V&gt;&nbsp;callable)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span></div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects()" class="member-name-link">unlockObjects</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects()" class="member-name-link">unlockObjects</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unlocks all locked objects of this view.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Unlocks the given locked objects of this view.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#unlockObjects(java.util.Collection,org.eclipse.net4j.util.concurrent.IRWLockManager.LockType,boolean)" class="member-name-link">unlockObjects</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a>&gt;&nbsp;objects,
  org.eclipse.net4j.util.concurrent.IRWLockManager.LockType&nbsp;lockType,
  boolean&nbsp;recursive)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForUpdate(long)" class="member-name-link">waitForUpdate</a><wbr>(long&nbsp;updateTime)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForUpdate(long)" class="member-name-link">waitForUpdate</a><wbr>(long&nbsp;updateTime)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForUpdate(long,long)" class="member-name-link">waitForUpdate</a><wbr>(long&nbsp;updateTime,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#waitForUpdate(long,long)" class="member-name-link">waitForUpdate</a><wbr>(long&nbsp;updateTime,
  long&nbsp;timeoutMillis)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Blocks the calling thread until a commit operation with the given time stamp (or higher) has occurred or the given
  timeout has expired.</div>
 </div>
@@ -2139,9 +2151,85 @@ implements <a href="CDOTransaction.html" title="Schnittstelle in org.eclipse.emf
 </section>
 </li>
 <li>
+<section class="detail" id="sync()">
+<h3>sync</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.concurrent.CriticalSection</span>&nbsp;<span class="element-name">sync</span>()</div>
+<div class="block"><span class="description-from-type-label">Beschreibung aus Schnittstelle kopiert:&nbsp;<code><a href="../view/CDOView.html#sync()">CDOView</a></code></span></div>
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of this view and its <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a>.
+ <p>
+ Here is an example:
+ <pre>
+ CDOView view = ...;
+ CriticalSection sync = view.sync();
+
+ MyResult result = sync.call(() -&gt; {
+   // Access the view and its objects safely here.
+   CDOObject object1 = view.getObject(id1);
+   CDOObject object2 = view.getObject(id2);
+   CDOObject object3 = view.getObject(id3);
+   ...
+   return new MyResult(...);
+ });
+ </pre>
+ The critical section ensures that no invalidation or other internal operation of the view can occur while
+ the block of code is executed. This is particularly important if the block of code accesses the view or
+ <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a> of the view <b>multiple times</b>, because these objects can be
+ <a href="../view/CDOView.html#isInvalidating()"><code>invalidated</code></a> by network threads at any time in between these accesses otherwise.
+ This can lead to wrong computation results in the block of code being executed.
+ <p>
+ Note that single accesses to the view or its objects are always safe, even without using the critical section.
+ <p>
+ There are some other useful methods in CriticalSection that can be used to execute a block of code,
+ such as <code>run(Runnable)</code> or <code>supply(Supplier)</code>.
+ <p>
+ By default the critical section uses the monitor lock of this view to synchronize. If you need a different locking
+ strategy you can override this by calling <a href="../util/CDOUtil.html#setNextViewLock(java.util.concurrent.locks.Lock)"><code>CDOUtil.setNextViewLock(Lock)</code></a> before opening the view.
+ <p>
+ In particular you can use a <code>DelegableReentrantLock</code>, which allows to delegate the lock ownership to a
+ different thread. This is useful in scenarios where you need to hold the lock while waiting for an
+ asynchronous operation to complete in a different thread.
+ <p>
+ A typical example is the Display.syncExec() method in SWT/JFace UI applications. With the default locking
+ strategy this can lead to deadlocks:
+ <ol>
+ <li>Thread A (not the UI thread) holds the view lock and calls <code>Display.syncExec()</code> to execute some code in the UI
+    thread.
+ <li>The Runnable passed to syncExec() is scheduled for execution in the UI thread. Thread A waits for the Runnable to
+    complete.
+ <li>The UI thread executes the Runnable, which tries to access the view or an object of the view. This requires
+    the view lock, which is already held by thread A.
+ <li>Deadlock: Thread A waits for the Runnable to complete and the UI thread waits for the view lock to be released.
+ </ol>
+ <p>
+ Note that, in this scenario, Thread A is holding the view lock while waiting for the Runnable to complete. This is kind
+ of an anti-pattern, because it blocks other threads from accessing the view for an indeterminate amount of time. In
+ addition, it is not necessary to hold the view lock while waiting for the Runnable to complete, because Thread A
+ can not access the view in that time.
+ <p>
+ A <code>DelegableReentrantLock</code> can be used to avoid the deadlock. It uses so called <em>lock delegation</em> to
+ temporarily transfer the ownership of the lock to a different thread. In the scenario described above,
+ Thread A can delegate the lock ownership to the UI thread while waiting for the Runnable to complete.
+ When the Runnable completes, the lock ownership is transferred back to Thread A. This way, the UI thread can
+ access the view while executing the Runnable and no deadlock occurs.
+ <p><code>DelegableReentrantLock</code>
+ uses <code>DelegableReentrantLock.DelegateDetector</code>s to determine whether the current thread is allowed to delegate the lock ownership
+ to a different thread. A <code>DelegateDetector</code> can be registered with the lock by calling
+ <code>DelegableReentrantLock.addDelegateDetector(DelegateDetector)</code>. The <code>org.eclipse.net4j.util.ui</code> plugin provides
+ a <code>DisplayDelegateDetector</code> for the SWT/JFace UI thread that detects calls to
+ <code>Display.syncExec()</code>.</div>
+<dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="../view/CDOView.html#sync()">sync</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getViewLock()">
 <h3>getViewLock</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link">Lock</a></span>&nbsp;<span class="element-name">getViewLock</span>()</div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link">Lock</a></span>&nbsp;<span class="element-name">getViewLock</span>()</div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="../view/CDOView.html#getViewLock()">getViewLock</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
@@ -2153,7 +2241,9 @@ implements <a href="CDOTransaction.html" title="Schnittstelle in org.eclipse.emf
 <li>
 <section class="detail" id="syncExec(java.lang.Runnable)">
 <h3>syncExec</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Runnable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Runnable</a>&nbsp;runnable)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="../view/CDOView.html#syncExec(java.lang.Runnable)">syncExec</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></dd>
@@ -2165,8 +2255,10 @@ implements <a href="CDOTransaction.html" title="Schnittstelle in org.eclipse.emf
 <li>
 <section class="detail" id="syncExec(java.util.concurrent.Callable)">
 <h3>syncExec</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;V&gt;</span>&nbsp;<span class="return-type">V</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html" title="Klasse oder Schnittstelle in java.util.concurrent" class="external-link">Callable</a>&lt;V&gt;&nbsp;callable)</span>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;V&gt;</span>&nbsp;<span class="return-type">V</span>&nbsp;<span class="element-name">syncExec</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/Callable.html" title="Klasse oder Schnittstelle in java.util.concurrent" class="external-link">Callable</a>&lt;V&gt;&nbsp;callable)</span>
                throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="../view/CDOView.html#syncExec(java.util.concurrent.Callable)">syncExec</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a></code></dd>

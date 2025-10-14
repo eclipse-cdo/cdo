@@ -100,6 +100,13 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">DelegableReentrantLock</span>
 <span class="extends-implements">extends <a href="NonFairReentrantLock.html" title="Klasse in org.eclipse.net4j.util.concurrent">NonFairReentrantLock</a>
 implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle">ILifecycle</a>, <a href="../container/IManagedContainerProvider.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainerProvider</a></span></div>
+<div class="block">A reentrant lock that can be delegated to other threads as detected by <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.
+ <p>
+ Delegate detectors can be registered programmatically or discovered in a <a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>managed container</code></a>.
+ The <a href="../container/IPluginContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>plugin container</code></a> is used by default.
+ <p>
+ This class implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.eclipse.net4j.util.lifecycle"><code>ILifecycle</code></a> and must be <a href="#activate()"><code>activated</code></a> before use. As a consequence, it
+ also implements <a href="../event/INotifier.html" title="Schnittstelle in org.eclipse.net4j.util.event"><code>INotifier</code></a>, but it does not send any events.</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.6</dd>
@@ -145,9 +152,20 @@ implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.ec
 <div class="table-header col-first">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">DelegableReentrantLock</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">DelegableReentrantLock</a><wbr>(<a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a delegable reentrant lock that uses the <a href="../container/IPluginContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>plugin container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.</div>
+</div>
+<div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(boolean)" class="member-name-link">DelegableReentrantLock</a><wbr>(boolean&nbsp;usePluginContainer)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a delegable reentrant lock that uses the <a href="../container/IPluginContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>plugin container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a> if the given flag is <code>true</code>.</div>
+</div>
+<div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">DelegableReentrantLock</a><wbr>(<a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a delegable reentrant lock that uses the given <a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>managed container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.</div>
+</div>
 </div>
 </section>
 </li>
@@ -166,39 +184,45 @@ implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.ec
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#activate()" class="member-name-link">activate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addListener(org.eclipse.net4j.util.event.IListener)" class="member-name-link">addListener</a><wbr>(<a href="../event/IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addDelegateDetector(org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector)" class="member-name-link">addDelegateDetector</a><wbr>(<a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a>&nbsp;delegateDetector)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addListener(org.eclipse.net4j.util.event.IListener)" class="member-name-link">addListener</a><wbr>(<a href="../event/IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Adds a listener to this notifier.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deactivate()" class="member-name-link">deactivate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#deactivate()" class="member-name-link">deactivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../lifecycle/LifecycleState.html" title="Enum-Klasse in org.eclipse.net4j.util.lifecycle">LifecycleState</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLifecycleState()" class="member-name-link">getLifecycleState</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainer</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../event/IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getListeners()" class="member-name-link">getListeners</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../lifecycle/LifecycleState.html" title="Enum-Klasse in org.eclipse.net4j.util.lifecycle">LifecycleState</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLifecycleState()" class="member-name-link">getLifecycleState</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="../event/IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getListeners()" class="member-name-link">getListeners</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the listeners that are registered with this notifier.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasListeners()" class="member-name-link">hasListeners</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#hasListeners()" class="member-name-link">hasListeners</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns <code>true</code> if one or more listeners are registered with this notifier, <code>false</code> otherwise.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isActive()" class="member-name-link">isActive</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDelegate(java.lang.Thread,java.lang.Thread)" class="member-name-link">isDelegate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;thread,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;owner)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isActive()" class="member-name-link">isActive</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOwner(java.lang.Thread,java.lang.Thread)" class="member-name-link">isOwner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;thread,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDelegate(java.lang.Thread,java.lang.Thread)" class="member-name-link">isDelegate</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;thread,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;owner)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isOwner(java.lang.Thread,java.lang.Thread)" class="member-name-link">isOwner</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;thread,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Thread.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Thread</a>&nbsp;owner)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeDelegateDetector(org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector)" class="member-name-link">removeDelegateDetector</a><wbr>(<a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a>&nbsp;delegateDetector)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeListener(org.eclipse.net4j.util.event.IListener)" class="member-name-link">removeListener</a><wbr>(<a href="../event/IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
@@ -229,12 +253,29 @@ implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.ec
 <section class="detail" id="&lt;init&gt;(org.eclipse.net4j.util.container.IManagedContainer)">
 <h3>DelegableReentrantLock</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DelegableReentrantLock</span><wbr><span class="parameters">(<a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container">IManagedContainer</a>&nbsp;container)</span></div>
+<div class="block">Constructs a delegable reentrant lock that uses the given <a href="../container/IManagedContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>managed container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>. If the given container is <code>null</code>, no container is
+ used.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="&lt;init&gt;(boolean)">
+<h3>DelegableReentrantLock</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DelegableReentrantLock</span><wbr><span class="parameters">(boolean&nbsp;usePluginContainer)</span></div>
+<div class="block">Constructs a delegable reentrant lock that uses the <a href="../container/IPluginContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>plugin container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a> if the given flag is <code>true</code>. Uses no container otherwise.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="&lt;init&gt;()">
 <h3>DelegableReentrantLock</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">DelegableReentrantLock</span>()</div>
+<div class="block">Constructs a delegable reentrant lock that uses the <a href="../container/IPluginContainer.html" title="Schnittstelle in org.eclipse.net4j.util.container"><code>plugin container</code></a> to discover
+ <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.</div>
 </section>
 </li>
 </ul>
@@ -245,6 +286,26 @@ implements <a href="../lifecycle/ILifecycle.html" title="Schnittstelle in org.ec
 <section class="method-details" id="method-detail">
 <h2>Methodendetails</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="addDelegateDetector(org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector)">
+<h3>addDelegateDetector</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addDelegateDetector</span><wbr><span class="parameters">(<a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a>&nbsp;delegateDetector)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="removeDelegateDetector(org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector)">
+<h3>removeDelegateDetector</h3>
+<div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">removeDelegateDetector</span><wbr><span class="parameters">(<a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a>&nbsp;delegateDetector)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="getContainer()">
 <h3>getContainer</h3>

@@ -311,11 +311,11 @@
       </topic>
       <topic label="Working with Views" href="html/programmers/client/Doc04_WorkingWithViews.html" icon="article">
         <topic label="Understanding Views and Their Types" href="html/programmers/client/Doc04_WorkingWithViews.html#UnderstandingViewsAndTheirTypes" icon="chapter" />
+        <topic label="Opening and Closing Views" href="html/programmers/client/Doc04_WorkingWithViews.html#OpeningAndClosingViews" icon="chapter" />
         <topic label="Thread Safety" href="html/programmers/client/Doc04_WorkingWithViews.html#ThreadSafety" icon="chapter">
-          <topic label="View Lock and Monitor" href="html/programmers/client/Doc04_WorkingWithViews.html#ViewLockAndMonitor" icon="chapter" />
+          <topic label="Using Critical Sections" href="html/programmers/client/Doc04_WorkingWithViews.html#UsingCriticalSections" icon="chapter" />
           <topic label="Using a Delegable Lock" href="html/programmers/client/Doc04_WorkingWithViews.html#UsingDelegableLock" icon="chapter" />
         </topic>
-        <topic label="Opening and Closing Views" href="html/programmers/client/Doc04_WorkingWithViews.html#OpeningAndClosingViews" icon="chapter" />
         <topic label="Understanding the CDO File System" href="html/programmers/client/Doc04_WorkingWithViews.html#UnderstandingTheCDOFileSystem" icon="chapter">
           <topic label="The Root Resource" href="html/programmers/client/Doc04_WorkingWithViews.html#TheRootResource" icon="chapter" />
           <topic label="Resource Folders" href="html/programmers/client/Doc04_WorkingWithViews.html#ResourceFolders" icon="chapter" />

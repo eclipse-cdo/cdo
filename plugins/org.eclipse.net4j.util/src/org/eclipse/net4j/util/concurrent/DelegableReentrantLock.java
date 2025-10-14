@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.INotifier;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 import org.eclipse.net4j.util.lifecycle.ILifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleException;
@@ -26,6 +27,14 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
+ * A reentrant lock that can be delegated to other threads as detected by {@link DelegateDetector delegate detectors}.
+ * <p>
+ * Delegate detectors can be registered programmatically or discovered in a {@link IManagedContainer managed container}.
+ * The {@link IPluginContainer plugin container} is used by default.
+ * <p>
+ * This class implements {@link ILifecycle} and must be {@link #activate() activated} before use. As a consequence, it
+ * also implements {@link INotifier}, but it does not send any events.
+ *
  * @author Eike Stepper
  * @since 3.6
  */
@@ -40,13 +49,13 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     @Override
     protected void onAdded(IContainer<Object> container, Object element)
     {
-      addDelegateDetector(element);
+      addDelegateDetectorObject(element);
     }
 
     @Override
     protected void onRemoved(IContainer<Object> container, Object element)
     {
-      removeDelegateDetector(element);
+      removeDelegateDetectorObject(element);
     }
   };
 
@@ -54,14 +63,50 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
 
   private volatile boolean active;
 
+  /**
+   * Constructs a delegable reentrant lock that uses the given {@link IManagedContainer managed container} to discover
+   * {@link DelegateDetector delegate detectors}. If the given container is <code>null</code>, no container is
+   * used.
+   */
   public DelegableReentrantLock(IManagedContainer container)
   {
     this.container = container;
   }
 
+  /**
+   * Constructs a delegable reentrant lock that uses the {@link IPluginContainer plugin container} to discover
+   * {@link DelegateDetector delegate detectors} if the given flag is <code>true</code>. Uses no container otherwise.
+   *
+   * @since 3.29
+   */
+  public DelegableReentrantLock(boolean usePluginContainer)
+  {
+    this(usePluginContainer ? IPluginContainer.INSTANCE : null);
+  }
+
+  /**
+   * Constructs a delegable reentrant lock that uses the {@link IPluginContainer plugin container} to discover
+   * {@link DelegateDetector delegate detectors}.
+   */
   public DelegableReentrantLock()
   {
     this(IPluginContainer.INSTANCE);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public final void addDelegateDetector(DelegateDetector delegateDetector)
+  {
+    addDelegateDetectorObject(delegateDetector);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public final void removeDelegateDetector(DelegateDetector delegateDetector)
+  {
+    removeDelegateDetectorObject(delegateDetector);
   }
 
   @Override
@@ -77,12 +122,15 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     {
       active = true;
 
-      for (Object element : container.getElements(DelegateDetector.Factory.PRODUCT_GROUP))
+      if (container != null)
       {
-        addDelegateDetector(element);
-      }
+        for (Object element : container.getElements(DelegateDetector.Factory.PRODUCT_GROUP))
+        {
+          addDelegateDetectorObject(element);
+        }
 
-      container.addListener(containerListener);
+        container.addListener(containerListener);
+      }
     }
   }
 
@@ -93,7 +141,11 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     {
       try
       {
-        container.removeListener(containerListener);
+        if (container != null)
+        {
+          container.removeListener(containerListener);
+        }
+
         delegateDetectors.clear();
       }
       catch (Exception ex)
@@ -169,7 +221,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     return false;
   }
 
-  private void addDelegateDetector(Object element)
+  private void addDelegateDetectorObject(Object element)
   {
     if (element instanceof DelegateDetector)
     {
@@ -178,7 +230,7 @@ public class DelegableReentrantLock extends NonFairReentrantLock implements ILif
     }
   }
 
-  private void removeDelegateDetector(Object element)
+  private final void removeDelegateDetectorObject(Object element)
   {
     if (element instanceof DelegateDetector)
     {

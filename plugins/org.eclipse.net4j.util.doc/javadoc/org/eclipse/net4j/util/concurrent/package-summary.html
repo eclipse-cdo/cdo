@@ -111,10 +111,30 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">Allow synchronization between many threads for a specific value.</div>
 </div>
+<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">CriticalSection</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="block">A critical section is a block of code that must be executed by only one thread at a time.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CriticalSection.LockedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.LockedCriticalSection</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that uses a given <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/concurrent/locks/Lock.html" title="Klasse oder Schnittstelle in java.util.concurrent.locks" class="external-link"><code>Lock</code></a> to synchronize access to the critical
+ section.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="CriticalSection.SynchronizedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.SynchronizedCriticalSection</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that uses a given mutex object to synchronize access to the critical
+ section.</div>
+</div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="CriticalSection.UnsynchronizedCriticalSection.html" title="Klasse in org.eclipse.net4j.util.concurrent">CriticalSection.UnsynchronizedCriticalSection</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A <a href="CriticalSection.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>CriticalSection</code></a> implementation that does not perform any synchronization.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab2"><a href="DelayingExecutor.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelayingExecutor</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DelegableReentrantLock.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelegableReentrantLock</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A reentrant lock that can be delegated to other threads as detected by <a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent"><code>delegate detectors</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="DelegableReentrantLock.DelegateDetector.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="DelegableReentrantLock.DelegateDetector.Factory.html" title="Klasse in org.eclipse.net4j.util.concurrent">DelegableReentrantLock.DelegateDetector.Factory</a></div>
@@ -128,7 +148,9 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-comment">As of 3.9 use an executor such as <a href="SerializingExecutor.html" title="Klasse in org.eclipse.net4j.util.concurrent"><code>SerializingExecutor</code></a>.</div>
 </div>
 <div class="col-first even-row-color class-summary class-summary-tab2"><a href="Holder.html" title="Klasse in org.eclipse.net4j.util.concurrent">Holder</a>&lt;T&gt;</div>
-<div class="col-last even-row-color class-summary class-summary-tab2">&nbsp;</div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">A simple holder for a single element that implements <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link"><code>Consumer</code></a> and <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Supplier.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link"><code>Supplier</code></a>.</div>
+</div>
 <div class="col-first odd-row-color class-summary class-summary-tab1"><a href="ICorrelator.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">ICorrelator</a>&lt;CORRELATION,<wbr>VALUE&gt;</div>
 <div class="col-last odd-row-color class-summary class-summary-tab1">&nbsp;</div>
 <div class="col-first even-row-color class-summary class-summary-tab1"><a href="IExecutorServiceProvider.html" title="Schnittstelle in org.eclipse.net4j.util.concurrent">IExecutorServiceProvider</a></div>

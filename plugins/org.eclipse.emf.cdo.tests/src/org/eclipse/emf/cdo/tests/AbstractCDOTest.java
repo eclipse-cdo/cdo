@@ -497,6 +497,7 @@ public abstract class AbstractCDOTest extends ConfigTest
     {
       if (updatable instanceof CDOView)
       {
+        @SuppressWarnings("resource")
         CDOView view = (CDOView)updatable;
         view.addListener(listener);
       }
@@ -539,6 +540,7 @@ public abstract class AbstractCDOTest extends ConfigTest
       {
         if (updatable instanceof CDOView)
         {
+          @SuppressWarnings("resource")
           CDOView view = (CDOView)updatable;
           view.removeListener(listener);
         }

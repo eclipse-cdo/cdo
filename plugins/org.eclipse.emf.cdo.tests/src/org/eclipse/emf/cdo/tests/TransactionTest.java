@@ -102,6 +102,22 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  public void testTryWithResources() throws Exception
+  {
+    CDOSession session = openSession();
+
+    try (CDOTransaction transaction = session.openTransaction())
+    {
+      assertEquals(1, session.getViews().length);
+
+      CDOResource resource = transaction.getOrCreateResource(getResourcePath("/test1"));
+      resource.getContents().add(getModel1Factory().createCompany());
+      transaction.commit();
+    }
+
+    assertEquals(0, session.getViews().length);
+  }
+
   /**
    * See bug 335432
    */
@@ -343,6 +359,7 @@ public class TransactionTest extends AbstractCDOTest
     }
   }
 
+  @SuppressWarnings("resource")
   public void testPushModeNewObjects() throws Exception
   {
     IOUtil.OUT().println("Creating category1");
@@ -393,6 +410,7 @@ public class TransactionTest extends AbstractCDOTest
     session.close();
   }
 
+  @SuppressWarnings("resource")
   public void testPushModeDeltas() throws Exception
   {
     IOUtil.OUT().println("Creating category1");

@@ -32,7 +32,7 @@ import org.eclipse.core.runtime.IAdaptable;
  * @noextend This interface is not intended to be extended by clients.
  * @noimplement This interface is not intended to be implemented by clients.
  */
-public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOptionsContainer, IPropertiesContainer, IAdaptable, Closeable
+public interface CDOCommonView extends CDOBranchPoint, CDORevisionProvider, IOptionsContainer, IPropertiesContainer, IAdaptable, Closeable, AutoCloseable
 {
   /**
    * @since 4.15

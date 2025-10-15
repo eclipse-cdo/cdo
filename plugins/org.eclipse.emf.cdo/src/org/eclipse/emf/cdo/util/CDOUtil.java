@@ -77,6 +77,7 @@ import org.eclipse.emf.internal.cdo.view.CDOStateMachine;
 import org.eclipse.emf.internal.cdo.view.CDOStoreImpl;
 
 import org.eclipse.net4j.util.AdapterUtil;
+import org.eclipse.net4j.util.concurrent.CriticalSection;
 import org.eclipse.net4j.util.concurrent.DelegableReentrantLock;
 import org.eclipse.net4j.util.container.ContainerUtil;
 import org.eclipse.net4j.util.container.IManagedContainer;
@@ -172,6 +173,52 @@ public final class CDOUtil
 
   private CDOUtil()
   {
+  }
+
+  /**
+   * Returns a {@link CriticalSection critical section} that can be used to execute a block of code that
+   * needs to be synchronized with the internal operations of the given view and its {@link CDOObject objects}.
+   * <p>
+   * The critical section is reentrant and may be nested.
+   * <p>
+   * For more information see {@link CDOView#sync()}.
+   *
+   * @return a critical section that can be used to synchronize with the given view and its objects or
+   * {@link CriticalSection#UNSYNCHRONIZED} if the given view is <code>null</code> or already closed.
+   * Never <code>null</code>.
+   *
+   * @see #sync(Notifier)
+   * @since 4.29
+   */
+  public static CriticalSection sync(CDOView view)
+  {
+    if (view == null || view.isClosed())
+    {
+      return CriticalSection.UNSYNCHRONIZED;
+    }
+
+    return view.sync();
+  }
+
+  /**
+   * Returns a {@link CriticalSection critical section} that can be used to execute a block of code that
+   * needs to be synchronized with the internal operations of the view of the given object.
+   * <p>
+   * The critical section is reentrant and may be nested.
+   * <p>
+   * For more information see {@link CDOView#sync()}.
+   *
+   * @return a critical section that can be used to synchronize with the view of the given object or
+   * {@link CriticalSection#UNSYNCHRONIZED} if the view is <code>null</code> or already closed.
+   * Never <code>null</code>.
+   *
+   * @see #sync(CDOView)
+   * @since 4.29
+   */
+  public static CriticalSection sync(Notifier object)
+  {
+    CDOView view = getView(object);
+    return sync(view);
   }
 
   /**

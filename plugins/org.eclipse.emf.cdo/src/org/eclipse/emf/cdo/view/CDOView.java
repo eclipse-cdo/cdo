@@ -51,6 +51,7 @@ import org.eclipse.net4j.util.container.IContainer;
 import org.eclipse.net4j.util.options.IOptionsEvent;
 import org.eclipse.net4j.util.ref.ReferenceType;
 
+import org.eclipse.emf.common.notify.Notifier;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -207,6 +208,8 @@ public interface CDOView extends CDOCommonView, CDOUpdatable, CDOCommitHistory.P
    * a <code>DisplayDelegateDetector</code> for the SWT/JFace UI thread that detects calls to
    * <code>Display.syncExec()</code>.
    *
+   * @see CDOUtil#sync(CDOView)
+   * @see CDOUtil#sync(Notifier)
    * @since 4.29
    */
   public CriticalSection sync();

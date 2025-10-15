@@ -46,6 +46,7 @@ import org.eclipse.emf.cdo.security.UserPassword;
 
 import org.eclipse.emf.common.util.Diagnostic;
 import org.eclipse.emf.common.util.DiagnosticChain;
+import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.ResourceLocator;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.util.EObjectValidator;
@@ -275,7 +276,8 @@ public class SecurityValidator extends EObjectValidator
     final CDORevisionProvider revisionProvider = getRevisionProvider(realm, context);
     final CDOBranchPoint securityContext = getSecurityContext(realm, context);
 
-    for (User user : realm.getAllUsers())
+    EList<User> allUsers = realm.getAllUsers();
+    for (User user : allUsers)
     {
       if (user.getDefaultAccess() == Access.WRITE)
       {

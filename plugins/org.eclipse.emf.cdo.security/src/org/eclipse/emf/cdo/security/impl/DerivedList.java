@@ -10,6 +10,8 @@
  */
 package org.eclipse.emf.cdo.security.impl;
 
+import org.eclipse.emf.cdo.util.CDOUtil;
+
 import org.eclipse.emf.common.notify.NotificationChain;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -36,10 +38,13 @@ abstract class DerivedList<E extends EObject> implements InternalEList<E>, EStru
   private InternalEList<E> getList()
   {
     InternalEObject owner = getOwner();
-    EStructuralFeature feature = getFeature();
-    Object[] data = getData();
 
-    return new EcoreEList.UnmodifiableEList.FastCompare<>(owner, feature, data.length, data);
+    return CDOUtil.sync(owner).supply(() -> {
+      EStructuralFeature feature = getFeature();
+      Object[] data = getData();
+
+      return new EcoreEList.UnmodifiableEList.FastCompare<>(owner, feature, data.length, data);
+    });
   }
 
   protected abstract InternalEObject getOwner();

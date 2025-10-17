@@ -97,6 +97,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">CDORevisionCrawler.Handler</span></div>
+<div class="block">Handler interface for receiving crawl events.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -117,20 +118,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)" class="member-name-link">begin</a><wbr>(<a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a>&nbsp;crawler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called when crawling begins.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">beginRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called when a revision is about to be processed.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">endRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called when a revision has been processed.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#finish()" class="member-name-link">finish</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called when crawling is finished.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">handleFeature</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Called for each feature to be handled.</div>
+</div>
 </div>
 </div>
 </div>
@@ -149,12 +160,26 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)">
 <h3>begin</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">begin</span><wbr><span class="parameters">(<a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a>&nbsp;crawler)</span></div>
+<div class="block">Called when crawling begins.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>crawler</code> - the crawler instance</dd>
+<dt>Gibt zurück:</dt>
+<dd>true to continue crawling</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>beginRevision</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">beginRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Called when a revision is about to be processed.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+<dt>Gibt zurück:</dt>
+<dd>true to continue crawling</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -162,18 +187,30 @@ loadScripts(document, 'script');</script>
 <h3>handleFeature</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleFeature</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="block">Called for each feature to be handled.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+<dd><code>feature</code> - the feature</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>endRevision</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">endRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Called when a revision has been processed.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="finish()">
 <h3>finish</h3>
 <div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">finish</span>()</div>
+<div class="block">Called when crawling is finished.</div>
 </section>
 </li>
 </ul>

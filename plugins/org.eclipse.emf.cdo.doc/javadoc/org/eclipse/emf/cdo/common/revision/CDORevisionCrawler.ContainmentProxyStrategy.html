@@ -103,6 +103,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name type-name-label">CDORevisionCrawler.ContainmentProxyStrategy</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Enum</a>&lt;<a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a>&gt;</span></div>
+<div class="block">Strategy for handling containment proxies during crawling.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -128,11 +129,17 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Enum-Konstante</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code><a href="#Any" class="member-name-link">Any</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Follows all containment proxies.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#Logical" class="member-name-link">Logical</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Follows only logical containment proxies (parent is not resource).</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#Physical" class="member-name-link">Physical</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Follows only physical containment proxies (parent is resource).</div>
+</div>
 </div>
 </section>
 </li>
@@ -149,7 +156,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#follow(boolean)" class="member-name-link">follow</a><wbr>(boolean&nbsp;parentIsResource)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Determines whether to follow a containment proxy based on parent resource status.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -185,18 +194,21 @@ der Reihenfolge ihrer Deklaration zurück.</div>
 <section class="detail" id="Physical">
 <h3>Physical</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></span>&nbsp;<span class="element-name">Physical</span></div>
+<div class="block">Follows only physical containment proxies (parent is resource).</div>
 </section>
 </li>
 <li>
 <section class="detail" id="Logical">
 <h3>Logical</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></span>&nbsp;<span class="element-name">Logical</span></div>
+<div class="block">Follows only logical containment proxies (parent is not resource).</div>
 </section>
 </li>
 <li>
 <section class="detail" id="Any">
 <h3>Any</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></span>&nbsp;<span class="element-name">Any</span></div>
+<div class="block">Follows all containment proxies.</div>
 </section>
 </li>
 </ul>
@@ -242,6 +254,13 @@ mit der eine Enum-Konstante in dieser Klasse deklariert wird.
 <section class="detail" id="follow(boolean)">
 <h3>follow</h3>
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">follow</span><wbr><span class="parameters">(boolean&nbsp;parentIsResource)</span></div>
+<div class="block">Determines whether to follow a containment proxy based on parent resource status.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>parentIsResource</code> - true if parent is a resource</dd>
+<dt>Gibt zurück:</dt>
+<dd>true to follow, false otherwise</dd>
+</dl>
 </section>
 </li>
 </ul>

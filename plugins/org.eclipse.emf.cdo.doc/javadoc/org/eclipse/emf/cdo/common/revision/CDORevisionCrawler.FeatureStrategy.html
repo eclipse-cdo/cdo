@@ -93,6 +93,7 @@ loadScripts(document, 'script');</script>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public static interface </span><span class="element-name type-name-label">CDORevisionCrawler.FeatureStrategy</span></div>
+<div class="block">Strategy for deciding how to handle features during crawling.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -111,7 +112,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" class="type-name-link" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Decision for feature handling: skip, handle, follow, or both.</div>
+</div>
 </div>
 </section>
 </li>
@@ -126,10 +129,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static final <a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></code></div>
 <div class="col-second even-row-color"><code><a href="#SINGLE" class="member-name-link">SINGLE</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Handles only the current feature, does not follow references.</div>
+</div>
 <div class="col-first odd-row-color"><code>static final <a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#TREE" class="member-name-link">TREE</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Handles the current feature and follows containment references.</div>
+</div>
 </div>
 </section>
 </li>
@@ -147,7 +154,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#decide(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">decide</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Decides how to handle a feature for a given revision.</div>
+</div>
 </div>
 </div>
 </div>
@@ -166,12 +175,14 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="SINGLE">
 <h3>SINGLE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></span>&nbsp;<span class="element-name">SINGLE</span></div>
+<div class="block">Handles only the current feature, does not follow references.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="TREE">
 <h3>TREE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></span>&nbsp;<span class="element-name">TREE</span></div>
+<div class="block">Handles the current feature and follows containment references.</div>
 </section>
 </li>
 </ul>
@@ -187,6 +198,14 @@ loadScripts(document, 'script');</script>
 <h3>decide</h3>
 <div class="member-signature"><span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></span>&nbsp;<span class="element-name">decide</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="block">Decides how to handle a feature for a given revision.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+<dd><code>feature</code> - the feature</dd>
+<dt>Gibt zurück:</dt>
+<dd>the decision</dd>
+</dl>
 </section>
 </li>
 </ul>

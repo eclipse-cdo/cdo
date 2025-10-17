@@ -106,6 +106,7 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">CDORevisionCrawler.OutputStreamHandler</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>
 implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></span></div>
+<div class="block">Handler implementation that writes crawl data to an output stream.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -124,7 +125,9 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" class="type-name-link" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Abstract ID mapper for mapping real IDs to local IDs.</div>
+</div>
 </div>
 </section>
 </li>
@@ -139,21 +142,29 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.io.OutputStream)" class="member-name-link">OutputStreamHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs an OutputStreamHandler with the given output stream.</div>
+</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.io.OutputStream,boolean,org.eclipse.emf.cdo.common.lob.CDOLobLoader)" class="member-name-link">OutputStreamHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream,
  boolean&nbsp;localIDs,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs an OutputStreamHandler with local ID mapping and optional LOB loader.</div>
+</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.io.OutputStream,org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.OutputStreamHandler.IDMapper,org.eclipse.emf.cdo.common.lob.CDOLobLoader)" class="member-name-link">OutputStreamHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs an OutputStreamHandler with custom ID mapper and optional LOB loader.</div>
+</div>
 <div class="col-first odd-row-color"><code>protected </code></div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.OutputStreamHandler.IDMapper)" class="member-name-link">OutputStreamHandler</a><wbr>(<a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs an OutputStreamHandler with the given data output and ID mapper.</div>
+</div>
 </div>
 </section>
 </li>
@@ -170,33 +181,51 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)" class="member-name-link">begin</a><wbr>(<a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a>&nbsp;crawler)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when crawling begins.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">beginRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when a revision is about to be processed.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">doBeginRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs finishing logic for the given revision.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doEndRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">doEndRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs ending logic for the given revision.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doHandleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">doHandleFeature</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs feature handling logic for the given revision and feature.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">endRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called when a revision has been processed.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#finishLocalIDs()" class="member-name-link">finishLocalIDs</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs the second phase for local ID mapping, writing features for all mapped revisions.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLocalIDMapper()" class="member-name-link">getLocalIDMapper</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the local ID mapper used by this handler, if any.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">handleFeature</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called for each feature to be handled.</div>
+</div>
 </div>
 </div>
 </div>
@@ -221,6 +250,11 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <section class="detail" id="&lt;init&gt;(java.io.OutputStream)">
 <h3>OutputStreamHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OutputStreamHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream)</span></div>
+<div class="block">Constructs an OutputStreamHandler with the given output stream.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>stream</code> - the output stream</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -229,6 +263,13 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OutputStreamHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream,
  boolean&nbsp;localIDs,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</span></div>
+<div class="block">Constructs an OutputStreamHandler with local ID mapping and optional LOB loader.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>stream</code> - the output stream</dd>
+<dd><code>localIDs</code> - true to use local IDs</dd>
+<dd><code>lobLoader</code> - the LOB loader, may be null</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -237,6 +278,13 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">OutputStreamHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/OutputStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">OutputStream</a>&nbsp;stream,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</span></div>
+<div class="block">Constructs an OutputStreamHandler with custom ID mapper and optional LOB loader.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>stream</code> - the output stream</dd>
+<dd><code>idMapper</code> - the ID mapper</dd>
+<dd><code>lobLoader</code> - the LOB loader, may be null</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -244,6 +292,7 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <h3>OutputStreamHandler</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">OutputStreamHandler</span><wbr><span class="parameters">(<a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper)</span></div>
+<div class="block">Constructs an OutputStreamHandler with the given data output and ID mapper.</div>
 </section>
 </li>
 </ul>
@@ -258,15 +307,22 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <section class="detail" id="getLocalIDMapper()">
 <h3>getLocalIDMapper</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a></span>&nbsp;<span class="element-name">getLocalIDMapper</span>()</div>
+<div class="block">Returns the local ID mapper used by this handler, if any.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)">
 <h3>begin</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">begin</span><wbr><span class="parameters">(<a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a>&nbsp;crawler)</span></div>
+<div class="block"><span class="description-from-type-label">Beschreibung aus Schnittstelle kopiert:&nbsp;<code><a href="CDORevisionCrawler.Handler.html#begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)">CDORevisionCrawler.Handler</a></code></span></div>
+<div class="block">Called when crawling begins.</div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="CDORevisionCrawler.Handler.html#begin(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler)">begin</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></dd>
+<dt>Parameter:</dt>
+<dd><code>crawler</code> - the crawler instance</dd>
+<dt>Gibt zurück:</dt>
+<dd>true to continue crawling</dd>
 </dl>
 </section>
 </li>
@@ -274,9 +330,15 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <section class="detail" id="beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>beginRevision</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">beginRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block"><span class="description-from-type-label">Beschreibung aus Schnittstelle kopiert:&nbsp;<code><a href="CDORevisionCrawler.Handler.html#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">CDORevisionCrawler.Handler</a></code></span></div>
+<div class="block">Called when a revision is about to be processed.</div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="CDORevisionCrawler.Handler.html#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">beginRevision</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></dd>
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+<dt>Gibt zurück:</dt>
+<dd>true to continue crawling</dd>
 </dl>
 </section>
 </li>
@@ -285,9 +347,14 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <h3>handleFeature</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">handleFeature</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="block"><span class="description-from-type-label">Beschreibung aus Schnittstelle kopiert:&nbsp;<code><a href="CDORevisionCrawler.Handler.html#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">CDORevisionCrawler.Handler</a></code></span></div>
+<div class="block">Called for each feature to be handled.</div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="CDORevisionCrawler.Handler.html#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)">handleFeature</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></dd>
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
+<dd><code>feature</code> - the feature</dd>
 </dl>
 </section>
 </li>
@@ -295,9 +362,13 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <section class="detail" id="endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>endRevision</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">endRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block"><span class="description-from-type-label">Beschreibung aus Schnittstelle kopiert:&nbsp;<code><a href="CDORevisionCrawler.Handler.html#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">CDORevisionCrawler.Handler</a></code></span></div>
+<div class="block">Called when a revision has been processed.</div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="CDORevisionCrawler.Handler.html#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">endRevision</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></dd>
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the revision</dd>
 </dl>
 </section>
 </li>
@@ -305,12 +376,14 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <section class="detail" id="finishLocalIDs()">
 <h3>finishLocalIDs</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">finishLocalIDs</span>()</div>
+<div class="block">Performs the second phase for local ID mapping, writing features for all mapped revisions.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="doBeginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>doBeginRevision</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">doBeginRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Performs finishing logic for the given revision.</div>
 </section>
 </li>
 <li>
@@ -318,12 +391,14 @@ implements <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org
 <h3>doHandleFeature</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doHandleFeature</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</span></div>
+<div class="block">Performs feature handling logic for the given revision and feature.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="doEndRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>doEndRevision</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doEndRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Performs ending logic for the given revision.</div>
 </section>
 </li>
 </ul>

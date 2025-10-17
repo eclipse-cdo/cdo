@@ -376,10 +376,14 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="col-first even-row-color"><code><a href="../CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.</span><code><a href="../CDORevisionCrawler.html#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">addRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Adds a revision to the crawl queue and processes reachable revisions.</div>
+</div>
 <div class="col-first odd-row-color"><code>default boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCrawler.Handler.</span><code><a href="../CDORevisionCrawler.Handler.html#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">beginRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Called when a revision is about to be processed.</div>
+</div>
 <div class="col-first even-row-color"><code>final boolean</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#beginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">beginRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -397,17 +401,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code><a href="../CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.FeatureStrategy.</span><code><a href="../CDORevisionCrawler.FeatureStrategy.html#decide(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">decide</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Decides how to handle a feature for a given revision.</div>
+</div>
 <div class="col-first odd-row-color"><code>protected boolean</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#doBeginRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">doBeginRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Performs finishing logic for the given revision.</div>
+</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#doEndRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">doEndRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Performs ending logic for the given revision.</div>
+</div>
 <div class="col-first odd-row-color"><code>protected void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#doHandleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">doHandleFeature</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Performs feature handling logic for the given revision and feature.</div>
+</div>
 <div class="col-first even-row-color"><code>protected abstract void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionUtil.AllRevisionsDumper.</span><code><a href="../CDORevisionUtil.AllRevisionsDumper.html#dumpRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">dumpRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -423,7 +435,9 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>default void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.Handler.</span><code><a href="../CDORevisionCrawler.Handler.html#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">endRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Called when a revision has been processed.</div>
+</div>
 <div class="col-first odd-row-color"><code>final void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#endRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">endRevision</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -478,7 +492,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>default void</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">CDORevisionCrawler.Handler.</span><code><a href="../CDORevisionCrawler.Handler.html#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">handleFeature</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Called for each feature to be handled.</div>
+</div>
 <div class="col-first even-row-color"><code>final void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDORevisionCrawler.OutputStreamHandler.</span><code><a href="../CDORevisionCrawler.OutputStreamHandler.html#handleFeature(org.eclipse.emf.cdo.common.revision.CDORevision,org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">handleFeature</a><wbr>(<a href="../CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>

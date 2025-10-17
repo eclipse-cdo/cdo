@@ -101,12 +101,33 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public final class </span><span class="element-name type-name-label">CDORevisionCrawler</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle</span></div>
-<div class="block">TODO unordered lists</div>
+<div class="block">A crawler that visits CDO revisions and their features according to a <a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>feature strategy</code></a>
+ and passes them to a <a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>handler</code></a>.
+ <p>
+ Example usage:
+ <pre>
+ MessageDigest digest = MessageDigest.getInstance("SHA-256");
+ new CDORevisionCrawler()
+    .handler(new CDORevisionCrawler.MessageDigestHandler(digest))
+    .revisionProvider(revisionProvider)
+    .featureStrategy(CDORevisionCrawler.FeatureStrategy.TREE)
+    .containmentProxyStrategy(CDORevisionCrawler.ContainmentProxyStrategy.Physical)
+    .begin()
+    .addRevision(rootRevision)
+    .finish();
+ byte[] hash = digest.digest();
+ </pre></div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.26</dd>
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../util/EObjectCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.util"><code>EObjectCrawler</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 <section class="summary">
@@ -122,19 +143,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" class="type-name-link" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Strategy for handling containment proxies during crawling.</div>
+</div>
 <div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDORevisionCrawler.FeatureStrategy.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Strategy for deciding how to handle features during crawling.</div>
+</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.Handler.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Handler interface for receiving crawl events.</div>
+</div>
 <div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second odd-row-color"><code><a href="CDORevisionCrawler.MessageDigestHandler.html" class="type-name-link" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.MessageDigestHandler</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Handler implementation that calculates a message digest over crawled data.</div>
+</div>
 <div class="col-first even-row-color"><code>static class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.OutputStreamHandler.html" class="type-name-link" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Handler implementation that writes crawl data to an output stream.</div>
+</div>
 </div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
@@ -162,7 +193,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">CDORevisionCrawler</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Creates a new CDO revision crawler.</div>
+</div>
 </div>
 </section>
 </li>
@@ -179,49 +212,79 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">addRevision</a><wbr>(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Adds a revision to the crawl queue and processes reachable revisions.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#begin()" class="member-name-link">begin</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Activates the crawler and prepares it for crawling.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containmentProxyStrategy()" class="member-name-link">containmentProxyStrategy</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current containment proxy strategy.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#containmentProxyStrategy(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.ContainmentProxyStrategy)" class="member-name-link">containmentProxyStrategy</a><wbr>(<a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a>&nbsp;containmentProxyStrategy)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the containment proxy strategy.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doActivate()" class="member-name-link">doActivate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs activation logic.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doBeforeActivate()" class="member-name-link">doBeforeActivate</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Checks the state of required fields before activation.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Performs deactivation logic.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#featureStrategy()" class="member-name-link">featureStrategy</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current feature strategy.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#featureStrategy(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.FeatureStrategy)" class="member-name-link">featureStrategy</a><wbr>(<a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a>&nbsp;featureStrategy)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the feature strategy.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#finish()" class="member-name-link">finish</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Deactivates the crawler and finalizes crawling.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handler()" class="member-name-link">handler</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current handler used by this crawler.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#handler(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.Handler)" class="member-name-link">handler</a><wbr>(<a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a>&nbsp;handler)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the handler to be used by this crawler.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#revisionCount()" class="member-name-link">revisionCount</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the number of revisions crawled so far.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#revisionProvider()" class="member-name-link">revisionProvider</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the current revision provider.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#revisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)" class="member-name-link">revisionProvider</a><wbr>(<a href="CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets the revision provider.</div>
+</div>
 </div>
 </div>
 </div>
@@ -252,6 +315,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>CDORevisionCrawler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">CDORevisionCrawler</span>()</div>
+<div class="block">Creates a new CDO revision crawler.</div>
 </section>
 </li>
 </ul>
@@ -266,72 +330,122 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="handler()">
 <h3>handler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a></span>&nbsp;<span class="element-name">handler</span>()</div>
+<div class="block">Returns the current handler used by this crawler.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="handler(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.Handler)">
 <h3>handler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">handler</span><wbr><span class="parameters">(<a href="CDORevisionCrawler.Handler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.Handler</a>&nbsp;handler)</span></div>
+<div class="block">Sets the handler to be used by this crawler.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>handler</code> - the handler implementation</dd>
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="containmentProxyStrategy()">
 <h3>containmentProxyStrategy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a></span>&nbsp;<span class="element-name">containmentProxyStrategy</span>()</div>
+<div class="block">Returns the current containment proxy strategy.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="containmentProxyStrategy(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.ContainmentProxyStrategy)">
 <h3>containmentProxyStrategy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">containmentProxyStrategy</span><wbr><span class="parameters">(<a href="CDORevisionCrawler.ContainmentProxyStrategy.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.ContainmentProxyStrategy</a>&nbsp;containmentProxyStrategy)</span></div>
+<div class="block">Sets the containment proxy strategy.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>containmentProxyStrategy</code> - the strategy to use</dd>
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="featureStrategy()">
 <h3>featureStrategy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a></span>&nbsp;<span class="element-name">featureStrategy</span>()</div>
+<div class="block">Returns the current feature strategy.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="featureStrategy(org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.FeatureStrategy)">
 <h3>featureStrategy</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">featureStrategy</span><wbr><span class="parameters">(<a href="CDORevisionCrawler.FeatureStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy</a>&nbsp;featureStrategy)</span></div>
+<div class="block">Sets the feature strategy.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>featureStrategy</code> - the strategy to use</dd>
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="revisionProvider()">
 <h3>revisionProvider</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a></span>&nbsp;<span class="element-name">revisionProvider</span>()</div>
+<div class="block">Returns the current revision provider.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="revisionProvider(org.eclipse.emf.cdo.common.revision.CDORevisionProvider)">
 <h3>revisionProvider</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">revisionProvider</span><wbr><span class="parameters">(<a href="CDORevisionProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionProvider</a>&nbsp;revisionProvider)</span></div>
+<div class="block">Sets the revision provider.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revisionProvider</code> - the provider to use</dd>
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="revisionCount()">
 <h3>revisionCount</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">long</span>&nbsp;<span class="element-name">revisionCount</span>()</div>
+<div class="block">Returns the number of revisions crawled so far.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="addRevision(org.eclipse.emf.cdo.common.revision.CDORevision)">
 <h3>addRevision</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">addRevision</span><wbr><span class="parameters">(<a href="CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</span></div>
+<div class="block">Adds a revision to the crawl queue and processes reachable revisions.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>revision</code> - the root revision to start crawling from</dd>
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="begin()">
 <h3>begin</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">begin</span>()</div>
+<div class="block">Activates the crawler and prepares it for crawling.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="finish()">
 <h3>finish</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler</a></span>&nbsp;<span class="element-name">finish</span>()</div>
+<div class="block">Deactivates the crawler and finalizes crawling.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>this crawler instance for chaining</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -339,6 +453,7 @@ loadScripts(document, 'script');</script>
 <h3>doBeforeActivate</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doBeforeActivate</span>()
                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></span></div>
+<div class="block">Checks the state of required fields before activation.</div>
 <dl class="notes">
 <dt>Setzt außer Kraft:</dt>
 <dd><code>doBeforeActivate</code>&nbsp;in Klasse&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>
@@ -352,6 +467,7 @@ loadScripts(document, 'script');</script>
 <h3>doActivate</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doActivate</span>()
                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></span></div>
+<div class="block">Performs activation logic.</div>
 <dl class="notes">
 <dt>Setzt außer Kraft:</dt>
 <dd><code>doActivate</code>&nbsp;in Klasse&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>
@@ -365,6 +481,7 @@ loadScripts(document, 'script');</script>
 <h3>doDeactivate</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">doDeactivate</span>()
                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Exception</a></span></div>
+<div class="block">Performs deactivation logic.</div>
 <dl class="notes">
 <dt>Setzt außer Kraft:</dt>
 <dd><code>doDeactivate</code>&nbsp;in Klasse&nbsp;<code>org.eclipse.net4j.util.lifecycle.Lifecycle</code></dd>

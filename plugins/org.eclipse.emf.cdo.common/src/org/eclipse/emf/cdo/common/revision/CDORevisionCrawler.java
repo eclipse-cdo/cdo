@@ -19,6 +19,7 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOType;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.FeatureStrategy.Decision;
+import org.eclipse.emf.cdo.common.util.EObjectCrawler;
 import org.eclipse.emf.cdo.spi.common.protocol.CDODataOutputImpl;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
@@ -44,8 +45,24 @@ import java.util.function.Consumer;
 import java.util.function.UnaryOperator;
 
 /**
- * TODO unordered lists
+ * A crawler that visits CDO revisions and their features according to a {@link FeatureStrategy feature strategy}
+ * and passes them to a {@link Handler handler}.
+ * <p>
+ * Example usage:
+ * <pre>
+ * MessageDigest digest = MessageDigest.getInstance("SHA-256");
+ * new CDORevisionCrawler()
+ *    .handler(new CDORevisionCrawler.MessageDigestHandler(digest))
+ *    .revisionProvider(revisionProvider)
+ *    .featureStrategy(CDORevisionCrawler.FeatureStrategy.TREE)
+ *    .containmentProxyStrategy(CDORevisionCrawler.ContainmentProxyStrategy.Physical)
+ *    .begin()
+ *    .addRevision(rootRevision)
+ *    .finish();
+ * byte[] hash = digest.digest();
+ * </pre>
  *
+ * @see EObjectCrawler
  * @author Eike Stepper
  * @since 4.26
  */
@@ -61,15 +78,27 @@ public final class CDORevisionCrawler extends Lifecycle
 
   private long revisionCount;
 
+  /**
+   * Creates a new CDO revision crawler.
+   */
   public CDORevisionCrawler()
   {
   }
 
+  /**
+   * Returns the current handler used by this crawler.
+   */
   public Handler handler()
   {
     return handler;
   }
 
+  /**
+   * Sets the handler to be used by this crawler.
+   *
+   * @param handler the handler implementation
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler handler(Handler handler)
   {
     checkInactive();
@@ -77,11 +106,20 @@ public final class CDORevisionCrawler extends Lifecycle
     return this;
   }
 
+  /**
+   * Returns the current containment proxy strategy.
+   */
   public ContainmentProxyStrategy containmentProxyStrategy()
   {
     return containmentProxyStrategy;
   }
 
+  /**
+   * Sets the containment proxy strategy.
+   *
+   * @param containmentProxyStrategy the strategy to use
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler containmentProxyStrategy(ContainmentProxyStrategy containmentProxyStrategy)
   {
     checkInactive();
@@ -89,11 +127,20 @@ public final class CDORevisionCrawler extends Lifecycle
     return this;
   }
 
+  /**
+   * Returns the current feature strategy.
+   */
   public FeatureStrategy featureStrategy()
   {
     return featureStrategy;
   }
 
+  /**
+   * Sets the feature strategy.
+   *
+   * @param featureStrategy the strategy to use
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler featureStrategy(FeatureStrategy featureStrategy)
   {
     checkInactive();
@@ -101,11 +148,20 @@ public final class CDORevisionCrawler extends Lifecycle
     return this;
   }
 
+  /**
+   * Returns the current revision provider.
+   */
   public CDORevisionProvider revisionProvider()
   {
     return revisionProvider;
   }
 
+  /**
+   * Sets the revision provider.
+   *
+   * @param revisionProvider the provider to use
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler revisionProvider(CDORevisionProvider revisionProvider)
   {
     checkInactive();
@@ -113,11 +169,20 @@ public final class CDORevisionCrawler extends Lifecycle
     return this;
   }
 
+  /**
+   * Returns the number of revisions crawled so far.
+   */
   public long revisionCount()
   {
     return revisionCount;
   }
 
+  /**
+   * Adds a revision to the crawl queue and processes reachable revisions.
+   *
+   * @param revision the root revision to start crawling from
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler addRevision(CDORevision revision)
   {
     checkActive();
@@ -154,18 +219,31 @@ public final class CDORevisionCrawler extends Lifecycle
     return this;
   }
 
+  /**
+   * Activates the crawler and prepares it for crawling.
+   *
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler begin()
   {
     activate();
     return this;
   }
 
+  /**
+   * Deactivates the crawler and finalizes crawling.
+   *
+   * @return this crawler instance for chaining
+   */
   public CDORevisionCrawler finish()
   {
     deactivate();
     return this;
   }
 
+  /**
+   * Checks the state of required fields before activation.
+   */
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -174,12 +252,18 @@ public final class CDORevisionCrawler extends Lifecycle
     CheckUtil.checkState(featureStrategy, "featureStrategy");
   }
 
+  /**
+   * Performs activation logic.
+   */
   @Override
   protected void doActivate() throws Exception
   {
     handler.begin(this);
   }
 
+  /**
+   * Performs deactivation logic.
+   */
   @Override
   protected void doDeactivate() throws Exception
   {
@@ -239,10 +323,15 @@ public final class CDORevisionCrawler extends Lifecycle
   }
 
   /**
+   * Strategy for handling containment proxies during crawling.
+   *
    * @author Eike Stepper
    */
   public enum ContainmentProxyStrategy
   {
+    /**
+     * Follows only physical containment proxies (parent is resource).
+     */
     Physical
     {
       @Override
@@ -252,6 +341,9 @@ public final class CDORevisionCrawler extends Lifecycle
       }
     },
 
+    /**
+     * Follows only logical containment proxies (parent is not resource).
+     */
     Logical
     {
       @Override
@@ -261,6 +353,9 @@ public final class CDORevisionCrawler extends Lifecycle
       }
     },
 
+    /**
+     * Follows all containment proxies.
+     */
     Any
     {
       @Override
@@ -270,16 +365,30 @@ public final class CDORevisionCrawler extends Lifecycle
       }
     };
 
+    /**
+     * Determines whether to follow a containment proxy based on parent resource status.
+     *
+     * @param parentIsResource true if parent is a resource
+     * @return true to follow, false otherwise
+     */
     protected abstract boolean follow(boolean parentIsResource);
   }
 
   /**
+   * Strategy for deciding how to handle features during crawling.
+   *
    * @author Eike Stepper
    */
   public interface FeatureStrategy
   {
+    /**
+     * Handles only the current feature, does not follow references.
+     */
     public static final FeatureStrategy SINGLE = (revision, feature) -> Decision.Handle;
 
+    /**
+     * Handles the current feature and follows containment references.
+     */
     public static final FeatureStrategy TREE = (revision, feature) -> {
       if (feature instanceof EReference)
       {
@@ -293,16 +402,40 @@ public final class CDORevisionCrawler extends Lifecycle
       return Decision.Handle;
     };
 
+    /**
+     * Decides how to handle a feature for a given revision.
+     *
+     * @param revision the revision
+     * @param feature the feature
+     * @return the decision
+     */
     public Decision decide(CDORevision revision, EStructuralFeature feature);
 
     /**
+     * Decision for feature handling: skip, handle, follow, or both.
+     *
      * @author Eike Stepper
      */
     public enum Decision
     {
-      Skip(false, false), //
-      Handle(true, false), //
-      Follow(false, true), //
+      /**
+       * Skip the feature.
+       */
+      Skip(false, false),
+
+      /**
+       * Handle the feature only.
+       */
+      Handle(true, false),
+
+      /**
+       * Follow the feature only.
+       */
+      Follow(false, true),
+
+      /**
+       * Handle and follow the feature.
+       */
       HandleAndFollow(true, true);
 
       private final boolean handle;
@@ -315,11 +448,17 @@ public final class CDORevisionCrawler extends Lifecycle
         this.follow = follow;
       }
 
+      /**
+       * Returns true if the feature should be handled.
+       */
       public boolean isHandle()
       {
         return handle;
       }
 
+      /**
+       * Returns true if the feature should be followed.
+       */
       public boolean isFollow()
       {
         return follow;
@@ -328,32 +467,60 @@ public final class CDORevisionCrawler extends Lifecycle
   }
 
   /**
+   * Handler interface for receiving crawl events.
+   *
    * @author Eike Stepper
    */
   public interface Handler
   {
+    /**
+     * Called when crawling begins.
+     *
+     * @param crawler the crawler instance
+     * @return true to continue crawling
+     */
     public default boolean begin(CDORevisionCrawler crawler)
     {
       // Continue crawling.
       return true;
     }
 
+    /**
+     * Called when a revision is about to be processed.
+     *
+     * @param revision the revision
+     * @return true to continue crawling
+     */
     public default boolean beginRevision(CDORevision revision)
     {
       // Continue crawling.
       return true;
     }
 
+    /**
+     * Called for each feature to be handled.
+     *
+     * @param revision the revision
+     * @param feature the feature
+     */
     public default void handleFeature(CDORevision revision, EStructuralFeature feature)
     {
       // Do nothing.
     }
 
+    /**
+     * Called when a revision has been processed.
+     *
+     * @param revision the revision
+     */
     public default void endRevision(CDORevision revision)
     {
       // Do nothing.
     }
 
+    /**
+     * Called when crawling is finished.
+     */
     public default void finish()
     {
       // Do nothing.
@@ -361,6 +528,8 @@ public final class CDORevisionCrawler extends Lifecycle
   }
 
   /**
+   * Handler implementation that writes crawl data to an output stream.
+   *
    * @author Eike Stepper
    */
   public static class OutputStreamHandler implements Handler
@@ -377,16 +546,35 @@ public final class CDORevisionCrawler extends Lifecycle
 
     private CDORevisionCrawler crawler;
 
+    /**
+     * Constructs an OutputStreamHandler with the given output stream.
+     *
+     * @param stream the output stream
+     */
     public OutputStreamHandler(OutputStream stream)
     {
       this(stream, false, null);
     }
 
+    /**
+     * Constructs an OutputStreamHandler with local ID mapping and optional LOB loader.
+     *
+     * @param stream the output stream
+     * @param localIDs true to use local IDs
+     * @param lobLoader the LOB loader, may be null
+     */
     public OutputStreamHandler(OutputStream stream, boolean localIDs, CDOLobLoader lobLoader)
     {
       this(stream, localIDs ? new IDMapper.InMemory() : null, lobLoader);
     }
 
+    /**
+     * Constructs an OutputStreamHandler with custom ID mapper and optional LOB loader.
+     *
+     * @param stream the output stream
+     * @param idMapper the ID mapper
+     * @param lobLoader the LOB loader, may be null
+     */
     public OutputStreamHandler(OutputStream stream, IDMapper idMapper, CDOLobLoader lobLoader)
     {
       this(new CDODataOutputImpl(new ExtendedDataOutputStream(stream))
@@ -423,12 +611,18 @@ public final class CDORevisionCrawler extends Lifecycle
       }, idMapper);
     }
 
+    /**
+     * Constructs an OutputStreamHandler with the given data output and ID mapper.
+     */
     protected OutputStreamHandler(CDODataOutput out, IDMapper idMapper)
     {
       this.out = out;
       this.idMapper = idMapper;
     }
 
+    /**
+     * Returns the local ID mapper used by this handler, if any.
+     */
     public IDMapper getLocalIDMapper()
     {
       return idMapper;
@@ -483,6 +677,9 @@ public final class CDORevisionCrawler extends Lifecycle
       doEndRevision(revision);
     }
 
+    /**
+     * Performs the second phase for local ID mapping, writing features for all mapped revisions.
+     */
     public final void finishLocalIDs()
     {
       if (idMapper == null || crawler == null)
@@ -514,6 +711,9 @@ public final class CDORevisionCrawler extends Lifecycle
       });
     }
 
+    /**
+     * Performs finishing logic for the given revision.
+     */
     protected boolean doBeginRevision(CDORevision revision)
     {
       CDOID id = revision.getID();
@@ -535,6 +735,9 @@ public final class CDORevisionCrawler extends Lifecycle
       return true;
     }
 
+    /**
+     * Performs feature handling logic for the given revision and feature.
+     */
     protected void doHandleFeature(CDORevision revision, EStructuralFeature feature)
     {
       try
@@ -581,22 +784,36 @@ public final class CDORevisionCrawler extends Lifecycle
       }
     }
 
+    /**
+     * Performs ending logic for the given revision.
+     */
     protected void doEndRevision(CDORevision revision)
     {
       // Do nothing.
     }
 
     /**
+     * Abstract ID mapper for mapping real IDs to local IDs.
+     *
      * @author Eike Stepper
      */
     public static abstract class IDMapper
     {
       private long nextMappedID;
 
+      /**
+       * Constructs an IDMapper.
+       */
       public IDMapper()
       {
       }
 
+      /**
+       * Maps a real ID to a new local ID.
+       *
+       * @param realID the real ID
+       * @return the mapped local ID
+       */
       public CDOID map(CDOID realID)
       {
         CDOID mappedID = getNextMappedID();
@@ -604,34 +821,69 @@ public final class CDORevisionCrawler extends Lifecycle
         return mappedID;
       }
 
+      /**
+       * Looks up the mapped local ID for a real ID.
+       *
+       * @param realID the real ID
+       * @return the mapped local ID
+       */
       public abstract CDOID lookup(CDOID realID);
 
+      /**
+       * Iterates over all real IDs that have been mapped.
+       *
+       * @param realIDConsumer the consumer for real IDs
+       */
       public abstract void forEach(Consumer<? super CDOID> realIDConsumer);
 
+      /**
+       * Registers a mapping from real ID to local ID.
+       *
+       * @param realID the real ID
+       * @param localID the local ID
+       */
       protected abstract void register(CDOID realID, CDOID localID);
 
+      /**
+       * Returns the next available local ID.
+       *
+       * @return the next local ID
+       */
       protected CDOID getNextMappedID()
       {
         return CDOIDUtil.createLong(++nextMappedID);
       }
 
       /**
+       * In-memory implementation of IDMapper.
+       * <p>
+       * Stores all mappings in memory using a LinkedHashMap to preserve insertion order.
+       *
        * @author Eike Stepper
        */
       public static final class InMemory extends IDMapper
       {
         private final Map<CDOID, CDOID> mappedIDs = new LinkedHashMap<>();
 
+        /**
+         * Constructs an in-memory IDMapper.
+         */
         public InMemory()
         {
         }
 
+        /**
+         * Looks up the mapped local ID for a real ID.
+         */
         @Override
         public CDOID lookup(CDOID realID)
         {
           return mappedIDs.get(realID);
         }
 
+        /**
+         * Iterates over all real IDs that have been mapped.
+         */
         @Override
         public void forEach(Consumer<? super CDOID> realIDConsumer)
         {
@@ -639,6 +891,9 @@ public final class CDORevisionCrawler extends Lifecycle
           mappedIDs.keySet().forEach(realIDConsumer);
         }
 
+        /**
+         * Registers a mapping from real ID to local ID.
+         */
         @Override
         protected void register(CDOID realID, CDOID mappedID)
         {
@@ -649,25 +904,49 @@ public final class CDORevisionCrawler extends Lifecycle
   }
 
   /**
+   * Handler implementation that calculates a message digest over crawled data.
+   *
    * @author Eike Stepper
    */
   public static class MessageDigestHandler extends OutputStreamHandler
   {
+    /**
+     * Constructs a MessageDigestHandler with the given digest.
+     *
+     * @param digest the message digest
+     */
     public MessageDigestHandler(MessageDigest digest)
     {
       super(newOutputStream(digest));
     }
 
+    /**
+     * Constructs a MessageDigestHandler with digest, local IDs, and optional LOB loader.
+     *
+     * @param digest the message digest
+     * @param localIDs true to use local IDs
+     * @param lobLoader the LOB loader, may be null
+     */
     public MessageDigestHandler(MessageDigest digest, boolean localIDs, CDOLobLoader lobLoader)
     {
       super(newOutputStream(digest), localIDs, lobLoader);
     }
 
+    /**
+     * Constructs a MessageDigestHandler with digest, custom ID mapper, and optional LOB loader.
+     *
+     * @param digest the message digest
+     * @param idMapper the ID mapper
+     * @param lobLoader the LOB loader, may be null
+     */
     public MessageDigestHandler(MessageDigest digest, IDMapper idMapper, CDOLobLoader lobLoader)
     {
       super(newOutputStream(digest), idMapper, lobLoader);
     }
 
+    /**
+     * Constructs a MessageDigestHandler with the given data output and ID mapper.
+     */
     protected MessageDigestHandler(CDODataOutput out, IDMapper idMapper)
     {
       super(out, idMapper);

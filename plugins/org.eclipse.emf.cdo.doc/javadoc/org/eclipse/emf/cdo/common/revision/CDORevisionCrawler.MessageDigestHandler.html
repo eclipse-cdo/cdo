@@ -103,6 +103,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static class </span><span class="element-name type-name-label">CDORevisionCrawler.MessageDigestHandler</span>
 <span class="extends-implements">extends <a href="CDORevisionCrawler.OutputStreamHandler.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler</a></span></div>
+<div class="block">Handler implementation that calculates a message digest over crawled data.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -130,21 +131,29 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.security.MessageDigest)" class="member-name-link">MessageDigestHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a MessageDigestHandler with the given digest.</div>
+</div>
 <div class="col-first odd-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(java.security.MessageDigest,boolean,org.eclipse.emf.cdo.common.lob.CDOLobLoader)" class="member-name-link">MessageDigestHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest,
  boolean&nbsp;localIDs,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a MessageDigestHandler with digest, local IDs, and optional LOB loader.</div>
+</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E(java.security.MessageDigest,org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.OutputStreamHandler.IDMapper,org.eclipse.emf.cdo.common.lob.CDOLobLoader)" class="member-name-link">MessageDigestHandler</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs a MessageDigestHandler with digest, custom ID mapper, and optional LOB loader.</div>
+</div>
 <div class="col-first odd-row-color"><code>protected </code></div>
 <div class="col-constructor-name odd-row-color"><code><a href="#%3Cinit%3E(org.eclipse.emf.cdo.common.protocol.CDODataOutput,org.eclipse.emf.cdo.common.revision.CDORevisionCrawler.OutputStreamHandler.IDMapper)" class="member-name-link">MessageDigestHandler</a><wbr>(<a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Constructs a MessageDigestHandler with the given data output and ID mapper.</div>
+</div>
 </div>
 </section>
 </li>
@@ -176,6 +185,11 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;(java.security.MessageDigest)">
 <h3>MessageDigestHandler</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MessageDigestHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest)</span></div>
+<div class="block">Constructs a MessageDigestHandler with the given digest.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>digest</code> - the message digest</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -184,6 +198,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MessageDigestHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest,
  boolean&nbsp;localIDs,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</span></div>
+<div class="block">Constructs a MessageDigestHandler with digest, local IDs, and optional LOB loader.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>digest</code> - the message digest</dd>
+<dd><code>localIDs</code> - true to use local IDs</dd>
+<dd><code>lobLoader</code> - the LOB loader, may be null</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -192,6 +213,13 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">MessageDigestHandler</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/security/MessageDigest.html" title="Klasse oder Schnittstelle in java.security" class="external-link">MessageDigest</a>&nbsp;digest,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper,
  <a href="../lob/CDOLobLoader.html" title="Schnittstelle in org.eclipse.emf.cdo.common.lob">CDOLobLoader</a>&nbsp;lobLoader)</span></div>
+<div class="block">Constructs a MessageDigestHandler with digest, custom ID mapper, and optional LOB loader.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>digest</code> - the message digest</dd>
+<dd><code>idMapper</code> - the ID mapper</dd>
+<dd><code>lobLoader</code> - the LOB loader, may be null</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -199,6 +227,7 @@ loadScripts(document, 'script');</script>
 <h3>MessageDigestHandler</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="element-name">MessageDigestHandler</span><wbr><span class="parameters">(<a href="../protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  <a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.html" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper</a>&nbsp;idMapper)</span></div>
+<div class="block">Constructs a MessageDigestHandler with the given data output and ID mapper.</div>
 </section>
 </li>
 </ul>

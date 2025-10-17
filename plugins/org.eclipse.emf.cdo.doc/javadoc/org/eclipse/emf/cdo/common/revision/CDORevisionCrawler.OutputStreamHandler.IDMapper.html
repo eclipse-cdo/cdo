@@ -101,6 +101,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract static class </span><span class="element-name type-name-label">CDORevisionCrawler.OutputStreamHandler.IDMapper</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></span></div>
+<div class="block">Abstract ID mapper for mapping real IDs to local IDs.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -119,7 +120,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="CDORevisionCrawler.OutputStreamHandler.IDMapper.InMemory.html" class="type-name-link" title="Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.OutputStreamHandler.IDMapper.InMemory</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">In-memory implementation of IDMapper.</div>
+</div>
 </div>
 </section>
 </li>
@@ -132,7 +135,9 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Konstruktor</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-constructor-name even-row-color"><code><a href="#%3Cinit%3E()" class="member-name-link">IDMapper</a>()</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Constructs an IDMapper.</div>
+</div>
 </div>
 </section>
 </li>
@@ -149,20 +154,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#forEach(java.util.function.Consumer)" class="member-name-link">forEach</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;realIDConsumer)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Iterates over all real IDs that have been mapped.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextMappedID()" class="member-name-link">getNextMappedID</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the next available local ID.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#lookup(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">lookup</a><wbr>(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Looks up the mapped local ID for a real ID.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#map(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">map</a><wbr>(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Maps a real ID to a new local ID.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#register(org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">register</a><wbr>(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID,
  <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;localID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Registers a mapping from real ID to local ID.</div>
+</div>
 </div>
 </div>
 </div>
@@ -184,6 +199,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="&lt;init&gt;()">
 <h3>IDMapper</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="element-name">IDMapper</span>()</div>
+<div class="block">Constructs an IDMapper.</div>
 </section>
 </li>
 </ul>
@@ -198,18 +214,37 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="map(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>map</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">map</span><wbr><span class="parameters">(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID)</span></div>
+<div class="block">Maps a real ID to a new local ID.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>realID</code> - the real ID</dd>
+<dt>Gibt zurück:</dt>
+<dd>the mapped local ID</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="lookup(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>lookup</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type"><a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">lookup</span><wbr><span class="parameters">(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID)</span></div>
+<div class="block">Looks up the mapped local ID for a real ID.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>realID</code> - the real ID</dd>
+<dt>Gibt zurück:</dt>
+<dd>the mapped local ID</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="forEach(java.util.function.Consumer)">
 <h3>forEach</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">forEach</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;? super <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;&nbsp;realIDConsumer)</span></div>
+<div class="block">Iterates over all real IDs that have been mapped.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>realIDConsumer</code> - the consumer for real IDs</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -217,12 +252,23 @@ loadScripts(document, 'script');</script>
 <h3>register</h3>
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">register</span><wbr><span class="parameters">(<a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;realID,
  <a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;localID)</span></div>
+<div class="block">Registers a mapping from real ID to local ID.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>realID</code> - the real ID</dd>
+<dd><code>localID</code> - the local ID</dd>
+</dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getNextMappedID()">
 <h3>getNextMappedID</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="../id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getNextMappedID</span>()</div>
+<div class="block">Returns the next available local ID.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>the next local ID</dd>
+</dl>
 </section>
 </li>
 </ul>

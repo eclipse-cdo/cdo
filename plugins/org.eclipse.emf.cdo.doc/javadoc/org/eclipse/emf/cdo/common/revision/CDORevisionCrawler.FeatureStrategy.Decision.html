@@ -103,6 +103,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public static enum </span><span class="element-name type-name-label">CDORevisionCrawler.FeatureStrategy.Decision</span>
 <span class="extends-implements">extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Enum.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Enum</a>&lt;<a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a>&gt;</span></div>
+<div class="block">Decision for feature handling: skip, handle, follow, or both.</div>
 <dl class="notes">
 <dt>Autor:</dt>
 <dd>Eike Stepper</dd>
@@ -128,13 +129,21 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Enum-Konstante</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code><a href="#Follow" class="member-name-link">Follow</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Follow the feature only.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#Handle" class="member-name-link">Handle</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Handle the feature only.</div>
+</div>
 <div class="col-first even-row-color"><code><a href="#HandleAndFollow" class="member-name-link">HandleAndFollow</a></code></div>
-<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-last even-row-color">
+<div class="block">Handle and follow the feature.</div>
+</div>
 <div class="col-first odd-row-color"><code><a href="#Skip" class="member-name-link">Skip</a></code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block">Skip the feature.</div>
+</div>
 </div>
 </section>
 </li>
@@ -151,10 +160,14 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isFollow()" class="member-name-link">isFollow</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if the feature should be followed.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isHandle()" class="member-name-link">isHandle</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns true if the feature should be handled.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#valueOf(java.lang.String)" class="member-name-link">valueOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
@@ -190,24 +203,28 @@ der Reihenfolge ihrer Deklaration zurück.</div>
 <section class="detail" id="Skip">
 <h3>Skip</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></span>&nbsp;<span class="element-name">Skip</span></div>
+<div class="block">Skip the feature.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="Handle">
 <h3>Handle</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></span>&nbsp;<span class="element-name">Handle</span></div>
+<div class="block">Handle the feature only.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="Follow">
 <h3>Follow</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></span>&nbsp;<span class="element-name">Follow</span></div>
+<div class="block">Follow the feature only.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="HandleAndFollow">
 <h3>HandleAndFollow</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="CDORevisionCrawler.FeatureStrategy.Decision.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.revision">CDORevisionCrawler.FeatureStrategy.Decision</a></span>&nbsp;<span class="element-name">HandleAndFollow</span></div>
+<div class="block">Handle and follow the feature.</div>
 </section>
 </li>
 </ul>
@@ -253,12 +270,14 @@ mit der eine Enum-Konstante in dieser Klasse deklariert wird.
 <section class="detail" id="isHandle()">
 <h3>isHandle</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isHandle</span>()</div>
+<div class="block">Returns true if the feature should be handled.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="isFollow()">
 <h3>isFollow</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isFollow</span>()</div>
+<div class="block">Returns true if the feature should be followed.</div>
 </section>
 </li>
 </ul>

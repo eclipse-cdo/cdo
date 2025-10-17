@@ -210,7 +210,7 @@
   </topic>
   <topic label="Programmer's Guide" href="html/programmers/index.html">
     <topic label="Introduction" href="html/programmers/Doc01_Introduction.html" icon="article" />
-    <topic label="Key Concepts of CDO" href="html/programmers/Doc02_KeyConcepts.html" icon="article">
+    <topic label="Understanding the Key Concepts" href="html/programmers/Doc02_KeyConcepts.html" icon="article">
       <topic label="Models" href="html/programmers/Doc02_KeyConcepts.html#ConceptModels" icon="chapter" />
       <topic label="Meta Models" href="html/programmers/Doc02_KeyConcepts.html#ConceptMetaModels" icon="chapter" />
       <topic label="Model Objects" href="html/programmers/Doc02_KeyConcepts.html#ConceptModelObjects" icon="chapter" />
@@ -229,7 +229,7 @@
     <topic label="Preparing the Workspace" href="html/programmers/Doc03_PreparingWorkspace.html" icon="article">
       <topic label="Using the Oomph Setup Engine" href="html/programmers/Doc03_PreparingWorkspace.html#UsingOomph" icon="chapter" />
     </topic>
-    <topic label="Preparing EMF Models" href="html/programmers/Doc04_PreparingModels.html" icon="article">
+    <topic label="Preparing the Models" href="html/programmers/Doc04_PreparingModels.html" icon="article">
       <topic label="Creating an Ecore Model" href="html/programmers/Doc04_PreparingModels.html#Doc_CreatingEcore" icon="chapter" />
       <topic label="Using the CDO Model Importer" href="html/programmers/Doc04_PreparingModels.html#Doc_UsingImporter" icon="chapter" />
       <topic label="Using the CDO Model Migrator" href="html/programmers/Doc04_PreparingModels.html#Doc_UsingMigrator" icon="chapter" />

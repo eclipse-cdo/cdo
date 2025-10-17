@@ -967,10 +967,16 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#load(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">load</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;eObject,
  <a href="../CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static <a href="../../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">wrapExternalObject</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;object,
+<div class="col-first odd-row-color"><code>static org.eclipse.net4j.util.concurrent.CriticalSection</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#sync(org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">sync</a><wbr>(<a href="../CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of the given view and its <a href="../../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+</div>
+<div class="col-first even-row-color"><code>static <a href="../../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOUtil.</span><code><a href="../../util/CDOUtil.html#wrapExternalObject(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">wrapExternalObject</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;object,
  <a href="../CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

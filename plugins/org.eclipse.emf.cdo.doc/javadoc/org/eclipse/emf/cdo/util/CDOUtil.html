@@ -333,6 +333,18 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
 <div class="block">Sets the <a href="../view/CDOView.html#getViewLock()"><code>lock</code></a> to be used for the next view that is opened in the context of the current thread.</div>
 </div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.net4j.util.concurrent.CriticalSection</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sync(org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">sync</a><wbr>(<a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of the given view and its <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a>.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static org.eclipse.net4j.util.concurrent.CriticalSection</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#sync(org.eclipse.emf.common.notify.Notifier)" class="member-name-link">sync</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">Notifier</a>&nbsp;object)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of the view of the given object.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo">CDOObject</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#wrapExternalObject(org.eclipse.emf.ecore.EObject,org.eclipse.emf.cdo.view.CDOView)" class="member-name-link">wrapExternalObject</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;object,
  <a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</code></div>
@@ -442,6 +454,58 @@ loadScripts(document, 'script');</script>
 <section class="method-details" id="method-detail">
 <h2>Methodendetails</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="sync(org.eclipse.emf.cdo.view.CDOView)">
+<h3>sync</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.concurrent.CriticalSection</span>&nbsp;<span class="element-name">sync</span><wbr><span class="parameters">(<a href="../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view">CDOView</a>&nbsp;view)</span></div>
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of the given view and its <a href="../CDOObject.html" title="Schnittstelle in org.eclipse.emf.cdo"><code>objects</code></a>.
+ <p>
+ The critical section is reentrant and may be nested.
+ <p>
+ For more information see <a href="../view/CDOView.html#sync()"><code>CDOView.sync()</code></a>.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>a critical section that can be used to synchronize with the given view and its objects or
+ <code>CriticalSection.UNSYNCHRONIZED</code> if the given view is <code>null</code> or already closed.
+ Never <code>null</code>.</dd>
+<dt>Seit:</dt>
+<dd>4.29</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="#sync(org.eclipse.emf.common.notify.Notifier)"><code>sync(Notifier)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="sync(org.eclipse.emf.common.notify.Notifier)">
+<h3>sync</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.concurrent.CriticalSection</span>&nbsp;<span class="element-name">sync</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/notify/Notifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.notify" class="external-link">Notifier</a>&nbsp;object)</span></div>
+<div class="block">Returns a <code>critical section</code> that can be used to execute a block of code that
+ needs to be synchronized with the internal operations of the view of the given object.
+ <p>
+ The critical section is reentrant and may be nested.
+ <p>
+ For more information see <a href="../view/CDOView.html#sync()"><code>CDOView.sync()</code></a>.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>a critical section that can be used to synchronize with the view of the given object or
+ <code>CriticalSection.UNSYNCHRONIZED</code> if the view is <code>null</code> or already closed.
+ Never <code>null</code>.</dd>
+<dt>Seit:</dt>
+<dd>4.29</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="#sync(org.eclipse.emf.cdo.view.CDOView)"><code>sync(CDOView)</code></a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="registerResourceFactory(org.eclipse.emf.ecore.resource.Resource.Factory.Registry)">
 <h3>registerResourceFactory</h3>

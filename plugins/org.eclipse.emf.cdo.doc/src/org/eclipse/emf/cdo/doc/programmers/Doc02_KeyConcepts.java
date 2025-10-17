@@ -11,7 +11,7 @@
 package org.eclipse.emf.cdo.doc.programmers;
 
 /**
- * Key Concepts of CDO
+ * Understanding the Key Concepts
  * <p>
  * Before diving into CDO programming, it is essential to understand some key concepts that form the foundation of CDO.
  * They are explained in the following sections:

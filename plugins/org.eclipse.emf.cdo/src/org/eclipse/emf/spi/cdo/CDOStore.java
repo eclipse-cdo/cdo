@@ -49,7 +49,16 @@ public interface CDOStore extends EStore
    */
   public void setContainer(InternalEObject eObject, CDOResource newResource, InternalEObject newEContainer, int newContainerFeatureID);
 
-  public int getContainingFeatureID(InternalEObject eObject);
+  /**
+   * Returns the container feature ID.
+   * If the container isn't a navigable feature, this will be a negative ID indicating the inverse of the containment feature's ID.
+   *
+   * @return the container feature ID.
+   * @see EObject#eContainmentFeature()
+   * @see InternalEObject#EOPPOSITE_FEATURE_BASE
+   * @since 4.29
+   */
+  public int getContainerFeatureID(InternalEObject eObject);
 
   /**
    * @since 2.0
@@ -70,4 +79,13 @@ public interface CDOStore extends EStore
    * @since 2.0
    */
   public Object convertToEMF(EObject eObject, InternalCDORevision revision, EStructuralFeature feature, int index, Object value);
+
+  /**
+   * @deprecated As of 4.29, replaced by {@link #getContainerFeatureID(InternalEObject)}.
+   */
+  @Deprecated
+  public default int getContainingFeatureID(InternalEObject eObject)
+  {
+    return getContainerFeatureID(eObject);
+  }
 }

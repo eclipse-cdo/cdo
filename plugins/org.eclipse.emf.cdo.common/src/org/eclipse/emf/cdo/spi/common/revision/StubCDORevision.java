@@ -90,8 +90,11 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.27
+   */
   @Override
-  public void setContainingFeatureID(int containingFeatureID)
+  public void setContainerFeatureID(int containingFeatureID)
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }
@@ -294,8 +297,11 @@ public class StubCDORevision extends AbstractCDORevision
     throw new UnsupportedOperationException(getExceptionMessage());
   }
 
+  /**
+   * @since 4.27
+   */
   @Override
-  public int getContainingFeatureID()
+  public int getContainerFeatureID()
   {
     throw new UnsupportedOperationException(getExceptionMessage());
   }
@@ -474,5 +480,19 @@ public class StubCDORevision extends AbstractCDORevision
   private String getExceptionMessage()
   {
     return "Unsupported operation in " + getClass().getSimpleName();
+  }
+
+  @Override
+  @Deprecated
+  public int getContainingFeatureID()
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
+  }
+
+  @Override
+  @Deprecated
+  public void setContainingFeatureID(int containerFeatureID)
+  {
+    throw new UnsupportedOperationException(getExceptionMessage());
   }
 }

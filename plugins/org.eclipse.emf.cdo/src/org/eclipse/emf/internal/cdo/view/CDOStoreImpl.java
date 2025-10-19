@@ -107,7 +107,7 @@ public final class CDOStoreImpl implements CDOStore
    * @category READ
    */
   @Override
-  public int getContainingFeatureID(InternalEObject eObject)
+  public int getContainerFeatureID(InternalEObject eObject)
   {
     return view.sync().supply(() -> {
       InternalCDOObject cdoObject = getCDOObject(eObject);
@@ -117,7 +117,7 @@ public final class CDOStoreImpl implements CDOStore
       }
 
       InternalCDORevision revision = readRevision(cdoObject);
-      return revision.getContainingFeatureID();
+      return revision.getContainerFeatureID();
     });
   }
 

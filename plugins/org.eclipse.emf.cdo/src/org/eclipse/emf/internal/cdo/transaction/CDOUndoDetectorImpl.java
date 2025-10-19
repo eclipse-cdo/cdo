@@ -124,10 +124,10 @@ public class CDOUndoDetectorImpl implements CDOUndoDetector
       return false;
     }
 
-    int cleanContainingFeatureID = cleanRevision.getContainingFeatureID();
-    int currentContainingFeatureID = currentRevision.getContainingFeatureID();
+    int cleanContainerFeatureID = cleanRevision.getContainerFeatureID();
+    int currentContainerFeatureID = currentRevision.getContainerFeatureID();
 
-    if (cleanContainingFeatureID != currentContainingFeatureID)
+    if (cleanContainerFeatureID != currentContainerFeatureID)
     {
       return false;
     }

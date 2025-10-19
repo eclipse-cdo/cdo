@@ -143,7 +143,7 @@ public class Issue_000105_Test extends AbstractCDOTest
 
     CDORevision revision = annotation.cdoRevision();
     assertEquals(modelElement.cdoID(), revision.data().getContainerID());
-    assertEquals(3, revision.data().getContainingFeatureID());
+    assertEquals(3, revision.data().getContainerFeatureID());
 
     Annotation annotation2 = EtypesFactory.eINSTANCE.createAnnotation("Client-Side-Annotation");
     annotations.add(annotation2);
@@ -154,7 +154,7 @@ public class Issue_000105_Test extends AbstractCDOTest
 
     CDORevision revision2 = annotation2.cdoRevision();
     assertEquals(modelElement.cdoID(), revision2.data().getContainerID());
-    assertEquals(3, revision2.data().getContainingFeatureID());
+    assertEquals(3, revision2.data().getContainerFeatureID());
   }
 
   public void testDigestTree() throws Exception

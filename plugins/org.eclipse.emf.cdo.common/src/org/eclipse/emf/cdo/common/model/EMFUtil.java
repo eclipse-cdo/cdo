@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EReference;
@@ -54,6 +55,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringJoiner;
 import java.util.function.Consumer;
 
 /**
@@ -677,30 +679,40 @@ public final class EMFUtil
 
   public static String getQualifiedName(EPackage ePackage, String separator)
   {
-    StringBuilder builder = new StringBuilder();
-    EPackage eSuperPackage = ePackage.getESuperPackage();
-    if (eSuperPackage != null)
-    {
-      builder.append(getQualifiedName(eSuperPackage, separator));
-      builder.append(separator);
-    }
-
-    builder.append(ePackage.getName());
-    return builder.toString();
+    return getFullyQualifiedName(ePackage, separator);
   }
 
   public static String getQualifiedName(EClassifier classifier, String separator)
   {
-    StringBuilder builder = new StringBuilder();
-    EPackage ePackage = classifier.getEPackage();
-    if (ePackage != null)
-    {
-      builder.append(getQualifiedName(ePackage, separator));
-      builder.append(separator);
-    }
+    return getFullyQualifiedName(classifier, separator);
+  }
 
-    builder.append(classifier.getName());
-    return builder.toString();
+  /**
+   * @since 4.27
+   */
+  public static String getQualifiedName(EStructuralFeature feature, String separator)
+  {
+    return getFullyQualifiedName(feature, separator);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static String getFullyQualifiedName(EObject modelElement, String separator)
+  {
+    StringJoiner joiner = new StringJoiner(separator);
+    getFullyQualifiedName(modelElement, joiner);
+    return joiner.toString();
+  }
+
+  private static void getFullyQualifiedName(EObject modelElement, StringJoiner joiner)
+  {
+    if (modelElement instanceof ENamedElement)
+    {
+      String name = ((ENamedElement)modelElement).getName();
+      getFullyQualifiedName(modelElement.eContainer(), joiner);
+      joiner.add(name);
+    }
   }
 
   public static ResourceSet newResourceSet(Resource.Factory resourceFactory)

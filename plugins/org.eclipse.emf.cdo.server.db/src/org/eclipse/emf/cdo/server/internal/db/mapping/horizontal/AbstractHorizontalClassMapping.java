@@ -476,7 +476,7 @@ public abstract class AbstractHorizontalClassMapping implements IClassMapping, I
         revision.setRevised(resultSet.getLong(MappingNames.ATTRIBUTES_REVISED));
         revision.setResourceID(idHandler.getCDOID(resultSet, MappingNames.ATTRIBUTES_RESOURCE));
         revision.setContainerID(idHandler.getCDOID(resultSet, MappingNames.ATTRIBUTES_CONTAINER));
-        revision.setContainingFeatureID(resultSet.getInt(MappingNames.ATTRIBUTES_FEATURE));
+        revision.setContainerFeatureID(resultSet.getInt(MappingNames.ATTRIBUTES_FEATURE));
 
         for (ITypeMapping mapping : valueMappings)
         {

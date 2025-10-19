@@ -1045,7 +1045,7 @@ public class CDOServerBrowser extends Worker
       {
         showKeyValue(pout, true, "resource", getRevisionValue(revision.getResourceID(), browser, ids, revision));
         showKeyValue(pout, true, "container", getRevisionValue(revision.getContainerID(), browser, ids, revision));
-        showKeyValue(pout, true, "feature", revision.getContainingFeatureID());
+        showKeyValue(pout, true, "feature", revision.getContainerFeatureID());
 
         for (EStructuralFeature feature : revision.getClassInfo().getAllPersistentFeatures())
         {

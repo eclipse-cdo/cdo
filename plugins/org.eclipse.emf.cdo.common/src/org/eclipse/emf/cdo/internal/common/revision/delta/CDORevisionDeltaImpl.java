@@ -128,12 +128,12 @@ public class CDORevisionDeltaImpl implements InternalCDORevisionDelta, ListCompa
     }
 
     CDOID dirtyResourceID = internalTargetRevision.getResourceID();
-    int dirtyContainingFeatureID = internalTargetRevision.getContainingFeatureID();
+    int dirtyContainerFeatureID = internalTargetRevision.getContainerFeatureID();
     if (!compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getContainerID(), dirtyContainerID)
-        || !compareValue(null, internalSourceRevision.getContainingFeatureID(), dirtyContainingFeatureID)
+        || !compareValue(null, internalSourceRevision.getContainerFeatureID(), dirtyContainerFeatureID)
         || !compareValue(CDOContainerFeatureDelta.CONTAINER_FEATURE, internalSourceRevision.getResourceID(), dirtyResourceID))
     {
-      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID, dirtyContainingFeatureID);
+      CDOFeatureDelta delta = new CDOContainerFeatureDeltaImpl(dirtyResourceID, dirtyContainerID, dirtyContainerFeatureID);
       addFeatureDelta(delta, null);
     }
   }

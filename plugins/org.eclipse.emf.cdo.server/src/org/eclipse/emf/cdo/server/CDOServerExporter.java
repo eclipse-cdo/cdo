@@ -719,10 +719,10 @@ public abstract class CDOServerExporter<OUT>
         out.attribute(REVISION_CONTAINER, str(containerID));
       }
 
-      int containingFeatureID = rev.getContainingFeatureID();
-      if (containingFeatureID != 0)
+      int containerFeatureID = rev.getContainerFeatureID();
+      if (containerFeatureID != 0)
       {
-        out.attribute(REVISION_FEATURE, containingFeatureID);
+        out.attribute(REVISION_FEATURE, containerFeatureID);
       }
 
       out.push();

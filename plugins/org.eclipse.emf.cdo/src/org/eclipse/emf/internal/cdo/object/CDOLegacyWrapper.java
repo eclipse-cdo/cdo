@@ -480,13 +480,13 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
     if (eContainer == null)
     {
       revision.setContainerID(CDOID.NULL);
-      revision.setContainingFeatureID(0);
+      revision.setContainerFeatureID(0);
     }
     else
     {
       CDOObject cdoContainer = FSMUtil.adapt(eContainer, viewAndState.view);
       revision.setContainerID(cdoContainer);
-      revision.setContainingFeatureID(getInstanceContainerFeatureID(instance));
+      revision.setContainerFeatureID(getInstanceContainerFeatureID(instance));
     }
   }
 
@@ -610,7 +610,7 @@ public abstract class CDOLegacyWrapper extends CDOObjectWrapper
       EObject oldContainer = instance.eContainer();
       if (oldContainer != container)
       {
-        setInstanceContainer(container, revision.getContainingFeatureID());
+        setInstanceContainer(container, revision.getContainerFeatureID());
       }
     }
     finally

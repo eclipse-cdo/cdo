@@ -2779,7 +2779,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     rootResource.setBranchPoint(head);
     rootResource.setContainerID(CDOID.NULL);
-    rootResource.setContainingFeatureID(0);
+    rootResource.setContainerFeatureID(0);
 
     CDOID id = createRootResourceID();
     rootResource.setID(id);

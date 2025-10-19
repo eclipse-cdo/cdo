@@ -566,7 +566,7 @@ public abstract class CDOServerImporter
             String featureID = attributes.getValue(REVISION_FEATURE);
             if (featureID != null)
             {
-              revision.setContainingFeatureID(Integer.parseInt(featureID));
+              revision.setContainerFeatureID(Integer.parseInt(featureID));
             }
           }
         }

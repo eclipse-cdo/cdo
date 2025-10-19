@@ -513,7 +513,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     InternalCDORevision revision = cdoRevision();
     revision.setContainerID(eContainer == null ? CDOID.NULL : viewAndState.view.convertObjectToID(eContainer, true));
-    revision.setContainingFeatureID(eContainerFeatureID);
+    revision.setContainerFeatureID(eContainerFeatureID);
 
     Resource directResource = eDirectResource();
     if (directResource instanceof CDOResource)
@@ -593,8 +593,8 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
     InternalEObject container = store.getContainer(this);
     eBasicSetContainer(container);
 
-    int containingFeatureID = store.getContainingFeatureID(this);
-    eBasicSetContainerFeatureID(containingFeatureID);
+    int containerFeatureID = store.getContainerFeatureID(this);
+    eBasicSetContainerFeatureID(containerFeatureID);
 
     if (eSettings != null)
     {
@@ -939,7 +939,7 @@ public class CDOObjectImpl extends MinimalEStoreEObjectImpl implements InternalC
 
     try
     {
-      return cdoStore().getContainingFeatureID(this);
+      return cdoStore().getContainerFeatureID(this);
     }
     catch (LifecycleException ex)
     {

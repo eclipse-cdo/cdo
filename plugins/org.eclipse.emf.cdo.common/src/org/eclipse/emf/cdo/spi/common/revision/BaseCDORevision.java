@@ -654,14 +654,20 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     this.containerID = containerID;
   }
 
+  /**
+   * @since 4.27
+   */
   @Override
-  public int getContainingFeatureID()
+  public int getContainerFeatureID()
   {
     return containingFeatureID;
   }
 
+  /**
+   * @since 4.27
+   */
   @Override
-  public void setContainingFeatureID(int containingFeatureID)
+  public void setContainerFeatureID(int containingFeatureID)
   {
     if (TRACER.isEnabled())
     {
@@ -1274,15 +1280,6 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
   }
 
-  /**
-   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
-   */
-  @Deprecated
-  public static void checkNoFeatureMap(EStructuralFeature feature)
-  {
-    throw new UnsupportedOperationException();
-  }
-
   public static Object remapID(Object value, Map<CDOID, CDOID> idMappings, boolean allowUnmappedTempIDs)
   {
     if (value instanceof CDOID)
@@ -1349,5 +1346,28 @@ public abstract class BaseCDORevision extends AbstractCDORevision
     }
 
     return builder.toString();
+  }
+
+  /**
+   * @deprecated As of 4.5 {@link org.eclipse.emf.ecore.util.FeatureMap feature maps} are no longer supported.
+   */
+  @Deprecated
+  public static void checkNoFeatureMap(EStructuralFeature feature)
+  {
+    throw new UnsupportedOperationException();
+  }
+
+  @Override
+  @Deprecated
+  public int getContainingFeatureID()
+  {
+    return getContainerFeatureID();
+  }
+
+  @Override
+  @Deprecated
+  public void setContainingFeatureID(int containerFeatureID)
+  {
+    setContainerFeatureID(containerFeatureID);
   }
 }

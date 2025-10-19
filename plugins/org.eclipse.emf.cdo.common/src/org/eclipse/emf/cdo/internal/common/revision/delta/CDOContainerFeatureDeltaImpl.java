@@ -94,7 +94,7 @@ public class CDOContainerFeatureDeltaImpl extends CDOFeatureDeltaImpl implements
     InternalCDORevision internalRevision = (InternalCDORevision)revision;
     internalRevision.setResourceID(newResourceID);
     internalRevision.setContainerID(newContainerID);
-    internalRevision.setContainingFeatureID(newContainerFeatureID);
+    internalRevision.setContainerFeatureID(newContainerFeatureID);
     return null;
   }
 

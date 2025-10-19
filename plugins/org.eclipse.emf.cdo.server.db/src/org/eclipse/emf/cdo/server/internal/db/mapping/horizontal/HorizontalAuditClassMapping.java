@@ -480,7 +480,7 @@ public class HorizontalAuditClassMapping extends AbstractHorizontalClassMapping
       stmt.setLong(column++, revision.getRevised());
       idHandler.setCDOID(stmt, column++, revision.getResourceID());
       idHandler.setCDOID(stmt, column++, (CDOID)revision.getContainerID());
-      stmt.setInt(column++, revision.getContainingFeatureID());
+      stmt.setInt(column++, revision.getContainerFeatureID());
 
       int isSetCol = column + getValueMappings().size();
 

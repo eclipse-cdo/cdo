@@ -448,7 +448,7 @@ public class Commits extends Coll
     CDOID containerID = (CDOID)revision.getContainerID();
     idHandler.write(doc, REVISIONS_CONTAINER, containerID);
 
-    int featureID = revision.getContainingFeatureID();
+    int featureID = revision.getContainerFeatureID();
     doc.put(REVISIONS_FEATURE, featureID);
 
     if (resource && changeKind != CDOChangeKind.DETACHED)
@@ -789,7 +789,7 @@ public class Commits extends Coll
     result.setVersion(version);
     result.setResourceID(resourceID);
     result.setContainerID(containerID);
-    result.setContainingFeatureID(featureID);
+    result.setContainerFeatureID(featureID);
 
     unmarshallRevision(embedded, result);
 

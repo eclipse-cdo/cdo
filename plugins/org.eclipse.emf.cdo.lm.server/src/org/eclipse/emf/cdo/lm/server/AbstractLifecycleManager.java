@@ -723,7 +723,9 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
 
     commitContext.modify(context -> {
       InternalCDORevision annotation = (InternalCDORevision)context.attachNewObject( //
-          fixedBaseline.getID(), EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, EtypesPackage.Literals.ANNOTATION);
+          fixedBaseline.getID(), //
+          EtypesPackage.Literals.MODEL_ELEMENT__ANNOTATIONS, //
+          EtypesPackage.Literals.ANNOTATION);
       annotation.setValue(EtypesPackage.Literals.ANNOTATION__SOURCE, LMFingerPrintAnnotation.ANNOTATION_SOURCE);
 
       addAnnotationDetail(context, annotation, LMFingerPrintAnnotation.ANNOTATION_DETAIL_VALUE, value);
@@ -739,7 +741,9 @@ public abstract class AbstractLifecycleManager extends Lifecycle implements LMPa
   private InternalCDORevision addAnnotationDetail(ModificationContext context, InternalCDORevision annotation, String key, String value)
   {
     InternalCDORevision detailEntry = (InternalCDORevision)context.attachNewObject( //
-        annotation.getID(), EtypesPackage.Literals.ANNOTATION__DETAILS, EtypesPackage.Literals.STRING_TO_STRING_MAP_ENTRY);
+        annotation.getID(), //
+        EtypesPackage.Literals.ANNOTATION__DETAILS, //
+        EtypesPackage.Literals.STRING_TO_STRING_MAP_ENTRY);
     detailEntry.setValue(EtypesPackage.Literals.STRING_TO_STRING_MAP_ENTRY__KEY, key);
     detailEntry.setValue(EtypesPackage.Literals.STRING_TO_STRING_MAP_ENTRY__VALUE, value);
     return detailEntry;

@@ -127,10 +127,13 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
     return getDelegate().getContainerID();
   }
 
+  /**
+   * @since 4.27
+   */
   @Override
-  public int getContainingFeatureID()
+  public int getContainerFeatureID()
   {
-    return getDelegate().getContainingFeatureID();
+    return getDelegate().getContainerFeatureID();
   }
 
   @Override
@@ -305,9 +308,9 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   }
 
   @Override
-  public void setContainingFeatureID(int containingFeatureID)
+  public void setContainerFeatureID(int containingFeatureID)
   {
-    getDelegate().setContainingFeatureID(containingFeatureID);
+    getDelegate().setContainerFeatureID(containingFeatureID);
   }
 
   @Override
@@ -374,20 +377,6 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void setList(EStructuralFeature feature, InternalCDOList list)
   {
     getDelegate().setList(feature, list);
-  }
-
-  @Override
-  @Deprecated
-  public CDOList getList(EStructuralFeature feature)
-  {
-    return getDelegate().getList(feature);
-  }
-
-  @Override
-  @Deprecated
-  public CDOList getList(EStructuralFeature feature, int initialCapacity)
-  {
-    return getDelegate().getList(feature, initialCapacity);
   }
 
   @Override
@@ -532,16 +521,6 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
    * @since 4.2
    */
   @Override
-  @Deprecated
-  public void accept(CDORevisionValueVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter)
-  {
-    getDelegate().accept(visitor, filter);
-  }
-
-  /**
-   * @since 4.2
-   */
-  @Override
   public void accept(CDORevisionValueVisitor visitor, java.util.function.Predicate<EStructuralFeature> filter)
   {
     getDelegate().accept(visitor, filter);
@@ -608,6 +587,44 @@ public abstract class DelegatingCDORevision implements InternalCDORevision
   public void setUnchunked()
   {
     getDelegate().setUnchunked();
+  }
+
+  @Override
+  @Deprecated
+  public int getContainingFeatureID()
+  {
+    return getContainerFeatureID();
+  }
+
+  @Override
+  @Deprecated
+  public void setContainingFeatureID(int containerFeatureID)
+  {
+    setContainerFeatureID(containerFeatureID);
+  }
+
+  @Override
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature)
+  {
+    return getDelegate().getList(feature);
+  }
+
+  @Override
+  @Deprecated
+  public CDOList getList(EStructuralFeature feature, int initialCapacity)
+  {
+    return getDelegate().getList(feature, initialCapacity);
+  }
+
+  /**
+   * @since 4.2
+   */
+  @Override
+  @Deprecated
+  public void accept(CDORevisionValueVisitor visitor, org.eclipse.net4j.util.Predicate<EStructuralFeature> filter)
+  {
+    getDelegate().accept(visitor, filter);
   }
 
   /**

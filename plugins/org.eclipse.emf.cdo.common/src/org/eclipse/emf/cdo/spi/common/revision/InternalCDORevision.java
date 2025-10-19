@@ -86,7 +86,10 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
 
   public void setContainerID(Object containerID);
 
-  public void setContainingFeatureID(int containingFeatureID);
+  /**
+   * @since 4.27
+   */
+  public void setContainerFeatureID(int containerFeatureID);
 
   /**
    * @see DelegatingEcoreEList#inverseAdd(Object, NotificationChain)
@@ -94,8 +97,8 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    */
   public default void setContainingReference(EReference containingReference)
   {
-    int containingReferenceID = calculateContainingReferenceID(containingReference);
-    setContainingFeatureID(containingReferenceID);
+    int containerReferenceID = calculateContainerReferenceID(containingReference);
+    setContainerFeatureID(containerReferenceID);
   }
 
   /**
@@ -269,4 +272,10 @@ public interface InternalCDORevision extends CDORevision, CDORevisionData, CDORe
    * @since 4.1
    */
   public void setUnchunked();
+
+  /**
+   * @deprecated As of 4.27 use {@link #setContainerFeatureID(int)}.
+   */
+  @Deprecated
+  public void setContainingFeatureID(int containerFeatureID);
 }

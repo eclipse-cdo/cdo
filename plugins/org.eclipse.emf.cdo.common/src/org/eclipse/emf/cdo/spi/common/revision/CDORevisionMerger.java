@@ -83,6 +83,6 @@ public class CDORevisionMerger extends CDOFeatureDeltaVisitorImpl
   {
     revision.setResourceID(delta.getResourceID());
     revision.setContainerID(delta.getContainerID());
-    revision.setContainingFeatureID(delta.getContainerFeatureID());
+    revision.setContainerFeatureID(delta.getContainerFeatureID());
   }
 }

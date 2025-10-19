@@ -2082,7 +2082,7 @@ public class CDOTransactionImpl extends CDOViewImpl implements InternalCDOTransa
               // See CDOStateMachine.RollbackTransition.execute().
               revision.setResourceID(null);
               revision.setContainerID(null);
-              revision.setContainingFeatureID(0);
+              revision.setContainerFeatureID(0);
             }
           }
 

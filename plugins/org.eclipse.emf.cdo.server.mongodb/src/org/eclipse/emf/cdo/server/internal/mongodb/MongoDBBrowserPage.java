@@ -103,7 +103,7 @@ public class MongoDBBrowserPage extends AbstractPage
   protected void showCollection(CDOServerBrowser browser, PrintStream pout, DB db, String collection)
   {
     DBCollection coll = db.getCollection(collection);
-    pout.print("<table border=\"1\" cellpadding=\"4\">\r\n");
+    pout.print("<table class=\"data\" cellpadding=\"4\">\r\n");
     pout.print("<tr><td colspan=\"2\" align=\"center\"><h2>" + collection + "</h2></td></tr>\r\n");
 
     if (SHOW_INDEXES)

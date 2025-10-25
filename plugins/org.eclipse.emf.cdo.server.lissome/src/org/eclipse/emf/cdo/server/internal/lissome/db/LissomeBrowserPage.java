@@ -144,7 +144,7 @@ public class LissomeBrowserPage extends AbstractPage
       ResultSetMetaData metaData = resultSet.getMetaData();
       int columns = metaData.getColumnCount();
 
-      pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      pout.print("<table class=\"data\">\r\n");
       pout.print("<tr>\r\n");
       pout.print("<td>&nbsp;</td>\r\n");
       for (int i = 0; i < columns; i++)

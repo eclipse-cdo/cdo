@@ -44,6 +44,7 @@ import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.concurrent.Worker;
 import org.eclipse.net4j.util.container.ContainerEventAdapter;
 import org.eclipse.net4j.util.container.IContainer;
@@ -77,6 +78,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -166,21 +168,40 @@ public class CDOServerBrowser extends Worker
           }
 
           initParams(params);
-          if ("/".equals(resource))
-          {
-            showMenu(pout);
-          }
-          else
+
+          Map<String, String> styles = new LinkedHashMap<>();
+          styles.put("html *", "font-family:Arial,Helvetica,sans-serif;");
+          styles.put("a", "text-decoration:none;color:inherit;");
+          styles.put("a:hover,a:active", "background-color:lightgrey;");
+          styles.put("table.data", "border:1px solid;border-collapse:collapse;");
+          styles.put("table.data th", "border:1px solid;padding:3px;");
+          styles.put("table.data td", "border:1px solid;padding:3px;");
+
+          Runnable body = () -> showMenu(pout);
+          if (!"/".equals(resource))
           {
             String pageName = resource.substring(1);
-            for (Page page : pages)
+
+            Page page = getPage(pageName);
+            if (page != null)
             {
-              if (page.getName().equals(pageName))
-              {
-                showPage(pout, page);
-              }
+              page.modifyStyles(styles);
+              body = () -> showPage(pout, page);
             }
           }
+
+          pout.print("<html>\r\n");
+          pout.print("<head>\r\n");
+          pout.print("<style>\r\n");
+          styles.forEach((key, value) -> pout.print(" " + key + " { " + value + " }\r\n"));
+          pout.print("</style>\r\n");
+          pout.print("</head>\r\n");
+          pout.print("<body>\r\n");
+
+          body.run();
+
+          pout.print("</body>\r\n");
+          pout.print("</html>\r\n");
         }
 
         out.flush();
@@ -256,6 +277,19 @@ public class CDOServerBrowser extends Worker
     return value;
   }
 
+  private String encodeParam(String value)
+  {
+    try
+    {
+      return java.net.URLEncoder.encode(value, UTF_8);
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      ex.printStackTrace();
+      return value;
+    }
+  }
+
   /**
    * @since 4.5
    */
@@ -267,10 +301,39 @@ public class CDOServerBrowser extends Worker
 
   public String href(String label, String resource, String... params)
   {
+    return href(Pair.create(label, null), resource, params);
+  }
+
+  /**
+   * @since 4.25
+   */
+  public String href(Pair<String, String> labelAndTooltip, String resource, String... params)
+  {
+    String label = labelAndTooltip.getElement1();
+    String tooltip = labelAndTooltip.getElement2();
+    if (tooltip != null)
+    {
+      tooltip = " title=\"" + escape(tooltip) + "\"";
+    }
+    else
+    {
+      tooltip = "";
+    }
+
     Map<String, String> map = new HashMap<>(this.params.get());
     for (int i = 0; i < params.length;)
     {
-      map.put(params[i++], params[i++]);
+      String key = params[i++];
+      String value = params[i++];
+
+      if (value == null)
+      {
+        map.remove(key);
+      }
+      else
+      {
+        map.put(key, value);
+      }
     }
 
     List<String> list = new ArrayList<>(map.keySet());
@@ -285,11 +348,11 @@ public class CDOServerBrowser extends Worker
         StringUtil.appendSeparator(builder, '&');
         builder.append(key);
         builder.append('=');
-        builder.append(value);
+        builder.append(encodeParam(value));
       }
     }
 
-    return "<a href=\"/" + escape(resource) + "?" + escape(builder.toString()) + "\">" + escape(label) + "</a>";
+    return "<a href=\"/" + escape(resource) + "?" + escape(builder.toString()) + "\"" + tooltip + ">" + escape(label) + "</a>";
   }
 
   public String escape(String raw)
@@ -318,7 +381,7 @@ public class CDOServerBrowser extends Worker
 
     for (Page page : pages)
     {
-      pout.println("<h3>" + href(page.getLabel(), page.getName()) + "</h3>");
+      pout.println("<h3>&#x21E8;&nbsp;" + href(page.getLabel(), page.getName()) + "</h3>");
     }
   }
 
@@ -329,7 +392,8 @@ public class CDOServerBrowser extends Worker
     List<String> repoNames = new ArrayList<>(getRepositoryNames());
     Collections.sort(repoNames);
 
-    pout.print("<h3><a href=\"/\">" + page.getLabel() + "</a>:&nbsp;&nbsp;");
+    pout.print("<h3><a href=\"/\" title=\"Menu\">&#x21E7;</a>&nbsp;" + page.getLabel() + ":&nbsp;&nbsp;");
+
     for (String repoName : repoNames)
     {
       InternalRepository repository = getRepository(repoName);
@@ -353,7 +417,7 @@ public class CDOServerBrowser extends Worker
       }
     }
 
-    pout.print("</h3>");
+    pout.print("</h3>\r\n");
 
     InternalRepository repository = getRepository(repo);
     if (repository != null)
@@ -414,6 +478,22 @@ public class CDOServerBrowser extends Worker
         OM.LOG.error(ex);
       }
     }
+  }
+
+  /**
+   * @since 4.25
+   */
+  protected Page getPage(String name)
+  {
+    for (Page page : pages)
+    {
+      if (page.getName().equals(name))
+      {
+        return page;
+      }
+    }
+
+    return null;
   }
 
   /**
@@ -639,6 +719,14 @@ public class CDOServerBrowser extends Worker
     public boolean canDisplay(InternalRepository repository);
 
     public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out);
+
+    /**
+     * @since 4.25
+     */
+    public default void modifyStyles(Map<String, String> styles)
+    {
+      // Do nothing.
+    }
   }
 
   /**
@@ -706,7 +794,7 @@ public class CDOServerBrowser extends Worker
         PrintStream out, String prefix)
     {
       EPackage ePackage = info.getEPackage();
-      out.println("<h3>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h3>");
+      out.println("<h4>" + prefix + ePackage.getName() + "&nbsp;&nbsp;[" + ePackage.getNsURI() + "]</h4>\r\n");
 
       for (EClassifier classifier : ePackage.getEClassifiers())
       {
@@ -716,21 +804,27 @@ public class CDOServerBrowser extends Worker
           param = name;
         }
 
+        String type = "";
         String label = name.equals(param) ? name : browser.href(name, getName(), "classifier", name);
-        out.print(prefix + "&nbsp;&nbsp;<b>" + label);
+        String extra = "";
 
         if (classifier instanceof EEnum)
         {
-          EEnum eenum = (EEnum)classifier;
-          out.print("&nbsp;&nbsp;" + eenum.getELiterals());
+          type = "&#x1F154;";
+          extra = "&nbsp;&nbsp;[" + ((EEnum)classifier).getELiterals() + "]";
         }
         else if (classifier instanceof EDataType)
         {
-          EDataType eDataType = (EDataType)classifier;
-          out.print("&nbsp;&nbsp;" + eDataType.getInstanceClassName());
+          type = "&#x1F153;";
+          extra = "&nbsp;&nbsp;[" + classifier.getInstanceClassName() + "]";
+        }
+        else // EClass.
+        {
+          type = "&#x1F152;";
+          label = "<b>" + label + "</b>";
         }
 
-        out.println("</b><br>");
+        out.print(prefix + "&nbsp;&nbsp;" + type + "&nbsp;" + label + extra + "<br>\r\n");
       }
 
       for (EPackage sub : ePackage.getESubpackages())
@@ -813,7 +907,7 @@ public class CDOServerBrowser extends Worker
     @Override
     public void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out)
     {
-      out.println("<table border=\"1\">");
+      out.println("<table class=\"data\">");
       out.println("<tr><th>Locked Object</th><th>Read Lock Owners</th><th>Write Lock Owner</th><th>Write Option Owner</th></tr>");
 
       InternalLockManager lockingManager = repository.getLockingManager();
@@ -893,13 +987,19 @@ public class CDOServerBrowser extends Worker
       out.print("<tr>\r\n");
 
       out.print("<td valign=\"top\">\r\n");
-      out.print("<table border=\"1\" cellpadding=\"2\"><tr><td>\r\n");
+      out.print("<table border=\"0\"><tr><td>\r\n");
       final String[] revision = { browser.getParam("revision") };
       new AllRevisionsDumper.Stream.Html(allRevisions, out)
       {
         private StringBuilder versionsBuilder;
 
         private CDORevision lastRevision;
+
+        @Override
+        protected void dumpStart(List<CDOBranch> branches)
+        {
+          out().println("<table class=\"data\">");
+        }
 
         @Override
         protected void dumpEnd(List<CDOBranch> branches)
@@ -1018,7 +1118,7 @@ public class CDOServerBrowser extends Worker
       String created = formatTimeStamp(revision.getTimeStamp());
       String commitInfo = browser.href(created, HistoryPage.NAME, "time", String.valueOf(revision.getTimeStamp()));
 
-      pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      pout.print("<table class=\"data\">\r\n");
       showKeyValue(pout, true, "type", "<b>" + revision.getClass().getSimpleName() + "</b>");
       showKeyValue(pout, true, "class", className);
       showKeyValue(pout, true, "id", getRevisionValue(revision.getID(), browser, ids, revision));
@@ -1394,7 +1494,7 @@ public class CDOServerBrowser extends Worker
 
       final String param = browser.getParam("time");
 
-      out.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      out.print("<table class=\"data\">\r\n");
       out.print("<tr>\r\n");
       out.print("<td valign=\"top\">Time</td>\r\n");
       out.print("<td valign=\"top\">Branch</td>\r\n");

@@ -21,18 +21,27 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBSchema;
+import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.io.PrintStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Eike Stepper
@@ -91,7 +100,7 @@ public abstract class DBBrowserPage extends AbstractPage
 
   protected abstract void display(CDOServerBrowser browser, InternalRepository repository, PrintStream out, Connection connection, IDBSchema schema);
 
-  protected void executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String title, boolean ordering, String sql)
+  protected boolean executeQuery(CDOServerBrowser browser, PrintStream pout, Connection connection, String title, boolean ordering, String sql)
   {
     String order = browser.getParam("order");
     String direction = browser.getParam("direction");
@@ -109,19 +118,38 @@ public abstract class DBBrowserPage extends AbstractPage
       ResultSetMetaData metaData = resultSet.getMetaData();
       int columns = metaData.getColumnCount();
 
-      pout.print("<table border=\"1\" cellpadding=\"2\">\r\n");
+      pout.print("<table class=\"data\">\r\n");
       pout.print("<tr><td colspan=\"" + (1 + columns) + "\" align=\"center\"><b>" + title + "</b></td></tr>\r\n");
       pout.print("<tr>\r\n");
       pout.print("<td>&nbsp;</td>\r\n");
+
       for (int i = 0; i < columns; i++)
       {
         String column = metaData.getColumnLabel(1 + i);
         String type = metaData.getColumnTypeName(1 + i).toLowerCase() + "(" + metaData.getPrecision(1 + i) + ")";
+        String arrow = "";
 
         if (ordering)
         {
-          String dir = column.equals(order) && "ASC".equals(direction) ? "DESC" : "ASC";
-          column = browser.href(column, getName(), "order", column, "direction", dir);
+          String dir = "ASC";
+
+          if (column.equals(order))
+          {
+            arrow = "&nbsp;";
+
+            if ("ASC".equals(direction))
+            {
+              arrow += "&#9650;"; // Up arrow.
+              dir = "DESC";
+            }
+            else
+            {
+              arrow += "&#9660;"; // Down arrow.
+            }
+          }
+
+          String tooltip = "Sort " + ("ASC".equals(dir) ? "ascending" : "descending");
+          column = browser.href(Pair.create(column, tooltip), getName(), "order", column, "direction", dir) + arrow;
         }
 
         pout.print("<td align=\"center\"><b>" + column);
@@ -141,8 +169,22 @@ public abstract class DBBrowserPage extends AbstractPage
           for (int i = 0; i < columns; i++)
           {
             String value = resultSet.getString(1 + i);
-            String bgcolor = highlight != null && highlight.equals(value) ? " bgcolor=\"#fffca6\"" : "";
-            pout.print("<td" + bgcolor + ">" + browser.href(value, getName(), "highlight", value) + "</td>\r\n");
+
+            String bgcolor = "";
+            String tooltip = "Highlight";
+            String[] params = new String[] { "highlight", null };
+
+            if (highlight != null && highlight.equals(value))
+            {
+              bgcolor = " bgcolor=\"#fffca6\"";
+              tooltip = "Unhighlight";
+            }
+            else
+            {
+              params[1] = value;
+            }
+
+            pout.print("<td" + bgcolor + ">" + browser.href(Pair.create(value, tooltip), getName(), params) + "</td>\r\n");
           }
 
           pout.print("</tr>\r\n");
@@ -150,6 +192,7 @@ public abstract class DBBrowserPage extends AbstractPage
       }
 
       pout.print("</table>\r\n");
+      return schema;
     }
     catch (SQLException ex)
     {
@@ -370,7 +413,6 @@ public abstract class DBBrowserPage extends AbstractPage
     }
 
     /**
-     * @param schema
      * @since 4.0
      */
     protected void showTable(CDOServerBrowser browser, PrintStream pout, Connection connection, IDBSchema schema, String tableName)
@@ -416,7 +458,8 @@ public abstract class DBBrowserPage extends AbstractPage
         sql += " ORDER BY " + DBUtil.quoted(firstColumn) + " ASC";
       }
 
-      String title = browser.href(tableName, Queries.NAME, "query", sql);
+      String title = tableName + "&nbsp;"
+          + browser.href(Pair.create("&#x1F50D;", "Query"), Queries.NAME, "query", URLEncoder.encode(sql, StandardCharsets.UTF_8));
 
       try
       {
@@ -429,6 +472,39 @@ public abstract class DBBrowserPage extends AbstractPage
         browser.removeParam("order");
         browser.removeParam("direction");
         executeQuery(browser, pout, connection, tableName, true, "SELECT * FROM " + sqlTableName);
+      }
+
+      showIndices(pout, schema, tableName);
+    }
+
+    private void showIndices(PrintStream pout, IDBSchema schema, String tableName)
+    {
+      IDBTable table = schema.getTable(tableName);
+      if (table != null)
+      {
+        IDBIndex[] indices = table.getIndices();
+        if (!ObjectUtil.isEmpty(indices))
+        {
+          pout.print("<p>\r\n");
+          pout.print("<table class=\"data\">\r\n");
+          pout.print("<tr><td colspan=\"3\" align=\"center\"><b>Indexes</b></td></tr>\r\n");
+          pout.print("<tr>\r\n");
+          pout.print("<td align=\"center\"><b>Name</b></td>\r\n");
+          pout.print("<td align=\"center\"><b>Type</b></td>\r\n");
+          pout.print("<td align=\"center\"><b>Fields</b></td>\r\n");
+          pout.print("</tr>\r\n");
+
+          for (IDBIndex index : indices)
+          {
+            pout.print("<tr>\r\n");
+            pout.print("<td>" + index.getName() + "</td>\r\n");
+            pout.print("<td>" + index.getType() + "</td>\r\n");
+            pout.print("<td>" + Arrays.stream(index.getFields()).map(IDBField::getName).collect(Collectors.joining(", ")) + "</td>\r\n");
+            pout.print("</tr>\r\n");
+          }
+
+          pout.print("</table>\r\n");
+        }
       }
     }
 

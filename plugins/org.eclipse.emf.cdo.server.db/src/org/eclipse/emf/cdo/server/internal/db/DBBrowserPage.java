@@ -31,8 +31,6 @@ import org.eclipse.net4j.util.collection.Pair;
 import org.eclipse.net4j.util.factory.ProductCreationException;
 
 import java.io.PrintStream;
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -458,8 +456,7 @@ public abstract class DBBrowserPage extends AbstractPage
         sql += " ORDER BY " + DBUtil.quoted(firstColumn) + " ASC";
       }
 
-      String title = tableName + "&nbsp;"
-          + browser.href(Pair.create("&#x1F50D;", "Query"), Queries.NAME, "query", URLEncoder.encode(sql, StandardCharsets.UTF_8));
+      String title = tableName + "&nbsp;" + browser.href(Pair.create("&#x1F50D;", "Query"), Queries.NAME, "query", sql);
 
       try
       {

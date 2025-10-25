@@ -170,12 +170,7 @@ public class CDOServerBrowser extends Worker
           initParams(params);
 
           Map<String, String> styles = new LinkedHashMap<>();
-          styles.put("html *", "font-family:Arial,Helvetica,sans-serif;");
-          styles.put("a", "text-decoration:none;color:inherit;");
-          styles.put("a:hover,a:active", "background-color:lightgrey;");
-          styles.put("table.data", "border:1px solid;border-collapse:collapse;");
-          styles.put("table.data th", "border:1px solid;padding:3px;");
-          styles.put("table.data td", "border:1px solid;padding:3px;");
+          initStyles(styles);
 
           Runnable body = () -> showMenu(pout);
           if (!"/".equals(resource))
@@ -245,6 +240,19 @@ public class CDOServerBrowser extends Worker
     }
   }
 
+  /**
+   * @since 4.25
+   */
+  protected void initStyles(Map<String, String> styles)
+  {
+    styles.put("html *", "font-family:Arial,Helvetica,sans-serif;");
+    styles.put("a", "text-decoration:none;color:inherit;");
+    styles.put("a:hover,a:active", "background-color:lightgray;");
+    styles.put("table.data", "border-collapse:collapse;");
+    styles.put("table.data th", "border:1px solid;padding:3px;border-color:lightgray;");
+    styles.put("table.data td", "border:1px solid;padding:3px;border-color:lightgray;");
+  }
+
   protected void clearParams()
   {
     Map<String, String> map = params.get();
@@ -275,19 +283,6 @@ public class CDOServerBrowser extends Worker
     }
 
     return value;
-  }
-
-  private String encodeParam(String value)
-  {
-    try
-    {
-      return java.net.URLEncoder.encode(value, UTF_8);
-    }
-    catch (UnsupportedEncodingException ex)
-    {
-      ex.printStackTrace();
-      return value;
-    }
   }
 
   /**
@@ -526,6 +521,19 @@ public class CDOServerBrowser extends Worker
   {
     serverSocket.close();
     super.doDeactivate();
+  }
+
+  private static String encodeParam(String value)
+  {
+    try
+    {
+      return java.net.URLEncoder.encode(value, UTF_8);
+    }
+    catch (UnsupportedEncodingException ex)
+    {
+      ex.printStackTrace();
+      return value;
+    }
   }
 
   /**

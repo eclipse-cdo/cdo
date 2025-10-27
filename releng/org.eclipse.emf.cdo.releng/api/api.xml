@@ -11,10 +11,22 @@
             <message_argument value="getMode()"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="calculateContainerReferenceID(Lorg/eclipse/emf/ecore/EReference;)I" kind="ADDED" message="Message not found for id: 0" newModifiers="65537" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="calculateContainerReferenceID(EReference)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="1" key="getCollectionLoadingPolicy()Lorg/eclipse/emf/cdo/session/CDOCollectionLoadingPolicy;" kind="CHANGED" message="The 'abstract' keyword has been removed from method org.eclipse.emf.cdo.view.CDOFetchRuleManager.getCollectionLoadingPolicy()" newModifiers="1" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOFetchRuleManager">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOFetchRuleManager"/>
             <message_argument value="getCollectionLoadingPolicy()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="1" key="getContainingFeatureID(Lorg/eclipse/emf/ecore/InternalEObject;)I" kind="CHANGED" message="The 'abstract' keyword has been removed from method org.eclipse.emf.spi.cdo.CDOStore.getContainingFeatureID(InternalEObject)" newModifiers="1048577" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOStore"/>
+            <message_argument value="getContainingFeatureID(InternalEObject)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="FIELD_ELEMENT_TYPE" flags="31" key="eClass" kind="CHANGED" message="The 'final' keyword has been added for the non-visble field org.eclipse.emf.cdo.common.util.CDOFetchRule.eClass" newModifiers="18" oldModifiers="2" restrictions="2" type_name="org.eclipse.emf.cdo.common.util.CDOFetchRule">
@@ -32,6 +44,13 @@
     <delta compatible="true" element_type="API_BASELINE_ELEMENT_TYPE" flags="3" key="org.eclipse.net4j.db.db2" kind="ADDED" message="The API component org.eclipse.net4j.db.db2_4.1.100 has been added" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.db.db2_4.1.100"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.7)" element_type="FIELD_ELEMENT_TYPE" flags="54" key="DEFAULT_SCHEMA_NAME" kind="REMOVED" message="The constant value public has been removed for the non-visible compile-time constant static field org.eclipse.net4j.db.h2.H2Adapter.DEFAULT_SCHEMA_NAME" newModifiers="26" oldModifiers="26" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
+            <message_argument value="DEFAULT_SCHEMA_NAME"/>
+            <message_argument value="public"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="8" key="CDOBlob(Ljava/lang/String;)V" kind="ADDED" message="The constructor org.eclipse.emf.cdo.common.lob.CDOBlob.CDOBlob(String) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.lob.CDOBlob">
@@ -58,10 +77,40 @@
             <message_argument value="DelegableReentrantLock(boolean)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="8" key="Holder(Ljava/util/function/Supplier&lt;TT;&gt;;)V" kind="ADDED" message="The constructor org.eclipse.net4j.util.concurrent.Holder.Holder(Supplier&lt;T&gt;) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="Holder(Supplier&lt;T&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="8" key="Holder(Ljava/util/function/Supplier&lt;TT;&gt;;TT;)V" kind="ADDED" message="The constructor org.eclipse.net4j.util.concurrent.Holder.Holder(Supplier&lt;T&gt;, T) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="Holder(Supplier&lt;T&gt;, T)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="modifyStyles(Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.CDOServerBrowser.Page.modifyStyles(Map&lt;String,String&gt;) in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser$Page">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser.Page"/>
+            <message_argument value="modifyStyles(Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="false" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getPersistentProperties(Ljava/lang/String;[Ljava/lang/String;)Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.IStore.getPersistentProperties(String, String[]) in an interface has been added" newModifiers="65665" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.IStore">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.IStore"/>
             <message_argument value="getPersistentProperties(String, String[])"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getFeatureMapping(Lorg/eclipse/emf/ecore/EStructuralFeature;)Lorg/eclipse/emf/cdo/server/db/mapping/IFeatureMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IClassMapping.getFeatureMapping(EStructuralFeature) in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IClassMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IClassMapping"/>
+            <message_argument value="getFeatureMapping(EStructuralFeature)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getTable()Lorg/eclipse/net4j/db/ddl/IDBTable;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IClassMapping.getTable() in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IClassMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IClassMapping"/>
+            <message_argument value="getTable()"/>
         </message_arguments>
     </delta>
     <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getValueMapping(Lorg/eclipse/emf/ecore/EStructuralFeature;)Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IClassMapping.getValueMapping(EStructuralFeature) in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IClassMapping">
@@ -74,6 +123,121 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IClassMapping"/>
             <message_argument value="isMapped()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="74" key="getField()Lorg/eclipse/net4j/db/ddl/IDBField;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMapping.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getField()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="74" key="getDBType()Lorg/eclipse/net4j/db/DBType;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMapping.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getDBType()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="74" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMapping.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMapping2.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping2"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMapping3.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping3">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping3"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="73" key="readObjectType2(Lorg/eclipse/emf/cdo/server/db/IDBStoreAccessor;Lorg/eclipse/emf/cdo/common/id/CDOID;)Lorg/eclipse/emf/ecore/EClass;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy.readObjectType2(IDBStoreAccessor, CDOID) in an interface has been added" newModifiers="65537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
+            <message_argument value="readObjectType2(IDBStoreAccessor, CDOID)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="false" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="74" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The default method org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping in an interface has been added" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getContainingFeatureID()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.common.revision.CDORevisionData.getContainingFeatureID()" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="getContainingFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="calculateContainingReferenceID(Lorg/eclipse/emf/ecore/EReference;Lorg/eclipse/emf/ecore/EClass;)I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.common.revision.CDORevisionData.calculateContainingReferenceID(EReference, EClass)" newModifiers="1048585" oldModifiers="9" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="calculateContainingReferenceID(EReference, EClass)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="calculateContainingReferenceID(Lorg/eclipse/emf/ecore/EReference;)I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.common.revision.CDORevisionData.calculateContainingReferenceID(EReference)" newModifiers="1048577" oldModifiers="1" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="calculateContainingReferenceID(EReference)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getContainingFeatureID()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision.getContainingFeatureID()" newModifiers="1048577" oldModifiers="1" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision"/>
+            <message_argument value="getContainingFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setContainingFeatureID(I)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision.setContainingFeatureID(int)" newModifiers="1048577" oldModifiers="1" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision"/>
+            <message_argument value="setContainingFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setContainingFeatureID(I)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision.setContainingFeatureID(int)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision"/>
+            <message_argument value="setContainingFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getContainingFeatureID()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision.getContainingFeatureID()" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision"/>
+            <message_argument value="getContainingFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setContainingFeatureID(I)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision.setContainingFeatureID(int)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision"/>
+            <message_argument value="setContainingFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="setContainingFeatureID(I)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.StubCDORevision.setContainingFeatureID(int)" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision"/>
+            <message_argument value="setContainingFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getContainingFeatureID()I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.spi.common.revision.StubCDORevision.getContainingFeatureID()" newModifiers="1048577" oldModifiers="1" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision"/>
+            <message_argument value="getContainingFeatureID()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getViewLock()Ljava/util/concurrent/locks/Lock;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.transaction.CDOPushTransaction.getViewLock()" newModifiers="1048577" oldModifiers="1" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
@@ -94,22 +258,28 @@
             <message_argument value="syncExec(Callable&lt;V&gt;)"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="syncExec&lt;V:Ljava/lang/Object;&gt;(Ljava/util/concurrent/Callable&lt;TV;&gt;;)TV;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.view.CDOView.syncExec(Callable&lt;V&gt;)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
-        <message_arguments>
-            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
-            <message_argument value="syncExec(Callable&lt;V&gt;)"/>
-        </message_arguments>
-    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="syncExec(Ljava/lang/Runnable;)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.view.CDOView.syncExec(Runnable)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
             <message_argument value="syncExec(Runnable)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="syncExec&lt;V:Ljava/lang/Object;&gt;(Ljava/util/concurrent/Callable&lt;TV;&gt;;)TV;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.view.CDOView.syncExec(Callable&lt;V&gt;)" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
+            <message_argument value="syncExec(Callable&lt;V&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getViewLock()Ljava/util/concurrent/locks/Lock;" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.cdo.view.CDOView.getViewLock()" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
             <message_argument value="getViewLock()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="getContainingFeatureID(Lorg/eclipse/emf/ecore/InternalEObject;)I" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.spi.cdo.CDOStore.getContainingFeatureID(InternalEObject)" newModifiers="1048577" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOStore"/>
+            <message_argument value="getContainingFeatureID(InternalEObject)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="lockView()V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.emf.spi.cdo.InternalCDOView.lockView()" newModifiers="1049601" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOView">
@@ -128,6 +298,48 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
             <message_argument value="unlockView()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="dropField(Ljava/sql/Connection;Ljava/lang/String;Ljava/lang/String;)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.spi.db.DBAdapter.dropField(Connection, String, String)" newModifiers="1048580" oldModifiers="4" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="dropField(Connection, String, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="readIndices(Ljava/sql/Connection;Ljava/sql/ResultSet;Lorg/eclipse/net4j/db/ddl/IDBTable;IIII)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.spi.db.DBAdapter.readIndices(Connection, ResultSet, IDBTable, int, int, int, int)" newModifiers="1048580" oldModifiers="4" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="readIndices(Connection, ResultSet, IDBTable, int, int, int, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="METHOD_ELEMENT_TYPE" flags="72" key="createField(Ljava/sql/Connection;Ljava/lang/String;Lorg/eclipse/net4j/db/ddl/IDBField;)V" kind="ADDED" message="The deprecation modifier has been added to org.eclipse.net4j.spi.db.DBAdapter.createField(Connection, String, IDBField)" newModifiers="1048580" oldModifiers="4" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="createField(Connection, String, IDBField)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="MODEL_EVOLUTION_MODE" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IDBStore.Props.MODEL_EVOLUTION_MODE has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IDBStore.Props"/>
+            <message_argument value="MODEL_EVOLUTION_MODE"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="MODEL_EVOLUTION_SUPPORT_DESCRIPTION" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IDBStore.Props.MODEL_EVOLUTION_SUPPORT_DESCRIPTION has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IDBStore.Props"/>
+            <message_argument value="MODEL_EVOLUTION_SUPPORT_DESCRIPTION"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="MODEL_EVOLUTION_SUPPORT_TYPE" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IDBStore.Props.MODEL_EVOLUTION_SUPPORT_TYPE has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IDBStore.Props"/>
+            <message_argument value="MODEL_EVOLUTION_SUPPORT_TYPE"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="16" key="NULL_STRING" kind="ADDED" message="The field org.eclipse.emf.cdo.server.db.IIDHandler.NULL_STRING has been added in an interface that is tagged with '@noimplement'" newModifiers="25" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IIDHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IIDHandler"/>
+            <message_argument value="NULL_STRING"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="69" key="org.eclipse.emf.cdo.server.IRepository" kind="ADDED" message="The interface org.eclipse.emf.cdo.server.ILobCleanup adds method cleanupLobs(boolean) to org.eclipse.emf.cdo.server.IRepository that is tagged as @noimplement" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.server.IRepository">
@@ -172,15 +384,47 @@
             <message_argument value="cleanupLobs(boolean)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="IndexInfo" kind="ADDED" message="The member type IndexInfo has been added" newModifiers="25" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="IndexInfo"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="Mode" kind="ADDED" message="The member type Mode has been added" newModifiers="17417" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonRepository">
         <message_arguments>
             <message_argument value="Mode"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="ModelEvolutionMode" kind="ADDED" message="The member type ModelEvolutionMode has been added" newModifiers="16409" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IDBStore$Props">
+        <message_arguments>
+            <message_argument value="ModelEvolutionMode"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="48" key="RestartException" kind="ADDED" message="The member type RestartException has been added" newModifiers="25" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.InternalStore">
+        <message_arguments>
+            <message_argument value="RestartException"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="48" key="TreeMapping" kind="ADDED" message="The member type TreeMapping has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="TreeMapping"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="isAdministrative()Z" kind="ADDED" message="The method org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo.isAdministrative() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.lock.CDOLockChangeInfo"/>
             <message_argument value="isAdministrative()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="calculateContainerReferenceID(Lorg/eclipse/emf/ecore/EReference;Lorg/eclipse/emf/ecore/EClass;)I" kind="ADDED" message="The method org.eclipse.emf.cdo.common.revision.CDORevisionData.calculateContainerReferenceID(EReference, EClass) has been added in an interface that is tagged with '@noimplement'" newModifiers="9" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="calculateContainerReferenceID(EReference, EClass)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getContainerFeatureID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.common.revision.CDORevisionData.getContainerFeatureID() has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
+            <message_argument value="getContainerFeatureID()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getListOrNull(Lorg/eclipse/emf/ecore/EStructuralFeature;)Lorg/eclipse/emf/cdo/common/revision/CDOList;" kind="ADDED" message="The method org.eclipse.emf.cdo.common.revision.CDORevisionData.getListOrNull(EStructuralFeature) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionData">
@@ -193,6 +437,42 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionData"/>
             <message_argument value="getValue(EStructuralFeature)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="deleteURIMapping(Ljava/sql/Statement;Ljava/lang/String;)Z" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.IIDHandler.deleteURIMapping(Statement, String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IIDHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IIDHandler"/>
+            <message_argument value="deleteURIMapping(Statement, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getStringValue(Ljava/sql/ResultSet;I)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.IIDHandler.getStringValue(ResultSet, int) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IIDHandler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IIDHandler"/>
+            <message_argument value="getStringValue(ResultSet, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="deleteMetaIDMapping(Ljava/sql/Statement;Lorg/eclipse/emf/ecore/EModelElement;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.IMetaDataManager.deleteMetaIDMapping(Statement, EModelElement) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IMetaDataManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IMetaDataManager"/>
+            <message_argument value="deleteMetaIDMapping(Statement, EModelElement)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getMetaURI(Lorg/eclipse/emf/cdo/common/id/CDOID;)Ljava/lang/String;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.IMetaDataManager.getMetaURI(CDOID) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.server.db.IMetaDataManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IMetaDataManager"/>
+            <message_argument value="getMetaURI(CDOID)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping.getTypeMapping() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping.getTypeMapping() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping"/>
+            <message_argument value="getTypeMapping()"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="updateLobRefs(Ljava/sql/Connection;)V" kind="ADDED" message="The method org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping.updateLobRefs(Connection) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping">
@@ -219,6 +499,30 @@
             <message_argument value="getRemoteSessions(String)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getContainerFeatureID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision.getContainerFeatureID() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision"/>
+            <message_argument value="getContainerFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="setContainerFeatureID(I)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision.setContainerFeatureID(int) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.BaseCDORevision"/>
+            <message_argument value="setContainerFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getContainerFeatureID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision.getContainerFeatureID() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision"/>
+            <message_argument value="getContainerFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="setContainerFeatureID(I)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision.setContainerFeatureID(int) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.DelegatingCDORevision"/>
+            <message_argument value="setContainerFeatureID(int)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="26" key="getListOrNull(Lorg/eclipse/emf/ecore/EStructuralFeature;)Lorg/eclipse/emf/cdo/common/revision/CDOList;" kind="REMOVED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision.getListOrNull(EStructuralFeature) has been moved up in the hierarchy" newModifiers="1025" oldModifiers="1025" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision"/>
@@ -229,6 +533,24 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision"/>
             <message_argument value="getValue(EStructuralFeature)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="setContainerFeatureID(I)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision.setContainerFeatureID(int) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision"/>
+            <message_argument value="setContainerFeatureID(int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getContainerFeatureID()I" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.StubCDORevision.getContainerFeatureID() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision"/>
+            <message_argument value="getContainerFeatureID()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="setContainerFeatureID(I)V" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.common.revision.StubCDORevision.setContainerFeatureID(int) has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.common.revision.StubCDORevision"/>
+            <message_argument value="setContainerFeatureID(int)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getLockKey(Lorg/eclipse/emf/cdo/common/id/CDOID;)Ljava/lang/Object;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.InternalLockManager.getLockKey(CDOID) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.cdo.spi.server.InternalLockManager">
@@ -261,6 +583,12 @@
             <message_argument value="unlockAdministratively(InternalView, IRWLockManager.LockType, List&lt;CDOID&gt;, boolean)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="getContainer()Lorg/eclipse/net4j/util/container/IManagedContainer;" kind="ADDED" message="The method org.eclipse.emf.cdo.spi.server.Store.getContainer() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.Store">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+            <message_argument value="getContainer()"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="36" key="sync()Lorg/eclipse/net4j/util/concurrent/CriticalSection;" kind="ADDED" message="The method org.eclipse.emf.cdo.transaction.CDOPushTransaction.sync() has been added, overriding a method from a superclass" newModifiers="1" oldModifiers="0" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
@@ -271,6 +599,12 @@
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
             <message_argument value="sync()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getContainerFeatureID(Lorg/eclipse/emf/ecore/InternalEObject;)I" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.CDOStore.getContainerFeatureID(InternalEObject) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.CDOStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.CDOStore"/>
+            <message_argument value="getContainerFeatureID(InternalEObject)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="25" key="getRemoteSessions(Ljava/lang/String;)[Lorg/eclipse/emf/spi/cdo/InternalCDORemoteSession;" kind="ADDED" message="The method org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager.getRemoteSessions(String) has been added in an interface that is tagged with '@noimplement'" newModifiers="1025" oldModifiers="0" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDORemoteSessionManager">
@@ -377,6 +711,13 @@
             <message_argument value="4.27.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.8.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.net4j" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.net4j (from version 4.7.2 to 4.8.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.net4j"/>
+            <message_argument value="4.7.2"/>
+            <message_argument value="4.8.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="60" key="org.eclipse.emf.cdo.server" kind="CHANGED" message="The minor version has been changed for the api component org.eclipse.emf.cdo.server (from version 4.24.0 to 4.25.0)" newModifiers="0" oldModifiers="0" restrictions="0" type_name="">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server"/>
@@ -429,6 +770,66 @@
             <message_argument value="createLockChangeInfo(CDOBranchPoint, CDOLockOwner, Collection&lt;CDOLockDelta&gt;, Collection&lt;CDOLockState&gt;, boolean)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEClass(Lorg/eclipse/emf/ecore/EPackage;Ljava/lang/String;)Lorg/eclipse/emf/ecore/EClass;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEClass(EPackage, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEClass(EPackage, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEEnum(Lorg/eclipse/emf/ecore/EPackage;Ljava/lang/String;)Lorg/eclipse/emf/ecore/EEnum;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEEnum(EPackage, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEEnum(EPackage, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEEnum(Lorg/eclipse/emf/ecore/EPackage;Ljava/lang/String;[Ljava/lang/String;)Lorg/eclipse/emf/ecore/EEnum;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEEnum(EPackage, String, String[]) has been added" newModifiers="137" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEEnum(EPackage, String, String[])"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEEnumLiteral(Lorg/eclipse/emf/ecore/EEnum;Ljava/lang/String;)Lorg/eclipse/emf/ecore/EEnumLiteral;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEEnumLiteral(EEnum, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEEnumLiteral(EEnum, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEEnumLiteral(Lorg/eclipse/emf/ecore/EEnum;Ljava/lang/String;I)Lorg/eclipse/emf/ecore/EEnumLiteral;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEEnumLiteral(EEnum, String, int) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEEnumLiteral(EEnum, String, int)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createEReference(Lorg/eclipse/emf/ecore/EClass;Ljava/lang/String;Lorg/eclipse/emf/ecore/EClassifier;)Lorg/eclipse/emf/ecore/EReference;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.createEReference(EClass, String, EClassifier) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="createEReference(EClass, String, EClassifier)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getAllPackages(Lorg/eclipse/emf/ecore/EPackage;Ljava/util/function/Consumer&lt;Lorg/eclipse/emf/ecore/EPackage;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.getAllPackages(EPackage, Consumer&lt;EPackage&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="getAllPackages(EPackage, Consumer&lt;EPackage&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getFullyQualifiedName(Lorg/eclipse/emf/ecore/EObject;Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.getFullyQualifiedName(EObject, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="getFullyQualifiedName(EObject, String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getFullyQualifiedName(Lorg/eclipse/emf/ecore/EObject;Ljava/util/StringJoiner;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.getFullyQualifiedName(EObject, StringJoiner) has been added" newModifiers="10" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="getFullyQualifiedName(EObject, StringJoiner)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getQualifiedName(Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.model.EMFUtil.getQualifiedName(EStructuralFeature, String) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="getQualifiedName(EStructuralFeature, String)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="forEachValue(Lorg/eclipse/emf/cdo/common/revision/CDORevision;Lorg/eclipse/emf/ecore/EStructuralFeature;Ljava/util/function/Consumer&lt;Ljava/lang/Object;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.common.revision.CDORevisionUtil.forEachValue(CDORevision, EStructuralFeature, Consumer&lt;Object&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.revision.CDORevisionUtil">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.revision.CDORevisionUtil"/>
@@ -447,10 +848,70 @@
             <message_argument value="sync()"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="encodeParam(Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.CDOServerBrowser.encodeParam(String) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser"/>
+            <message_argument value="encodeParam(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getPage(Ljava/lang/String;)Lorg/eclipse/emf/cdo/server/CDOServerBrowser$Page;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.CDOServerBrowser.getPage(String) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser"/>
+            <message_argument value="getPage(String)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="href(Lorg/eclipse/net4j/util/collection/Pair&lt;Ljava/lang/String;Ljava/lang/String;&gt;;Ljava/lang/String;[Ljava/lang/String;)Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.CDOServerBrowser.href(Pair&lt;String,String&gt;, String, String[]) has been added" newModifiers="129" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser"/>
+            <message_argument value="href(Pair&lt;String,String&gt;, String, String[])"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="initStyles(Ljava/util/Map&lt;Ljava/lang/String;Ljava/lang/String;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.server.CDOServerBrowser.initStyles(Map&lt;String,String&gt;) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.CDOServerBrowser">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.CDOServerBrowser"/>
+            <message_argument value="initStyles(Map&lt;String,String&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="sync(Lorg/eclipse/emf/cdo/view/CDOView;)Lorg/eclipse/net4j/util/concurrent/CriticalSection;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.util.CDOUtil.sync(CDOView) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.util.CDOUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.util.CDOUtil"/>
+            <message_argument value="sync(CDOView)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="sync(Lorg/eclipse/emf/common/notify/Notifier;)Lorg/eclipse/net4j/util/concurrent/CriticalSection;" kind="ADDED" message="The non-abstract method org.eclipse.emf.cdo.util.CDOUtil.sync(Notifier) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.util.CDOUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.util.CDOUtil"/>
+            <message_argument value="sync(Notifier)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="sync()Lorg/eclipse/net4j/util/concurrent/CriticalSection;" kind="ADDED" message="The non-abstract method org.eclipse.emf.internal.cdo.CDOObjectImpl.sync() has been added" newModifiers="2" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.internal.cdo.CDOObjectImpl">
         <message_arguments>
             <message_argument value="org.eclipse.emf.internal.cdo.CDOObjectImpl"/>
             <message_argument value="sync()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="createField(Ljava/sql/Connection;Lorg/eclipse/net4j/db/ddl/IDBField;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.spi.db.DBAdapter.createField(Connection, IDBField) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="createField(Connection, IDBField)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="dropField(Ljava/sql/Connection;Lorg/eclipse/net4j/db/ddl/IDBField;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.spi.db.DBAdapter.dropField(Connection, IDBField) has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="dropField(Connection, IDBField)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getIndexInfos(Ljava/sql/DatabaseMetaData;Ljava/lang/String;Ljava/lang/String;Ljava/util/function/Consumer&lt;Lorg/eclipse/net4j/spi/db/DBAdapter$IndexInfo;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.spi.db.DBAdapter.getIndexInfos(DatabaseMetaData, String, String, Consumer&lt;DBAdapter.IndexInfo&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="getIndexInfos(DatabaseMetaData, String, String, Consumer&lt;DBAdapter.IndexInfo&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getIndexInfos(Ljava/sql/ResultSet;IIIILjava/util/function/Consumer&lt;Lorg/eclipse/net4j/spi/db/DBAdapter$IndexInfo;&gt;;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.spi.db.DBAdapter.getIndexInfos(ResultSet, int, int, int, int, Consumer&lt;DBAdapter.IndexInfo&gt;) has been added" newModifiers="10" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter"/>
+            <message_argument value="getIndexInfos(ResultSet, int, int, int, int, Consumer&lt;DBAdapter.IndexInfo&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="sqlCharIndexFunction()Ljava/lang/String;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.spi.db.DBAdapter.sqlCharIndexFunction() has been added" newModifiers="4" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.spi.db.DBAdapter">
@@ -465,10 +926,34 @@
             <message_argument value="sqlSubstringFunction()"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="ifNotNull&lt;T:Ljava/lang/Object;&gt;(TT;Ljava/util/function/Consumer&lt;TT;&gt;;)TT;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ObjectUtil.ifNotNull(T, Consumer&lt;T&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ObjectUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ObjectUtil"/>
+            <message_argument value="ifNotNull(T, Consumer&lt;T&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="tryCast&lt;T:Ljava/lang/Object;EX:Ljava/lang/Throwable;&gt;(Ljava/lang/Object;Ljava/lang/Class&lt;TT;&gt;;Ljava/util/function/Supplier&lt;TEX;&gt;;)TT;^TEX;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.ObjectUtil.tryCast(Object, Class&lt;T&gt;, Supplier&lt;EX&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.ObjectUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.ObjectUtil"/>
+            <message_argument value="tryCast(Object, Class&lt;T&gt;, Supplier&lt;EX&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="close([Ljava/lang/Object;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.CollectionUtil.close(Object[]) has been added" newModifiers="137" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.CollectionUtil">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.collection.CollectionUtil"/>
             <message_argument value="close(Object[])"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="stream&lt;T:Ljava/lang/Object;&gt;(Ljava/util/Iterator&lt;TT;&gt;;)Ljava/util/stream/Stream&lt;TT;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.CollectionUtil.stream(Iterator&lt;T&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.CollectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.CollectionUtil"/>
+            <message_argument value="stream(Iterator&lt;T&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="subclasses&lt;SUBTYPE:Ljava/lang/Object;TYPE:TSUBTYPE;&gt;(Ljava/lang/Class&lt;TTYPE;&gt;;)Ljava/util/function/Function&lt;-TSUBTYPE;+Ljava/util/stream/Stream&lt;+TTYPE;&gt;;&gt;;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.collection.CollectionUtil.subclasses(Class&lt;TYPE&gt;) has been added" newModifiers="9" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.collection.CollectionUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.collection.CollectionUtil"/>
+            <message_argument value="subclasses(Class&lt;TYPE&gt;)"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="addDelegateDetector(Lorg/eclipse/net4j/util/concurrent/DelegableReentrantLock$DelegateDetector;)V" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.DelegableReentrantLock.addDelegateDetector(DelegableReentrantLock.DelegateDetector) has been added" newModifiers="17" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.DelegableReentrantLock">
@@ -495,6 +980,42 @@
             <message_argument value="removeDelegateDetectorObject(Object)"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getIfSet()TT;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.Holder.getIfSet() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="getIfSet()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="handleIfSet(Ljava/util/function/Consumer&lt;TT;&gt;;)TT;" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.Holder.handleIfSet(Consumer&lt;T&gt;) has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="handleIfSet(Consumer&lt;T&gt;)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="isSet()Z" kind="ADDED" message="The non-abstract method org.eclipse.net4j.util.concurrent.Holder.isSet() has been added" newModifiers="1" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="isSet()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="creator" kind="ADDED" message="The non-visible field org.eclipse.net4j.util.concurrent.Holder.creator has been added" newModifiers="18" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="creator"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="unset" kind="ADDED" message="The non-visible field org.eclipse.net4j.util.concurrent.Holder.unset has been added" newModifiers="18" oldModifiers="0" restrictions="2" type_name="org.eclipse.net4j.util.concurrent.Holder">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.concurrent.Holder"/>
+            <message_argument value="unset"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="getAllPackages(Lorg/eclipse/emf/ecore/EPackage;Ljava/util/List&lt;Lorg/eclipse/emf/ecore/EPackage;&gt;;)V" kind="REMOVED" message="The non-visible method org.eclipse.emf.cdo.common.model.EMFUtil.getAllPackages(EPackage, List&lt;EPackage&gt;) has been removed" newModifiers="0" oldModifiers="10" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="getAllPackages(EPackage, List&lt;EPackage&gt;)"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="25" key="addDelegateDetector(Ljava/lang/Object;)V" kind="REMOVED" message="The non-visible method org.eclipse.net4j.util.concurrent.DelegableReentrantLock.addDelegateDetector(Object) has been removed" newModifiers="0" oldModifiers="2" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.DelegableReentrantLock">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.concurrent.DelegableReentrantLock"/>
@@ -505,6 +1026,54 @@
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.concurrent.DelegableReentrantLock"/>
             <message_argument value="removeDelegateDetector(Object)"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getDBType()Lorg/eclipse/net4j/db/DBType;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMapping.getDBType() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="getDBType()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getField()Lorg/eclipse/net4j/db/ddl/IDBField;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMapping.getField() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="getField()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMapping.getTypeMapping() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMapping2.getTypeMapping() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping2"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMapping3.getTypeMapping() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping3">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping3"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport.getTypeMapping() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="36" key="getTypeMapping()Lorg/eclipse/emf/cdo/server/db/mapping/ITypeMapping;" kind="ADDED" message="The overriden method org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.getTypeMapping() has been added" newModifiers="1" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping"/>
+            <message_argument value="getTypeMapping()"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.28.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.common.util.EObjectCrawler" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.common.util.EObjectCrawler has been added to org.eclipse.emf.cdo_4.28.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.common.util.EObjectCrawler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.util.EObjectCrawler"/>
+            <message_argument value="org.eclipse.emf.cdo_4.28.0"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.lm.server(1.7.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.emf.cdo.server.ILobCleanup" kind="ADDED" message="The re-exported type org.eclipse.emf.cdo.server.ILobCleanup has been added to org.eclipse.emf.cdo.lm.server_1.7.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ILobCleanup">
@@ -555,6 +1124,132 @@
             <message_argument value="org.eclipse.emf.cdo.workspace_4.4.5"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.13.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.emf.cdo.server.db_4.13.3" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.13.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.derby(4.3.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.derby_4.3.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.derby_4.3.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.h2_4.5.6" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.h2_4.5.6"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.hsqldb(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.hsqldb_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.hsqldb_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.mysql(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.mysql_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.mysql_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.oracle(1.3.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.oracle_1.3.6" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.oracle_1.3.6"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.postgresql(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db.postgresql_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db.postgresql_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.13.3)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.emf.cdo.server.db_4.13.3" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.13.3"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.derby(4.3.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.derby_4.3.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.derby_4.3.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.h2_4.5.6" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.h2_4.5.6"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.hsqldb(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.hsqldb_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.hsqldb_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.mysql(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.mysql_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.mysql_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.oracle(1.3.6)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.oracle_1.3.6" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.oracle_1.3.6"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.postgresql(4.4.5)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The re-exported type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db.postgresql_4.4.5" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db.postgresql_4.4.5"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.26.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.emf.cdo.common_4.26.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.26.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.transfer(4.4.7)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.emf.cdo.transfer_4.4.7" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.emf.cdo.transfer_4.4.7"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.12.1)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j.db_4.12.1" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j.db_4.12.1"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.trace(1.2.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j.trace_1.2.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j.trace_1.2.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.ui.shared(4.9.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j.ui.shared_4.9.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j.ui.shared_4.9.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util.ui(3.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j.util.ui_3.21.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j.util.ui_3.21.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j(4.21.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j_4.21.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j_4.21.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.26.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="70" key="org.eclipse.net4j.util.concurrent.CriticalSection" kind="ADDED" message="The re-exported type org.eclipse.net4j.util.concurrent.CriticalSection has been added to org.eclipse.emf.cdo.common_4.26.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.CriticalSection">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.concurrent.CriticalSection"/>
@@ -603,9 +1298,51 @@
             <message_argument value="DEFAULT_STORE"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="CLASSES" kind="ADDED" message="The static field org.eclipse.emf.cdo.common.model.EMFPredicates.CLASSES has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFPredicates">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFPredicates"/>
+            <message_argument value="CLASSES"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="CONCRETE_CLASSES" kind="ADDED" message="The static field org.eclipse.emf.cdo.common.model.EMFPredicates.CONCRETE_CLASSES has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFPredicates">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFPredicates"/>
+            <message_argument value="CONCRETE_CLASSES"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="DATA_TYPES" kind="ADDED" message="The static field org.eclipse.emf.cdo.common.model.EMFPredicates.DATA_TYPES has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFPredicates">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFPredicates"/>
+            <message_argument value="DATA_TYPES"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="ENUMS" kind="ADDED" message="The static field org.eclipse.emf.cdo.common.model.EMFPredicates.ENUMS has been added" newModifiers="25" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFPredicates">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFPredicates"/>
+            <message_argument value="ENUMS"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.7)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="LOWER_CASE_SCHEMA_NAME" kind="ADDED" message="The static field org.eclipse.net4j.db.h2.H2Adapter.LOWER_CASE_SCHEMA_NAME has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
+            <message_argument value="LOWER_CASE_SCHEMA_NAME"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.transaction.CDOPushTransaction" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for class org.eclipse.emf.cdo.transaction.CDOPushTransaction" newModifiers="33" oldModifiers="33" restrictions="6" type_name="org.eclipse.emf.cdo.transaction.CDOPushTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOPushTransaction"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.common.CDOCommonSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.common.CDOCommonSession" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.common.CDOCommonSession"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.common.CDOCommonTransaction" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.common.CDOCommonTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.common.CDOCommonTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.CDOCommonTransaction"/>
             <message_argument value="java.lang.AutoCloseable"/>
         </message_arguments>
     </delta>
@@ -615,13 +1352,13 @@
             <message_argument value="java.lang.AutoCloseable"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.7.3)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.net4j.CDONet4jSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.net4j.CDONet4jSession" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.net4j.CDONet4jSession">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.8.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.net4j.CDONet4jSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.net4j.CDONet4jSession" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.net4j.CDONet4jSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.net4j.CDONet4jSession"/>
             <message_argument value="java.lang.AutoCloseable"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.7.3)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.net4j.CDOSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.net4j.CDOSession" newModifiers="1050113" oldModifiers="1050113" restrictions="3" type_name="org.eclipse.emf.cdo.net4j.CDOSession">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.net4j(4.8.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.net4j.CDOSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.net4j.CDOSession" newModifiers="1050113" oldModifiers="1050113" restrictions="3" type_name="org.eclipse.emf.cdo.net4j.CDOSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.net4j.CDOSession"/>
             <message_argument value="java.lang.AutoCloseable"/>
@@ -669,9 +1406,33 @@
             <message_argument value="java.lang.AutoCloseable"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.transaction.CDOTransaction" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.transaction.CDOTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.transaction.CDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.transaction.CDOTransaction"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.view.CDOView" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.cdo.view.CDOView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.cdo.view.CDOView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.view.CDOView"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOSession" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.spi.cdo.InternalCDOSession" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOSession">
         <message_arguments>
             <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOSession"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOTransaction" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.spi.cdo.InternalCDOTransaction" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOTransaction">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOTransaction"/>
+            <message_argument value="java.lang.AutoCloseable"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo(4.29.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.spi.cdo.InternalCDOView" kind="CHANGED" message="The superinterfaces set has been expanded (java.lang.AutoCloseable) for interface org.eclipse.emf.spi.cdo.InternalCDOView" newModifiers="1537" oldModifiers="1537" restrictions="3" type_name="org.eclipse.emf.spi.cdo.InternalCDOView">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.spi.cdo.InternalCDOView"/>
             <message_argument value="java.lang.AutoCloseable"/>
         </message_arguments>
     </delta>
@@ -711,10 +1472,64 @@
             <message_argument value="org.eclipse.emf.cdo.server.ILobCleanup"/>
         </message_arguments>
     </delta>
-    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater) for class org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping">
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for class org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.AbstractTypeMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.IListMapping" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for interface org.eclipse.emf.cdo.server.db.mapping.IListMapping" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.IListMapping2" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for interface org.eclipse.emf.cdo.server.db.mapping.IListMapping2" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping2">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping2"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.IListMapping3" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for interface org.eclipse.emf.cdo.server.db.mapping.IListMapping3" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMapping3">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMapping3"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for interface org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IListMappingUnitSupport"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="INTERFACE_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping) for interface org.eclipse.emf.cdo.server.db.mapping.ITypeMapping" newModifiers="1537" oldModifiers="1537" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ITypeMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping,org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater) for class org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.db.mapping.DelegatingTypeMapping"/>
-            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping,org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.LongIDStore" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.container.IManagedContainerProvider) for class org.eclipse.emf.cdo.spi.server.LongIDStore" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.LongIDStore">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.LongIDStore"/>
+            <message_argument value="org.eclipse.net4j.util.container.IManagedContainerProvider"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="CLASS_ELEMENT_TYPE" flags="15" key="org.eclipse.emf.cdo.spi.server.Store" kind="CHANGED" message="The superinterfaces set has been expanded (org.eclipse.net4j.util.container.IManagedContainerProvider) for class org.eclipse.emf.cdo.spi.server.Store" newModifiers="1057" oldModifiers="1057" restrictions="0" type_name="org.eclipse.emf.cdo.spi.server.Store">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.spi.server.Store"/>
+            <message_argument value="org.eclipse.net4j.util.container.IManagedContainerProvider"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.common.util.EObjectCrawler" kind="ADDED" message="The type org.eclipse.emf.cdo.common.util.EObjectCrawler has been added to org.eclipse.emf.cdo.common_4.27.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.common.util.EObjectCrawler">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.util.EObjectCrawler"/>
+            <message_argument value="org.eclipse.emf.cdo.common_4.27.0"/>
         </message_arguments>
     </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server(4.25.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.ILobCleanup" kind="ADDED" message="The type org.eclipse.emf.cdo.server.ILobCleanup has been added to org.eclipse.emf.cdo.server_4.25.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.ILobCleanup">
@@ -723,16 +1538,57 @@
             <message_argument value="org.eclipse.emf.cdo.server_4.25.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.IModelEvolutionSupport" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.IModelEvolutionSupport has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.IModelEvolutionSupport">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.IModelEvolutionSupport"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater"/>
             <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3 has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy3"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.db.BatchingIDChanger" kind="ADDED" message="The type org.eclipse.net4j.db.BatchingIDChanger has been added to org.eclipse.net4j.db_4.13.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.BatchingIDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.BatchingIDChanger"/>
+            <message_argument value="org.eclipse.net4j.db_4.13.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.db.StatementBatcher" kind="ADDED" message="The type org.eclipse.net4j.db.StatementBatcher has been added to org.eclipse.net4j.db_4.13.0" newModifiers="33" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.StatementBatcher">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.db.StatementBatcher"/>
+            <message_argument value="org.eclipse.net4j.db_4.13.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.IDChanger" kind="ADDED" message="The type org.eclipse.net4j.util.IDChanger has been added to org.eclipse.net4j.util_3.29.0" newModifiers="49" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.IDChanger">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.util.IDChanger"/>
+            <message_argument value="org.eclipse.net4j.util_3.29.0"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.util(3.29.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.net4j.util.concurrent.CriticalSection" kind="ADDED" message="The type org.eclipse.net4j.util.concurrent.CriticalSection has been added to org.eclipse.net4j.util_3.29.0" newModifiers="1537" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.util.concurrent.CriticalSection">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.util.concurrent.CriticalSection"/>
             <message_argument value="org.eclipse.net4j.util_3.29.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.net4j.db(4.13.0)" element_type="CLASS_ELEMENT_TYPE" flags="22" key="org.eclipse.net4j.spi.db.DBAdapter$FieldInfo" kind="CHANGED" message="The visibility of the class org.eclipse.net4j.spi.db.DBAdapter.FieldInfo has been increased" newModifiers="25" oldModifiers="28" restrictions="2" type_name="org.eclipse.net4j.spi.db.DBAdapter$FieldInfo">
+        <message_arguments>
+            <message_argument value="org.eclipse.net4j.spi.db.DBAdapter.FieldInfo"/>
         </message_arguments>
     </delta>
 </deltas>

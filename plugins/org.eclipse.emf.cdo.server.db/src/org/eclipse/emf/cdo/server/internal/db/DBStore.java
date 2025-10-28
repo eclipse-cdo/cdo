@@ -92,6 +92,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 /**
  * The DBStore class is a core implementation of a database-backed store for the Eclipse CDO (Connected Data Objects) framework.
@@ -975,7 +976,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     }
 
     List<Model> models = loadModels();
-    List<Model> changedModels = models.stream().filter(Model::isChanged).toList();
+    List<Model> changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
     if (changedModels.isEmpty())
     {
       // No changed models.

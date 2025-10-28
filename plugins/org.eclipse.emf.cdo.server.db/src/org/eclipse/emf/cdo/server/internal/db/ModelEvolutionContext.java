@@ -41,6 +41,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @author Eike Stepper
@@ -75,7 +76,7 @@ public final class ModelEvolutionContext extends Notifier implements Context
     this.dry = dry;
     this.models = models;
 
-    changedModels = models.stream().filter(Model::isChanged).toList();
+    changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
 
     models.forEach(model -> {
       EPackage storedPackage = model.getStoredPackage();

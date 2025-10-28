@@ -12,7 +12,6 @@
 package org.eclipse.emf.cdo.server.internal.db;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -31,7 +30,7 @@ import java.sql.Connection;
  */
 public interface IObjectTypeMapper
 {
-  public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id);
+  public EClass getObjectType(IDBStoreAccessor accessor, CDOID id);
 
   public boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type);
 

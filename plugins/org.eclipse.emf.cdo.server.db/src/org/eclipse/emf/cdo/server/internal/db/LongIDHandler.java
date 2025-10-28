@@ -35,6 +35,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Set;
 
 /**
@@ -255,6 +256,18 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
   }
 
   @Override
+  public String getStringValue(ResultSet resultSet, int column) throws SQLException
+  {
+    long id = resultSet.getLong(column);
+    if (resultSet.wasNull())
+    {
+      return NULL_STRING;
+    }
+
+    return Long.toString(id);
+  }
+
+  @Override
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime)
   {
     return create(externalReferenceManager.mapURI(accessor, uri, commitTime));
@@ -269,6 +282,12 @@ public class LongIDHandler extends Lifecycle implements IIDHandler
     }
 
     return externalReferenceManager.unmapURI(accessor, value(id));
+  }
+
+  @Override
+  public boolean deleteURIMapping(Statement statement, String uri)
+  {
+    return externalReferenceManager.deleteByURI(statement, uri);
   }
 
   @Override

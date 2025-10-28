@@ -15,6 +15,7 @@ import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
@@ -26,24 +27,42 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Context;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IFeatureMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.AbstractMappingStrategy;
 
+import org.eclipse.net4j.db.BatchingIDChanger;
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.DBUtil.DeserializeRowHandler;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnection;
+import org.eclipse.net4j.db.IDBSchemaTransaction;
+import org.eclipse.net4j.db.StatementBatcher;
+import org.eclipse.net4j.db.ddl.IDBField;
+import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.IDChanger;
+import org.eclipse.net4j.util.ObjectUtil;
+import org.eclipse.net4j.util.concurrent.Holder;
+import org.eclipse.net4j.util.event.PropertiesEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.EReference;
+import org.eclipse.emf.ecore.EStructuralFeature;
+import org.eclipse.emf.ecore.InternalEObject;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -51,8 +70,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * * This abstract base class refines {@link AbstractMappingStrategy} by implementing aspects common to horizontal
@@ -65,7 +94,7 @@ import java.util.List;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy
+public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingStrategy implements IMappingStrategy.ModelEvolution
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractHorizontalMappingStrategy.class);
 
@@ -102,6 +131,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
   @Override
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id)
+  {
+    EClass type = readObjectType2(accessor, id);
+    if (type == null)
+    {
+      return null;
+    }
+
+    return new CDOClassifierRef(type);
+  }
+
+  @Override
+  public EClass readObjectType2(IDBStoreAccessor accessor, CDOID id)
   {
     return objectTypeMapper.getObjectType(accessor, id);
   }
@@ -220,6 +261,17 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   }
 
   @Override
+  public boolean evolveModels(Context context, IDBStoreAccessor accessor) throws SQLException
+  {
+    ModelEvolutionHelper helper = new ModelEvolutionHelper(context);
+
+    boolean triggerCrashRecovery = false;
+    triggerCrashRecovery |= helper.evolveSchema();
+    triggerCrashRecovery |= helper.evolveUsedClasses(accessor);
+    return triggerCrashRecovery;
+  }
+
+  @Override
   public void rawExport(IDBStoreAccessor accessor, CDODataOutput out, int fromBranchID, int toBranchID, long fromCommitTime, long toCommitTime)
       throws IOException
   {
@@ -242,7 +294,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       EClass eClass = classMapping.getEClass();
       out.writeCDOClassifierRef(eClass);
 
-      IDBTable table = classMapping.getDBTables().get(0);
+      IDBTable table = classMapping.getTable();
       DBUtil.serializeTable(out, connection, table, "a_t", attrSuffix);
 
       for (IListMapping listMapping : classMapping.getListMappings())
@@ -320,7 +372,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
         // }
         // }
 
-        IDBTable table = classMapping.getDBTables().get(0);
+        IDBTable table = classMapping.getTable();
         DBUtil.deserializeTable(in, connection, table, monitor.fork());
         rawImportReviseOldRevisions(connection, table, monitor.fork());
         rawImportUnreviseNewRevisions(connection, table, fromCommitTime, toCommitTime, monitor.fork());
@@ -561,36 +613,296 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
     String prefix = "SELECT MIN(t." + id + ") FROM " + objects + " o, ";
     String suffix = " t WHERE t." + branch + "<0 AND t." + id + "=o." + id + " AND t." + created + "=o." + created;
 
-    getStore().visitAllTables(connection, new IDBStore.TableVisitor()
-    {
-      @Override
-      public void visitTable(Connection connection, String name) throws SQLException
+    getStore().visitAllTables(connection, (c, name) -> {
+      Statement stmt = null;
+      ResultSet resultSet = null;
+
+      try
       {
-        Statement stmt = null;
-        ResultSet resultSet = null;
+        stmt = connection.createStatement();
+        resultSet = stmt.executeQuery(prefix + name + suffix);
 
-        try
+        if (resultSet.next())
         {
-          stmt = connection.createStatement();
-          resultSet = stmt.executeQuery(prefix + name + suffix);
-
-          if (resultSet.next())
+          CDOID id1 = idHandler.getCDOID(resultSet, 1);
+          if (id1 != null && idHandler.compare(id1, min[0]) < 0)
           {
-            CDOID id = idHandler.getCDOID(resultSet, 1);
-            if (id != null && idHandler.compare(id, min[0]) < 0)
-            {
-              min[0] = id;
-            }
+            min[0] = id1;
           }
         }
-        finally
-        {
-          DBUtil.close(resultSet);
-          DBUtil.close(stmt);
-        }
+      }
+      finally
+      {
+        DBUtil.close(resultSet);
+        DBUtil.close(stmt);
       }
     });
 
     return min[0];
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private final class ModelEvolutionHelper
+  {
+    private final Context context;
+
+    private final PropertiesEvent event = new PropertiesEvent(AbstractHorizontalMappingStrategy.this)
+    {
+      @Override
+      public PropertiesEvent fire()
+      {
+        context.fireEvent(this);
+        return this;
+      }
+    };
+
+    public ModelEvolutionHelper(Context context)
+    {
+      this.context = context;
+
+    }
+
+    public boolean evolveSchema() throws SQLException
+    {
+      event.setType("StartingModelEvolution").fire();
+
+      Holder<IDBSchemaTransaction> schemaTransactionHolder = new Holder<>(() -> {
+        event.setType("OpeningSchemaTransaction").fire();
+        IDBSchemaTransaction schemaTransaction = context.getStore().getDatabase().openSchemaTransaction();
+        event.setType("OpenedSchemaTransaction").addProperty("schemaTransaction", schemaTransaction).fire();
+        return schemaTransaction;
+      });
+
+      Supplier<IDBSchema> workingCopySupplier = () -> schemaTransactionHolder.get().getWorkingCopy();
+
+      try
+      {
+        context.getStoredPackages().values().forEach(ePackage -> {
+          for (EClassifier eClassifier : ePackage.getEClassifiers())
+          {
+            if (eClassifier instanceof EClass)
+            {
+              EClass storedClass = (EClass)eClassifier;
+
+              if (!isMapped(storedClass))
+              {
+                // Only concrete classes can have tables in horizontal mapping.
+                continue;
+              }
+
+              EClass registeredClass = context.getRegisteredElement(storedClass);
+              if (registeredClass == null)
+              {
+                // Class has been removed -- not allowed.
+                throw new ModelEvolutionNotAllowedException("Class has been removed: " + EMFUtil.getFullyQualifiedName(storedClass));
+              }
+
+              if (!isMapped(registeredClass))
+              {
+                // Class is no longer mapped -- not allowed.
+                throw new ModelEvolutionNotAllowedException("Class is no longer mapped: " + EMFUtil.getFullyQualifiedName(storedClass));
+              }
+
+              EStructuralFeature[] addedFeatures = getAddedFeatures(context, storedClass, registeredClass);
+              if (addedFeatures.length != 0)
+              {
+                IClassMapping classMapping = doCreateClassMapping(storedClass);
+                String tableName = classMapping.getTable().getName();
+                IDBTable table = workingCopySupplier.get().getTable(tableName);
+
+                context.log("Creating new feature mappings for class " + EMFUtil.getFullyQualifiedName(storedClass) + " in table " + table + ": "
+                    + Arrays.stream(addedFeatures).map(EStructuralFeature::getName).collect(Collectors.joining(", ")));
+
+                AbstractHorizontalClassMapping.createFeatureMappings(AbstractHorizontalMappingStrategy.this, //
+                    registeredClass, table, addedFeatures);
+              }
+            }
+          }
+        });
+
+        schemaTransactionHolder.handleIfSet(schemaTransaction -> {
+          event.setType("CommittingSchemaTransaction").fire();
+          schemaTransaction.commit();
+          event.setType("CommittedSchemaTransaction").fire().removeProperty("schemaTransaction");
+        });
+      }
+      finally
+      {
+        schemaTransactionHolder.handleIfSet(IDBSchemaTransaction::close);
+      }
+
+      return false;
+    }
+
+    public boolean evolveUsedClasses(IDBStoreAccessor accessor) throws SQLException, ModelEvolutionNotAllowedException
+    {
+      Map<EClass, String> usedClasses = new HashMap<>();
+      Map<String, EObject> fromObjectsByURI = context.getElementMappings().getFromObjectsByURI();
+
+      // Determine used classes and their URIs.
+      objects.handleObjectTypes(accessor, //
+          (raw, metaID, uri) -> ObjectUtil.ifNotNull((EClass)fromObjectsByURI.get(uri), //
+              usedClass -> usedClasses.put(usedClass, raw)));
+
+      event.setType("EvolvingUsedClasses").addProperty("usedClasses", usedClasses).fire();
+
+      try (StatementBatcher batcher = createBatcher(accessor))
+      {
+        usedClasses.keySet().forEach(eClass -> evolveUsedClass(batcher, usedClasses, eClass));
+      }
+
+      event.setType("EvolvedUsedClasses").fire();
+      return false;
+    }
+
+    private void evolveUsedClass(StatementBatcher batcher, Map<EClass, String> usedClasses, EClass usedClass)
+    {
+      event.setType("EvolvingUsedClass").addProperty("usedClass", usedClass).fire();
+
+      Holder<IClassMapping> classMappingHolder = new Holder<>(() -> Objects.requireNonNull(getClassMapping(usedClass)));
+
+      // Change container IDs
+      Map<Integer, Integer> containerChanges = new HashMap<>();
+      context.handleFeatureIDChanges(usedClass, this::getContainerReferences, //
+          (storedFeatureID, registeredFeatureID) -> containerChanges.put(storedFeatureID, registeredFeatureID));
+
+      if (!containerChanges.isEmpty())
+      {
+        context.log("Adjusting container reference IDs for class " + EMFUtil.getFullyQualifiedName(usedClass));
+        IDChanger.changeIDs(containerChanges, new ContainerIDChanger(batcher, classMappingHolder.get()));
+      }
+
+      // Change opposite container IDs (containments with no navigable opposite).
+      handleContainmentCandidates(usedClass, usedClasses.keySet(), (containerClass, containments) -> {
+        Map<Integer, Integer> containmentChanges = new HashMap<>();
+        context.handleFeatureIDChanges(containerClass, ec -> containments, (storedFeatureID, registeredFeatureID) -> {
+          int fromID = InternalEObject.EOPPOSITE_FEATURE_BASE - storedFeatureID;
+          int toID = InternalEObject.EOPPOSITE_FEATURE_BASE - registeredFeatureID;
+          containmentChanges.put(fromID, toID);
+        });
+
+        if (!containmentChanges.isEmpty())
+        {
+          context.log("Adjusting containment reference IDs for class " + EMFUtil.getFullyQualifiedName(usedClass));
+          String rawContainerTypeID = usedClasses.get(containerClass);
+          IDChanger.changeIDs(containmentChanges, new ContainmentIDChanger(batcher, classMappingHolder.get(), objects, rawContainerTypeID));
+        }
+      });
+
+      // Accommodate enum literal changes.
+      for (EAttribute attribute : usedClass.getEAllAttributes())
+      {
+        EClassifier type = attribute.getEType();
+        if (type instanceof EEnum)
+        {
+          EEnum storedEnum = (EEnum)type;
+
+          Map<Integer, Integer> changes = context.getEnumLiteralChanges(storedEnum);
+          if (!ObjectUtil.isEmpty(changes))
+          {
+            context.log("Adjusting enum literal IDs for attribute " + EMFUtil.getFullyQualifiedName(usedClass) + "." + attribute.getName());
+            IClassMapping classMapping = classMappingHolder.get();
+            IFeatureMapping featureMapping = classMapping.getFeatureMapping(attribute);
+            IDBField valueField = featureMapping.getField();
+            IDChanger.changeIDs(changes, new BatchingIDChanger(batcher, valueField));
+          }
+        }
+      }
+
+      event.setType("EvolvedUsedClass").fire().removeProperty("usedClass");
+    }
+
+    private EStructuralFeature[] getAddedFeatures(Context context, EClass storedClass, EClass registeredClass)
+    {
+      Set<EStructuralFeature> existingRegisteredFeatures = new HashSet<>();
+
+      for (EStructuralFeature storedFeature : CDOModelUtil.getClassInfo(storedClass).getAllPersistentFeatures())
+      {
+        EStructuralFeature registeredFeature = context.getRegisteredElement(storedFeature);
+        if (registeredFeature != null)
+        {
+          existingRegisteredFeatures.add(registeredFeature);
+        }
+      }
+
+      List<EStructuralFeature> addedRegisteredFeatures = new ArrayList<>();
+
+      for (EStructuralFeature registeredFeature : CDOModelUtil.getClassInfo(registeredClass).getAllPersistentFeatures())
+      {
+        if (!existingRegisteredFeatures.contains(registeredFeature))
+        {
+          addedRegisteredFeatures.add(registeredFeature);
+        }
+      }
+
+      return addedRegisteredFeatures.toArray(new EStructuralFeature[0]);
+    }
+
+    private List<EStructuralFeature> getContainerReferences(EClass eClass)
+    {
+      return eClass.getEAllReferences().stream().filter(EReference::isContainer).collect(Collectors.toList());
+    }
+
+    private void handleContainmentCandidates(EClass eClass, Collection<EClass> usedClasses, BiConsumer<EClass, List<EReference>> handler)
+    {
+      usedClasses.forEach(containerClass -> {
+        List<EReference> containments = containerClass.getEAllContainments().stream() //
+            .filter(ref -> EMFUtil.isPersistent(ref) && ref.getEReferenceType().isSuperTypeOf(eClass)) //
+            .collect(Collectors.toList());
+        if (!containments.isEmpty())
+        {
+          handler.accept(containerClass, containments);
+        }
+      });
+    }
+
+    private StatementBatcher createBatcher(IDBStoreAccessor accessor) throws SQLException
+    {
+      StatementBatcher batcher = context.createStatementBatcher(accessor.getConnection());
+      event.setType("CreatedStatementBatcher").addProperty("batcher", batcher).fire();
+      return batcher;
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private class ContainerIDChanger extends BatchingIDChanger
+    {
+      public ContainerIDChanger(StatementBatcher batcher, IClassMapping classMapping)
+      {
+        super(batcher, classMapping.getTable().getField(MappingNames.ATTRIBUTES_FEATURE));
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    private final class ContainmentIDChanger extends ContainerIDChanger
+    {
+      private final ObjectTypeTable objects;
+
+      private final String rawContainerTypeID;
+
+      private final IDBField containerField;
+
+      public ContainmentIDChanger(StatementBatcher batcher, IClassMapping classMapping, ObjectTypeTable objects, String rawContainerTypeID)
+      {
+        super(batcher, classMapping);
+        this.objects = objects;
+        this.rawContainerTypeID = rawContainerTypeID;
+        containerField = Objects.requireNonNull(table.getField(MappingNames.ATTRIBUTES_CONTAINER));
+      }
+
+      @Override
+      protected String sql(Object newValue, String condition)
+      {
+        return super.sql(newValue, condition) //
+            + " AND (SELECT " + objects.clazz() //
+            + " FROM " + objects //
+            + " WHERE " + objects.id() + "=" + containerField + ")=" + rawContainerTypeID;
+      }
+    }
   }
 }

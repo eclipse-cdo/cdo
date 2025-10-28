@@ -27,6 +27,15 @@ import java.sql.SQLException;
  */
 public interface IListMappingUnitSupport extends IListMapping
 {
+  /**
+   * @since 4.14
+   */
+  @Override
+  public default ITypeMapping getTypeMapping()
+  {
+    return null;
+  }
+
   public ResultSet queryUnitEntries(IDBStoreAccessor accessor, IIDHandler idHandler, long timeStamp, CDOID rootID) throws SQLException;
 
   public void readUnitEntries(ResultSet resultSet, IIDHandler idHandler, CDOID id, MoveableList<Object> list) throws SQLException;

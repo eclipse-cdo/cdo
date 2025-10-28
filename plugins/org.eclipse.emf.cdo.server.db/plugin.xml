@@ -17,6 +17,7 @@
    
    <extension point="org.eclipse.net4j.util.productGroups">
        <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup2.name"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -32,6 +33,10 @@
             productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
             type="registry"
             class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory"/>
+      <simpleFactory
+            productGroup="org.eclipse.emf.cdo.server.db.modelEvolutionSupports"
+            type="default"
+            productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.server.storeFactories">

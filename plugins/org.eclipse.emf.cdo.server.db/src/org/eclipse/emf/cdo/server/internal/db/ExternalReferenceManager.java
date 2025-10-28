@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -143,14 +144,26 @@ public class ExternalReferenceManager extends DBStoreTable
       // Not found ...
       return NULL;
     }
-    catch (SQLException e)
+    catch (SQLException ex)
     {
-      throw new DBException(e);
+      throw new DBException(ex);
     }
     finally
     {
       DBUtil.close(resultSet);
       DBUtil.close(stmt);
+    }
+  }
+
+  public boolean deleteByURI(Statement statement, String uriValue)
+  {
+    try
+    {
+      return statement.execute("DELETE from " + table() + " WHERE " + uri + "='" + uriValue + "'");
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
     }
   }
 

@@ -14,15 +14,14 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
+import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTable;
 import org.eclipse.emf.cdo.server.internal.db.IObjectTypeMapper;
-import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.db.DBException;
 import org.eclipse.net4j.db.DBType;
@@ -32,6 +31,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex;
 import org.eclipse.net4j.db.ddl.IDBTable;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 
 import org.eclipse.emf.ecore.EClass;
@@ -48,6 +48,9 @@ import java.sql.Statement;
  */
 public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 {
+  private static final boolean INDEX_CLASS_COLUMN = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.ObjectTypeTable.INDEX_CLASS_COLUMN"); //$NON-NLS-1$
+
   private IDBField id;
 
   private IDBField clazz;
@@ -76,7 +79,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   }
 
   @Override
-  public final CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
+  public final EClass getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlSelect, ReuseProbability.MAX);
@@ -102,9 +105,8 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
         return null;
       }
 
-      CDOID classID = idHandler.getCDOID(resultSet, 1);
-      EClass eClass = (EClass)store().getMetaDataManager().getMetaInstance(classID);
-      return new CDOClassifierRef(eClass);
+      CDOID metaID = idHandler.getCDOID(resultSet, 1);
+      return (EClass)store().getMetaDataManager().getMetaInstance(metaID);
     }
     catch (SQLException ex)
     {
@@ -119,13 +121,15 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
   @Override
   public final boolean putObjectType(IDBStoreAccessor accessor, long timeStamp, CDOID id, EClass type)
   {
+    CDOID metaID = store().getMetaDataManager().getMetaID(type, timeStamp);
+
     IIDHandler idHandler = store().getIDHandler();
     IDBPreparedStatement stmt = accessor.getDBConnection().prepareStatement(sqlInsert, ReuseProbability.MAX);
 
     try
     {
       idHandler.setCDOID(stmt, 1, id);
-      idHandler.setCDOID(stmt, 2, store().getMetaDataManager().getMetaID(type, timeStamp));
+      idHandler.setCDOID(stmt, 2, metaID);
       stmt.setLong(3, timeStamp);
 
       if (DBUtil.isTracerEnabled())
@@ -185,6 +189,25 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     }
   }
 
+  public final void handleObjectTypes(IDBStoreAccessor accessor, ObjectTypeHandler handler) throws SQLException
+  {
+    try (Statement stmt = accessor.getConnection().createStatement(); //
+        ResultSet rs = stmt.executeQuery("SELECT DISTINCT(" + clazz + ") FROM " + table()))
+    {
+      while (rs.next())
+      {
+        IIDHandler idHandler = store().getIDHandler();
+        String raw = idHandler.getStringValue(rs, 1);
+        CDOID metaID = idHandler.getCDOID(rs, 1);
+
+        IMetaDataManager metaDataManager = store().getMetaDataManager();
+        String uri = metaDataManager.getMetaURI(metaID);
+
+        handler.handleObjectType(raw, metaID, uri);
+      }
+    }
+  }
+
   @Override
   public CDOID getMaxID(Connection connection, IIDHandler idHandler)
   {
@@ -239,8 +262,7 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
 
     table.addIndex(IDBIndex.Type.PRIMARY_KEY, id);
 
-    InternalRepository repository = (InternalRepository)store().getRepository();
-    if (repository.isSupportingUnits())
+    if (INDEX_CLASS_COLUMN || store().getRepository().isSupportingUnits())
     {
       table.addIndex(IDBIndex.Type.NON_UNIQUE, clazz);
     }
@@ -260,5 +282,25 @@ public class ObjectTypeTable extends DBStoreTable implements IObjectTypeMapper
     sqlSelect = "SELECT " + clazz + " FROM " + table + " WHERE " + id + "=?";
     sqlInsert = "INSERT INTO " + table + "(" + id + "," + clazz + "," + created + ") VALUES (?, ?, ?)";
     sqlDelete = "DELETE FROM " + table + " WHERE " + id + "=?";
+  }
+
+  /**
+   * Functional interface for handling object types.
+   *
+   * @author Eike Stepper
+   */
+  @FunctionalInterface
+  public interface ObjectTypeHandler
+  {
+    /**
+     * Handles an object type.
+     *
+     * @param raw The raw string representation of the object type.
+     *        This value is obtained directly from the database and converted to a Java string by the {@link IIDHandler}.
+     *        The resulting Java string can be used in database queries. It is quoted if necessary.
+     * @param metaID The meta ID of the object type.
+     * @param uri The URI of the object type as stored in the cdo_ext_refs table.
+     */
+    public void handleObjectType(String raw, CDOID metaID, String uri);
   }
 }

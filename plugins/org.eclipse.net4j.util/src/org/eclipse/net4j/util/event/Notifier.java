@@ -153,14 +153,7 @@ public class Notifier implements INotifier2
       ExecutorService notificationService = getNotificationService();
       if (notificationService != null)
       {
-        notificationService.execute(new Runnable()
-        {
-          @Override
-          public void run()
-          {
-            fireEventSafe(event, listeners);
-          }
-        });
+        notificationService.execute(() -> fireEventSafe(event, listeners));
       }
       else
       {
@@ -240,10 +233,28 @@ public class Notifier implements INotifier2
           listener.notifyEvent(event);
         }
       }
+      catch (Cancelation ex)
+      {
+        throw (RuntimeException)ex.getCause();
+      }
       catch (Exception ex)
       {
         OM.LOG.warn(listener + " failed to process " + event + ": " + ex, ex);
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   * @since 3.29
+   */
+  public static final class Cancelation extends RuntimeException
+  {
+    private static final long serialVersionUID = 1L;
+
+    public Cancelation(RuntimeException reason)
+    {
+      super(reason);
     }
   }
 }

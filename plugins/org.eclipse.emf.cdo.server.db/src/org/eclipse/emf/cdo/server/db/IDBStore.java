@@ -102,6 +102,7 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
    * @author Eike Stepper
    * @since 4.2
    */
+  @FunctionalInterface
   public interface TableVisitor
   {
     public void visitTable(Connection connection, String name) throws SQLException;
@@ -188,5 +189,51 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
      * @since 4.4
      */
     public static final String JDBC_FETCH_SIZE = "jdbcFetchSize"; //$NON-NLS-1$
+
+    /**
+     * Can have the following values:
+     * <ul>
+     * <li>"DISABLED" - No model evolution support</li>
+     * <li>"GUARD" - Prevent model changes only</li>
+     * <li>"DRY" - Evolve models without persisting changes</li>
+     * <li>"EVOLVE" - Evolve models automatically (default)</li>
+     * @since 4.14
+     */
+    public static final String MODEL_EVOLUTION_MODE = "modelEvolutionMode"; //$NON-NLS-1$
+
+    /**
+     * @since 4.14
+     */
+    public static final String MODEL_EVOLUTION_SUPPORT_TYPE = "modelEvolutionSupportType"; //$NON-NLS-1$
+
+    /**
+     * @since 4.14
+     */
+    public static final String MODEL_EVOLUTION_SUPPORT_DESCRIPTION = "modelEvolutionSupportDescription"; //$NON-NLS-1$
+
+    /**
+     * @author Eike Stepper
+     * @since 4.14
+     */
+    public enum ModelEvolutionMode
+    {
+      DISABLED, GUARD, DRY, EVOLVE;
+
+      public static ModelEvolutionMode parse(String str)
+      {
+        if (str != null)
+        {
+          for (ModelEvolutionMode mode : values())
+          {
+            if (mode.name().equalsIgnoreCase(str))
+            {
+              return mode;
+            }
+          }
+        }
+
+        return null;
+      }
+    }
   }
 }

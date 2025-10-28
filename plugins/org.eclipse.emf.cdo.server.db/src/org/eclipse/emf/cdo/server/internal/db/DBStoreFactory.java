@@ -71,17 +71,14 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
   {
     IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
-    DataSource dataSource = getDataSource(storeConfig);
-    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
+    IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(getDataSource(storeConfig));
+    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1, parameters, container);
 
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDBConnectionProvider(connectionProvider);
-
-    Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1, parameters, container);
     store.setProperties(storeProperties);
-
     return store;
   }
 

@@ -20,6 +20,7 @@ import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IPluginContainer;
 
 import javax.sql.DataSource;
@@ -174,6 +175,14 @@ public abstract class DBConfig extends RepositoryConfig
   protected boolean isOptimizing()
   {
     return true;
+  }
+
+  @Override
+  protected IManagedContainer createServerContainer()
+  {
+    IManagedContainer container = super.createServerContainer();
+    CDODBUtil.prepareContainer(container);
+    return container;
   }
 
   @Override

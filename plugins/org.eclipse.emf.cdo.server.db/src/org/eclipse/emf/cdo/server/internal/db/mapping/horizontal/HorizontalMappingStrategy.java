@@ -22,6 +22,7 @@ import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Context;
 import org.eclipse.emf.cdo.server.db.mapping.IClassMapping;
 import org.eclipse.emf.cdo.server.db.mapping.IListMapping;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
@@ -42,6 +43,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -49,7 +51,7 @@ import java.util.Set;
 /**
  * @author Eike Stepper
  */
-public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy, ILobRefsUpdater
+public class HorizontalMappingStrategy extends Lifecycle implements IMappingStrategy.ModelEvolution, ILobRefsUpdater
 {
   private Map<String, String> properties;
 
@@ -237,6 +239,17 @@ public class HorizontalMappingStrategy extends Lifecycle implements IMappingStra
   public Set<CDOID> readChangeSet(IDBStoreAccessor accessor, OMMonitor monitor, CDOChangeSetSegment[] segments)
   {
     return delegate.readChangeSet(accessor, monitor, segments);
+  }
+
+  @Override
+  public boolean evolveModels(Context context, IDBStoreAccessor accessor) throws SQLException
+  {
+    if (delegate instanceof ModelEvolution)
+    {
+      return ((ModelEvolution)delegate).evolveModels(context, accessor);
+    }
+
+    throw new ModelEvolutionNotSupportedException();
   }
 
   @Override

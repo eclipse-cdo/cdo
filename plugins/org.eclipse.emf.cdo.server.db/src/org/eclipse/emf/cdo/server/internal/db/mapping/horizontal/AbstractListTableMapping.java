@@ -273,6 +273,18 @@ public abstract class AbstractListTableMapping extends AbstractBasicListTableMap
   }
 
   @Override
+  public IDBField getField()
+  {
+    return valueField;
+  }
+
+  @Override
+  public DBType getDBType()
+  {
+    return typeMapping == null ? null : typeMapping.getDBType();
+  }
+
+  @Override
   public void readValues(IDBStoreAccessor accessor, InternalCDORevision revision, int listChunk)
   {
     if (table == null)

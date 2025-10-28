@@ -93,6 +93,15 @@ public abstract class AbstractTypeMapping implements ITypeMapping
     this.feature = feature;
   }
 
+  /**
+   * @since 4.14
+   */
+  @Override
+  public ITypeMapping getTypeMapping()
+  {
+    return this;
+  }
+
   @Override
   public final void setDBType(DBType dbType)
   {

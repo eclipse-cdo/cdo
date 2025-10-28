@@ -31,6 +31,8 @@ import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.collection.Entity.Builder;
 import org.eclipse.net4j.util.container.IContainerDelta.Kind;
+import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.container.IManagedContainerProvider;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
@@ -51,7 +53,7 @@ import java.util.function.Consumer;
  * @author Eike Stepper
  * @since 2.0
  */
-public abstract class Store extends Lifecycle implements InternalStore, Entity.Store.Provider
+public abstract class Store extends Lifecycle implements InternalStore, Entity.Store.Provider, IManagedContainerProvider
 {
   /**
    * @since 3.0
@@ -457,6 +459,15 @@ public abstract class Store extends Lifecycle implements InternalStore, Entity.S
     }
 
     return revision;
+  }
+
+  /**
+   * @since 4.25
+   */
+  @Override
+  public IManagedContainer getContainer()
+  {
+    return getRepository().getContainer();
   }
 
   @Override

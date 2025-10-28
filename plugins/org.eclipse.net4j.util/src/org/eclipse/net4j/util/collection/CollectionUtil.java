@@ -255,6 +255,44 @@ public final class CollectionUtil
   }
 
   /**
+   * Returns a function that returns a stream containing the given object if it is an instance of the given class;
+   * otherwise an empty stream.
+   * <p>
+   * Example usage:
+   * <pre>
+   * Stream&lt;Animal&gt; animals = Stream.of(new Dog(), new Cat(), new Bird());
+   * Stream&lt;Dog&gt; dogs = animals.flatMap(CollectionUtil.subclasses(Dog.class));
+   * </pre>
+   * <p>
+   * This example creates a stream of animals and then uses the {@code subclasses} function to filter and cast the
+   * stream to only include instances of {@code Dog}. This is a little easier to read and remember than using
+   * {@code filter} and {@code map} separately, as the following equivalent code shows:
+   * <pre>
+   * Stream&lt;Dog&gt; dogs = animals
+   *    .filter(Dog.class::isInstance)
+   *    .map(Dog.class::cast);
+   * </pre>
+   *
+   * @since 3.29
+   */
+  public static <SUBTYPE, TYPE extends SUBTYPE> Function<? super SUBTYPE, ? extends Stream<? extends TYPE>> subclasses(Class<TYPE> clazz)
+  {
+    return obj -> clazz.isInstance(obj) ? Stream.of(clazz.cast(obj)) : Stream.empty();
+  }
+
+  /**
+   * Returns a stream over the elements of the given iterator.
+   *
+   * @since 3.29
+   */
+  public static <T> Stream<T> stream(Iterator<T> it)
+  {
+    return StreamSupport.stream(Spliterators.spliteratorUnknownSize(it, Spliterator.ORDERED), false);
+  }
+
+  /**
+   * Returns a stream that concatenates the given streams.
+   *
    * @since 3.26
    */
   @SafeVarargs
@@ -264,6 +302,8 @@ public final class CollectionUtil
   }
 
   /**
+   * Returns a stream that concatenates the given streams.
+   *
    * @since 3.26
    */
   @SuppressWarnings("unchecked")

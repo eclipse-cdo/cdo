@@ -15,6 +15,10 @@
 package org.eclipse.emf.cdo.common.model;
 
 import org.eclipse.emf.ecore.EAttribute;
+import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EDataType;
+import org.eclipse.emf.ecore.EEnum;
 import org.eclipse.emf.ecore.EReference;
 import org.eclipse.emf.ecore.EStructuralFeature;
 
@@ -28,6 +32,54 @@ import java.util.function.Predicate;
  */
 public final class EMFPredicates
 {
+  /**
+   * @since 4.27
+   */
+  public static final Predicate<EClassifier> CLASSES = new Predicate<EClassifier>()
+  {
+    @Override
+    public boolean test(EClassifier classifier)
+    {
+      return classifier instanceof EClass;
+    }
+  };
+
+  /**
+   * @since 4.27
+   */
+  public static final Predicate<EClassifier> DATA_TYPES = new Predicate<EClassifier>()
+  {
+    @Override
+    public boolean test(EClassifier classifier)
+    {
+      return classifier instanceof EDataType;
+    }
+  };
+
+  /**
+   * @since 4.27
+   */
+  public static final Predicate<EClassifier> ENUMS = new Predicate<EClassifier>()
+  {
+    @Override
+    public boolean test(EClassifier classifier)
+    {
+      return classifier instanceof EEnum;
+    }
+  };
+
+  /**
+   * @since 4.27
+   */
+  public static final Predicate<EClassifier> CONCRETE_CLASSES = new Predicate<EClassifier>()
+  {
+    @Override
+    public boolean test(EClassifier classifier)
+    {
+      return CLASSES.test(classifier) && !((EClass)classifier).isAbstract() && !((EClass)classifier).isInterface();
+    }
+  };
+
   public static final Predicate<EStructuralFeature> ATTRIBUTES = new Predicate<EStructuralFeature>()
   {
     @Override

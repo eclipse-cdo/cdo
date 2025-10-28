@@ -21,6 +21,15 @@ import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
  */
 public interface IListMapping2 extends IListMapping
 {
+  /**
+   * @since 4.14
+   */
+  @Override
+  public default ITypeMapping getTypeMapping()
+  {
+    return null;
+  }
+
   public void addSimpleChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int index);
 
   public void addRangedChunkWhere(IDBStoreAccessor accessor, CDOID cdoid, StringBuilder builder, int fromIndex, int toIndex);

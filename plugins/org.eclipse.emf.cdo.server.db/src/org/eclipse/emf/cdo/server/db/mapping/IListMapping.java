@@ -21,6 +21,8 @@ import org.eclipse.emf.cdo.server.db.IDBStoreChunkReader;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDOList;
 import org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision;
 
+import org.eclipse.net4j.db.DBType;
+import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBTable;
 
 import org.eclipse.emf.ecore.EStructuralFeature;
@@ -35,14 +37,33 @@ import java.util.List;
  * @author Stefan Winkler
  * @since 2.0
  */
-public interface IListMapping
+public interface IListMapping extends IFeatureMapping
 {
   /**
    * Return the mapped feature.
    *
    * @return the mapped feature.
    */
+  @Override
   public EStructuralFeature getFeature();
+
+  @Override
+  public default ITypeMapping getTypeMapping()
+  {
+    return null;
+  }
+
+  @Override
+  public default IDBField getField()
+  {
+    return null;
+  }
+
+  @Override
+  public default DBType getDBType()
+  {
+    return null;
+  }
 
   /**
    * Returns all DB tables which are used by this feature.

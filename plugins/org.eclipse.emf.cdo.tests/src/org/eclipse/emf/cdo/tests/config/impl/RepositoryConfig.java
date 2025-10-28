@@ -107,6 +107,7 @@ import org.eclipse.net4j.util.security.IAuthenticator;
 import org.eclipse.net4j.util.tests.AbstractOMTest;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.spi.cdo.InternalCDOSession;
 
 import org.junit.Assert;
@@ -154,6 +155,8 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   public static final String PROP_TEST_QUERY_HANDLER_PROVIDER = "test.repository.QueryHandlerProvider";
 
   public static final String PROP_TEST_COMMIT_CONFLICT_RESOLVER = "test.repository.CommitConflictResolver";
+
+  public static final String PROP_TEST_INITIAL_PACKAGES = "test.repository.InitialPackages";
 
   public static final String PROP_TEST_ENABLE_SERVER_BROWSER = "test.repository.EnableServerBrowser";
 
@@ -970,6 +973,12 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
       repository.setCommitConflictResolver(commitConflictResolver);
     }
 
+    EPackage[] initialPackages = getTestInitialPackages();
+    if (initialPackages != null)
+    {
+      repository.setInitialPackages(initialPackages);
+    }
+
     return repository;
   }
 
@@ -1021,6 +1030,11 @@ public abstract class RepositoryConfig extends Config implements IRepositoryConf
   protected ICommitConflictResolver getTestCommitConflictResolver()
   {
     return (ICommitConflictResolver)getTestProperty(PROP_TEST_COMMIT_CONFLICT_RESOLVER);
+  }
+
+  protected EPackage[] getTestInitialPackages()
+  {
+    return (EPackage[])getTestProperty(PROP_TEST_INITIAL_PACKAGES);
   }
 
   protected boolean needsCleanRepos()

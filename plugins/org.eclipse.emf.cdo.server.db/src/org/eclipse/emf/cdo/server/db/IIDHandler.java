@@ -25,6 +25,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Comparator;
 import java.util.Set;
 
@@ -38,6 +39,11 @@ import java.util.Set;
  */
 public interface IIDHandler extends Comparator<CDOID>
 {
+  /**
+   * @since 4.14
+   */
+  public static final String NULL_STRING = "null";
+
   public IDBStore getStore();
 
   public DBType getDBType();
@@ -84,6 +90,11 @@ public interface IIDHandler extends Comparator<CDOID>
 
   public CDOID getCDOID(ResultSet resultSet, String name) throws SQLException;
 
+  /**
+   * @since 4.14
+   */
+  public String getStringValue(ResultSet resultSet, int column) throws SQLException;
+
   public CDOID getMinCDOID();
 
   public CDOID getMaxCDOID();
@@ -91,6 +102,11 @@ public interface IIDHandler extends Comparator<CDOID>
   public CDOID mapURI(IDBStoreAccessor accessor, String uri, long commitTime);
 
   public String unmapURI(IDBStoreAccessor accessor, CDOID id);
+
+  /**
+   * @since 4.14
+   */
+  public boolean deleteURIMapping(Statement statement, String uri);
 
   public void rawExport(Connection connection, CDODataOutput out, long fromCommitTime, long toCommitTime) throws IOException;
 

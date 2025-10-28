@@ -19,6 +19,7 @@ import java.sql.Connection;
  *
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IDBConnectionProvider
 {
   /**

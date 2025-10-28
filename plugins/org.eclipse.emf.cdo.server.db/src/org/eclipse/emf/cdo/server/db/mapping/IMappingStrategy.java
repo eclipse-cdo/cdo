@@ -15,14 +15,17 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.id.CDOID;
 import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.server.IStoreAccessor;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext;
 import org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Context;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
@@ -39,6 +42,7 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 
@@ -297,6 +301,28 @@ public interface IMappingStrategy
   public CDOClassifierRef readObjectType(IDBStoreAccessor accessor, CDOID id);
 
   /**
+   * Read the type (i.e. class) of the object referred to by a given ID.
+   *
+   * @param accessor
+   *          the accessor to use to look up the type.
+   * @param id
+   *          the ID of the object for which the type is to be determined.
+   * @return the type of the object.
+   * @since 4.14
+   */
+  public default EClass readObjectType2(IDBStoreAccessor accessor, CDOID id)
+  {
+    CDOClassifierRef classifierRef = readObjectType(accessor, id);
+    if (classifierRef == null)
+    {
+      return null;
+    }
+
+    CDOPackageRegistry packageRegistry = getStore().getRepository().getPackageRegistry();
+    return (EClass)classifierRef.resolve(packageRegistry);
+  }
+
+  /**
    * Get an iterator over all instances of objects in the store.
    *
    * @param accessor
@@ -446,5 +472,42 @@ public interface IMappingStrategy
      * @since 4.10
      */
     public static final String TYPE_MAPPING_PROVIDER = "typeMappingProvider"; //$NON-NLS-1$
+  }
+
+  /**
+   * Interface to complement {@link IMappingStrategy}.
+   *
+   * @author Eike Stepper
+   * @since 4.14
+   */
+  public interface ModelEvolution extends IMappingStrategy
+  {
+    public boolean evolveModels(Context context, IDBStoreAccessor accessor) throws SQLException;
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class ModelEvolutionNotSupportedException extends CDOException
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ModelEvolutionNotSupportedException()
+      {
+        super("Model evolution is not supported");
+      }
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public static final class ModelEvolutionNotAllowedException extends CDOException
+    {
+      private static final long serialVersionUID = 1L;
+
+      public ModelEvolutionNotAllowedException(String message)
+      {
+        super(message);
+      }
+    }
   }
 }

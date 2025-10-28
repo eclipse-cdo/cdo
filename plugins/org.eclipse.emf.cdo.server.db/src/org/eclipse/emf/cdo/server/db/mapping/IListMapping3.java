@@ -18,5 +18,14 @@ package org.eclipse.emf.cdo.server.db.mapping;
  */
 public interface IListMapping3 extends IListMapping2
 {
+  /**
+   * @since 4.14
+   */
+  @Override
+  public default ITypeMapping getTypeMapping()
+  {
+    return null;
+  }
+
   public void setClassMapping(IClassMapping classMapping);
 }

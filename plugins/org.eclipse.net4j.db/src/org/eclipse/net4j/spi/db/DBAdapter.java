@@ -52,10 +52,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.function.Consumer;
 
 /**
  * A useful base class for implementing custom {@link IDBAdapter DB adapters}.
@@ -260,74 +263,12 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.2
-   */
+  * @since 4.2
+  */
   protected void readIndices(Connection connection, DatabaseMetaData metaData, IDBTable table, String schemaName) throws SQLException
   {
-    String catalog = connection.getCatalog();
-    String tableName = table.getName();
-
-    ResultSet primaryKeys = metaData.getPrimaryKeys(catalog, schemaName, tableName);
-    readIndices(connection, primaryKeys, table, 6, 0, 4, 5);
-
-    ResultSet indexInfo = metaData.getIndexInfo(catalog, schemaName, tableName, false, true);
-    readIndices(connection, indexInfo, table, 6, 4, 9, 8);
-  }
-
-  /**
-   * @since 4.2
-   */
-  protected void readIndices(Connection connection, ResultSet resultSet, IDBTable table, int indexNameColumn, int indexTypeColumn, int fieldNameColumn,
-      int fieldPositionColumn) throws SQLException
-  {
-    try
-    {
-      String indexName = null;
-      IDBIndex.Type indexType = null;
-      List<FieldInfo> fieldInfos = new ArrayList<>();
-
-      while (resultSet.next())
-      {
-        String name = resultSet.getString(indexNameColumn);
-        if (name == null)
-        {
-          // Bug 405924: It seems that this can happen with Oracle.
-          continue;
-        }
-
-        if (indexName != null && !indexName.equals(name))
-        {
-          addIndex(connection, table, indexName, indexType, fieldInfos);
-          fieldInfos.clear();
-        }
-
-        indexName = name;
-
-        if (indexTypeColumn == 0)
-        {
-          indexType = IDBIndex.Type.PRIMARY_KEY;
-        }
-        else
-        {
-          boolean nonUnique = resultSet.getBoolean(indexTypeColumn);
-          indexType = nonUnique ? IDBIndex.Type.NON_UNIQUE : IDBIndex.Type.UNIQUE;
-        }
-
-        FieldInfo fieldInfo = new FieldInfo();
-        fieldInfo.name = resultSet.getString(fieldNameColumn);
-        fieldInfo.position = resultSet.getShort(fieldPositionColumn);
-        fieldInfos.add(fieldInfo);
-      }
-
-      if (indexName != null)
-      {
-        addIndex(connection, table, indexName, indexType, fieldInfos);
-      }
-    }
-    finally
-    {
-      DBUtil.close(resultSet);
-    }
+    getIndexInfos(metaData, schemaName, table.getName(), //
+        indexInfo -> addIndex(connection, table, indexInfo.name, indexInfo.type, indexInfo.fieldInfos));
   }
 
   /**
@@ -524,21 +465,21 @@ public abstract class DBAdapter implements IDBAdapter
     {
       ChangeKind changeKind = fieldDelta.getChangeKind();
       String fieldName = fieldDelta.getName();
-      String tableName = table.getName();
+      IDBField field = table.getField(fieldName);
 
       switch (changeKind)
       {
       case ADD:
-        createField(connection, tableName, table.getField(fieldName));
+        createField(connection, field);
         break;
 
       case CHANGE:
-        dropField(connection, tableName, fieldName);
-        createField(connection, tableName, table.getField(fieldName));
+        dropField(connection, field);
+        createField(connection, field);
         break;
 
       case REMOVE:
-        dropField(connection, tableName, fieldName);
+        dropField(connection, field);
         break;
 
       default:
@@ -548,19 +489,19 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.6
+   * @since 4.13
    */
-  protected void createField(Connection connection, String tableName, IDBField field)
+  protected void createField(Connection connection, IDBField field)
   {
-    DBUtil.execute(connection, "ALTER TABLE " + tableName + " ADD COLUMN " + field.getName() + " " + createFieldDefinition(field));
+    DBUtil.execute(connection, "ALTER TABLE " + field.getTable() + " ADD COLUMN " + field + " " + createFieldDefinition(field));
   }
 
   /**
-   * @since 4.6
+   * @since 4.13
    */
-  protected void dropField(Connection connection, String tableName, String fieldName)
+  protected void dropField(Connection connection, IDBField field)
   {
-    DBUtil.execute(connection, "ALTER TABLE " + tableName + " DROP COLUMN " + fieldName);
+    DBUtil.execute(connection, "ALTER TABLE " + field.getTable() + " DROP COLUMN " + field);
   }
 
   /**
@@ -1342,6 +1283,65 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+   * @since 4.13
+   */
+  public static void getIndexInfos(DatabaseMetaData metaData, String schemaName, String tableName, Consumer<IndexInfo> consumer) throws SQLException
+  {
+    Connection connection = metaData.getConnection();
+    String catalog = connection.getCatalog();
+
+    ResultSet primaryKeys = metaData.getPrimaryKeys(catalog, schemaName, tableName);
+    getIndexInfos(primaryKeys, 6, 0, 4, 5, consumer);
+
+    ResultSet indexInfo = metaData.getIndexInfo(catalog, schemaName, tableName, false, true);
+    getIndexInfos(indexInfo, 6, 4, 9, 8, consumer);
+  }
+
+  private static void getIndexInfos(ResultSet resultSet, int indexNameColumn, int indexTypeColumn, int fieldNameColumn, int fieldPositionColumn,
+      Consumer<IndexInfo> consumer) throws SQLException
+  {
+    Map<String, IndexInfo> indexInfos = new HashMap<>();
+
+    try
+    {
+      while (resultSet.next())
+      {
+        String name = resultSet.getString(indexNameColumn);
+        if (name == null)
+        {
+          // Bug 405924: It seems that this can happen with Oracle.
+          continue;
+        }
+
+        IDBIndex.Type indexType = IDBIndex.Type.PRIMARY_KEY;
+        if (indexTypeColumn != 0)
+        {
+          boolean nonUnique = resultSet.getBoolean(indexTypeColumn);
+          indexType = nonUnique ? IDBIndex.Type.NON_UNIQUE : IDBIndex.Type.UNIQUE;
+        }
+
+        FieldInfo fieldInfo = new FieldInfo();
+        fieldInfo.name = resultSet.getString(fieldNameColumn);
+        fieldInfo.position = resultSet.getShort(fieldPositionColumn);
+
+        IndexInfo indexInfo = indexInfos.computeIfAbsent(name, key -> new IndexInfo());
+        indexInfo.name = name;
+        indexInfo.type = indexType;
+        indexInfo.fieldInfos.add(fieldInfo);
+      }
+    }
+    finally
+    {
+      DBUtil.close(resultSet);
+    }
+
+    indexInfos.values().forEach(indexInfo -> {
+      indexInfo.fieldInfos.sort(null);
+      consumer.accept(indexInfo);
+    });
+  }
+
+  /**
    * @since 4.2
    */
   public static int getDefaultDBLength(DBType type)
@@ -1376,6 +1376,38 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
+  * @since 4.2
+  * @deprecated As of 4.13 no longer supported. Use {@link #getIndexInfos(DatabaseMetaData, String, String, Consumer)} instead.
+  */
+  @Deprecated
+  protected void readIndices(Connection connection, ResultSet resultSet, IDBTable table, int indexNameColumn, int indexTypeColumn, int fieldNameColumn,
+      int fieldPositionColumn) throws SQLException
+  {
+    getIndexInfos(resultSet, indexNameColumn, indexTypeColumn, fieldNameColumn, fieldPositionColumn, //
+        indexInfo -> addIndex(connection, table, indexInfo.name, indexInfo.type, indexInfo.fieldInfos));
+  }
+
+  /**
+   * @since 4.6
+   * @deprecated As of 4.13 use {@link #createField(Connection, IDBField)} instead.
+   */
+  @Deprecated
+  protected void createField(Connection connection, String tableName, IDBField field)
+  {
+    createField(connection, field);
+  }
+
+  /**
+   * @since 4.6
+   * @deprecated As of 4.13 use {@link #dropField(Connection, IDBField)} instead.
+   */
+  @Deprecated
+  protected void dropField(Connection connection, String tableName, String fieldName)
+  {
+    DBUtil.execute(connection, "ALTER TABLE " + tableName + " DROP COLUMN " + fieldName);
+  }
+
+  /**
    * @since 4.2
    * @deprecated As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).
    */
@@ -1398,10 +1430,23 @@ public abstract class DBAdapter implements IDBAdapter
   }
 
   /**
-   * @since 4.2
+   * @since 4.13
    * @author Eike Stepper
    */
-  protected static final class FieldInfo implements Comparable<FieldInfo>
+  public static final class IndexInfo
+  {
+    public String name;
+
+    public IDBIndex.Type type;
+
+    public List<FieldInfo> fieldInfos = new ArrayList<>();
+  }
+
+  /**
+   * @since 4.13
+   * @author Eike Stepper
+   */
+  public static final class FieldInfo implements Comparable<FieldInfo>
   {
     public String name;
 

@@ -16,6 +16,7 @@ package org.eclipse.net4j.db;
  * @see DBUtil#select(java.sql.Connection, IDBRowHandler, String, org.eclipse.net4j.db.ddl.IDBField...)
  * @author Eike Stepper
  */
+@FunctionalInterface
 public interface IDBRowHandler
 {
   public boolean handle(int row, Object... values);

@@ -95,6 +95,10 @@ public abstract class AbstractCDOTest extends ConfigTest
     ReflectUtil.setValue(field, Resource.Factory.Registry.INSTANCE, Collections.unmodifiableMap(map));
   }
 
+  public AbstractCDOTest()
+  {
+  }
+
   @Override
   protected void doSetUp() throws Exception
   {

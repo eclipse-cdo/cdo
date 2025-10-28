@@ -28,6 +28,8 @@ import org.eclipse.emf.ecore.EAnnotation;
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EClassifier;
+import org.eclipse.emf.ecore.EEnum;
+import org.eclipse.emf.ecore.EEnumLiteral;
 import org.eclipse.emf.ecore.ENamedElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -56,6 +58,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.StringJoiner;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 /**
@@ -351,6 +354,14 @@ public final class EMFUtil
   }
 
   /**
+   * @since 4.27
+   */
+  public static EClass createEClass(EPackage ePackage, String name)
+  {
+    return createEClass(ePackage, name, false, false);
+  }
+
+  /**
    * @since 2.0
    */
   public static EClass createEClass(EPackage ePackage, String name, boolean isAbstract, boolean isInterface)
@@ -376,6 +387,14 @@ public final class EMFUtil
   }
 
   /**
+   * @since 4.27
+   */
+  public static EReference createEReference(EClass eClass, String name, EClassifier type)
+  {
+    return createEReference(eClass, name, type, false, false);
+  }
+
+  /**
    * @since 2.0
    */
   public static EReference createEReference(EClass eClass, String name, EClassifier type, boolean isRequired, boolean isMany)
@@ -387,6 +406,52 @@ public final class EMFUtil
     eReference.setUpperBound(isMany ? -1 : 0);
     eClass.getEStructuralFeatures().add(eReference);
     return eReference;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static EEnum createEEnum(EPackage ePackage, String name)
+  {
+    EEnum eEnum = EcoreFactory.eINSTANCE.createEEnum();
+    eEnum.setName(name);
+    ePackage.getEClassifiers().add(eEnum);
+    return eEnum;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static EEnum createEEnum(EPackage ePackage, String name, String... literals)
+  {
+    EEnum eEnum = createEEnum(ePackage, name);
+    for (int i = 0; i < literals.length; i++)
+    {
+      createEEnumLiteral(eEnum, literals[i], i);
+    }
+
+    return eEnum;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static EEnumLiteral createEEnumLiteral(EEnum eEnum, String name)
+  {
+    int value = eEnum.getELiterals().stream().mapToInt(EEnumLiteral::getValue).max().orElse(-1) + 1;
+    return createEEnumLiteral(eEnum, name, value);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static EEnumLiteral createEEnumLiteral(EEnum eEnum, String name, int value)
+  {
+    EEnumLiteral eEnumLiteral = EcoreFactory.eINSTANCE.createEEnumLiteral();
+    eEnumLiteral.setName(name);
+    eEnumLiteral.setValue(value);
+    eEnum.getELiterals().add(eEnumLiteral);
+    return eEnumLiteral;
   }
 
   /**
@@ -551,8 +616,7 @@ public final class EMFUtil
   public static String getParentURI(EPackage ePackage)
   {
     EPackage superPackage = ePackage.getESuperPackage();
-    String parentURI = superPackage == null ? null : superPackage.getNsURI();
-    return parentURI;
+    return superPackage == null ? null : superPackage.getNsURI();
   }
 
   public static void registerPackage(EPackage ePackage, EPackage.Registry... packageRegistries)
@@ -664,16 +728,20 @@ public final class EMFUtil
   public static EPackage[] getAllPackages(EPackage ePackage)
   {
     List<EPackage> result = new ArrayList<>();
-    getAllPackages(ePackage, result);
+    getAllPackages(ePackage, result::add);
     return result.toArray(new EPackage[result.size()]);
   }
 
-  private static void getAllPackages(EPackage ePackage, List<EPackage> result)
+  /**
+   * @since 4.27
+   */
+  public static void getAllPackages(EPackage ePackage, Consumer<EPackage> consumer)
   {
-    result.add(ePackage);
+    consumer.accept(ePackage);
+
     for (EPackage subPackage : ePackage.getESubpackages())
     {
-      getAllPackages(subPackage, result);
+      getAllPackages(subPackage, consumer);
     }
   }
 
@@ -693,6 +761,14 @@ public final class EMFUtil
   public static String getQualifiedName(EStructuralFeature feature, String separator)
   {
     return getFullyQualifiedName(feature, separator);
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static String getFullyQualifiedName(EObject modelElement)
+  {
+    return getFullyQualifiedName(modelElement, "."); //$NON-NLS-1$
   }
 
   /**
@@ -725,7 +801,12 @@ public final class EMFUtil
   public static ResourceSet newEcoreResourceSet(EPackage.Registry packageRegistry)
   {
     ResourceSet resourceSet = newResourceSet(new EcoreResourceFactoryImpl());
-    resourceSet.setPackageRegistry(packageRegistry);
+
+    if (packageRegistry != null)
+    {
+      resourceSet.setPackageRegistry(packageRegistry);
+    }
+
     return resourceSet;
   }
 
@@ -857,6 +938,95 @@ public final class EMFUtil
       }
 
       return null;
+    }
+  }
+
+  /**
+   * A mapping between two {@link EObject}s and their contents based on their URIs.
+   *
+   * @author Eike Stepper
+   * @since 4.27
+   */
+  public static final class TreeMapping<T extends EObject> extends HashMap<T, T>
+  {
+    private static final long serialVersionUID = 1L;
+
+    private final Class<T> type;
+
+    private final Map<String, T> fromObjectsByURI = new HashMap<>();
+
+    private final Map<String, T> toObjectsByURI = new HashMap<>();
+
+    public TreeMapping(Class<T> type)
+    {
+      this.type = type;
+    }
+
+    public Map<String, T> getFromObjectsByURI()
+    {
+      return fromObjectsByURI;
+    }
+
+    public Map<String, T> getToObjectsByURI()
+    {
+      return toObjectsByURI;
+    }
+
+    public void map(EObject fromObject, EObject toObject)
+    {
+      map(fromObject, toObject, false);
+    }
+
+    public void map(EObject fromObject, EObject toObject, boolean allContents)
+    {
+      fillURIMap(toObject, allContents, toObjectsByURI, null);
+
+      fillURIMap(fromObject, allContents, fromObjectsByURI, (uri, fObj) -> {
+        T tObj = toObjectsByURI.get(uri);
+        put(fObj, tObj);
+      });
+    }
+
+    protected T filter(EObject object)
+    {
+      if (type.isInstance(object))
+      {
+        return type.cast(object);
+      }
+
+      return null;
+    }
+
+    private void fillURIMap(EObject object, boolean allContents, Map<String, T> map, BiConsumer<String, T> registrationConsumer)
+    {
+      if (object != null)
+      {
+        registerElement(object, map, registrationConsumer);
+
+        if (allContents)
+        {
+          for (TreeIterator<EObject> it = object.eAllContents(); it.hasNext();)
+          {
+            EObject content = it.next();
+            registerElement(content, map, registrationConsumer);
+          }
+        }
+      }
+    }
+
+    private void registerElement(EObject object, Map<String, T> map, BiConsumer<String, T> registrationConsumer)
+    {
+      T t = filter(object);
+      if (t != null)
+      {
+        String uri = EcoreUtil.getURI(t).toString();
+        map.put(uri, t);
+
+        if (registrationConsumer != null)
+        {
+          registrationConsumer.accept(uri, t);
+        }
+      }
     }
   }
 }

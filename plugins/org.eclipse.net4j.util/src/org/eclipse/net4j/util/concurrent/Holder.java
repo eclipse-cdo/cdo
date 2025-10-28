@@ -10,6 +10,8 @@
  */
 package org.eclipse.net4j.util.concurrent;
 
+import org.eclipse.net4j.util.ObjectUtil;
+
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -23,20 +25,76 @@ import java.util.function.Supplier;
  */
 public final class Holder<T> implements Consumer<T>, Supplier<T>
 {
-  private T element;
+  private final Supplier<T> creator;
 
-  public Holder(T element)
-  {
-    set(element);
-  }
+  private final T unset;
+
+  private T element;
 
   public Holder()
   {
+    creator = null;
+    unset = null;
+  }
+
+  public Holder(T element)
+  {
+    this();
+    set(element);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public Holder(Supplier<T> creator)
+  {
+    this(creator, null);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public Holder(Supplier<T> creator, T unset)
+  {
+    this.creator = creator;
+    this.unset = unset;
+    element = unset;
+  }
+
+  /**
+   * @since 3.29
+   */
+  public boolean isSet()
+  {
+    return element != unset;
+  }
+
+  /**
+   * @since 3.29
+   */
+  public T handleIfSet(Consumer<T> consumer)
+  {
+    T elem = getIfSet();
+    ObjectUtil.ifNotNull(elem, consumer);
+    return elem;
+  }
+
+  /**
+   * @since 3.29
+   */
+  public T getIfSet()
+  {
+    return isSet() ? element : null;
   }
 
   @Override
   public T get()
   {
+    if (!isSet() && creator != null)
+    {
+      element = creator.get();
+    }
+
     return element;
   }
 

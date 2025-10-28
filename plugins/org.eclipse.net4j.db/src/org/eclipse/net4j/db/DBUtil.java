@@ -1073,7 +1073,7 @@ public final class DBUtil
 
     builder.append(" FROM "); //$NON-NLS-1$
     builder.append(table);
-    if (where != null)
+    if (!StringUtil.isEmpty(where))
     {
       builder.append(" WHERE "); //$NON-NLS-1$
       builder.append(where);
@@ -1652,6 +1652,7 @@ public final class DBUtil
    * @since 4.2
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface RunnableWithConnection<T>
   {
     public T run(Connection connection) throws SQLException;
@@ -1664,6 +1665,7 @@ public final class DBUtil
    * @since 4.1
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface RowHandler
   {
     public void done(boolean successful) throws SQLException, IOException;

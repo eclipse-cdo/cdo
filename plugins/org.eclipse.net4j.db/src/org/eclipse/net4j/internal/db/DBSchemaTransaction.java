@@ -107,6 +107,8 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
   {
     if (connection == null)
     {
+      // No connection yet, execute with a new one.
+      // The execute method will call run(connection) below.
       return DBUtil.execute(database, this);
     }
 

@@ -82,6 +82,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * A simple HTTP server that web browsers can connect to in order to render internal server data for debugging purposes.
@@ -819,7 +820,9 @@ public class CDOServerBrowser extends Worker
         if (classifier instanceof EEnum)
         {
           type = "&#x1F154;";
-          extra = "&nbsp;&nbsp;[" + ((EEnum)classifier).getELiterals() + "]";
+          extra = "&nbsp;&nbsp;["
+              + ((EEnum)classifier).getELiterals().stream().map(literal -> literal.getName() + "(" + literal.getValue() + ")").collect(Collectors.joining(", "))
+              + "]";
         }
         else if (classifier instanceof EDataType)
         {

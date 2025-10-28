@@ -56,6 +56,38 @@ public interface IClassMapping
   public List<IDBTable> getDBTables();
 
   /**
+   * @since 4.14
+   */
+  public default IDBTable getTable()
+  {
+    List<IDBTable> tables = getDBTables();
+    if (tables.isEmpty())
+    {
+      return null;
+    }
+
+    return tables.get(0);
+  }
+
+  /**
+   * @since 4.14
+   */
+  public default IFeatureMapping getFeatureMapping(EStructuralFeature feature)
+  {
+    if (feature == null)
+    {
+      return null;
+    }
+
+    if (feature.isMany())
+    {
+      return getListMapping(feature);
+    }
+
+    return getValueMapping(feature);
+  }
+
+  /**
    * Get the mapping of the many-valued feature.
    *
    * @param feature

@@ -18,6 +18,7 @@ import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBIndex.Type;
 import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.spi.db.DBAdapter;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.h2.api.ErrorCode;
 
@@ -38,7 +39,9 @@ public class H2Adapter extends DBAdapter
 
   public static final String VERSION = String.valueOf("2.3.230"); //$NON-NLS-1$
 
-  private static final String DEFAULT_SCHEMA_NAME = "public"; //$NON-NLS-1$
+  private static final boolean LOWER_CASE_SCHEMA_NAME = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.h2.H2Adapter.LOWER_CASE_SCHEMA_NAME"); //$NON-NLS-1$
+
+  private static final String DEFAULT_SCHEMA_NAME = LOWER_CASE_SCHEMA_NAME ? "public" : "PUBLIC"; //$NON-NLS-1$ //$NON-NLS-2$
 
   public H2Adapter()
   {

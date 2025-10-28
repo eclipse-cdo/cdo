@@ -40,6 +40,7 @@ import org.eclipse.net4j.db.IDBPreparedStatement;
 import org.eclipse.net4j.db.IDBPreparedStatement.ReuseProbability;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.Monitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
 import org.eclipse.net4j.util.om.monitor.OMMonitor.Async;
@@ -55,6 +56,7 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -68,7 +70,8 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, MetaDataManager.class);
 
-  private static final boolean ZIP_PACKAGE_BYTES = true;
+  private static final boolean ZIP_PACKAGE_BYTES = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.internal.db.MetaDataManager.ZIP_PACKAGE_BYTES", //$NON-NLS-1$
+      true);
 
   private DBStore store;
 
@@ -91,7 +94,7 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     }
 
     IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
-    String uri = EcoreUtil.getURI(modelElement).toString();
+    String uri = getMetaURI(modelElement);
     metaID = store.getIDHandler().mapURI(accessor, uri, commitTime);
     cacheMetaIDMapping(modelElement, metaID);
 
@@ -107,13 +110,37 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       return modelElement;
     }
 
-    IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
-    String uri = store.getIDHandler().unmapURI(accessor, id);
+    String uri = unmapURI(id);
 
     ResourceSet resourceSet = new ResourceSetImpl();
     resourceSet.setPackageRegistry(getStore().getRepository().getPackageRegistry());
 
     return (EModelElement)resourceSet.getEObject(URI.createURI(uri), true);
+  }
+
+  @Override
+  public synchronized String getMetaURI(CDOID id)
+  {
+    EModelElement modelElement = metaIDToModelElement.get(id);
+    if (modelElement != null)
+    {
+      return getMetaURI(modelElement);
+    }
+
+    return unmapURI(id);
+  }
+
+  @Override
+  public synchronized void deleteMetaIDMapping(Statement statement, EModelElement modelElement)
+  {
+    CDOID metaID = modelElementToMetaID.remove(modelElement);
+    if (metaID != null)
+    {
+      metaIDToModelElement.remove(metaID);
+    }
+
+    String uri = getMetaURI(modelElement);
+    store.getIDHandler().deleteURIMapping(statement, uri);
   }
 
   @Override
@@ -148,6 +175,88 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     finally
     {
       monitor.done();
+    }
+  }
+
+  public void writePackageUnit(IDBConnection connection, String unitID, int originalType, long timeStamp, byte[] packageBytes, OMMonitor monitor)
+  {
+    PackageUnitsTable packageUnits = store.tables().packageUnits();
+
+    String sql = "INSERT INTO " + packageUnits + " (" + packageUnits.id() + ", " //$NON-NLS-1$ //$NON-NLS-2$
+        + packageUnits.originalType() + ", " + packageUnits.timeStamp() + ", " + packageUnits.packageData() + ") VALUES (?, ?, ?, ?)";
+    DBUtil.trace(sql);
+
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    Async async = monitor == null ? null : monitor.forkAsync();
+
+    try
+    {
+      stmt.setString(1, unitID);
+      stmt.setInt(2, originalType);
+      stmt.setLong(3, timeStamp);
+      stmt.setBytes(4, packageBytes);
+
+      if (stmt.execute())
+      {
+        throw new DBException("No result set expected"); //$NON-NLS-1$
+      }
+
+      if (stmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + packageUnits.table().getName()); //$NON-NLS-1$
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+      if (async != null)
+      {
+        async.stop();
+      }
+    }
+  }
+
+  public void writePackageInfo(IDBConnection connection, String packageURI, String parentURI, String unitID, OMMonitor monitor)
+  {
+    PackageInfosTable packageInfos = store.tables().packageInfos();
+    String sql = "INSERT INTO " + packageInfos + " (" + packageInfos.uri() + ", " //$NON-NLS-1$ //$NON-NLS-2$
+        + packageInfos.parent() + ", " + packageInfos.unit() + ") VALUES (?, ?, ?)";
+    DBUtil.trace(sql);
+
+    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
+    Async async = monitor == null ? null : monitor.forkAsync();
+
+    try
+    {
+      stmt.setString(1, packageURI);
+      stmt.setString(2, parentURI);
+      stmt.setString(3, unitID);
+
+      if (stmt.execute())
+      {
+        throw new DBException("No result set expected"); //$NON-NLS-1$
+      }
+
+      if (stmt.getUpdateCount() == 0)
+      {
+        throw new DBException("No row inserted into table " + packageInfos.table().getName()); //$NON-NLS-1$
+      }
+    }
+    catch (SQLException ex)
+    {
+      throw new DBException(ex);
+    }
+    finally
+    {
+      DBUtil.close(stmt);
+      if (async != null)
+      {
+        async.stop();
+      }
     }
   }
 
@@ -225,76 +334,16 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
   private EPackage createEPackage(InternalCDOPackageUnit packageUnit, byte[] bytes)
   {
+    String uri = packageUnit.getID();
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
-    return EMFUtil.createEPackage(packageUnit.getID(), bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
+    return createEPackage(uri, bytes, resourceSet);
   }
 
   private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
   {
     EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
-    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, getPackageRegistry());
-  }
-
-  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
-  {
-    if (TRACER.isEnabled())
-    {
-      TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
-    }
-
-    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
-    Async async = null;
-    monitor.begin(1 + packageInfos.length);
-
-    try
-    {
-      PackageUnitsTable packageUnits = store.tables().packageUnits();
-      String sql = "INSERT INTO " + packageUnits + " (" + packageUnits.id() + ", " //$NON-NLS-1$ //$NON-NLS-2$
-          + packageUnits.originalType() + ", " + packageUnits.timeStamp() + ", " + packageUnits.packageData() + ") VALUES (?, ?, ?, ?)";
-      DBUtil.trace(sql);
-
-      IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-
-      try
-      {
-        async = monitor.forkAsync();
-        stmt.setString(1, packageUnit.getID());
-        stmt.setInt(2, packageUnit.getOriginalType().ordinal());
-        stmt.setLong(3, packageUnit.getTimeStamp());
-        stmt.setBytes(4, getEPackageBytes(packageUnit));
-
-        if (stmt.execute())
-        {
-          throw new DBException("No result set expected"); //$NON-NLS-1$
-        }
-
-        if (stmt.getUpdateCount() == 0)
-        {
-          throw new DBException("No row inserted into table " + packageUnits.table().getName()); //$NON-NLS-1$
-        }
-      }
-      catch (SQLException ex)
-      {
-        throw new DBException(ex);
-      }
-      finally
-      {
-        DBUtil.close(stmt);
-        if (async != null)
-        {
-          async.stop();
-        }
-      }
-
-      for (InternalCDOPackageInfo packageInfo : packageInfos)
-      {
-        fillSystemTables(connection, packageInfo, monitor); // Don't fork monitor
-      }
-    }
-    finally
-    {
-      monitor.done();
-    }
+    EPackage.Registry packageRegistry = getPackageRegistry();
+    return getEPackageBytes(ePackage, packageRegistry);
   }
 
   private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -305,6 +354,36 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       for (InternalCDOPackageUnit packageUnit : packageUnits)
       {
         fillSystemTables(connection, packageUnit, monitor.fork());
+      }
+    }
+    finally
+    {
+      monitor.done();
+    }
+  }
+
+  private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit packageUnit, OMMonitor monitor)
+  {
+    if (TRACER.isEnabled())
+    {
+      TRACER.format("Writing package unit: {0}", packageUnit); //$NON-NLS-1$
+    }
+
+    String unitID = packageUnit.getID();
+    int originalType = packageUnit.getOriginalType().ordinal();
+    long timeStamp = packageUnit.getTimeStamp();
+    byte[] packageBytes = getEPackageBytes(packageUnit);
+
+    InternalCDOPackageInfo[] packageInfos = packageUnit.getPackageInfos();
+    monitor.begin(1 + packageInfos.length);
+
+    try
+    {
+      writePackageUnit(connection, unitID, originalType, timeStamp, packageBytes, monitor);
+
+      for (InternalCDOPackageInfo packageInfo : packageInfos)
+      {
+        fillSystemTables(connection, packageInfo, monitor); // Don't fork monitor
       }
     }
     finally
@@ -324,62 +403,26 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
     String parentURI = packageInfo.getParentURI();
     String unitID = packageInfo.getPackageUnit().getID();
 
-    PackageInfosTable packageInfos = store.tables().packageInfos();
-    String sql = "INSERT INTO " + packageInfos + " (" + packageInfos.uri() + ", " //$NON-NLS-1$ //$NON-NLS-2$
-        + packageInfos.parent() + ", " + packageInfos.unit() + ") VALUES (?, ?, ?)";
-    DBUtil.trace(sql);
-
-    IDBPreparedStatement stmt = connection.prepareStatement(sql, ReuseProbability.MEDIUM);
-    Async async = monitor.forkAsync();
-
-    try
-    {
-      stmt.setString(1, packageURI);
-      stmt.setString(2, parentURI);
-      stmt.setString(3, unitID);
-
-      if (stmt.execute())
-      {
-        throw new DBException("No result set expected"); //$NON-NLS-1$
-      }
-
-      if (stmt.getUpdateCount() == 0)
-      {
-        throw new DBException("No row inserted into table " + packageInfos.table().getName()); //$NON-NLS-1$
-      }
-    }
-    catch (SQLException ex)
-    {
-      throw new DBException(ex);
-    }
-    finally
-    {
-      DBUtil.close(stmt);
-      if (async != null)
-      {
-        async.stop();
-      }
-    }
+    writePackageInfo(connection, packageURI, parentURI, unitID, monitor);
   }
 
   private Collection<InternalCDOPackageUnit> readPackageUnits(Connection connection, long fromCommitTime, long toCommitTime, OMMonitor monitor)
   {
-    final Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<>();
-    IDBRowHandler unitRowHandler = new IDBRowHandler()
-    {
-      @Override
-      public boolean handle(int row, final Object... values)
-      {
-        int index = DBUtil.asInt(values[1]);
-        long timestamp = DBUtil.asLong(values[2]);
+    //
+    // Read package units.
+    //
+    Map<String, InternalCDOPackageUnit> packageUnits = new HashMap<>();
 
-        InternalCDOPackageUnit packageUnit = createPackageUnit();
-        packageUnit.setOriginalType(CDOPackageUnit.Type.values()[index]);
-        packageUnit.setTimeStamp(timestamp);
+    IDBRowHandler unitRowHandler = (row, values) -> {
+      int index = DBUtil.asInt(values[1]);
+      long timestamp = DBUtil.asLong(values[2]);
 
-        packageUnits.put((String)values[0], packageUnit);
-        return true;
-      }
+      InternalCDOPackageUnit packageUnit = createPackageUnit();
+      packageUnit.setOriginalType(CDOPackageUnit.Type.values()[index]);
+      packageUnit.setTimeStamp(timestamp);
+
+      packageUnits.put((String)values[0], packageUnit);
+      return true;
     };
 
     PackageUnitsTable packageUnitsTable = store.tables().packageUnits();
@@ -394,27 +437,26 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
 
     DBUtil.select(connection, unitRowHandler, where, packageUnitsTable.id(), packageUnitsTable.originalType(), packageUnitsTable.timeStamp());
 
-    final Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<>();
-    IDBRowHandler infoRowHandler = new IDBRowHandler()
-    {
-      @Override
-      public boolean handle(int row, final Object... values)
+    //
+    // Read package infos.
+    //
+    Map<String, List<InternalCDOPackageInfo>> packageInfos = new HashMap<>();
+
+    IDBRowHandler infoRowHandler = (row, values) -> {
+      InternalCDOPackageInfo packageInfo = createPackageInfo();
+      packageInfo.setPackageURI((String)values[1]);
+      packageInfo.setParentURI((String)values[2]);
+
+      String unit = (String)values[0];
+      List<InternalCDOPackageInfo> list = packageInfos.get(unit);
+      if (list == null)
       {
-        InternalCDOPackageInfo packageInfo = createPackageInfo();
-        packageInfo.setPackageURI((String)values[1]);
-        packageInfo.setParentURI((String)values[2]);
-
-        String unit = (String)values[0];
-        List<InternalCDOPackageInfo> list = packageInfos.get(unit);
-        if (list == null)
-        {
-          list = new ArrayList<>();
-          packageInfos.put(unit, list);
-        }
-
-        list.add(packageInfo);
-        return true;
+        list = new ArrayList<>();
+        packageInfos.put(unit, list);
       }
+
+      list.add(packageInfo);
+      return true;
     };
 
     monitor.begin();
@@ -431,6 +473,9 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
       monitor.done();
     }
 
+    //
+    // Link package units and package infos.
+    //
     for (Map.Entry<String, InternalCDOPackageUnit> entry : packageUnits.entrySet())
     {
       String id = entry.getKey();
@@ -448,5 +493,26 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   {
     modelElementToMetaID.put(modelElement, metaID);
     metaIDToModelElement.put(metaID, modelElement);
+  }
+
+  private String unmapURI(CDOID id)
+  {
+    IDBStoreAccessor accessor = (IDBStoreAccessor)StoreThreadLocal.getAccessor();
+    return store.getIDHandler().unmapURI(accessor, id);
+  }
+
+  private static String getMetaURI(EModelElement modelElement)
+  {
+    return EcoreUtil.getURI(modelElement).toString();
+  }
+
+  public static byte[] getEPackageBytes(EPackage ePackage, EPackage.Registry packageRegistry)
+  {
+    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
+  }
+
+  public static EPackage createEPackage(String uri, byte[] bytes, ResourceSet resourceSet)
+  {
+    return EMFUtil.createEPackage(uri, bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
   }
 }

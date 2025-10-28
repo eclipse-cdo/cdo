@@ -110,6 +110,7 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
+import org.eclipse.emf.cdo.spi.server.InternalStore.RestartException;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -2676,7 +2677,7 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
-  public void initSystemPackages(final boolean firstStart)
+  public void initSystemPackages(boolean firstStart)
   {
     List<InternalCDOPackageUnit> newPackageUnits = new ArrayList<>();
     long timeStamp;
@@ -2991,7 +2992,19 @@ public class Repository extends Container<Object> implements InternalRepository
     revisionManager.setSupportingAudits(supportingAudits);
     revisionManager.setSupportingBranches(supportingBranches);
 
-    LifecycleUtil.activate(store);
+    for (;;)
+    {
+      try
+      {
+        LifecycleUtil.activate(store);
+      }
+      catch (RestartException ex)
+      {
+        continue;
+      }
+
+      break;
+    }
 
     Map<String, String> persistentProperties = store.getPersistentProperties(PROP_UUID, PROP_MODE);
     String persistentUUID = persistentProperties.get(PROP_UUID);

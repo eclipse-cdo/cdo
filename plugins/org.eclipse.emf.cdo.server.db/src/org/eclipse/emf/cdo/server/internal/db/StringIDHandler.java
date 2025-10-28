@@ -31,6 +31,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collections;
 import java.util.Set;
 
@@ -198,6 +199,18 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
   }
 
   @Override
+  public String getStringValue(ResultSet resultSet, int column) throws SQLException
+  {
+    String id = resultSet.getString(column);
+    if (resultSet.wasNull())
+    {
+      return NULL_STRING;
+    }
+
+    return '\'' + id + '\'';
+  }
+
+  @Override
   public CDOID getMinCDOID()
   {
     return MIN;
@@ -219,6 +232,13 @@ public class StringIDHandler extends Lifecycle implements IIDHandler
   public String unmapURI(IDBStoreAccessor accessor, CDOID id)
   {
     return value(id);
+  }
+
+  @Override
+  public boolean deleteURIMapping(Statement statement, String uri)
+  {
+    // Do nothing
+    return false;
   }
 
   @Override

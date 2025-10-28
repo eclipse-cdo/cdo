@@ -27,6 +27,7 @@ import org.eclipse.emf.ecore.EPackage;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.util.Collection;
 
 /**
@@ -40,8 +41,9 @@ import java.util.Collection;
 public interface IMetaDataManager
 {
   /**
-   * Returns the meta ID of the given {@link EModelElement}. <code> getMetaID(getMetaInstance(x))</code> yields
-   * <code>x</code>
+   * Returns the meta ID of the given {@link EModelElement}.
+   * <p>
+   * <code>getMetaID(getMetaInstance(x))</code> yields <code>x</code>.
    *
    * @param modelElement
    *          the element
@@ -51,12 +53,32 @@ public interface IMetaDataManager
   public CDOID getMetaID(EModelElement modelElement, long commitTime);
 
   /**
-   * Returns the {@link EModelElement} referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
-   * <code>m</code>
+   * Returns the {@link EModelElement} referred to by the given ID.
+   * <p>
+   * <code>getMetaInstance(getMetaID(m))</code> yields <code>m</code>.
    *
    * @since 4.0
    */
   public EModelElement getMetaInstance(CDOID id);
+
+  /**
+   * Returns the URI of the {@link EModelElement} referred to by the given ID.
+   * <p>
+   * <code>getMetaURI(getMetaID(m))</code> yields <code>EcoreUtil.getURI(m).toString()</code>.
+   *
+   * @since 4.14
+   */
+  public String getMetaURI(CDOID id);
+
+  /**
+   * @since 4.14
+   */
+  public void deleteMetaIDMapping(Statement statement, EModelElement modelElement);
+
+  /**
+   * @since 4.0
+   */
+  public void clearMetaIDMappings();
 
   /**
    * Loads a package unit from the database.
@@ -69,11 +91,6 @@ public interface IMetaDataManager
    * @since 2.0
    */
   public EPackage[] loadPackageUnit(Connection connection, InternalCDOPackageUnit packageUnit);
-
-  /**
-   * @since 4.0
-   */
-  public void clearMetaIDMappings();
 
   /**
    * Reads information about package units present in the database.

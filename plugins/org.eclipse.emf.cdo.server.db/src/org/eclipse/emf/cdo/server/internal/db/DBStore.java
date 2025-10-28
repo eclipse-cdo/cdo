@@ -20,20 +20,27 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
+import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
+import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IDBStore.Props.ModelEvolutionMode;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Model;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater.LobRefsUpdateNotSupportedException;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
+import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.MappingNames;
@@ -52,6 +59,7 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
+import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -61,10 +69,14 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
+import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
+
+import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -108,7 +120,11 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
   private static final String PROP_REPOSITORY_CREATED = "org.eclipse.emf.cdo.server.db.repositoryCreated"; //$NON-NLS-1$
 
+  private static final String PROP_REPOSITORY_STARTED = "org.eclipse.emf.cdo.server.db.repositoryStarted"; //$NON-NLS-1$
+
   private static final String PROP_REPOSITORY_STOPPED = "org.eclipse.emf.cdo.server.db.repositoryStopped"; //$NON-NLS-1$
+
+  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
 
   private static final String PROP_NEXT_LOCAL_CDOID = "org.eclipse.emf.cdo.server.db.nextLocalCDOID"; //$NON-NLS-1$
 
@@ -121,8 +137,6 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   private static final String PROP_LAST_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastCommitTime"; //$NON-NLS-1$
 
   private static final String PROP_LAST_NONLOCAL_COMMITTIME = "org.eclipse.emf.cdo.server.db.lastNonLocalCommitTime"; //$NON-NLS-1$
-
-  private static final String PROP_GRACEFULLY_SHUT_DOWN = "org.eclipse.emf.cdo.server.db.gracefullyShutDown"; //$NON-NLS-1$
 
   private static final int DEFAULT_CONNECTION_RETRY_COUNT = OMPlatform.INSTANCE.getProperty("org.eclipse.emf.cdo.server.db.DEFAULT_CONNECTION_RETRY_COUNT", 0);
 
@@ -230,6 +244,34 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       if (value != null)
       {
         return Integer.parseInt(value);
+      }
+    }
+
+    return defaultValue;
+  }
+
+  private String getProperty(String key, String defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return value;
+      }
+    }
+
+    return defaultValue;
+  }
+
+  private boolean getProperty(String key, boolean defaultValue)
+  {
+    if (properties != null)
+    {
+      String value = properties.get(key);
+      if (value != null)
+      {
+        return Boolean.parseBoolean(value);
       }
     }
 
@@ -702,27 +744,14 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     {
       if (idGenerationLocation == IDGenerationLocation.CLIENT)
       {
-        String prop = properties.get(Props.ID_COLUMN_LENGTH);
-        if (prop != null)
-        {
-          idColumnLength = Integer.parseInt(prop);
-        }
+        idColumnLength = getProperty(Props.ID_COLUMN_LENGTH, idColumnLength);
       }
 
       configureAccessorPool(readerPool, Props.READER_POOL_CAPACITY);
       configureAccessorPool(writerPool, Props.WRITER_POOL_CAPACITY);
 
-      String prop = properties.get(Props.DROP_ALL_DATA_ON_ACTIVATE);
-      if (prop != null)
-      {
-        setDropAllDataOnActivate(Boolean.parseBoolean(prop));
-      }
-
-      prop = properties.get(Props.JDBC_FETCH_SIZE);
-      if (prop != null)
-      {
-        jdbcFetchSize = Integer.parseInt(prop);
-      }
+      setDropAllDataOnActivate(getProperty(Props.DROP_ALL_DATA_ON_ACTIVATE, false));
+      jdbcFetchSize = getProperty(Props.JDBC_FETCH_SIZE, jdbcFetchSize);
     }
 
     Connection connection = getConnectionOrRetry();
@@ -802,7 +831,10 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       reStart();
     }
 
-    putPersistentProperty(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
+    Map<String, String> map = new HashMap<>();
+    map.put(PROP_SCHEMA_VERSION, Integer.toString(SCHEMA_VERSION));
+    map.put(PROP_REPOSITORY_STARTED, Long.toString(getRepository().getTimeStamp()));
+    setPersistentProperties(map);
   }
 
   @Override
@@ -816,8 +848,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     LifecycleUtil.deactivate(idHandler);
 
     Map<String, String> map = new HashMap<>();
-    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
     map.put(PROP_REPOSITORY_STOPPED, Long.toString(getRepository().getTimeStamp()));
+    map.put(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
 
     if (getRepository().getIDGenerationLocation() == IDGenerationLocation.STORE)
     {
@@ -908,7 +940,106 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       repairAfterCrash();
     }
 
+    Boolean triggerCrashRecovery = evolveModels();
+    if (triggerCrashRecovery == Boolean.TRUE)
+    {
+      // Remove the shutdown flag to indicate that the repository is now active again.
+      // On next start, crash recovery will be performed because the flag is missing.
+      removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+
+      // Restart with crash recovery.
+      throw new RestartException();
+    }
+    else if (triggerCrashRecovery == Boolean.FALSE)
+    {
+      // Set the shutdown flag to indicate that the repository was shut down gracefully.
+      // On next start, crash recovery will be skipped because the flag is present.
+      putPersistentProperty(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
+
+      // Restart without crash recovery.
+      throw new RestartException();
+    }
+
+    // Remove the shutdown flag to indicate that the repository is now active again.
+    // If we crash later, crash recovery will be performed because the flag is missing.
     removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+  }
+
+  protected Boolean evolveModels() throws SQLException
+  {
+    ModelEvolutionMode mode = ModelEvolutionMode.parse(getProperty(Props.MODEL_EVOLUTION_MODE, ModelEvolutionMode.EVOLVE.name()));
+    if (mode == ModelEvolutionMode.DISABLED)
+    {
+      OM.LOG.info("Model evolution is disabled");
+      return null;
+    }
+
+    List<Model> models = loadModels();
+    List<Model> changedModels = models.stream().filter(Model::isChanged).toList();
+    if (changedModels.isEmpty())
+    {
+      // No changed models.
+      return null;
+    }
+
+    if (mode == ModelEvolutionMode.GUARD)
+    {
+      OM.LOG.error("Models have changed, but model evolution mode is GUARD. Changed models: " + changedModels);
+      throw new CDOException("Models have changed");
+    }
+
+    IModelEvolutionSupport modelEvolutionSupport = createModelEvolutionSupport();
+    ModelEvolutionContext modelEvolutionContext = createModelEvolutionContext(models, mode);
+    return modelEvolutionSupport.evolveModels(modelEvolutionContext);
+  }
+
+  protected List<Model> loadModels() throws SQLException
+  {
+    List<Model> models = new ArrayList<>();
+
+    EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
+
+    IDBRowHandler modelRowHandler = (row, values) -> {
+      String id = (String)values[0];
+      CDOPackageUnit.Type originalType = CDOPackageUnit.Type.values()[DBUtil.asInt(values[1])];
+      long timeStamp = DBUtil.asLong(values[2]);
+      byte[] packageData = (byte[])values[3];
+
+      EPackage storedPackage = MetaDataManager.createEPackage(id, packageData, resourceSet);
+      EPackage registeredPackage = packageRegistry.getEPackage(id);
+
+      Model model = new Model(id, originalType, timeStamp, storedPackage, registeredPackage);
+      models.add(model);
+      return true;
+    };
+
+    try (Connection connection = getConnection())
+    {
+      PackageUnitsTable packageUnitsTable = tables().packageUnits();
+
+      DBUtil.select(connection, modelRowHandler, StringUtil.EMPTY, //
+          packageUnitsTable.id(), //
+          packageUnitsTable.originalType(), //
+          packageUnitsTable.timeStamp(), //
+          packageUnitsTable.packageData());
+    }
+
+    return models;
+  }
+
+  protected IModelEvolutionSupport createModelEvolutionSupport()
+  {
+    IManagedContainer container = getContainer();
+    String type = getProperty(Props.MODEL_EVOLUTION_SUPPORT_TYPE, "default");
+    String description = getProperty(Props.MODEL_EVOLUTION_SUPPORT_DESCRIPTION, null);
+    return container.createElement(IModelEvolutionSupport.PRODUCT_GROUP, type, description);
+  }
+
+  protected ModelEvolutionContext createModelEvolutionContext(List<Model> models, ModelEvolutionMode mode)
+  {
+    boolean dry = mode == ModelEvolutionMode.DRY;
+    return new ModelEvolutionContext(this, models, dry);
   }
 
   protected void repairAfterCrash()

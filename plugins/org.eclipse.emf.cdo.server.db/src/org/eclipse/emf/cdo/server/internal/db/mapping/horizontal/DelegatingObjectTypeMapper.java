@@ -11,7 +11,6 @@
 package org.eclipse.emf.cdo.server.internal.db.mapping.horizontal;
 
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOClassifierRef;
 import org.eclipse.emf.cdo.common.protocol.CDODataInput;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -49,13 +48,12 @@ public abstract class DelegatingObjectTypeMapper extends AbstractObjectTypeMappe
   }
 
   @Override
-  public CDOClassifierRef getObjectType(IDBStoreAccessor accessor, CDOID id)
+  public EClass getObjectType(IDBStoreAccessor accessor, CDOID id)
   {
     CDOID type = doGetObjectType(accessor, id);
     if (type != null)
     {
-      EClass eClass = (EClass)getMetaDataManager().getMetaInstance(type);
-      return new CDOClassifierRef(eClass);
+      return (EClass)getMetaDataManager().getMetaInstance(type);
     }
 
     return delegate.getObjectType(accessor, id);

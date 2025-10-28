@@ -37,6 +37,15 @@ public abstract class DelegatingTypeMapping implements ITypeMapping, ILobRefsUpd
     return getDelegate().getFeature();
   }
 
+  /**
+   * @since 4.14
+   */
+  @Override
+  public ITypeMapping getTypeMapping()
+  {
+    return getDelegate().getTypeMapping();
+  }
+
   @Override
   public IDBField getField()
   {

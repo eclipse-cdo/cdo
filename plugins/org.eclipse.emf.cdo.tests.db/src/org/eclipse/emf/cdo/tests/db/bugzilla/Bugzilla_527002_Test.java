@@ -30,11 +30,10 @@ import java.util.Map;
 public class Bugzilla_527002_Test extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(DBConfig.PROP_TEST_MAPPING_STRATEGY, CDODBUtil.createHorizontalMappingStrategy());
-    return testProperties;
+    super.initTestProperties(properties);
+    properties.put(DBConfig.PROP_TEST_MAPPING_STRATEGY, CDODBUtil.createHorizontalMappingStrategy());
   }
 
   public void testDelegatingMappingStrategy() throws Exception

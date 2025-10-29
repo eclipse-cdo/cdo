@@ -24,11 +24,10 @@ import java.util.Map;
 public class Bugzilla_541437_Test extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> properties = super.getTestProperties();
+    super.initTestProperties(properties);
     properties.put(IRepository.Props.OVERRIDE_UUID, null);
-    return properties;
   }
 
   public void testUUIDWithoutOverride() throws Exception

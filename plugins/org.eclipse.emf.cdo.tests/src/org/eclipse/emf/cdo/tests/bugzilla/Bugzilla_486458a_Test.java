@@ -69,6 +69,20 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
 
   private CountDownLatch startInitializeUnit;
 
+  @Override
+  protected void initTestProperties(Map<String, Object> properties)
+  {
+    super.initTestProperties(properties);
+    properties.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
+  }
+
+  @Override
+  protected void doSetUp() throws Exception
+  {
+    createRepository();
+    super.doSetUp();
+  }
+
   public void testCreateUnitWithParallelCommit() throws Exception
   {
     fillRepository();
@@ -137,21 +151,6 @@ public class Bugzilla_486458a_Test extends AbstractCDOTest
 
     count = iterateResource(resource);
     assertEquals(expected, count);
-  }
-
-  @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
-    return map;
-  }
-
-  @Override
-  protected void doSetUp() throws Exception
-  {
-    createRepository();
-    super.doSetUp();
   }
 
   private void createRepository()

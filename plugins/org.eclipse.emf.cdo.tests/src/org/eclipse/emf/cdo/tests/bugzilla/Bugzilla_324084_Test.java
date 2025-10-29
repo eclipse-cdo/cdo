@@ -36,18 +36,17 @@ import java.util.Map;
 public class Bugzilla_324084_Test extends AbstractCDOTest
 {
   @Override
+  protected void initTestProperties(Map<String, Object> properties)
+  {
+    super.initTestProperties(properties);
+    properties.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
+  }
+
+  @Override
   protected void doSetUp() throws Exception
   {
     super.doSetUp();
     skipStoreWithoutChangeSets();
-  }
-
-  @Override
-  public synchronized Map<String, Object> getTestProperties()
-  {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
-    return map;
   }
 
   @Requires(IRepositoryConfig.CAPABILITY_BRANCHING)

@@ -162,11 +162,10 @@ public class WorkspaceTest extends AbstractCDOTest
   }
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "false");
-    return map;
+    super.initTestProperties(properties);
+    properties.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "false");
   }
 
   @CleanRepositoriesBefore(reason = "Object counting")

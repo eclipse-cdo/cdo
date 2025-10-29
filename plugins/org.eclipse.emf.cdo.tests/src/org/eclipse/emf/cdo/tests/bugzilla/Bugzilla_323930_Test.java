@@ -25,11 +25,10 @@ import java.util.Map;
 public class Bugzilla_323930_Test extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
-    return map;
+    super.initTestProperties(properties);
+    properties.put(IRepository.Props.ENSURE_REFERENTIAL_INTEGRITY, "true");
   }
 
   @Override

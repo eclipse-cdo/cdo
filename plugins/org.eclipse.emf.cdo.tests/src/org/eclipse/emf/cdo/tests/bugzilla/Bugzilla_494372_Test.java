@@ -50,11 +50,10 @@ import java.util.Map;
 public class Bugzilla_494372_Test extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(Props.SUPPORTING_UNITS, "true");
-    return testProperties;
+    super.initTestProperties(properties);
+    properties.put(Props.SUPPORTING_UNITS, "true");
   }
 
   public void testCreateUnitAfterUnitDeletion() throws Exception

@@ -42,14 +42,14 @@ public class Bugzilla_329179_Test extends AbstractCDOTest
   private static final int PRODUCTS = 10;
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
+    super.initTestProperties(properties);
+
     TestRevisionManager revisionManager = new TestRevisionManager();
     revisionManager.setGetRevisionsDelay(100);
 
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, revisionManager);
-    return testProperties;
+    properties.put(RepositoryConfig.PROP_TEST_REVISION_MANAGER, revisionManager);
   }
 
   public void testPrefetchTimeOut() throws Exception

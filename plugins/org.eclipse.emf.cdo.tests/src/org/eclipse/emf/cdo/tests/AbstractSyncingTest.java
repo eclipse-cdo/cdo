@@ -69,15 +69,14 @@ public abstract class AbstractSyncingTest extends AbstractCDOTest
   }
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(OfflineConfig.PROP_TEST_RAW_REPLICATION, isRawReplication());
-    testProperties.put(OfflineConfig.PROP_TEST_DELAYED_COMMIT_HANDLING, getTestDelayedCommitHandling());
-    testProperties.put(OfflineConfig.PROP_TEST_DELAYED2_COMMIT_HANDLING, getTestDelayed2CommitHandling());
-    testProperties.put(OfflineConfig.PROP_TEST_FAILOVER, isFailover());
-    testProperties.put(OfflineConfig.PROP_TEST_HINDER_INITIAL_REPLICATION, isHinderInitialReplication());
-    return testProperties;
+    super.initTestProperties(properties);
+    properties.put(OfflineConfig.PROP_TEST_RAW_REPLICATION, isRawReplication());
+    properties.put(OfflineConfig.PROP_TEST_DELAYED_COMMIT_HANDLING, getTestDelayedCommitHandling());
+    properties.put(OfflineConfig.PROP_TEST_DELAYED2_COMMIT_HANDLING, getTestDelayed2CommitHandling());
+    properties.put(OfflineConfig.PROP_TEST_FAILOVER, isFailover());
+    properties.put(OfflineConfig.PROP_TEST_HINDER_INITIAL_REPLICATION, isHinderInitialReplication());
   }
 
   protected boolean isFailover()

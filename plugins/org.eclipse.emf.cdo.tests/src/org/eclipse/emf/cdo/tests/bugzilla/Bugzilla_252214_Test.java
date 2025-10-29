@@ -37,11 +37,10 @@ import java.util.Map;
 public class Bugzilla_252214_Test extends AbstractCDOTest
 {
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  public void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    return testProperties;
+    super.initTestProperties(properties);
+    properties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
   }
 
   public void testBugzilla_252214() throws Exception

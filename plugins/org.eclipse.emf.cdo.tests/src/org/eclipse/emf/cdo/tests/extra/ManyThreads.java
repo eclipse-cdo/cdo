@@ -28,13 +28,11 @@ public class ManyThreads extends AbstractCDOTest
   private static final int COMMITTERS = 250;
 
   // @Override
-  // public synchronized Map<String, Object> getTestProperties()
+  // protected void initTestProperties(Map<String, Object> properties)
   // {
-  // Map<String, Object> props = super.getTestProperties();
-  // props.put(IRepository.Props.OPTIMISTIC_LOCKING_TIMEOUT, "30000");
-  // return props;
+  // super.initTestProperties(properties);
+  // properties.put(IRepository.Props.OPTIMISTIC_LOCKING_TIMEOUT, "30000");
   // }
-
   public void testManyParallelCommits() throws Exception
   {
     disableConsole();

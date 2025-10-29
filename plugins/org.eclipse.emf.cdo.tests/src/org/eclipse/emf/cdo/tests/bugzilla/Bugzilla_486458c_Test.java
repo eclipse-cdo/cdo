@@ -100,11 +100,10 @@ public class Bugzilla_486458c_Test extends AbstractCDOTest
   }
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> map = super.getTestProperties();
-    map.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
-    return map;
+    super.initTestProperties(properties);
+    properties.put(Props.SUPPORTING_UNITS, Boolean.toString(true));
   }
 
   @Override

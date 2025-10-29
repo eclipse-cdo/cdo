@@ -69,14 +69,14 @@ public class ModelEvolutionTest extends AbstractCDOTest
   }
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
+    super.initTestProperties(properties);
+    properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
+
     ModelEvolutionSupport modelEvolutionSupport = new ModelEvolutionSupport();
     modelEvolutionSupport.addListener(new LogListener());
-    testProperties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, modelEvolutionSupport);
-    return testProperties;
+    properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, modelEvolutionSupport);
   }
 
   public void test() throws Exception

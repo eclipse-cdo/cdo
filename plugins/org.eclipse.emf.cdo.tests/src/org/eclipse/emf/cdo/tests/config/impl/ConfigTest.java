@@ -176,9 +176,15 @@ public abstract class ConfigTest extends AbstractOMTest implements IConstants
     if (testProperties == null)
     {
       testProperties = new HashMap<>();
+      initTestProperties(testProperties);
     }
 
     return testProperties;
+  }
+
+  protected void initTestProperties(Map<String, Object> properties)
+  {
+    // Subclasses may override to initialize test properties.
   }
 
   // /////////////////////////////////////////////////////////////////////////

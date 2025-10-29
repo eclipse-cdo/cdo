@@ -83,12 +83,11 @@ public class RevisionManagerTest extends AbstractCDOTest
   private TestRevisionManager revisionManager;
 
   @Override
-  public synchronized Map<String, Object> getTestProperties()
+  protected void initTestProperties(Map<String, Object> properties)
   {
-    Map<String, Object> testProperties = super.getTestProperties();
-    testProperties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
-    testProperties.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
-    return testProperties;
+    super.initTestProperties(properties);
+    properties.put(IRepository.Props.SUPPORTING_AUDITS, "true");
+    properties.put(IRepository.Props.SUPPORTING_BRANCHES, "true");
   }
 
   @Override

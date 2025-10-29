@@ -198,6 +198,20 @@ public final class EventUtil
   }
 
   /**
+   * @since 3.29
+   */
+  public static boolean fireEvent(Object notifier, IEvent event)
+  {
+    if (notifier instanceof Notifier)
+    {
+      ((Notifier)notifier).fireEvent(event);
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
    * @author Eike Stepper
    */
   private static interface AutoCloseableListener extends IListener, AutoCloseable

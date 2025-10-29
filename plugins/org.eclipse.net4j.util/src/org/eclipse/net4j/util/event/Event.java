@@ -36,9 +36,13 @@ public class Event extends EventObject implements IEvent
   @Override
   public String toString()
   {
+    String eventName = formatEventName();
+    INotifier source = getSource();
+
     String params = formatAdditionalParameters();
     params = params == null ? "" : ", " + params;
-    return MessageFormat.format("{0}[source={1}{2}]", formatEventName(), getSource(), params);
+
+    return MessageFormat.format("{0}[source={1}{2}]", eventName, source, params);
   }
 
   /**
@@ -46,7 +50,13 @@ public class Event extends EventObject implements IEvent
    */
   protected String formatEventName()
   {
-    return getClass().getSimpleName();
+    String eventName = getClass().getSimpleName();
+    if (eventName.length() == 0)
+    {
+      eventName = getClass().getName();
+    }
+
+    return eventName;
   }
 
   /**

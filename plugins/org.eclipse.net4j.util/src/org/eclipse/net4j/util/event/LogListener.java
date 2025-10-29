@@ -10,21 +10,38 @@
  */
 package org.eclipse.net4j.util.event;
 
-import java.util.Map;
+import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.om.log.OMLogger.Level;
 
 /**
  * @author Eike Stepper
  * @since 3.29
  */
-public interface IPropertiesEvent extends IEvent
+public class LogListener implements IListener
 {
-  public static final String PROP_TYPE = "type";
+  private final Level level;
 
-  public default String type()
+  public LogListener()
   {
-    Object type = properties().get(PROP_TYPE);
-    return type != null ? type.toString() : null;
+    this(Level.INFO);
   }
 
-  public Map<String, Object> properties();
+  public LogListener(Level level)
+  {
+    this.level = level;
+  }
+
+  public Level getLevel()
+  {
+    return level;
+  }
+
+  @Override
+  public void notifyEvent(IEvent event)
+  {
+    if (event != null)
+    {
+      OM.LOG.log(level, event.toString());
+    }
+  }
 }

@@ -120,6 +120,8 @@
       <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob" class="org.eclipse.net4j.util.StringTester"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob_ci" class="org.eclipse.net4j.util.StringTester"/>
       <factory productGroup="org.eclipse.net4j.util.metaFactories" type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
+      <simpleFactory productGroup="org.eclipse.net4j.util.event.listeners" type="log" productClass="org.eclipse.net4j.util.event.LogListener"/>
+
   </extension>
 
   <extension point="org.eclipse.net4j.util.elementProcessors">

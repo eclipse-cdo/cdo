@@ -20,27 +20,21 @@ import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.branch.CDOBranchPoint;
 import org.eclipse.emf.cdo.common.branch.CDOBranchVersion;
 import org.eclipse.emf.cdo.common.id.CDOID;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.revision.CDOAllRevisionsProvider;
 import org.eclipse.emf.cdo.common.revision.CDORevision;
 import org.eclipse.emf.cdo.common.revision.CDORevisionHandler;
-import org.eclipse.emf.cdo.common.util.CDOException;
 import org.eclipse.emf.cdo.server.ISession;
 import org.eclipse.emf.cdo.server.ITransaction;
 import org.eclipse.emf.cdo.server.IView;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStore.Props.ModelEvolutionMode;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
 import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
-import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Model;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater.LobRefsUpdateNotSupportedException;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.LobsTable;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PropertiesTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.server.internal.db.mapping.horizontal.MappingNames;
@@ -59,7 +53,6 @@ import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.db.IDBDatabase;
-import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.db.ddl.IDBField;
 import org.eclipse.net4j.db.ddl.IDBSchema;
 import org.eclipse.net4j.db.ddl.IDBTable;
@@ -69,14 +62,11 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.container.IManagedContainer;
+import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
-
-import org.eclipse.emf.ecore.EPackage;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -92,7 +82,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Timer;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 /**
  * The DBStore class is a core implementation of a database-backed store for the Eclipse CDO (Connected Data Objects) framework.
@@ -183,6 +172,8 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
 
   private IDBConnectionProvider dbConnectionProvider;
 
+  private IModelEvolutionSupport modelEvolutionSupport;
+
   @ExcludeFromDump
   private transient ProgressDistributor accessorWriteDistributor = createProgressDistributor();
 
@@ -251,6 +242,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     return defaultValue;
   }
 
+  @SuppressWarnings("unused")
   private String getProperty(String key, String defaultValue)
   {
     if (properties != null)
@@ -390,6 +382,17 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   public void setDBConnectionProvider(IDBConnectionProvider dbConnectionProvider)
   {
     this.dbConnectionProvider = dbConnectionProvider;
+  }
+
+  public IModelEvolutionSupport getModelEvolutionSupport()
+  {
+    return modelEvolutionSupport;
+  }
+
+  public void setModelEvolutionSupport(IModelEvolutionSupport modelEvolutionSupport)
+  {
+    checkInactive();
+    this.modelEvolutionSupport = modelEvolutionSupport;
   }
 
   @Override
@@ -673,6 +676,31 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   }
 
   @Override
+  public void triggerRestart(boolean withCrashRecovery)
+  {
+    if (getLifecycleState() == LifecycleState.ACTIVATING)
+    {
+      if (withCrashRecovery)
+      {
+        // Remove the shutdown flag to indicate that the repository is now active again.
+        // On next start, crash recovery will be performed because the flag is missing.
+        removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
+      }
+      else
+      {
+        // Set the shutdown flag to indicate that the repository was shut down gracefully.
+        // On next start, crash recovery will be skipped because the flag is present.
+        putPersistentProperty(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
+      }
+
+      // Restart.
+      throw new RestartException();
+    }
+
+    throw new IllegalStateException("Store is not activating: " + getLifecycleState());
+  }
+
+  @Override
   public boolean isFirstStart()
   {
     return firstTime;
@@ -941,106 +969,25 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
       repairAfterCrash();
     }
 
-    Boolean triggerCrashRecovery = evolveModels();
-    if (triggerCrashRecovery == Boolean.TRUE)
-    {
-      // Remove the shutdown flag to indicate that the repository is now active again.
-      // On next start, crash recovery will be performed because the flag is missing.
-      removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
-
-      // Restart with crash recovery.
-      throw new RestartException();
-    }
-    else if (triggerCrashRecovery == Boolean.FALSE)
-    {
-      // Set the shutdown flag to indicate that the repository was shut down gracefully.
-      // On next start, crash recovery will be skipped because the flag is present.
-      putPersistentProperty(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
-
-      // Restart without crash recovery.
-      throw new RestartException();
-    }
-
     // Remove the shutdown flag to indicate that the repository is now active again.
     // If we crash later, crash recovery will be performed because the flag is missing.
     removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
-  }
 
-  protected Boolean evolveModels() throws SQLException
-  {
-    ModelEvolutionMode mode = ModelEvolutionMode.parse(getProperty(Props.MODEL_EVOLUTION_MODE, ModelEvolutionMode.EVOLVE.name()));
-    if (mode == ModelEvolutionMode.DISABLED)
+    // Evolve models if needed.
+    if (modelEvolutionSupport != null)
     {
-      OM.LOG.info("Model evolution is disabled");
-      return null;
+      modelEvolutionSupport.setStore(this);
+      LifecycleUtil.activate(modelEvolutionSupport);
+
+      try
+      {
+        modelEvolutionSupport.evolveModels();
+      }
+      finally
+      {
+        LifecycleUtil.deactivate(modelEvolutionSupport);
+      }
     }
-
-    List<Model> models = loadModels();
-    List<Model> changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
-    if (changedModels.isEmpty())
-    {
-      // No changed models.
-      return null;
-    }
-
-    if (mode == ModelEvolutionMode.GUARD)
-    {
-      OM.LOG.error("Models have changed, but model evolution mode is GUARD. Changed models: " + changedModels);
-      throw new CDOException("Models have changed");
-    }
-
-    IModelEvolutionSupport modelEvolutionSupport = createModelEvolutionSupport();
-    ModelEvolutionContext modelEvolutionContext = createModelEvolutionContext(models, mode);
-    return modelEvolutionSupport.evolveModels(modelEvolutionContext);
-  }
-
-  protected List<Model> loadModels() throws SQLException
-  {
-    List<Model> models = new ArrayList<>();
-
-    EPackage.Registry packageRegistry = EPackage.Registry.INSTANCE;
-    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(packageRegistry);
-
-    IDBRowHandler modelRowHandler = (row, values) -> {
-      String id = (String)values[0];
-      CDOPackageUnit.Type originalType = CDOPackageUnit.Type.values()[DBUtil.asInt(values[1])];
-      long timeStamp = DBUtil.asLong(values[2]);
-      byte[] packageData = (byte[])values[3];
-
-      EPackage storedPackage = MetaDataManager.createEPackage(id, packageData, resourceSet);
-      EPackage registeredPackage = packageRegistry.getEPackage(id);
-
-      Model model = new Model(id, originalType, timeStamp, storedPackage, registeredPackage);
-      models.add(model);
-      return true;
-    };
-
-    try (Connection connection = getConnection())
-    {
-      PackageUnitsTable packageUnitsTable = tables().packageUnits();
-
-      DBUtil.select(connection, modelRowHandler, StringUtil.EMPTY, //
-          packageUnitsTable.id(), //
-          packageUnitsTable.originalType(), //
-          packageUnitsTable.timeStamp(), //
-          packageUnitsTable.packageData());
-    }
-
-    return models;
-  }
-
-  protected IModelEvolutionSupport createModelEvolutionSupport()
-  {
-    IManagedContainer container = getContainer();
-    String type = getProperty(Props.MODEL_EVOLUTION_SUPPORT_TYPE, "default");
-    String description = getProperty(Props.MODEL_EVOLUTION_SUPPORT_DESCRIPTION, null);
-    return container.createElement(IModelEvolutionSupport.PRODUCT_GROUP, type, description);
-  }
-
-  protected ModelEvolutionContext createModelEvolutionContext(List<Model> models, ModelEvolutionMode mode)
-  {
-    boolean dry = mode == ModelEvolutionMode.DRY;
-    return new ModelEvolutionContext(this, models, dry);
   }
 
   protected void repairAfterCrash()

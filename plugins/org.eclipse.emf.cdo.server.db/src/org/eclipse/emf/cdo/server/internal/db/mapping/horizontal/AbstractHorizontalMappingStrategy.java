@@ -50,6 +50,7 @@ import org.eclipse.net4j.db.ddl.IDBTable;
 import org.eclipse.net4j.util.IDChanger;
 import org.eclipse.net4j.util.ObjectUtil;
 import org.eclipse.net4j.util.concurrent.Holder;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.PropertiesEvent;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.om.monitor.OMMonitor;
@@ -653,8 +654,18 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       @Override
       public PropertiesEvent fire()
       {
-        context.fireEvent(this);
+        if (!EventUtil.fireEvent(context.getModelEvolutionSupport(), this))
+        {
+          fireEvent(this);
+        }
+
         return this;
+      }
+
+      @Override
+      protected String formatEventName()
+      {
+        return "ModelEvolutionEvent";
       }
     };
 

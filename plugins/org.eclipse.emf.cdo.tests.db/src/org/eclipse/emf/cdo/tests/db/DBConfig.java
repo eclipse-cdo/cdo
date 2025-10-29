@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;
@@ -43,6 +44,8 @@ public abstract class DBConfig extends RepositoryConfig
   public static final String CAPABILITY_INVERSE_LISTS = "DB.inverse.lists";
 
   public static final String PROP_TEST_MAPPING_STRATEGY = "test.repository.MappingStrategy";
+
+  public static final String PROP_TEST_MODEL_EVOLUTION_SUPPORT = "test.repository.ModelEvolutionSupport";
 
   private static final long serialVersionUID = 1L;
 
@@ -196,9 +199,10 @@ public abstract class DBConfig extends RepositoryConfig
     DataSource dataSource = createDataSource(repoName);
     IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(dataSource);
 
+    IModelEvolutionSupport modelEvolutionSupport = getTestModelEvolutionSupport();
     Map<String, String> props = createStoreProperties(repoName);
 
-    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider, props);
+    return CDODBUtil.createStore(mappingStrategy, dbAdapter, connectionProvider, modelEvolutionSupport, props);
   }
 
   protected Map<String, String> createStoreProperties(String repoName)
@@ -231,6 +235,11 @@ public abstract class DBConfig extends RepositoryConfig
   protected IMappingStrategy getTestMappingStrategy()
   {
     return (IMappingStrategy)getTestProperty(PROP_TEST_MAPPING_STRATEGY);
+  }
+
+  protected IModelEvolutionSupport getTestModelEvolutionSupport()
+  {
+    return (IModelEvolutionSupport)getTestProperty(PROP_TEST_MODEL_EVOLUTION_SUPPORT);
   }
 
   @Override

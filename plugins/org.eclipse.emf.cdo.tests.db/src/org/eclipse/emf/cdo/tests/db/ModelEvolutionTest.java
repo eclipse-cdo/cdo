@@ -12,12 +12,15 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
+
+import org.eclipse.net4j.util.event.LogListener;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -70,6 +73,9 @@ public class ModelEvolutionTest extends AbstractCDOTest
   {
     Map<String, Object> testProperties = super.getTestProperties();
     testProperties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
+    ModelEvolutionSupport modelEvolutionSupport = new ModelEvolutionSupport();
+    modelEvolutionSupport.addListener(new LogListener());
+    testProperties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, modelEvolutionSupport);
     return testProperties;
   }
 
@@ -98,7 +104,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
     // DBStore store = (DBStore)repository.getStore();
     // Map<EClass, IClassMapping> classMappings = store.getMappingStrategy().getClassMappings();
 
-    EPackage v2 = EcoreUtil.copy(V1);
+    EPackage v2 = registerPackage(EcoreUtil.copy(V1));
     EEnum v2Shape = (EEnum)v2.getEClassifier("Shape");
     EClass v2A = (EClass)v2.getEClassifier("A");
     EClass v2B = (EClass)v2.getEClassifier("B");
@@ -138,7 +144,6 @@ public class ModelEvolutionTest extends AbstractCDOTest
     v2Bname.setEType(EcorePackage.Literals.ESTRING);
     v2B.getEStructuralFeatures().add(0, v2Bname);
 
-    registerPackage(v2);
     restartRepository();
 
     CDOSession session = openSession();
@@ -182,11 +187,12 @@ public class ModelEvolutionTest extends AbstractCDOTest
     ref2.setEOpposite(ref1);
   }
 
-  private static void registerPackage(EPackage ePackage)
+  private static EPackage registerPackage(EPackage ePackage)
   {
     String nsURI = ePackage.getNsURI();
     RESOURCE_SET.createResource(URI.createURI(nsURI)).getContents().add(ePackage);
     PACKAGE_REGISTRY.put(nsURI, ePackage);
+    return ePackage;
   }
 
   private static EPackage createModelV1()
@@ -222,7 +228,6 @@ public class ModelEvolutionTest extends AbstractCDOTest
     // EAttribute B_shape =
     EMFUtil.createEAttribute(B, "shape", Shape);
 
-    registerPackage(model);
-    return model;
+    return registerPackage(model);
   }
 }

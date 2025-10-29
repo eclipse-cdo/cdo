@@ -242,6 +242,11 @@
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
         URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
       
+      <modelEvolutionSupport type="default" mode="evolve">
+        <modelLoader type="default"/>
+        <listener type="log"/>
+      </modelEvolutionSupport>
+      
       <!-- Example:
       <dbAdapter name="derby-embedded"/>
       <dataSource class="org.apache.derby.jdbc.EmbeddedDataSource"

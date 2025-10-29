@@ -391,6 +391,12 @@ public final class DBDatabase extends SetContainer<IDBConnection> implements IDB
     return adapter.convertString(resultSet, columnLabel, value);
   }
 
+  @Override
+  public String toString()
+  {
+    return "DBDatabase[schema=" + schema + "]";
+  }
+
   private ReadSchemaAccess createReadSchemaAccess()
   {
     if (TRACK_SCHEMA_ACCESS)

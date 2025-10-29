@@ -15,13 +15,17 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
 
 import org.eclipse.net4j.db.DBUtil;
 import org.eclipse.net4j.db.IDBAdapter;
 import org.eclipse.net4j.db.IDBConnectionProvider;
 import org.eclipse.net4j.util.ParameterAware;
+import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.collection.Tree;
 import org.eclipse.net4j.util.container.IManagedContainer;
 import org.eclipse.net4j.util.container.IManagedContainer.ContainerAware;
 
@@ -72,12 +76,14 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     IMappingStrategy mappingStrategy = getMappingStrategy(repositoryName, repositoryProperties, storeConfig);
     IDBAdapter dbAdapter = getDBAdapter(storeConfig);
     IDBConnectionProvider connectionProvider = dbAdapter.createConnectionProvider(getDataSource(storeConfig));
+    IModelEvolutionSupport modelEvolutionSupport = getModelEvolutionSupport(storeConfig);
     Map<String, String> storeProperties = RepositoryConfigurator.getProperties(storeConfig, 1, parameters, container);
 
     DBStore store = new DBStore();
     store.setMappingStrategy(mappingStrategy);
     store.setDBAdapter(dbAdapter);
     store.setDBConnectionProvider(connectionProvider);
+    store.setModelEvolutionSupport(modelEvolutionSupport);
     store.setProperties(storeProperties);
     return store;
   }
@@ -147,6 +153,32 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     }
 
     return DBUtil.createDataSource(properties);
+  }
+
+  private IModelEvolutionSupport getModelEvolutionSupport(Element storeConfig)
+  {
+    NodeList modelEvolutionSupportConfigs = storeConfig.getElementsByTagName("modelEvolutionSupport"); //$NON-NLS-1$
+    if (modelEvolutionSupportConfigs.getLength() > 1)
+    {
+      throw new IllegalStateException("At most one modelEvolutionSupport must be configured for DB store"); //$NON-NLS-1$
+    }
+
+    if (modelEvolutionSupportConfigs.getLength() == 0)
+    {
+      OM.LOG.info("Model evolution support disabled");
+      return null;
+    }
+
+    Element modelEvolutionSupportConfig = (Element)modelEvolutionSupportConfigs.item(0);
+
+    String type = getAttribute(modelEvolutionSupportConfig, "type"); //$NON-NLS-1$
+    if (StringUtil.isEmpty(type))
+    {
+      type = ModelEvolutionSupport.FACTORY_TYPE;
+    }
+
+    Tree config = Tree.XMLConverter.convertElementToTree(modelEvolutionSupportConfig, parameters);
+    return container.createElement(IModelEvolutionSupport.PRODUCT_GROUP, type, config);
   }
 
   private String getAttribute(Element element, String name)

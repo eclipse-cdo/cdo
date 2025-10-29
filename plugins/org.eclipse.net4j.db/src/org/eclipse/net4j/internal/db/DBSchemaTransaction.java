@@ -177,4 +177,10 @@ public final class DBSchemaTransaction implements IDBSchemaTransaction, Runnable
   {
     return workingCopy == null;
   }
+
+  @Override
+  public String toString()
+  {
+    return "SchemaTransaction[database=" + database + "]";
+  }
 }

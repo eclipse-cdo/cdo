@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 
 import org.eclipse.net4j.db.StatementBatcher;
-import org.eclipse.net4j.util.event.IEvent;
 import org.eclipse.net4j.util.event.INotifier.INotifier2;
 import org.eclipse.net4j.util.properties.IPropertiesContainer;
 
@@ -39,31 +38,27 @@ import java.util.function.Function;
  * @author Eike Stepper
  * @since 4.14
  */
-public interface IModelEvolutionSupport
+public interface IModelEvolutionSupport extends INotifier2
 {
   public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.modelEvolutionSupports"; //$NON-NLS-1$
+
+  public IDBStore getStore();
+
+  public void setStore(IDBStore store);
 
   /**
    * Evolves the models stored in the given DB store to match the currently registered EPackages.
    */
-  public boolean evolveModels(Context context) throws SQLException;
+  public void evolveModels() throws SQLException;
 
   /**
    * @author Eike Stepper
    */
-  public interface Context extends INotifier2, CDOTimeProvider, IPropertiesContainer
+  public interface Context extends CDOTimeProvider, IPropertiesContainer
   {
-    public void fireEvent(IEvent event);
-
-    public void log(Object message);
+    public IModelEvolutionSupport getModelEvolutionSupport();
 
     public IDBStore getStore();
-
-    public int getTotalUpdateCount();
-
-    public boolean isDry();
-
-    public StatementBatcher createStatementBatcher(Connection connection) throws SQLException;
 
     public List<Model> getModels();
 
@@ -79,6 +74,12 @@ public interface IModelEvolutionSupport
 
     public <F extends EStructuralFeature> void handleFeatureIDChanges(EClass storedClass, Function<EClass, Collection<F>> featureProvider,
         BiConsumer<Integer, Integer> handler);
+
+    public StatementBatcher createStatementBatcher(Connection connection) throws SQLException;
+
+    public void log(Object message);
+
+    public int getTotalUpdateCount();
   }
 
   /**
@@ -147,6 +148,16 @@ public interface IModelEvolutionSupport
     public String toString()
     {
       return "Model[id=" + id + ", originalType=" + originalType + ", timeStamp=" + timeStamp + "]";
+    }
+
+    /**
+     * @author Eike Stepper
+     */
+    public interface Loader
+    {
+      public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.modelLoaders"; //$NON-NLS-1$
+
+      public List<Model> loadModels(IDBStore store) throws SQLException;
     }
   }
 }

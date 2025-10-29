@@ -99,6 +99,21 @@ public final class CDODBUtil
     store.setDBAdapter(dbAdapter);
     store.setDBConnectionProvider(dbConnectionProvider);
     store.setProperties(properties);
+    return createStore(mappingStrategy, dbAdapter, dbConnectionProvider, null, properties);
+  }
+
+  /**
+   * @since 4.14
+   */
+  public static IDBStore createStore(IMappingStrategy mappingStrategy, IDBAdapter dbAdapter, IDBConnectionProvider dbConnectionProvider,
+      IModelEvolutionSupport modelEvolutionSupport, Map<String, String> properties)
+  {
+    DBStore store = new DBStore();
+    store.setMappingStrategy(mappingStrategy);
+    store.setDBAdapter(dbAdapter);
+    store.setDBConnectionProvider(dbConnectionProvider);
+    store.setModelEvolutionSupport(modelEvolutionSupport);
+    store.setProperties(properties);
     return store;
   }
 

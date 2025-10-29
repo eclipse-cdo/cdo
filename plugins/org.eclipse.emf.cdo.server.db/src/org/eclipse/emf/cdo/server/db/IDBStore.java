@@ -97,6 +97,25 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
   public IDBStoreAccessor getWriter(ITransaction transaction);
 
   /**
+   * Triggers a restart of the store.
+   * <p>
+   * If the store is in the ACTIVATING state, it will throw a RestartException to signal that a restart is required.
+   * The behavior of the restart depends on the value of the withCrashRecovery parameter:
+   * <ul>
+   * <li>If withCrashRecovery is true, the store will remove the shutdown flag (PROP_GRACEFULLY_SHUT_DOWN) from its persistent properties.
+   *      This indicates that the repository is now active again, and on the next start, crash recovery will be performed because the flag is missing.
+   * <li>If withCrashRecovery is false, the store will set the shutdown flag (PROP_GRACEFULLY_SHUT_DOWN) in its persistent properties.
+   *      This indicates that the repository was shut down gracefully, and on the next start, crash recovery will be skipped because the flag is present.
+   * </ul>
+   * <p>
+   * If the store is not in the ACTIVATING state, an IllegalStateException will be thrown, indicating that the store cannot be restarted in its current state.
+   *
+   * @param withCrashRecovery if true, the store will perform crash recovery on the next start; if false, it will skip crash recovery.
+   * @since 4.14
+   */
+  public void triggerRestart(boolean withCrashRecovery);
+
+  /**
    * Called back from {@link IDBStore#visitAllTables(Connection, TableVisitor)} for all tables in the database.
    *
    * @author Eike Stepper
@@ -189,51 +208,5 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
      * @since 4.4
      */
     public static final String JDBC_FETCH_SIZE = "jdbcFetchSize"; //$NON-NLS-1$
-
-    /**
-     * Can have the following values:
-     * <ul>
-     * <li>"DISABLED" - No model evolution support</li>
-     * <li>"GUARD" - Prevent model changes only</li>
-     * <li>"DRY" - Evolve models without persisting changes</li>
-     * <li>"EVOLVE" - Evolve models automatically (default)</li>
-     * @since 4.14
-     */
-    public static final String MODEL_EVOLUTION_MODE = "modelEvolutionMode"; //$NON-NLS-1$
-
-    /**
-     * @since 4.14
-     */
-    public static final String MODEL_EVOLUTION_SUPPORT_TYPE = "modelEvolutionSupportType"; //$NON-NLS-1$
-
-    /**
-     * @since 4.14
-     */
-    public static final String MODEL_EVOLUTION_SUPPORT_DESCRIPTION = "modelEvolutionSupportDescription"; //$NON-NLS-1$
-
-    /**
-     * @author Eike Stepper
-     * @since 4.14
-     */
-    public enum ModelEvolutionMode
-    {
-      DISABLED, GUARD, DRY, EVOLVE;
-
-      public static ModelEvolutionMode parse(String str)
-      {
-        if (str != null)
-        {
-          for (ModelEvolutionMode mode : values())
-          {
-            if (mode.name().equalsIgnoreCase(str))
-            {
-              return mode;
-            }
-          }
-        }
-
-        return null;
-      }
-    }
   }
 }

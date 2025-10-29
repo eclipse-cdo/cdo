@@ -16,8 +16,9 @@
    <extension-point id="mappingStrategies" name="%extension-point.name" schema="schema/mappingStrategies.exsd"/>
    
    <extension point="org.eclipse.net4j.util.productGroups">
-       <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name"/>
-       <productGroup id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup2.name"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name.typeMappingProviders"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup.modelEvolutionSupports"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.modelLoaders" name="%productGroup.name.modelLoaders"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -33,10 +34,14 @@
             productGroup="org.eclipse.emf.cdo.server.db.typeMappingProviders"
             type="registry"
             class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory"/>
-      <simpleFactory
-            productGroup="org.eclipse.emf.cdo.server.db.modelEvolutionSupports"
-            type="default"
+      <annotationFactory 
+            productGroup="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" 
+            type="default" 
             productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport"/>
+      <annotationFactory 
+            productGroup="org.eclipse.emf.cdo.server.db.modelLoaders" 
+            type="default" 
+            productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport$DefaultModelLoader"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.server.storeFactories">

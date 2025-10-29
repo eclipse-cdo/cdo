@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
 import org.eclipse.emf.cdo.server.db.IDBStore;
+import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Context;
 import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Model;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
@@ -21,7 +22,6 @@ import org.eclipse.net4j.db.StatementBatcher;
 import org.eclipse.net4j.db.StatementBatcher.BatchEvent;
 import org.eclipse.net4j.db.StatementBatcher.CloseEvent;
 import org.eclipse.net4j.db.StatementBatcher.ResultEvent;
-import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
 
@@ -41,20 +41,17 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @author Eike Stepper
  */
-public final class ModelEvolutionContext extends Notifier implements Context
+public final class ModelEvolutionContext implements Context
 {
   private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
-  private final IDBStore store;
+  private final IModelEvolutionSupport modelEvolutionSupport;
 
   private final long timeStamp;
-
-  private final boolean dry;
 
   private final List<Model> models;
 
@@ -68,15 +65,13 @@ public final class ModelEvolutionContext extends Notifier implements Context
 
   private final AtomicInteger totalUpdateCount = new AtomicInteger();
 
-  public ModelEvolutionContext(IDBStore store, List<Model> models, boolean dry)
+  public ModelEvolutionContext(IModelEvolutionSupport modelEvolutionSupport, List<Model> models, List<Model> changedModels)
   {
-    timeStamp = store.getRepository().getTimeStamp();
-
-    this.store = store;
-    this.dry = dry;
+    this.modelEvolutionSupport = modelEvolutionSupport;
     this.models = models;
+    this.changedModels = changedModels;
 
-    changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
+    timeStamp = getStore().getRepository().getTimeStamp();
 
     models.forEach(model -> {
       EPackage storedPackage = model.getStoredPackage();
@@ -101,9 +96,15 @@ public final class ModelEvolutionContext extends Notifier implements Context
   }
 
   @Override
+  public IModelEvolutionSupport getModelEvolutionSupport()
+  {
+    return modelEvolutionSupport;
+  }
+
+  @Override
   public IDBStore getStore()
   {
-    return store;
+    return modelEvolutionSupport.getStore();
   }
 
   @Override
@@ -116,12 +117,6 @@ public final class ModelEvolutionContext extends Notifier implements Context
   public int getTotalUpdateCount()
   {
     return totalUpdateCount.get();
-  }
-
-  @Override
-  public boolean isDry()
-  {
-    return dry;
   }
 
   @Override

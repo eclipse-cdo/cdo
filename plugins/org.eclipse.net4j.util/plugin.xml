@@ -47,6 +47,8 @@
       <factory productGroup="org.eclipse.net4j.authenticators" type="file" class="org.eclipse.net4j.util.security.FileAuthenticatorFactory"/>
       <factory productGroup="org.eclipse.net4j.Negotiators" type="challenge" class="org.eclipse.net4j.util.security.ChallengeNegotiatorFactory"/>
       <factory productGroup="org.eclipse.net4j.util.confirmationProviders" type="default" class="org.eclipse.net4j.util.confirmation.IConfirmationProvider$Factory$Default"/>
+      <factory productGroup="org.eclipse.net4j.util.metaFactories" type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
+      <simpleFactory productGroup="org.eclipse.net4j.util.event.listeners" type="log" productClass="org.eclipse.net4j.util.event.LogListener"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="identity" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="chars" class="org.eclipse.net4j.util.StringConverter"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringConverters" type="safe" class="org.eclipse.net4j.util.StringConverter"/>
@@ -119,8 +121,6 @@
       <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="regex_find_ci" class="org.eclipse.net4j.util.StringTester"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob" class="org.eclipse.net4j.util.StringTester"/>
       <constantFactory productGroup="org.eclipse.net4j.util.stringTesters" type="glob_ci" class="org.eclipse.net4j.util.StringTester"/>
-      <factory productGroup="org.eclipse.net4j.util.metaFactories" type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory"/>
-      <simpleFactory productGroup="org.eclipse.net4j.util.event.listeners" type="log" productClass="org.eclipse.net4j.util.event.LogListener"/>
 
   </extension>
 

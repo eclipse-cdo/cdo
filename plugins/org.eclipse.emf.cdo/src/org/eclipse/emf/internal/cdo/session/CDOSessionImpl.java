@@ -184,6 +184,9 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
 {
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG_SESSION, CDOSessionImpl.class);
 
+  private static final boolean DEFAULT_GENERATED_PACKAGE_EMULATION_ENABLED = OMPlatform.INSTANCE
+      .isProperty("org.eclipse.emf.internal.cdo.session.CDOSessionImpl.DEFAULT_GENERATED_PACKAGE_EMULATION_ENABLED");
+
   private static final boolean DEBUG_INVALIDATION = OMPlatform.INSTANCE.isProperty( //
       "org.eclipse.emf.internal.cdo.session.CDOSessionImpl.DEBUG_INVALIDATION");
 
@@ -1908,7 +1911,7 @@ public abstract class CDOSessionImpl extends CDOTransactionContainerImpl impleme
    */
   protected class OptionsImpl extends Notifier implements Options
   {
-    private boolean generatedPackageEmulationEnabled;
+    private boolean generatedPackageEmulationEnabled = DEFAULT_GENERATED_PACKAGE_EMULATION_ENABLED;
 
     private boolean passiveUpdateEnabled = true;
 

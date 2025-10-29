@@ -15,6 +15,7 @@ import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.collection.ConcurrentArray;
 import org.eclipse.net4j.util.event.IListener.NotifierAware;
 import org.eclipse.net4j.util.event.INotifier.INotifier2;
+import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
 import java.util.concurrent.ExecutorService;
@@ -84,6 +85,7 @@ public class Notifier implements INotifier2
   }
 
   @Override
+  @InjectElement(name = "listener", productGroup = EventUtil.PRODUCT_GROUP_LISTENERS)
   public void addListener(IListener listener)
   {
     CheckUtil.checkArg(listener, "listener"); //$NON-NLS-1$

@@ -19,23 +19,24 @@
   <extension-point id="elementProcessors" name="%extpoint.name.elementProcessors" schema="schema/elementProcessors.exsd"/>
 
   <extension point="org.eclipse.net4j.util.productGroups">
-     <productGroup id="org.eclipse.net4j.util.metaFactories" name="%productGroup.name.mf"/>
-     <productGroup id="org.eclipse.net4j.util.timers" name="%productGroup.name"/>
-     <productGroup id="org.eclipse.net4j.executorServices" name="%productGroup.name.0"/>
-     <productGroup id="org.eclipse.net4j.randomizers" name="%productGroup.name.1"/>
-     <productGroup id="org.eclipse.net4j.streamWrappers" name="%productGroup.name.2"/>
-     <productGroup id="org.eclipse.net4j.util.concurrent.delegateDetectors" name="%productGroup.name.3"/>
-     <productGroup id="org.eclipse.net4j.userManagers" name="%productGroup.name.4"/>
-     <productGroup id="org.eclipse.net4j.Negotiators" name="%productGroup.name.5"/>
-     <productGroup id="org.eclipse.net4j.authenticators" name="%productGroup.name.6"/>
-     <productGroup id="org.eclipse.net4j.util.security.credentialsProviders" name="%productGroup.name.7"/>
-     <productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="%productGroup.name.8"/>
-     <productGroup id="org.eclipse.net4j.util.confirmationProviders" name="%productGroup.name.9"/>
-     <productGroup id="org.eclipse.net4j.util.stringConverters" name="%productGroup.name.10"/>
-     <productGroup id="org.eclipse.net4j.util.stringParsers" name="%productGroup.name.11"/>
-     <productGroup id="org.eclipse.net4j.util.stringTesters" name="%productGroup.name.12"/>
-     <productGroup id="org.eclipse.net4j.util.security.crypters" name="%productGroup.name.13"/>
-     <productGroup id="org.eclipse.net4j.util.exceptionHandlers" name="%productGroup.name.14"/>
+     <productGroup id="org.eclipse.net4j.Negotiators" name="%productGroup.name.Negotiators"/>
+     <productGroup id="org.eclipse.net4j.authenticators" name="%productGroup.name.authenticators"/>
+     <productGroup id="org.eclipse.net4j.executorServices" name="%productGroup.name.executorServices"/>
+     <productGroup id="org.eclipse.net4j.randomizers" name="%productGroup.name.randomizers"/>
+     <productGroup id="org.eclipse.net4j.streamWrappers" name="%productGroup.name.streamWrappers"/>
+     <productGroup id="org.eclipse.net4j.userManagers" name="%productGroup.name.userManagers"/>
+     <productGroup id="org.eclipse.net4j.util.concurrent.delegateDetectors" name="%productGroup.name.delegateDetectors"/>
+     <productGroup id="org.eclipse.net4j.util.confirmationProviders" name="%productGroup.name.confirmationProviders"/>
+     <productGroup id="org.eclipse.net4j.util.event.listeners" name="%productGroup.name.listeners"/>
+     <productGroup id="org.eclipse.net4j.util.exceptionHandlers" name="%productGroup.name.exceptionHandlers"/>
+     <productGroup id="org.eclipse.net4j.util.metaFactories" name="%productGroup.name.metaFactories"/>
+     <productGroup id="org.eclipse.net4j.util.security.authorizableOperations" name="%productGroup.name.authorizableOperations"/>
+     <productGroup id="org.eclipse.net4j.util.security.credentialsProviders" name="%productGroup.name.credentialsProviders"/>
+     <productGroup id="org.eclipse.net4j.util.security.crypters" name="%productGroup.name.crypters"/>
+     <productGroup id="org.eclipse.net4j.util.stringConverters" name="%productGroup.name.stringConverters"/>
+     <productGroup id="org.eclipse.net4j.util.stringParsers" name="%productGroup.name.stringParsers"/>
+     <productGroup id="org.eclipse.net4j.util.stringTesters" name="%productGroup.name.stringTesters"/>
+     <productGroup id="org.eclipse.net4j.util.timers" name="%productGroup.name.timers"/>
   </extension>
 
   <extension point="org.eclipse.net4j.util.factories">

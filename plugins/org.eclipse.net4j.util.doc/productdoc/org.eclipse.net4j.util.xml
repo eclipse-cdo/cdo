@@ -45,6 +45,9 @@
 	<productGroup id="org.eclipse.net4j.executorServices" name="Executor Services" description="" deprecated="false">
 		<factory type="default" class="org.eclipse.net4j.util.concurrent.ExecutorServiceFactory" contributor="org.eclipse.net4j.util"/>
 	</productGroup>
+	<productGroup id="org.eclipse.net4j.util.event.listeners" name="Listeners" description="" deprecated="false">
+		<factory type="log" class="org.eclipse.net4j.internal.util.factory.SimpleFactory" info="product=org.eclipse.net4j.util.event.LogListener" contributor="org.eclipse.net4j.util"/>
+	</productGroup>
 	<productGroup id="org.eclipse.net4j.util.metaFactories" name="Meta Factories" description="" deprecated="false">
 		<factory type="org.eclipse.net4j.util.security.crypters" class="org.eclipse.net4j.util.security.Crypter$MetaFactory" contributor="org.eclipse.net4j.util"/>
 	</productGroup>

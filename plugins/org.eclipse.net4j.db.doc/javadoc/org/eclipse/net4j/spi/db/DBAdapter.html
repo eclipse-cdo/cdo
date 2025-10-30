@@ -119,9 +119,12 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Klasse</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><code>protected static final class&nbsp;</code></div>
+<div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
 <div class="col-second even-row-color"><code><a href="DBAdapter.FieldInfo.html" class="type-name-link" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="DBAdapter.IndexInfo.html" class="type-name-link" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -213,71 +216,87 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createConstraints(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">createConstraints</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
  <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createFieldDefinition</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">createFieldDefinitions</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>createField(Connection, IDBField)</code></a> instead.</div>
+</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)" class="member-name-link">createIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createFieldDefinition</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createFieldDefinitions(org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">createFieldDefinitions</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)" class="member-name-link">createIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
  <a href="../../db/ddl/delta/IDBIndexDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBIndexDelta</a>&nbsp;delta)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createIndex</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.sql.Statement,int)" class="member-name-link">createIndex</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
- int&nbsp;num)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createIndex</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createIndexFields</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndex(org.eclipse.net4j.db.ddl.IDBIndex,java.sql.Statement,int)" class="member-name-link">createIndex</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
+ int&nbsp;num)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="Klasse oder Schnittstelle in javax.sql" class="external-link">DataSource</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#createJDBCDataSource()" class="member-name-link">createJDBCDataSource</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createIndexFields(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createIndexFields</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/javax/sql/DataSource.html" title="Klasse oder Schnittstelle in javax.sql" class="external-link">DataSource</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#createJDBCDataSource()" class="member-name-link">createJDBCDataSource</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createPrimaryKey</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createPrimaryKey(org.eclipse.net4j.db.ddl.IDBIndex,java.lang.StringBuilder)" class="member-name-link">createPrimaryKey</a><wbr>(<a href="../../db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a>&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createSchema(java.sql.Connection,java.lang.String)" class="member-name-link">createSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createSchema(java.sql.Connection,java.lang.String)" class="member-name-link">createSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;schemaName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)" class="member-name-link">createTable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="../../db/ddl/delta/IDBTableDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">doCreateTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTable(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,org.eclipse.net4j.db.ddl.delta.IDBTableDelta)" class="member-name-link">createTable</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="../../db/ddl/delta/IDBTableDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a>&nbsp;delta)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">createTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#createTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">createTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropField(java.sql.Connection,java.lang.String,java.lang.String)" class="member-name-link">dropField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">doCreateTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#dropField(java.sql.Connection,java.lang.String,java.lang.String)" class="member-name-link">dropField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>dropField(Connection, IDBField)</code></a> instead.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">dropField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#dropIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)" class="member-name-link">dropIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
@@ -329,151 +348,161 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the column length for the given database type.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Driver.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Driver</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getJDBCDriver()" class="member-name-link">getJDBCDriver</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)" class="member-name-link">getIndexInfos</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;schemaName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a>&gt;&nbsp;consumer)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Driver.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Driver</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getJDBCDriver()" class="member-name-link">getJDBCDriver</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
 </div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxFieldNameLength()" class="member-name-link">getMaxFieldNameLength</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxTableNameLength()" class="member-name-link">getMaxTableNameLength</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxFieldNameLength()" class="member-name-link">getMaxFieldNameLength</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMaxTableNameLength()" class="member-name-link">getMaxTableNameLength</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNullableConstraint()" class="member-name-link">getNullableConstraint</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getName()" class="member-name-link">getName</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSQL92ReservedWords()" class="member-name-link">getSQL92ReservedWords</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNullableConstraint()" class="member-name-link">getNullableConstraint</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">getTypeName</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSQL92ReservedWords()" class="member-name-link">getSQL92ReservedWords</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVersion()" class="member-name-link">getVersion</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeName(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">getTypeName</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCaseSensitive()" class="member-name-link">isCaseSensitive</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getVersion()" class="member-name-link">getVersion</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isColumnNotFoundException(java.sql.SQLException)" class="member-name-link">isColumnNotFoundException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isCaseSensitive()" class="member-name-link">isCaseSensitive</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDuplicateKeyException(java.sql.SQLException)" class="member-name-link">isDuplicateKeyException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isColumnNotFoundException(java.sql.SQLException)" class="member-name-link">isColumnNotFoundException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDuplicateKeyException(java.sql.SQLException)" class="member-name-link">isDuplicateKeyException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if an exception indicates a constraint violation (duplicate key)</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPrimaryKeyShadow(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField%5B%5D)" class="member-name-link">isPrimaryKeyShadow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isPrimaryKeyShadow(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,org.eclipse.net4j.db.ddl.IDBField%5B%5D)" class="member-name-link">isPrimaryKeyShadow</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="../../db/ddl/IDBIndex.Type.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl">IDBIndex.Type</a>&nbsp;type,
  <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>[]&nbsp;fields)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isReservedWord(java.lang.String)" class="member-name-link">isReservedWord</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;word)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTableNotFoundException(java.sql.SQLException)" class="member-name-link">isTableNotFoundException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isReservedWord(java.lang.String)" class="member-name-link">isReservedWord</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;word)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../../db/DBType.html" title="Enum-Klasse in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTableNotFoundException(java.sql.SQLException)" class="member-name-link">isTableNotFoundException</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a>&nbsp;ex)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidFirstChar(char)" class="member-name-link">isValidFirstChar</a><wbr>(char&nbsp;ch)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isTypeIndexable(org.eclipse.net4j.db.DBType)" class="member-name-link">isTypeIndexable</a><wbr>(<a href="../../db/DBType.html" title="Enum-Klasse in org.eclipse.net4j.db">DBType</a>&nbsp;type)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isValidFirstChar(char)" class="member-name-link">isValidFirstChar</a><wbr>(char&nbsp;ch)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Check if a character is valid as first character.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyConnection(java.sql.Connection)" class="member-name-link">modifyConnection</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../db/IDBSchemaTransaction.html" title="Schnittstelle in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../../db/IDBDatabase.html" title="Schnittstelle in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
- <a href="../../db/IDBConnection.html" title="Schnittstelle in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#modifyConnection(java.sql.Connection)" class="member-name-link">modifyConnection</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readFields(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">readFields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../db/IDBSchemaTransaction.html" title="Schnittstelle in org.eclipse.net4j.db">IDBSchemaTransaction</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#openSchemaTransaction(org.eclipse.net4j.db.IDBDatabase,org.eclipse.net4j.db.IDBConnection)" class="member-name-link">openSchemaTransaction</a><wbr>(<a href="../../db/IDBDatabase.html" title="Schnittstelle in org.eclipse.net4j.db">IDBDatabase</a>&nbsp;database,
+ <a href="../../db/IDBConnection.html" title="Schnittstelle in org.eclipse.net4j.db">IDBConnection</a>&nbsp;currentConnection)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readIndices(java.sql.Connection,java.sql.DatabaseMetaData,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">readIndices</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readFields(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">readFields</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readIndices(java.sql.Connection,java.sql.DatabaseMetaData,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">readIndices</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData,
  <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;schemaName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)" class="member-name-link">readIndices</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)" class="member-name-link">readIndices</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
  <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  int&nbsp;indexNameColumn,
  int&nbsp;indexTypeColumn,
  int&nbsp;fieldNameColumn,
  int&nbsp;fieldPositionColumn)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../db/ddl/IDBSchema.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readSchema(java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 no longer supported.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../db/ddl/IDBSchema.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchema</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readSchema(java.sql.Connection,java.lang.String)" class="member-name-link">readSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">readSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="../../db/ddl/IDBSchema.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readTables(java.sql.Connection,java.sql.DatabaseMetaData,java.lang.String)" class="member-name-link">readTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">readSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../../db/ddl/IDBSchema.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readTables(java.sql.Connection,java.sql.DatabaseMetaData,java.lang.String)" class="member-name-link">readTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;schemaName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlCharIndex(java.lang.Object,java.lang.Object)" class="member-name-link">sqlCharIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;substring,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlCharIndex(java.lang.Object,java.lang.Object)" class="member-name-link">sqlCharIndex</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;substring,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;string)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlCharIndexFunction()" class="member-name-link">sqlCharIndexFunction</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlConcat(java.lang.Object...)" class="member-name-link">sqlConcat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>...&nbsp;strings)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlModifyField(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">sqlModifyField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;definition)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">sqlModifyField</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)" class="member-name-link">sqlRenameField</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;oldName)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstring(java.lang.Object,java.lang.Object)" class="member-name-link">sqlSubstring</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;string,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;startIndex)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstring(java.lang.Object,java.lang.Object,java.lang.Object)" class="member-name-link">sqlSubstring</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;string,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;startIndex,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;length)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstringFunction()" class="member-name-link">sqlSubstringFunction</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlCharIndexFunction()" class="member-name-link">sqlCharIndexFunction</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlConcat(java.lang.Object...)" class="member-name-link">sqlConcat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>...&nbsp;strings)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlModifyField(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">sqlModifyField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;definition)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlModifyField(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">sqlModifyField</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)" class="member-name-link">sqlRenameField</a><wbr>(<a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;oldName)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstring(java.lang.Object,java.lang.Object)" class="member-name-link">sqlSubstring</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;string,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;startIndex)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstring(java.lang.Object,java.lang.Object,java.lang.Object)" class="member-name-link">sqlSubstring</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;string,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;startIndex,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;length)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#sqlSubstringFunction()" class="member-name-link">sqlSubstringFunction</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateSchema(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBSchemaDelta)" class="member-name-link">updateSchema</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../../db/ddl/IDBSchema.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchema</a>&nbsp;schema,
  <a href="../../db/ddl/delta/IDBSchemaDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBSchemaDelta</a>&nbsp;delta)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#validateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">validateTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#validateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">validateTable</a><wbr>(<a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -667,25 +696,6 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 </section>
 </li>
 <li>
-<section class="detail" id="readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)">
-<h3>readIndices</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readIndices</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
- <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
- int&nbsp;indexNameColumn,
- int&nbsp;indexTypeColumn,
- int&nbsp;fieldNameColumn,
- int&nbsp;fieldPositionColumn)</span>
-                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
-<dl class="notes">
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code></dd>
-<dt>Seit:</dt>
-<dd>4.2</dd>
-</dl>
-</section>
-</li>
-<li>
 <section class="detail" id="addIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String,org.eclipse.net4j.db.ddl.IDBIndex.Type,java.util.List)">
 <h3>addIndex</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addIndex</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
@@ -767,26 +777,24 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 </section>
 </li>
 <li>
-<section class="detail" id="createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)">
+<section class="detail" id="createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)">
 <h3>createField</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
  <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
-<dd>4.6</dd>
+<dd>4.13</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="dropField(java.sql.Connection,java.lang.String,java.lang.String)">
+<section class="detail" id="dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)">
 <h3>dropField</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dropField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
+ <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</span></div>
 <dl class="notes">
 <dt>Seit:</dt>
-<dd>4.6</dd>
+<dd>4.13</dd>
 </dl>
 </section>
 </li>
@@ -1357,6 +1365,22 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 </section>
 </li>
 <li>
+<section class="detail" id="getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)">
+<h3>getIndexInfos</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getIndexInfos</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/DatabaseMetaData.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">DatabaseMetaData</a>&nbsp;metaData,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;schemaName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a>&gt;&nbsp;consumer)</span>
+                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.13</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getDefaultDBLength(org.eclipse.net4j.db.DBType)">
 <h3>getDefaultDBLength</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getDefaultDBLength</span><wbr><span class="parameters">(<a href="../../db/DBType.html" title="Enum-Klasse in org.eclipse.net4j.db">DBType</a>&nbsp;type)</span></div>
@@ -1377,6 +1401,61 @@ implements <a href="../../db/IDBAdapter.html" title="Schnittstelle in org.eclips
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code></dd>
 <dt>Seit:</dt>
 <dd>4.9</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)">
+<h3>readIndices</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">readIndices</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+ <a href="../../db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
+ int&nbsp;indexNameColumn,
+ int&nbsp;indexTypeColumn,
+ int&nbsp;fieldNameColumn,
+ int&nbsp;fieldPositionColumn)</span>
+                    throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 no longer supported. Use <a href="#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)"><code>getIndexInfos(DatabaseMetaData, String, String, Consumer)</code></a> instead.</div>
+</div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)">
+<h3>createField</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">createField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
+ <a href="../../db/ddl/IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>createField(Connection, IDBField)</code></a> instead.</div>
+</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.6</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="dropField(java.sql.Connection,java.lang.String,java.lang.String)">
+<h3>dropField</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">dropField</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>dropField(Connection, IDBField)</code></a> instead.</div>
+</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.6</dd>
 </dl>
 </section>
 </li>

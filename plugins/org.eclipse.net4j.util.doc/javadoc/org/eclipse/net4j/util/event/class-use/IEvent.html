@@ -212,6 +212,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.net4j.util.event">
 <h2>Verwendungen von <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a> in <a href="../package-summary.html">org.eclipse.net4j.util.event</a></h2>
+<div class="caption"><span>Unterschnittstellen von <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a> in <a href="../package-summary.html">org.eclipse.net4j.util.event</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Schnittstelle</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../IPropertiesEvent.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.util.event">IPropertiesEvent</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Klassen in <a href="../package-summary.html">org.eclipse.net4j.util.event</a>, die <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a> implementieren</span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -227,14 +236,17 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">An <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event"><code>IEvent</code></a> that is fired after a method has called a handler multiple times.</div>
 </div>
-<div class="col-first even-row-color"><code>final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../ThrowableEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.util.event">ThrowableEvent</a></code></div>
-<div class="col-last even-row-color">
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../PropertiesEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.util.event">PropertiesEvent</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../ThrowableEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.util.event">ThrowableEvent</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">An <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event"><code>IEvent</code></a> typically fired from <a href="../INotifier.html" title="Schnittstelle in org.eclipse.net4j.util.event"><code>notifiers</code></a> that execute operations in the background.</div>
 </div>
-<div class="col-first odd-row-color"><code>class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="../ValueEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.util.event">ValueEvent</a>&lt;VALUE&gt;</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>class&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../ValueEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.util.event">ValueEvent</a>&lt;VALUE&gt;</code></div>
+<div class="col-last even-row-color">
 <div class="block">An <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event"><code>IEvent</code></a> fired from <a href="../ValueNotifier.html" title="Klasse in org.eclipse.net4j.util.event"><code>value notifiers</code></a> after value changes.</div>
 </div>
 </div>
@@ -263,18 +275,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Notifier.</span><code><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">fireEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">EventUtil.</span><code><a href="../EventUtil.html#fireEvent(java.lang.Object,org.eclipse.net4j.util.event.IEvent)" class="member-name-link">fireEvent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">Notifier.</span><code><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)" class="member-name-link">fireEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
- <a href="../IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;listeners)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Notifier.</span><code><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">fireEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">EventPrinter.</span><code><a href="../EventPrinter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Notifier.</span><code><a href="../Notifier.html#fireEvent(org.eclipse.net4j.util.event.IEvent,org.eclipse.net4j.util.event.IListener%5B%5D)" class="member-name-link">fireEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event,
+ <a href="../IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]&nbsp;listeners)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListener.</span><code><a href="../IListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">EventPrinter.</span><code><a href="../EventPrinter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListener.</span><code><a href="../IListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">LogListener.</span><code><a href="../LogListener.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>final void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">ThrowableEventAdapter.</span><code><a href="../ThrowableEventAdapter.html#notifyEvent(org.eclipse.net4j.util.event.IEvent)" class="member-name-link">notifyEvent</a><wbr>(<a href="../IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>

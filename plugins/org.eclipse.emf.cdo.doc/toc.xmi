@@ -200,7 +200,9 @@
     <packages name="org.eclipse.emf.cdo.server.db"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
-    <productGroups id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO Type Mapping Providers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup.modelEvolutionSupports" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.modelLoaders" name="CDO DB Model Loaders" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO DB Type Mapping Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.embedded" label="CDO Model Repository Server Embedded Support">
     <packages name="org.eclipse.emf.cdo.server.embedded"/>

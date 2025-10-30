@@ -180,6 +180,9 @@ loadScripts(document, 'script');</script>
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.concurrent.Worker">Von Klasse geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.concurrent.Worker</h2>
 <code>org.eclipse.net4j.util.concurrent.Worker.Terminate, org.eclipse.net4j.util.concurrent.Worker.WorkContext</code></div>
 <div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Von Klasse geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.event.Notifier</h2>
+<code>org.eclipse.net4j.util.event.Notifier.Cancelation</code></div>
+<div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
 <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></div>
 <div class="inherited-list">
@@ -238,29 +241,37 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#formatTimeStamp(long)" class="member-name-link">formatTimeStamp</a><wbr>(long&nbsp;timeStamp)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.container.IManagedContainer</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPagesContainer()" class="member-name-link">getPagesContainer</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="CDOServerBrowser.Page.html" title="Schnittstelle in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPage(java.lang.String)" class="member-name-link">getPage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected org.eclipse.net4j.util.container.IManagedContainer</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPagesContainer()" class="member-name-link">getPagesContainer</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParam(java.lang.String)" class="member-name-link">getParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPort()" class="member-name-link">getPort</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="../spi/server/InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepositories()" class="member-name-link">getRepositories</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../spi/server/InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepositoryNames()" class="member-name-link">getRepositoryNames</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThreadName()" class="member-name-link">getThreadName</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#href(java.lang.String,java.lang.String,java.lang.String...)" class="member-name-link">href</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;label,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;resource,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;params)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getParam(java.lang.String)" class="member-name-link">getParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPort()" class="member-name-link">getPort</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="../spi/server/InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepositories()" class="member-name-link">getRepositories</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../spi/server/InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepository(java.lang.String)" class="member-name-link">getRepository</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepositoryNames()" class="member-name-link">getRepositoryNames</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getThreadName()" class="member-name-link">getThreadName</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#href(java.lang.String,java.lang.String,java.lang.String...)" class="member-name-link">href</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;label,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#href(org.eclipse.net4j.util.collection.Pair,java.lang.String,java.lang.String...)" class="member-name-link">href</a><wbr>(org.eclipse.net4j.util.collection.Pair&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;labelAndTooltip,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;resource,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;params)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -270,28 +281,31 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initParams(java.lang.String)" class="member-name-link">initParams</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;params)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isParam(java.lang.String)" class="member-name-link">isParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initStyles(java.util.Map)" class="member-name-link">initStyles</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;styles)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printHeader(java.io.PrintStream)" class="member-name-link">printHeader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isParam(java.lang.String)" class="member-name-link">isParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeParam(java.lang.String)" class="member-name-link">removeParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#printHeader(java.io.PrintStream)" class="member-name-link">printHeader</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPort(int)" class="member-name-link">setPort</a><wbr>(int&nbsp;port)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#removeParam(java.lang.String)" class="member-name-link">removeParam</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;key)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showMenu(java.io.PrintStream)" class="member-name-link">showMenu</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setPort(int)" class="member-name-link">setPort</a><wbr>(int&nbsp;port)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showPage(java.io.PrintStream,org.eclipse.emf.cdo.server.CDOServerBrowser.Page)" class="member-name-link">showPage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout,
- <a href="CDOServerBrowser.Page.html" title="Schnittstelle in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a>&nbsp;page)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showMenu(java.io.PrintStream)" class="member-name-link">showMenu</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#work(org.eclipse.net4j.util.concurrent.Worker.WorkContext)" class="member-name-link">work</a><wbr>(org.eclipse.net4j.util.concurrent.Worker.WorkContext&nbsp;context)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#showPage(java.io.PrintStream,org.eclipse.emf.cdo.server.CDOServerBrowser.Page)" class="member-name-link">showPage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/PrintStream.html" title="Klasse oder Schnittstelle in java.io" class="external-link">PrintStream</a>&nbsp;pout,
+ <a href="CDOServerBrowser.Page.html" title="Schnittstelle in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a>&nbsp;page)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#work(org.eclipse.net4j.util.concurrent.Worker.WorkContext)" class="member-name-link">work</a><wbr>(org.eclipse.net4j.util.concurrent.Worker.WorkContext&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -373,6 +387,16 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="initStyles(java.util.Map)">
+<h3>initStyles</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initStyles</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;styles)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="clearParams()">
 <h3>clearParams</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">clearParams</span>()</div>
@@ -406,6 +430,18 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">href</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;label,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;resource,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;params)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="href(org.eclipse.net4j.util.collection.Pair,java.lang.String,java.lang.String...)">
+<h3>href</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">href</span><wbr><span class="parameters">(org.eclipse.net4j.util.collection.Pair&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;labelAndTooltip,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;resource,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;params)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -459,6 +495,16 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="initPages(java.util.List)">
 <h3>initPages</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initPages</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a>&lt;<a href="CDOServerBrowser.Page.html" title="Schnittstelle in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a>&gt;&nbsp;pages)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getPage(java.lang.String)">
+<h3>getPage</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type"><a href="CDOServerBrowser.Page.html" title="Schnittstelle in org.eclipse.emf.cdo.server">CDOServerBrowser.Page</a></span>&nbsp;<span class="element-name">getPage</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.25</dd>
+</dl>
 </section>
 </li>
 <li>

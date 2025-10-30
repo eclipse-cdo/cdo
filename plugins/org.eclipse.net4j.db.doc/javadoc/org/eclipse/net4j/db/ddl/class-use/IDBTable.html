@@ -90,6 +90,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.net4j.db">
 <h2>Verwendungen von <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a> in <a href="../../package-summary.html">org.eclipse.net4j.db</a></h2>
+<div class="caption"><span>Felder in <a href="../../package-summary.html">org.eclipse.net4j.db</a>, die deklariert sind als <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>protected final <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BatchingIDChanger.</span><code><a href="../../BatchingIDChanger.html#table" class="member-name-link">table</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Methoden in <a href="../../package-summary.html">org.eclipse.net4j.db</a>, die Typen mit Argumenten vom Typ <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a> zurückgeben</span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -163,6 +172,17 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../../IDBAdapter.html#dropTables(java.lang.Iterable,java.sql.Connection)" class="member-name-link">dropTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Iterable.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Iterable</a>&lt;? extends <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&gt;&nbsp;tables,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Konstruktoren in <a href="../../package-summary.html">org.eclipse.net4j.db</a> mit Parametern vom Typ <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer</div>
+<div class="table-header col-second">Konstruktor</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../BatchingIDChanger.html#%3Cinit%3E(org.eclipse.net4j.db.StatementBatcher,org.eclipse.net4j.db.ddl.IDBField,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">BatchingIDChanger</a><wbr>(<a href="../../StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a>&nbsp;batcher,
+ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;idField,
+ <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -424,7 +444,11 @@ loadScripts(document, 'script');</script>
  int&nbsp;indexTypeColumn,
  int&nbsp;fieldNameColumn,
  int&nbsp;fieldPositionColumn)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 no longer supported.</div>
+</div>
+</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
 <div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#validateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">validateTable</a><wbr>(<a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement)</code></div>

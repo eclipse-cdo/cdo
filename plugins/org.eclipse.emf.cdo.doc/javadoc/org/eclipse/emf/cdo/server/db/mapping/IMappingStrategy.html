@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Alle bekannten Unterschnittstellen:</dt>
-<dd><code><a href="IMappingStrategy2.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy2</a></code></dd>
+<dd><code><a href="IMappingStrategy.ModelEvolution.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.ModelEvolution</a></code>, <code><a href="IMappingStrategy2.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy2</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IMappingStrategy</span></div>
@@ -117,8 +117,13 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Schnittstelle</div>
 <div class="table-header col-last">Beschreibung</div>
 <div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="IMappingStrategy.Props.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></code></div>
+<div class="col-second even-row-color"><code><a href="IMappingStrategy.ModelEvolution.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.ModelEvolution</a></code></div>
 <div class="col-last even-row-color">
+<div class="block">Interface to complement <a href="IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping"><code>IMappingStrategy</code></a>.</div>
+</div>
+<div class="col-first odd-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="IMappingStrategy.Props.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy.Props</a></code></div>
+<div class="col-last odd-row-color">
 <div class="block">Contains symbolic constants that specifiy valid keys of <a href="#getProperties()"><code>mapping strategy properties</code></a>.</div>
 </div>
 </div>
@@ -190,7 +195,7 @@ loadScripts(document, 'script');</script>
 <section class="method-summary" id="method-summary">
 <h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Standardmethoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -330,26 +335,32 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Read the type (i.e.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D)" class="member-name-link">removeMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#readObjectType2(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType2</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Read the type (i.e.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#removeMapping(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit%5B%5D)" class="member-name-link">removeMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="../../../spi/common/model/InternalCDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageUnit</a>[]&nbsp;packageUnits)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Remove the mapping infrastructure for the given packages.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)" class="member-name-link">repairAfterCrash</a><wbr>(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#repairAfterCrash(org.eclipse.net4j.db.IDBAdapter,java.sql.Connection)" class="member-name-link">repairAfterCrash</a><wbr>(org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Return the maximum object id used in the store.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProperties(java.util.Map)" class="member-name-link">setProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setProperties(java.util.Map)" class="member-name-link">setProperties</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set configuration properties for this mapping strategy.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;dbStore)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Set the store to which this MappingStrategy instance belongs.</div>
 </div>
 </div>
@@ -760,6 +771,23 @@ loadScripts(document, 'script');</script>
 <dd><code>id</code> - the ID of the object for which the type is to be determined.</dd>
 <dt>Gibt zurück:</dt>
 <dd>the type of the object.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="readObjectType2(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>readObjectType2</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></span>&nbsp;<span class="element-name">readObjectType2</span><wbr><span class="parameters">(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<div class="block">Read the type (i.e. class) of the object referred to by a given ID.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>accessor</code> - the accessor to use to look up the type.</dd>
+<dd><code>id</code> - the ID of the object for which the type is to be determined.</dd>
+<dt>Gibt zurück:</dt>
+<dd>the type of the object.</dd>
+<dt>Seit:</dt>
+<dd>4.14</dd>
 </dl>
 </section>
 </li>

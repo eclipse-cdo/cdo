@@ -114,6 +114,9 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color"><code>static final <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
 <div class="col-second even-row-color"><code><a href="#NO_LISTENERS" class="member-name-link">NO_LISTENERS</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><code><a href="#PRODUCT_GROUP_LISTENERS" class="member-name-link">PRODUCT_GROUP_LISTENERS</a></code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -141,25 +144,29 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#addUniqueListener(java.lang.Object,org.eclipse.net4j.util.event.IListener)" class="member-name-link">addUniqueListener</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
  <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getListeners(java.lang.Object)" class="member-name-link">getListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#fireEvent(java.lang.Object,org.eclipse.net4j.util.event.IEvent)" class="member-name-link">fireEvent</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getListeners(java.lang.Object,java.util.function.Predicate)" class="member-name-link">getListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Predicate</a>&lt;<a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&gt;&nbsp;predicate)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#hasListener(java.lang.Object,org.eclipse.net4j.util.event.IListener)" class="member-name-link">hasListener</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
- <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeListener(java.lang.Object,org.eclipse.net4j.util.event.IListener)" class="member-name-link">removeListener</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
- <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getListeners(java.lang.Object)" class="member-name-link">getListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeListeners(java.lang.Object,java.util.function.Predicate)" class="member-name-link">removeListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getListeners(java.lang.Object,java.util.function.Predicate)" class="member-name-link">getListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Predicate</a>&lt;<a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&gt;&nbsp;predicate)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#hasListener(java.lang.Object,org.eclipse.net4j.util.event.IListener)" class="member-name-link">hasListener</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeListener(java.lang.Object,org.eclipse.net4j.util.event.IListener)" class="member-name-link">removeListener</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&nbsp;listener)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>[]</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#removeListeners(java.lang.Object,java.util.function.Predicate)" class="member-name-link">removeListeners</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Predicate.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Predicate</a>&lt;<a href="IListener.html" title="Schnittstelle in org.eclipse.net4j.util.event">IListener</a>&gt;&nbsp;predicate)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -177,6 +184,22 @@ loadScripts(document, 'script');</script>
 <section class="field-details" id="field-detail">
 <h2>Felddetails</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="PRODUCT_GROUP_LISTENERS">
+<h3>PRODUCT_GROUP_LISTENERS</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">PRODUCT_GROUP_LISTENERS</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../constant-values.html#org.eclipse.net4j.util.event.EventUtil.PRODUCT_GROUP_LISTENERS">Konstantenfeldwerte</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="NO_LISTENERS">
 <h3>NO_LISTENERS</h3>
@@ -268,6 +291,17 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="fireEvent(java.lang.Object,org.eclipse.net4j.util.event.IEvent)">
+<h3>fireEvent</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">fireEvent</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;notifier,
+ <a href="IEvent.html" title="Schnittstelle in org.eclipse.net4j.util.event">IEvent</a>&nbsp;event)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
 </dl>
 </section>
 </li>

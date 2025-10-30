@@ -92,7 +92,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Alle implementierten Schnittstellen:</dt>
-<dd><code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dd><code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code>, <code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">AbstractTypeMapping</span>
@@ -199,58 +199,61 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the SQL type of this TypeMapping.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readValue(java.sql.ResultSet)" class="member-name-link">readValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getTypeMapping()" class="member-name-link">getTypeMapping</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readValue(java.sql.ResultSet)" class="member-name-link">readValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Read the value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a> and convert it from the DB to the CDO representation.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readValueToRevision(java.sql.ResultSet,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">readValueToRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#readValueToRevision(java.sql.ResultSet,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">readValueToRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Read a value from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link"><code>ResultSet</code></a>, convert it from the DB to the CDO representation and set it to the feature
  of the revision.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">setDBField</a><wbr>(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDBField(org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">setDBField</a><wbr>(org.eclipse.net4j.db.ddl.IDBTable&nbsp;table,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;fieldName)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the DBField.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDBType(org.eclipse.net4j.db.DBType)" class="member-name-link">setDBType</a><wbr>(org.eclipse.net4j.db.DBType&nbsp;dbType)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDBType(org.eclipse.net4j.db.DBType)" class="member-name-link">setDBType</a><wbr>(org.eclipse.net4j.db.DBType&nbsp;dbType)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDefaultValue(java.sql.PreparedStatement,int)" class="member-name-link">setDefaultValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the feature's default value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFeature(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">setFeature</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setFeature(org.eclipse.emf.ecore.EStructuralFeature)" class="member-name-link">setFeature</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setValue(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">setValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setValue(java.sql.PreparedStatement,int,java.lang.Object)" class="member-name-link">setValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set the given value to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code> method.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setValueFromRevision(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">setValueFromRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setValueFromRevision(java.sql.PreparedStatement,int,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">setValueFromRevision</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/PreparedStatement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">PreparedStatement</a>&nbsp;stmt,
  int&nbsp;index,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Set a value of the given revision to the JDBC <code>IDBPreparedStatement</code> using an appropriate <code>setXxx</code>
  method.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#toString()" class="member-name-link">toString</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -305,6 +308,8 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a></span>&nbsp;<span class="element-name">getFeature</span>()</div>
 <dl class="notes">
 <dt>Angegeben von:</dt>
+<dd><code><a href="IFeatureMapping.html#getFeature()">getFeature</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
+<dt>Angegeben von:</dt>
 <dd><code><a href="ITypeMapping.html#getFeature()">getFeature</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
 <dt>Gibt zurück:</dt>
 <dd>The feature which is associated with this mapping.</dd>
@@ -318,6 +323,22 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <dl class="notes">
 <dt>Angegeben von:</dt>
 <dd><code><a href="ITypeMapping.html#setFeature(org.eclipse.emf.ecore.EStructuralFeature)">setFeature</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getTypeMapping()">
+<h3>getTypeMapping</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></span>&nbsp;<span class="element-name">getTypeMapping</span>()</div>
+<dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="IFeatureMapping.html#getTypeMapping()">getTypeMapping</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
+<dt>Angegeben von:</dt>
+<dd><code><a href="ITypeMapping.html#getTypeMapping()">getTypeMapping</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
+<dt>Gibt zurück:</dt>
+<dd>The type mapping which is used for this feature mapping.</dd>
+<dt>Seit:</dt>
+<dd>4.14</dd>
 </dl>
 </section>
 </li>
@@ -336,6 +357,8 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <h3>getDBType</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.DBType</span>&nbsp;<span class="element-name">getDBType</span>()</div>
 <dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="IFeatureMapping.html#getDBType()">getDBType</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
 <dt>Angegeben von:</dt>
 <dd><code><a href="ITypeMapping.html#getDBType()">getDBType</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
 <dt>Gibt zurück:</dt>
@@ -440,6 +463,8 @@ implements <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.c
 <h3>getField</h3>
 <div class="member-signature"><span class="modifiers">public final</span>&nbsp;<span class="return-type">org.eclipse.net4j.db.ddl.IDBField</span>&nbsp;<span class="element-name">getField</span>()</div>
 <dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="IFeatureMapping.html#getField()">getField</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
 <dt>Angegeben von:</dt>
 <dd><code><a href="ITypeMapping.html#getField()">getField</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></dd>
 <dt>Gibt zurück:</dt>

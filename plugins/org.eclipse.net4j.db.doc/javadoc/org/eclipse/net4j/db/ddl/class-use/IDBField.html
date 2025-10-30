@@ -102,6 +102,15 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="org.eclipse.net4j.db">
 <h2>Verwendungen von <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a> in <a href="../../package-summary.html">org.eclipse.net4j.db</a></h2>
+<div class="caption"><span>Felder in <a href="../../package-summary.html">org.eclipse.net4j.db</a>, die deklariert sind als <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>protected final <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">BatchingIDChanger.</span><code><a href="../../BatchingIDChanger.html#idField" class="member-name-link">idField</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Methoden in <a href="../../package-summary.html">org.eclipse.net4j.db</a> mit Parametern vom Typ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -162,6 +171,21 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">IDBAdapter.</span><code><a href="../../IDBAdapter.html#sqlRenameField(org.eclipse.net4j.db.ddl.IDBField,java.lang.String)" class="member-name-link">sqlRenameField</a><wbr>(<a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;oldName)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+</div>
+<div class="caption"><span>Konstruktoren in <a href="../../package-summary.html">org.eclipse.net4j.db</a> mit Parametern vom Typ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer</div>
+<div class="table-header col-second">Konstruktor</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../BatchingIDChanger.html#%3Cinit%3E(org.eclipse.net4j.db.StatementBatcher,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">BatchingIDChanger</a><wbr>(<a href="../../StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a>&nbsp;batcher,
+ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;idField)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="../../BatchingIDChanger.html#%3Cinit%3E(org.eclipse.net4j.db.StatementBatcher,org.eclipse.net4j.db.ddl.IDBField,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">BatchingIDChanger</a><wbr>(<a href="../../StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a>&nbsp;batcher,
+ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;idField,
+ <a href="../IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a>&nbsp;table)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>
@@ -385,9 +409,21 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;tableName,
  <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-last odd-row-color">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="../../../spi/db/DBAdapter.html#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>DBAdapter.createField(Connection, IDBField)</code></a> instead.</div>
+</div>
+</div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createFieldDefinition</a><wbr>(<a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createFieldDefinition</a><wbr>(<a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
+<div class="col-first even-row-color"><code>protected void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">dropField</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+ <a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">DBAdapter.</span><code><a href="../../../spi/db/DBAdapter.html#getTypeName(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">getTypeName</a><wbr>(<a href="../IDBField.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBField</a>&nbsp;field)</code></div>

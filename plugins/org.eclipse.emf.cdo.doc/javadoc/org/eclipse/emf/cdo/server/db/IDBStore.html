@@ -185,9 +185,14 @@ extends <a href="../IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.ser
 <div class="block">Returns a writer that can be used to write to this store in the context of the given view.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#visitAllTables(java.sql.Connection,org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)" class="member-name-link">visitAllTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#triggerRestart(boolean)" class="member-name-link">triggerRestart</a><wbr>(boolean&nbsp;withCrashRecovery)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Triggers a restart of the store.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#visitAllTables(java.sql.Connection,org.eclipse.emf.cdo.server.db.IDBStore.TableVisitor)" class="member-name-link">visitAllTables</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
  <a href="IDBStore.TableVisitor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore.TableVisitor</a>&nbsp;visitor)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -349,6 +354,30 @@ extends <a href="../IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.ser
 <dd>a writer that can be used to write to this store in the context of the given view, never <code>null</code>.</dd>
 <dt>Seit:</dt>
 <dd>2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="triggerRestart(boolean)">
+<h3>triggerRestart</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">triggerRestart</span><wbr><span class="parameters">(boolean&nbsp;withCrashRecovery)</span></div>
+<div class="block">Triggers a restart of the store.
+ <p>
+ If the store is in the ACTIVATING state, it will throw a RestartException to signal that a restart is required.
+ The behavior of the restart depends on the value of the withCrashRecovery parameter:
+ <ul>
+ <li>If withCrashRecovery is true, the store will remove the shutdown flag (PROP_GRACEFULLY_SHUT_DOWN) from its persistent properties.
+      This indicates that the repository is now active again, and on the next start, crash recovery will be performed because the flag is missing.
+ <li>If withCrashRecovery is false, the store will set the shutdown flag (PROP_GRACEFULLY_SHUT_DOWN) in its persistent properties.
+      This indicates that the repository was shut down gracefully, and on the next start, crash recovery will be skipped because the flag is present.
+ </ul>
+ <p>
+ If the store is not in the ACTIVATING state, an IllegalStateException will be thrown, indicating that the store cannot be restarted in its current state.</div>
+<dl class="notes">
+<dt>Parameter:</dt>
+<dd><code>withCrashRecovery</code> - if true, the store will perform crash recovery on the next start; if false, it will skip crash recovery.</dd>
+<dt>Seit:</dt>
+<dd>4.14</dd>
 </dl>
 </section>
 </li>

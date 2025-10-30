@@ -36,6 +36,7 @@
     <productGroups id="org.eclipse.net4j.util.security.crypters" name="Crypters" description=""/>
     <productGroups id="org.eclipse.net4j.util.exceptionHandlers" name="Exception Handlers" description=""/>
     <productGroups id="org.eclipse.net4j.executorServices" name="Executor Services" description=""/>
+    <productGroups id="org.eclipse.net4j.util.event.listeners" name="Listeners" description=""/>
     <productGroups id="org.eclipse.net4j.util.metaFactories" name="Meta Factories" description=""/>
     <productGroups id="org.eclipse.net4j.Negotiators" name="Negotiators" description=""/>
     <productGroups id="org.eclipse.net4j.randomizers" name="Randomizers" description=""/>

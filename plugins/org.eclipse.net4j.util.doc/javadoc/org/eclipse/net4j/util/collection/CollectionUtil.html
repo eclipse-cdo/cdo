@@ -144,10 +144,14 @@ V&gt;&nbsp;V</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#concat(java.util.Collection)" class="member-name-link">concat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;&gt;&nbsp;streams)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a stream that concatenates the given streams.</div>
+</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#concat(java.util.stream.Stream...)" class="member-name-link">concat</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;...&nbsp;streams)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a stream that concatenates the given streams.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Iterator</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#dump(java.util.Iterator)" class="member-name-link">dump</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Iterator</a>&lt;T&gt;&nbsp;it)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
@@ -162,6 +166,18 @@ V&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;T&gt;</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#setOf(java.util.Collection)" class="member-name-link">setOf</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;? extends T&gt;&nbsp;c)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a><wbr>&lt;T&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#stream(java.util.Iterator)" class="member-name-link">stream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Iterator</a>&lt;T&gt;&nbsp;it)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a stream over the elements of the given iterator.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;SUBTYPE,<wbr>
+TYPE extends SUBTYPE&gt;<br><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Function</a><wbr>&lt;? super SUBTYPE,<wbr>? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;? extends TYPE&gt;&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#subclasses(java.lang.Class)" class="member-name-link">subclasses</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Class</a>&lt;TYPE&gt;&nbsp;clazz)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Returns a function that returns a stream containing the given object if it is an instance of the given class;
+ otherwise an empty stream.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;NODE&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;NODE&gt;</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#topologicalSort(java.util.Collection,java.util.function.Function)" class="member-name-link">topologicalSort</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;NODE&gt;&nbsp;nodes,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Function</a>&lt;NODE,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;NODE&gt;&gt;&nbsp;edgeProvider)</code></div>
@@ -284,10 +300,51 @@ V&gt;</span>&nbsp;<span class="return-type">V</span>&nbsp;<span class="element-n
 </section>
 </li>
 <li>
+<section class="detail" id="subclasses(java.lang.Class)">
+<h3>subclasses</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;SUBTYPE,<wbr>
+TYPE extends SUBTYPE&gt;</span>
+<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Function.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Function</a>&lt;? super SUBTYPE,<wbr>? extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;? extends TYPE&gt;&gt;</span>&nbsp;<span class="element-name">subclasses</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Class</a>&lt;TYPE&gt;&nbsp;clazz)</span></div>
+<div class="block">Returns a function that returns a stream containing the given object if it is an instance of the given class;
+ otherwise an empty stream.
+ <p>
+ Example usage:
+ <pre>
+ Stream&lt;Animal&gt; animals = Stream.of(new Dog(), new Cat(), new Bird());
+ Stream&lt;Dog&gt; dogs = animals.flatMap(CollectionUtil.subclasses(Dog.class));
+ </pre>
+ <p>
+ This example creates a stream of animals and then uses the <code>subclasses</code> function to filter and cast the
+ stream to only include instances of <code>Dog</code>. This is a little easier to read and remember than using
+ <code>filter</code> and <code>map</code> separately, as the following equivalent code shows:
+ <pre>
+ Stream&lt;Dog&gt; dogs = animals
+    .filter(Dog.class::isInstance)
+    .map(Dog.class::cast);
+ </pre></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="stream(java.util.Iterator)">
+<h3>stream</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;</span>&nbsp;<span class="element-name">stream</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Iterator.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Iterator</a>&lt;T&gt;&nbsp;it)</span></div>
+<div class="block">Returns a stream over the elements of the given iterator.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="concat(java.util.stream.Stream...)">
 <h3>concat</h3>
 <div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/SafeVarargs.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@SafeVarargs</a>
 </span><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;</span>&nbsp;<span class="element-name">concat</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;...&nbsp;streams)</span></div>
+<div class="block">Returns a stream that concatenates the given streams.</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.26</dd>
@@ -298,6 +355,7 @@ V&gt;</span>&nbsp;<span class="return-type">V</span>&nbsp;<span class="element-n
 <section class="detail" id="concat(java.util.Collection)">
 <h3>concat</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="type-parameters">&lt;T&gt;</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;</span>&nbsp;<span class="element-name">concat</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Collection</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/stream/Stream.html" title="Klasse oder Schnittstelle in java.util.stream" class="external-link">Stream</a>&lt;T&gt;&gt;&nbsp;streams)</span></div>
+<div class="block">Returns a stream that concatenates the given streams.</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.26</dd>

@@ -62,6 +62,7 @@
       <topic label="Crypters" href="productdoc/org.eclipse.net4j.util.security.crypters.html" icon="productgroup" />
       <topic label="Exception Handlers" href="productdoc/org.eclipse.net4j.util.exceptionHandlers.html" icon="productgroup" />
       <topic label="Executor Services" href="productdoc/org.eclipse.net4j.executorServices.html" icon="productgroup" />
+      <topic label="Listeners" href="productdoc/org.eclipse.net4j.util.event.listeners.html" icon="productgroup" />
       <topic label="Meta Factories" href="productdoc/org.eclipse.net4j.util.metaFactories.html" icon="productgroup" />
       <topic label="Negotiators" href="productdoc/org.eclipse.net4j.Negotiators.html" icon="productgroup" />
       <topic label="Randomizers" href="productdoc/org.eclipse.net4j.randomizers.html" icon="productgroup" />

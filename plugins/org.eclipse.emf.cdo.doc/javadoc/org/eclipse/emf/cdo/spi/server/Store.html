@@ -96,7 +96,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Alle implementierten Schnittstellen:</dt>
-<dd><code><a href="../../server/IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStore</a></code>, <code><a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore</a></code>, <code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
+<dd><code><a href="../../server/IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStore</a></code>, <code><a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore</a></code>, <code>org.eclipse.net4j.util.collection.Entity.Store.Provider</code>, <code>org.eclipse.net4j.util.container.IManagedContainerProvider</code>, <code>org.eclipse.net4j.util.event.INotifier</code>, <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code>, <code>org.eclipse.net4j.util.lifecycle.IDeactivateable</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle</code>, <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></dd>
 </dl>
 <dl class="notes">
 <dt>Bekannte direkte Unterklassen:</dt>
@@ -105,7 +105,7 @@ loadScripts(document, 'script');</script>
 <hr>
 <div class="type-signature"><span class="modifiers">public abstract class </span><span class="element-name type-name-label">Store</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
-implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore</a>, org.eclipse.net4j.util.collection.Entity.Store.Provider</span></div>
+implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore</a>, org.eclipse.net4j.util.collection.Entity.Store.Provider, org.eclipse.net4j.util.container.IManagedContainerProvider</span></div>
 <div class="block">If the meaning of this type isn't clear, there really should be more of a description here...</div>
 <dl class="notes">
 <dt>Seit:</dt>
@@ -121,6 +121,9 @@ implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.
 <section class="nested-class-summary" id="nested-class-summary">
 <h2>Verschachtelte Klassen - Übersicht</h2>
 <div class="inherited-list">
+<h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.event.Notifier">Von Klasse geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.event.Notifier</h2>
+<code>org.eclipse.net4j.util.event.Notifier.Cancelation</code></div>
+<div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.net4j.util.lifecycle.ILifecycle">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.net4j.util.lifecycle.ILifecycle</h2>
 <code>org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation</code></div>
 <div class="inherited-list">
@@ -128,7 +131,7 @@ implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.
 <code>org.eclipse.net4j.util.event.INotifier.INotifier2</code></div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.spi.server.InternalStore">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.emf.cdo.spi.server.<a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore</a></h2>
-<code><a href="InternalStore.NoChangeSets.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoChangeSets</a>, <a href="InternalStore.NoCommitInfos.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoCommitInfos</a>, <a href="InternalStore.NoDurableLocking.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoDurableLocking</a>, <a href="InternalStore.NoExternalReferences.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</a>, <a href="InternalStore.NoFeatureMaps.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoFeatureMaps</a>, <a href="InternalStore.NoHandleRevisions.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</a>, <a href="InternalStore.NoLargeObjects.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</a>, <a href="InternalStore.NoQueryXRefs.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</a>, <a href="InternalStore.NoRawAccess.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</a></code></div>
+<code><a href="InternalStore.NoChangeSets.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoChangeSets</a>, <a href="InternalStore.NoCommitInfos.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoCommitInfos</a>, <a href="InternalStore.NoDurableLocking.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoDurableLocking</a>, <a href="InternalStore.NoExternalReferences.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoExternalReferences</a>, <a href="InternalStore.NoFeatureMaps.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoFeatureMaps</a>, <a href="InternalStore.NoHandleRevisions.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoHandleRevisions</a>, <a href="InternalStore.NoLargeObjects.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoLargeObjects</a>, <a href="InternalStore.NoQueryXRefs.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoQueryXRefs</a>, <a href="InternalStore.NoRawAccess.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalStore.NoRawAccess</a>, <a href="InternalStore.RestartException.html" title="Klasse in org.eclipse.emf.cdo.spi.server">InternalStore.RestartException</a></code></div>
 <div class="inherited-list">
 <h2 id="nested-classes-inherited-from-class-org.eclipse.emf.cdo.server.IStore">Von Schnittstelle geerbte verschachtelte Klassen/Schnittstellen&nbsp;org.eclipse.emf.cdo.server.<a href="../../server/IStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStore</a></h2>
 <code><a href="../../server/IStore.CanHandleClientAssignedIDs.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStore.CanHandleClientAssignedIDs</a>, <a href="../../server/IStore.ChangeFormat.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a>, <a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a>, <a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a></code></div>
@@ -214,128 +217,131 @@ implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected final org.eclipse.net4j.util.collection.Entity.Builder</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#entityBuilder()" class="member-name-link">entityBuilder</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.container.IManagedContainer</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContainer()" class="member-name-link">getContainer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.om.monitor.ProgressDistributor</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIndicatingCommitDistributor()" class="member-name-link">getIndicatingCommitDistributor</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.collection.Entity.Store</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEntityStore()" class="member-name-link">getEntityStore</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastBranchID()" class="member-name-link">getLastBranchID</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the id of the last branch that has been created in this store.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastCommitTime()" class="member-name-link">getLastCommitTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the time stamp of the last successful commit operation.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastLocalBranchID()" class="member-name-link">getLastLocalBranchID</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the id of the last local branch that has been created in this store.</div>
-</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastNonLocalCommitTime()" class="member-name-link">getLastNonLocalCommitTime</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns the time stamp of the last successful commit operation to a non-local <a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
-</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextBranchID()" class="member-name-link">getNextBranchID</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>org.eclipse.net4j.util.om.monitor.ProgressDistributor</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getIndicatingCommitDistributor()" class="member-name-link">getIndicatingCommitDistributor</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextLocalBranchID()" class="member-name-link">getNextLocalBranchID</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getObjectIDTypes()" class="member-name-link">getObjectIDTypes</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReader(org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getReader</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastBranchID()" class="member-name-link">getLastBranchID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a reader that can be used to read from this store in the context of the given session.</div>
+<div class="block">Returns the id of the last branch that has been created in this store.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getReaderPool(org.eclipse.emf.cdo.server.ISession,boolean)" class="member-name-link">getReaderPool</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
- boolean&nbsp;forReleasing)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns a <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server"><code>pool</code></a> that may contain <a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> instances that are compatible with
- the given session.</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastCommitTime()" class="member-name-link">getLastCommitTime</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the time stamp of the last successful commit operation.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastLocalBranchID()" class="member-name-link">getLastLocalBranchID</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the id of the last local branch that has been created in this store.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>long</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getLastNonLocalCommitTime()" class="member-name-link">getLastNonLocalCommitTime</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns the time stamp of the last successful commit operation to a non-local <a href="../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch"><code>branch</code></a>.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextBranchID()" class="member-name-link">getNextBranchID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionParallelism()" class="member-name-link">getRevisionParallelism</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNextLocalBranchID()" class="member-name-link">getNextLocalBranchID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionTemporality()" class="member-name-link">getRevisionTemporality</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.ChangeFormat.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedChangeFormats()" class="member-name-link">getSupportedChangeFormats</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedRevisionParallelisms()" class="member-name-link">getSupportedRevisionParallelisms</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedRevisionTemporalities()" class="member-name-link">getSupportedRevisionTemporalities</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getObjectIDTypes()" class="member-name-link">getObjectIDTypes</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWriter(org.eclipse.emf.cdo.server.ITransaction)" class="member-name-link">getWriter</a><wbr>(<a href="../../server/ITransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getReader(org.eclipse.emf.cdo.server.ISession)" class="member-name-link">getReader</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
-<div class="block">Returns a writer that can be used to write to this store in the context of the given view.</div>
+<div class="block">Returns a reader that can be used to read from this store in the context of the given session.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getWriterPool(org.eclipse.emf.cdo.server.IView,boolean)" class="member-name-link">getWriterPool</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getReaderPool(org.eclipse.emf.cdo.server.ISession,boolean)" class="member-name-link">getReaderPool</a><wbr>(<a href="../../server/ISession.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ISession</a>&nbsp;session,
  boolean&nbsp;forReleasing)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns a <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server"><code>pool</code></a> that may contain <a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> instances that are compatible with
  the given session.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#idToString(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">idToString</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDropAllDataOnActivate()" class="member-name-link">isDropAllDataOnActivate</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#releaseAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)" class="member-name-link">releaseAccessor</a><wbr>(<a href="StoreAccessorBase.html" title="Klasse in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a>&nbsp;accessor)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="InternalRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.server">InternalRepository</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRepository()" class="member-name-link">getRepository</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;T&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#set(T...)" class="member-name-link">set</a><wbr>(T...&nbsp;elements)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionParallelism()" class="member-name-link">getRevisionParallelism</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRevisionTemporality()" class="member-name-link">getRevisionTemporality</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.ChangeFormat.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.ChangeFormat</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedChangeFormats()" class="member-name-link">getSupportedChangeFormats</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedRevisionParallelisms()" class="member-name-link">getSupportedRevisionParallelisms</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getSupportedRevisionTemporalities()" class="member-name-link">getSupportedRevisionTemporalities</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getType()" class="member-name-link">getType</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getWriter(org.eclipse.emf.cdo.server.ITransaction)" class="member-name-link">getWriter</a><wbr>(<a href="../../server/ITransaction.html" title="Schnittstelle in org.eclipse.emf.cdo.server">ITransaction</a>&nbsp;transaction)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns a writer that can be used to write to this store in the context of the given view.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server">StoreAccessorPool</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getWriterPool(org.eclipse.emf.cdo.server.IView,boolean)" class="member-name-link">getWriterPool</a><wbr>(<a href="../../server/IView.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a>&nbsp;view,
+ boolean&nbsp;forReleasing)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns a <a href="StoreAccessorPool.html" title="Klasse in org.eclipse.emf.cdo.spi.server"><code>pool</code></a> that may contain <a href="../../server/IStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server"><code>IStoreAccessor</code></a> instances that are compatible with
+ the given session.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#idToString(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">idToString</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDropAllDataOnActivate(boolean)" class="member-name-link">setDropAllDataOnActivate</a><wbr>(boolean&nbsp;dropAllDataOnActivate)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastBranchID(int)" class="member-name-link">setLastBranchID</a><wbr>(int&nbsp;lastBranchID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastCommitTime(long)" class="member-name-link">setLastCommitTime</a><wbr>(long&nbsp;lastCommitTime)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastLocalBranchID(int)" class="member-name-link">setLastLocalBranchID</a><wbr>(int&nbsp;lastLocalBranchID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastNonLocalCommitTime(long)" class="member-name-link">setLastNonLocalCommitTime</a><wbr>(long&nbsp;lastNonLocalCommitTime)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDropAllDataOnActivate()" class="member-name-link">isDropAllDataOnActivate</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setObjectIDTypes(java.util.Set)" class="member-name-link">setObjectIDTypes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#releaseAccessor(org.eclipse.emf.cdo.spi.server.StoreAccessorBase)" class="member-name-link">releaseAccessor</a><wbr>(<a href="StoreAccessorBase.html" title="Klasse in org.eclipse.emf.cdo.spi.server">StoreAccessorBase</a>&nbsp;accessor)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>protected static &lt;T&gt;&nbsp;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;T&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#set(T...)" class="member-name-link">set</a><wbr>(T...&nbsp;elements)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDropAllDataOnActivate(boolean)" class="member-name-link">setDropAllDataOnActivate</a><wbr>(boolean&nbsp;dropAllDataOnActivate)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">setRepository</a><wbr>(<a href="../../server/IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastBranchID(int)" class="member-name-link">setLastBranchID</a><wbr>(int&nbsp;lastBranchID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionParallelism(org.eclipse.emf.cdo.server.IStore.RevisionParallelism)" class="member-name-link">setRevisionParallelism</a><wbr>(<a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a>&nbsp;revisionParallelism)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastCommitTime(long)" class="member-name-link">setLastCommitTime</a><wbr>(long&nbsp;lastCommitTime)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionTemporality(org.eclipse.emf.cdo.server.IStore.RevisionTemporality)" class="member-name-link">setRevisionTemporality</a><wbr>(<a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a>&nbsp;revisionTemporality)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastLocalBranchID(int)" class="member-name-link">setLastLocalBranchID</a><wbr>(int&nbsp;lastLocalBranchID)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#stringToID(java.lang.String)" class="member-name-link">stringToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;string)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setLastNonLocalCommitTime(long)" class="member-name-link">setLastNonLocalCommitTime</a><wbr>(long&nbsp;lastNonLocalCommitTime)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setObjectIDTypes(java.util.Set)" class="member-name-link">setObjectIDTypes</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;&nbsp;objectIDTypes)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRepository(org.eclipse.emf.cdo.server.IRepository)" class="member-name-link">setRepository</a><wbr>(<a href="../../server/IRepository.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IRepository</a>&nbsp;repository)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionParallelism(org.eclipse.emf.cdo.server.IStore.RevisionParallelism)" class="member-name-link">setRevisionParallelism</a><wbr>(<a href="../../server/IStore.RevisionParallelism.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionParallelism</a>&nbsp;revisionParallelism)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setRevisionTemporality(org.eclipse.emf.cdo.server.IStore.RevisionTemporality)" class="member-name-link">setRevisionTemporality</a><wbr>(<a href="../../server/IStore.RevisionTemporality.html" title="Enum-Klasse in org.eclipse.emf.cdo.server">IStore.RevisionTemporality</a>&nbsp;revisionTemporality)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#stringToID(java.lang.String)" class="member-name-link">stringToID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;string)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -770,6 +776,18 @@ implements <a href="InternalStore.html" title="Schnittstelle in org.eclipse.emf.
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>3.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContainer()">
+<h3>getContainer</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">org.eclipse.net4j.util.container.IManagedContainer</span>&nbsp;<span class="element-name">getContainer</span>()</div>
+<dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code>getContainer</code>&nbsp;in Schnittstelle&nbsp;<code>org.eclipse.net4j.util.container.IManagedContainerProvider</code></dd>
+<dt>Seit:</dt>
+<dd>4.25</dd>
 </dl>
 </section>
 </li>

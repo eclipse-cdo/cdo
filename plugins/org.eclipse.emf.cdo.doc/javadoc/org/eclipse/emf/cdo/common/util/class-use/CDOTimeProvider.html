@@ -104,44 +104,48 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Server concepts for dealing with repositories and stores.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.server.db">org.eclipse.emf.cdo.server.db</a></div>
 <div class="col-last even-row-color">
+<div class="block">Server concepts for dealing with DB stores and accessors.</div>
+</div>
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.session">org.eclipse.emf.cdo.session</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with sessions to CDO repositories.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.branch">org.eclipse.emf.cdo.spi.common.branch</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.branch">org.eclipse.emf.cdo.spi.common.branch</a></div>
+<div class="col-last even-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with branches.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.commit">org.eclipse.emf.cdo.spi.common.commit</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.commit">org.eclipse.emf.cdo.spi.common.commit</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with commits and change sets.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.lock">org.eclipse.emf.cdo.spi.common.lock</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.lock">org.eclipse.emf.cdo.spi.common.lock</a></div>
+<div class="col-last even-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with object locks.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.model">org.eclipse.emf.cdo.spi.common.model</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.model">org.eclipse.emf.cdo.spi.common.model</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with models and types</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.common.revision">org.eclipse.emf.cdo.spi.common.revision</a></div>
+<div class="col-last even-row-color">
 <div class="block">Common service provider interfaces and useful base implementations for dealing with revisions and deltas.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.spi.server">org.eclipse.emf.cdo.spi.server</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Server service provider interfaces and useful base implementations.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.transaction">org.eclipse.emf.cdo.transaction</a></div>
+<div class="col-last even-row-color">
 <div class="block">Client concepts for dealing with transactions, distributed transactions and their save points.</div>
 </div>
-<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
-<div class="col-last even-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.view">org.eclipse.emf.cdo.view</a></div>
+<div class="col-last odd-row-color">
 <div class="block">Client concepts for dealing with views, view sets, queries, CDO objects and EMF resource sets.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.spi.cdo">org.eclipse.emf.spi.cdo</a></div>
+<div class="col-last even-row-color">
 <div class="block">Client service provider interfaces and useful base implementations.</div>
 </div>
 </div>
@@ -433,6 +437,22 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><a href="../../../server/IView.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server">IView</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">The server-side representation of a client <a href="../../../view/CDOView.html" title="Schnittstelle in org.eclipse.emf.cdo.view"><code>view</code></a>.</div>
+</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.server.db">
+<h2>Verwendungen von <a href="../CDOTimeProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a> in <a href="../../../server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a></h2>
+<div class="caption"><span>Unterschnittstellen von <a href="../CDOTimeProvider.html" title="Schnittstelle in org.eclipse.emf.cdo.common.util">CDOTimeProvider</a> in <a href="../../../server/db/package-summary.html">org.eclipse.emf.cdo.server.db</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Schnittstelle</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>static interface&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="../../../server/db/IModelEvolutionSupport.Context.html" class="type-name-link" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport.Context</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Context information for model evolution.</div>
 </div>
 </div>
 </section>

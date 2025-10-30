@@ -40,7 +40,7 @@ loadScripts(document, 'script');</script>
 <p>Übersicht:</p>
 <ul>
 <li>Verschachtelt</li>
-<li>Feld</li>
+<li><a href="#field-summary">Feld</a></li>
 <li>Konstruktor</li>
 <li><a href="#method-summary">Methode</a></li>
 </ul>
@@ -48,7 +48,7 @@ loadScripts(document, 'script');</script>
 <li>
 <p>Details:</p>
 <ul>
-<li>Feld</li>
+<li><a href="#field-detail">Feld</a></li>
 <li>Konstruktor</li>
 <li><a href="#method-detail">Methode</a></li>
 </ul>
@@ -60,13 +60,13 @@ loadScripts(document, 'script');</script>
 <ul class="sub-nav-list">
 <li>Übersicht:&nbsp;</li>
 <li>Verschachtelt&nbsp;|&nbsp;</li>
-<li>Feld&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
 <li>Konstruktor&nbsp;|&nbsp;</li>
 <li><a href="#method-summary">Methode</a></li>
 </ul>
 <ul class="sub-nav-list">
 <li>Details:&nbsp;</li>
-<li>Feld&nbsp;|&nbsp;</li>
+<li><a href="#field-detail">Feld</a>&nbsp;|&nbsp;</li>
 <li>Konstruktor&nbsp;|&nbsp;</li>
 <li><a href="#method-detail">Methode</a></li>
 </ul>
@@ -108,6 +108,21 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 </section>
 <section class="summary">
 <ul class="summary-list">
+<!-- =========== FIELD SUMMARY =========== -->
+<li>
+<section class="field-summary" id="field-summary">
+<h2>Feldübersicht</h2>
+<div class="caption"><span>Felder</span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Feld</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#NULL_STRING" class="member-name-link">NULL_STRING</a></code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
@@ -129,40 +144,48 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#createCDOID(java.lang.String)" class="member-name-link">createCDOID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;val)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCDOID(java.sql.ResultSet,int)" class="member-name-link">getCDOID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deleteURIMapping(java.sql.Statement,java.lang.String)" class="member-name-link">deleteURIMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCDOID(java.sql.ResultSet,int)" class="member-name-link">getCDOID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
  int&nbsp;column)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCDOID(java.sql.ResultSet,java.lang.String)" class="member-name-link">getCDOID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getCDOID(java.sql.ResultSet,java.lang.String)" class="member-name-link">getCDOID</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.DBType</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBType()" class="member-name-link">getDBType</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastObjectID()" class="member-name-link">getLastObjectID</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>org.eclipse.net4j.db.DBType</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getDBType()" class="member-name-link">getDBType</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMaxCDOID()" class="member-name-link">getMaxCDOID</a>()</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getLastObjectID()" class="member-name-link">getLastObjectID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMinCDOID()" class="member-name-link">getMinCDOID</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMaxCDOID()" class="member-name-link">getMaxCDOID</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">getNextCDOID</a><wbr>(<a href="../../common/revision/CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMinCDOID()" class="member-name-link">getMinCDOID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextLocalObjectID()" class="member-name-link">getNextLocalObjectID</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextCDOID(org.eclipse.emf.cdo.common.revision.CDORevision)" class="member-name-link">getNextCDOID</a><wbr>(<a href="../../common/revision/CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectIDTypes()" class="member-name-link">getObjectIDTypes</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getNextLocalObjectID()" class="member-name-link">getNextLocalObjectID</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="mapping/ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectTypeMapping()" class="member-name-link">getObjectTypeMapping</a>()</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../common/id/CDOID.ObjectType.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.id">CDOID.ObjectType</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectIDTypes()" class="member-name-link">getObjectIDTypes</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="mapping/ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getObjectTypeMapping()" class="member-name-link">getObjectTypeMapping</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getStringValue(java.sql.ResultSet,int)" class="member-name-link">getStringValue</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+ int&nbsp;column)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code>boolean</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3 method-summary-table-tab6"><code><a href="#isLocalCDOID(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">isLocalCDOID</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
@@ -227,6 +250,30 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 </section>
 <section class="details">
 <ul class="details-list">
+<!-- ============ FIELD DETAIL =========== -->
+<li>
+<section class="field-details" id="field-detail">
+<h2>Felddetails</h2>
+<ul class="member-list">
+<li>
+<section class="detail" id="NULL_STRING">
+<h3>NULL_STRING</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">NULL_STRING</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.14</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IIDHandler.NULL_STRING">Konstantenfeldwerte</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+</ul>
+</section>
+</li>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
@@ -386,6 +433,20 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 </section>
 </li>
 <li>
+<section class="detail" id="getStringValue(java.sql.ResultSet,int)">
+<h3>getStringValue</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getStringValue</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a>&nbsp;resultSet,
+ int&nbsp;column)</span>
+               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></span></div>
+<dl class="notes">
+<dt>Löst aus:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">SQLException</a></code></dd>
+<dt>Seit:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getMinCDOID()">
 <h3>getMinCDOID</h3>
 <div class="member-signature"><span class="return-type"><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getMinCDOID</span>()</div>
@@ -410,6 +471,17 @@ extends <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/ja
 <h3>unmapURI</h3>
 <div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">unmapURI</span><wbr><span class="parameters">(<a href="IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="deleteURIMapping(java.sql.Statement,java.lang.String)">
+<h3>deleteURIMapping</h3>
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">deleteURIMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.14</dd>
+</dl>
 </section>
 </li>
 <li>

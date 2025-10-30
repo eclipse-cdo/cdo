@@ -129,7 +129,7 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
 <section class="method-summary" id="method-summary">
 <h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Standardmethoden</button><button id="method-summary-table-tab6" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab6', 3)" class="table-tab">Veraltete Methoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -148,26 +148,35 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainingFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainerFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the container feature ID.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code>default int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6"><code><a href="#getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getContainingFeatureID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5 method-summary-table-tab6">
+<div class="block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.29, replaced by <a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)"><code>getContainerFeatureID(InternalEObject)</code></a>.</div>
+</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResource(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getResource</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getResource(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getResource</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOView.html" title="Schnittstelle in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView()" class="member-name-link">getView</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="InternalCDOView.html" title="Schnittstelle in org.eclipse.emf.spi.cdo">InternalCDOView</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getView()" class="member-name-link">getView</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#resolveProxy(org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,org.eclipse.emf.ecore.EStructuralFeature,int,java.lang.Object)" class="member-name-link">resolveProxy</a><wbr>(<a href="../../cdo/spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  int&nbsp;index,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)" class="member-name-link">setContainer</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setContainer(org.eclipse.emf.ecore.InternalEObject,org.eclipse.emf.cdo.eresource.CDOResource,org.eclipse.emf.ecore.InternalEObject,int)" class="member-name-link">setContainer</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject,
  <a href="../../cdo/eresource/CDOResource.html" title="Schnittstelle in org.eclipse.emf.cdo.eresource">CDOResource</a>&nbsp;newResource,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;newEContainer,
  int&nbsp;newContainerFeatureID)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -209,9 +218,24 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
 </section>
 </li>
 <li>
-<section class="detail" id="getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)">
-<h3>getContainingFeatureID</h3>
-<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getContainingFeatureID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</span></div>
+<section class="detail" id="getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)">
+<h3>getContainerFeatureID</h3>
+<div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getContainerFeatureID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</span></div>
+<div class="block">Returns the container feature ID.
+ If the container isn't a navigable feature, this will be a negative ID indicating the inverse of the containment feature's ID.</div>
+<dl class="notes">
+<dt>Gibt zurück:</dt>
+<dd>the container feature ID.</dd>
+<dt>Seit:</dt>
+<dd>4.29</dd>
+<dt>Siehe auch:</dt>
+<dd>
+<ul class="tag-list-long">
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html#eContainmentFeature--" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EObject.eContainmentFeature()</code></a></li>
+<li><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html#EOPPOSITE_FEATURE_BASE" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>InternalEObject.EOPPOSITE_FEATURE_BASE</code></a></li>
+</ul>
+</dd>
+</dl>
 </section>
 </li>
 <li>
@@ -261,6 +285,16 @@ extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/
 <dt>Seit:</dt>
 <dd>2.0</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getContainingFeatureID(org.eclipse.emf.ecore.InternalEObject)">
+<h3>getContainingFeatureID</h3>
+<div class="member-signature"><span class="annotations"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Deprecated.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">@Deprecated</a>
+</span><span class="modifiers">default</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">getContainingFeatureID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;eObject)</span></div>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.29, replaced by <a href="#getContainerFeatureID(org.eclipse.emf.ecore.InternalEObject)"><code>getContainerFeatureID(InternalEObject)</code></a>.</div>
+</div>
 </section>
 </li>
 </ul>

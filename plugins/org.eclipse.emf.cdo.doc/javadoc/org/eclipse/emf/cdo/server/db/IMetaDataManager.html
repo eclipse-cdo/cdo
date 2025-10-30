@@ -117,16 +117,25 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clearMetaIDMappings()" class="member-name-link">clearMetaIDMappings</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMetaID(org.eclipse.emf.ecore.EModelElement,long)" class="member-name-link">getMetaID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a>&nbsp;modelElement,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deleteMetaIDMapping(java.sql.Statement,org.eclipse.emf.ecore.EModelElement)" class="member-name-link">deleteMetaIDMapping</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a>&nbsp;modelElement)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMetaID(org.eclipse.emf.ecore.EModelElement,long)" class="member-name-link">getMetaID</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a>&nbsp;modelElement,
  long&nbsp;commitTime)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the meta ID of the given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a>.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMetaInstance(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getMetaInstance</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMetaInstance(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getMetaInstance</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a> referred to by the given ID.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getMetaURI(org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">getMetaURI</a><wbr>(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
+<div class="block">Returns the URI of the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a> referred to by the given ID.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#loadPackageUnit(java.sql.Connection,org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit)" class="member-name-link">loadPackageUnit</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Connection.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Connection</a>&nbsp;connection,
@@ -178,8 +187,9 @@ loadScripts(document, 'script');</script>
 <h3>getMetaID</h3>
 <div class="member-signature"><span class="return-type"><a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a></span>&nbsp;<span class="element-name">getMetaID</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a>&nbsp;modelElement,
  long&nbsp;commitTime)</span></div>
-<div class="block">Returns the meta ID of the given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a>. <code> getMetaID(getMetaInstance(x))</code> yields
- <code>x</code></div>
+<div class="block">Returns the meta ID of the given <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a>.
+ <p>
+ <code>getMetaID(getMetaInstance(x))</code> yields <code>x</code>.</div>
 <dl class="notes">
 <dt>Parameter:</dt>
 <dd><code>modelElement</code> - the element</dd>
@@ -194,8 +204,43 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="getMetaInstance(org.eclipse.emf.cdo.common.id.CDOID)">
 <h3>getMetaInstance</h3>
 <div class="member-signature"><span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a></span>&nbsp;<span class="element-name">getMetaInstance</span><wbr><span class="parameters">(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
-<div class="block">Returns the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a> referred to by the given ID. <code> getMetaInstance(getMetaID(m))</code> yields
- <code>m</code></div>
+<div class="block">Returns the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a> referred to by the given ID.
+ <p>
+ <code>getMetaInstance(getMetaID(m))</code> yields <code>m</code>.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getMetaURI(org.eclipse.emf.cdo.common.id.CDOID)">
+<h3>getMetaURI</h3>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getMetaURI</span><wbr><span class="parameters">(<a href="../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</span></div>
+<div class="block">Returns the URI of the <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EModelElement</code></a> referred to by the given ID.
+ <p>
+ <code>getMetaURI(getMetaID(m))</code> yields <code>EcoreUtil.getURI(m).toString()</code>.</div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="deleteMetaIDMapping(java.sql.Statement,org.eclipse.emf.ecore.EModelElement)">
+<h3>deleteMetaIDMapping</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">deleteMetaIDMapping</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/Statement.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">Statement</a>&nbsp;statement,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EModelElement.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EModelElement</a>&nbsp;modelElement)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="clearMetaIDMappings()">
+<h3>clearMetaIDMappings</h3>
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">clearMetaIDMappings</span>()</div>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.0</dd>
@@ -216,16 +261,6 @@ loadScripts(document, 'script');</script>
 <dd>the loaded package unit.</dd>
 <dt>Seit:</dt>
 <dd>2.0</dd>
-</dl>
-</section>
-</li>
-<li>
-<section class="detail" id="clearMetaIDMappings()">
-<h3>clearMetaIDMappings</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">clearMetaIDMappings</span>()</div>
-<dl class="notes">
-<dt>Seit:</dt>
-<dd>4.0</dd>
 </dl>
 </section>
 </li>

@@ -187,9 +187,16 @@ loadScripts(document, 'script');</script>
  org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.emf.cdo.server.db.IModelEvolutionSupport,java.util.Map)" class="member-name-link">createStore</a><wbr>(<a href="mapping/IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+ org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+ org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
+ <a href="IModelEvolutionSupport.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport</a>&nbsp;modelEvolutionSupport,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#prepareContainer(org.eclipse.net4j.util.container.IManagedContainer)" class="member-name-link">prepareContainer</a><wbr>(org.eclipse.net4j.util.container.IManagedContainer&nbsp;container)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -327,6 +334,20 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>4.2</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.emf.cdo.server.db.IModelEvolutionSupport,java.util.Map)">
+<h3>createStore</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></span>&nbsp;<span class="element-name">createStore</span><wbr><span class="parameters">(<a href="mapping/IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+ org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+ org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
+ <a href="IModelEvolutionSupport.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport</a>&nbsp;modelEvolutionSupport,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.14</dd>
 </dl>
 </section>
 </li>

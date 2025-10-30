@@ -60,6 +60,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#absolute(int)" class="member-name-link">absolute(int)</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#accept(java.lang.String)" class="member-name-link">accept(String)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.html#accept(org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor)" class="member-name-link">accept(IDBDeltaVisitor)</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBDelta</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.html#accept(org.eclipse.net4j.db.ddl.IDBSchemaVisitor)" class="member-name-link">accept(IDBSchemaVisitor)</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBSchemaElement</a></dt>
@@ -183,6 +185,10 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#batch(java.lang.Object,java.lang.String)" class="member-name-link">batch(Object, String)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#batch(java.lang.String)" class="member-name-link">batch(String)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/Batch.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">Batch</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/Batch.html#%3Cinit%3E(java.sql.Connection,java.lang.String...)" class="member-name-link">Batch(Connection, String...)</a> - Konstruktor für Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/Batch.html" title="Klasse in org.eclipse.net4j.db">Batch</a></dt>
@@ -190,6 +196,16 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#batched(java.sql.PreparedStatement,int)" class="member-name-link">batched(PreparedStatement, int)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchedStatement.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.db">BatchedStatement</a> - Schnittstelle in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#batcher" class="member-name-link">batcher</a> - Variable in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>
+<div class="block">A <code>IDChanger.ChangeHandler</code> that batches SQL update statements to change IDs in a database table.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#%3Cinit%3E(org.eclipse.net4j.db.StatementBatcher,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">BatchingIDChanger(StatementBatcher, IDBField)</a> - Konstruktor für Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#%3Cinit%3E(org.eclipse.net4j.db.StatementBatcher,org.eclipse.net4j.db.ddl.IDBField,org.eclipse.net4j.db.ddl.IDBTable)" class="member-name-link">BatchingIDChanger(StatementBatcher, IDBField, IDBTable)</a> - Konstruktor für Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#beforeFirst()" class="member-name-link">beforeFirst()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
@@ -265,6 +281,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#close()" class="member-name-link">close()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#close()" class="member-name-link">close()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#close()" class="member-name-link">close()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#close(java.sql.Connection)" class="member-name-link">close(Connection)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -349,6 +367,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#createDataSource(java.util.Map,java.lang.String,java.lang.String)" class="member-name-link">createDataSource(Map&lt;Object, Object&gt;, String, String)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField(Connection, String, IDBField)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>DBAdapter.createField(Connection, IDBField)</code></a> instead.</div>
+</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createField(Connection, IDBField)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createFieldDefinition(org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">createFieldDefinition(IDBField)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
@@ -430,6 +454,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#%3Cinit%3E(java.lang.String,java.lang.String)" class="member-name-link">DBAdapter(String, String)</a> - Konstruktor für Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" class="type-name-link" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a> - Klasse in <a href="org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" class="type-name-link" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a> - Klasse in <a href="org/eclipse/net4j/spi/db/package-summary.html">org.eclipse.net4j.spi.db</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBException.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">DBException</a> - Ausnahmeklasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
 <dd>
@@ -543,6 +569,8 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#doCreateTable(org.eclipse.net4j.db.ddl.IDBTable,java.sql.Statement)" class="member-name-link">doCreateTable(IDBTable, Statement)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#doExecuteBatch()" class="member-name-link">doExecuteBatch()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.RowHandler.html#done(boolean)" class="member-name-link">done(boolean)</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.RowHandler.html" title="Schnittstelle in org.eclipse.net4j.db">DBUtil.RowHandler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#DOUBLE" class="member-name-link">DOUBLE</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="Enum-Klasse in org.eclipse.net4j.db">DBType</a></dt>
@@ -594,6 +622,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#dropAllTables(java.sql.Connection,java.lang.String,boolean)" class="member-name-link">dropAllTables(Connection, String, boolean)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropField(java.sql.Connection,java.lang.String,java.lang.String)" class="member-name-link">dropField(Connection, String, String)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>DBAdapter.dropField(Connection, IDBField)</code></a> instead.</div>
+</div>
+</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)" class="member-name-link">dropField(Connection, IDBField)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropIndex(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBIndex,org.eclipse.net4j.db.ddl.delta.IDBIndexDelta)" class="member-name-link">dropIndex(Connection, IDBIndex, IDBIndexDelta)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
@@ -639,6 +673,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema)" class="member-name-link">ensureSchema(IDBSchema)</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Schnittstelle in org.eclipse.net4j.db">IDBSchemaTransaction</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBSchemaTransaction.html#ensureSchema(org.eclipse.net4j.db.ddl.IDBSchema,org.eclipse.net4j.db.ddl.delta.IDBDeltaVisitor.Filter.Policy)" class="member-name-link">ensureSchema(IDBSchema, IDBDeltaVisitor.Filter.Policy)</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Schnittstelle in org.eclipse.net4j.db">IDBSchemaTransaction</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#ensureStatement()" class="member-name-link">ensureStatement()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html#equalNames(java.lang.String,java.lang.String)" class="member-name-link">equalNames(String, String)</a> - Methode in Schnittstelle org.eclipse.net4j.spi.db.ddl.<a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html" title="Schnittstelle in org.eclipse.net4j.spi.db.ddl">InternalDBSchema</a></dt>
 <dd>&nbsp;</dd>
@@ -716,6 +752,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.Type.html#FIELD_TYPE" class="member-name-link">FIELD_TYPE</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.Type.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl.delta">IDBPropertyDelta.Type</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html#%3Cinit%3E()" class="member-name-link">FieldInfo()</a> - Konstruktor für Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html#fieldInfos" class="member-name-link">fieldInfos</a> - Variable in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#%3Cinit%3E()" class="member-name-link">Filter()</a> - Konstruktor für Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="Klasse in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</a></dt>
 <dd>&nbsp;</dd>
@@ -816,7 +854,11 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchedStatement.html#getBatchCount()" class="member-name-link">getBatchCount()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="Schnittstelle in org.eclipse.net4j.db">BatchedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#getBatchCount()" class="member-name-link">getBatchCount()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchedStatement.html#getBatchSize()" class="member-name-link">getBatchSize()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="Schnittstelle in org.eclipse.net4j.db">BatchedStatement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#getBatchSize()" class="member-name-link">getBatchSize()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getBigDecimal(int)" class="member-name-link">getBigDecimal(int)</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
@@ -887,6 +929,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/IDBSchemaTransaction.html#getConnection()" class="member-name-link">getConnection()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBSchemaTransaction.html" title="Schnittstelle in org.eclipse.net4j.db">IDBSchemaTransaction</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#getConnection()" class="member-name-link">getConnection()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#getConnection()" class="member-name-link">getConnection()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBDatabase.html#getConnections()" class="member-name-link">getConnections()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBDatabase.html" title="Schnittstelle in org.eclipse.net4j.db">IDBDatabase</a></dt>
 <dd>&nbsp;</dd>
@@ -1041,6 +1085,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBIndex.html#getIndexFields()" class="member-name-link">getIndexFields()</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBIndex.html#getIndexFieldSafe(java.lang.String)" class="member-name-link">getIndexFieldSafe(String)</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBIndex.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBIndex</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)" class="member-name-link">getIndexInfos(DatabaseMetaData, String, String, Consumer&lt;DBAdapter.IndexInfo&gt;)</a> - Statische Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBTable.html#getIndexSafe(java.lang.String)" class="member-name-link">getIndexSafe(String)</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a></dt>
 <dd>&nbsp;</dd>
@@ -1318,6 +1364,10 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBPreparedStatement.html#getSQL()" class="member-name-link">getSQL()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBPreparedStatement.html" title="Schnittstelle in org.eclipse.net4j.db">IDBPreparedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.BatchEvent.html#getSQL()" class="member-name-link">getSQL()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.BatchEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.BatchEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html#getSQL()" class="member-name-link">getSQL()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.ResultEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#getSQL92ReservedWords()" class="member-name-link">getSQL92ReservedWords()</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getSQLXML(int)" class="member-name-link">getSQLXML(int)</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
@@ -1331,6 +1381,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/IDBResultSet.html#getStatement()" class="member-name-link">getStatement()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBResultSet.html" title="Schnittstelle in org.eclipse.net4j.db">IDBResultSet</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getStatement()" class="member-name-link">getStatement()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#getStatement()" class="member-name-link">getStatement()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBDatabase.html#getStatementCacheCapacity()" class="member-name-link">getStatementCacheCapacity()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBDatabase.html" title="Schnittstelle in org.eclipse.net4j.db">IDBDatabase</a></dt>
 <dd>&nbsp;</dd>
@@ -1382,6 +1434,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/BatchedStatement.html#getTotalResult()" class="member-name-link">getTotalResult()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchedStatement.html" title="Schnittstelle in org.eclipse.net4j.db">BatchedStatement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.CloseEvent.html#getTotalUpdateCount()" class="member-name-link">getTotalUpdateCount()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.CloseEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.CloseEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#getTotalUpdateCount()" class="member-name-link">getTotalUpdateCount()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html#getTotalUpdateCount()" class="member-name-link">getTotalUpdateCount()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.ResultEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBPreparedStatement.html#getTransaction()" class="member-name-link">getTransaction()</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBPreparedStatement.html" title="Schnittstelle in org.eclipse.net4j.db">IDBPreparedStatement</a></dt>
 <dd>
 <div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
@@ -1427,6 +1485,8 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 </dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#getUpdateCount()" class="member-name-link">getUpdateCount()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html#getUpdateCount()" class="member-name-link">getUpdateCount()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.ResultEvent</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getURL(int)" class="member-name-link">getURL(int)</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
@@ -1475,9 +1535,15 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html#handle(org.eclipse.net4j.db.ddl.delta.IDBDelta)" class="member-name-link">handle(IDBDelta)</a> - Methode in Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" title="Klasse in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#handleArbitraryChanges(java.util.List,int)" class="member-name-link">handleArbitraryChanges(List&lt;Integer&gt;, int)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#handleConsecutiveChanges(int,int,int)" class="member-name-link">handleConsecutiveChanges(int, int, int)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataInput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)" class="member-name-link">handleRow(ExtendedDataInput, Connection, IDBField[], Object[])</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" title="Schnittstelle in org.eclipse.net4j.db">DBUtil.DeserializeRowHandler</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html#handleRow(org.eclipse.net4j.util.io.ExtendedDataOutput,java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField%5B%5D,java.lang.Object%5B%5D)" class="member-name-link">handleRow(ExtendedDataOutput, Connection, IDBField[], Object[])</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" title="Schnittstelle in org.eclipse.net4j.db">DBUtil.SerializeRowHandler</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#handleSingleChange(int,int)" class="member-name-link">handleSingleChange(int, int)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBTable.html#hasIndexFor(org.eclipse.net4j.db.ddl.IDBField...)" class="member-name-link">hasIndexFor(IDBField...)</a> - Methode in Schnittstelle org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBTable.html" title="Schnittstelle in org.eclipse.net4j.db.ddl">IDBTable</a></dt>
 <dd>&nbsp;</dd>
@@ -1617,6 +1683,8 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" class="type-name-link" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBTableDelta</a> - Schnittstelle in <a href="org/eclipse/net4j/db/ddl/delta/package-summary.html">org.eclipse.net4j.db.ddl.delta</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#idField" class="member-name-link">idField</a> - Variable in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.ChangeKind)" class="member-name-link">ignore(IDBDelta.ChangeKind)</a> - Methode in Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="Klasse in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html#ignore(org.eclipse.net4j.db.ddl.delta.IDBDelta.DeltaType)" class="member-name-link">ignore(IDBDelta.DeltaType)</a> - Methode in Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" title="Klasse in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Filter.Policy</a></dt>
@@ -1638,6 +1706,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html#INDEX_FIELD" class="member-name-link">INDEX_FIELD</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl">IDBSchemaElement.SchemaElementType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.Type.html#INDEX_TYPE" class="member-name-link">INDEX_TYPE</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.Type.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl.delta">IDBPropertyDelta.Type</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html#%3Cinit%3E()" class="member-name-link">IndexInfo()</a> - Konstruktor für Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#insertRow()" class="member-name-link">insertRow()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingResultSet</a></dt>
 <dd>&nbsp;</dd>
@@ -1691,6 +1761,8 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Since JDK 1.6.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#isClosed()" class="member-name-link">isClosed()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html#isCloseOnCompletion()" class="member-name-link">isCloseOnCompletion()</a> - Methode in Klasse org.eclipse.net4j.db.jdbc.<a href="org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" title="Klasse in org.eclipse.net4j.db.jdbc">DelegatingPreparedStatement</a></dt>
 <dd>
 <div class="block">Since JDK 1.7.</div>
@@ -1876,6 +1948,8 @@ loadScripts(document, 'script');</script>
 <h2 class="title" id="I:N">N</h2>
 <dl class="index">
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html#name" class="member-name-link">name</a> - Variable in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.FieldInfo</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html#name" class="member-name-link">name</a> - Variable in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#name(java.lang.String)" class="member-name-link">name(String)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
 <dd>&nbsp;</dd>
@@ -2072,7 +2146,11 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection,java.sql.DatabaseMetaData,org.eclipse.net4j.db.ddl.IDBTable,java.lang.String)" class="member-name-link">readIndices(Connection, DatabaseMetaData, IDBTable, String)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)" class="member-name-link">readIndices(Connection, ResultSet, IDBTable, int, int, int, int)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
-<dd>&nbsp;</dd>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Veraltet.</span>
+<div class="deprecation-comment">As of 4.13 no longer supported. Use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)"><code>DBAdapter.getIndexInfos(DatabaseMetaData, String, String, Consumer)</code></a> instead.</div>
+</div>
+</dd>
 <dt><a href="org/eclipse/net4j/db/IDBAdapter.html#readSchema(java.sql.Connection,java.lang.String)" class="member-name-link">readSchema(Connection, String)</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="Schnittstelle in org.eclipse.net4j.db">IDBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#readSchema(java.sql.Connection,java.lang.String)" class="member-name-link">readSchema(Connection, String)</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
@@ -2420,9 +2498,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html#setWrapper(org.eclipse.net4j.db.ddl.IDBSchemaElement)" class="member-name-link">setWrapper(IDBSchemaElement)</a> - Methode in Schnittstelle org.eclipse.net4j.spi.db.ddl.<a href="org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html" title="Schnittstelle in org.eclipse.net4j.spi.db.ddl">InternalDBSchemaElement</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#shiftStr(int)" class="member-name-link">shiftStr(int)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/h2/H2Adapter.html#shutdown(javax.sql.DataSource)" class="member-name-link">shutdown(DataSource)</a> - Statische Methode in Klasse org.eclipse.net4j.db.h2.<a href="org/eclipse/net4j/db/h2/H2Adapter.html" title="Klasse in org.eclipse.net4j.db.h2">H2Adapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBType.html#SMALLINT" class="member-name-link">SMALLINT</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBType.html" title="Enum-Klasse in org.eclipse.net4j.db">DBType</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#sql(java.lang.Object,java.lang.String)" class="member-name-link">sql(Object, String)</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/IDBAdapter.html#sqlCharIndex(java.lang.Object,java.lang.Object)" class="member-name-link">sqlCharIndex(Object, Object)</a> - Methode in Schnittstelle org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/IDBAdapter.html" title="Schnittstelle in org.eclipse.net4j.db">IDBAdapter</a></dt>
 <dd>&nbsp;</dd>
@@ -2484,6 +2566,20 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#sqlSubstringFunction()" class="member-name-link">sqlSubstringFunction()</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>
+<div class="block">A helper for batching SQL statements.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#%3Cinit%3E(java.sql.Connection)" class="member-name-link">StatementBatcher(Connection)</a> - Konstruktor für Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.html#%3Cinit%3E(java.sql.Connection,int)" class="member-name-link">StatementBatcher(Connection, int)</a> - Konstruktor für Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.BatchEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">StatementBatcher.BatchEvent</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.CloseEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">StatementBatcher.CloseEvent</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" class="type-name-link" title="Klasse in org.eclipse.net4j.db">StatementBatcher.ResultEvent</a> - Klasse in <a href="org/eclipse/net4j/db/package-summary.html">org.eclipse.net4j.db</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html#stopRecursion()" class="member-name-link">stopRecursion()</a> - Methode in Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" title="Klasse in org.eclipse.net4j.db.ddl.delta">IDBDeltaVisitor.Default</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html#stopRecursion()" class="member-name-link">stopRecursion()</a> - Methode in Klasse org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html" title="Klasse in org.eclipse.net4j.db.ddl">IDBSchemaVisitor.Default</a></dt>
@@ -2497,6 +2593,8 @@ loadScripts(document, 'script');</script>
 </dl>
 <h2 class="title" id="I:T">T</h2>
 <dl class="index">
+<dt><a href="org/eclipse/net4j/db/BatchingIDChanger.html#table" class="member-name-link">table</a> - Variable in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/BatchingIDChanger.html" title="Klasse in org.eclipse.net4j.db">BatchingIDChanger</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html#TABLE" class="member-name-link">TABLE</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl.delta">IDBDelta.DeltaType</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html#TABLE" class="member-name-link">TABLE</a> - Enum-Konstante in Enum-Klasse org.eclipse.net4j.db.ddl.<a href="org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html" title="Enum-Klasse in org.eclipse.net4j.db.ddl">IDBSchemaElement.SchemaElementType</a></dt>
@@ -2513,6 +2611,12 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/hsqldb/HSQLDBDataSource.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.db.hsqldb.<a href="org/eclipse/net4j/db/hsqldb/HSQLDBDataSource.html" title="Klasse in org.eclipse.net4j.db.hsqldb">HSQLDBDataSource</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.BatchEvent.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.BatchEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.BatchEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.CloseEvent.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.CloseEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.CloseEvent</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" title="Klasse in org.eclipse.net4j.db">StatementBatcher.ResultEvent</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBAdapter.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/spi/db/DBSchema.html#toString()" class="member-name-link">toString()</a> - Methode in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBSchema.html" title="Klasse in org.eclipse.net4j.spi.db">DBSchema</a></dt>
@@ -2520,6 +2624,8 @@ loadScripts(document, 'script');</script>
 <div class="deprecation-block"><span class="deprecated-label">Veraltet.</span></div>
 &nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/DBUtil.html#trace(java.lang.String)" class="member-name-link">trace(String)</a> - Statische Methode in Klasse org.eclipse.net4j.db.<a href="org/eclipse/net4j/db/DBUtil.html" title="Klasse in org.eclipse.net4j.db">DBUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html#type" class="member-name-link">type</a> - Variable in Klasse org.eclipse.net4j.spi.db.<a href="org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" title="Klasse in org.eclipse.net4j.spi.db">DBAdapter.IndexInfo</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html#TYPE_PROPERTY" class="member-name-link">TYPE_PROPERTY</a> - Statische Variable in Schnittstelle org.eclipse.net4j.db.ddl.delta.<a href="org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" title="Schnittstelle in org.eclipse.net4j.db.ddl.delta">IDBFieldDelta</a></dt>
 <dd>&nbsp;</dd>

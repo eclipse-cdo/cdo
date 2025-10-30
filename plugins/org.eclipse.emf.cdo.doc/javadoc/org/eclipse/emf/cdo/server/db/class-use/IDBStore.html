@@ -86,12 +86,41 @@ loadScripts(document, 'script');</script>
  org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code><a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IDBStoreAccessor.</span><code><a href="../IDBStoreAccessor.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-first even-row-color"><code>static <a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDODBUtil.</span><code><a href="../CDODBUtil.html#createStore(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.net4j.db.IDBAdapter,org.eclipse.net4j.db.IDBConnectionProvider,org.eclipse.emf.cdo.server.db.IModelEvolutionSupport,java.util.Map)" class="member-name-link">createStore</a><wbr>(<a href="../mapping/IMappingStrategy.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
+ org.eclipse.net4j.db.IDBAdapter&nbsp;dbAdapter,
+ org.eclipse.net4j.db.IDBConnectionProvider&nbsp;dbConnectionProvider,
+ <a href="../IModelEvolutionSupport.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport</a>&nbsp;modelEvolutionSupport,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&gt;&nbsp;properties)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code><a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IIDHandler.</span><code><a href="../IIDHandler.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IDBStoreAccessor.</span><code><a href="../IDBStoreAccessor.html#getStore()" class="member-name-link">getStore</a>()</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IIDHandler.</span><code><a href="../IIDHandler.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code><a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IModelEvolutionSupport.Context.</span><code><a href="../IModelEvolutionSupport.Context.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IModelEvolutionSupport.</span><code><a href="../IModelEvolutionSupport.html#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last even-row-color">
+<div class="block">Returns the DB store this model evolution support is associated with.</div>
+</div>
+</div>
+<div class="caption"><span>Methoden in <a href="../package-summary.html">org.eclipse.emf.cdo.server.db</a> mit Parametern vom Typ <a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="../IModelEvolutionSupport.Model.html" title="Klasse in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport.Model</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IModelEvolutionSupport.Model.Loader.</span><code><a href="../IModelEvolutionSupport.Model.Loader.html#loadModels(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">loadModels</a><wbr>(<a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;store)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IModelEvolutionSupport.</span><code><a href="../IModelEvolutionSupport.html#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../IDBStore.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;store)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Sets the DB store this model evolution support is associated with.</div>
+</div>
 </div>
 </section>
 </li>

@@ -118,6 +118,11 @@ loadScripts(document, 'script');</script>
 <div class="block">An extension of <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/impl/ResourceSetImpl.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource.impl" class="external-link"><code>ResourceSetImpl</code></a> that allows demandLoading of resources and delegation of resource lookups,
  to be switched on/off as desired.</div>
 </div>
+<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
+<div class="col-second odd-row-color"><code><a href="EMFUtil.TreeMapping.html" class="type-name-link" title="Klasse in org.eclipse.emf.cdo.common.model">EMFUtil.TreeMapping</a>&lt;<a href="EMFUtil.TreeMapping.html" title="Typparameter in EMFUtil.TreeMapping">T</a> extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;</code></div>
+<div class="col-last odd-row-color">
+<div class="block">A mapping between two <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link"><code>EObject</code></a>s and their contents based on their URIs.</div>
+</div>
 </div>
 </section>
 </li>
@@ -219,22 +224,49 @@ loadScripts(document, 'script');</script>
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;type)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEClass(org.eclipse.emf.ecore.EPackage,java.lang.String,boolean,boolean)" class="member-name-link">createEClass</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEClass(org.eclipse.emf.ecore.EPackage,java.lang.String)" class="member-name-link">createEClass</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEClass(org.eclipse.emf.ecore.EPackage,java.lang.String,boolean,boolean)" class="member-name-link">createEClass</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
  boolean&nbsp;isAbstract,
  boolean&nbsp;isInterface)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEEnum(org.eclipse.emf.ecore.EPackage,java.lang.String)" class="member-name-link">createEEnum</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEPackage(java.lang.String,byte%5B%5D,boolean,org.eclipse.emf.ecore.resource.ResourceSet,boolean)" class="member-name-link">createEPackage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri,
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEEnum(org.eclipse.emf.ecore.EPackage,java.lang.String,java.lang.String...)" class="member-name-link">createEEnum</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;literals)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnumLiteral.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnumLiteral</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEEnumLiteral(org.eclipse.emf.ecore.EEnum,java.lang.String)" class="member-name-link">createEEnumLiteral</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a>&nbsp;eEnum,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnumLiteral.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnumLiteral</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEEnumLiteral(org.eclipse.emf.ecore.EEnum,java.lang.String,int)" class="member-name-link">createEEnumLiteral</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a>&nbsp;eEnum,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;value)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEPackage(java.lang.String,byte%5B%5D,boolean,org.eclipse.emf.ecore.resource.ResourceSet,boolean)" class="member-name-link">createEPackage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;uri,
  byte[]&nbsp;bytes,
  boolean&nbsp;zipped,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/resource/ResourceSet.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore.resource" class="external-link">ResourceSet</a>&nbsp;resourceSet,
  boolean&nbsp;lookForResource)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEPackage(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">createEPackage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEPackage(java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">createEPackage</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;nsPrefix,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;nsURI)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EReference</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEReference(org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.ecore.EClassifier)" class="member-name-link">createEReference</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;type)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EReference</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#createEReference(org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.ecore.EClassifier,boolean,boolean)" class="member-name-link">createEReference</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
@@ -260,55 +292,70 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>[]</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAllPackages(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getAllPackages</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EAnnotation.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EAnnotation</a>&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAnnotations(org.eclipse.emf.ecore.EClass,java.lang.String)" class="member-name-link">getAnnotations</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;sourceURI)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAllPackages(org.eclipse.emf.ecore.EPackage,java.util.function.Consumer)" class="member-name-link">getAllPackages</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&gt;&nbsp;consumer)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAnyConcreteEClass(org.eclipse.emf.ecore.EPackage,boolean)" class="member-name-link">getAnyConcreteEClass</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
- boolean&nbsp;includeSubPackages)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EAnnotation.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EAnnotation</a>&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAnnotations(org.eclipse.emf.ecore.EClass,java.lang.String)" class="member-name-link">getAnnotations</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;sourceURI)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getConcreteClasses(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getConcreteClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getAnyConcreteEClass(org.eclipse.emf.ecore.EPackage,boolean)" class="member-name-link">getAnyConcreteEClass</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ boolean&nbsp;includeSubPackages)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>[]</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getConcreteClasses(org.eclipse.emf.ecore.EPackage,boolean)" class="member-name-link">getConcreteClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
- boolean&nbsp;includeSubPackages)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getEPackageBytes(org.eclipse.emf.ecore.EPackage,boolean,org.eclipse.emf.ecore.EPackage.Registry)" class="member-name-link">getEPackageBytes</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
- boolean&nbsp;zipped,
- <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;packageRegistry)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getGeneratedEPackage(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getGeneratedEPackage</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;<br>T</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getNearestObject(org.eclipse.emf.ecore.EObject,java.lang.Class)" class="member-name-link">getNearestObject</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;object,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getParentURI(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getParentURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getConcreteClasses(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getConcreteClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>[]</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPersistentClasses(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getPersistentClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getConcreteClasses(org.eclipse.emf.ecore.EPackage,boolean)" class="member-name-link">getConcreteClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ boolean&nbsp;includeSubPackages)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getPersistentFeatures(org.eclipse.emf.common.util.EList)" class="member-name-link">getPersistentFeatures</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;eFeatures)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static byte[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getEPackageBytes(org.eclipse.emf.ecore.EPackage,boolean,org.eclipse.emf.ecore.EPackage.Registry)" class="member-name-link">getEPackageBytes</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ boolean&nbsp;zipped,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;packageRegistry)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFullyQualifiedName(org.eclipse.emf.ecore.EObject)" class="member-name-link">getFullyQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;modelElement)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getFullyQualifiedName(org.eclipse.emf.ecore.EObject,java.lang.String)" class="member-name-link">getFullyQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;modelElement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getGeneratedEPackage(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getGeneratedEPackage</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static &lt;T extends <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&gt;<br>T</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getNearestObject(org.eclipse.emf.ecore.EObject,java.lang.Class)" class="member-name-link">getNearestObject</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;object,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Class.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Class</a>&lt;T&gt;&nbsp;type)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getParentURI(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getParentURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>[]</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPersistentClasses(org.eclipse.emf.ecore.EPackage)" class="member-name-link">getPersistentClasses</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="Klasse oder Schnittstelle in java.util" class="external-link">List</a><wbr>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6"><code><a href="#getPersistentFeatures(org.eclipse.emf.common.util.EList)" class="member-name-link">getPersistentFeatures</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/EList.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">EList</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&gt;&nbsp;eFeatures)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4 method-summary-table-tab6">
 <div class="block"><span class="deprecated-label">Veraltet.</span>
 <div class="deprecation-comment">This method is expensive and will be removed in the future.</div>
 </div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPositionalURI(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getPositionalURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;internalEObject)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/common/util/URI.html" title="Klasse oder Schnittstelle in org.eclipse.emf.common.util" class="external-link">URI</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getPositionalURI(org.eclipse.emf.ecore.InternalEObject)" class="member-name-link">getPositionalURI</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/InternalEObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">InternalEObject</a>&nbsp;internalEObject)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getQualifiedName(org.eclipse.emf.ecore.EClassifier,java.lang.String)" class="member-name-link">getQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;classifier,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getQualifiedName(org.eclipse.emf.ecore.EClassifier,java.lang.String)" class="member-name-link">getQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;classifier,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getQualifiedName(org.eclipse.emf.ecore.EPackage,java.lang.String)" class="member-name-link">getQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getQualifiedName(org.eclipse.emf.ecore.EPackage,java.lang.String)" class="member-name-link">getQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#getQualifiedName(org.eclipse.emf.ecore.EStructuralFeature,java.lang.String)" class="member-name-link">getQualifiedName</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.Entry.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Map.Entry</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&gt;[]</code></div>
@@ -615,6 +662,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createEClass(org.eclipse.emf.ecore.EPackage,java.lang.String)">
+<h3>createEClass</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></span>&nbsp;<span class="element-name">createEClass</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createEClass(org.eclipse.emf.ecore.EPackage,java.lang.String,boolean,boolean)">
 <h3>createEClass</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></span>&nbsp;<span class="element-name">createEClass</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
@@ -640,6 +698,18 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="createEReference(org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.ecore.EClassifier)">
+<h3>createEReference</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EReference</a></span>&nbsp;<span class="element-name">createEReference</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;type)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="createEReference(org.eclipse.emf.ecore.EClass,java.lang.String,org.eclipse.emf.ecore.EClassifier,boolean,boolean)">
 <h3>createEReference</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EReference.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EReference</a></span>&nbsp;<span class="element-name">createEReference</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
@@ -650,6 +720,52 @@ loadScripts(document, 'script');</script>
 <dl class="notes">
 <dt>Seit:</dt>
 <dd>2.0</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEEnum(org.eclipse.emf.ecore.EPackage,java.lang.String)">
+<h3>createEEnum</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a></span>&nbsp;<span class="element-name">createEEnum</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEEnum(org.eclipse.emf.ecore.EPackage,java.lang.String,java.lang.String...)">
+<h3>createEEnum</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a></span>&nbsp;<span class="element-name">createEEnum</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>...&nbsp;literals)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEEnumLiteral(org.eclipse.emf.ecore.EEnum,java.lang.String)">
+<h3>createEEnumLiteral</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnumLiteral.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnumLiteral</a></span>&nbsp;<span class="element-name">createEEnumLiteral</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a>&nbsp;eEnum,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="createEEnumLiteral(org.eclipse.emf.ecore.EEnum,java.lang.String,int)">
+<h3>createEEnumLiteral</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnumLiteral.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnumLiteral</a></span>&nbsp;<span class="element-name">createEEnumLiteral</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EEnum.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EEnum</a>&nbsp;eEnum,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;name,
+ int&nbsp;value)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
 </dl>
 </section>
 </li>
@@ -807,6 +923,17 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="detail" id="getAllPackages(org.eclipse.emf.ecore.EPackage,java.util.function.Consumer)">
+<h3>getAllPackages</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">getAllPackages</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/function/Consumer.html" title="Klasse oder Schnittstelle in java.util.function" class="external-link">Consumer</a>&lt;<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&gt;&nbsp;consumer)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="getQualifiedName(org.eclipse.emf.ecore.EPackage,java.lang.String)">
 <h3>getQualifiedName</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getQualifiedName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;ePackage,
@@ -818,6 +945,38 @@ loadScripts(document, 'script');</script>
 <h3>getQualifiedName</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getQualifiedName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClassifier.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClassifier</a>&nbsp;classifier,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="getQualifiedName(org.eclipse.emf.ecore.EStructuralFeature,java.lang.String)">
+<h3>getQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getQualifiedName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFullyQualifiedName(org.eclipse.emf.ecore.EObject)">
+<h3>getFullyQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFullyQualifiedName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;modelElement)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="getFullyQualifiedName(org.eclipse.emf.ecore.EObject,java.lang.String)">
+<h3>getFullyQualifiedName</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getFullyQualifiedName</span><wbr><span class="parameters">(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EObject.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EObject</a>&nbsp;modelElement,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;separator)</span></div>
+<dl class="notes">
+<dt>Seit:</dt>
+<dd>4.27</dd>
+</dl>
 </section>
 </li>
 <li>

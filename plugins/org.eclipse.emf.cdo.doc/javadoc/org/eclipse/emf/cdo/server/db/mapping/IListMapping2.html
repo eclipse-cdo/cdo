@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <dl class="notes">
 <dt>Alle Superschnittstellen:</dt>
-<dd><code><a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></dd>
+<dd><code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code>, <code><a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></dd>
 </dl>
 <dl class="notes">
 <dt>Alle bekannten Unterschnittstellen:</dt>
@@ -113,7 +113,7 @@ extends <a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.
 <section class="method-summary" id="method-summary">
 <h2>Methodenübersicht</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button><button id="method-summary-table-tab5" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab5', 3)" class="table-tab">Standardmethoden</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
 <div class="table-header col-first">Modifizierer und Typ</div>
@@ -132,12 +132,15 @@ extends <a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/StringBuilder.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">StringBuilder</a>&nbsp;builder,
  int&nbsp;index)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default <a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#getTypeMapping()" class="member-name-link">getTypeMapping</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">&nbsp;</div>
 </div>
 </div>
 </div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-org.eclipse.emf.cdo.server.db.mapping.IListMapping">Von Schnittstelle geerbte Methoden&nbsp;org.eclipse.emf.cdo.server.db.mapping.<a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></h3>
-<code><a href="IListMapping.html#getDBTables()">getDBTables</a>, <a href="IListMapping.html#getFeature()">getFeature</a>, <a href="IListMapping.html#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)">objectDetached</a>, <a href="IListMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)">queryXRefs</a>, <a href="IListMapping.html#readChunks(org.eclipse.emf.cdo.server.db.IDBStoreChunkReader,java.util.List,java.lang.String)">readChunks</a>, <a href="IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">readValues</a>, <a href="IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">writeValues</a></code></div>
+<code><a href="IListMapping.html#getDBTables()">getDBTables</a>, <a href="IListMapping.html#getDBType()">getDBType</a>, <a href="IListMapping.html#getFeature()">getFeature</a>, <a href="IListMapping.html#getField()">getField</a>, <a href="IListMapping.html#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)">objectDetached</a>, <a href="IListMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)">queryXRefs</a>, <a href="IListMapping.html#readChunks(org.eclipse.emf.cdo.server.db.IDBStoreChunkReader,java.util.List,java.lang.String)">readChunks</a>, <a href="IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)">readValues</a>, <a href="IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)">writeValues</a></code></div>
 </section>
 </li>
 </ul>
@@ -149,6 +152,22 @@ extends <a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.
 <section class="method-details" id="method-detail">
 <h2>Methodendetails</h2>
 <ul class="member-list">
+<li>
+<section class="detail" id="getTypeMapping()">
+<h3>getTypeMapping</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type"><a href="ITypeMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping</a></span>&nbsp;<span class="element-name">getTypeMapping</span>()</div>
+<dl class="notes">
+<dt>Angegeben von:</dt>
+<dd><code><a href="IFeatureMapping.html#getTypeMapping()">getTypeMapping</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IFeatureMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IFeatureMapping</a></code></dd>
+<dt>Angegeben von:</dt>
+<dd><code><a href="IListMapping.html#getTypeMapping()">getTypeMapping</a></code>&nbsp;in Schnittstelle&nbsp;<code><a href="IListMapping.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.mapping">IListMapping</a></code></dd>
+<dt>Gibt zurück:</dt>
+<dd>The type mapping which is used for this feature mapping.</dd>
+<dt>Seit:</dt>
+<dd>4.14</dd>
+</dl>
+</section>
+</li>
 <li>
 <section class="detail" id="addSimpleChunkWhere(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,java.lang.StringBuilder,int)">
 <h3>addSimpleChunkWhere</h3>

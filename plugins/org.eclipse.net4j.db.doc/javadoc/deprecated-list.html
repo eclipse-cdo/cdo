@@ -145,13 +145,25 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color"></div>
 <div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/db/jdbc/DelegatingResultSet.html#getUnicodeStream(java.lang.String)">org.eclipse.net4j.db.jdbc.DelegatingResultSet.getUnicodeStream<wbr>(String)</a></div>
 <div class="col-last odd-row-color"></div>
-<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource()">org.eclipse.net4j.spi.db.DBAdapter.createJDBCDataSource()</a></div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createField(java.sql.Connection,java.lang.String,org.eclipse.net4j.db.ddl.IDBField)">org.eclipse.net4j.spi.db.DBAdapter.createField<wbr>(Connection, String, IDBField)</a></div>
 <div class="col-last even-row-color">
+<div class="block">As of 4.13 use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#createField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>DBAdapter.createField(Connection, IDBField)</code></a> instead.</div>
+</div>
+<div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#createJDBCDataSource()">org.eclipse.net4j.spi.db.DBAdapter.createJDBCDataSource()</a></div>
+<div class="col-last odd-row-color">
 <div class="block">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropField(java.sql.Connection,java.lang.String,java.lang.String)">org.eclipse.net4j.spi.db.DBAdapter.dropField<wbr>(Connection, String, String)</a></div>
+<div class="col-last even-row-color">
+<div class="block">As of 4.13 use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#dropField(java.sql.Connection,org.eclipse.net4j.db.ddl.IDBField)"><code>DBAdapter.dropField(Connection, IDBField)</code></a> instead.</div>
 </div>
 <div class="col-summary-item-name odd-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#getJDBCDriver()">org.eclipse.net4j.spi.db.DBAdapter.getJDBCDriver()</a></div>
 <div class="col-last odd-row-color">
 <div class="block">As of 4.2 no longer supported because of IP issues for external build dependencies (the vendor driver libs).</div>
+</div>
+<div class="col-summary-item-name even-row-color"><a href="org/eclipse/net4j/spi/db/DBAdapter.html#readIndices(java.sql.Connection,java.sql.ResultSet,org.eclipse.net4j.db.ddl.IDBTable,int,int,int,int)">org.eclipse.net4j.spi.db.DBAdapter.readIndices<wbr>(Connection, ResultSet, IDBTable, int, int, int, int)</a></div>
+<div class="col-last even-row-color">
+<div class="block">As of 4.13 no longer supported. Use <a href="org/eclipse/net4j/spi/db/DBAdapter.html#getIndexInfos(java.sql.DatabaseMetaData,java.lang.String,java.lang.String,java.util.function.Consumer)"><code>DBAdapter.getIndexInfos(DatabaseMetaData, String, String, Consumer)</code></a> instead.</div>
 </div>
 </div>
 </div>

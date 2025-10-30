@@ -669,8 +669,10 @@
         <topic label="CDO Administration Servers" href="productdoc/org.eclipse.emf.cdo.server.admin.adminServers.html" icon="productgroup" />
         <topic label="CDO Repository Configuration Managers" href="productdoc/org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers.html" icon="productgroup" />
       </topic>
-      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="plugin">
-        <topic label="CDO Type Mapping Providers" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="productgroup" />
+      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.modelEvolutionSupports.html" icon="plugin">
+        <topic label="%productGroup.modelEvolutionSupports" href="productdoc/org.eclipse.emf.cdo.server.db.modelEvolutionSupports.html" icon="productgroup" />
+        <topic label="CDO DB Model Loaders" href="productdoc/org.eclipse.emf.cdo.server.db.modelLoaders.html" icon="productgroup" />
+        <topic label="CDO DB Type Mapping Providers" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="productgroup" />
       </topic>
       <topic label="CDO Model Repository Server Net4j Support" href="productdoc/org.eclipse.emf.cdo.server.net4j.failoverMonitors.html" icon="plugin">
         <topic label="Net4j Failover Monitors" href="productdoc/org.eclipse.emf.cdo.server.net4j.failoverMonitors.html" icon="productgroup" />

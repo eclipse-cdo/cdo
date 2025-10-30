@@ -46,7 +46,7 @@ public class Doc04_PreparingModels
   public class Doc_CreatingEcore
   {
     /**
-     * @snip xml ../../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.ecore
+     * @snip xml ../../../../../../../../org.eclipse.emf.cdo.examples.company/model/company.ecore
      */
     public void companyEcoreModel()
     {

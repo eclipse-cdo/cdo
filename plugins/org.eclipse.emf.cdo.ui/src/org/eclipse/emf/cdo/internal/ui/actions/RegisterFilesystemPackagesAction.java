@@ -43,7 +43,7 @@ public class RegisterFilesystemPackagesAction extends RegisterPackagesAction
       Messages.getString("RegisterFilesystemPackagesAction.4"), //$NON-NLS-1$
       Messages.getString("RegisterFilesystemPackagesAction.5") }; //$NON-NLS-1$
 
-  private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", null }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+  private static final String[] FILTER_EXTENSIONS = { "ecore", "xmi", "xml", "*.*" }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
   public RegisterFilesystemPackagesAction(IWorkbenchPage page, CDOSession session)
   {

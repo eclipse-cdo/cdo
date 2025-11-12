@@ -556,6 +556,8 @@
       </topic>
       <topic label="CDO Model Repository Server DB" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="plugin">
         <topic label="org.eclipse.emf.cdo.server.db" href="javadoc/org/eclipse/emf/cdo/server/db/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.server.db.evolution" href="javadoc/org/eclipse/emf/cdo/server/db/evolution/package-summary.html" icon="package" />
+        <topic label="org.eclipse.emf.cdo.server.db.evolution.phased" href="javadoc/org/eclipse/emf/cdo/server/db/evolution/phased/package-summary.html" icon="package" />
         <topic label="org.eclipse.emf.cdo.server.db.mapping" href="javadoc/org/eclipse/emf/cdo/server/db/mapping/package-summary.html" icon="package" />
       </topic>
       <topic label="CDO Model Repository Server Embedded Support" href="javadoc/org/eclipse/emf/cdo/server/embedded/package-summary.html" icon="plugin">
@@ -669,9 +671,9 @@
         <topic label="CDO Administration Servers" href="productdoc/org.eclipse.emf.cdo.server.admin.adminServers.html" icon="productgroup" />
         <topic label="CDO Repository Configuration Managers" href="productdoc/org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers.html" icon="productgroup" />
       </topic>
-      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.modelEvolutionSupports.html" icon="plugin">
-        <topic label="%productGroup.modelEvolutionSupports" href="productdoc/org.eclipse.emf.cdo.server.db.modelEvolutionSupports.html" icon="productgroup" />
-        <topic label="CDO DB Model Loaders" href="productdoc/org.eclipse.emf.cdo.server.db.modelLoaders.html" icon="productgroup" />
+      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.phaseHandlers.html" icon="plugin">
+        <topic label="CDO DB Model Evolution Phase Handlers" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.phaseHandlers.html" icon="productgroup" />
+        <topic label="CDO DB Model Evolution Supports" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.supports.html" icon="productgroup" />
         <topic label="CDO DB Type Mapping Providers" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="productgroup" />
       </topic>
       <topic label="CDO Model Repository Server Net4j Support" href="productdoc/org.eclipse.emf.cdo.server.net4j.failoverMonitors.html" icon="plugin">

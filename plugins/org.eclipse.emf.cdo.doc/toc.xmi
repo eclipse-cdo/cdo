@@ -198,10 +198,12 @@
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
     <packages name="org.eclipse.emf.cdo.server.db"/>
+    <packages name="org.eclipse.emf.cdo.server.db.evolution"/>
+    <packages name="org.eclipse.emf.cdo.server.db.evolution.phased"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
-    <productGroups id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup.modelEvolutionSupports" description=""/>
-    <productGroups id="org.eclipse.emf.cdo.server.db.modelLoaders" name="CDO DB Model Loaders" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" name="CDO DB Model Evolution Phase Handlers" description=""/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.evolution.supports" name="CDO DB Model Evolution Supports" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO DB Type Mapping Providers" description=""/>
   </article:Plugin>
   <article:Plugin name="org.eclipse.emf.cdo.server.embedded" label="CDO Model Repository Server Embedded Support">

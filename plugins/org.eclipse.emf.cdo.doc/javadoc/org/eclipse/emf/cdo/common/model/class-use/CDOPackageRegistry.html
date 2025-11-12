@@ -127,6 +127,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>static <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOModelUtil.</span><code><a href="../CDOModelUtil.html#createPackageRegistry()" class="member-name-link">createPackageRegistry</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOModelUtil.</span><code><a href="../CDOModelUtil.html#createPackageRegistry(org.eclipse.emf.ecore.EPackage.Registry)" class="member-name-link">createPackageRegistry</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;delegateRegistry)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code><a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">CDOPackageUnit.</span><code><a href="../CDOPackageUnit.html#getPackageRegistry()" class="member-name-link">getPackageRegistry</a>()</code></div>
 <div class="col-last even-row-color">
@@ -141,17 +147,23 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifizierer und Typ</div>
 <div class="table-header col-second">Methode</div>
 <div class="table-header col-last">Beschreibung</div>
-<div class="col-first even-row-color"><code>static <a href="../CDOPackageInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOModelUtil.</span><code><a href="../CDOModelUtil.html#getPackageInfo(java.lang.Object,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">getPackageInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value,
+<div class="col-first even-row-color"><code>static <a href="../CDOPackageUnit.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageUnit</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOModelUtil.</span><code><a href="../CDOModelUtil.html#createPackageUnit(org.eclipse.emf.ecore.EPackage,org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type,long,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">createPackageUnit</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage</a>&nbsp;topLevelPackage,
+ <a href="../CDOPackageUnit.Type.html" title="Enum-Klasse in org.eclipse.emf.cdo.common.model">CDOPackageUnit.Type</a>&nbsp;type,
+ long&nbsp;timeStamp,
  <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>static boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">CDOPackageRegistryPopulator.</span><code><a href="../CDOPackageRegistryPopulator.html#populate(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">populate</a><wbr>(<a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></div>
+<div class="col-first odd-row-color"><code>static <a href="../CDOPackageInfo.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageInfo</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOModelUtil.</span><code><a href="../CDOModelUtil.html#getPackageInfo(java.lang.Object,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">getPackageInfo</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">Object</a>&nbsp;value,
+ <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;packageRegistry)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">CDOPackageRegistryPopulator.</span><code><a href="../CDOPackageRegistryPopulator.html#populate(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">populate</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;source,
- <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">CDOPackageRegistryPopulator.</span><code><a href="../CDOPackageRegistryPopulator.html#populate(org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">populate</a><wbr>(<a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">CDOPackageRegistryPopulator.</span><code><a href="../CDOPackageRegistryPopulator.html#populate(org.eclipse.emf.ecore.EPackage.Registry,org.eclipse.emf.cdo.common.model.CDOPackageRegistry)" class="member-name-link">populate</a><wbr>(<a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EPackage.Registry.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EPackage.Registry</a>&nbsp;source,
+ <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a>&nbsp;target)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 <div class="caption"><span>Konstruktoren in <a href="../package-summary.html">org.eclipse.emf.cdo.common.model</a> mit Parametern vom Typ <a href="../CDOPackageRegistry.html" title="Schnittstelle in org.eclipse.emf.cdo.common.model">CDOPackageRegistry</a></span></div>
 <div class="summary-table three-column-summary">

@@ -60,8 +60,10 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Server concepts for dealing with DB stores and accessors.</div>
 </div>
-<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></div>
-<div class="col-last odd-row-color">
+<div class="col-first odd-row-color"><a href="#org.eclipse.emf.cdo.server.db.evolution.phased">org.eclipse.emf.cdo.server.db.evolution.phased</a></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><a href="#org.eclipse.emf.cdo.server.db.mapping">org.eclipse.emf.cdo.server.db.mapping</a></div>
+<div class="col-last even-row-color">
 <div class="block">Server concepts for dealing with mapping strategies and mappings for classes, lists and types.</div>
 </div>
 </div>
@@ -99,6 +101,42 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><span class="type-name-label">IIDHandler.</span><code><a href="../IIDHandler.html#unmapURI(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">unmapURI</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+</div>
+</section>
+</li>
+<li>
+<section class="detail" id="org.eclipse.emf.cdo.server.db.evolution.phased">
+<h2>Verwendungen von <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a> in <a href="../evolution/phased/package-summary.html">org.eclipse.emf.cdo.server.db.evolution.phased</a></h2>
+<div class="caption"><span>Methoden in <a href="../evolution/phased/package-summary.html">org.eclipse.emf.cdo.server.db.evolution.phased</a> mit Parametern vom Typ <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifizierer und Typ</div>
+<div class="table-header col-second">Methode</div>
+<div class="table-header col-last">Beschreibung</div>
+<div class="col-first even-row-color"><code>protected boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.DefaultSchemaMigrator.</span><code><a href="../evolution/phased/PhasedModelEvolutionSupport.DefaultSchemaMigrator.html#commitChanges(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">commitChanges</a><wbr>(<a href="../evolution/phased/Context.html" title="Klasse in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+ <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Commits the model evolution changes to the database.</div>
+</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ISchemaMigration.</span><code><a href="../evolution/phased/ISchemaMigration.html#migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">migrateSchema</a><wbr>(<a href="../evolution/phased/Context.html" title="Klasse in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+ <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Migrates the database schema to match the new models in the given context.</div>
+</div>
+<div class="col-first even-row-color"><code>protected boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.DefaultSchemaMigrator.</span><code><a href="../evolution/phased/PhasedModelEvolutionSupport.DefaultSchemaMigrator.html#migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration)" class="member-name-link">migrateSchema</a><wbr>(<a href="../evolution/phased/Context.html" title="Klasse in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+ <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../evolution/phased/ISchemaMigration.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration</a>&nbsp;schemaMigration)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Delegates the schema migration to the mapping strategy.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.DefaultSchemaMigrator.</span><code><a href="../evolution/phased/PhasedModelEvolutionSupport.DefaultSchemaMigrator.html#updateSystemTables(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">updateSystemTables</a><wbr>(<a href="../evolution/phased/Context.html" title="Klasse in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+ <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Updates the system tables with the changed models.</div>
+</div>
 </div>
 </section>
 </li>
@@ -152,25 +190,8 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color">
 <div class="block">Detaches (deletes) a CDO object leaving a "ghost" revision behind.</div>
 </div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.ModelEvolution.</span><code><a href="../mapping/IMappingStrategy.ModelEvolution.html#evolveModels(org.eclipse.emf.cdo.server.db.IModelEvolutionSupport.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">evolveModels</a><wbr>(<a href="../IModelEvolutionSupport.Context.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IModelEvolutionSupport.Context</a>&nbsp;context,
- <a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">handleRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
- <a href="../../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
- long&nbsp;timeStamp,
- boolean&nbsp;exactTime,
- <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></div>
-<div class="col-last odd-row-color">
-<div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
- conditions are met:
- 
- The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.</div>
-</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">handleRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
- <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+<div class="col-second even-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">handleRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
  long&nbsp;timeStamp,
  boolean&nbsp;exactTime,
@@ -179,166 +200,179 @@ loadScripts(document, 'script');</script>
 <div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
  conditions are met:
  
+ The <code>branch</code> parameter is <code>null</code> or equal to <code>revision.getBranch()</code>.</div>
+</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#handleRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.ecore.EClass,org.eclipse.emf.cdo.common.branch.CDOBranch,long,boolean,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">handleRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a>&nbsp;eClass,
+ <a href="../../../common/branch/CDOBranch.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranch</a>&nbsp;branch,
+ long&nbsp;timeStamp,
+ boolean&nbsp;exactTime,
+ <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;handler)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Passes all revisions of the store to the <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision"><code>handler</code></a> if <b>all</b> of the following
+ conditions are met:
+ 
  The <code>eClass</code> parameter is <code>null</code> or equal to <code>revision.getEClass()</code>.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)" class="member-name-link">objectDetached</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#objectDetached(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,long)" class="member-name-link">objectDetached</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  long&nbsp;revised)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Hook with which a list mapping is notified that a containing object has been revised.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy2.</span><code><a href="../mapping/IMappingStrategy2.html#postProcessRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">postProcessRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy2.</span><code><a href="../mapping/IMappingStrategy2.html#postProcessRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.CommitContext,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">postProcessRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.CommitContext.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor.CommitContext</a>&nbsp;context,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMappingDeltaSupport.</span><code><a href="../mapping/IListMappingDeltaSupport.html#processDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,int,int,long,org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta)" class="member-name-link">processDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMappingDeltaSupport.</span><code><a href="../mapping/IListMappingDeltaSupport.html#processDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID,int,int,int,long,org.eclipse.emf.cdo.common.revision.delta.CDOListFeatureDelta)" class="member-name-link">processDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id,
  int&nbsp;branchId,
  int&nbsp;oldVersion,
  int&nbsp;newVersion,
  long&nbsp;created,
  <a href="../../../common/revision/delta/CDOListFeatureDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision.delta">CDOListFeatureDelta</a>&nbsp;delta)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Process a set of CDOFeatureDeltas for a many-valued feature.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)" class="member-name-link">queryResources</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#queryResources(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryResourcesContext)" class="member-name-link">queryResources</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.QueryResourcesContext.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor.QueryResourcesContext</a>&nbsp;context)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Executes a resource query.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMappingUnitSupport.</span><code><a href="../mapping/IListMappingUnitSupport.html#queryUnitEntries(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.IIDHandler,long,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">queryUnitEntries</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/ResultSet.html" title="Klasse oder Schnittstelle in java.sql" class="external-link">ResultSet</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMappingUnitSupport.</span><code><a href="../mapping/IListMappingUnitSupport.html#queryUnitEntries(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.IIDHandler,long,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">queryUnitEntries</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../IIDHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IIDHandler</a>&nbsp;idHandler,
  long&nbsp;timeStamp,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;idString)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Retrieve cross-references from DB</div>
 </div>
-<div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,java.lang.String,java.lang.String,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext,java.lang.String)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;mainTableName,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;mainTableWhere,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a>&nbsp;idString)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Retrieve cross-references from DB.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#queryXRefs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.IStoreAccessor.QueryXRefsContext)" class="member-name-link">queryXRefs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../IStoreAccessor.QueryXRefsContext.html" title="Schnittstelle in org.eclipse.emf.cdo.server">IStoreAccessor.QueryXRefsContext</a>&nbsp;context)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Executes a cross reference query.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)" class="member-name-link">rawExport</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#rawExport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataOutput,int,int,long,long)" class="member-name-link">rawExport</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/protocol/CDODataOutput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataOutput</a>&nbsp;out,
  int&nbsp;lastReplicatedBranchID,
  int&nbsp;lastBranchID,
  long&nbsp;lastReplicatedCommitTime,
  long&nbsp;lastCommitTime)</code></div>
-<div class="col-last odd-row-color">&nbsp;</div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">rawImport</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#rawImport(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.protocol.CDODataInput,long,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">rawImport</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/protocol/CDODataInput.html" title="Schnittstelle in org.eclipse.emf.cdo.common.protocol">CDODataInput</a>&nbsp;in,
  long&nbsp;fromCommitTime,
  long&nbsp;toCommitTime,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="Klasse in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Set.html" title="Klasse oder Schnittstelle in java.util" class="external-link">Set</a><wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readChangeSet(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.net4j.util.om.monitor.OMMonitor,org.eclipse.emf.cdo.spi.common.commit.CDOChangeSetSegment%5B%5D)" class="member-name-link">readChangeSet</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor,
  <a href="../../../spi/common/commit/CDOChangeSetSegment.html" title="Klasse in org.eclipse.emf.cdo.spi.common.commit">CDOChangeSetSegment</a>[]&nbsp;segments)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Returns a set of CDOIDs that have at least one revision in any of the passed branches and time ranges.</div>
 </div>
-<div class="col-first odd-row-color"><code>org.eclipse.net4j.util.collection.CloseableIterator<wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">readObjectIDs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-first even-row-color"><code>org.eclipse.net4j.util.collection.CloseableIterator<wbr>&lt;<a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectIDs(org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">readObjectIDs</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Get an iterator over all instances of objects in the store.</div>
 </div>
-<div class="col-first even-row-color"><code><a href="../../../common/model/CDOClassifierRef.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
- <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
-<div class="col-last even-row-color">
-<div class="block">Read the type (i.e.</div>
-</div>
-<div class="col-first odd-row-color"><code>default <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectType2(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType2</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code><a href="../../../common/model/CDOClassifierRef.html" title="Klasse in org.eclipse.emf.cdo.common.model">CDOClassifierRef</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectType(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Read the type (i.e.</div>
 </div>
-<div class="col-first even-row-color"><code>boolean</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readRevision</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
- <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
- int&nbsp;listChunk)</code></div>
+<div class="col-first even-row-color"><code>default <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EClass.html" title="Klasse oder Schnittstelle in org.eclipse.emf.ecore" class="external-link">EClass</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../mapping/IMappingStrategy.html#readObjectType2(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.id.CDOID)" class="member-name-link">readObjectType2</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+ <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;id)</code></div>
 <div class="col-last even-row-color">
-<div class="block">Read a revision.</div>
+<div class="block">Read the type (i.e.</div>
 </div>
 <div class="col-first odd-row-color"><code>boolean</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingAuditSupport.</span><code><a href="../mapping/IClassMappingAuditSupport.html#readRevisionByVersion(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readRevisionByVersion</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;storeAccessor,
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#readRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readRevision</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;listChunk)</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Read a revision.</div>
+</div>
+<div class="col-first even-row-color"><code>boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IClassMappingAuditSupport.</span><code><a href="../mapping/IClassMappingAuditSupport.html#readRevisionByVersion(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readRevisionByVersion</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;storeAccessor,
+ <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
+ int&nbsp;listChunk)</code></div>
+<div class="col-last even-row-color">
 <div class="block">Read a specific version of a revision.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IClassMappingUnitSupport.</span><code><a href="../mapping/IClassMappingUnitSupport.html#readUnitRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">readUnitRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingUnitSupport.</span><code><a href="../mapping/IClassMappingUnitSupport.html#readUnitRevisions(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.branch.CDOBranchPoint,org.eclipse.emf.cdo.common.id.CDOID,org.eclipse.emf.cdo.common.revision.CDORevisionHandler)" class="member-name-link">readUnitRevisions</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/branch/CDOBranchPoint.html" title="Schnittstelle in org.eclipse.emf.cdo.common.branch">CDOBranchPoint</a>&nbsp;branchPoint,
  <a href="../../../common/id/CDOID.html" title="Schnittstelle in org.eclipse.emf.cdo.common.id">CDOID</a>&nbsp;rootID,
  <a href="../../../common/revision/CDORevisionHandler.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevisionHandler</a>&nbsp;revisionHandler)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#readValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,int)" class="member-name-link">readValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  int&nbsp;listChunk)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Read the list size and the complete list or the first part of it.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevision</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IClassMapping.</span><code><a href="../mapping/IClassMapping.html#writeRevision(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision,boolean,boolean,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevision</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision,
  boolean&nbsp;firstRevision,
  boolean&nbsp;revise,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Write the revision data to the database.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IClassMappingDeltaSupport.</span><code><a href="../mapping/IClassMappingDeltaSupport.html#writeRevisionDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IClassMappingDeltaSupport.</span><code><a href="../mapping/IClassMappingDeltaSupport.html#writeRevisionDelta(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevisionDelta,long,org.eclipse.net4j.util.om.monitor.OMMonitor)" class="member-name-link">writeRevisionDelta</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevisionDelta.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevisionDelta</a>&nbsp;delta,
  long&nbsp;created,
  org.eclipse.net4j.util.om.monitor.OMMonitor&nbsp;monitor)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Write a revision delta.</div>
 </div>
-<div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IListMapping.</span><code><a href="../mapping/IListMapping.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.spi.common.revision.InternalCDORevision)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../spi/common/revision/InternalCDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.spi.common.revision">InternalCDORevision</a>&nbsp;revision)</code></div>
-<div class="col-last even-row-color">
+<div class="col-last odd-row-color">
 <div class="block">Write a complete list of values to the database.</div>
 </div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">IListMapping4.</span><code><a href="../mapping/IListMapping4.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.revision.CDORevision,boolean,boolean)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IListMapping4.</span><code><a href="../mapping/IListMapping4.html#writeValues(org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.common.revision.CDORevision,boolean,boolean)" class="member-name-link">writeValues</a><wbr>(<a href="../IDBStoreAccessor.html" title="Schnittstelle in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="../../../common/revision/CDORevision.html" title="Schnittstelle in org.eclipse.emf.cdo.common.revision">CDORevision</a>&nbsp;revision,
  boolean&nbsp;firstRevision,
  boolean&nbsp;raw)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Write a complete list of values to the database.</div>
 </div>
 </div>

@@ -167,6 +167,8 @@
 				<include name="org.eclipse.emf.cdo.server.admin/src/org/eclipse/emf/cdo/server/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.server.admin/src/org/eclipse/emf/cdo/server/spi/admin/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/evolution/*.java" />
+				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/evolution/phased/*.java" />
 				<include name="org.eclipse.emf.cdo.server.db/src/org/eclipse/emf/cdo/server/db/mapping/*.java" />
 				<include name="org.eclipse.emf.cdo.server.embedded/src/org/eclipse/emf/cdo/server/embedded/*.java" />
 				<include name="org.eclipse.emf.cdo.server.lissome/src/org/eclipse/emf/cdo/server/lissome/*.java" />
@@ -358,6 +360,8 @@
 			</group>
 			<group title="CDO Model Repository Server DB">
 				<package name="org.eclipse.emf.cdo.server.db" />
+				<package name="org.eclipse.emf.cdo.server.db.evolution" />
+				<package name="org.eclipse.emf.cdo.server.db.evolution.phased" />
 				<package name="org.eclipse.emf.cdo.server.db.mapping" />
 			</group>
 			<group title="CDO Model Repository Server Embedded Support">

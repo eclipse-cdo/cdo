@@ -64,6 +64,8 @@ org.eclipse.emf.cdo.security.util
 org.eclipse.emf.cdo.server
 org.eclipse.emf.cdo.server.admin
 org.eclipse.emf.cdo.server.db
+org.eclipse.emf.cdo.server.db.evolution
+org.eclipse.emf.cdo.server.db.evolution.phased
 org.eclipse.emf.cdo.server.db.mapping
 org.eclipse.emf.cdo.server.embedded
 org.eclipse.emf.cdo.server.lissome

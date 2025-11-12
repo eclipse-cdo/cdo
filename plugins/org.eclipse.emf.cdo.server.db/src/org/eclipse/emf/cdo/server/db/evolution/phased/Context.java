@@ -16,7 +16,6 @@ import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
 import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
-import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 
 import org.eclipse.net4j.db.StatementBatcher;
 import org.eclipse.net4j.db.StatementBatcher.BatchEvent;
@@ -67,7 +66,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
 {
   private final IRegistry<String, Object> properties = new HashMapRegistry.AutoCommit<>();
 
-  private final IModelEvolutionSupport support;
+  private final PhasedModelEvolutionSupport support;
 
   private final long timeStamp;
 
@@ -88,7 +87,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
    */
   public Context(IModelEvolutionSupport support, List<Model> models)
   {
-    this.support = support;
+    this.support = (PhasedModelEvolutionSupport)support;
     this.models = models;
 
     changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
@@ -99,6 +98,14 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
       EMFUtil.getAllPackages(oldPackage, ePackage -> oldPackages.put(ePackage.getNsURI(), ePackage));
       elementMappings.map(oldPackage, model.getNewPackage(), true);
     });
+  }
+
+  /**
+   * Returns the model evolution support associated with this context.
+   */
+  public IModelEvolutionSupport getSupport()
+  {
+    return support;
   }
 
   /**
@@ -121,18 +128,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
    */
   public void log(Object message)
   {
-    if (message != null)
-    {
-      OM.LOG.info(message.toString());
-    }
-  }
-
-  /**
-   * Returns the model evolution support associated with this context.
-   */
-  public IModelEvolutionSupport getSupport()
-  {
-    return support;
+    support.log(message);
   }
 
   /**
@@ -150,6 +146,16 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   public int getTotalUpdateCount()
   {
     return totalUpdateCount.get();
+  }
+
+  public int incrementTotalUpdateCount()
+  {
+    return totalUpdateCount.incrementAndGet();
+  }
+
+  public int incrementTotalUpdateCount(int delta)
+  {
+    return totalUpdateCount.addAndGet(delta);
   }
 
   /**

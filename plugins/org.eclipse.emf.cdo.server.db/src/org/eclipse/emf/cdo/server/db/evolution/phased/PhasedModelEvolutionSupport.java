@@ -51,7 +51,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -104,11 +106,15 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    */
   public static final String FACTORY_TYPE = "phased"; //$NON-NLS-1$
 
+  private static final String PROPERTIES_FILE = "evolution.properties";
+
   private static final String PROP_ID = "id";
 
   private static final String PROP_PHASE = "phase";
 
   private static final String PROP_PHASE_ONGOING = "phase.ongoing";
+
+  private static final String PROP_MODEL_PREFIX = "model.";
 
   private final EnumMap<Phase, Handler> phaseHandlers = new EnumMap<>(Phase.class);
 
@@ -164,7 +170,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Returns the DB store this model evolution support is associated with.
    */
   @Override
-  public final IDBStore getStore()
+  public IDBStore getStore()
   {
     return store;
   }
@@ -175,7 +181,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * @noreference This method is not intended to be called by clients.
    */
   @Override
-  public final void setStore(IDBStore store)
+  public void setStore(IDBStore store)
   {
     checkInactive();
     this.store = store;
@@ -184,7 +190,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Returns the model evolution mode.
    */
-  public final Mode getMode()
+  public Mode getMode()
   {
     return mode;
   }
@@ -193,7 +199,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the model evolution mode.
    */
   @InjectAttribute(name = "mode")
-  public final void setMode(Mode mode)
+  public void setMode(Mode mode)
   {
     checkInactive();
     this.mode = mode;
@@ -202,7 +208,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Returns the phase handler for the given phase, or <code>null</code> if none is set.
    */
-  public final Handler getPhaseHandler(Phase phase)
+  public Handler getPhaseHandler(Phase phase)
   {
     return phase == null ? null : phaseHandlers.get(phase);
   }
@@ -218,7 +224,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the change detection phase handler.
    */
   @InjectElement(name = "changeDetector", productGroup = Handler.PRODUCT_GROUP)
-  public final void setChangeDetector(Handler changeDetector)
+  public void setChangeDetector(Handler changeDetector)
   {
     setPhaseHandler(Phase.ChangeDetection, changeDetector);
   }
@@ -227,7 +233,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the repository export phase handler.
    */
   @InjectElement(name = "repositoryExporter", productGroup = Handler.PRODUCT_GROUP)
-  public final void setRepositoryExporter(Handler repositoryExporter)
+  public void setRepositoryExporter(Handler repositoryExporter)
   {
     setPhaseHandler(Phase.RepositoryExport, repositoryExporter);
   }
@@ -236,7 +242,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the schema migration phase handler.
    */
   @InjectElement(name = "schemaMigrator", productGroup = Handler.PRODUCT_GROUP)
-  public final void setSchemaMigrator(Handler schemaMigrator)
+  public void setSchemaMigrator(Handler schemaMigrator)
   {
     setPhaseHandler(Phase.SchemaMigration, schemaMigrator);
   }
@@ -245,7 +251,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the store post-processing phase handler.
    */
   @InjectElement(name = "storeProcessor", productGroup = Handler.PRODUCT_GROUP)
-  public final void setStorePostProcessor(Handler storeProcessor)
+  public void setStorePostProcessor(Handler storeProcessor)
   {
     setPhaseHandler(Phase.StoreProcessing, storeProcessor);
   }
@@ -254,7 +260,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * Sets the repository post-processing phase handler.
    */
   @InjectElement(name = "repositoryProcessor", productGroup = Handler.PRODUCT_GROUP)
-  public final void setRepositoryPostProcessor(Handler repositoryProcessor)
+  public void setRepositoryPostProcessor(Handler repositoryProcessor)
   {
     setPhaseHandler(Phase.RepositoryProcessing, repositoryProcessor);
   }
@@ -262,7 +268,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Returns the current evolution phase.
    */
-  public final Phase getPhase()
+  public Phase getPhase()
   {
     return phase;
   }
@@ -278,7 +284,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    *
    * @see #getEvolutionFolder()
    */
-  public final int getEvolutionID()
+  public int getEvolutionID()
   {
     return id;
   }
@@ -293,9 +299,53 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * @see #getRootFolder()
    * @see #getEvolutionID()
    */
-  public final File getEvolutionFolder()
+  public File getEvolutionFolder()
   {
     return id < 1 ? null : new File(rootFolder, Integer.toString(id));
+  }
+
+  public File getEvolutionLog()
+  {
+    File folder = getEvolutionFolder();
+    return folder == null ? null : new File(folder, "evolution.log");
+  }
+
+  /**
+   * Logs the given message to the evolution log.
+   * <p>
+   * Can be used by phases and handlers to log messages during model evolution.
+   * <p>
+   * The evolution log is typically located in the {@link PhasedModelEvolutionSupport#getEvolutionFolder() evolution folder}.
+   */
+  public void log(Object message)
+  {
+    if (message != null)
+    {
+      String string = message.toString();
+
+      try
+      {
+        OM.LOG.info("[Model evolution for repository " + store.getRepository().getName() + "] " + string);
+      }
+      catch (Exception ex)
+      {
+        OM.LOG.error("Failed to log message: " + message.getClass().getName(), ex);
+      }
+
+      File log = getEvolutionLog();
+      if (log != null)
+      {
+        try (Writer writer = IOUtil.buffered(new FileWriter(log, true)))
+        {
+          writer.write(string);
+          writer.write(StringUtil.NL);
+        }
+        catch (Exception ex)
+        {
+          OM.LOG.error("Failed to write to evolution log: " + log, ex);
+        }
+      }
+    }
   }
 
   /**
@@ -304,7 +354,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * The evolution context contains the models to be evolved and other relevant information
    * for the model evolution process.
    */
-  public final Context getContext()
+  public Context getContext()
   {
     return context;
   }
@@ -336,7 +386,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       // Model evolution is disabled.
       if (trigger == Trigger.ActivatingStore)
       {
-        OM.LOG.info("Model evolution is disabled for repository " + store.getRepository().getName());
+        log("Model evolution is disabled");
       }
 
       // Skip model evolution.
@@ -357,16 +407,18 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
     if (context == null)
     {
-      OM.LOG.info("Model evolution root folder: " + rootFolder);
+      log("Root folder: " + rootFolder);
 
       if (phase.initial())
       {
         // Starting a new model evolution process.
+        log("Creating new model evolution context");
         context = createContext();
       }
       else
       {
         // Resuming an ongoing model evolution process.
+        log("Loading existing model evolution context");
         context = loadContext();
       }
     }
@@ -394,6 +446,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
       // At this point, the current phase is set, persisted, and guaranteed to have a handler.
       Handler phaseHandler = getCurrentPhaseHandler();
+      log("Starting phase " + phase + " (handler: " + phaseHandler + ")");
 
       // Execute the phase handler with cancelation detection.
       if (Context.canceled(() -> phaseHandler.execute(context)))
@@ -410,6 +463,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         ++id;
         saveContext(context);
       }
+
+      log("Completed phase " + phase);
 
       // Determine the next phase to execute.
       Phase nextPhase = determineNextPhase();
@@ -434,14 +489,17 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
         case NextTrigger:
           // Move to the next trigger before proceeding to the next phase.
+          log("Moving to next trigger before proceeding to phase " + phase);
           return;
 
         case StoreRestart:
           // Restart the store before proceeding to the next phase.
+          log("Restarting store before proceeding to phase " + phase);
           throw ReactivationTrigger.createFor(store);
 
         case RepositoryRestart:
           // Restart the repository before proceeding to the next phase.
+          log("Restarting repository before proceeding to phase " + phase);
           throw ReactivationTrigger.createFor(store.getRepository());
         }
       }
@@ -449,6 +507,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
     // Model evolution process completed successfully. No more phases to execute.
     // Deactivate model evolution support, so that a potential next trigger does not try to continue.
+    log("Model evolution process completed successfully");
+    log("Total row updates: " + context.getTotalUpdateCount());
     deactivate();
   }
 
@@ -557,27 +617,31 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     InternalCDOPackageRegistry oldPackageRegistry = getOldPackageRegistry();
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(oldPackageRegistry);
 
-    Properties properties = IOUtil.loadProperties(getModelsPropertiesFile(folder));
+    Properties properties = IOUtil.loadProperties(getPropertiesFile(folder));
 
     for (Map.Entry<Object, Object> entry : properties.entrySet())
     {
       String fileName = (String)entry.getKey();
+      if (fileName.startsWith(PROP_MODEL_PREFIX))
+      {
+        fileName = fileName.substring(PROP_MODEL_PREFIX.length());
 
-      String[] parts = ((String)entry.getValue()).split(",");
-      CDOPackageUnit.Type originalType = CDOPackageUnit.Type.valueOf(parts[0]);
-      long timeStamp = Long.parseLong(parts[1]);
+        String[] parts = ((String)entry.getValue()).split(",");
+        CDOPackageUnit.Type originalType = CDOPackageUnit.Type.valueOf(parts[0]);
+        long timeStamp = Long.parseLong(parts[1]);
 
-      URI uri = URI.createFileURI(new File(folder, fileName).getAbsolutePath());
-      Resource resource = resourceSet.getResource(uri, true);
-      EPackage oldPackage = (EPackage)resource.getContents().get(0);
-      String id = oldPackage.getNsURI();
-      EPackage newPackage = getNewPackageRegistry().getEPackage(id);
+        URI uri = URI.createFileURI(new File(folder, fileName).getAbsolutePath());
+        Resource resource = resourceSet.getResource(uri, true);
+        EPackage oldPackage = (EPackage)resource.getContents().get(0);
+        String id = oldPackage.getNsURI();
+        EPackage newPackage = getNewPackageRegistry().getEPackage(id);
 
-      Model model = new Model(id, originalType, timeStamp, oldPackage, newPackage);
-      models.add(model);
+        Model model = new Model(id, originalType, timeStamp, oldPackage, newPackage);
+        models.add(model);
 
-      InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit(oldPackage, originalType, timeStamp, oldPackageRegistry);
-      oldPackageRegistry.putPackageUnit(packageUnit);
+        InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit(oldPackage, originalType, timeStamp, oldPackageRegistry);
+        oldPackageRegistry.putPackageUnit(packageUnit);
+      }
     }
 
     return models;
@@ -593,13 +657,13 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     for (Model model : models)
     {
       String fileName = IOUtil.encodeFileName(model.getID()) + ".ecore";
-      properties.setProperty(fileName, model.getOriginalType().name() + "," + model.getTimeStamp());
+      properties.setProperty(PROP_MODEL_PREFIX + fileName, model.getOriginalType().name() + "," + model.getTimeStamp());
 
       Resource resource = model.getOldPackage().eResource();
       resource.setURI(URI.createFileURI(new File(folder, fileName).getAbsolutePath()));
     }
 
-    IOUtil.saveProperties(getModelsPropertiesFile(folder), properties, null);
+    IOUtil.saveProperties(getPropertiesFile(folder), properties, null);
 
     for (Model model : models)
     {
@@ -703,7 +767,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
   private void loadProperties() throws IOException
   {
-    Properties properties = IOUtil.loadProperties(getPropertiesFile());
+    Properties properties = IOUtil.loadProperties(getRootPropertiesFile());
     id = getProperty(properties, PROP_ID, 0);
     phase = Phase.parse(properties.getProperty(PROP_PHASE));
     phaseOngoing = getProperty(properties, PROP_PHASE_ONGOING, false);
@@ -728,17 +792,17 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       properties.setProperty(PROP_PHASE_ONGOING, StringUtil.TRUE);
     }
 
-    IOUtil.saveProperties(getPropertiesFile(), properties, null);
+    IOUtil.saveProperties(getRootPropertiesFile(), properties, null);
   }
 
-  private File getPropertiesFile()
+  private File getRootPropertiesFile()
   {
-    return new File(rootFolder, "evolution.properties");
+    return getPropertiesFile(rootFolder);
   }
 
-  private File getModelsPropertiesFile(File folder)
+  private File getPropertiesFile(File folder)
   {
-    return new File(folder, "models.properties");
+    return new File(folder, PROPERTIES_FILE);
   }
 
   private static boolean getProperty(Properties properties, String key, boolean defaultValue)
@@ -845,14 +909,14 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       if (changedModels.isEmpty())
       {
         // No changed models.
-        OM.LOG.info("No model evolution needed for repository " + store.getRepository().getName());
+        context.log("No model evolution needed");
         throw context.cancelation();
       }
 
       if (support.getMode() == Mode.Prevent)
       {
-        throw new IllegalStateException(
-            "Model evolution needed for repository " + store.getRepository().getName() + ", but model evolution mode is set to PREVENT");
+        context.log("Model evolution prevented");
+        throw new IllegalStateException("Model evolution needed, but model evolution mode is set to PREVENT");
       }
     }
   }
@@ -919,7 +983,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         // - updating the model elements' meta IDs in the cdo_external_refs table.
         updateSystemTables(context, accessor);
 
-        context.log("Model evolution completed with " + context.getTotalUpdateCount() + " row updates");
+        context.log("Schema migration completed with " + context.getTotalUpdateCount() + " row updates");
         commitChanges(context, accessor);
       }
       finally
@@ -935,6 +999,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
      */
     protected boolean migrateSchema(Context context, IDBStoreAccessor accessor, ISchemaMigration schemaMigration) throws SQLException
     {
+      context.log("Migrating schema with mapping strategy " + schemaMigration.getClass().getName());
       return schemaMigration.migrateSchema(context, accessor);
     }
 
@@ -943,6 +1008,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
      */
     protected boolean updateSystemTables(Context context, IDBStoreAccessor accessor) throws SQLException
     {
+      context.log("Updating system tables with changed models");
+
       IDBConnection connection = accessor.getDBConnection();
       DBStore store = (DBStore)accessor.getStore();
       MetaDataManager metaDataManager = (MetaDataManager)store.getMetaDataManager();
@@ -958,20 +1025,30 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
           String unitID = model.getID();
 
           // Delete the old package unit and package info(s).
-          statement.execute("DELETE from " + packageUnits + " WHERE " + packageUnits.id() + "='" + unitID + "'");
-          statement.execute("DELETE from " + packageInfos + " WHERE " + packageInfos.unit() + "='" + unitID + "'");
+          context.log("Deleting old package unit " + unitID);
+          int count1 = statement.executeUpdate("DELETE from " + packageUnits + " WHERE " + packageUnits.id() + "='" + unitID + "'");
+          context.incrementTotalUpdateCount(count1);
+
+          // Delete the old package info(s).
+          context.log("Deleting old package infos for " + unitID);
+          int count2 = statement.executeUpdate("DELETE from " + packageInfos + " WHERE " + packageInfos.unit() + "='" + unitID + "'");
+          context.incrementTotalUpdateCount(count2);
 
           // Get the registered package bytes.
           EPackage newPackage = model.getNewPackage();
           byte[] packageBytes = MetaDataManager.getEPackageBytes(newPackage, EPackage.Registry.INSTANCE);
 
           // Write the new package unit.
+          context.log("Writing new package unit " + unitID);
           metaDataManager.writePackageUnit(connection, unitID, model.getOriginalType().ordinal(), context.getTimeStamp(), packageBytes, null);
+          context.incrementTotalUpdateCount();
 
           // Write the new package info(s).
           for (EPackage ePackage : EMFUtil.getAllPackages(newPackage))
           {
+            context.log("Writing new package info for " + ePackage.getNsURI());
             metaDataManager.writePackageInfo(connection, ePackage.getNsURI(), EMFUtil.getParentURI(ePackage), unitID, null);
+            context.incrementTotalUpdateCount();
           }
         }
 
@@ -982,7 +1059,9 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         elementMappings.getFromObjectsByURI().forEach((oldURI, oldModelElement) -> {
           if (oldModelElement instanceof EModelElement && !newURIs.contains(oldURI))
           {
+            context.log("Deleting obsolete meta ID mapping for " + oldURI);
             metaDataManager.deleteMetaIDMapping(statement, (EModelElement)oldModelElement);
+            context.incrementTotalUpdateCount();
           }
         });
       }

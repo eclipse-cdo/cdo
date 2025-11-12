@@ -12,6 +12,7 @@
 package org.eclipse.net4j.util.io;
 
 import org.eclipse.net4j.internal.util.bundle.OM;
+import org.eclipse.net4j.util.HexUtil;
 import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.WrappedException;
@@ -34,6 +35,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.FilterInputStream;
 import java.io.Flushable;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,9 +51,12 @@ import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Eike Stepper
@@ -90,6 +95,8 @@ public final class IOUtil
   private static final char SEP_UNIX = '/';
 
   private static final char SEP_WINDOWS = '\\';
+
+  private static final int MAX_FILE_NAME_LENGTH = 200;
 
   private IOUtil()
   {
@@ -216,6 +223,119 @@ public final class IOUtil
     {
       IOUtil.closeSilent(socket);
     }
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static byte[] getSHA1(String contents) throws NoSuchAlgorithmException, IOException
+  {
+    return getSHA1(new ByteArrayInputStream(contents.getBytes()));
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static byte[] getSHA1(InputStream contents) throws NoSuchAlgorithmException, IOException
+  {
+    InputStream stream = null;
+
+    try
+    {
+      final MessageDigest digest = MessageDigest.getInstance("SHA-1"); //$NON-NLS-1$
+      stream = new FilterInputStream(contents)
+      {
+        @Override
+        public int read() throws IOException
+        {
+          for (;;)
+          {
+            int ch = super.read();
+            switch (ch)
+            {
+            case -1:
+              return -1;
+
+            case 10:
+            case 13:
+              continue;
+            }
+
+            digest.update((byte)ch);
+            return ch;
+          }
+        }
+
+        @Override
+        public int read(byte[] b, int off, int len) throws IOException
+        {
+          int read = super.read(b, off, len);
+          if (read == -1)
+          {
+            return -1;
+          }
+
+          for (int i = off; i < off + read; i++)
+          {
+            byte c = b[i];
+            if (c == 10 || c == 13)
+            {
+              if (i + 1 < off + read)
+              {
+                System.arraycopy(b, i + 1, b, i, read - i - 1);
+                --i;
+              }
+
+              --read;
+            }
+          }
+
+          digest.update(b, off, read);
+          return read;
+        }
+      };
+
+      byte[] bytes = new byte[DEFAULT_BUFFER_SIZE];
+      while (stream.read(bytes) != -1)
+      {
+        // Do nothing
+      }
+
+      return digest.digest();
+    }
+    finally
+    {
+      close(stream);
+    }
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static String encodeFileName(String path)
+  {
+    String result = path.replace(':', '_').replace('/', '_').replace('\\', '_').replace('?', '_').replace('#', '_').replace(';', '_');
+
+    int length = result.length();
+    if (length > MAX_FILE_NAME_LENGTH)
+    {
+      String digest;
+
+      try
+      {
+        byte[] bytes = getSHA1(result);
+        digest = "-" + HexUtil.bytesToHex(bytes) + "-"; //$NON-NLS-1$ //$NON-NLS-2$
+      }
+      catch (Exception ex)
+      {
+        digest = "---" + result.hashCode() + "---"; //$NON-NLS-1$ //$NON-NLS-2$
+      }
+
+      int half = (MAX_FILE_NAME_LENGTH - digest.length() >> 1) - 1;
+      result = result.substring(0, half) + digest + result.substring(result.length() - half);
+    }
+
+    return result;
   }
 
   /**
@@ -1017,6 +1137,37 @@ public final class IOUtil
   public static void appendText(File file, String text) throws IORuntimeException
   {
     writeText(file, true, text);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static Properties loadProperties(File file) throws IOException
+  {
+    Properties properties = new Properties();
+
+    if (file.isFile())
+    {
+      try (InputStream inputStream = buffered(openInputStream(file)))
+      {
+        properties.load(inputStream);
+      }
+    }
+
+    return properties;
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static void saveProperties(File file, Properties properties, String comments) throws IOException
+  {
+    mkdirs(file.getParentFile());
+
+    try (OutputStream outputStream = buffered(openOutputStream(file)))
+    {
+      properties.store(outputStream, comments);
+    }
   }
 
   public static List<File> listDepthFirst(File file)

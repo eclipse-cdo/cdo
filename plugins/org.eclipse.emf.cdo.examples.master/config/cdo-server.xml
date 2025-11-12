@@ -241,10 +241,14 @@
       <dbAdapter name="h2"/>
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
         URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
-      
-      <modelEvolutionSupport type="default" mode="evolve">
-        <modelLoader type="default"/>
-        <listener type="log"/>
+
+      <modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="evolve">
+        <changeDetector type="default-change-detector"/>
+        <!-- <repositoryExporter type="default-repository-exporter"/> -->
+        <schemaMigrator type="default-schema-migrator"/>
+        <!-- <storeProcessor type="custom-store-processor" extraArgs="data"/> -->
+        <!-- <repositoryProcessor type="custom-repository-processor" extraArgs="data"/> -->
+        <listener type="log" />
       </modelEvolutionSupport>
       
       <!-- Example:

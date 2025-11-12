@@ -54,26 +54,6 @@
             </message_arguments>
         </filter>
     </resource>
-    <resource path="src/org/eclipse/emf/cdo/server/db/mapping/IMappingStrategy.java" type="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy">
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
-                <message_argument value="PROP_COLUMN_TYPE_MODIFIER"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
-                <message_argument value="PROP_FORCE_INDEXES"/>
-            </message_arguments>
-        </filter>
-        <filter id="403767336">
-            <message_arguments>
-                <message_argument value="org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy"/>
-                <message_argument value="PROP_TYPE_MAPPING_MODIFIER"/>
-            </message_arguments>
-        </filter>
-    </resource>
     <resource path="src/org/eclipse/emf/cdo/server/internal/db/DBStoreAccessor.java" type="org.eclipse.emf.cdo.server.internal.db.DBStoreAccessor">
         <filter id="574660632">
             <message_arguments>

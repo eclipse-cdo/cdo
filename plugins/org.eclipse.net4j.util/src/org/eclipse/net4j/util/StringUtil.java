@@ -837,6 +837,20 @@ public final class StringUtil
     return null;
   }
 
+  /**
+   * @since 3.29
+   */
+  public static <E extends Enum<E>> E parseEnum(Class<E> enumType, String name, boolean caseSensitive)
+  {
+    if (name != null)
+    {
+      EnumStringParser<E> parser = new EnumStringParser<>(enumType, caseSensitive);
+      return parser.apply(name);
+    }
+
+    return null;
+  }
+
   public static boolean isEmpty(String str)
   {
     return ObjectUtil.isEmpty(str);

@@ -105,6 +105,7 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
    *
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface PackageProcessor
   {
     public Object processPackage(Object value);
@@ -115,6 +116,7 @@ public interface InternalCDOPackageRegistry extends CDOPackageRegistry, ILifecyc
    *
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface PackageLoader
   {
     public EPackage[] loadPackages(CDOPackageUnit packageUnit);

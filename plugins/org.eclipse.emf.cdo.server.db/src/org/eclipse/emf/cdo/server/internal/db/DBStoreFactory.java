@@ -15,7 +15,8 @@ package org.eclipse.emf.cdo.server.internal.db;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.IStoreFactory;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.server.RepositoryConfigurator;
@@ -174,7 +175,7 @@ public class DBStoreFactory implements IStoreFactory, ContainerAware, ParameterA
     String type = getAttribute(modelEvolutionSupportConfig, "type"); //$NON-NLS-1$
     if (StringUtil.isEmpty(type))
     {
-      type = ModelEvolutionSupport.FACTORY_TYPE;
+      type = PhasedModelEvolutionSupport.FACTORY_TYPE;
     }
 
     Tree config = Tree.XMLConverter.convertElementToTree(modelEvolutionSupportConfig, parameters);

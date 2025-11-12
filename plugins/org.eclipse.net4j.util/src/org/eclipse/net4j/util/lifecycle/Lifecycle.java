@@ -17,6 +17,7 @@ import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.Notifier;
 import org.eclipse.net4j.util.lifecycle.ILifecycle.DeferrableActivation;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.trace.ContextTracer;
 
@@ -55,49 +56,92 @@ public class Lifecycle extends Notifier implements ILifecycle, DeferrableActivat
   {
     try
     {
-      if (lifecycleState == LifecycleState.INACTIVE)
+      for (;;)
       {
-        if (TRACER.isEnabled())
-        {
-          TRACER.trace("Activating " + this); //$NON-NLS-1$
-        }
-
-        lock();
-
-        if (lifecycleState != LifecycleState.INACTIVE)
-        {
-          // Someone else must have called activate() between the first "if" above and lock().
-          unlock();
-          return;
-        }
-
-        IListener[] listeners = getListeners();
-        if (listeners.length != 0)
-        {
-          fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE), listeners);
-        }
-
-        doBeforeActivate();
-
-        lifecycleState = LifecycleState.ACTIVATING;
-        doActivate();
-
-        if (!isDeferredActivation())
-        {
-          deferredActivate(true);
-        }
-
-        dump();
-      }
-      else
-      {
-        if (TRACE_IGNORING)
+        if (lifecycleState == LifecycleState.INACTIVE)
         {
           if (TRACER.isEnabled())
           {
-            TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this); //$NON-NLS-1$
+            TRACER.trace("Activating " + this); //$NON-NLS-1$
+          }
+
+          lock();
+
+          if (lifecycleState != LifecycleState.INACTIVE)
+          {
+            // Someone else must have called activate() between the first "if" above and lock().
+            unlock();
+            return;
+          }
+
+          IListener[] listeners = getListeners();
+          if (listeners.length != 0)
+          {
+            fireEvent(new LifecycleEvent(this, ILifecycleEvent.Kind.ABOUT_TO_ACTIVATE), listeners);
+          }
+
+          doBeforeActivate();
+          lifecycleState = LifecycleState.ACTIVATING;
+
+          try
+          {
+            doActivate();
+          }
+          catch (ReactivationTrigger trigger)
+          {
+            // Restart activation if triggered for this lifecycle.
+            if (trigger.isFor(this))
+            {
+              // Restore to INACTIVE state.
+              lifecycleState = LifecycleState.INACTIVE;
+              continue;
+            }
+
+            // Rethrow to catch block in outer lifecycle.
+            throw trigger;
+          }
+
+          if (!isDeferredActivation())
+          {
+            try
+            {
+              deferredActivate(true);
+            }
+            catch (ReactivationTrigger trigger)
+            {
+              // Restart activation if triggered for this lifecycle.
+              if (trigger.isFor(this))
+              {
+                // Deactivate first, but do not notify listeners.
+                doBeforeDeactivate();
+                lifecycleState = LifecycleState.DEACTIVATING;
+
+                doDeactivate();
+                lifecycleState = LifecycleState.INACTIVE;
+
+                unlock();
+                continue;
+              }
+
+              // Rethrow to catch block in outer lifecycle.
+              throw trigger;
+            }
+          }
+
+          dump();
+        }
+        else
+        {
+          if (TRACE_IGNORING)
+          {
+            if (TRACER.isEnabled())
+            {
+              TRACER.format("Ignoring activation in state {0} for {1}", lifecycleState, this); //$NON-NLS-1$
+            }
           }
         }
+
+        break;
       }
     }
     catch (RuntimeException | Error ex)

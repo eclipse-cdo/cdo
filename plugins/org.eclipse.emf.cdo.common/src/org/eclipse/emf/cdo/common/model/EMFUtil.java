@@ -942,7 +942,8 @@ public final class EMFUtil
   }
 
   /**
-   * A mapping between two {@link EObject}s and their contents based on their URIs.
+   * A mapping between two {@link EObject}s and their contents based on their URIs
+   * as returned by {@link EcoreUtil#getURI(EObject)}.
    *
    * @author Eike Stepper
    * @since 4.27

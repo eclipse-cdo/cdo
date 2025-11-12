@@ -17,8 +17,8 @@
    
    <extension point="org.eclipse.net4j.util.productGroups">
        <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name.typeMappingProviders"/>
-       <productGroup id="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" name="%productGroup.modelEvolutionSupports"/>
-       <productGroup id="org.eclipse.emf.cdo.server.db.modelLoaders" name="%productGroup.name.modelLoaders"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.evolution.supports" name="%productGroup.name.evolution.supports"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" name="%productGroup.name.evolution.phaseHandlers"/>
    </extension>
 
    <extension point="org.eclipse.net4j.util.factories">
@@ -35,13 +35,17 @@
             type="registry"
             class="org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry$Factory"/>
       <annotationFactory 
-            productGroup="org.eclipse.emf.cdo.server.db.modelEvolutionSupports" 
-            type="default" 
-            productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport"/>
+            productGroup="org.eclipse.emf.cdo.server.db.evolution.supports" 
+            type="phased" 
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport"/>
       <annotationFactory 
-            productGroup="org.eclipse.emf.cdo.server.db.modelLoaders" 
-            type="default" 
-            productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport$DefaultModelLoader"/>
+            productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
+            type="default-change-detector" 
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultChangeDetector"/>
+      <annotationFactory 
+            productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
+            type="default-schema-migrator" 
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultSchemaMigrator"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.server.storeFactories">

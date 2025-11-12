@@ -19,10 +19,10 @@ package org.eclipse.emf.cdo.internal.net4j;
 
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.LockNotificationMode;
 import org.eclipse.emf.cdo.common.CDOCommonSession.Options.PassiveUpdateMode;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.protocol.CDOProtocolConstants;
 import org.eclipse.emf.cdo.common.revision.CDORevisionUtil;
 import org.eclipse.emf.cdo.common.util.NotAuthenticatedException;
-import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.net4j.CDONet4jSessionConfigurationImpl.RepositoryInfo;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CDOClientProtocol;
 import org.eclipse.emf.cdo.internal.net4j.protocol.CommitTransactionRequest;
@@ -259,7 +259,7 @@ public class CDONet4jSessionImpl extends CDOSessionImpl implements org.eclipse.e
     InternalCDOPackageRegistry packageRegistry = getPackageRegistry();
     if (packageRegistry == null)
     {
-      packageRegistry = new CDOPackageRegistryImpl();
+      packageRegistry = (InternalCDOPackageRegistry)CDOModelUtil.createPackageRegistry();
       setPackageRegistry(packageRegistry);
     }
 

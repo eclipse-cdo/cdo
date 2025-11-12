@@ -12,6 +12,7 @@
  */
 package org.eclipse.emf.cdo.server.db;
 
+import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;

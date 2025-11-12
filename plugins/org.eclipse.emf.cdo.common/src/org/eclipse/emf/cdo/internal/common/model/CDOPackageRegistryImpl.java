@@ -90,6 +90,11 @@ public class CDOPackageRegistryImpl extends EPackageRegistryImpl implements Inte
   {
   }
 
+  public CDOPackageRegistryImpl(EPackage.Registry delegateRegistry)
+  {
+    super(delegateRegistry);
+  }
+
   @Override
   public boolean isReplacingDescriptors()
   {

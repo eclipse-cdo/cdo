@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOPackageUnitImpl;
 import org.eclipse.emf.cdo.internal.common.model.CDOTypeImpl;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageInfo;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.util.io.ExtendedDataInput;
@@ -115,6 +116,22 @@ public final class CDOModelUtil implements CDOModelConstants
 
   private CDOModelUtil()
   {
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static CDOPackageRegistry createPackageRegistry()
+  {
+    return new CDOPackageRegistryImpl();
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static CDOPackageRegistry createPackageRegistry(EPackage.Registry delegateRegistry)
+  {
+    return new CDOPackageRegistryImpl(delegateRegistry);
   }
 
   /**
@@ -642,6 +659,20 @@ public final class CDOModelUtil implements CDOModelConstants
 
     newPackageUnit.setPackageInfos(newPackageInfos);
     return newPackageUnit;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static CDOPackageUnit createPackageUnit(EPackage topLevelPackage, CDOPackageUnit.Type type, long timeStamp, CDOPackageRegistry packageRegistry)
+  {
+    InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)createPackageUnit();
+    packageUnit.setPackageRegistry((InternalCDOPackageRegistry)packageRegistry);
+    packageUnit.init(topLevelPackage);
+    packageUnit.setOriginalType(type);
+    packageUnit.setTimeStamp(timeStamp);
+    packageUnit.setState(State.LOADED);
+    return packageUnit;
   }
 
   /**

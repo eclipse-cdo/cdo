@@ -30,7 +30,8 @@ import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IIDHandler;
 import org.eclipse.emf.cdo.server.db.IMetaDataManager;
-import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater;
 import org.eclipse.emf.cdo.server.db.mapping.ILobRefsUpdater.LobRefsUpdateNotSupportedException;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
@@ -60,10 +61,11 @@ import org.eclipse.net4j.internal.db.ddl.DBField;
 import org.eclipse.net4j.internal.db.ddl.DBTable;
 import org.eclipse.net4j.util.ReflectUtil.ExcludeFromDump;
 import org.eclipse.net4j.util.StringUtil;
+import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.collection.Entity;
 import org.eclipse.net4j.util.concurrent.ConcurrencyUtil;
-import org.eclipse.net4j.util.lifecycle.LifecycleState;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger;
 import org.eclipse.net4j.util.om.OMPlatform;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor;
 import org.eclipse.net4j.util.om.monitor.ProgressDistributor.Geometric;
@@ -676,39 +678,37 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
   }
 
   @Override
-  public void triggerRestart(boolean withCrashRecovery)
-  {
-    if (getLifecycleState() == LifecycleState.ACTIVATING)
-    {
-      if (withCrashRecovery)
-      {
-        // Remove the shutdown flag to indicate that the repository is now active again.
-        // On next start, crash recovery will be performed because the flag is missing.
-        removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
-      }
-      else
-      {
-        // Set the shutdown flag to indicate that the repository was shut down gracefully.
-        // On next start, crash recovery will be skipped because the flag is present.
-        putPersistentProperty(PROP_GRACEFULLY_SHUT_DOWN, StringUtil.TRUE);
-      }
-
-      // Restart.
-      throw new RestartException();
-    }
-
-    throw new IllegalStateException("Store is not activating: " + getLifecycleState());
-  }
-
-  @Override
   public boolean isFirstStart()
   {
     return firstTime;
   }
 
+  /**
+   * Called after the <b>repository</b> has been activated.
+   * At this point, the store is long since activated.
+   */
   @Override
   public void doPostActivate(InternalSession session)
   {
+    if (modelEvolutionSupport != null && modelEvolutionSupport.isActive())
+    {
+      try
+      {
+        modelEvolutionSupport.trigger(Trigger.ActivatedRepository);
+      }
+      catch (ReactivationTrigger ex)
+      {
+        // Do not wrap a ReactivationTrigger before re-throwing it.
+        throw ex;
+      }
+      catch (Exception ex)
+      {
+        throw WrappedException.wrap(ex);
+      }
+
+      modelEvolutionSupport.deactivate();
+    }
+
     // if (OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.server.db.MIGRATE_WRONG_CONTAINERS"))
     // {
     // DBStoreAccessor reader = getReader(session);
@@ -973,20 +973,20 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     // If we crash later, crash recovery will be performed because the flag is missing.
     removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
-    // Evolve models if needed.
+    // if (true)
+    // {
+    // return;
+    // }
+
     if (modelEvolutionSupport != null)
     {
       modelEvolutionSupport.setStore(this);
-      LifecycleUtil.activate(modelEvolutionSupport);
-
-      try
-      {
-        modelEvolutionSupport.evolveModels();
-      }
-      finally
-      {
-        LifecycleUtil.deactivate(modelEvolutionSupport);
-      }
+      modelEvolutionSupport.activate();
+      modelEvolutionSupport.trigger(Trigger.ActivatingStore);
+    }
+    else
+    {
+      OM.LOG.info("No model evolution support configured for repository " + getRepository().getName() + ". Skipping model evolution.");
     }
   }
 

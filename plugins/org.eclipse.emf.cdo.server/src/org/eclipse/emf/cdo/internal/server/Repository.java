@@ -38,6 +38,7 @@ import org.eclipse.emf.cdo.common.lock.CDOLockDelta;
 import org.eclipse.emf.cdo.common.lock.CDOLockOwner;
 import org.eclipse.emf.cdo.common.lock.CDOLockState;
 import org.eclipse.emf.cdo.common.lock.CDOLockUtil;
+import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.protocol.CDODataOutput;
@@ -58,7 +59,6 @@ import org.eclipse.emf.cdo.common.util.RepositoryStateChangedEvent;
 import org.eclipse.emf.cdo.common.util.RepositoryTypeChangedEvent;
 import org.eclipse.emf.cdo.eresource.EresourcePackage;
 import org.eclipse.emf.cdo.etypes.EtypesPackage;
-import org.eclipse.emf.cdo.internal.common.model.CDOPackageRegistryImpl;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockDeltaCollector;
 import org.eclipse.emf.cdo.internal.server.LockingManager.LockStateCollector;
 import org.eclipse.emf.cdo.internal.server.bundle.OM;
@@ -110,7 +110,6 @@ import org.eclipse.emf.cdo.spi.server.InternalRepository;
 import org.eclipse.emf.cdo.spi.server.InternalSession;
 import org.eclipse.emf.cdo.spi.server.InternalSessionManager;
 import org.eclipse.emf.cdo.spi.server.InternalStore;
-import org.eclipse.emf.cdo.spi.server.InternalStore.RestartException;
 import org.eclipse.emf.cdo.spi.server.InternalTransaction;
 import org.eclipse.emf.cdo.spi.server.InternalUnitManager;
 import org.eclipse.emf.cdo.spi.server.InternalView;
@@ -1353,6 +1352,12 @@ public class Repository extends Container<Object> implements InternalRepository
   }
 
   @Override
+  public Semaphore getPackageRegistryCommitLock()
+  {
+    return packageRegistryCommitLock;
+  }
+
+  @Override
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext)
   {
     if (considerCommitContext)
@@ -1369,12 +1374,6 @@ public class Repository extends Container<Object> implements InternalRepository
     }
 
     return packageRegistry;
-  }
-
-  @Override
-  public Semaphore getPackageRegistryCommitLock()
-  {
-    return packageRegistryCommitLock;
   }
 
   @Override
@@ -2992,19 +2991,7 @@ public class Repository extends Container<Object> implements InternalRepository
     revisionManager.setSupportingAudits(supportingAudits);
     revisionManager.setSupportingBranches(supportingBranches);
 
-    for (;;)
-    {
-      try
-      {
-        LifecycleUtil.activate(store);
-      }
-      catch (RestartException ex)
-      {
-        continue;
-      }
-
-      break;
-    }
+    LifecycleUtil.activate(store);
 
     Map<String, String> persistentProperties = store.getPersistentProperties(PROP_UUID, PROP_MODE);
     String persistentUUID = persistentProperties.get(PROP_UUID);
@@ -3376,7 +3363,7 @@ public class Repository extends Container<Object> implements InternalRepository
 
     protected InternalCDOPackageRegistry createPackageRegistry()
     {
-      return new CDOPackageRegistryImpl();
+      return (InternalCDOPackageRegistry)CDOModelUtil.createPackageRegistry();
     }
 
     protected InternalSessionManager createSessionManager()

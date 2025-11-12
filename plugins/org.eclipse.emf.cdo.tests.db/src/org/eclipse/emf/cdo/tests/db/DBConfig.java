@@ -13,7 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.common.CDOCommonRepository.IDGenerationLocation;
 import org.eclipse.emf.cdo.server.IStore;
 import org.eclipse.emf.cdo.server.db.CDODBUtil;
-import org.eclipse.emf.cdo.server.db.IModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
 import org.eclipse.emf.cdo.server.db.mapping.ITypeMapping;
 import org.eclipse.emf.cdo.server.internal.db.mapping.TypeMappingRegistry;

@@ -12,7 +12,8 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
-import org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.Mode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
@@ -37,6 +38,7 @@ import org.eclipse.emf.ecore.EcorePackage;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 
+import java.io.File;
 import java.util.Map;
 
 /**
@@ -74,7 +76,9 @@ public class ModelEvolutionTest extends AbstractCDOTest
     super.initTestProperties(properties);
     properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
 
-    ModelEvolutionSupport modelEvolutionSupport = new ModelEvolutionSupport();
+    PhasedModelEvolutionSupport modelEvolutionSupport = new PhasedModelEvolutionSupport();
+    modelEvolutionSupport.setRootFolder(new File("C:\\develop\\temp\\evolution"));
+    modelEvolutionSupport.setMode(Mode.Evolve);
     modelEvolutionSupport.addListener(new LogListener());
     properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, modelEvolutionSupport);
   }

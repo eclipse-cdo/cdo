@@ -249,7 +249,7 @@ public class CDOClientProtocol extends AuthenticatingSignalProtocol<InternalCDOS
     try
     {
       REVISION_LOADING.start(request);
-      return send((RequestWithConfirmation<List<RevisionInfo>>)request);
+      return send(request);
     }
     finally
     {

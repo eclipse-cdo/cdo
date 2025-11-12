@@ -56,6 +56,8 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
   private static final EPackage V1 = createModelV1();
 
+  private PhasedModelEvolutionSupport support;
+
   @Override
   protected void doSetUp() throws Exception
   {
@@ -73,14 +75,15 @@ public class ModelEvolutionTest extends AbstractCDOTest
   @Override
   protected void initTestProperties(Map<String, Object> properties)
   {
+    support = new PhasedModelEvolutionSupport();
+    support.setRootFolder(new File("C:\\develop\\temp\\evolution"));
+    support.setMode(Mode.Evolve);
+    // support.setRepositoryExporter(new DefaultRepositoryExporter());
+    support.addListener(new LogListener());
+
     super.initTestProperties(properties);
     properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
-
-    PhasedModelEvolutionSupport modelEvolutionSupport = new PhasedModelEvolutionSupport();
-    modelEvolutionSupport.setRootFolder(new File("C:\\develop\\temp\\evolution"));
-    modelEvolutionSupport.setMode(Mode.Evolve);
-    modelEvolutionSupport.addListener(new LogListener());
-    properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, modelEvolutionSupport);
+    properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, support);
   }
 
   public void test() throws Exception

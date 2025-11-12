@@ -244,7 +244,7 @@
 
       <modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="evolve">
         <changeDetector type="default-change-detector"/>
-        <!-- <repositoryExporter type="default-repository-exporter"/> -->
+        <!-- <repositoryExporter type="default-repository-exporter" binary="false"/> -->
         <schemaMigrator type="default-schema-migrator"/>
         <!-- <storeProcessor type="custom-store-processor" extraArgs="data"/> -->
         <!-- <repositoryProcessor type="custom-repository-processor" extraArgs="data"/> -->

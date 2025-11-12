@@ -14,6 +14,8 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
+import org.eclipse.emf.cdo.server.CDOServerExporter;
+import org.eclipse.emf.cdo.server.IRepository;
 import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
@@ -51,14 +53,18 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.EnumMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -115,6 +121,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   private static final String PROP_PHASE_ONGOING = "phase.ongoing";
 
   private static final String PROP_MODEL_PREFIX = "model.";
+
+  private final Deque<String> logBuffer = new LinkedList<>();
 
   private final EnumMap<Phase, Handler> phaseHandlers = new EnumMap<>(Phase.class);
 
@@ -332,13 +340,19 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         OM.LOG.error("Failed to log message: " + message.getClass().getName(), ex);
       }
 
+      logBuffer.add(string);
+
       File log = getEvolutionLog();
       if (log != null)
       {
         try (Writer writer = IOUtil.buffered(new FileWriter(log, true)))
         {
-          writer.write(string);
-          writer.write(StringUtil.NL);
+          while (!logBuffer.isEmpty())
+          {
+            String line = logBuffer.poll();
+            writer.write(line);
+            writer.write(StringUtil.NL);
+          }
         }
         catch (Exception ex)
         {
@@ -386,7 +400,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       // Model evolution is disabled.
       if (trigger == Trigger.ActivatingStore)
       {
-        log("Model evolution is disabled");
+        OM.LOG.info("Model evolution is disabled");
       }
 
       // Skip model evolution.
@@ -405,9 +419,11 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       return;
     }
 
+    log("Model evolution triggered by " + trigger);
+
     if (context == null)
     {
-      log("Root folder: " + rootFolder);
+      OM.LOG.info("Model evolution root folder: " + rootFolder);
 
       if (phase.initial())
       {
@@ -750,6 +766,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   {
     phase = null;
     id = 0;
+    logBuffer.clear();
     super.doDeactivate();
   }
 
@@ -902,9 +919,6 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     @Override
     public void execute(Context context) throws Exception
     {
-      PhasedModelEvolutionSupport support = (PhasedModelEvolutionSupport)context.getSupport();
-      IDBStore store = support.getStore();
-
       List<Model> changedModels = context.getChangedModels();
       if (changedModels.isEmpty())
       {
@@ -913,7 +927,10 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         throw context.cancelation();
       }
 
-      if (support.getMode() == Mode.Prevent)
+      changedModels.forEach(model -> context.log("Model changed: " + model.getID()));
+
+      Mode mode = context.getSupport().getMode();
+      if (mode == Mode.Prevent)
       {
         context.log("Model evolution prevented");
         throw new IllegalStateException("Model evolution needed, but model evolution mode is set to PREVENT");
@@ -991,7 +1008,6 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         // Release the store accessor and clear the thread local.
         StoreThreadLocal.release();
       }
-
     }
 
     /**
@@ -1077,6 +1093,92 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       context.log("Committing model evolution changes to the database");
       accessor.getConnection().commit();
       return false;
+    }
+  }
+
+  /**
+   * Evolves the models with the given mapping strategy, context, and store accessor.
+   * <p>
+   * This method performs the following steps:
+   * <ol>
+   * <li>It delegates the model evolution to the mapping strategy, which is responsible for updating the database schema,
+   * migrating the existing data, and changing the container feature IDs in case of shifted features.</li>
+   * <li>It updates the system tables, including the cdo_package_units table, cdo_package_infos table, and
+   * cdo_external_refs table.</li>
+   * <li>It commits the transaction unless it's a dry run, in which case it rolls back the changes.</li>
+   * </ol>
+   *
+   * @author Eike Stepper
+   * @since 4.14
+   * @noreference This package is currently considered <i>provisional</i>.
+   * @noimplement This package is currently considered <i>provisional</i>.
+   * @noextend This package is currently considered <i>provisional</i>.
+   */
+  public static class DefaultRepositoryExporter extends BasicPhaseHandler
+  {
+    /**
+     * The factory type of the default repository exporter.
+     */
+    public static final String FACTORY_TYPE = "default-repository-exporter"; //$NON-NLS-1$
+
+    private boolean binary;
+
+    /**
+     * Creates an XML repository exporter.
+     */
+    public DefaultRepositoryExporter()
+    {
+      this(false);
+    }
+
+    /**
+     * Creates a repository exporter that is either binary or XML.
+     */
+    public DefaultRepositoryExporter(boolean binary)
+    {
+      setBinary(binary);
+    }
+
+    public boolean isBinary()
+    {
+      return binary;
+    }
+
+    @InjectAttribute(name = "binary")
+    public void setBinary(boolean binary)
+    {
+      checkInactive();
+      this.binary = binary;
+    }
+
+    @Override
+    public void execute(Context context) throws Exception
+    {
+      PhasedModelEvolutionSupport support = context.getSupport();
+      IRepository repository = support.getStore().getRepository();
+
+      CDOServerExporter<?> exporter;
+      String fileName;
+
+      if (binary)
+      {
+        exporter = new CDOServerExporter.Binary(repository);
+        fileName = "export.bin";
+      }
+      else
+      {
+        exporter = new CDOServerExporter.XML(repository);
+        fileName = "export.xml";
+      }
+
+      File evolutionFolder = support.getEvolutionFolder();
+      File exportFile = new File(evolutionFolder, fileName);
+      context.log("Exporting repository to " + exportFile.getAbsolutePath());
+
+      try (OutputStream out = IOUtil.buffered(new FileOutputStream(exportFile)))
+      {
+        exporter.exportRepository(out);
+      }
     }
   }
 }

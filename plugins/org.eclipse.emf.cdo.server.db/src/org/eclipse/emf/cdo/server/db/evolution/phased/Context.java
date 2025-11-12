@@ -15,7 +15,6 @@ import org.eclipse.emf.cdo.common.model.CDOPackageUnit.Type;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
 import org.eclipse.emf.cdo.common.util.CDOTimeProvider;
-import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 
 import org.eclipse.net4j.db.StatementBatcher;
 import org.eclipse.net4j.db.StatementBatcher.BatchEvent;
@@ -85,9 +84,9 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   /**
    * Creates a context for model evolution with the given models.
    */
-  public Context(IModelEvolutionSupport support, List<Model> models)
+  public Context(PhasedModelEvolutionSupport support, List<Model> models)
   {
-    this.support = (PhasedModelEvolutionSupport)support;
+    this.support = support;
     this.models = models;
 
     changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
@@ -103,7 +102,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   /**
    * Returns the model evolution support associated with this context.
    */
-  public IModelEvolutionSupport getSupport()
+  public PhasedModelEvolutionSupport getSupport()
   {
     return support;
   }

@@ -269,6 +269,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * @generated
    */
   @Deprecated
+  @SuppressWarnings("deprecation")
   protected ClassPermissionItemProvider classPermissionItemProvider;
 
   /**
@@ -296,6 +297,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * @generated
    */
   @Deprecated
+  @SuppressWarnings("deprecation")
   protected PackagePermissionItemProvider packagePermissionItemProvider;
 
   /**
@@ -322,6 +324,7 @@ public class SecurityItemProviderAdapterFactory extends SecurityAdapterFactory
    * <!-- end-user-doc -->
    * @generated
    */
+  @SuppressWarnings("deprecation")
   @Deprecated
   protected ResourcePermissionItemProvider resourcePermissionItemProvider;
 

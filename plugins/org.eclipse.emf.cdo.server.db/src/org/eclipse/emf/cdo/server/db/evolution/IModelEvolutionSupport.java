@@ -43,7 +43,7 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  * <pre>
  * &lt;store type="db">
  *   ...
- *   &lt;modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="migrate">
+ *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate">
  *     &lt;changeDetector type="default-change-detector"/>
  *     &lt;repositoryExporter type="default-repository-exporter" binary="false"/>
  *     &lt;schemaMigrator type="default-schema-migrator"/>

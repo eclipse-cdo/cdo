@@ -242,7 +242,7 @@
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
         URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
 
-      <modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="migrate" saveNewModels="true">
+      <modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true">
         <changeDetector/>
         <!-- <repositoryExporter binary="false"/> -->
         <schemaMigrator deleteObsoleteMetaIDs="false"/>

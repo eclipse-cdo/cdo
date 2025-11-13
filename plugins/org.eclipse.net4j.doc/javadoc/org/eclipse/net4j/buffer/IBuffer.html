@@ -18,39 +18,39 @@
 <script type="text/javascript">var pathtoroot = "../../../../";
 loadScripts(document, 'script');</script>
 <noscript>
-<div>JavaScript ist im Browser deaktiviert.</div>
+<div>JavaScript is disabled on your browser.</div>
 </noscript>
 <div class="flex-box">
 <header role="banner" class="flex-header">
 <nav role="navigation">
 <!-- ========= START OF TOP NAVBAR ======= -->
-<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Navigationslinks umschalten"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
-<div class="skip-nav"><a href="#skip-navbar-top" title="Navigations-Links überspringen">Navigations-Links überspringen</a></div>
+<div class="top-nav" id="navbar-top"><button id="navbar-toggle-button" aria-controls="navbar-top" aria-expanded="false" aria-label="Toggle navigation links"><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span><span class="nav-bar-toggle-icon">&nbsp;</span></button>
+<div class="skip-nav"><a href="#skip-navbar-top" title="Skip navigation links">Skip navigation links</a></div>
 <ul id="navbar-top-firstrow" class="nav-list" title="Navigation">
-<li><a href="../../../../index.html">Überblick</a></li>
+<li><a href="../../../../index.html">Overview</a></li>
 <li><a href="package-summary.html">Package</a></li>
-<li class="nav-bar-cell1-rev">Klasse</li>
-<li><a href="class-use/IBuffer.html">Verwendung</a></li>
-<li><a href="../../../../deprecated-list.html">Veraltet</a></li>
+<li class="nav-bar-cell1-rev">Class</li>
+<li><a href="class-use/IBuffer.html">Use</a></li>
+<li><a href="../../../../deprecated-list.html">Deprecated</a></li>
 <li><a href="../../../../index-all.html">Index</a></li>
-<li><a href="../../../../help-doc.html#class">Hilfe</a></li>
+<li><a href="../../../../help-doc.html#class">Help</a></li>
 </ul>
 <ul class="sub-nav-list-small">
 <li>
-<p>Übersicht:</p>
+<p>Summary:</p>
 <ul>
-<li>Verschachtelt</li>
-<li><a href="#field-summary">Feld</a></li>
-<li>Konstruktor</li>
-<li><a href="#method-summary">Methode</a></li>
+<li>Nested</li>
+<li><a href="#field-summary">Field</a></li>
+<li>Constr</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
 </li>
 <li>
-<p>Details:</p>
+<p>Detail:</p>
 <ul>
-<li><a href="#field-detail">Feld</a></li>
-<li>Konstruktor</li>
-<li><a href="#method-detail">Methode</a></li>
+<li><a href="#field-detail">Field</a></li>
+<li>Constr</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </li>
 </ul>
@@ -58,21 +58,21 @@ loadScripts(document, 'script');</script>
 <div class="sub-nav">
 <div id="navbar-sub-list">
 <ul class="sub-nav-list">
-<li>Übersicht:&nbsp;</li>
-<li>Verschachtelt&nbsp;|&nbsp;</li>
-<li><a href="#field-summary">Feld</a>&nbsp;|&nbsp;</li>
-<li>Konstruktor&nbsp;|&nbsp;</li>
-<li><a href="#method-summary">Methode</a></li>
+<li>Summary:&nbsp;</li>
+<li>Nested&nbsp;|&nbsp;</li>
+<li><a href="#field-summary">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method-summary">Method</a></li>
 </ul>
 <ul class="sub-nav-list">
-<li>Details:&nbsp;</li>
-<li><a href="#field-detail">Feld</a>&nbsp;|&nbsp;</li>
-<li>Konstruktor&nbsp;|&nbsp;</li>
-<li><a href="#method-detail">Methode</a></li>
+<li>Detail:&nbsp;</li>
+<li><a href="#field-detail">Field</a>&nbsp;|&nbsp;</li>
+<li>Constr&nbsp;|&nbsp;</li>
+<li><a href="#method-detail">Method</a></li>
 </ul>
 </div>
 <div class="nav-list-search"><a href="../../../../search.html">SEARCH</a>
-<input type="text" id="search-input" disabled placeholder="Suchen">
+<input type="text" id="search-input" disabled placeholder="Search">
 <input type="reset" id="reset-button" disabled value="reset">
 </div>
 </div>
@@ -84,21 +84,21 @@ loadScripts(document, 'script');</script>
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
 <div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">org.eclipse.net4j.buffer</a></div>
-<h1 title="Schnittstelle IBuffer" class="title">Schnittstelle IBuffer</h1>
+<h1 title="Interface IBuffer" class="title">Interface IBuffer</h1>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
-<dt>Alle bekannten Unterschnittstellen:</dt>
-<dd><code><a href="../../spi/net4j/InternalBuffer.html" title="Schnittstelle in org.eclipse.spi.net4j">InternalBuffer</a></code></dd>
+<dt>All Known Subinterfaces:</dt>
+<dd><code><a href="../../spi/net4j/InternalBuffer.html" title="interface in org.eclipse.spi.net4j">InternalBuffer</a></code></dd>
 </dl>
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">IBuffer</span></div>
 <div class="block">Basic <b>unit of transport</b> in Net4j.
  <p>
- A buffer is well prepared for the usage with asynchronous <a href="../channel/IChannel.html" title="Schnittstelle in org.eclipse.net4j.channel"><code>IChannel</code></a>s but can also be used with pure
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>s. All methods of <code>IBuffer</code> are non-blocking.
+ A buffer is well prepared for the usage with asynchronous <a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a>s but can also be used with pure
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>s. All methods of <code>IBuffer</code> are non-blocking.
  <p>
- Usually buffers are obtained from a <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Buffers can be accessed, passed around and finally
+ Usually buffers are obtained from a <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>. Buffers can be accessed, passed around and finally
  <a href="#release()"><code>released</code></a> to their original provider. The capacity of a buffer is determined by its provider.
  <p>
  In addition to its payload data each buffer contains an internal header of four bytes, two of them representing a
@@ -107,7 +107,7 @@ loadScripts(document, 'script');</script>
  <p>
  This interface is <b>not</b> intended to be implemented by clients.
  <p>
- An example for <b>putting</b> values into a buffer and writing it to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>:
+ An example for <b>putting</b> values into a buffer and writing it to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>:
  <p>
 
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
@@ -117,7 +117,7 @@ loadScripts(document, 'script');</script>
  without blocking while (!buffer.write(socketChannel)) { // Do something else }
  </pre>
 
- An example for reading a buffer from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a> and <b>getting</b> values from it:
+ An example for reading a buffer from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a> and <b>getting</b> values from it:
  <p>
 
  <pre style="background-color:#ffffc8; border-width:1px; border-style:solid; padding:.5em;">
@@ -136,12 +136,12 @@ loadScripts(document, 'script');</script>
  buffer.release();
  </pre></div>
 <dl class="notes">
-<dt>Autor:</dt>
+<dt>Author:</dt>
 <dd>Eike Stepper</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list-long">
-<li><a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a></li>
+<li><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a></li>
 <li><a href="../channel/IChannel.html#sendBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IChannel.sendBuffer(IBuffer)</code></a></li>
 <li><a href="../channel/IChannel.html#setReceiveHandler(org.eclipse.net4j.buffer.IBufferHandler)"><code>IChannel.setReceiveHandler(IBufferHandler)</code></a></li>
 <li><a href="IBufferHandler.html#handleBuffer(org.eclipse.net4j.buffer.IBuffer)"><code>IBufferHandler.handleBuffer(IBuffer)</code></a></li>
@@ -158,12 +158,12 @@ loadScripts(document, 'script');</script>
 <!-- =========== FIELD SUMMARY =========== -->
 <li>
 <section class="field-summary" id="field-summary">
-<h2>Feldübersicht</h2>
-<div class="caption"><span>Felder</span></div>
+<h2>Field Summary</h2>
+<div class="caption"><span>Fields</span></div>
 <div class="summary-table three-column-summary">
-<div class="table-header col-first">Modifizierer und Typ</div>
-<div class="table-header col-second">Feld</div>
-<div class="table-header col-last">Beschreibung</div>
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Field</div>
+<div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#CHANNEL_ID_BYTES" class="member-name-link">CHANNEL_ID_BYTES</a></code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -183,7 +183,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color"><code><a href="#NO_CHANNEL" class="member-name-link">NO_CHANNEL</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Possible argument value of <a href="#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="#getChannelID()"><code>getChannelID()</code></a> that
- indicates that this buffer is not intended to be passed to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
+ indicates that this buffer is not intended to be passed to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
 </div>
 <div class="col-first even-row-color"><code>static final int</code></div>
 <div class="col-second even-row-color"><code><a href="#PAYLOAD_SIZE_BYTES" class="member-name-link">PAYLOAD_SIZE_BYTES</a></code></div>
@@ -197,14 +197,14 @@ loadScripts(document, 'script');</script>
 <!-- ========== METHOD SUMMARY =========== -->
 <li>
 <section class="method-summary" id="method-summary">
-<h2>Methodenübersicht</h2>
+<h2>Method Summary</h2>
 <div id="method-summary-table">
-<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">Alle Methoden</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instanzmethoden</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstrakte Methoden</button></div>
+<div class="table-tabs" role="tablist" aria-orientation="horizontal"><button id="method-summary-table-tab0" role="tab" aria-selected="true" aria-controls="method-summary-table.tabpanel" tabindex="0" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table', 3)" class="active-table-tab">All Methods</button><button id="method-summary-table-tab2" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab2', 3)" class="table-tab">Instance Methods</button><button id="method-summary-table-tab3" role="tab" aria-selected="false" aria-controls="method-summary-table.tabpanel" tabindex="-1" onkeydown="switchTab(event)" onclick="show('method-summary-table', 'method-summary-table-tab3', 3)" class="table-tab">Abstract Methods</button></div>
 <div id="method-summary-table.tabpanel" role="tabpanel">
 <div class="summary-table three-column-summary" aria-labelledby="method-summary-table-tab0">
-<div class="table-header col-first">Modifizierer und Typ</div>
-<div class="table-header col-second">Methode</div>
-<div class="table-header col-last">Beschreibung</div>
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#clear()" class="member-name-link">clear</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -218,7 +218,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Turns the state of this buffer from <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#formatContent(boolean)" class="member-name-link">formatContent</a><wbr>(boolean&nbsp;showHeader)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>byte</code></div>
@@ -227,13 +227,13 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#get(byte%5B%5D)" class="member-name-link">get</a><wbr>(byte[]&nbsp;dst)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer">IBufferProvider</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getBufferProvider()" class="member-name-link">getBufferProvider</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns the <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+<div class="block">Returns the <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
  <a href="#release()"><code>release()</code></a> method is called.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getByteBuffer()" class="member-name-link">getByteBuffer</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
@@ -263,12 +263,12 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>short</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getShort()" class="member-name-link">getShort</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="BufferState.html" title="Enum-Klasse in org.eclipse.net4j.buffer">BufferState</a></code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="BufferState.html" title="enum class in org.eclipse.net4j.buffer">BufferState</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getState()" class="member-name-link">getState</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Returns the internal state of this buffer.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getString()" class="member-name-link">getString</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
@@ -298,7 +298,7 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#release()" class="member-name-link">release</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setCCAM(boolean)" class="member-name-link">setCCAM</a><wbr>(boolean&nbsp;ccam)</code></div>
@@ -319,20 +319,20 @@ loadScripts(document, 'script');</script>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#setPosition(int)" class="member-name-link">setPosition</a><wbr>(int&nbsp;position)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#startGetting(java.nio.channels.SocketChannel)" class="member-name-link">startGetting</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#startGetting(java.nio.channels.SocketChannel)" class="member-name-link">startGetting</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Tries to read a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a> that can be used for getting data.</div>
+<div class="block">Tries to read a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a> that can be used for getting data.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#startPutting(short)" class="member-name-link">startPutting</a><wbr>(short&nbsp;channelID)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.</div>
+<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.channels.SocketChannel)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#write(java.nio.channels.SocketChannel)" class="member-name-link">write</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
-<div class="block">Tries to write the data of this buffer to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
+<div class="block">Tries to write the data of this buffer to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
 </div>
 </div>
 </div>
@@ -346,19 +346,19 @@ loadScripts(document, 'script');</script>
 <!-- ============ FIELD DETAIL =========== -->
 <li>
 <section class="field-details" id="field-detail">
-<h2>Felddetails</h2>
+<h2>Field Details</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="NO_CHANNEL">
 <h3>NO_CHANNEL</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">NO_CHANNEL</span></div>
 <div class="block">Possible argument value of <a href="#startPutting(short)"><code>startPutting(short)</code></a> and possible return value of <a href="#getChannelID()"><code>getChannelID()</code></a> that
- indicates that this buffer is not intended to be passed to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
+ indicates that this buffer is not intended to be passed to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.</div>
 <dl class="notes">
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.NO_CHANNEL">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.NO_CHANNEL">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -369,12 +369,12 @@ loadScripts(document, 'script');</script>
 <h3>MIN_CHANNEL</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">MIN_CHANNEL</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>2.0</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MIN_CHANNEL">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MIN_CHANNEL">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -385,12 +385,12 @@ loadScripts(document, 'script');</script>
 <h3>MAX_CHANNEL</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">MAX_CHANNEL</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>2.0</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MAX_CHANNEL">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.MAX_CHANNEL">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -401,12 +401,12 @@ loadScripts(document, 'script');</script>
 <h3>CHANNEL_ID_BYTES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">CHANNEL_ID_BYTES</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.8</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.CHANNEL_ID_BYTES">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.CHANNEL_ID_BYTES">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -417,12 +417,12 @@ loadScripts(document, 'script');</script>
 <h3>PAYLOAD_SIZE_BYTES</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">PAYLOAD_SIZE_BYTES</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.8</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.PAYLOAD_SIZE_BYTES">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.PAYLOAD_SIZE_BYTES">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -433,10 +433,10 @@ loadScripts(document, 'script');</script>
 <h3>HEADER_SIZE</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">short</span>&nbsp;<span class="element-name">HEADER_SIZE</span></div>
 <dl class="notes">
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.HEADER_SIZE">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.HEADER_SIZE">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -447,12 +447,12 @@ loadScripts(document, 'script');</script>
 <h3>CHANNEL_ID_POS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">CHANNEL_ID_POS</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.10</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.CHANNEL_ID_POS">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.CHANNEL_ID_POS">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -463,12 +463,12 @@ loadScripts(document, 'script');</script>
 <h3>PAYLOAD_SIZE_POS</h3>
 <div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type">int</span>&nbsp;<span class="element-name">PAYLOAD_SIZE_POS</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.10</dd>
-<dt>Siehe auch:</dt>
+<dt>See Also:</dt>
 <dd>
 <ul class="tag-list">
-<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.PAYLOAD_SIZE_POS">Konstantenfeldwerte</a></li>
+<li><a href="../../../../constant-values.html#org.eclipse.net4j.buffer.IBuffer.PAYLOAD_SIZE_POS">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>
@@ -480,13 +480,13 @@ loadScripts(document, 'script');</script>
 <!-- ============ METHOD DETAIL ========== -->
 <li>
 <section class="method-details" id="method-detail">
-<h2>Methodendetails</h2>
+<h2>Method Details</h2>
 <ul class="member-list">
 <li>
 <section class="detail" id="getBufferProvider()">
 <h3>getBufferProvider</h3>
-<div class="member-signature"><span class="return-type"><a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer">IBufferProvider</a></span>&nbsp;<span class="element-name">getBufferProvider</span>()</div>
-<div class="block">Returns the <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
+<div class="member-signature"><span class="return-type"><a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer">IBufferProvider</a></span>&nbsp;<span class="element-name">getBufferProvider</span>()</div>
+<div class="block">Returns the <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer and that this buffer will be returned to when its
  <a href="#release()"><code>release()</code></a> method is called.</div>
 </section>
 </li>
@@ -496,7 +496,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">short</span>&nbsp;<span class="element-name">getChannelID</span>()</div>
 <div class="block">Returns the channel index value stored in the header of this buffer.</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
 </section>
@@ -508,23 +508,23 @@ loadScripts(document, 'script');</script>
 <div class="block">Returns the capacity of this buffer.
  <p>
  The capacity of this buffer is equal to the <a href="IBufferProvider.html#getBufferCapacity()"><code>capacity</code></a> of the
- <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer.</div>
+ <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a> that has provided this buffer.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="getState()">
 <h3>getState</h3>
-<div class="member-signature"><span class="return-type"><a href="BufferState.html" title="Enum-Klasse in org.eclipse.net4j.buffer">BufferState</a></span>&nbsp;<span class="element-name">getState</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="BufferState.html" title="enum class in org.eclipse.net4j.buffer">BufferState</a></span>&nbsp;<span class="element-name">getState</span>()</div>
 <div class="block">Returns the internal state of this buffer.</div>
 </section>
 </li>
 <li>
 <section class="detail" id="startGetting(java.nio.channels.SocketChannel)">
 <h3>startGetting</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">startGetting</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</span>
-                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Tries to read a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a> that can be used for getting data.
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">startGetting</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</span>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Tries to read a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> from a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a> that can be used for getting data.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to read a
  complete header from the <code>SocketChannel</code> <code>null</code> is returned and the state of this buffer is
@@ -535,78 +535,78 @@ loadScripts(document, 'script');</script>
  If a <code>ByteBuffer</code> is returned it <b>may only</b> be used for getting data. It is left to the
  responsibility of the caller that only the following methods of that <code>ByteBuffer</code> are used:
  <ul>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.get()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(byte%5B%5D)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.get(byte[])</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.get(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(byte%5B%5D,int,int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.get(byte[], int, int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getChar()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getChar()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getChar(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getChar(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getDouble()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getDouble()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getDouble(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getDouble(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getFloat()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getFloat()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getFloat(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getFloat(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getInt()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getInt()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getInt(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getInt(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getLong()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getLong()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getLong(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getLong(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getShort()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getShort()</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getShort(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.getShort(int)</code></a>
- <li>all other methods that do not influence <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#position()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.position()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#limit()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.limit()</code></a> and
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#capacity()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.capacity()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.get()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(byte%5B%5D)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.get(byte[])</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.get(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#get(byte%5B%5D,int,int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.get(byte[], int, int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getChar()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getChar()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getChar(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getChar(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getDouble()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getDouble()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getDouble(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getDouble(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getFloat()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getFloat()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getFloat(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getFloat(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getInt()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getInt()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getInt(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getInt(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getLong()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getLong()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getLong(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getLong(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getShort()" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getShort()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#getShort(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.getShort(int)</code></a>
+ <li>all other methods that do not influence <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#position()" title="class or interface in java.nio" class="external-link"><code>Buffer.position()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#limit()" title="class or interface in java.nio" class="external-link"><code>Buffer.limit()</code></a> and
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#capacity()" title="class or interface in java.nio" class="external-link"><code>Buffer.capacity()</code></a>
  </ul></div>
 <dl class="notes">
-<dt>Parameter:</dt>
-<dd><code>socketChannel</code> - The <code>socketChannel</code> to read the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> from.</dd>
-<dt>Gibt zurück:</dt>
-<dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for getting data if it was possible to completely read the data from
+<dt>Parameters:</dt>
+<dd><code>socketChannel</code> - The <code>socketChannel</code> to read the <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> from.</dd>
+<dt>Returns:</dt>
+<dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for getting data if it was possible to completely read the data from
          the given <code>SocketChannel</code>, <code>null</code> otherwise.</dd>
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a>,
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a>,
            <a href="BufferState.html#READING_HEADER"><code>READING_HEADER</code></a> or <a href="BufferState.html#READING_BODY"><code>READING_BODY</code></a>.</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="startPutting(short)">
 <h3>startPutting</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">startPutting</span><wbr><span class="parameters">(short&nbsp;channelID)</span>
-                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></span></div>
-<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">startPutting</span><wbr><span class="parameters">(short&nbsp;channelID)</span>
+                 throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></span></div>
+<div class="block">Returns a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.
  <p>
  Turns the <a href="#getState()"><code>state</code></a> of this buffer into <a href="BufferState.html#PUTTING"><code>PUTTING</code></a>.
  <p>
  The returned <code>ByteBuffer</code> <b>may only</b> be used for putting data. It is left to the responsibility of
  the caller that only the following methods of that <code>ByteBuffer</code> are used:
  <ul>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.put(byte)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte%5B%5D)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.put(byte[])</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(java.nio.ByteBuffer)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.put(ByteBuffer)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(int,byte)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.put(int, byte)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte%5B%5D,int,int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.put(byte[], int, int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putChar(char)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putChar(char)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putChar(int,char)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putChar(int, char)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putDouble(double)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putDouble(double)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putDouble(int,double)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putDouble(int, double)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putFloat(float)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putFloat(float)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putFloat(int,float)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putFloat(int, float)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putInt(int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putInt(int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putInt(int,int)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putInt(int, int)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putLong(long)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putLong(long)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putLong(int,long)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putLong(int, long)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putShort(short)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putShort(short)</code></a>
- <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putShort(int,short)" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer.putShort(int, short)</code></a>
- <li>all other methods that do not influence <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#position()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.position()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#limit()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.limit()</code></a> and
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#capacity()" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>Buffer.capacity()</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.put(byte)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte%5B%5D)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.put(byte[])</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(java.nio.ByteBuffer)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.put(ByteBuffer)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(int,byte)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.put(int, byte)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#put(byte%5B%5D,int,int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.put(byte[], int, int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putChar(char)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putChar(char)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putChar(int,char)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putChar(int, char)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putDouble(double)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putDouble(double)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putDouble(int,double)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putDouble(int, double)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putFloat(float)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putFloat(float)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putFloat(int,float)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putFloat(int, float)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putInt(int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putInt(int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putInt(int,int)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putInt(int, int)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putLong(long)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putLong(long)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putLong(int,long)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putLong(int, long)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putShort(short)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putShort(short)</code></a>
+ <li> <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html#putShort(int,short)" title="class or interface in java.nio" class="external-link"><code>ByteBuffer.putShort(int, short)</code></a>
+ <li>all other methods that do not influence <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#position()" title="class or interface in java.nio" class="external-link"><code>Buffer.position()</code></a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#limit()" title="class or interface in java.nio" class="external-link"><code>Buffer.limit()</code></a> and
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/Buffer.html#capacity()" title="class or interface in java.nio" class="external-link"><code>Buffer.capacity()</code></a>
  </ul></div>
 <dl class="notes">
-<dt>Parameter:</dt>
-<dd><code>channelID</code> - The index of an <a href="../channel/IChannel.html" title="Schnittstelle in org.eclipse.net4j.channel"><code>IChannel</code></a> that this buffer is intended to be passed to later or <a href="#NO_CHANNEL"><code>NO_CHANNEL</code></a>
+<dt>Parameters:</dt>
+<dd><code>channelID</code> - The index of an <a href="../channel/IChannel.html" title="interface in org.eclipse.net4j.channel"><code>IChannel</code></a> that this buffer is intended to be passed to later or <a href="#NO_CHANNEL"><code>NO_CHANNEL</code></a>
           .</dd>
-<dt>Gibt zurück:</dt>
-<dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.</dd>
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a> (<a href="BufferState.html#PUTTING"><code>PUTTING</code></a> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
+<dt>Returns:</dt>
+<dd>A <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link"><code>ByteBuffer</code></a> that can be used for putting data.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#INITIAL"><code>INITIAL</code></a> (<a href="BufferState.html#PUTTING"><code>PUTTING</code></a> is allowed but meaningless if and only if the given <code>channelID</code> is equal to the
            existing <code>channelID</code> of this buffer).</dd>
 </dl>
 </section>
@@ -614,23 +614,23 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="write(java.nio.channels.SocketChannel)">
 <h3>write</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">write</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</span>
-       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a>,
-<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></span></div>
-<div class="block">Tries to write the data of this buffer to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="Klasse oder Schnittstelle in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.
+<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">write</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;socketChannel)</span>
+       throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
+<div class="block">Tries to write the data of this buffer to a <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link"><code>SocketChannel</code></a>.
  <p>
  This method is non-blocking and it can be necessary to repeatedly call it. If it was not possible to completely
  write the data to the <code>SocketChannel</code> <code>false</code> is returned and the state of this buffer
  remains <a href="BufferState.html#WRITING"><code>WRITING</code></a>.</div>
 <dl class="notes">
-<dt>Parameter:</dt>
+<dt>Parameters:</dt>
 <dd><code>socketChannel</code> - The <code>socketChannel</code> to write the data to.</dd>
-<dt>Gibt zurück:</dt>
+<dt>Returns:</dt>
 <dd><code>true</code> if it was possible to completely write the data to the <code>SocketChannel</code>,
          <code>false</code> otherwise.</dd>
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#WRITING"><code>WRITING</code></a>.</dd>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="Klasse oder Schnittstelle in java.io" class="external-link">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#WRITING"><code>WRITING</code></a>.</dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code> - If the <code>SocketChannel</code> has been closed or discovers other I/O problems.</dd>
 </dl>
 </section>
 </li>
@@ -638,23 +638,23 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="flip()">
 <h3>flip</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">flip</span>()
-   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></span></div>
+   throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></span></div>
 <div class="block">Turns the state of this buffer from <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> into <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</div>
 <dl class="notes">
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a>.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a>.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="getByteBuffer()">
 <h3>getByteBuffer</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="Klasse oder Schnittstelle in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">getByteBuffer</span>()
-                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/ByteBuffer.html" title="class or interface in java.nio" class="external-link">ByteBuffer</a></span>&nbsp;<span class="element-name">getByteBuffer</span>()
+                  throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></span></div>
 <div class="block">Returns the <code>ByteBuffer</code> that can be used for putting or getting data.</div>
 <dl class="notes">
-<dt>Löst aus:</dt>
-<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</dd>
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/IllegalStateException.html" title="class or interface in java.lang" class="external-link">IllegalStateException</a></code> - If the state of this buffer is not <a href="BufferState.html#PUTTING"><code>PUTTING</code></a> or <a href="BufferState.html#GETTING"><code>GETTING</code></a>.</dd>
 </dl>
 </section>
 </li>
@@ -678,7 +678,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">isCCAM</span>()</div>
 <div class="block">Returns the <em>Close Channel After Me</em> flag.</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.4</dd>
 </dl>
 </section>
@@ -689,7 +689,7 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setCCAM</span><wbr><span class="parameters">(boolean&nbsp;ccam)</span></div>
 <div class="block">Sets the <em>Close Channel After Me</em> flag.</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.4</dd>
 </dl>
 </section>
@@ -698,7 +698,7 @@ loadScripts(document, 'script');</script>
 <section class="detail" id="release()">
 <h3>release</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">release</span>()</div>
-<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="Schnittstelle in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
+<div class="block">Releases this buffer to its original <a href="IBufferProvider.html" title="interface in org.eclipse.net4j.buffer"><code>IBufferProvider</code></a>.</div>
 </section>
 </li>
 <li>
@@ -711,7 +711,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="formatContent(boolean)">
 <h3>formatContent</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatContent</span><wbr><span class="parameters">(boolean&nbsp;showHeader)</span></div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">formatContent</span><wbr><span class="parameters">(boolean&nbsp;showHeader)</span></div>
 </section>
 </li>
 <li>
@@ -719,7 +719,7 @@ loadScripts(document, 'script');</script>
 <h3>getErrorHandler</h3>
 <div class="member-signature"><span class="return-type">org.eclipse.net4j.util.IErrorHandler</span>&nbsp;<span class="element-name">getErrorHandler</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
 </section>
@@ -729,7 +729,7 @@ loadScripts(document, 'script');</script>
 <h3>setErrorHandler</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setErrorHandler</span><wbr><span class="parameters">(org.eclipse.net4j.util.IErrorHandler&nbsp;errorHandler)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>2.0</dd>
 </dl>
 </section>
@@ -739,7 +739,7 @@ loadScripts(document, 'script');</script>
 <h3>compact</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">compact</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -749,7 +749,7 @@ loadScripts(document, 'script');</script>
 <h3>getPosition</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getPosition</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -759,7 +759,7 @@ loadScripts(document, 'script');</script>
 <h3>setPosition</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setPosition</span><wbr><span class="parameters">(int&nbsp;position)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -769,7 +769,7 @@ loadScripts(document, 'script');</script>
 <h3>getLimit</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getLimit</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -779,7 +779,7 @@ loadScripts(document, 'script');</script>
 <h3>setLimit</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">setLimit</span><wbr><span class="parameters">(int&nbsp;limit)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -789,7 +789,7 @@ loadScripts(document, 'script');</script>
 <h3>hasRemaining</h3>
 <div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">hasRemaining</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -799,7 +799,7 @@ loadScripts(document, 'script');</script>
 <h3>get</h3>
 <div class="member-signature"><span class="return-type">byte</span>&nbsp;<span class="element-name">get</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -809,7 +809,7 @@ loadScripts(document, 'script');</script>
 <h3>get</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">get</span><wbr><span class="parameters">(byte[]&nbsp;dst)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -819,7 +819,7 @@ loadScripts(document, 'script');</script>
 <h3>getShort</h3>
 <div class="member-signature"><span class="return-type">short</span>&nbsp;<span class="element-name">getShort</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -829,7 +829,7 @@ loadScripts(document, 'script');</script>
 <h3>getInt</h3>
 <div class="member-signature"><span class="return-type">int</span>&nbsp;<span class="element-name">getInt</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -837,9 +837,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getString()">
 <h3>getString</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="Klasse oder Schnittstelle in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getString</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">getString</span>()</div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -849,7 +849,7 @@ loadScripts(document, 'script');</script>
 <h3>put</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">put</span><wbr><span class="parameters">(byte&nbsp;b)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -861,7 +861,7 @@ loadScripts(document, 'script');</script>
  int&nbsp;offset,
  int&nbsp;length)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>
@@ -871,7 +871,7 @@ loadScripts(document, 'script');</script>
 <h3>putShort</h3>
 <div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">putShort</span><wbr><span class="parameters">(short&nbsp;value)</span></div>
 <dl class="notes">
-<dt>Seit:</dt>
+<dt>Since:</dt>
 <dd>4.7</dd>
 </dl>
 </section>

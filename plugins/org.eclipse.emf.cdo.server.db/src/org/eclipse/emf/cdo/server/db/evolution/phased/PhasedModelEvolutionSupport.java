@@ -457,6 +457,15 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       }
     }
 
+    // Execute the phase loop.
+    executePhaseLoop();
+  }
+
+  /**
+   * Executes the phase loop until completion or until a restart is requested.
+   */
+  protected void executePhaseLoop() throws IOException, Exception, ReactivationTrigger
+  {
     // Execute phases until completion or until a restart is requested.
     while (phase != null)
     {
@@ -566,8 +575,10 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    */
   protected Phase determineNextPhase()
   {
+    // Start with the next phase, no matter if it has a handler or not.
     Phase nextPhase = phase.next();
 
+    // Skip phases without a handler.
     while (nextPhase != null && getPhaseHandler(nextPhase) == null)
     {
       nextPhase = nextPhase.next();

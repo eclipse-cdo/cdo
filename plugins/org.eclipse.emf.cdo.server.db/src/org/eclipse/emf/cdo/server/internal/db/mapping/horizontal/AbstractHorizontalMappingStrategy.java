@@ -262,14 +262,11 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
   }
 
   @Override
-  public boolean migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException
+  public void migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException
   {
     ModelEvolutionHelper helper = new ModelEvolutionHelper(context);
-
-    boolean triggerCrashRecovery = false;
-    triggerCrashRecovery |= helper.evolveSchema();
-    triggerCrashRecovery |= helper.evolveUsedClasses(accessor);
-    return triggerCrashRecovery;
+    helper.evolveSchema();
+    helper.evolveUsedClasses(accessor);
   }
 
   @Override
@@ -675,7 +672,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     }
 
-    public boolean evolveSchema() throws SQLException
+    public void evolveSchema() throws SQLException
     {
       event.setType("StartingModelEvolution").fire();
 
@@ -704,30 +701,27 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
               }
 
               EClass newClass = context.getNewElement(oldClass);
-              if (newClass == null)
+              if (newClass == null || !isMapped(newClass))
               {
-                // Class has been removed -- not allowed.
-                throw new ModelEvolutionNotAllowedException("Class has been removed: " + EMFUtil.getFullyQualifiedName(oldClass));
-              }
-
-              if (!isMapped(newClass))
-              {
-                // Class is no longer mapped -- not allowed.
-                throw new ModelEvolutionNotAllowedException("Class is no longer mapped: " + EMFUtil.getFullyQualifiedName(oldClass));
+                // Class was removed or is no longer mapped.
+                continue;
               }
 
               EStructuralFeature[] addedFeatures = getAddedFeatures(oldClass, newClass);
-              if (addedFeatures.length != 0)
+              if (addedFeatures.length == 0)
               {
-                IClassMapping classMapping = doCreateClassMapping(oldClass);
-                String tableName = classMapping.getTable().getName();
-                IDBTable table = workingCopySupplier.get().getTable(tableName);
-
-                context.log("Creating new feature mappings for class " + EMFUtil.getFullyQualifiedName(oldClass) + " in table " + table + ": "
-                    + Arrays.stream(addedFeatures).map(EStructuralFeature::getName).collect(Collectors.joining(", ")));
-
-                AbstractHorizontalClassMapping.createFeatureMappings(AbstractHorizontalMappingStrategy.this, newClass, table, addedFeatures);
+                // No new features.
+                continue;
               }
+
+              IClassMapping classMapping = doCreateClassMapping(oldClass);
+              String tableName = classMapping.getTable().getName();
+              IDBTable table = workingCopySupplier.get().getTable(tableName);
+
+              context.log("Creating new feature mappings for class " + EMFUtil.getFullyQualifiedName(oldClass) + " in table " + table + ": "
+                  + Arrays.stream(addedFeatures).map(EStructuralFeature::getName).collect(Collectors.joining(", ")));
+
+              AbstractHorizontalClassMapping.createFeatureMappings(AbstractHorizontalMappingStrategy.this, newClass, table, addedFeatures);
             }
           }
         });
@@ -742,11 +736,9 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       {
         schemaTransactionHolder.handleIfSet(IDBSchemaTransaction::close);
       }
-
-      return false;
     }
 
-    public boolean evolveUsedClasses(IDBStoreAccessor accessor) throws SQLException, ModelEvolutionNotAllowedException
+    public void evolveUsedClasses(IDBStoreAccessor accessor) throws SQLException
     {
       Map<EClass, String> usedClasses = new HashMap<>();
       Map<String, EObject> fromObjectsByURI = context.getElementMappings().getFromObjectsByURI();
@@ -764,7 +756,6 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       }
 
       event.setType("EvolvedUsedClasses").fire();
-      return false;
     }
 
     private void evolveUsedClass(StatementBatcher batcher, Map<EClass, String> usedClasses, EClass usedClass)

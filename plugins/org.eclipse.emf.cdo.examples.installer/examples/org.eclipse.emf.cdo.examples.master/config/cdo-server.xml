@@ -242,12 +242,12 @@
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
         URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
 
-      <modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="evolve">
-        <changeDetector type="default-change-detector"/>
-        <!-- <repositoryExporter type="default-repository-exporter" binary="false"/> -->
-        <schemaMigrator type="default-schema-migrator"/>
-        <!-- <storeProcessor type="custom-store-processor" extraArgs="data"/> -->
-        <!-- <repositoryProcessor type="custom-repository-processor" extraArgs="data"/> -->
+      <modelEvolutionSupport type="phased" rootFolder="@config/evolution" mode="migrate" saveNewModels="true">
+        <changeDetector/>
+        <!-- <repositoryExporter binary="false"/> -->
+        <schemaMigrator deleteObsoleteMetaIDs="false"/>
+        <!-- <storeProcessor type="myExtraChecks" myExtraArg="bla"/> -->
+        <!-- <repositoryProcessor type="myExtraUpdates" myExtraArg="yadda"/> -->
         <listener type="log" />
       </modelEvolutionSupport>
       

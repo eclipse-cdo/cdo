@@ -30,7 +30,7 @@ public interface ISchemaMigration extends IMappingStrategy
   /**
    * Migrates the database schema to match the new models in the given context.
    */
-  public boolean migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException;
+  public void migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException;
 
   /**
    * Indicates whether the mapping strategy supports schema migration.
@@ -50,27 +50,6 @@ public interface ISchemaMigration extends IMappingStrategy
     public SchemaMigrationNotSupportedException()
     {
       super("Schema migration not supported");
-    }
-  }
-
-  /**
-   * Indicates that particular model changes are not allowed during model evolution.
-   *
-   * @author Eike Stepper
-   * @noreference This package is currently considered <i>provisional</i>.
-   * @noimplement This package is currently considered <i>provisional</i>.
-   * @noextend This package is currently considered <i>provisional</i>.
-   */
-  public static final class ModelEvolutionNotAllowedException extends CDOException
-  {
-    private static final long serialVersionUID = 1L;
-
-    /**
-     * Constructs a ModelEvolutionNotAllowedException.
-     */
-    public ModelEvolutionNotAllowedException(String message)
-    {
-      super(message);
     }
   }
 }

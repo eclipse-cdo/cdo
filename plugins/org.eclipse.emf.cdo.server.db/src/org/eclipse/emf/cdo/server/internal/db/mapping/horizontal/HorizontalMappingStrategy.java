@@ -243,14 +243,16 @@ public class HorizontalMappingStrategy extends Lifecycle implements ISchemaMigra
   }
 
   @Override
-  public boolean migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException
+  public void migrateSchema(Context context, IDBStoreAccessor accessor) throws SQLException
   {
     if (delegate instanceof ISchemaMigration)
     {
-      return ((ISchemaMigration)delegate).migrateSchema(context, accessor);
+      ((ISchemaMigration)delegate).migrateSchema(context, accessor);
     }
-
-    throw new SchemaMigrationNotSupportedException();
+    else
+    {
+      throw new SchemaMigrationNotSupportedException();
+    }
   }
 
   @Override

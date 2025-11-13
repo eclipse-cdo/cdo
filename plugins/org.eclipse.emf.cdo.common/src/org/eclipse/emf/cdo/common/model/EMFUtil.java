@@ -48,6 +48,7 @@ import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -700,6 +701,15 @@ public final class EMFUtil
     }
 
     return options;
+  }
+
+  /**
+   * @since 4.27
+   */
+  public static String getXMI(EPackage ePackage)
+  {
+    byte[] xmi = getEPackageBytes(ePackage, false, EPackage.Registry.INSTANCE);
+    return new String(xmi, StandardCharsets.UTF_8);
   }
 
   /**

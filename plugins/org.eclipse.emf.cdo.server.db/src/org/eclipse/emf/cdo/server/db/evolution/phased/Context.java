@@ -20,7 +20,6 @@ import org.eclipse.net4j.db.StatementBatcher;
 import org.eclipse.net4j.db.StatementBatcher.BatchEvent;
 import org.eclipse.net4j.db.StatementBatcher.CloseEvent;
 import org.eclipse.net4j.db.StatementBatcher.ResultEvent;
-import org.eclipse.net4j.util.RunnableWithException;
 import org.eclipse.net4j.util.properties.IPropertiesContainer;
 import org.eclipse.net4j.util.registry.HashMapRegistry;
 import org.eclipse.net4j.util.registry.IRegistry;
@@ -36,13 +35,13 @@ import org.eclipse.emf.ecore.util.EcoreUtil;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * The context for model evolution.
@@ -69,9 +68,9 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
 
   private final long timeStamp;
 
-  private final List<Model> models;
+  private final Map<String, Model> models = new HashMap<>();
 
-  private final List<Model> changedModels;
+  private final Map<Model, Object> changeInfos = new HashMap<>();
 
   private final Map<String, EPackage> oldPackages = new HashMap<>();
 
@@ -84,15 +83,14 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   /**
    * Creates a context for model evolution with the given models.
    */
-  public Context(PhasedModelEvolutionSupport support, List<Model> models)
+  public Context(PhasedModelEvolutionSupport support, Collection<Model> models)
   {
     this.support = support;
-    this.models = models;
-
-    changedModels = models.stream().filter(Model::isChanged).collect(Collectors.toList());
     timeStamp = support.getStore().getRepository().getTimeStamp();
 
     models.forEach(model -> {
+      this.models.put(model.getID(), model);
+
       EPackage oldPackage = model.getOldPackage();
       EMFUtil.getAllPackages(oldPackage, ePackage -> oldPackages.put(ePackage.getNsURI(), ePackage));
       elementMappings.map(oldPackage, model.getNewPackage(), true);
@@ -140,39 +138,29 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   }
 
   /**
-   * Returns the total update count accumulated during this evolution.
-   */
-  public int getTotalUpdateCount()
-  {
-    return totalUpdateCount.get();
-  }
-
-  public int incrementTotalUpdateCount()
-  {
-    return totalUpdateCount.incrementAndGet();
-  }
-
-  public int incrementTotalUpdateCount(int delta)
-  {
-    return totalUpdateCount.addAndGet(delta);
-  }
-
-  /**
    * Returns the models being evolved in this context.
    * <p>
    * Includes both changed and unchanged models.
    */
-  public List<Model> getModels()
+  public Map<String, Model> getModels()
   {
-    return models;
+    return Collections.unmodifiableMap(models);
   }
 
   /**
-   * Returns the changed models being evolved in this context.
+   * Returns the changed models along with their change infos.
    */
-  public List<Model> getChangedModels()
+  public Map<Model, Object> getChangeInfos()
   {
-    return changedModels;
+    return changeInfos;
+  }
+
+  /**
+   * Adds the given changed model along with its change info.
+   */
+  public void addChangeInfo(Model model, Object changeInfo)
+  {
+    changeInfos.put(model, Objects.requireNonNull(changeInfo));
   }
 
   /**
@@ -180,7 +168,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
    */
   public Map<String, EPackage> getOldPackages()
   {
-    return oldPackages;
+    return Collections.unmodifiableMap(oldPackages);
   }
 
   /**
@@ -287,43 +275,21 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   }
 
   /**
-   * Creates a cancelation error to abort model evolution.
-   * <p>
-   * Typically used by the Change Detection phase to abort evolution when no model changes are detected.
+   * Returns the total update count accumulated during this evolution.
    */
-  public Error cancelation()
+  public int getTotalUpdateCount()
   {
-    return new Cancelation();
+    return totalUpdateCount.get();
   }
 
-  /**
-   * Runs the given runnable and returns whether it was canceled.
-   */
-  public static boolean canceled(RunnableWithException runnable) throws Exception
+  public int incrementTotalUpdateCount()
   {
-    try
-    {
-      runnable.run();
-      return false;
-    }
-    catch (Cancelation ex)
-    {
-      return true;
-    }
+    return totalUpdateCount.incrementAndGet();
   }
 
-  /**
-   * Indicates the cancelation of model evolution.
-   *
-   * @author Eike Stepper
-   */
-  private static final class Cancelation extends Error
+  public int incrementTotalUpdateCount(int delta)
   {
-    private static final long serialVersionUID = 1L;
-
-    public Cancelation()
-    {
-    }
+    return totalUpdateCount.addAndGet(delta);
   }
 
   /**
@@ -349,7 +315,9 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
 
     private final EPackage newPackage;
 
-    private final boolean changed;
+    private String oldXMI;
+
+    private String newXMI;
 
     /**
      * Creates a model with the given ID, original type, timestamp, old and new EPackages.
@@ -361,7 +329,6 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
       this.timeStamp = timeStamp;
       this.oldPackage = oldPackage;
       this.newPackage = newPackage;
-      changed = newPackage != null && !EcoreUtil.equals(oldPackage, newPackage);
     }
 
     /**
@@ -405,14 +372,29 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
     }
 
     /**
-     * Returns whether this model has changed.
-     * <p>
-     * A model is considered changed if its new EPackage exists and is not equal to its old EPackage, as determined by
-     * {@link EcoreUtil#equals(EObject, EObject)}.
+     * Returns the XMI serialization of the old EPackage of this model.
      */
-    public boolean isChanged()
+    public String getOldXMI()
     {
-      return changed;
+      if (oldXMI == null)
+      {
+        oldXMI = EMFUtil.getXMI(oldPackage);
+      }
+
+      return oldXMI;
+    }
+
+    /**
+     * Returns the XMI serialization of the new EPackage of this model, or <code>null</code> if the model has been removed.
+     */
+    public String getNewXMI()
+    {
+      if (newXMI == null && newPackage != null)
+      {
+        newXMI = EMFUtil.getXMI(newPackage);
+      }
+
+      return newXMI;
     }
 
     /**
@@ -423,6 +405,40 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
     public boolean isRemoved()
     {
       return newPackage == null;
+    }
+
+    /**
+     * Returns the hash code of this model based on its ID.
+     */
+    @Override
+    public int hashCode()
+    {
+      return Objects.hash(id);
+    }
+
+    /**
+     * Returns whether this model is equal to the given object based on its ID.
+     */
+    @Override
+    public boolean equals(Object obj)
+    {
+      if (this == obj)
+      {
+        return true;
+      }
+
+      if (obj == null)
+      {
+        return false;
+      }
+
+      if (getClass() != obj.getClass())
+      {
+        return false;
+      }
+
+      Model other = (Model)obj;
+      return Objects.equals(id, other.id);
     }
 
     /**

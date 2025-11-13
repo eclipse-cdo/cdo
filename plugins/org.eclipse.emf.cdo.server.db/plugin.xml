@@ -44,6 +44,10 @@
             productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultChangeDetector"/>
       <annotationFactory 
             productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
+            type="default-repository-exporter" 
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultRepositoryExporter"/>
+      <annotationFactory 
+            productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
             type="default-schema-migrator" 
             productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultSchemaMigrator"/>
    </extension>

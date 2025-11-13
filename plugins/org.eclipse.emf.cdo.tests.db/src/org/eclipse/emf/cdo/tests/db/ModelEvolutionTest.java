@@ -77,7 +77,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
   {
     support = new PhasedModelEvolutionSupport();
     support.setRootFolder(new File("C:\\develop\\temp\\evolution"));
-    support.setMode(Mode.Evolve);
+    support.setMode(Mode.Migrate);
     // support.setRepositoryExporter(new DefaultRepositoryExporter());
     support.addListener(new LogListener());
 

@@ -49,6 +49,7 @@ import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EModelElement;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
+import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
@@ -62,6 +63,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.LinkedList;
@@ -94,8 +96,8 @@ import java.util.Set;
  * Each phase is triggered at a specific point during the activation of the DB store and the repository.
  * <p>
  * The model evolution process can be configured via the <code>mode</code> attribute, which
- * can be set to <code>evolve</code> (default), <code>prevent</code>, or <code>disabled</code>.
- * In <code>evolve</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
+ * can be set to <code>migrate</code> (default), <code>prevent</code>, or <code>disabled</code>.
+ * In <code>migrate</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
  * an exception is thrown if model changes are detected. In <code>disabled</code> mode,
  * model evolution is skipped entirely.
  *
@@ -111,6 +113,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * The factory type of the default model evolution support implementation.
    */
   public static final String FACTORY_TYPE = "phased"; //$NON-NLS-1$
+
+  private static final Registry GLOBAL_PACKAGE_REGISTRY = EPackage.Registry.INSTANCE;
 
   private static final String PROPERTIES_FILE = "evolution.properties";
 
@@ -129,6 +133,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   private File rootFolder;
 
   private IDBStore store;
+
+  private boolean saveNewModels;
 
   private Mode mode;
 
@@ -214,6 +220,24 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   }
 
   /**
+   * Returns whether to save the new models to disk during evolution.
+   */
+  public boolean isSaveNewModels()
+  {
+    return saveNewModels;
+  }
+
+  /**
+   * Sets whether to save the new models to disk during evolution.
+   */
+  @InjectAttribute(name = "saveNewModels")
+  public void setSaveNewModels(boolean saveNewModels)
+  {
+    checkInactive();
+    this.saveNewModels = saveNewModels;
+  }
+
+  /**
    * Returns the phase handler for the given phase, or <code>null</code> if none is set.
    */
   public Handler getPhaseHandler(Phase phase)
@@ -221,17 +245,10 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     return phase == null ? null : phaseHandlers.get(phase);
   }
 
-  private void setPhaseHandler(Phase phase, Handler handler)
-  {
-    checkInactive();
-    handler.setPhase(phase);
-    phaseHandlers.put(phase, handler);
-  }
-
   /**
    * Sets the change detection phase handler.
    */
-  @InjectElement(name = "changeDetector", productGroup = Handler.PRODUCT_GROUP)
+  @InjectElement(name = "changeDetector", productGroup = Handler.PRODUCT_GROUP, defaultFactoryType = "default", factoryTypeSuffix = "-change-detector")
   public void setChangeDetector(Handler changeDetector)
   {
     setPhaseHandler(Phase.ChangeDetection, changeDetector);
@@ -240,7 +257,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Sets the repository export phase handler.
    */
-  @InjectElement(name = "repositoryExporter", productGroup = Handler.PRODUCT_GROUP)
+  @InjectElement(name = "repositoryExporter", productGroup = Handler.PRODUCT_GROUP, defaultFactoryType = "default", factoryTypeSuffix = "-repository-exporter")
   public void setRepositoryExporter(Handler repositoryExporter)
   {
     setPhaseHandler(Phase.RepositoryExport, repositoryExporter);
@@ -249,7 +266,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Sets the schema migration phase handler.
    */
-  @InjectElement(name = "schemaMigrator", productGroup = Handler.PRODUCT_GROUP)
+  @InjectElement(name = "schemaMigrator", productGroup = Handler.PRODUCT_GROUP, defaultFactoryType = "default", factoryTypeSuffix = "-schema-migrator")
   public void setSchemaMigrator(Handler schemaMigrator)
   {
     setPhaseHandler(Phase.SchemaMigration, schemaMigrator);
@@ -258,7 +275,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Sets the store post-processing phase handler.
    */
-  @InjectElement(name = "storeProcessor", productGroup = Handler.PRODUCT_GROUP)
+  @InjectElement(name = "storeProcessor", productGroup = Handler.PRODUCT_GROUP, factoryTypeSuffix = "-store-processor")
   public void setStorePostProcessor(Handler storeProcessor)
   {
     setPhaseHandler(Phase.StoreProcessing, storeProcessor);
@@ -267,7 +284,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Sets the repository post-processing phase handler.
    */
-  @InjectElement(name = "repositoryProcessor", productGroup = Handler.PRODUCT_GROUP)
+  @InjectElement(name = "repositoryProcessor", productGroup = Handler.PRODUCT_GROUP, factoryTypeSuffix = "-repository-processor")
   public void setRepositoryPostProcessor(Handler repositoryProcessor)
   {
     setPhaseHandler(Phase.RepositoryProcessing, repositoryProcessor);
@@ -384,7 +401,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * If the evolution mode is set to {@link Mode#Prevent} and model changes are detected,
    * an exception is thrown.
    * <p>
-   * If the evolution mode is set to {@link Mode#Evolve}, the evolution process is executed
+   * If the evolution mode is set to {@link Mode#Migrate}, the evolution process is executed
    * phase by phase until completion.
    * <p>
    * If a phase handler requests a store or repository restart, a {@link ReactivationTrigger}
@@ -404,6 +421,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       }
 
       // Skip model evolution.
+      deactivate();
       return;
     }
 
@@ -423,7 +441,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
     if (context == null)
     {
-      OM.LOG.info("Model evolution root folder: " + rootFolder);
+      log("Root folder: " + rootFolder);
 
       if (phase.initial())
       {
@@ -464,17 +482,30 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       Handler phaseHandler = getCurrentPhaseHandler();
       log("Starting phase " + phase + " (handler: " + phaseHandler + ")");
 
-      // Execute the phase handler with cancelation detection.
-      if (Context.canceled(() -> phaseHandler.execute(context)))
-      {
-        // Cancelation was requested during phase execution.
-        // This can happen e.g. during change detection if no model changes are detected.
-        // The entire model evolution process is aborted in this case.
-        return;
-      }
+      // Execute the phase handler.
+      phaseHandler.execute(context);
 
+      // The initial phase is Change Detection.
+      // If no model changes were detected, the evolution process is aborted.
+      // Otherwise, the evolution ID is incremented and the context is persisted.
       if (phase.initial())
       {
+        if (context.getChangeInfos().isEmpty())
+        {
+          // No model changes detected during the initial phase.
+          // The entire model evolution process is aborted in this case.
+          log("No model changes detected; aborting model evolution process");
+          deactivate();
+          return;
+        }
+
+        if (mode == Mode.Prevent)
+        {
+          // Model changes were detected, but the mode is set to PREVENT.
+          log("Model changes detected, but model evolution mode is set to PREVENT; aborting model evolution process");
+          throw new IllegalStateException("Model changes detected, but model evolution mode is set to PREVENT");
+        }
+
         // Increment the evolution ID and persist the context after the initial phase.
         ++id;
         saveContext(context);
@@ -482,11 +513,11 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
       log("Completed phase " + phase);
 
-      // Determine the next phase to execute.
+      // Determine the next phase to execute. Skip any phases without a handler.
       Phase nextPhase = determineNextPhase();
 
       // Let the current phase determine the transition to the next phase.
-      // If the next phase is null, we are done. Transition is null as well.
+      // If the next phase is null, we are done. Then transition is null as well.
       Transition transition = phase.transitionTo(nextPhase);
 
       // Persist the new phase and mark it as not (yet) ongoing.
@@ -589,7 +620,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     List<Model> models = new ArrayList<>();
 
     InternalCDOPackageRegistry oldPackageRegistry = getOldPackageRegistry();
-    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(EPackage.Registry.INSTANCE);
+    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(GLOBAL_PACKAGE_REGISTRY);
 
     IDBRowHandler modelRowHandler = (row, values) -> {
       String id = (String)values[0];
@@ -598,7 +629,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       byte[] packageData = (byte[])values[3];
 
       EPackage oldPackage = MetaDataManager.createEPackage(id, packageData, resourceSet);
-      EPackage newPackage = EPackage.Registry.INSTANCE.getEPackage(id);
+      EPackage newPackage = GLOBAL_PACKAGE_REGISTRY.getEPackage(id);
 
       Model model = new Model(id, originalType, timeStamp, oldPackage, newPackage);
       models.add(model);
@@ -666,7 +697,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   /**
    * Saves the models to disk.
    */
-  protected void saveModelsToDisk(File folder, List<Model> models) throws IOException
+  protected void saveModelsToDisk(File folder, Collection<Model> models) throws IOException
   {
     Properties properties = new Properties();
 
@@ -675,17 +706,15 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       String fileName = IOUtil.encodeFileName(model.getID()) + ".ecore";
       properties.setProperty(PROP_MODEL_PREFIX + fileName, model.getOriginalType().name() + "," + model.getTimeStamp());
 
-      Resource resource = model.getOldPackage().eResource();
-      resource.setURI(URI.createFileURI(new File(folder, fileName).getAbsolutePath()));
+      IOUtil.writeText(new File(folder, fileName), false, model.getOldXMI());
+
+      if (saveNewModels)
+      {
+        IOUtil.writeText(new File(folder, IOUtil.encodeFileName(model.getID()) + "_new.ecore"), false, model.getNewXMI());
+      }
     }
 
     IOUtil.saveProperties(getPropertiesFile(folder), properties, null);
-
-    for (Model model : models)
-    {
-      Resource resource = model.getOldPackage().eResource();
-      resource.save(null);
-    }
   }
 
   /**
@@ -723,7 +752,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       folder.mkdirs();
     }
 
-    List<Model> models = context.getModels();
+    Collection<Model> models = context.getChangeInfos().keySet();
     saveModelsToDisk(folder, models);
   }
 
@@ -740,7 +769,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
     if (mode == null)
     {
-      mode = Mode.Evolve;
+      mode = Mode.Migrate;
     }
 
     if (getPhaseHandler(Phase.ChangeDetection) == null)
@@ -770,9 +799,16 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     super.doDeactivate();
   }
 
+  private void setPhaseHandler(Phase phase, Handler handler)
+  {
+    checkInactive();
+    handler.setPhase(phase);
+    phaseHandlers.put(phase, handler);
+  }
+
   private InternalCDOPackageRegistry createPackageRegistry()
   {
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)CDOModelUtil.createPackageRegistry(EPackage.Registry.INSTANCE);
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)CDOModelUtil.createPackageRegistry(GLOBAL_PACKAGE_REGISTRY);
     packageRegistry.setPackageProcessor((PackageProcessor)store.getRepository());
     packageRegistry.setPackageLoader(packageUnit -> {
       throw new UnsupportedOperationException("Loading of package units is not supported during model evolution");
@@ -851,7 +887,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    * <ul>
    * <li><b>Disabled</b>: Model evolution is disabled. No model changes are detected or evolved.</li>
    * <li><b>Prevent</b>: Model evolution is prevented. If model changes are detected, an exception is thrown.</li>
-   * <li><b>Evolve</b>: Model evolution is enabled. If model changes are detected, they are automatically evolved.</li>
+   * <li><b>Migrate</b>: Model evolution is enabled. If model changes are detected, the database is automatically migrated.</li>
    * </ul>
    *
    * @author Eike Stepper
@@ -863,7 +899,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   public enum Mode
   {
     /**
-     * Model evolution is disabled. No model changes are detected or evolved.
+     * Model evolution is disabled. No model changes are detected or migrated.
      */
     Disabled,
 
@@ -873,9 +909,9 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     Prevent,
 
     /**
-     * Model evolution is enabled. If model changes are detected, they are automatically evolved.
+     * Model evolution is enabled. If model changes are detected, the database is automatically migrated.
      */
-    Evolve;
+    Migrate;
 
     /**
      * Parses the given string into a Mode.
@@ -914,27 +950,31 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     }
 
     /**
-     * Detects model changes and handles them according to the configured mode.
+     * Detects model changes and registers the changed models in the context.
      */
     @Override
     public void execute(Context context) throws Exception
     {
-      List<Model> changedModels = context.getChangedModels();
-      if (changedModels.isEmpty())
+      context.getModels().values().forEach(model -> {
+        Object changeInfo = getChangeInfo(model);
+        if (changeInfo != null)
+        {
+          context.addChangeInfo(model, changeInfo);
+        }
+      });
+    }
+
+    protected Object getChangeInfo(Model model)
+    {
+      String oldXMI = model.getOldXMI();
+      String newXMI = model.getNewXMI();
+
+      if (newXMI != null && !oldXMI.equals(newXMI))
       {
-        // No changed models.
-        context.log("No model evolution needed");
-        throw context.cancelation();
+        return Boolean.TRUE;
       }
 
-      changedModels.forEach(model -> context.log("Model changed: " + model.getID()));
-
-      Mode mode = context.getSupport().getMode();
-      if (mode == Mode.Prevent)
-      {
-        context.log("Model evolution prevented");
-        throw new IllegalStateException("Model evolution needed, but model evolution mode is set to PREVENT");
-      }
+      return null;
     }
   }
 
@@ -963,11 +1003,31 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
      */
     public static final String FACTORY_TYPE = "default-schema-migrator"; //$NON-NLS-1$
 
+    private boolean deleteObsoleteMetaIDs;
+
     /**
      * Creates a schema migrator.
      */
     public DefaultSchemaMigrator()
     {
+    }
+
+    /**
+     * Returns whether to delete obsolete meta ID mappings from the cdo_external_refs table.
+     */
+    public boolean isDeleteObsoleteMetaIDs()
+    {
+      return deleteObsoleteMetaIDs;
+    }
+
+    /**
+     * Sets whether to delete obsolete meta ID mappings from the cdo_external_refs table.
+     */
+    @InjectAttribute(name = "deleteObsoleteMetaIDs")
+    public void setDeleteObsoleteMetaIDs(boolean deleteObsoleteMetaIDs)
+    {
+      checkInactive();
+      this.deleteObsoleteMetaIDs = deleteObsoleteMetaIDs;
     }
 
     /**
@@ -988,7 +1048,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
       try
       {
-        // Let the mapping strategy evolve the models. This includes:
+        // Let the mapping strategy migrate the database. This includes:
         // - updating the database schema,
         // - migrating the existing data,
         // - changing the container feature IDs, in case of shifted features,
@@ -1013,16 +1073,16 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     /**
      * Delegates the schema migration to the mapping strategy.
      */
-    protected boolean migrateSchema(Context context, IDBStoreAccessor accessor, ISchemaMigration schemaMigration) throws SQLException
+    protected void migrateSchema(Context context, IDBStoreAccessor accessor, ISchemaMigration schemaMigration) throws SQLException
     {
       context.log("Migrating schema with mapping strategy " + schemaMigration.getClass().getName());
-      return schemaMigration.migrateSchema(context, accessor);
+      schemaMigration.migrateSchema(context, accessor);
     }
 
     /**
      * Updates the system tables with the changed models.
      */
-    protected boolean updateSystemTables(Context context, IDBStoreAccessor accessor) throws SQLException
+    protected void updateSystemTables(Context context, IDBStoreAccessor accessor) throws SQLException
     {
       context.log("Updating system tables with changed models");
 
@@ -1036,7 +1096,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       try (Statement statement = connection.createStatement())
       {
         // Replace the changed package units and package infos.
-        for (Model model : context.getChangedModels())
+        for (Model model : context.getChangeInfos().keySet())
         {
           String unitID = model.getID();
 
@@ -1052,7 +1112,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
           // Get the registered package bytes.
           EPackage newPackage = model.getNewPackage();
-          byte[] packageBytes = MetaDataManager.getEPackageBytes(newPackage, EPackage.Registry.INSTANCE);
+          byte[] packageBytes = MetaDataManager.getEPackageBytes(newPackage, GLOBAL_PACKAGE_REGISTRY);
 
           // Write the new package unit.
           context.log("Writing new package unit " + unitID);
@@ -1068,21 +1128,22 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
           }
         }
 
-        // Clean up obsolete meta ID mappings.
-        TreeMapping<EObject> elementMappings = context.getElementMappings();
-        Set<String> newURIs = elementMappings.getToObjectsByURI().keySet();
+        if (deleteObsoleteMetaIDs)
+        {
+          // Clean up obsolete meta ID mappings.
+          TreeMapping<EObject> elementMappings = context.getElementMappings();
+          Set<String> newURIs = elementMappings.getToObjectsByURI().keySet();
 
-        elementMappings.getFromObjectsByURI().forEach((oldURI, oldModelElement) -> {
-          if (oldModelElement instanceof EModelElement && !newURIs.contains(oldURI))
-          {
-            context.log("Deleting obsolete meta ID mapping for " + oldURI);
-            metaDataManager.deleteMetaIDMapping(statement, (EModelElement)oldModelElement);
-            context.incrementTotalUpdateCount();
-          }
-        });
+          elementMappings.getFromObjectsByURI().forEach((oldURI, oldModelElement) -> {
+            if (oldModelElement instanceof EModelElement && !newURIs.contains(oldURI))
+            {
+              context.log("Deleting obsolete meta ID mapping for " + oldURI);
+              metaDataManager.deleteMetaIDMapping(statement, (EModelElement)oldModelElement);
+              context.incrementTotalUpdateCount();
+            }
+          });
+        }
       }
-
-      return false;
     }
 
     /**

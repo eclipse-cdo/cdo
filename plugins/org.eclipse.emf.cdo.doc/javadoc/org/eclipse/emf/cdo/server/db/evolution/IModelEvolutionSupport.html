@@ -104,14 +104,14 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
  registered EPackages.
  <p>
  Model evolution support implementations are registered via <code>factories</code> contributing to the
- <code>org.eclipse.emf.cdo.server.db.modelEvolutionSupports</code> <a href="#PRODUCT_GROUP"><code>product group</code></a>.
+ <code>org.eclipse.emf.cdo.server.db.evolution.supports</code> <a href="#PRODUCT_GROUP"><code>product group</code></a>.
  Here is an example contribution in plugin.xml:
  <pre>
  &lt;extension point="org.eclipse.net4j.util.factories"&gt;
     &lt;annotationFactory
-       productGroup="org.eclipse.emf.cdo.server.db.modelEvolutionSupports"
-       type="default"
-       productClass="org.eclipse.emf.cdo.server.internal.db.ModelEvolutionSupport"/&gt;
+       productGroup="org.eclipse.emf.cdo.server.db.evolution.supports"
+       type="phased"
+       productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport"/&gt;
  &lt;/extension&gt;
  </pre>
  If model evolution support is desired, an instance must be created and set on the DB store via
@@ -122,8 +122,12 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
  <pre>
  &lt;store type="db"&gt;
    ...
-   &lt;modelEvolutionSupport type="default" mode="evolve"&gt;
-     &lt;modelLoader type="default"/&gt;
+   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate"&gt;
+     &lt;changeDetector type="default-change-detector"/&gt;
+     &lt;repositoryExporter type="default-repository-exporter" binary="false"/&gt;
+     &lt;schemaMigrator type="default-schema-migrator"/&gt;
+     &lt;storeProcessor type="custom-store-processor" myExtraArg="data"/&gt;
+     &lt;repositoryProcessor type="custom-repository-processor" myExtraArg="data"/&gt; --&gt;
      &lt;listener type="log"/&gt;
      &lt;listener type="myCustomModelEvolutionExtraChecks"/&gt;
    &lt;/modelEvolutionSupport&gt;
@@ -131,18 +135,15 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
  &lt;/store&gt;
  </pre>
  The optional <code>mode</code> attribute can be used to specify whether model evolution should be
- performed automatically (<code>evolve</code>), only prevented with an exception (<code>prevent</code>),
+ performed automatically (<code>migrate</code>), only prevented with an exception (<code>prevent</code>),
  or skipped entirely (<code>disabled</code>) when model changes are detected.
- <p>
- The optional <code>modelLoader</code> element specifies the model loader to be used for loading the models
- stored in the DB store. If omitted, the default model loader is used.
  <p>
  The optional <code>listener</code> elements specify additional model evolution listeners to be
  notified during model evolution. They can be used to implement logging, custom checks, or additional
  evolution steps.
  <p>
  Note that model evolution happens very late during the activation of a DB store, but very early
- during the activation of the <a href="../../IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>. Therefore, model loaders must not rely on
+ during the activation of the <a href="../../IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>. Therefore, phase handlers must not rely on
  any services of the repository. In particular, they must not access the repository's
  <a href="../../IRepository.html#getPackageRegistry()"><code>package registry</code></a> because it is not yet available!</div>
 <dl class="notes">
@@ -150,6 +151,12 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
 <dd>4.14</dd>
 <dt>Author:</dt>
 <dd>Eike Stepper</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="phased/PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>PhasedModelEvolutionSupport</code></a></li>
+</ul>
+</dd>
 </dl>
 </section>
 <section class="summary">

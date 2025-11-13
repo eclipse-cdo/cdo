@@ -69,12 +69,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">Context.</span><code><a href="../Context.html#getChangedModels()" class="member-name-link">getChangedModels</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>,<wbr><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&gt;</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Context.</span><code><a href="../Context.html#getChangeInfos()" class="member-name-link">getChangeInfos</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Returns the changed models being evolved in this context.</div>
+<div class="block">Returns the changed models along with their change infos.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a><wbr>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;</code></div>
+<div class="col-first odd-row-color"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Map.html" title="class or interface in java.util" class="external-link">Map</a><wbr>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>,<wbr><a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;</code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">Context.</span><code><a href="../Context.html#getModels()" class="member-name-link">getModels</a>()</code></div>
 <div class="col-last odd-row-color">
 <div class="block">Returns the models being evolved in this context.</div>
@@ -90,14 +90,29 @@ loadScripts(document, 'script');</script>
 <div class="block">Loads the models from disk.</div>
 </div>
 </div>
+<div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.server.db.evolution.phased</a> with parameters of type <a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a></span></div>
+<div class="summary-table three-column-summary">
+<div class="table-header col-first">Modifier and Type</div>
+<div class="table-header col-second">Method</div>
+<div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Context.</span><code><a href="../Context.html#addChangeInfo(org.eclipse.emf.cdo.server.db.evolution.phased.Context.Model,java.lang.Object)" class="member-name-link">addChangeInfo</a><wbr>(<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&nbsp;model,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;changeInfo)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Adds the given changed model along with its change info.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.DefaultChangeDetector.</span><code><a href="../PhasedModelEvolutionSupport.DefaultChangeDetector.html#getChangeInfo(org.eclipse.emf.cdo.server.db.evolution.phased.Context.Model)" class="member-name-link">getChangeInfo</a><wbr>(<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&nbsp;model)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+</div>
 <div class="caption"><span>Method parameters in <a href="../package-summary.html">org.eclipse.emf.cdo.server.db.evolution.phased</a> with type arguments of type <a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a></span></div>
 <div class="summary-table three-column-summary">
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#saveModelsToDisk(java.io.File,java.util.List)" class="member-name-link">saveModelsToDisk</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#saveModelsToDisk(java.io.File,java.util.Collection)" class="member-name-link">saveModelsToDisk</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Saves the models to disk.</div>
 </div>
@@ -108,8 +123,8 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-second">Constructor</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="../Context.html#%3Cinit%3E(org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport,java.util.List)" class="member-name-link">Context</a><wbr>(<a href="../PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport</a>&nbsp;support,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
+<div class="col-second even-row-color"><code><a href="../Context.html#%3Cinit%3E(org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport,java.util.Collection)" class="member-name-link">Context</a><wbr>(<a href="../PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport</a>&nbsp;support,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="../Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
 <div class="col-last even-row-color">
 <div class="block">Creates a context for model evolution with the given models.</div>
 </div>

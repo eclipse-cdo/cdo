@@ -120,13 +120,8 @@ extends <a href="../../mapping/IMappingStrategy.html" title="interface in org.ec
 <div class="table-header col-second">Interface</div>
 <div class="table-header col-last">Description</div>
 <div class="col-first even-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="ISchemaMigration.ModelEvolutionNotAllowedException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.ModelEvolutionNotAllowedException</a></code></div>
+<div class="col-second even-row-color"><code><a href="ISchemaMigration.SchemaMigrationNotSupportedException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.SchemaMigrationNotSupportedException</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Indicates that particular model changes are not allowed during model evolution.</div>
-</div>
-<div class="col-first odd-row-color"><code>static final class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="ISchemaMigration.SchemaMigrationNotSupportedException.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.SchemaMigrationNotSupportedException</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">Indicates whether the mapping strategy supports schema migration.</div>
 </div>
 </div>
@@ -155,7 +150,7 @@ extends <a href="../../mapping/IMappingStrategy.html" title="interface in org.ec
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>boolean</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">migrateSchema</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
@@ -181,9 +176,9 @@ extends <a href="../../mapping/IMappingStrategy.html" title="interface in org.ec
 <li>
 <section class="detail" id="migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">
 <h3>migrateSchema</h3>
-<div class="member-signature"><span class="return-type">boolean</span>&nbsp;<span class="element-name">migrateSchema</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">migrateSchema</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</span>
-               throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+            throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Migrates the database schema to match the new models in the given context.</div>
 <dl class="notes">
 <dt>Throws:</dt>

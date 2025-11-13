@@ -106,44 +106,40 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color class-summary class-summary-tab1">
 <div class="block">Interface to complement <a href="../../mapping/IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>IMappingStrategy</code></a> with schema migration capabilities.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab5"><a href="ISchemaMigration.ModelEvolutionNotAllowedException.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.ModelEvolutionNotAllowedException</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab5"><a href="ISchemaMigration.SchemaMigrationNotSupportedException.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.SchemaMigrationNotSupportedException</a></div>
 <div class="col-last even-row-color class-summary class-summary-tab5">
-<div class="block">Indicates that particular model changes are not allowed during model evolution.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab5"><a href="ISchemaMigration.SchemaMigrationNotSupportedException.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration.SchemaMigrationNotSupportedException</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab5">
 <div class="block">Indicates whether the mapping strategy supports schema migration.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
 <div class="block">Phases in the model evolution process.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab1"><a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab1">
+<div class="col-first even-row-color class-summary class-summary-tab1"><a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab1">
 <div class="block">A handler for a specific phase in the model evolution process.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab3"><a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Transition</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab3">
+<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Transition</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab3">
 <div class="block">The possible transitions between phases.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab2">
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
 <div class="block">A default implementation of <a href="../IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution"><code>model evolution support</code></a> for DB stores.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultChangeDetector.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultChangeDetector</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultChangeDetector.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultChangeDetector</a></div>
+<div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Detects model changes between the stored models and the currently registered EPackages.</div>
 </div>
-<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultRepositoryExporter.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultRepositoryExporter</a></div>
+<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultRepositoryExporter.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultRepositoryExporter</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab2">
+<div class="block">Evolves the models with the given mapping strategy, context, and store accessor.</div>
+</div>
+<div class="col-first odd-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultSchemaMigrator.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultSchemaMigrator</a></div>
 <div class="col-last odd-row-color class-summary class-summary-tab2">
 <div class="block">Evolves the models with the given mapping strategy, context, and store accessor.</div>
 </div>
-<div class="col-first even-row-color class-summary class-summary-tab2"><a href="PhasedModelEvolutionSupport.DefaultSchemaMigrator.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultSchemaMigrator</a></div>
-<div class="col-last even-row-color class-summary class-summary-tab2">
-<div class="block">Evolves the models with the given mapping strategy, context, and store accessor.</div>
-</div>
-<div class="col-first odd-row-color class-summary class-summary-tab3"><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></div>
-<div class="col-last odd-row-color class-summary class-summary-tab3">
+<div class="col-first even-row-color class-summary class-summary-tab3"><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></div>
+<div class="col-last even-row-color class-summary class-summary-tab3">
 <div class="block">Indicates the model evolution mode.</div>
 </div>
 </div>

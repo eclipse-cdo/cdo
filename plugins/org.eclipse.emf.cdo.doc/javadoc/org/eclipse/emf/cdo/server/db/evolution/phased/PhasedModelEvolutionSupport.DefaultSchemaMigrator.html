@@ -207,14 +207,24 @@ loadScripts(document, 'script');</script>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Evolves the models with the current mapping strategy.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration)" class="member-name-link">migrateSchema</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isDeleteObsoleteMetaIDs()" class="member-name-link">isDeleteObsoleteMetaIDs</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether to delete obsolete meta ID mappings from the cdo_external_refs table.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration)" class="member-name-link">migrateSchema</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="ISchemaMigration.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration</a>&nbsp;schemaMigration)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Delegates the schema migration to the mapping strategy.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected boolean</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setDeleteObsoleteMetaIDs(boolean)" class="member-name-link">setDeleteObsoleteMetaIDs</a><wbr>(boolean&nbsp;deleteObsoleteMetaIDs)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets whether to delete obsolete meta ID mappings from the cdo_external_refs table.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#updateSystemTables(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">updateSystemTables</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -288,6 +298,20 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="isDeleteObsoleteMetaIDs()">
+<h3>isDeleteObsoleteMetaIDs</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isDeleteObsoleteMetaIDs</span>()</div>
+<div class="block">Returns whether to delete obsolete meta ID mappings from the cdo_external_refs table.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setDeleteObsoleteMetaIDs(boolean)">
+<h3>setDeleteObsoleteMetaIDs</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setDeleteObsoleteMetaIDs</span><wbr><span class="parameters">(boolean&nbsp;deleteObsoleteMetaIDs)</span></div>
+<div class="block">Sets whether to delete obsolete meta ID mappings from the cdo_external_refs table.</div>
+</section>
+</li>
+<li>
 <section class="detail" id="execute(org.eclipse.emf.cdo.server.db.evolution.phased.Context)">
 <h3>execute</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">execute</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</span>
@@ -302,10 +326,10 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="migrateSchema(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor,org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration)">
 <h3>migrateSchema</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">migrateSchema</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">migrateSchema</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor,
  <a href="ISchemaMigration.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">ISchemaMigration</a>&nbsp;schemaMigration)</span>
-                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+                      throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Delegates the schema migration to the mapping strategy.</div>
 <dl class="notes">
 <dt>Throws:</dt>
@@ -316,9 +340,9 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="updateSystemTables(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)">
 <h3>updateSystemTables</h3>
-<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">updateSystemTables</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">updateSystemTables</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
  <a href="../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</span>
-                              throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
+                           throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.sql/java/sql/SQLException.html" title="class or interface in java.sql" class="external-link">SQLException</a></span></div>
 <div class="block">Updates the system tables with the changed models.</div>
 <dl class="notes">
 <dt>Throws:</dt>

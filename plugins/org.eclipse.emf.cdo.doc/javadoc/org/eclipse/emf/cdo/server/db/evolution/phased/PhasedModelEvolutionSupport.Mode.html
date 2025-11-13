@@ -109,7 +109,7 @@ loadScripts(document, 'script');</script>
  <ul>
  <li><b>Disabled</b>: Model evolution is disabled. No model changes are detected or evolved.</li>
  <li><b>Prevent</b>: Model evolution is prevented. If model changes are detected, an exception is thrown.</li>
- <li><b>Evolve</b>: Model evolution is enabled. If model changes are detected, they are automatically evolved.</li>
+ <li><b>Migrate</b>: Model evolution is enabled. If model changes are detected, the database is automatically migrated.</li>
  </ul></div>
 <dl class="notes">
 <dt>Since:</dt>
@@ -147,7 +147,7 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Model evolution is disabled.</div>
 </div>
-<div class="col-first odd-row-color"><code><a href="#Evolve" class="member-name-link">Evolve</a></code></div>
+<div class="col-first odd-row-color"><code><a href="#Migrate" class="member-name-link">Migrate</a></code></div>
 <div class="col-last odd-row-color">
 <div class="block">Model evolution is enabled.</div>
 </div>
@@ -209,7 +209,7 @@ the order they are declared.</div>
 <section class="detail" id="Disabled">
 <h3>Disabled</h3>
 <div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></span>&nbsp;<span class="element-name">Disabled</span></div>
-<div class="block">Model evolution is disabled. No model changes are detected or evolved.</div>
+<div class="block">Model evolution is disabled. No model changes are detected or migrated.</div>
 </section>
 </li>
 <li>
@@ -220,10 +220,10 @@ the order they are declared.</div>
 </section>
 </li>
 <li>
-<section class="detail" id="Evolve">
-<h3>Evolve</h3>
-<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></span>&nbsp;<span class="element-name">Evolve</span></div>
-<div class="block">Model evolution is enabled. If model changes are detected, they are automatically evolved.</div>
+<section class="detail" id="Migrate">
+<h3>Migrate</h3>
+<div class="member-signature"><span class="modifiers">public static final</span>&nbsp;<span class="return-type"><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></span>&nbsp;<span class="element-name">Migrate</span></div>
+<div class="block">Model evolution is enabled. If model changes are detected, the database is automatically migrated.</div>
 </section>
 </li>
 </ul>

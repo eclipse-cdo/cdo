@@ -125,8 +125,8 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
  Each phase is triggered at a specific point during the activation of the DB store and the repository.
  <p>
  The model evolution process can be configured via the <code>mode</code> attribute, which
- can be set to <code>evolve</code> (default), <code>prevent</code>, or <code>disabled</code>.
- In <code>evolve</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
+ can be set to <code>migrate</code> (default), <code>prevent</code>, or <code>disabled</code>.
+ In <code>migrate</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
  an exception is thrown if model changes are detected. In <code>disabled</code> mode,
  model evolution is skipped entirely.</div>
 <dl class="notes">
@@ -256,59 +256,69 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#doDeactivate()" class="member-name-link">doDeactivate</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContext()" class="member-name-link">getContext</a>()</code></div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#executePhaseLoop()" class="member-name-link">executePhaseLoop</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Executes the phase loop until completion or until a restart is requested.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getContext()" class="member-name-link">getContext</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current evolution context.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPhaseHandler()" class="member-name-link">getCurrentPhaseHandler</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getCurrentPhaseHandler()" class="member-name-link">getCurrentPhaseHandler</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the handler for the current phase, throwing an exception if none is set.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionFolder()" class="member-name-link">getEvolutionFolder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionFolder()" class="member-name-link">getEvolutionFolder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the evolution folder for the current evolution ID, or <code>null</code> if the evolution ID is less than 1.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionID()" class="member-name-link">getEvolutionID</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>int</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionID()" class="member-name-link">getEvolutionID</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current evolution ID.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionLog()" class="member-name-link">getEvolutionLog</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMode()" class="member-name-link">getMode</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getEvolutionLog()" class="member-name-link">getEvolutionLog</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getMode()" class="member-name-link">getMode</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the model evolution mode.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../../../spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNewPackageRegistry()" class="member-name-link">getNewPackageRegistry</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../../../spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOldPackageRegistry()" class="member-name-link">getOldPackageRegistry</a>()</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getNewPackageRegistry()" class="member-name-link">getNewPackageRegistry</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPhase()" class="member-name-link">getPhase</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="../../../../spi/common/model/InternalCDOPackageRegistry.html" title="interface in org.eclipse.emf.cdo.spi.common.model">InternalCDOPackageRegistry</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getOldPackageRegistry()" class="member-name-link">getOldPackageRegistry</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPhase()" class="member-name-link">getPhase</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the current evolution phase.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPhaseHandler(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)" class="member-name-link">getPhaseHandler</a><wbr>(<a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a>&nbsp;phase)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getPhaseHandler(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)" class="member-name-link">getPhaseHandler</a><wbr>(<a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a>&nbsp;phase)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the phase handler for the given phase, or <code>null</code> if none is set.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootFolder()" class="member-name-link">getRootFolder</a>()</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a></code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRootFolder()" class="member-name-link">getRootFolder</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the root folder where evolution data is stored.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="../../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getStore()" class="member-name-link">getStore</a>()</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Returns the DB store this model evolution support is associated with.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#isSaveNewModels()" class="member-name-link">isSaveNewModels</a>()</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Returns whether to save the new models to disk during evolution.</div>
 </div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected <a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#loadContext()" class="member-name-link">loadContext</a>()</code></div>
@@ -336,8 +346,8 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <div class="block">Saves the evolution context by saving the models to disk.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>protected void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#saveModelsToDisk(java.io.File,java.util.List)" class="member-name-link">saveModelsToDisk</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#saveModelsToDisk(java.io.File,java.util.Collection)" class="member-name-link">saveModelsToDisk</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Saves the models to disk.</div>
 </div>
@@ -367,23 +377,28 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <div class="block">Sets the root folder where evolution data is stored.</div>
 </div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSchemaMigrator(org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler)" class="member-name-link">setSchemaMigrator</a><wbr>(<a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a>&nbsp;schemaMigrator)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSaveNewModels(boolean)" class="member-name-link">setSaveNewModels</a><wbr>(boolean&nbsp;saveNewModels)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Sets whether to save the new models to disk during evolution.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setSchemaMigrator(org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler)" class="member-name-link">setSchemaMigrator</a><wbr>(<a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a>&nbsp;schemaMigrator)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the schema migration phase handler.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;store)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStore(org.eclipse.emf.cdo.server.db.IDBStore)" class="member-name-link">setStore</a><wbr>(<a href="../../IDBStore.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStore</a>&nbsp;store)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the DB store this model evolution support is associated with.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStorePostProcessor(org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler)" class="member-name-link">setStorePostProcessor</a><wbr>(<a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a>&nbsp;storeProcessor)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#setStorePostProcessor(org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler)" class="member-name-link">setStorePostProcessor</a><wbr>(<a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Handler</a>&nbsp;storeProcessor)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the store post-processing phase handler.</div>
 </div>
-<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger)" class="member-name-link">trigger</a><wbr>(<a href="../IModelEvolutionSupport.Trigger.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution">IModelEvolutionSupport.Trigger</a>&nbsp;trigger)</code></div>
-<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#trigger(org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger)" class="member-name-link">trigger</a><wbr>(<a href="../IModelEvolutionSupport.Trigger.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution">IModelEvolutionSupport.Trigger</a>&nbsp;trigger)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Evolves the models stored in the given DB store to match the currently registered <code>EPackages</code>.</div>
 </div>
 </div>
@@ -514,6 +529,20 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <h3>setMode</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setMode</span><wbr><span class="parameters">(<a href="PhasedModelEvolutionSupport.Mode.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a>&nbsp;mode)</span></div>
 <div class="block">Sets the model evolution mode.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isSaveNewModels()">
+<h3>isSaveNewModels</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isSaveNewModels</span>()</div>
+<div class="block">Returns whether to save the new models to disk during evolution.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="setSaveNewModels(boolean)">
+<h3>setSaveNewModels</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">setSaveNewModels</span><wbr><span class="parameters">(boolean&nbsp;saveNewModels)</span></div>
+<div class="block">Sets whether to save the new models to disk during evolution.</div>
 </section>
 </li>
 <li>
@@ -648,7 +677,7 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
  If the evolution mode is set to <a href="PhasedModelEvolutionSupport.Mode.html#Prevent"><code>PhasedModelEvolutionSupport.Mode.Prevent</code></a> and model changes are detected,
  an exception is thrown.
  <p>
- If the evolution mode is set to <a href="PhasedModelEvolutionSupport.Mode.html#Evolve"><code>PhasedModelEvolutionSupport.Mode.Evolve</code></a>, the evolution process is executed
+ If the evolution mode is set to <a href="PhasedModelEvolutionSupport.Mode.html#Migrate"><code>PhasedModelEvolutionSupport.Mode.Migrate</code></a>, the evolution process is executed
  phase by phase until completion.
  <p>
  If a phase handler requests a store or repository restart, a <code>LifecycleUtil.ReactivationTrigger</code>
@@ -658,6 +687,22 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <dd><code><a href="../IModelEvolutionSupport.html#trigger(org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger)">trigger</a></code>&nbsp;in interface&nbsp;<code><a href="../IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution">IModelEvolutionSupport</a></code></dd>
 <dt>Throws:</dt>
 <dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="executePhaseLoop()">
+<h3>executePhaseLoop</h3>
+<div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">executePhaseLoop</span>()
+                         throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a>,
+<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a>,
+org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger</span></div>
+<div class="block">Executes the phase loop until completion or until a restart is requested.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></code></dd>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Exception.html" title="class or interface in java.lang" class="external-link">Exception</a></code></dd>
+<dd><code>org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger</code></dd>
 </dl>
 </section>
 </li>
@@ -716,10 +761,10 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 </section>
 </li>
 <li>
-<section class="detail" id="saveModelsToDisk(java.io.File,java.util.List)">
+<section class="detail" id="saveModelsToDisk(java.io.File,java.util.Collection)">
 <h3>saveModelsToDisk</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">saveModelsToDisk</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;folder,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/List.html" title="class or interface in java.util" class="external-link">List</a>&lt;<a href="Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</span>
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/util/Collection.html" title="class or interface in java.util" class="external-link">Collection</a>&lt;<a href="Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&gt;&nbsp;models)</span>
                          throws <span class="exceptions"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/IOException.html" title="class or interface in java.io" class="external-link">IOException</a></span></div>
 <div class="block">Saves the models to disk.</div>
 <dl class="notes">

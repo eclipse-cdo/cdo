@@ -14,35 +14,27 @@ import org.eclipse.emf.cdo.common.model.CDOModelUtil;
 import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
 import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
-import org.eclipse.emf.cdo.common.model.EMFUtil.TreeMapping;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
-import org.eclipse.emf.cdo.server.CDOServerExporter;
-import org.eclipse.emf.cdo.server.IRepository;
-import org.eclipse.emf.cdo.server.StoreThreadLocal;
 import org.eclipse.emf.cdo.server.db.IDBStore;
-import org.eclipse.emf.cdo.server.db.IDBStoreAccessor;
 import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Context.Model;
-import org.eclipse.emf.cdo.server.db.evolution.phased.ISchemaMigration.SchemaMigrationNotSupportedException;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Transition;
 import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageInfosTable;
 import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
-import org.eclipse.emf.cdo.server.internal.db.MetaDataManager;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
 
 import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBConnection;
 import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.CheckUtil;
-import org.eclipse.net4j.util.ObjectUtil;
-import org.eclipse.net4j.util.ReflectUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.event.IListener;
+import org.eclipse.net4j.util.event.LogListener;
+import org.eclipse.net4j.util.factory.AnnotationFactory;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.io.IOUtil;
@@ -50,8 +42,6 @@ import org.eclipse.net4j.util.lifecycle.Lifecycle;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger;
 
 import org.eclipse.emf.common.util.URI;
-import org.eclipse.emf.ecore.EModelElement;
-import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
 import org.eclipse.emf.ecore.EcorePackage;
@@ -59,14 +49,11 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.Writer;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Deque;
@@ -75,36 +62,97 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 /**
- * A default implementation of {@link IModelEvolutionSupport model evolution support} for DB stores.
+ * A {@link Phase phased} implementation of {@link IModelEvolutionSupport model evolution support} for DB stores.
  * <p>
  * Model evolution support is responsible for evolving the models stored in a DB store to match the currently
  * registered EPackages.
  * <p>
- * This implementation is based on a phased approach. Each phase is handled by a dedicated {@link Phase.Handler phase handler}.
- * The following phases are supported:
- * <ul>
- * <li>Change detection: Detects model changes between the stored models and the currently registered EPackages.
+ * This implementation is based on a phased approach. The following phases are supported:
+ * <p>
+ * <ol>
+ * <li><b>Change detection</b>: Detects model changes between the stored models and the currently registered EPackages.
  * If no changes are detected, the model evolution process is aborted.</li>
- * <li>Repository export: Exports the repository data to a temporary location to prepare for schema migration.
+ * <li><b>Repository export</b>: Exports the repository data to a temporary location to prepare for schema migration.
  * This phase is optional.</li>
- * <li>Schema migration: Evolves the database schema to match the new models. This includes updating the database
+ * <li><b>Schema migration</b>: Evolves the database schema to match the new models. This includes updating the database
  * schema, changing the container feature IDs in case of shifted features, and adjusting enum literals in case
  * of changed enums. This phase is mandatory and ensures that the database schema is in sync with the new models.</li>
- * <li>Store processing: Performs any necessary post-processing on the DB store after schema migration.
+ * <li><b>Store processing</b>: Performs any necessary post-processing on the DB store after schema migration.
  * This phase is optional.</li>
- * <li>Repository processing: Performs any necessary post-processing on the repository after the DB store
+ * <li><b>Repository processing</b>: Performs any necessary post-processing on the repository after the DB store
  * has been processed. This phase is optional.</li>
+ * </ol>
+ * <p>
+ * Each phase is handled by a dedicated {@link Phase.Handler phase handler}. Phase handlers can be
+ * configured via dependency injection (see {@link AnnotationFactory}). The Change Detection and Schema Migration
+ * phases must have a phase handler configured. If no phase handler is configured for these phases, a default implementation
+ * is used:
+ * <p>
+ * <ul>
+ * <li>Change Detection: {@link DefaultChangeDetector}</li>
+ * <li>Schema Migration: {@link DefaultSchemaMigrator}</li>
  * </ul>
- * Each phase is triggered at a specific point during the activation of the DB store and the repository.
+ * <p>
+ * The Repository Export, Store Processing, and Repository Processing phases may be skipped if no phase handler
+ * is configured for them. The Repository Export phase is the only optional phase for which a default implementation
+ * exists: {@link DefaultRepositoryExporter}.
+ * <p>
+ * Each phase is triggered at a specific point during the activation of the DB store and the repository. There are
+ * two {@link org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger triggers}:
+ * <p>
+ * <ul>
+ * <li>{@link org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger#ActivatingStore ActivatingStore}:
+ * Triggered when the DB store is being activated by the {@link org.eclipse.emf.cdo.server.IRepository IRepository}.
+ * This is the main trigger for model evolution. It only occurs when the store is restarted, i.e., not
+ * when the store is activated for the first time.</li>
+ * <li>{@link org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger#ActivatedRepository ActivatedRepository}:
+ * Triggered when the {@link org.eclipse.emf.cdo.server.IRepository IRepository} has been fully activated.
+ * This trigger exists mainly for special purposes, e.g., to export repository models before the schema
+ * is upgraded.</li>
+ * </ul>
+ * <p>
+ * Phases can request a store or repository restart by returning the appropriate {@link Transition}
+ * from their {@link Phase#transitionTo(Phase) transition} method.
  * <p>
  * The model evolution process can be configured via the <code>mode</code> attribute, which
  * can be set to <code>migrate</code> (default), <code>prevent</code>, or <code>disabled</code>.
  * In <code>migrate</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
  * an exception is thrown if model changes are detected. In <code>disabled</code> mode,
  * model evolution is skipped entirely.
+ * <p>
+ * The model evolution process stores its state in a dedicated root folder, which can be configured
+ * via the <code>rootFolder</code> attribute. The root folder contains an <code>evolution.properties</code> file
+ * storing the current evolution ID and phase, as well as dedicated evolution folders for each
+ * evolution process. Each evolution folder is named after the evolution ID and contains
+ * the exported models and an optional evolution log. The {@link DefaultRepositoryExporter} stores
+ * the repository export file in the evolution folder during the Repository Export phase.
+ * <p>
+ * The model evolution context, which contains the models to be evolved and other relevant information,
+ * is persisted in the evolution folder after the Change Detection phase. If the model evolution process
+ * is interrupted, it can be resumed from the persisted context. Manual inspection of the evolution folder
+ * may help diagnosing issues during model evolution or recovering from failures.
+ * <p>
+ * The phases and their handlers fire various events during the model evolution process.
+ * Clients can register {@link IListener listeners} with the model evolution support to be notified
+ * about these events and to monitor or impact the evolution process. Registering a {@link LogListener}
+ * will log all evolution events to the logging system and helps to understand the evolution process.
+ * <p>
+ * Example configuration snippet:
+ * <pre>
+ * &lt;modelEvolutionSupport type="phased" mode="migrate" rootFolder="/var/cdo/evolution" saveNewModels="true">
+ *    &lt;changeDetector/>
+ *    &lt;repositoryExporter binary="false"/>
+ *    &lt;schemaMigrator deleteObsoleteMetaIDs="false"/>
+ *    &lt;storeProcessor type="myCustomStoreProcessor"/>
+ *    &lt;repositoryProcessor type="myCustomRepositoryProcessor"/>
+ *    &lt;!-- Optional listeners -->
+ *    &lt;listener type="log"/&gt;
+ *    &lt;listener type="myCustomModelEvolutionChecks"/&gt;
+ * &lt;/modelEvolutionSupport>
+ * </pre>
+ *
  *
  * @author Eike Stepper
  * @since 4.14
@@ -986,329 +1034,6 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     public static Mode parse(String str)
     {
       return StringUtil.parseEnum(Mode.class, str, true);
-    }
-  }
-
-  /**
-   * Detects model changes between the stored models and the currently registered EPackages.
-   * <p>
-   * If no model changes are detected, the model evolution process is aborted.
-   * If model changes are detected and the mode is set to {@link Mode#Prevent},
-   * an exception is thrown.
-   *
-   * @author Eike Stepper
-   * @since 4.14
-   * @noreference This package is currently considered <i>provisional</i>.
-   * @noimplement This package is currently considered <i>provisional</i>.
-   * @noextend This package is currently considered <i>provisional</i>.
-   */
-  public static class DefaultChangeDetector extends BasicPhaseHandler
-  {
-    /**
-     * The factory type of the default change detector.
-     */
-    public static final String FACTORY_TYPE = "default-change-detector"; //$NON-NLS-1$
-
-    /**
-     * Creates a change detector.
-     */
-    public DefaultChangeDetector()
-    {
-    }
-
-    /**
-     * Detects model changes and registers the changed models in the context.
-     */
-    @Override
-    public void execute(Context context) throws Exception
-    {
-      Collection<Model> models = context.getModels().values();
-      models.forEach(model -> {
-        Object changeInfo = getChangeInfo(model);
-        if (changeInfo != null)
-        {
-          context.addChangeInfo(model, changeInfo);
-        }
-      });
-    }
-
-    protected Object getChangeInfo(Model model)
-    {
-      String oldXMI = model.getOldXMI();
-      String newXMI = model.getNewXMI();
-
-      if (newXMI != null && !oldXMI.equals(newXMI))
-      {
-        return Boolean.TRUE;
-      }
-
-      return null;
-    }
-  }
-
-  /**
-   * Evolves the models with the given mapping strategy, context, and store accessor.
-   * <p>
-   * This method performs the following steps:
-   * <ol>
-   * <li>It delegates the model evolution to the mapping strategy, which is responsible for updating the database schema,
-   * migrating the existing data, and changing the container feature IDs in case of shifted features.</li>
-   * <li>It updates the system tables, including the cdo_package_units table, cdo_package_infos table, and
-   * cdo_external_refs table.</li>
-   * <li>It commits the transaction unless it's a dry run, in which case it rolls back the changes.</li>
-   * </ol>
-   *
-   * @author Eike Stepper
-   * @since 4.14
-   * @noreference This package is currently considered <i>provisional</i>.
-   * @noimplement This package is currently considered <i>provisional</i>.
-   * @noextend This package is currently considered <i>provisional</i>.
-   */
-  public static class DefaultRepositoryExporter extends BasicPhaseHandler
-  {
-    /**
-     * The factory type of the default repository exporter.
-     */
-    public static final String FACTORY_TYPE = "default-repository-exporter"; //$NON-NLS-1$
-
-    private boolean binary;
-
-    /**
-     * Creates an XML repository exporter.
-     */
-    public DefaultRepositoryExporter()
-    {
-      this(false);
-    }
-
-    /**
-     * Creates a repository exporter that is either binary or XML.
-     */
-    public DefaultRepositoryExporter(boolean binary)
-    {
-      setBinary(binary);
-    }
-
-    public boolean isBinary()
-    {
-      return binary;
-    }
-
-    @InjectAttribute(name = "binary")
-    public void setBinary(boolean binary)
-    {
-      checkInactive();
-      this.binary = binary;
-    }
-
-    @Override
-    public void execute(Context context) throws Exception
-    {
-      PhasedModelEvolutionSupport support = context.getSupport();
-      IRepository repository = support.getStore().getRepository();
-
-      CDOServerExporter<?> exporter;
-      String fileName;
-
-      if (binary)
-      {
-        exporter = new CDOServerExporter.Binary(repository);
-        fileName = "export.bin";
-      }
-      else
-      {
-        exporter = new CDOServerExporter.XML(repository);
-        fileName = "export.xml";
-      }
-
-      File evolutionFolder = support.getEvolutionFolder();
-      File exportFile = new File(evolutionFolder, fileName);
-      context.log("Exporting repository to " + exportFile.getAbsolutePath());
-
-      try (OutputStream out = IOUtil.buffered(new FileOutputStream(exportFile)))
-      {
-        exporter.exportRepository(out);
-      }
-    }
-  }
-
-  /**
-   * Evolves the models with the given mapping strategy, context, and store accessor.
-   * <p>
-   * This method performs the following steps:
-   * <ol>
-   * <li>It delegates the model evolution to the mapping strategy, which is responsible for updating the database schema,
-   * migrating the existing data, and changing the container feature IDs in case of shifted features.</li>
-   * <li>It updates the system tables, including the <code>cdo_package_units</code> table, <code>cdo_package_infos</code> table, and
-   * <code>cdo_external_refs</code> table.</li>
-   * <li>It commits the transaction.</li>
-   * </ol>
-   *
-   * @author Eike Stepper
-   * @since 4.14
-   * @noreference This package is currently considered <i>provisional</i>.
-   * @noimplement This package is currently considered <i>provisional</i>.
-   * @noextend This package is currently considered <i>provisional</i>.
-   */
-  public static class DefaultSchemaMigrator extends BasicPhaseHandler
-  {
-    /**
-     * The factory type of the default schema migrator.
-     */
-    public static final String FACTORY_TYPE = "default-schema-migrator"; //$NON-NLS-1$
-
-    private boolean deleteObsoleteMetaIDs;
-
-    /**
-     * Creates a schema migrator.
-     */
-    public DefaultSchemaMigrator()
-    {
-    }
-
-    /**
-     * Returns whether to delete obsolete meta ID mappings from the cdo_external_refs table.
-     */
-    public boolean isDeleteObsoleteMetaIDs()
-    {
-      return deleteObsoleteMetaIDs;
-    }
-
-    /**
-     * Sets whether to delete obsolete meta ID mappings from the cdo_external_refs table.
-     */
-    @InjectAttribute(name = "deleteObsoleteMetaIDs")
-    public void setDeleteObsoleteMetaIDs(boolean deleteObsoleteMetaIDs)
-    {
-      checkInactive();
-      this.deleteObsoleteMetaIDs = deleteObsoleteMetaIDs;
-    }
-
-    /**
-     * Evolves the models with the current mapping strategy.
-     */
-    @Override
-    public void execute(Context context) throws Exception
-    {
-      IDBStore store = context.getSupport().getStore();
-
-      // Check whether the mapping strategy supports model evolution.
-      ISchemaMigration schemaMigration = ObjectUtil.tryCast(store.getMappingStrategy(), ISchemaMigration.class, //
-          () -> new SchemaMigrationNotSupportedException());
-
-      // Obtain a store accessor and set it in the thread local.
-      IDBStoreAccessor accessor = store.getWriter(null);
-      StoreThreadLocal.setAccessor(accessor);
-
-      try
-      {
-        // Let the mapping strategy migrate the database. This includes:
-        // - updating the database schema,
-        // - migrating the existing data,
-        // - changing the container feature IDs, in case of shifted features,
-        migrateSchema(context, accessor, schemaMigration);
-
-        // Update the system tables. This includes:
-        // - updating the cdo_package_units table,
-        // - updating the cdo_package_infos table,
-        // - updating the model elements' meta IDs in the cdo_external_refs table.
-        updateSystemTables(context, accessor);
-
-        context.log("Schema migration completed with " + context.getTotalUpdateCount() + " row updates");
-        commitChanges(context, accessor);
-      }
-      finally
-      {
-        // Release the store accessor and clear the thread local.
-        StoreThreadLocal.release();
-      }
-    }
-
-    /**
-     * Delegates the schema migration to the mapping strategy.
-     */
-    protected void migrateSchema(Context context, IDBStoreAccessor accessor, ISchemaMigration schemaMigration) throws SQLException
-    {
-      context.log("Migrating schema with mapping strategy " + ReflectUtil.getSimpleClassName(schemaMigration));
-      schemaMigration.migrateSchema(context, accessor);
-    }
-
-    /**
-     * Updates the system tables with the changed models.
-     */
-    protected void updateSystemTables(Context context, IDBStoreAccessor accessor) throws SQLException
-    {
-      context.log("Updating system tables with changed models");
-
-      IDBConnection connection = accessor.getDBConnection();
-      DBStore store = (DBStore)accessor.getStore();
-      MetaDataManager metaDataManager = (MetaDataManager)store.getMetaDataManager();
-      PackageUnitsTable packageUnits = store.tables().packageUnits();
-      PackageInfosTable packageInfos = store.tables().packageInfos();
-      InternalCDOPackageRegistry packageRegistry = context.getSupport().getNewPackageRegistry();
-
-      // Update the changed models in the database.
-      try (Statement statement = connection.createStatement())
-      {
-        // Replace the changed package units and package infos.
-        for (Model model : context.getChangeInfos().keySet())
-        {
-          String unitID = model.getID();
-
-          // Delete the old package unit and package info(s).
-          context.log("Deleting old package unit " + unitID);
-          int count1 = statement.executeUpdate("DELETE from " + packageUnits + " WHERE " + packageUnits.id() + "='" + unitID + "'");
-          context.incrementTotalUpdateCount(count1);
-
-          // Delete the old package info(s).
-          context.log("Deleting old package infos for " + unitID);
-          int count2 = statement.executeUpdate("DELETE from " + packageInfos + " WHERE " + packageInfos.unit() + "='" + unitID + "'");
-          context.incrementTotalUpdateCount(count2);
-
-          // Get the registered package bytes.
-          EPackage newPackage = model.getNewPackage();
-          byte[] packageBytes = EMFUtil.getEPackageBytes(newPackage, metaDataManager.isZipPackageBytes(), packageRegistry);
-
-          // Write the new package unit.
-          context.log("Writing new package unit " + unitID);
-          metaDataManager.writePackageUnit(connection, unitID, model.getOriginalType().ordinal(), context.getTimeStamp(), packageBytes, null);
-          context.incrementTotalUpdateCount();
-
-          // Write the new package info(s).
-          for (EPackage ePackage : EMFUtil.getAllPackages(newPackage))
-          {
-            context.log("Writing new package info for " + ePackage.getNsURI());
-            metaDataManager.writePackageInfo(connection, ePackage.getNsURI(), EMFUtil.getParentURI(ePackage), unitID, null);
-            context.incrementTotalUpdateCount();
-          }
-        }
-
-        if (deleteObsoleteMetaIDs)
-        {
-          // Clean up obsolete meta ID mappings.
-          TreeMapping<EObject> elementMappings = context.getElementMappings();
-          Set<String> newURIs = elementMappings.getToObjectsByURI().keySet();
-
-          elementMappings.getFromObjectsByURI().forEach((oldURI, oldModelElement) -> {
-            if (oldModelElement instanceof EModelElement && !newURIs.contains(oldURI))
-            {
-              context.log("Deleting obsolete meta ID mapping for " + oldURI);
-              metaDataManager.deleteMetaIDMapping(statement, (EModelElement)oldModelElement);
-              context.incrementTotalUpdateCount();
-            }
-          });
-        }
-      }
-    }
-
-    /**
-     * Commits the model evolution changes to the database.
-     */
-    protected boolean commitChanges(Context context, IDBStoreAccessor accessor) throws SQLException
-    {
-      context.log("Committing model evolution changes to the database");
-      accessor.getConnection().commit();
-      return false;
     }
   }
 }

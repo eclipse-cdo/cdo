@@ -12,8 +12,8 @@ package org.eclipse.emf.cdo.tests.db;
 
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
-import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.DefaultRepositoryExporter;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.Mode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;

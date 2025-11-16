@@ -149,6 +149,11 @@ public interface InternalRepository extends IRepository, //
 
   public InternalCDOPackageRegistry getPackageRegistry(boolean considerCommitContext);
 
+  /**
+   * @since 4.25
+   */
+  public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry);
+
   @Override
   public InternalCDORevisionManager getRevisionManager();
 

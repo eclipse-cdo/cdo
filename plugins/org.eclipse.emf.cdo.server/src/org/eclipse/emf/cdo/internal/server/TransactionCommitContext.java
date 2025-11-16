@@ -2076,7 +2076,7 @@ public class TransactionCommitContext implements InternalCommitContext
 
     public TransactionPackageRegistry(InternalCDOPackageRegistry repositoryPackageRegistry)
     {
-      delegateRegistry = repositoryPackageRegistry;
+      super(repositoryPackageRegistry);
       setPackageLoader(repositoryPackageRegistry.getPackageLoader());
     }
 

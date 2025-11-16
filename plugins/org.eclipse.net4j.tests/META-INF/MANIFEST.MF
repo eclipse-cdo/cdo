@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-SymbolicName: org.eclipse.net4j.tests;singleton:=true
-Bundle-Version: 4.2.14.qualifier
+Bundle-Version: 4.2.15.qualifier
 Bundle-Name: %pluginName
 Bundle-Vendor: %providerName
 Bundle-Localization: plugin
@@ -35,13 +35,13 @@ Require-Bundle: org.eclipse.core.runtime;bundle-version="[3.5.0,4.0.0)";visibili
 Import-Package: javax.servlet;version="[2.3.0,5.0.0)",
  javax.servlet.http;version="[2.3.0,5.0.0)",
  org.slf4j;version="[1.0.0,2.0.0)"
-Export-Package: org.eclipse.net4j.tests;version="4.2.14",
- org.eclipse.net4j.tests.apps;version="4.2.14",
- org.eclipse.net4j.tests.bugzilla;version="4.2.14",
- org.eclipse.net4j.tests.bundle;version="4.2.14";x-internal:=true,
- org.eclipse.net4j.tests.config;version="4.2.14",
- org.eclipse.net4j.tests.data;version="4.2.14",
- org.eclipse.net4j.tests.signal;version="4.2.14",
- org.eclipse.net4j.util.tests;version="4.2.14",
- org.eclipse.net4j.util.tests.cache;version="4.2.14"
+Export-Package: org.eclipse.net4j.tests;version="4.2.15",
+ org.eclipse.net4j.tests.apps;version="4.2.15",
+ org.eclipse.net4j.tests.bugzilla;version="4.2.15",
+ org.eclipse.net4j.tests.bundle;version="4.2.15";x-internal:=true,
+ org.eclipse.net4j.tests.config;version="4.2.15",
+ org.eclipse.net4j.tests.data;version="4.2.15",
+ org.eclipse.net4j.tests.signal;version="4.2.15",
+ org.eclipse.net4j.util.tests;version="4.2.15",
+ org.eclipse.net4j.util.tests.cache;version="4.2.15"
 Automatic-Module-Name: org.eclipse.net4j.tests

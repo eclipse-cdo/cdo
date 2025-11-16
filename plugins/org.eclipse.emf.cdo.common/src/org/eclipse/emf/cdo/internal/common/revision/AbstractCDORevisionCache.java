@@ -163,6 +163,13 @@ public abstract class AbstractCDORevisionCache extends Lifecycle implements Inte
   protected abstract CDORevision doRemoveRevision(CDOID id, CDOBranchVersion branchVersion);
 
   @Override
+  protected void doDeactivate() throws Exception
+  {
+    clear();
+    super.doDeactivate();
+  }
+
+  @Override
   public String toString()
   {
     return formatName("CDORevisionCache");

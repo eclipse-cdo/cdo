@@ -1044,14 +1044,30 @@ public final class IOUtil
 
     try
     {
-      ByteArrayOutputStream output = new ByteArrayOutputStream(size);
-      copy(input, output);
-      return output.toByteArray();
+      return readBytes(input, size);
     }
     finally
     {
       closeSilent(input);
     }
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static byte[] readBytes(InputStream in)
+  {
+    return readBytes(in, DEFAULT_BUFFER_SIZE);
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static byte[] readBytes(InputStream in, int initialBufferSize)
+  {
+    ByteArrayOutputStream output = new ByteArrayOutputStream(initialBufferSize);
+    copy(in, output);
+    return output.toByteArray();
   }
 
   /**

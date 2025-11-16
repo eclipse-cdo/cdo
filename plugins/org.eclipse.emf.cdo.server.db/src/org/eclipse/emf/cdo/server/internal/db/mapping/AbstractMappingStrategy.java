@@ -685,6 +685,13 @@ public abstract class AbstractMappingStrategy extends Lifecycle implements IMapp
     return classMappings;
   }
 
+  @Override
+  public void clearClassMappings()
+  {
+    IMappingStrategy.super.clearClassMappings();
+    allClassMappingsCreated = false;
+  }
+
   private void createAllClassMappings()
   {
     InternalRepository repository = (InternalRepository)getStore().getRepository();

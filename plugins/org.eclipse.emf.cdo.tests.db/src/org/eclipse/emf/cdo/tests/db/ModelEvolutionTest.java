@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
+import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.DefaultRepositoryExporter;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.Mode;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.tests.AbstractCDOTest;
@@ -20,8 +21,6 @@ import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesAfter;
 import org.eclipse.emf.cdo.tests.config.impl.ConfigTest.CleanRepositoriesBefore;
 import org.eclipse.emf.cdo.tests.config.impl.RepositoryConfig;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
-
-import org.eclipse.net4j.util.event.LogListener;
 
 import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
@@ -54,6 +53,8 @@ public class ModelEvolutionTest extends AbstractCDOTest
 
   private static final ResourceSet RESOURCE_SET = EMFUtil.newEcoreResourceSet(PACKAGE_REGISTRY);
 
+  private static final String NS_URI = "http://www.example.org/model";
+
   private static final EPackage V1 = createModelV1();
 
   private PhasedModelEvolutionSupport support;
@@ -75,18 +76,21 @@ public class ModelEvolutionTest extends AbstractCDOTest
   @Override
   protected void initTestProperties(Map<String, Object> properties)
   {
+    File rootFolder = createTempFolder();
+
     support = new PhasedModelEvolutionSupport();
-    support.setRootFolder(new File("C:\\develop\\temp\\evolution"));
+    support.setRootFolder(rootFolder);
+    support.setSaveNewModels(true);
     support.setMode(Mode.Migrate);
-    // support.setRepositoryExporter(new DefaultRepositoryExporter());
-    support.addListener(new LogListener());
+    support.setRepositoryExporter(new DefaultRepositoryExporter());
+    // support.addListener(new LogListener());
 
     super.initTestProperties(properties);
     properties.put(RepositoryConfig.PROP_TEST_INITIAL_PACKAGES, new EPackage[] { V1 });
     properties.put(DBConfig.PROP_TEST_MODEL_EVOLUTION_SUPPORT, support);
   }
 
-  public void test() throws Exception
+  public void testFeatureAddition() throws Exception
   {
     {
       CDOSession session = openSession();
@@ -154,6 +158,8 @@ public class ModelEvolutionTest extends AbstractCDOTest
     restartRepository();
 
     CDOSession session = openSession();
+    msg(EMFUtil.getXMI(session.getPackageRegistry().getEPackage(NS_URI)));
+
     CDOTransaction transaction = session.openTransaction();
     CDOResource resource = transaction.getResource(getResourcePath("test"));
 
@@ -205,7 +211,7 @@ public class ModelEvolutionTest extends AbstractCDOTest
   private static EPackage createModelV1()
   {
     // Package v1
-    EPackage model = EMFUtil.createEPackage("model", "model", "http://www.example.org/model");
+    EPackage model = EMFUtil.createEPackage("model", "model", NS_URI);
 
     // Enum Shape
     EEnum Shape = EMFUtil.createEEnum(model, "Shape", "CIRCLE", "SQUARE", "TRIANGLE", "RECTANGLE", "OVAL", "DIAMOND");

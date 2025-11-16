@@ -189,5 +189,22 @@ public interface IDBStore extends IStore, IDBConnectionProvider, ILobCleanup, Ca
      * @since 4.4
      */
     public static final String JDBC_FETCH_SIZE = "jdbcFetchSize"; //$NON-NLS-1$
+
+    /**
+     * Whether to store packages as zipped byte arrays in the database.
+     * <p>
+     * When set to <code>true</code>, packages are stored as zipped byte arrays. This saves database space, but
+     * makes it harder to inspect the stored packages outside of CDO.
+     * <p>
+     * When set to <code>false</code> (the default), packages are stored as plain XML/XMI.
+     * <p>
+     * The default value is determined by the "org.eclipse.emf.cdo.server.internal.db.MetaDataManager.ZIP_PACKAGE_BYTES"
+     * system property, which defaults to <code>true</code>.
+     * <p>
+     * Note: This property only affects newly stored packages. Existing packages are not converted.
+     *
+     * @since 4.14
+     */
+    public static final String ZIP_PACKAGE_BYTES = "zipPackageBytes"; //$NON-NLS-1$
   }
 }

@@ -12,6 +12,7 @@ package org.eclipse.net4j.util.io;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -47,6 +48,87 @@ public final class ZIPUtil
 
   private ZIPUtil()
   {
+  }
+
+  /**
+   * Checks whether the given byte array represents a ZIP file by inspecting the magic number.
+   *
+   * @since 3.29
+   */
+  public static boolean isZip(byte[] bytes)
+  {
+    if (bytes != null && bytes.length >= 4)
+    {
+      if (bytes[0] == 'P' && bytes[1] == 'K')
+      {
+        if (bytes[2] == 1 && bytes[3] == 2)
+        {
+          // Central directory file header signature.
+          return true;
+        }
+
+        if (bytes[2] == 3 && bytes[3] == 4)
+        {
+          // Local file header signature.
+          return true;
+        }
+
+        if (bytes[2] == 5 && bytes[3] == 6)
+        {
+          // End of central directory record signature.
+          return true;
+        }
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks whether the given input stream represents a ZIP file by inspecting the magic number.
+   *
+   * @since 3.29
+   */
+  public static boolean isZip(InputStream input) throws IORuntimeException
+  {
+    if (input != null)
+    {
+      try
+      {
+        input.mark(4);
+        byte[] bytes = new byte[4];
+        int read = input.read(bytes);
+        input.reset();
+
+        if (read == 4)
+        {
+          return isZip(bytes);
+        }
+      }
+      catch (IOException ex)
+      {
+        ex.printStackTrace();
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * Checks whether the given file represents a ZIP file by inspecting the magic number.
+   *
+   * @since 3.29
+   */
+  public static boolean isZip(File file) throws IORuntimeException
+  {
+    try (InputStream fis = IOUtil.openInputStream(file))
+    {
+      return isZip(fis);
+    }
+    catch (IOException ex)
+    {
+      throw new IORuntimeException(ex);
+    }
   }
 
   public static void zip(ZipEntryHandler handler, File zipFile) throws IORuntimeException
@@ -115,14 +197,16 @@ public final class ZIPUtil
     zip(new FileSystemZipHandler(sourceFolder, excludeRoot), zipFile);
   }
 
-  public static void unzip(File zipFile, UnzipHandler handler) throws IORuntimeException
+  /**
+   * @since 3.29
+   */
+  public static void unzip(InputStream input, UnzipHandler handler) throws IORuntimeException
   {
-    FileInputStream fis = IOUtil.openInputStream(zipFile);
     ZipInputStream zis = null;
 
     try
     {
-      zis = new ZipInputStream(new BufferedInputStream(fis, DEFAULT_BUFFER_SIZE));
+      zis = new ZipInputStream(new BufferedInputStream(input, DEFAULT_BUFFER_SIZE));
 
       ZipEntry entry;
       while ((entry = zis.getNextEntry()) != null)
@@ -145,6 +229,36 @@ public final class ZIPUtil
     finally
     {
       IOUtil.closeSilent(zis);
+    }
+  }
+
+  /**
+   * @since 3.29
+   */
+  public static void unzip(byte[] bytes, UnzipHandler handler) throws IORuntimeException
+  {
+    InputStream input = new ByteArrayInputStream(bytes);
+
+    try
+    {
+      unzip(input, handler);
+    }
+    finally
+    {
+      IOUtil.closeSilent(input);
+    }
+  }
+
+  public static void unzip(File zipFile, UnzipHandler handler) throws IORuntimeException
+  {
+    FileInputStream fis = IOUtil.openInputStream(zipFile);
+
+    try
+    {
+      unzip(fis, handler);
+    }
+    finally
+    {
       IOUtil.closeSilent(fis);
     }
   }
@@ -157,6 +271,7 @@ public final class ZIPUtil
   /**
    * @author Eike Stepper
    */
+  @FunctionalInterface
   public interface ZipEntryHandler
   {
     public void handleEntry(EntryContext context) throws IOException;
@@ -167,9 +282,15 @@ public final class ZIPUtil
    */
   public interface UnzipHandler
   {
-    public void unzipDirectory(String name) throws IOException;
+    public default void unzipDirectory(String name) throws IOException
+    {
+      // Subclasses may override.
+    }
 
-    public void unzipFile(String name, InputStream zipStream) throws IOException;
+    public default void unzipFile(String name, InputStream zipStream) throws IOException
+    {
+      // Subclasses may override.
+    }
   }
 
   /**

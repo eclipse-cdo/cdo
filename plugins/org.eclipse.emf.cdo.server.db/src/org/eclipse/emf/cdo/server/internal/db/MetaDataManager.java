@@ -85,6 +85,12 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   }
 
   @Override
+  public boolean isZipPackageBytes()
+  {
+    return store.getProperty(IDBStore.Props.ZIP_PACKAGE_BYTES, ZIP_PACKAGE_BYTES);
+  }
+
+  @Override
   public synchronized CDOID getMetaID(EModelElement modelElement, long commitTime)
   {
     CDOID metaID = modelElementToMetaID.get(modelElement);
@@ -336,14 +342,15 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   {
     String uri = packageUnit.getID();
     ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(getPackageRegistry());
-    return createEPackage(uri, bytes, resourceSet);
+    return EMFUtil.createEPackage(uri, bytes, resourceSet, false);
   }
 
   private byte[] getEPackageBytes(InternalCDOPackageUnit packageUnit)
   {
     EPackage ePackage = packageUnit.getTopLevelPackageInfo().getEPackage();
+    boolean zipped = isZipPackageBytes();
     EPackage.Registry packageRegistry = getPackageRegistry();
-    return getEPackageBytes(ePackage, packageRegistry);
+    return EMFUtil.getEPackageBytes(ePackage, zipped, packageRegistry);
   }
 
   private void fillSystemTables(IDBConnection connection, InternalCDOPackageUnit[] packageUnits, OMMonitor monitor)
@@ -504,15 +511,5 @@ public class MetaDataManager extends Lifecycle implements IMetaDataManager
   private static String getMetaURI(EModelElement modelElement)
   {
     return EcoreUtil.getURI(modelElement).toString();
-  }
-
-  public static byte[] getEPackageBytes(EPackage ePackage, EPackage.Registry packageRegistry)
-  {
-    return EMFUtil.getEPackageBytes(ePackage, ZIP_PACKAGE_BYTES, packageRegistry);
-  }
-
-  public static EPackage createEPackage(String uri, byte[] bytes, ResourceSet resourceSet)
-  {
-    return EMFUtil.createEPackage(uri, bytes, ZIP_PACKAGE_BYTES, resourceSet, false);
   }
 }

@@ -41,6 +41,11 @@ import java.util.Collection;
 public interface IMetaDataManager
 {
   /**
+   * @since 4.14
+   */
+  public boolean isZipPackageBytes();
+
+  /**
    * Returns the meta ID of the given {@link EModelElement}.
    * <p>
    * <code>getMetaID(getMetaInstance(x))</code> yields <code>x</code>.

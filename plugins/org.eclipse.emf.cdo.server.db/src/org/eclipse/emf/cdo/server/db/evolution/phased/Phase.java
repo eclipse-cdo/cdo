@@ -10,7 +10,12 @@
  */
 package org.eclipse.emf.cdo.server.db.evolution.phased;
 
+import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
+import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport.Trigger;
+import org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
+import org.eclipse.emf.cdo.spi.server.InternalRepository;
 
 import org.eclipse.net4j.util.StringUtil;
 
@@ -99,6 +104,34 @@ public enum Phase
         return null;
       }
     }
+
+    /**
+     * Installs the old package registry in the repository before executing the phase handler.
+     */
+    @Override
+    public void init(Context context)
+    {
+      PhasedModelEvolutionSupport support = context.getSupport();
+      InternalRepository repository = (InternalRepository)support.getStore().getRepository();
+      InternalCDOPackageRegistry originalPackageRegistry = repository.getPackageRegistry(false);
+      context.properties().put(ORIGINAL_PACKAGE_REGISTRY_KEY, originalPackageRegistry);
+      repository.setPackageRegistry(support.getOldPackageRegistry());
+    }
+
+    /**
+     * Restores the original package registry in the repository after executing the phase handler.
+     */
+    @Override
+    public void done(Context context)
+    {
+      PhasedModelEvolutionSupport support = context.getSupport();
+      InternalRepository repository = (InternalRepository)support.getStore().getRepository();
+      InternalCDOPackageRegistry originalPackageRegistry = (InternalCDOPackageRegistry)context.properties().remove(ORIGINAL_PACKAGE_REGISTRY_KEY);
+      if (originalPackageRegistry != null)
+      {
+        repository.setPackageRegistry(originalPackageRegistry);
+      }
+    }
   },
 
   /**
@@ -130,6 +163,24 @@ public enum Phase
       default:
         return null;
       }
+    }
+
+    /**
+     * Installs the new package registry in the repository and forces remapping before executing the phase handler.
+     */
+    @Override
+    public void done(Context context)
+    {
+      PhasedModelEvolutionSupport support = context.getSupport();
+      IDBStore store = support.getStore();
+
+      // Install the new package registry in the repository.
+      InternalRepository repository = (InternalRepository)store.getRepository();
+      repository.setPackageRegistry(support.getNewPackageRegistry());
+
+      // Force remapping with new package registry.
+      IMappingStrategy mappingStrategy = store.getMappingStrategy();
+      mappingStrategy.clearClassMappings();
     }
   },
 
@@ -183,6 +234,8 @@ public enum Phase
     }
   };
 
+  private static final String ORIGINAL_PACKAGE_REGISTRY_KEY = CDOPackageRegistry.class.getName();
+
   private final Trigger trigger;
 
   private Phase(Trigger trigger)
@@ -234,6 +287,22 @@ public enum Phase
   }
 
   protected abstract Transition getTransitionTo(Phase nextPhase);
+
+  /**
+   * Called before executing a phase handler.
+   */
+  public void init(Context context)
+  {
+    // Default implementation does nothing.
+  }
+
+  /**
+   * Called after executing a phase handler.
+   */
+  public void done(Context context)
+  {
+    // Default implementation does nothing.
+  }
 
   /**
    * Parses the given string into a Phase.

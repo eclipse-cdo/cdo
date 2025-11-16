@@ -230,7 +230,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     return properties;
   }
 
-  private int getProperty(String key, int defaultValue)
+  public int getProperty(String key, int defaultValue)
   {
     if (properties != null)
     {
@@ -244,8 +244,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     return defaultValue;
   }
 
-  @SuppressWarnings("unused")
-  private String getProperty(String key, String defaultValue)
+  public String getProperty(String key, String defaultValue)
   {
     if (properties != null)
     {
@@ -259,7 +258,7 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     return defaultValue;
   }
 
-  private boolean getProperty(String key, boolean defaultValue)
+  public boolean getProperty(String key, boolean defaultValue)
   {
     if (properties != null)
     {
@@ -973,15 +972,14 @@ public class DBStore extends Store implements IDBStore, CDOAllRevisionsProvider,
     // If we crash later, crash recovery will be performed because the flag is missing.
     removePersistentProperties(Collections.singleton(PROP_GRACEFULLY_SHUT_DOWN));
 
-    // if (true)
-    // {
-    // return;
-    // }
-
     if (modelEvolutionSupport != null)
     {
-      modelEvolutionSupport.setStore(this);
-      modelEvolutionSupport.activate();
+      if (!modelEvolutionSupport.isActive())
+      {
+        modelEvolutionSupport.setStore(this);
+        modelEvolutionSupport.activate();
+      }
+
       modelEvolutionSupport.trigger(Trigger.ActivatingStore);
     }
     else

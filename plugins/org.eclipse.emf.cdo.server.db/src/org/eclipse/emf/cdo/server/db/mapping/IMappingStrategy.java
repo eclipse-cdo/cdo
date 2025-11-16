@@ -240,6 +240,15 @@ public interface IMappingStrategy
   public Map<EClass, IClassMapping> getClassMappings(boolean createOnDemand);
 
   /**
+   * @since 4.14
+   */
+  public default void clearClassMappings()
+  {
+    Map<EClass, IClassMapping> classMappings = getClassMappings(false);
+    classMappings.clear();
+  }
+
+  /**
    * Query if this mapping supports revision deltas. <br>
    * If this method returns <code>true</code>, it is guaranteed that all class mappings returned by
    * {@link #getClassMapping(EClass)} implement {@link IClassMappingDeltaSupport}.
@@ -396,7 +405,24 @@ public interface IMappingStrategy
   public String getListJoin(String attrTable, String listTable);
 
   /**
-   * Contains symbolic constants that specifiy valid keys of {@link IMappingStrategy#getProperties() mapping strategy properties}.
+   * @since 4.14
+   */
+  public default IMappingStrategy getDelegate()
+  {
+    return null;
+  }
+
+  /**
+   * @since 4.14
+   */
+  public static IMappingStrategy getEffectiveMappingStrategy(IMappingStrategy mappingStrategy)
+  {
+    IMappingStrategy delegate = mappingStrategy != null ? mappingStrategy.getDelegate() : null;
+    return delegate != null ? getEffectiveMappingStrategy(delegate) : mappingStrategy;
+  }
+
+  /**
+   * Contains symbolic constants that specify valid keys of {@link IMappingStrategy#getProperties() mapping strategy properties}.
    *
    * @author Eike Stepper
    * @since 4.4

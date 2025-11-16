@@ -95,6 +95,8 @@ public abstract class AbstractOMTest extends TestCase
 
   private static final ContextTracer TRACER = new ContextTracer(OM.DEBUG, AbstractOMTest.class);
 
+  private static final boolean PHYSICALLY_DELETE_FILES = OMPlatform.INSTANCE.isProperty("PHYSICALLY_DELETE_FILES", true);
+
   private static boolean consoleEnabled;
 
   private static String testName;
@@ -455,9 +457,12 @@ public abstract class AbstractOMTest extends TestCase
   {
     synchronized (filesToDelete)
     {
-      for (File file : filesToDelete)
+      if (PHYSICALLY_DELETE_FILES)
       {
-        IOUtil.delete(file);
+        for (File file : filesToDelete)
+        {
+          IOUtil.delete(file);
+        }
       }
 
       filesToDelete.clear();

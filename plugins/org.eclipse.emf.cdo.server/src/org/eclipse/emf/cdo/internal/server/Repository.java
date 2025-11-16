@@ -1382,9 +1382,9 @@ public class Repository extends Container<Object> implements InternalRepository
     return getPackageRegistry(true);
   }
 
+  @Override
   public void setPackageRegistry(InternalCDOPackageRegistry packageRegistry)
   {
-    checkInactive();
     this.packageRegistry = packageRegistry;
   }
 

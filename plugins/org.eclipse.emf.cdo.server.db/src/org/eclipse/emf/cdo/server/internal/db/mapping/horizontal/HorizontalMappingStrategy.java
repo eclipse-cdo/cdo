@@ -64,6 +64,7 @@ public class HorizontalMappingStrategy extends Lifecycle implements ISchemaMigra
   {
   }
 
+  @Override
   public IMappingStrategy getDelegate()
   {
     return delegate;

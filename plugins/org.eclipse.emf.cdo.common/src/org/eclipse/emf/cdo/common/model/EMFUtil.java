@@ -17,6 +17,7 @@ package org.eclipse.emf.cdo.common.model;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.util.WrappedException;
+import org.eclipse.net4j.util.io.ZIPUtil;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -43,7 +44,9 @@ import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.XMLResource;
 import org.eclipse.emf.ecore.xmi.impl.EcoreResourceFactoryImpl;
+import org.eclipse.emf.ecore.xmi.impl.URIHandlerImpl;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -119,6 +122,8 @@ public final class EMFUtil
    * @since 4.2
    */
   public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE.getEClassifier_InstanceTypeName();
+
+  private static final XMLResource.URIHandler ABSOLUTE_URI_PRESERVING_URI_HANDLER = new AbsoluteURIPreservingURIHandler();
 
   /**
    * @since 4.2
@@ -663,6 +668,35 @@ public final class EMFUtil
   }
 
   /**
+   * Creates an {@link EPackage} from the given byte array by loading it into a resource in the given resource set.
+   * <p>
+   * If <code>lookForResource</code> is <code>true</code>, then an attempt is made to find an existing resource with the given URI
+   * before creating a new one.
+   * <p>
+   * The method automatically detects whether the byte array is zipped.
+   * <p>
+   * Note that the byte array is not copied, so it must not be modified while the resource is in use.
+   *
+   * @see #createEPackage(String, byte[], boolean, ResourceSet, boolean)
+   * @since 4.27
+   */
+  public static EPackage createEPackage(String uri, byte[] bytes, ResourceSet resourceSet, boolean lookForResource)
+  {
+    boolean zipped = ZIPUtil.isZip(bytes);
+    return createEPackage(uri, bytes, zipped, resourceSet, lookForResource);
+  }
+
+  /**
+   * Creates an {@link EPackage} from the given byte array by loading it into a resource in the given resource set.
+   * <p>
+   * If <code>lookForResource</code> is <code>true</code>, then an attempt is made to find an existing resource with the given URI
+   * before creating a new one.
+   * <p>
+   * If the byte array is zipped, then set <code>zipped</code> to <code>true</code>.
+   * <p>
+   * Note that the byte array is not copied, so it must not be modified while the resource is in use.
+   *
+   * @see #createEPackage(String, byte[], ResourceSet, boolean)
    * @since 3.0
    */
   public static EPackage createEPackage(String uri, byte[] bytes, boolean zipped, ResourceSet resourceSet, boolean lookForResource)
@@ -695,6 +729,9 @@ public final class EMFUtil
   private static Map<String, Object> createResourceOptions(boolean zipped)
   {
     Map<String, Object> options = new HashMap<>();
+    options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
+    options.put(XMLResource.OPTION_URI_HANDLER, ABSOLUTE_URI_PRESERVING_URI_HANDLER);
+
     if (zipped)
     {
       options.put(Resource.OPTION_ZIP, true);
@@ -1038,6 +1075,27 @@ public final class EMFUtil
           registrationConsumer.accept(uri, t);
         }
       }
+    }
+  }
+
+  /**
+   * @author Eike Stepper
+   */
+  private static final class AbsoluteURIPreservingURIHandler extends URIHandlerImpl
+  {
+    public AbsoluteURIPreservingURIHandler()
+    {
+    }
+
+    @Override
+    public URI deresolve(URI uri)
+    {
+      if (uri.trimFragment() == baseURI)
+      {
+        return super.deresolve(uri);
+      }
+
+      return uri;
     }
   }
 }

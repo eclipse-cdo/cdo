@@ -164,6 +164,11 @@ loadScripts(document, 'script');</script>
 <div class="col-first odd-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
 <div class="col-second odd-row-color"><code><a href="#WRITER_POOL_CAPACITY" class="member-name-link">WRITER_POOL_CAPACITY</a></code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static final <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second even-row-color"><code><a href="#ZIP_PACKAGE_BYTES" class="member-name-link">ZIP_PACKAGE_BYTES</a></code></div>
+<div class="col-last even-row-color">
+<div class="block">Whether to store packages as zipped byte arrays in the database.</div>
+</div>
 </div>
 </section>
 </li>
@@ -369,6 +374,33 @@ loadScripts(document, 'script');</script>
 <dd>
 <ul class="tag-list">
 <li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.JDBC_FETCH_SIZE">Constant Field Values</a></li>
+</ul>
+</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="ZIP_PACKAGE_BYTES">
+<h3>ZIP_PACKAGE_BYTES</h3>
+<div class="member-signature"><span class="modifiers">static final</span>&nbsp;<span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></span>&nbsp;<span class="element-name">ZIP_PACKAGE_BYTES</span></div>
+<div class="block">Whether to store packages as zipped byte arrays in the database.
+ <p>
+ When set to <code>true</code>, packages are stored as zipped byte arrays. This saves database space, but
+ makes it harder to inspect the stored packages outside of CDO.
+ <p>
+ When set to <code>false</code> (the default), packages are stored as plain XML/XMI.
+ <p>
+ The default value is determined by the "org.eclipse.emf.cdo.server.internal.db.MetaDataManager.ZIP_PACKAGE_BYTES"
+ system property, which defaults to <code>true</code>.
+ <p>
+ Note: This property only affects newly stored packages. Existing packages are not converted.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>4.14</dd>
+<dt>See Also:</dt>
+<dd>
+<ul class="tag-list">
+<li><a href="../../../../../../constant-values.html#org.eclipse.emf.cdo.server.db.IDBStore.Props.ZIP_PACKAGE_BYTES">Constant Field Values</a></li>
 </ul>
 </dd>
 </dl>

@@ -196,9 +196,19 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Transition</a></code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransitionTo(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)" class="member-name-link">getTransitionTo</a><wbr>(<a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a>&nbsp;nextPhase)</code></div>
-<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#done(org.eclipse.emf.cdo.server.db.evolution.phased.Context)" class="member-name-link">done</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called after executing a phase handler.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>protected abstract <a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Transition</a></code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getTransitionTo(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)" class="member-name-link">getTransitionTo</a><wbr>(<a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a>&nbsp;nextPhase)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#init(org.eclipse.emf.cdo.server.db.evolution.phased.Context)" class="member-name-link">init</a><wbr>(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
+<div class="block">Called before executing a phase handler.</div>
+</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>boolean</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initial()" class="member-name-link">initial</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
@@ -422,6 +432,20 @@ not permitted.)</div>
 <section class="detail" id="getTransitionTo(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)">
 <h3>getTransitionTo</h3>
 <div class="member-signature"><span class="modifiers">protected abstract</span>&nbsp;<span class="return-type"><a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase.Transition</a></span>&nbsp;<span class="element-name">getTransitionTo</span><wbr><span class="parameters">(<a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">Phase</a>&nbsp;nextPhase)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="init(org.eclipse.emf.cdo.server.db.evolution.phased.Context)">
+<h3>init</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">init</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</span></div>
+<div class="block">Called before executing a phase handler.</div>
+</section>
+</li>
+<li>
+<section class="detail" id="done(org.eclipse.emf.cdo.server.db.evolution.phased.Context)">
+<h3>done</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">done</span><wbr><span class="parameters">(<a href="Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</span></div>
+<div class="block">Called after executing a phase handler.</div>
 </section>
 </li>
 <li>

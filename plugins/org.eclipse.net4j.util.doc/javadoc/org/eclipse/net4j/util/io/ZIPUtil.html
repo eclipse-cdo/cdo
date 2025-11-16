@@ -160,6 +160,25 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isZip(byte%5B%5D)" class="member-name-link">isZip</a><wbr>(byte[]&nbsp;bytes)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Checks whether the given byte array represents a ZIP file by inspecting the magic number.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isZip(java.io.File)" class="member-name-link">isZip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Checks whether the given file represents a ZIP file by inspecting the magic number.</div>
+</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#isZip(java.io.InputStream)" class="member-name-link">isZip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">
+<div class="block">Checks whether the given input stream represents a ZIP file by inspecting the magic number.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unzip(byte%5B%5D,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(byte[]&nbsp;bytes,
+ <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unzip(java.io.File,java.io.File)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;targetFolder)</code></div>
@@ -169,14 +188,18 @@ loadScripts(document, 'script');</script>
  <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#zip(java.io.File,boolean,java.io.File)" class="member-name-link">zip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;sourceFolder,
- boolean&nbsp;excludeRoot,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#unzip(java.io.InputStream,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#zip(org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler,java.io.File)" class="member-name-link">zip</a><wbr>(<a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#zip(java.io.File,boolean,java.io.File)" class="member-name-link">zip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;sourceFolder,
+ boolean&nbsp;excludeRoot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code>static void</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4"><code><a href="#zip(org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler,java.io.File)" class="member-name-link">zip</a><wbr>(<a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile)</code></div>
+<div class="col-last even-row-color method-summary-table method-summary-table-tab1 method-summary-table-tab4">&nbsp;</div>
 </div>
 </div>
 </div>
@@ -237,6 +260,45 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
+<section class="detail" id="isZip(byte[])">
+<h3>isZip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isZip</span><wbr><span class="parameters">(byte[]&nbsp;bytes)</span></div>
+<div class="block">Checks whether the given byte array represents a ZIP file by inspecting the magic number.</div>
+<dl class="notes">
+<dt>Since:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isZip(java.io.InputStream)">
+<h3>isZip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isZip</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<div class="block">Checks whether the given input stream represents a ZIP file by inspecting the magic number.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isZip(java.io.File)">
+<h3>isZip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isZip</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</span>
+                     throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<div class="block">Checks whether the given file represents a ZIP file by inspecting the magic number.</div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
 <section class="detail" id="zip(org.eclipse.net4j.util.io.ZIPUtil.ZipEntryHandler,java.io.File)">
 <h3>zip</h3>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">zip</span><wbr><span class="parameters">(<a href="ZIPUtil.ZipEntryHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.ZipEntryHandler</a>&nbsp;handler,
@@ -254,6 +316,34 @@ loadScripts(document, 'script');</script>
 <div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">zip</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;sourceFolder,
  boolean&nbsp;excludeRoot,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile)</span></div>
+</section>
+</li>
+<li>
+<section class="detail" id="unzip(java.io.InputStream,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)">
+<h3>unzip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unzip</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
+ <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</span>
+                  throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.29</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="unzip(byte[],org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)">
+<h3>unzip</h3>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">unzip</span><wbr><span class="parameters">(byte[]&nbsp;bytes,
+ <a href="ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</span>
+                  throws <span class="exceptions"><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></span></div>
+<dl class="notes">
+<dt>Throws:</dt>
+<dd><code><a href="IORuntimeException.html" title="class in org.eclipse.net4j.util.io">IORuntimeException</a></code></dd>
+<dt>Since:</dt>
+<dd>3.29</dd>
+</dl>
 </section>
 </li>
 <li>

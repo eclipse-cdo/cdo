@@ -221,6 +221,16 @@ loadScripts(document, 'script');</script>
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;suffix,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;directory)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static boolean</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#isZip(java.io.File)" class="member-name-link">isZip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Checks whether the given file represents a ZIP file by inspecting the magic number.</div>
+</div>
+<div class="col-first even-row-color"><code>static boolean</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#isZip(java.io.InputStream)" class="member-name-link">isZip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input)</code></div>
+<div class="col-last even-row-color">
+<div class="block">Checks whether the given input stream represents a ZIP file by inspecting the magic number.</div>
+</div>
 <div class="col-first odd-row-color"><code>static <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileInputStream.html" title="class or interface in java.io" class="external-link">FileInputStream</a></code></div>
 <div class="col-second odd-row-color"><span class="type-name-label">IOUtil.</span><code><a href="../IOUtil.html#openInputStream(java.io.File)" class="member-name-link">openInputStream</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;file)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
@@ -282,11 +292,19 @@ loadScripts(document, 'script');</script>
  <a href="../IORunnable.html" title="interface in org.eclipse.net4j.util.io">IORunnable</a>&lt;<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/FileWriter.html" title="class or interface in java.io" class="external-link">FileWriter</a>&gt;&nbsp;runnable)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(java.io.File,java.io.File)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;targetFolder)</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(byte%5B%5D,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(byte[]&nbsp;bytes,
+ <a href="../ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>static void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(java.io.File,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile,
+<div class="col-second even-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(java.io.File,java.io.File)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;targetFolder)</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(java.io.File,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/File.html" title="class or interface in java.io" class="external-link">File</a>&nbsp;zipFile,
+ <a href="../ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>static void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ZIPUtil.</span><code><a href="../ZIPUtil.html#unzip(java.io.InputStream,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/io/InputStream.html" title="class or interface in java.io" class="external-link">InputStream</a>&nbsp;input,
  <a href="../ZIPUtil.UnzipHandler.html" title="interface in org.eclipse.net4j.util.io">ZIPUtil.UnzipHandler</a>&nbsp;handler)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
 <div class="col-first odd-row-color"><code>static void</code></div>

@@ -113,9 +113,9 @@ loadScripts(document, 'script');</script>
  <ol>
  <li>It delegates the model evolution to the mapping strategy, which is responsible for updating the database schema,
  migrating the existing data, and changing the container feature IDs in case of shifted features.</li>
- <li>It updates the system tables, including the cdo_package_units table, cdo_package_infos table, and
- cdo_external_refs table.</li>
- <li>It commits the transaction unless it's a dry run, in which case it rolls back the changes.</li>
+ <li>It updates the system tables, including the <code>cdo_package_units</code> table, <code>cdo_package_infos</code> table, and
+ <code>cdo_external_refs</code> table.</li>
+ <li>It commits the transaction.</li>
  </ol></div>
 <dl class="notes">
 <dt>Since:</dt>

@@ -3880,6 +3880,10 @@ loadScripts(document, 'script');</script>
 </dd>
 <dt><a href="org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html#%3Cinit%3E(java.lang.String)" class="member-name-link">FactoryTypeContentProvider(String)</a> - Constructor for class org.eclipse.net4j.util.ui.<a href="org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html" title="class in org.eclipse.net4j.util.ui">FactoryTypeContentProvider</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.html#factoryTypePrefix()" class="member-name-link">factoryTypePrefix()</a> - Element in annotation interface org.eclipse.net4j.util.factory.<a href="org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.html" title="annotation interface in org.eclipse.net4j.util.factory">AnnotationFactory.InjectElement</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.html#factoryTypeSuffix()" class="member-name-link">factoryTypeSuffix()</a> - Element in annotation interface org.eclipse.net4j.util.factory.<a href="org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.html" title="annotation interface in org.eclipse.net4j.util.factory">AnnotationFactory.InjectElement</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/fsm/FiniteStateMachine.html#FAIL" class="member-name-link">FAIL</a> - Static variable in class org.eclipse.net4j.util.fsm.<a href="org/eclipse/net4j/util/fsm/FiniteStateMachine.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html#%3Cinit%3E()" class="member-name-link">FailTransition()</a> - Constructor for class org.eclipse.net4j.util.fsm.<a href="org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html" title="class in org.eclipse.net4j.util.fsm">FiniteStateMachine.FailTransition</a></dt>
@@ -5085,6 +5089,12 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/container/ContainerElementList.html#getElementType()" class="member-name-link">getElementType()</a> - Method in class org.eclipse.net4j.util.container.<a href="org/eclipse/net4j/util/container/ContainerElementList.html" title="class in org.eclipse.net4j.util.container">ContainerElementList</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String)" class="member-name-link">getElementType(Tree, String, String)</a> - Method in class org.eclipse.net4j.util.factory.<a href="org/eclipse/net4j/util/factory/AnnotationFactory.html" title="class in org.eclipse.net4j.util.factory">AnnotationFactory</a></dt>
+<dd>
+<div class="deprecation-block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 3.29, use <a href="org/eclipse/net4j/util/factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String,java.lang.String,java.lang.String)"><code>AnnotationFactory.getElementType(Tree, String, String, String, String)</code></a>.</div>
+</div>
+</dd>
+<dt><a href="org/eclipse/net4j/util/factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">getElementType(Tree, String, String, String, String)</a> - Method in class org.eclipse.net4j.util.factory.<a href="org/eclipse/net4j/util/factory/AnnotationFactory.html" title="class in org.eclipse.net4j.util.factory">AnnotationFactory</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ui/widgets/EntryField.FieldConfig.html#getEmptyHandler()" class="member-name-link">getEmptyHandler()</a> - Method in class org.eclipse.net4j.util.ui.widgets.<a href="org/eclipse/net4j/util/ui/widgets/EntryField.FieldConfig.html" title="class in org.eclipse.net4j.util.ui.widgets">EntryField.FieldConfig</a></dt>
 <dd>&nbsp;</dd>
@@ -7912,6 +7922,18 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Synchronizes a producer and a consumer thread letting the producer pass a value to the consumer.</div>
 </dd>
+<dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#isZip(byte%5B%5D)" class="member-name-link">isZip(byte[])</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
+<dd>
+<div class="block">Checks whether the given byte array represents a ZIP file by inspecting the magic number.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#isZip(java.io.File)" class="member-name-link">isZip(File)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
+<dd>
+<div class="block">Checks whether the given file represents a ZIP file by inspecting the magic number.</div>
+</dd>
+<dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#isZip(java.io.InputStream)" class="member-name-link">isZip(InputStream)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
+<dd>
+<div class="block">Checks whether the given input stream represents a ZIP file by inspecting the magic number.</div>
+</dd>
 <dt><a href="org/eclipse/net4j/util/ui/views/ItemProvider.html" class="type-name-link" title="class in org.eclipse.net4j.util.ui.views">ItemProvider&lt;INPUT&gt;</a> - Class in <a href="org/eclipse/net4j/util/ui/views/package-summary.html">org.eclipse.net4j.util.ui.views</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/ui/views/ItemProvider.html#%3Cinit%3E()" class="member-name-link">ItemProvider()</a> - Constructor for class org.eclipse.net4j.util.ui.views.<a href="org/eclipse/net4j/util/ui/views/ItemProvider.html" title="class in org.eclipse.net4j.util.ui.views">ItemProvider</a></dt>
@@ -10142,6 +10164,10 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/eclipse/net4j/util/io/ExtendedIOUtil.html#readByteArray(java.io.DataInput)" class="member-name-link">readByteArray(DataInput)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ExtendedIOUtil.html" title="class in org.eclipse.net4j.util.io">ExtendedIOUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/io/DataInputOutputFile.html#readBytes(int)" class="member-name-link">readBytes(int)</a> - Method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/DataInputOutputFile.html" title="class in org.eclipse.net4j.util.io">DataInputOutputFile</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/io/IOUtil.html#readBytes(java.io.InputStream)" class="member-name-link">readBytes(InputStream)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/IOUtil.html" title="class in org.eclipse.net4j.util.io">IOUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/io/IOUtil.html#readBytes(java.io.InputStream,int)" class="member-name-link">readBytes(InputStream, int)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/IOUtil.html" title="class in org.eclipse.net4j.util.io">IOUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/io/DataInputExtender.html#readChar()" class="member-name-link">readChar()</a> - Method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/DataInputExtender.html" title="class in org.eclipse.net4j.util.io">DataInputExtender</a></dt>
 <dd>&nbsp;</dd>
@@ -13010,9 +13036,13 @@ loadScripts(document, 'script');</script>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/WrappedException.html#unwrap(java.lang.Exception)" class="member-name-link">unwrap(Exception)</a> - Static method in exception class org.eclipse.net4j.util.<a href="org/eclipse/net4j/util/WrappedException.html" title="class in org.eclipse.net4j.util">WrappedException</a></dt>
 <dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#unzip(byte%5B%5D,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip(byte[], ZIPUtil.UnzipHandler)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
+<dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#unzip(java.io.File,java.io.File)" class="member-name-link">unzip(File, File)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#unzip(java.io.File,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip(File, ZIPUtil.UnzipHandler)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/eclipse/net4j/util/io/ZIPUtil.html#unzip(java.io.InputStream,org.eclipse.net4j.util.io.ZIPUtil.UnzipHandler)" class="member-name-link">unzip(InputStream, ZIPUtil.UnzipHandler)</a> - Static method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.html" title="class in org.eclipse.net4j.util.io">ZIPUtil</a></dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/eclipse/net4j/util/io/ZIPUtil.FileSystemUnzipHandler.html#unzipDirectory(java.lang.String)" class="member-name-link">unzipDirectory(String)</a> - Method in class org.eclipse.net4j.util.io.<a href="org/eclipse/net4j/util/io/ZIPUtil.FileSystemUnzipHandler.html" title="class in org.eclipse.net4j.util.io">ZIPUtil.FileSystemUnzipHandler</a></dt>
 <dd>&nbsp;</dd>

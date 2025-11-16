@@ -302,24 +302,35 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String)" class="member-name-link">getElementType</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;elementConfig,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryTypeAttribute,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultFactoryType)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#injectAttribute(PRODUCT,org.eclipse.net4j.util.collection.Tree,java.lang.reflect.Method)" class="member-name-link">injectAttribute</a><wbr>(<a href="../../factory/AnnotationFactory.html" title="type parameter in AnnotationFactory">PRODUCT</a>&nbsp;product,
- <a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method)</code></div>
+<div class="col-last even-row-color">
+<div class="block"><span class="deprecated-label">Deprecated.</span>
+<div class="deprecation-comment">As of 3.29, use <a href="../../factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String,java.lang.String,java.lang.String)"><code>AnnotationFactory.getElementType(Tree, String, String, String, String)</code></a>.</div>
+</div>
+</div>
+<div class="col-first odd-row-color"><code>protected <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#getElementType(org.eclipse.net4j.util.collection.Tree,java.lang.String,java.lang.String,java.lang.String,java.lang.String)" class="member-name-link">getElementType</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;elementConfig,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryTypeAttribute,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;defaultFactoryType,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryTypePrefix,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/String.html" title="class or interface in java.lang" class="external-link">String</a>&nbsp;factoryTypeSuffix)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#injectElement(PRODUCT,org.eclipse.net4j.util.collection.Tree,java.lang.reflect.Method)" class="member-name-link">injectElement</a><wbr>(<a href="../../factory/AnnotationFactory.html" title="type parameter in AnnotationFactory">PRODUCT</a>&nbsp;product,
+<div class="col-second even-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#injectAttribute(PRODUCT,org.eclipse.net4j.util.collection.Tree,java.lang.reflect.Method)" class="member-name-link">injectAttribute</a><wbr>(<a href="../../factory/AnnotationFactory.html" title="type parameter in AnnotationFactory">PRODUCT</a>&nbsp;product,
  <a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config,
  <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>protected final <a href="../../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">TreeFactory.</span><code><a href="../../factory/TreeFactory.html#productCreationException(org.eclipse.net4j.util.collection.Tree)" class="member-name-link">productCreationException</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</code></div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AnnotationFactory.</span><code><a href="../../factory/AnnotationFactory.html#injectElement(PRODUCT,org.eclipse.net4j.util.collection.Tree,java.lang.reflect.Method)" class="member-name-link">injectElement</a><wbr>(<a href="../../factory/AnnotationFactory.html" title="type parameter in AnnotationFactory">PRODUCT</a>&nbsp;product,
+ <a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/reflect/Method.html" title="class or interface in java.lang.reflect" class="external-link">Method</a>&nbsp;method)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>protected final <a href="../../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">TreeFactory.</span><code><a href="../../factory/TreeFactory.html#productCreationException(org.eclipse.net4j.util.collection.Tree,java.lang.Throwable)" class="member-name-link">productCreationException</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config,
- <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">TreeFactory.</span><code><a href="../../factory/TreeFactory.html#productCreationException(org.eclipse.net4j.util.collection.Tree)" class="member-name-link">productCreationException</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>protected final <a href="../../factory/ProductCreationException.html" title="class in org.eclipse.net4j.util.factory">ProductCreationException</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">TreeFactory.</span><code><a href="../../factory/TreeFactory.html#productCreationException(org.eclipse.net4j.util.collection.Tree,java.lang.Throwable)" class="member-name-link">productCreationException</a><wbr>(<a href="../Tree.html" title="class in org.eclipse.net4j.util.collection">Tree</a>&nbsp;config,
+ <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Throwable.html" title="class or interface in java.lang" class="external-link">Throwable</a>&nbsp;cause)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

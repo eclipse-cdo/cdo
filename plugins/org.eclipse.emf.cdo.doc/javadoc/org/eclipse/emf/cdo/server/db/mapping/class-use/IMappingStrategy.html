@@ -167,6 +167,12 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
+<div class="col-first even-row-color"><code>default <a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../IMappingStrategy.html#getDelegate()" class="member-name-link">getDelegate</a>()</code></div>
+<div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>static <a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../IMappingStrategy.html#getEffectiveMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">getEffectiveMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>final <a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></div>
 <div class="col-second even-row-color"><span class="type-name-label">AbstractTypeMapping.</span><code><a href="../AbstractTypeMapping.html#getMappingStrategy()" class="member-name-link">getMappingStrategy</a>()</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
@@ -182,23 +188,26 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Create an <a href="../ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>ITypeMapping</code></a> implementation.</div>
 </div>
-<div class="col-first odd-row-color"><code>abstract org.eclipse.net4j.db.DBType</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">ColumnTypeModifier.</span><code><a href="../ColumnTypeModifier.html#modify(org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Provider,org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.emf.ecore.EStructuralFeature,org.eclipse.net4j.db.DBType)" class="member-name-link">modify</a><wbr>(<a href="../ITypeMapping.Provider.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a>&nbsp;provider,
+<div class="col-first odd-row-color"><code>static <a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">IMappingStrategy.</span><code><a href="../IMappingStrategy.html#getEffectiveMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">getEffectiveMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
+<div class="col-first even-row-color"><code>abstract org.eclipse.net4j.db.DBType</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">ColumnTypeModifier.</span><code><a href="../ColumnTypeModifier.html#modify(org.eclipse.emf.cdo.server.db.mapping.ITypeMapping.Provider,org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy,org.eclipse.emf.ecore.EStructuralFeature,org.eclipse.net4j.db.DBType)" class="member-name-link">modify</a><wbr>(<a href="../ITypeMapping.Provider.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">ITypeMapping.Provider</a>&nbsp;provider,
  <a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy,
  <a href="https://download.eclipse.org/modeling/emf/emf/javadoc/2.11/org/eclipse/emf/ecore/EStructuralFeature.html" title="class or interface in org.eclipse.emf.ecore" class="external-link">EStructuralFeature</a>&nbsp;feature,
  org.eclipse.net4j.db.DBType&nbsp;dbType)</code></div>
-<div class="col-last odd-row-color">
+<div class="col-last even-row-color">
 <div class="block">Can modify the column type of a <a href="../ITypeMapping.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping</code></a> that is created by the <a href="../ITypeMapping.Registry.html" title="interface in org.eclipse.emf.cdo.server.db.mapping"><code>type mapping registry</code></a>.</div>
 </div>
-<div class="col-first even-row-color"><code>final void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">AbstractTypeMapping.</span><code><a href="../AbstractTypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
-<div class="col-last even-row-color">&nbsp;</div>
-<div class="col-first odd-row-color"><code>void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">DelegatingTypeMapping.</span><code><a href="../DelegatingTypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-first odd-row-color"><code>final void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">AbstractTypeMapping.</span><code><a href="../AbstractTypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
 <div class="col-last odd-row-color">&nbsp;</div>
 <div class="col-first even-row-color"><code>void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">ITypeMapping.</span><code><a href="../ITypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">DelegatingTypeMapping.</span><code><a href="../DelegatingTypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
 <div class="col-last even-row-color">&nbsp;</div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">ITypeMapping.</span><code><a href="../ITypeMapping.html#setMappingStrategy(org.eclipse.emf.cdo.server.db.mapping.IMappingStrategy)" class="member-name-link">setMappingStrategy</a><wbr>(<a href="../IMappingStrategy.html" title="interface in org.eclipse.emf.cdo.server.db.mapping">IMappingStrategy</a>&nbsp;mappingStrategy)</code></div>
+<div class="col-last odd-row-color">&nbsp;</div>
 </div>
 </section>
 </li>

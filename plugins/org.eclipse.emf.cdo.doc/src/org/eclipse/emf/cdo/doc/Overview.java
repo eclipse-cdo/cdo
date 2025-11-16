@@ -90,6 +90,13 @@ public class Overview
    * <dd>Data integrity can be ensured by enabling optional commit checks in the repository server such as referential
    * integrity checks and containment cycle checks, as well as custom checks implemented by write access handlers.
    * <p>
+   * <dt><b>Model Evolution</b>
+   * <dd> Model evolution support allows you to change the meta model of your application and to
+   * automatically migrate the existing data in the repository to conform to the changed
+   * meta model. Model evolution support is highly configurable and can be extended
+   * through custom model change detectors, repository exporters, schema migrators,
+   * store processors, repository processors, and listeners.
+   * <p>
    * <dt><b>Security</b>
    * <dd>The data in a repository can be secured through pluggable {@link IAuthenticator authenticators} and
    * {@link IPermissionManager permission managers}. A default security model is provided on top of these low-level

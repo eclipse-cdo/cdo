@@ -141,16 +141,20 @@ import java.util.Properties;
  * <p>
  * Example configuration snippet:
  * <pre>
- * &lt;modelEvolutionSupport type="phased" mode="migrate" rootFolder="/var/cdo/evolution" saveNewModels="true">
- *    &lt;changeDetector/>
- *    &lt;repositoryExporter binary="false"/>
- *    &lt;schemaMigrator deleteObsoleteMetaIDs="false"/>
- *    &lt;storeProcessor type="myCustomStoreProcessor"/>
- *    &lt;repositoryProcessor type="myCustomRepositoryProcessor"/>
- *    &lt;!-- Optional listeners -->
- *    &lt;listener type="log"/&gt;
- *    &lt;listener type="myCustomModelEvolutionChecks"/&gt;
- * &lt;/modelEvolutionSupport>
+ * &lt;store type="db">
+ *   ...
+ *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true">
+ *     &lt;changeDetector/>
+ *     &lt;repositoryExporter type="default" binary="false"/>
+ *     &lt;schemaMigrator/>
+ *     &lt;storeProcessor type="my-sql-processor" myExtraArg="data"/>
+ *     &lt;repositoryProcessor type="my-eobject-handler" myExtraArg="data"/> -->
+ *     &lt;!-- Optional listeners -->
+ *     &lt;listener type="log"/>
+ *     &lt;listener type="my-extra-checks"/>
+ *   &lt;/modelEvolutionSupport>
+ *   ...
+ * &lt;/store>
  * </pre>
  *
  *

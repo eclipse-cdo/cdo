@@ -43,14 +43,14 @@ import org.eclipse.net4j.util.lifecycle.ILifecycle;
  * <pre>
  * &lt;store type="db">
  *   ...
- *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate">
- *     &lt;changeDetector type="default-change-detector"/>
- *     &lt;repositoryExporter type="default-repository-exporter" binary="false"/>
- *     &lt;schemaMigrator type="default-schema-migrator"/>
- *     &lt;storeProcessor type="custom-store-processor" myExtraArg="data"/>
- *     &lt;repositoryProcessor type="custom-repository-processor" myExtraArg="data"/> -->
+ *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true">
+ *     &lt;changeDetector/>
+ *     &lt;repositoryExporter type="default" binary="false"/>
+ *     &lt;schemaMigrator/>
+ *     &lt;storeProcessor type="my-sql-processor" myExtraArg="data"/>
+ *     &lt;repositoryProcessor type="my-eobject-handler" myExtraArg="data"/> -->
  *     &lt;listener type="log"/>
- *     &lt;listener type="myCustomModelEvolutionExtraChecks"/>
+ *     &lt;listener type="my-extra-checks"/>
  *   &lt;/modelEvolutionSupport>
  *   ...
  * &lt;/store>

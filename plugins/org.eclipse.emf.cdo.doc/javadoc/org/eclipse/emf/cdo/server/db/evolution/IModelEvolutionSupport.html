@@ -122,14 +122,14 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
  <pre>
  &lt;store type="db"&gt;
    ...
-   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate"&gt;
-     &lt;changeDetector type="default-change-detector"/&gt;
-     &lt;repositoryExporter type="default-repository-exporter" binary="false"/&gt;
-     &lt;schemaMigrator type="default-schema-migrator"/&gt;
-     &lt;storeProcessor type="custom-store-processor" myExtraArg="data"/&gt;
-     &lt;repositoryProcessor type="custom-repository-processor" myExtraArg="data"/&gt; --&gt;
+   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true"&gt;
+     &lt;changeDetector/&gt;
+     &lt;repositoryExporter type="default" binary="false"/&gt;
+     &lt;schemaMigrator/&gt;
+     &lt;storeProcessor type="my-sql-processor" myExtraArg="data"/&gt;
+     &lt;repositoryProcessor type="my-eobject-handler" myExtraArg="data"/&gt; --&gt;
      &lt;listener type="log"/&gt;
-     &lt;listener type="myCustomModelEvolutionExtraChecks"/&gt;
+     &lt;listener type="my-extra-checks"/&gt;
    &lt;/modelEvolutionSupport&gt;
    ...
  &lt;/store&gt;

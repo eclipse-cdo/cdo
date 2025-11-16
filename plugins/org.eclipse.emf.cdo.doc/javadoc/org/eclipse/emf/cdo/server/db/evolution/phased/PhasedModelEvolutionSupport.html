@@ -102,33 +102,98 @@ loadScripts(document, 'script');</script>
 <div class="type-signature"><span class="modifiers">public class </span><span class="element-name type-name-label">PhasedModelEvolutionSupport</span>
 <span class="extends-implements">extends org.eclipse.net4j.util.lifecycle.Lifecycle
 implements <a href="../IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution">IModelEvolutionSupport</a></span></div>
-<div class="block">A default implementation of <a href="../IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution"><code>model evolution support</code></a> for DB stores.
+<div class="block">A <a href="Phase.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>phased</code></a> implementation of <a href="../IModelEvolutionSupport.html" title="interface in org.eclipse.emf.cdo.server.db.evolution"><code>model evolution support</code></a> for DB stores.
  <p>
  Model evolution support is responsible for evolving the models stored in a DB store to match the currently
  registered EPackages.
  <p>
- This implementation is based on a phased approach. Each phase is handled by a dedicated <a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased"><code>phase handler</code></a>.
- The following phases are supported:
- <ul>
- <li>Change detection: Detects model changes between the stored models and the currently registered EPackages.
+ This implementation is based on a phased approach. The following phases are supported:
+ <p>
+ <ol>
+ <li><b>Change detection</b>: Detects model changes between the stored models and the currently registered EPackages.
  If no changes are detected, the model evolution process is aborted.</li>
- <li>Repository export: Exports the repository data to a temporary location to prepare for schema migration.
+ <li><b>Repository export</b>: Exports the repository data to a temporary location to prepare for schema migration.
  This phase is optional.</li>
- <li>Schema migration: Evolves the database schema to match the new models. This includes updating the database
+ <li><b>Schema migration</b>: Evolves the database schema to match the new models. This includes updating the database
  schema, changing the container feature IDs in case of shifted features, and adjusting enum literals in case
  of changed enums. This phase is mandatory and ensures that the database schema is in sync with the new models.</li>
- <li>Store processing: Performs any necessary post-processing on the DB store after schema migration.
+ <li><b>Store processing</b>: Performs any necessary post-processing on the DB store after schema migration.
  This phase is optional.</li>
- <li>Repository processing: Performs any necessary post-processing on the repository after the DB store
+ <li><b>Repository processing</b>: Performs any necessary post-processing on the repository after the DB store
  has been processed. This phase is optional.</li>
+ </ol>
+ <p>
+ Each phase is handled by a dedicated <a href="Phase.Handler.html" title="interface in org.eclipse.emf.cdo.server.db.evolution.phased"><code>phase handler</code></a>. Phase handlers can be
+ configured via dependency injection (see <code>AnnotationFactory</code>). The Change Detection and Schema Migration
+ phases must have a phase handler configured. If no phase handler is configured for these phases, a default implementation
+ is used:
+ <p>
+ <ul>
+ <li>Change Detection: <a href="DefaultChangeDetector.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>DefaultChangeDetector</code></a></li>
+ <li>Schema Migration: <a href="DefaultSchemaMigrator.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>DefaultSchemaMigrator</code></a></li>
  </ul>
- Each phase is triggered at a specific point during the activation of the DB store and the repository.
+ <p>
+ The Repository Export, Store Processing, and Repository Processing phases may be skipped if no phase handler
+ is configured for them. The Repository Export phase is the only optional phase for which a default implementation
+ exists: <a href="DefaultRepositoryExporter.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>DefaultRepositoryExporter</code></a>.
+ <p>
+ Each phase is triggered at a specific point during the activation of the DB store and the repository. There are
+ two <a href="../IModelEvolutionSupport.Trigger.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution"><code>triggers</code></a>:
+ <p>
+ <ul>
+ <li><a href="../IModelEvolutionSupport.Trigger.html#ActivatingStore"><code>ActivatingStore</code></a>:
+ Triggered when the DB store is being activated by the <a href="../../../IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a>.
+ This is the main trigger for model evolution. It only occurs when the store is restarted, i.e., not
+ when the store is activated for the first time.</li>
+ <li><a href="../IModelEvolutionSupport.Trigger.html#ActivatedRepository"><code>ActivatedRepository</code></a>:
+ Triggered when the <a href="../../../IRepository.html" title="interface in org.eclipse.emf.cdo.server"><code>IRepository</code></a> has been fully activated.
+ This trigger exists mainly for special purposes, e.g., to export repository models before the schema
+ is upgraded.</li>
+ </ul>
+ <p>
+ Phases can request a store or repository restart by returning the appropriate <a href="Phase.Transition.html" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>Phase.Transition</code></a>
+ from their <a href="Phase.html#transitionTo(org.eclipse.emf.cdo.server.db.evolution.phased.Phase)"><code>transition</code></a> method.
  <p>
  The model evolution process can be configured via the <code>mode</code> attribute, which
  can be set to <code>migrate</code> (default), <code>prevent</code>, or <code>disabled</code>.
  In <code>migrate</code> mode, model changes are automatically evolved. In <code>prevent</code> mode,
  an exception is thrown if model changes are detected. In <code>disabled</code> mode,
- model evolution is skipped entirely.</div>
+ model evolution is skipped entirely.
+ <p>
+ The model evolution process stores its state in a dedicated root folder, which can be configured
+ via the <code>rootFolder</code> attribute. The root folder contains an <code>evolution.properties</code> file
+ storing the current evolution ID and phase, as well as dedicated evolution folders for each
+ evolution process. Each evolution folder is named after the evolution ID and contains
+ the exported models and an optional evolution log. The <a href="DefaultRepositoryExporter.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased"><code>DefaultRepositoryExporter</code></a> stores
+ the repository export file in the evolution folder during the Repository Export phase.
+ <p>
+ The model evolution context, which contains the models to be evolved and other relevant information,
+ is persisted in the evolution folder after the Change Detection phase. If the model evolution process
+ is interrupted, it can be resumed from the persisted context. Manual inspection of the evolution folder
+ may help diagnosing issues during model evolution or recovering from failures.
+ <p>
+ The phases and their handlers fire various events during the model evolution process.
+ Clients can register <code>listeners</code> with the model evolution support to be notified
+ about these events and to monitor or impact the evolution process. Registering a <code>LogListener</code>
+ will log all evolution events to the logging system and helps to understand the evolution process.
+ <p>
+ Example configuration snippet:
+ <pre>
+ &lt;store type="db"&gt;
+   ...
+   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true"&gt;
+     &lt;changeDetector/&gt;
+     &lt;repositoryExporter type="default" binary="false"/&gt;
+     &lt;schemaMigrator/&gt;
+     &lt;storeProcessor type="my-sql-processor" myExtraArg="data"/&gt;
+     &lt;repositoryProcessor type="my-eobject-handler" myExtraArg="data"/&gt; --&gt;
+     &lt;!-- Optional listeners --&gt;
+     &lt;listener type="log"/&gt;
+     &lt;listener type="my-extra-checks"/&gt;
+   &lt;/modelEvolutionSupport&gt;
+   ...
+ &lt;/store&gt;
+ </pre></div>
 <dl class="notes">
 <dt>Since:</dt>
 <dd>4.14</dd>
@@ -153,24 +218,9 @@ implements <a href="../IModelEvolutionSupport.html" title="interface in org.ecli
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Class</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="PhasedModelEvolutionSupport.DefaultChangeDetector.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultChangeDetector</a></code></div>
+<div class="col-first even-row-color"><code>static enum&nbsp;</code></div>
+<div class="col-second even-row-color"><code><a href="PhasedModelEvolutionSupport.Mode.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></code></div>
 <div class="col-last even-row-color">
-<div class="block">Detects model changes between the stored models and the currently registered EPackages.</div>
-</div>
-<div class="col-first odd-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="PhasedModelEvolutionSupport.DefaultRepositoryExporter.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultRepositoryExporter</a></code></div>
-<div class="col-last odd-row-color">
-<div class="block">Evolves the models with the given mapping strategy, context, and store accessor.</div>
-</div>
-<div class="col-first even-row-color"><code>static class&nbsp;</code></div>
-<div class="col-second even-row-color"><code><a href="PhasedModelEvolutionSupport.DefaultSchemaMigrator.html" class="type-name-link" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.DefaultSchemaMigrator</a></code></div>
-<div class="col-last even-row-color">
-<div class="block">Evolves the models with the given mapping strategy, context, and store accessor.</div>
-</div>
-<div class="col-first odd-row-color"><code>static enum&nbsp;</code></div>
-<div class="col-second odd-row-color"><code><a href="PhasedModelEvolutionSupport.Mode.html" class="type-name-link" title="enum class in org.eclipse.emf.cdo.server.db.evolution.phased">PhasedModelEvolutionSupport.Mode</a></code></div>
-<div class="col-last odd-row-color">
 <div class="block">Indicates the model evolution mode.</div>
 </div>
 </div>

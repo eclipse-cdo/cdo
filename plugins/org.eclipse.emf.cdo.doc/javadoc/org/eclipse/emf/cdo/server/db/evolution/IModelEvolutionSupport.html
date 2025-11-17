@@ -122,7 +122,8 @@ extends org.eclipse.net4j.util.lifecycle.ILifecycle</span></div>
  <pre>
  &lt;store type="db"&gt;
    ...
-   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true"&gt;
+   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate"&gt;
+     &lt;<contextManager type="folder" saveNewModels="true"/>
      &lt;changeDetector/&gt;
      &lt;repositoryExporter type="default" binary="false"/&gt;
      &lt;schemaMigrator/&gt;

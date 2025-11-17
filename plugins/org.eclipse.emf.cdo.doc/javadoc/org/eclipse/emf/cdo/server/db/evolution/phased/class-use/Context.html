@@ -71,20 +71,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color"><code>protected <a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#createContext()" class="member-name-link">createContext</a>()</code></div>
+<div class="col-first even-row-color"><code><a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">Context.Manager.</span><code><a href="../Context.Manager.html#createContext()" class="member-name-link">createContext</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Creates a new evolution context by loading the models from the database.</div>
+<div class="block">Creates a new context for model evolution.</div>
 </div>
 <div class="col-first odd-row-color"><code><a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#getContext()" class="member-name-link">getContext</a>()</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">FolderContextManager.</span><code><a href="../FolderContextManager.html#createContext()" class="member-name-link">createContext</a>()</code></div>
 <div class="col-last odd-row-color">
+<div class="block">Creates a new context by loading the models from the database.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#getContext()" class="member-name-link">getContext</a>()</code></div>
+<div class="col-last even-row-color">
 <div class="block">Returns the current evolution context.</div>
 </div>
-<div class="col-first even-row-color"><code>protected <a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
-<div class="col-second even-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#loadContext()" class="member-name-link">loadContext</a>()</code></div>
+<div class="col-first odd-row-color"><code><a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Context.Manager.</span><code><a href="../Context.Manager.html#loadContext()" class="member-name-link">loadContext</a>()</code></div>
+<div class="col-last odd-row-color">
+<div class="block">Loads an existing context for model evolution.</div>
+</div>
+<div class="col-first even-row-color"><code><a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FolderContextManager.</span><code><a href="../FolderContextManager.html#loadContext()" class="member-name-link">loadContext</a>()</code></div>
 <div class="col-last even-row-color">
-<div class="block">Loads the evolution context by loading the models from disk.</div>
+<div class="block">Loads the context from disk.</div>
 </div>
 </div>
 <div class="caption"><span>Methods in <a href="../package-summary.html">org.eclipse.emf.cdo.server.db.evolution.phased</a> with parameters of type <a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a></span></div>
@@ -139,15 +149,20 @@ loadScripts(document, 'script');</script>
 <div class="col-last even-row-color">
 <div class="block">Migrates the database schema to match the new models in the given context.</div>
 </div>
-<div class="col-first odd-row-color"><code>protected void</code></div>
-<div class="col-second odd-row-color"><span class="type-name-label">PhasedModelEvolutionSupport.</span><code><a href="../PhasedModelEvolutionSupport.html#saveContext(org.eclipse.emf.cdo.server.db.evolution.phased.Context)" class="member-name-link">saveContext</a><wbr>(<a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</code></div>
+<div class="col-first odd-row-color"><code>void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">Context.Manager.</span><code><a href="../Context.Manager.html#saveContext(org.eclipse.emf.cdo.server.db.evolution.phased.Context)" class="member-name-link">saveContext</a><wbr>(<a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</code></div>
 <div class="col-last odd-row-color">
-<div class="block">Saves the evolution context by saving the models to disk.</div>
+<div class="block">Saves the given context for model evolution.</div>
 </div>
-<div class="col-first even-row-color"><code>protected void</code></div>
-<div class="col-second even-row-color"><span class="type-name-label">DefaultSchemaMigrator.</span><code><a href="../DefaultSchemaMigrator.html#updateSystemTables(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">updateSystemTables</a><wbr>(<a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
- <a href="../../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-first even-row-color"><code>void</code></div>
+<div class="col-second even-row-color"><span class="type-name-label">FolderContextManager.</span><code><a href="../FolderContextManager.html#saveContext(org.eclipse.emf.cdo.server.db.evolution.phased.Context)" class="member-name-link">saveContext</a><wbr>(<a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context)</code></div>
 <div class="col-last even-row-color">
+<div class="block">Saves the context to disk.</div>
+</div>
+<div class="col-first odd-row-color"><code>protected void</code></div>
+<div class="col-second odd-row-color"><span class="type-name-label">DefaultSchemaMigrator.</span><code><a href="../DefaultSchemaMigrator.html#updateSystemTables(org.eclipse.emf.cdo.server.db.evolution.phased.Context,org.eclipse.emf.cdo.server.db.IDBStoreAccessor)" class="member-name-link">updateSystemTables</a><wbr>(<a href="../Context.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context</a>&nbsp;context,
+ <a href="../../../IDBStoreAccessor.html" title="interface in org.eclipse.emf.cdo.server.db">IDBStoreAccessor</a>&nbsp;accessor)</code></div>
+<div class="col-last odd-row-color">
 <div class="block">Updates the system tables with the changed models.</div>
 </div>
 </div>

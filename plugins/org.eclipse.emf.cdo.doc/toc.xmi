@@ -202,6 +202,7 @@
     <packages name="org.eclipse.emf.cdo.server.db.evolution.phased"/>
     <packages name="org.eclipse.emf.cdo.server.db.mapping"/>
     <extensionPoints name="mappingStrategies"/>
+    <productGroups id="org.eclipse.emf.cdo.server.db.evolution.contextManagers" name="CDO DB Model Evolution Context Managers" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" name="CDO DB Model Evolution Phase Handlers" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.db.evolution.supports" name="CDO DB Model Evolution Supports" description=""/>
     <productGroups id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="CDO DB Type Mapping Providers" description=""/>

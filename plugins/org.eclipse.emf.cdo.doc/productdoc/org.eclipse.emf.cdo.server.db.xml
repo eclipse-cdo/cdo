@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <plugin id="org.eclipse.emf.cdo.server.db" label="CDO Model Repository Server DB">
+	<productGroup id="org.eclipse.emf.cdo.server.db.evolution.contextManagers" name="CDO DB Model Evolution Context Managers" description="" deprecated="false">
+		<factory type="folder" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager" contributor="org.eclipse.emf.cdo.server.db"/>
+	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" name="CDO DB Model Evolution Phase Handlers" description="" deprecated="false">
-		<factory type="default-change-detector" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultChangeDetector" contributor="org.eclipse.emf.cdo.server.db"/>
-		<factory type="default-repository-exporter" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultRepositoryExporter" contributor="org.eclipse.emf.cdo.server.db"/>
-		<factory type="default-schema-migrator" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultSchemaMigrator" contributor="org.eclipse.emf.cdo.server.db"/>
+		<factory type="default-change-detector" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector" contributor="org.eclipse.emf.cdo.server.db"/>
+		<factory type="default-repository-exporter" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter" contributor="org.eclipse.emf.cdo.server.db"/>
+		<factory type="default-schema-migrator" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator" contributor="org.eclipse.emf.cdo.server.db"/>
 	</productGroup>
 	<productGroup id="org.eclipse.emf.cdo.server.db.evolution.supports" name="CDO DB Model Evolution Supports" description="" deprecated="false">
 		<factory type="phased" class="org.eclipse.net4j.util.factory.AnnotationFactory" info="product=org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport" contributor="org.eclipse.emf.cdo.server.db"/>

@@ -671,7 +671,8 @@
         <topic label="CDO Administration Servers" href="productdoc/org.eclipse.emf.cdo.server.admin.adminServers.html" icon="productgroup" />
         <topic label="CDO Repository Configuration Managers" href="productdoc/org.eclipse.emf.cdo.server.admin.repositoryConfigurationManagers.html" icon="productgroup" />
       </topic>
-      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.phaseHandlers.html" icon="plugin">
+      <topic label="CDO Model Repository Server DB" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.contextManagers.html" icon="plugin">
+        <topic label="CDO DB Model Evolution Context Managers" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.contextManagers.html" icon="productgroup" />
         <topic label="CDO DB Model Evolution Phase Handlers" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.phaseHandlers.html" icon="productgroup" />
         <topic label="CDO DB Model Evolution Supports" href="productdoc/org.eclipse.emf.cdo.server.db.evolution.supports.html" icon="productgroup" />
         <topic label="CDO DB Type Mapping Providers" href="productdoc/org.eclipse.emf.cdo.server.db.typeMappingProviders.html" icon="productgroup" />

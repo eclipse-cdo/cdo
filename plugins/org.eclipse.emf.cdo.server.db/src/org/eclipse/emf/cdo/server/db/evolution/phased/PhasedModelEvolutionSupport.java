@@ -11,24 +11,17 @@
 package org.eclipse.emf.cdo.server.db.evolution.phased;
 
 import org.eclipse.emf.cdo.common.model.CDOModelUtil;
-import org.eclipse.emf.cdo.common.model.CDOPackageRegistry;
-import org.eclipse.emf.cdo.common.model.CDOPackageUnit;
-import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.common.util.CDOCommonUtil;
 import org.eclipse.emf.cdo.server.db.IDBStore;
 import org.eclipse.emf.cdo.server.db.evolution.IModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Context.Model;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Handler;
 import org.eclipse.emf.cdo.server.db.evolution.phased.Phase.Transition;
-import org.eclipse.emf.cdo.server.internal.db.DBStore;
-import org.eclipse.emf.cdo.server.internal.db.DBStoreTables.PackageUnitsTable;
 import org.eclipse.emf.cdo.server.internal.db.bundle.OM;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageLoader;
-import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageUnit;
+import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackageProcessor;
 
-import org.eclipse.net4j.db.DBUtil;
-import org.eclipse.net4j.db.IDBRowHandler;
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
@@ -39,28 +32,19 @@ import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.lifecycle.Lifecycle;
+import org.eclipse.net4j.util.lifecycle.LifecycleUtil;
 import org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger;
 
-import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.emf.ecore.EPackage.Registry;
-import org.eclipse.emf.ecore.EcorePackage;
-import org.eclipse.emf.ecore.resource.Resource;
-import org.eclipse.emf.ecore.resource.ResourceSet;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Deque;
 import java.util.EnumMap;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -132,7 +116,8 @@ import java.util.Properties;
  * The model evolution context, which contains the models to be evolved and other relevant information,
  * is persisted in the evolution folder after the Change Detection phase. If the model evolution process
  * is interrupted, it can be resumed from the persisted context. Manual inspection of the evolution folder
- * may help diagnosing issues during model evolution or recovering from failures.
+ * may help diagnosing issues during model evolution or recovering from failures. The context is managed
+ * by a {@link Context.Manager context manager}, which can be configured via dependency injection.
  * <p>
  * The phases and their handlers fire various events during the model evolution process.
  * Clients can register {@link IListener listeners} with the model evolution support to be notified
@@ -143,7 +128,8 @@ import java.util.Properties;
  * <pre>
  * &lt;store type="db">
  *   ...
- *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate" saveNewModels="true">
+ *   &lt;modelEvolutionSupport type="phased" rootFolder="@state/evolution" mode="migrate">
+ *     &lt;<contextManager type="folder" saveNewModels="true"/>
  *     &lt;changeDetector/>
  *     &lt;repositoryExporter type="default" binary="false"/>
  *     &lt;schemaMigrator/>
@@ -177,29 +163,33 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     throw new UnsupportedOperationException("Loading of package units is not supported during model evolution");
   };
 
-  private static final String PROPERTIES_FILE = "evolution.properties";
+  private static final PackageProcessor NO_PACKAGE_PROCESSING = null;
 
-  private static final String PROP_ID = "id";
+  private static final String SUPPORT_PROPERTIES_FILE = "support.properties";
+
+  private static final String PROP_EVOLUTION_ID = "evolution.id";
+
+  private static final String PROP_EVOLUTION_ONGOING = "evolution.ongoing";
 
   private static final String PROP_PHASE = "phase";
 
   private static final String PROP_PHASE_ONGOING = "phase.ongoing";
 
-  private static final String PROP_MODEL_PREFIX = "model.";
-
   private final Deque<Pair<String, Long>> logBuffer = new LinkedList<>();
 
   private final EnumMap<Phase, Handler> phaseHandlers = new EnumMap<>(Phase.class);
+
+  private Context.Manager contextManager;
 
   private File rootFolder;
 
   private IDBStore store;
 
-  private boolean saveNewModels;
-
   private Mode mode;
 
-  private int id;
+  private int evolutionID;
+
+  private boolean evolutionOngoing;
 
   private Phase phase;
 
@@ -281,21 +271,21 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   }
 
   /**
-   * Returns whether to save the new models to disk during evolution.
+   * Returns the context manager used to create, load, and save evolution contexts.
    */
-  public boolean isSaveNewModels()
+  public Context.Manager getContextManager()
   {
-    return saveNewModels;
+    return contextManager;
   }
 
   /**
-   * Sets whether to save the new models to disk during evolution.
+   * Sets the context manager used to create, load, and save evolution contexts.
    */
-  @InjectAttribute(name = "saveNewModels")
-  public void setSaveNewModels(boolean saveNewModels)
+  @InjectElement(name = "contextManager", productGroup = Context.Manager.PRODUCT_GROUP, defaultFactoryType = "folder")
+  public void setContextManager(Context.Manager contextManager)
   {
     checkInactive();
-    this.saveNewModels = saveNewModels;
+    this.contextManager = contextManager;
   }
 
   /**
@@ -380,7 +370,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    */
   public int getEvolutionID()
   {
-    return id;
+    return evolutionID;
   }
 
   /**
@@ -395,7 +385,7 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
    */
   public File getEvolutionFolder()
   {
-    return id < 1 ? null : new File(rootFolder, Integer.toString(id));
+    return evolutionID < 1 ? null : new File(rootFolder, Integer.toString(evolutionID));
   }
 
   public File getEvolutionLog()
@@ -413,6 +403,32 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   public Context getContext()
   {
     return context;
+  }
+
+  /**
+   * Returns the old package registry used for recreating the old EPackages.
+   */
+  public InternalCDOPackageRegistry getOldPackageRegistry()
+  {
+    if (oldPackageRegistry == null)
+    {
+      oldPackageRegistry = createPackageRegistry(false);
+    }
+
+    return oldPackageRegistry;
+  }
+
+  /**
+   * Returns the new package registry used for determining the new EPackages.
+   */
+  public InternalCDOPackageRegistry getNewPackageRegistry()
+  {
+    if (newPackageRegistry == null)
+    {
+      newPackageRegistry = createPackageRegistry(true);
+    }
+
+    return newPackageRegistry;
   }
 
   /**
@@ -520,13 +536,13 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       {
         // Starting a new model evolution process.
         log("Creating new model evolution context");
-        context = createContext();
+        context = contextManager.createContext();
       }
       else
       {
         // Resuming an ongoing model evolution process.
         log("Loading existing model evolution context");
-        context = loadContext();
+        context = contextManager.loadContext();
       }
     }
 
@@ -546,7 +562,9 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       {
         // A previous attempt to execute a phase was interrupted.
         // The data may be inconsistent, so we cannot continue.
-        throw new IllegalStateException("Model evolution was interrupted for repository " + store.getRepository().getName());
+        throw new IllegalStateException("Model evolution was interrupted for repository " //
+            + store.getRepository().getName() + " during phase " + phase //
+            + "; manual intervention is required to recover");
       }
 
       // Record that we are executing a phase.
@@ -589,11 +607,11 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
         }
 
         // Increment the evolution ID before persisting the context.
-        ++id;
-        log("Model changes detected; assigned evolution ID " + id);
+        ++evolutionID;
+        log("Model changes detected; assigned evolution ID " + evolutionID);
 
         // Persist the context after the initial phase.
-        saveContext(context);
+        contextManager.saveContext(context);
       }
 
       log("Completed phase " + phase);
@@ -641,6 +659,8 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     // Deactivate model evolution support, so that a potential next trigger does not try to continue.
     log("Model evolution process completed successfully");
     log("Total row updates: " + context.getTotalUpdateCount());
+    evolutionOngoing = false;
+    saveProperties();
     deactivate();
   }
 
@@ -688,193 +708,12 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
     return phaseHandler;
   }
 
-  public InternalCDOPackageRegistry getOldPackageRegistry()
-  {
-    if (oldPackageRegistry == null)
-    {
-      oldPackageRegistry = createPackageRegistry(false);
-    }
-
-    return oldPackageRegistry;
-  }
-
-  public InternalCDOPackageRegistry getNewPackageRegistry()
-  {
-    if (newPackageRegistry == null)
-    {
-      newPackageRegistry = createPackageRegistry(true);
-    }
-
-    return newPackageRegistry;
-  }
-
   /**
-   * Loads the models from the database.
+   * Called after a change info has been added to the evolution context.
    */
-  protected List<Model> loadModelsFromDatabase(IDBStore store) throws SQLException
+  protected void addedChangeInfo(Model model, Object changeInfo)
   {
-    // Prepare a list to hold the loaded models.
-    List<Model> models = new ArrayList<>();
-
-    // Prepare the old package registry and resource set for recreating the old EPackages.
-    InternalCDOPackageRegistry oldPackageRegistry = getOldPackageRegistry();
-    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(oldPackageRegistry);
-
-    // Prepare the new package registry for determining the new EPackages.
-    CDOPackageRegistry newPackageRegistry = getNewPackageRegistry();
-
-    // Define a row handler to process each row in the cdo_package_units table.
-    IDBRowHandler modelRowHandler = (row, values) -> {
-      // Read ID, original type, timestamp, and (optionally) package data from the current row.
-      String id = (String)values[0];
-      CDOPackageUnit.Type originalType = CDOPackageUnit.Type.values()[DBUtil.asInt(values[1])];
-      long timeStamp = DBUtil.asLong(values[2]);
-
-      // Determine the old EPackage.
-      EPackage oldPackage;
-      if (EcorePackage.eNS_URI.equals(id))
-      {
-        // The Ecore package is always available and MUST NOT be recreated dynamically from stored package data!
-        oldPackage = EcorePackage.eINSTANCE;
-      }
-      else
-      {
-        // Recreate the old EPackage from the stored package data.
-        byte[] packageData = (byte[])values[3];
-        oldPackage = EMFUtil.createEPackage(id, packageData, resourceSet, false);
-      }
-
-      // Determine the new EPackage from the new package registry.
-      EPackage newPackage = newPackageRegistry.getEPackage(id);
-
-      // Create the model and add it to the list.
-      Model model = new Model(id, originalType, timeStamp, oldPackage, newPackage);
-      models.add(model);
-
-      // Create the old package unit and register it in the old package registry.
-      CDOModelUtil.createPackageUnit(oldPackage, originalType, timeStamp, oldPackageRegistry);
-      return true;
-    };
-
-    // Load the models from the cdo_package_units table using the row handler.
-    try (Connection connection = store.getConnection())
-    {
-      // Get the cdo_package_units table.
-      PackageUnitsTable packageUnitsTable = ((DBStore)store).tables().packageUnits();
-
-      // Execute the select statement to load the models.
-      DBUtil.select(connection, modelRowHandler, StringUtil.EMPTY, //
-          packageUnitsTable.id(), //
-          packageUnitsTable.originalType(), //
-          packageUnitsTable.timeStamp(), //
-          packageUnitsTable.packageData());
-    }
-
-    // Return the loaded models.
-    return models;
-  }
-
-  /**
-   * Loads the models from disk.
-   */
-  protected List<Model> loadModelsFromDisk(File folder) throws IOException
-  {
-    List<Model> models = new ArrayList<>();
-
-    InternalCDOPackageRegistry oldPackageRegistry = getOldPackageRegistry();
-    ResourceSet resourceSet = EMFUtil.newEcoreResourceSet(oldPackageRegistry);
-
-    Properties properties = IOUtil.loadProperties(getPropertiesFile(folder));
-
-    for (Map.Entry<Object, Object> entry : properties.entrySet())
-    {
-      String fileName = (String)entry.getKey();
-      if (fileName.startsWith(PROP_MODEL_PREFIX))
-      {
-        fileName = fileName.substring(PROP_MODEL_PREFIX.length());
-
-        String[] parts = ((String)entry.getValue()).split(",");
-        CDOPackageUnit.Type originalType = CDOPackageUnit.Type.valueOf(parts[0]);
-        long timeStamp = Long.parseLong(parts[1]);
-
-        URI uri = URI.createFileURI(new File(folder, fileName).getAbsolutePath());
-        Resource resource = resourceSet.getResource(uri, true);
-        EPackage oldPackage = (EPackage)resource.getContents().get(0);
-        String id = oldPackage.getNsURI();
-        EPackage newPackage = getNewPackageRegistry().getEPackage(id);
-
-        Model model = new Model(id, originalType, timeStamp, oldPackage, newPackage);
-        models.add(model);
-
-        InternalCDOPackageUnit packageUnit = (InternalCDOPackageUnit)CDOModelUtil.createPackageUnit(oldPackage, originalType, timeStamp, oldPackageRegistry);
-        oldPackageRegistry.putPackageUnit(packageUnit);
-      }
-    }
-
-    return models;
-  }
-
-  /**
-   * Saves the models to disk.
-   */
-  protected void saveModelsToDisk(File folder, Collection<Model> models) throws IOException
-  {
-    Properties properties = new Properties();
-
-    for (Model model : models)
-    {
-      String encodedFileName = IOUtil.encodeFileName(model.getID());
-      String fileName = encodedFileName + ".ecore";
-      properties.setProperty(PROP_MODEL_PREFIX + fileName, model.getOriginalType().name() + "," + model.getTimeStamp());
-
-      IOUtil.writeText(new File(folder, fileName), false, model.getOldXMI());
-
-      if (saveNewModels)
-      {
-        IOUtil.writeText(new File(folder, encodedFileName + "_new.ecore"), false, model.getNewXMI());
-      }
-    }
-
-    IOUtil.saveProperties(getPropertiesFile(folder), properties, null);
-  }
-
-  /**
-   * Creates a new evolution context by loading the models from the database.
-   */
-  protected Context createContext() throws Exception
-  {
-    List<Model> models = loadModelsFromDatabase(store);
-    return new Context(this, models);
-  }
-
-  /**
-   * Loads the evolution context by loading the models from disk.
-   */
-  protected Context loadContext() throws Exception
-  {
-    File folder = getEvolutionFolder();
-    if (folder == null || !folder.isDirectory())
-    {
-      throw new IllegalStateException("Evolution folder not found for evolution ID " + id);
-    }
-
-    List<Model> models = loadModelsFromDisk(folder);
-    return new Context(this, models);
-  }
-
-  /**
-   * Saves the evolution context by saving the models to disk.
-   */
-  protected void saveContext(Context context) throws Exception
-  {
-    File folder = getEvolutionFolder();
-    if (folder != null)
-    {
-      folder.mkdirs();
-    }
-
-    Collection<Model> models = context.getChangeInfos().keySet();
-    saveModelsToDisk(folder, models);
+    // Subclasses may override.
   }
 
   @Override
@@ -893,6 +732,13 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       mode = Mode.Migrate;
     }
 
+    if (contextManager == null)
+    {
+      contextManager = new FolderContextManager();
+    }
+
+    contextManager.setSupport(this);
+
     if (getPhaseHandler(Phase.ChangeDetection) == null)
     {
       setPhaseHandler(Phase.ChangeDetection, new DefaultChangeDetector());
@@ -908,15 +754,32 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   protected void doActivate() throws Exception
   {
     super.doActivate();
+    LifecycleUtil.activate(contextManager);
+
+    for (Handler handler : phaseHandlers.values())
+    {
+      LifecycleUtil.activate(handler);
+    }
+
     loadProperties();
   }
 
   @Override
   protected void doDeactivate() throws Exception
   {
+    for (Handler handler : phaseHandlers.values())
+    {
+      LifecycleUtil.deactivate(handler);
+    }
+
+    LifecycleUtil.deactivate(contextManager);
+
+    evolutionID = 0;
+    evolutionOngoing = false;
     phase = null;
-    id = 0;
+    phaseOngoing = false;
     logBuffer.clear();
+
     super.doDeactivate();
   }
 
@@ -929,8 +792,9 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
   private void loadProperties() throws IOException
   {
-    Properties properties = IOUtil.loadProperties(getRootPropertiesFile());
-    id = getProperty(properties, PROP_ID, 0);
+    Properties properties = IOUtil.loadProperties(getSupportPropertiesFile());
+    evolutionID = getProperty(properties, PROP_EVOLUTION_ID, 0);
+    evolutionOngoing = getProperty(properties, PROP_EVOLUTION_ONGOING, false);
     phase = Phase.parse(properties.getProperty(PROP_PHASE));
     phaseOngoing = getProperty(properties, PROP_PHASE_ONGOING, false);
   }
@@ -939,9 +803,14 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   {
     Properties properties = new Properties();
 
-    if (id != 0)
+    if (evolutionID != 0)
     {
-      properties.setProperty(PROP_ID, Integer.toString(id));
+      properties.setProperty(PROP_EVOLUTION_ID, Integer.toString(evolutionID));
+    }
+
+    if (evolutionOngoing)
+    {
+      properties.setProperty(PROP_EVOLUTION_ONGOING, StringUtil.TRUE);
     }
 
     if (phase != null)
@@ -954,17 +823,12 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
       properties.setProperty(PROP_PHASE_ONGOING, StringUtil.TRUE);
     }
 
-    IOUtil.saveProperties(getRootPropertiesFile(), properties, null);
+    IOUtil.saveProperties(getSupportPropertiesFile(), properties, null);
   }
 
-  private File getRootPropertiesFile()
+  private File getSupportPropertiesFile()
   {
-    return getPropertiesFile(rootFolder);
-  }
-
-  private File getPropertiesFile(File folder)
-  {
-    return new File(folder, PROPERTIES_FILE);
+    return new File(rootFolder, SUPPORT_PROPERTIES_FILE);
   }
 
   private static boolean getProperty(Properties properties, String key, boolean defaultValue)
@@ -991,10 +855,11 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
   private static InternalCDOPackageRegistry createPackageRegistry(boolean delegateToGlobal)
   {
-    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)CDOModelUtil //
-        .createPackageRegistry(delegateToGlobal ? GLOBAL_PACKAGE_REGISTRY : null);
-    packageRegistry.setPackageProcessor(null); // No processing during model evolution.
-    packageRegistry.setPackageLoader(NO_PACKAGE_LOADING);
+    EPackage.Registry delegateRegistry = delegateToGlobal ? GLOBAL_PACKAGE_REGISTRY : null;
+
+    InternalCDOPackageRegistry packageRegistry = (InternalCDOPackageRegistry)CDOModelUtil.createPackageRegistry(delegateRegistry);
+    packageRegistry.setPackageLoader(NO_PACKAGE_LOADING); // No loading during model evolution.
+    packageRegistry.setPackageProcessor(NO_PACKAGE_PROCESSING); // No processing during model evolution.
     packageRegistry.activate();
     return packageRegistry;
   }

@@ -18,6 +18,7 @@
    <extension point="org.eclipse.net4j.util.productGroups">
        <productGroup id="org.eclipse.emf.cdo.server.db.typeMappingProviders" name="%productGroup.name.typeMappingProviders"/>
        <productGroup id="org.eclipse.emf.cdo.server.db.evolution.supports" name="%productGroup.name.evolution.supports"/>
+       <productGroup id="org.eclipse.emf.cdo.server.db.evolution.contextManagers" name="%productGroup.name.evolution.contextManagers"/>
        <productGroup id="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" name="%productGroup.name.evolution.phaseHandlers"/>
    </extension>
 
@@ -39,17 +40,21 @@
             type="phased" 
             productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport"/>
       <annotationFactory 
+            productGroup="org.eclipse.emf.cdo.server.db.evolution.contextManagers" 
+            type="folder" 
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager"/>
+      <annotationFactory 
             productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
             type="default-change-detector" 
-            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultChangeDetector"/>
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector"/>
       <annotationFactory 
             productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
             type="default-repository-exporter" 
-            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultRepositoryExporter"/>
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter"/>
       <annotationFactory 
             productGroup="org.eclipse.emf.cdo.server.db.evolution.phaseHandlers" 
             type="default-schema-migrator" 
-            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport$DefaultSchemaMigrator"/>
+            productClass="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator"/>
    </extension>
 
    <extension point="org.eclipse.emf.cdo.server.storeFactories">

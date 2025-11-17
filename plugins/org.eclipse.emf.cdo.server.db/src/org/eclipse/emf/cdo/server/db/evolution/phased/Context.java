@@ -152,7 +152,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
    */
   public Map<Model, Object> getChangeInfos()
   {
-    return changeInfos;
+    return Collections.unmodifiableMap(changeInfos);
   }
 
   /**
@@ -161,6 +161,7 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
   public void addChangeInfo(Model model, Object changeInfo)
   {
     changeInfos.put(model, Objects.requireNonNull(changeInfo));
+    support.addedChangeInfo(model, changeInfo);
   }
 
   /**
@@ -449,5 +450,49 @@ public final class Context implements CDOTimeProvider, IPropertiesContainer
     {
       return "Model[id=" + id + ", originalType=" + originalType + ", timeStamp=" + timeStamp + "]";
     }
+  }
+
+  /**
+   * A manager for creating, loading, and saving contexts.
+   *
+   * @author Eike Stepper
+   * @since 4.14
+   * @noreference This package is currently considered <i>provisional</i>.
+   * @noimplement This package is currently considered <i>provisional</i>.
+   * @noextend This package is currently considered <i>provisional</i>.
+   */
+  public interface Manager
+  {
+    /**
+     * The product group for context manager implementations.
+     */
+    public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.evolution.contextManagers"; //$NON-NLS-1$
+
+    /**
+     * Returns the model evolution support associated with this context manager.
+     */
+    public PhasedModelEvolutionSupport getSupport();
+
+    /**
+     * Sets the model evolution support associated with this context manager.
+     *
+     * @noreference This method is not intended to be called by clients.
+     */
+    public void setSupport(PhasedModelEvolutionSupport support);
+
+    /**
+     * Creates a new context for model evolution.
+     */
+    public Context createContext() throws Exception;
+
+    /**
+     * Loads an existing context for model evolution.
+     */
+    public Context loadContext() throws Exception;
+
+    /**
+     * Saves the given context for model evolution.
+     */
+    public void saveContext(Context context) throws Exception;
   }
 }

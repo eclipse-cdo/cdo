@@ -13,6 +13,7 @@ package org.eclipse.emf.cdo.tests.db;
 import org.eclipse.emf.cdo.common.model.EMFUtil;
 import org.eclipse.emf.cdo.eresource.CDOResource;
 import org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter;
+import org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport;
 import org.eclipse.emf.cdo.server.db.evolution.phased.PhasedModelEvolutionSupport.Mode;
 import org.eclipse.emf.cdo.session.CDOSession;
@@ -78,9 +79,12 @@ public class ModelEvolutionTest extends AbstractCDOTest
   {
     File rootFolder = createTempFolder();
 
+    FolderContextManager contextManager = new FolderContextManager();
+    contextManager.setSaveNewModels(true);
+
     support = new PhasedModelEvolutionSupport();
     support.setRootFolder(rootFolder);
-    support.setSaveNewModels(true);
+    support.setContextManager(contextManager);
     support.setMode(Mode.Migrate);
     support.setRepositoryExporter(new DefaultRepositoryExporter());
     // support.addListener(new LogListener());

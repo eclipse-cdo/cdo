@@ -323,6 +323,9 @@ public enum Phase
    */
   public interface Handler
   {
+    /**
+     * The product group for phase handlers.
+     */
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.server.db.evolution.phaseHandlers"; //$NON-NLS-1$
 
     /**

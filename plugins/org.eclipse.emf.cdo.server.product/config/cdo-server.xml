@@ -245,7 +245,8 @@
       <dataSource class="org.h2.jdbcx.JdbcDataSource"
         URL="jdbc:h2:/develop/cdo-master/h2/big;LOCK_TIMEOUT=10000;TRACE_LEVEL_FILE=0"/>
 
-      <modelEvolutionSupport type="phased" rootFolder="C:/develop/cdo-master/h2" mode="migrate" saveNewModels="true">
+      <modelEvolutionSupport type="phased" rootFolder="C:/develop/cdo-master/h2" mode="migrate">
+        <contextManager type="folder" saveNewModels="true"/>
         <changeDetector/>
         <repositoryExporter binary="false"/>
         <schemaMigrator deleteObsoleteMetaIDs="false"/>

@@ -5,33 +5,183 @@
   <topic label="Overview" href="html/Overview.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j Signalling Platform" href="javadoc/org/eclipse/net4j/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.acceptor" href="javadoc/org/eclipse/net4j/acceptor/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.buffer" href="javadoc/org/eclipse/net4j/buffer/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.channel" href="javadoc/org/eclipse/net4j/channel/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.connector" href="javadoc/org/eclipse/net4j/connector/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.signal.confirmation" href="javadoc/org/eclipse/net4j/signal/confirmation/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.signal.security" href="javadoc/org/eclipse/net4j/signal/security/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package" />
-      <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j" href="javadoc/org/eclipse/net4j/package-summary.html" icon="package">
+        <topic label="ContainerProtocolProvider" href="javadoc/org/eclipse/net4j/ContainerProtocolProvider.html" icon="class" />
+        <topic label="ContainerProtocolProvider.Client" href="javadoc/org/eclipse/net4j/ContainerProtocolProvider.Client.html" icon="class" />
+        <topic label="ContainerProtocolProvider.Server" href="javadoc/org/eclipse/net4j/ContainerProtocolProvider.Server.html" icon="class" />
+        <topic label="FactoriesProtocolProvider" href="javadoc/org/eclipse/net4j/FactoriesProtocolProvider.html" icon="class" />
+        <topic label="ILocationAware" href="javadoc/org/eclipse/net4j/ILocationAware.html" icon="interface" />
+        <topic label="ILocationAware.Location" href="javadoc/org/eclipse/net4j/ILocationAware.Location.html" icon="enum" />
+        <topic label="ITransportConfig" href="javadoc/org/eclipse/net4j/ITransportConfig.html" icon="interface" />
+        <topic label="ITransportConfigAware" href="javadoc/org/eclipse/net4j/ITransportConfigAware.html" icon="interface" />
+        <topic label="Net4jUtil" href="javadoc/org/eclipse/net4j/Net4jUtil.html" icon="class" />
+        <topic label="TransportConfigurator" href="javadoc/org/eclipse/net4j/TransportConfigurator.html" icon="class" />
+        <topic label="TransportConfigurator.AcceptorDescriptionParser" href="javadoc/org/eclipse/net4j/TransportConfigurator.AcceptorDescriptionParser.html" icon="interface" />
+        <topic label="TransportConfigurator.AcceptorDescriptionParser.Factory" href="javadoc/org/eclipse/net4j/TransportConfigurator.AcceptorDescriptionParser.Factory.html" icon="class" />
+        <topic label="TransportInjector" href="javadoc/org/eclipse/net4j/TransportInjector.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.acceptor" href="javadoc/org/eclipse/net4j/acceptor/package-summary.html" icon="package">
+        <topic label="IAcceptor" href="javadoc/org/eclipse/net4j/acceptor/IAcceptor.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.buffer" href="javadoc/org/eclipse/net4j/buffer/package-summary.html" icon="package">
+        <topic label="BufferInputStream" href="javadoc/org/eclipse/net4j/buffer/BufferInputStream.html" icon="class" />
+        <topic label="BufferOutputStream" href="javadoc/org/eclipse/net4j/buffer/BufferOutputStream.html" icon="class" />
+        <topic label="BufferState" href="javadoc/org/eclipse/net4j/buffer/BufferState.html" icon="enum" />
+        <topic label="IBuffer" href="javadoc/org/eclipse/net4j/buffer/IBuffer.html" icon="interface" />
+        <topic label="IBufferHandler" href="javadoc/org/eclipse/net4j/buffer/IBufferHandler.html" icon="interface" />
+        <topic label="IBufferPool" href="javadoc/org/eclipse/net4j/buffer/IBufferPool.html" icon="interface" />
+        <topic label="IBufferPool.Introspection" href="javadoc/org/eclipse/net4j/buffer/IBufferPool.Introspection.html" icon="interface" />
+        <topic label="IBufferProvider" href="javadoc/org/eclipse/net4j/buffer/IBufferProvider.html" icon="interface" />
+        <topic label="IBufferProvider.Introspection" href="javadoc/org/eclipse/net4j/buffer/IBufferProvider.Introspection.html" icon="interface" />
+        <topic label="IBufferProvider.Notification" href="javadoc/org/eclipse/net4j/buffer/IBufferProvider.Notification.html" icon="interface" />
+        <topic label="IBufferProvider.Notification.BufferProvidedEvent" href="javadoc/org/eclipse/net4j/buffer/IBufferProvider.Notification.BufferProvidedEvent.html" icon="interface" />
+        <topic label="IBufferProvider.Notification.BufferRetainingEvent" href="javadoc/org/eclipse/net4j/buffer/IBufferProvider.Notification.BufferRetainingEvent.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.channel" href="javadoc/org/eclipse/net4j/channel/package-summary.html" icon="package">
+        <topic label="ChannelException" href="javadoc/org/eclipse/net4j/channel/ChannelException.html" icon="class" />
+        <topic label="ChannelInputStream" href="javadoc/org/eclipse/net4j/channel/ChannelInputStream.html" icon="class" />
+        <topic label="ChannelOutputStream" href="javadoc/org/eclipse/net4j/channel/ChannelOutputStream.html" icon="class" />
+        <topic label="IChannel" href="javadoc/org/eclipse/net4j/channel/IChannel.html" icon="interface" />
+        <topic label="IChannelMultiplexer" href="javadoc/org/eclipse/net4j/channel/IChannelMultiplexer.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.connector" href="javadoc/org/eclipse/net4j/connector/package-summary.html" icon="package">
+        <topic label="ConnectorCredentialsInjector" href="javadoc/org/eclipse/net4j/connector/ConnectorCredentialsInjector.html" icon="class" />
+        <topic label="ConnectorException" href="javadoc/org/eclipse/net4j/connector/ConnectorException.html" icon="class" />
+        <topic label="ConnectorState" href="javadoc/org/eclipse/net4j/connector/ConnectorState.html" icon="enum" />
+        <topic label="IConnector" href="javadoc/org/eclipse/net4j/connector/IConnector.html" icon="interface" />
+        <topic label="IConnectorEvent" href="javadoc/org/eclipse/net4j/connector/IConnectorEvent.html" icon="interface" />
+        <topic label="IConnectorStateEvent" href="javadoc/org/eclipse/net4j/connector/IConnectorStateEvent.html" icon="interface" />
+        <topic label="IServerConnector" href="javadoc/org/eclipse/net4j/connector/IServerConnector.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.protocol" href="javadoc/org/eclipse/net4j/protocol/package-summary.html" icon="package">
+        <topic label="IProtocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/protocol/IProtocol.html" icon="interface" />
+        <topic label="IProtocol2&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/protocol/IProtocol2.html" icon="interface" />
+        <topic label="IProtocol3&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/protocol/IProtocol3.html" icon="interface" />
+        <topic label="IProtocolProvider" href="javadoc/org/eclipse/net4j/protocol/IProtocolProvider.html" icon="interface" />
+        <topic label="ProtocolVersionException" href="javadoc/org/eclipse/net4j/protocol/ProtocolVersionException.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.signal" href="javadoc/org/eclipse/net4j/signal/package-summary.html" icon="package">
+        <topic label="AcknowledgeCompressedStringsIndication" href="javadoc/org/eclipse/net4j/signal/AcknowledgeCompressedStringsIndication.html" icon="class" />
+        <topic label="AcknowledgeCompressedStringsRequest" href="javadoc/org/eclipse/net4j/signal/AcknowledgeCompressedStringsRequest.html" icon="class" />
+        <topic label="EntityIndication" href="javadoc/org/eclipse/net4j/signal/EntityIndication.html" icon="class" />
+        <topic label="EntityRequest" href="javadoc/org/eclipse/net4j/signal/EntityRequest.html" icon="class" />
+        <topic label="Indication" href="javadoc/org/eclipse/net4j/signal/Indication.html" icon="class" />
+        <topic label="IndicationWithMonitoring" href="javadoc/org/eclipse/net4j/signal/IndicationWithMonitoring.html" icon="class" />
+        <topic label="IndicationWithResponse" href="javadoc/org/eclipse/net4j/signal/IndicationWithResponse.html" icon="class" />
+        <topic label="ISignalProtocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/ISignalProtocol.html" icon="interface" />
+        <topic label="ISignalProtocol.WithSignalCounters&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/ISignalProtocol.WithSignalCounters.html" icon="interface" />
+        <topic label="MonitorCanceledIndication" href="javadoc/org/eclipse/net4j/signal/MonitorCanceledIndication.html" icon="class" />
+        <topic label="MonitorCanceledRequest" href="javadoc/org/eclipse/net4j/signal/MonitorCanceledRequest.html" icon="class" />
+        <topic label="MonitorProgressIndication" href="javadoc/org/eclipse/net4j/signal/MonitorProgressIndication.html" icon="class" />
+        <topic label="MonitorProgressRequest" href="javadoc/org/eclipse/net4j/signal/MonitorProgressRequest.html" icon="class" />
+        <topic label="RemoteException" href="javadoc/org/eclipse/net4j/signal/RemoteException.html" icon="class" />
+        <topic label="Request" href="javadoc/org/eclipse/net4j/signal/Request.html" icon="class" />
+        <topic label="RequestWithConfirmation&lt;RESULT&gt;" href="javadoc/org/eclipse/net4j/signal/RequestWithConfirmation.html" icon="class" />
+        <topic label="RequestWithMonitoring&lt;RESULT&gt;" href="javadoc/org/eclipse/net4j/signal/RequestWithMonitoring.html" icon="class" />
+        <topic label="Signal" href="javadoc/org/eclipse/net4j/signal/Signal.html" icon="class" />
+        <topic label="SignalActor" href="javadoc/org/eclipse/net4j/signal/SignalActor.html" icon="class" />
+        <topic label="SignalCounter" href="javadoc/org/eclipse/net4j/signal/SignalCounter.html" icon="class" />
+        <topic label="SignalFinishedEvent&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/SignalFinishedEvent.html" icon="class" />
+        <topic label="SignalProtocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.html" icon="class" />
+        <topic label="SignalProtocol.InvalidSignalIDException" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.InvalidSignalIDException.html" icon="class" />
+        <topic label="SignalProtocol.TimeoutChangedEvent" href="javadoc/org/eclipse/net4j/signal/SignalProtocol.TimeoutChangedEvent.html" icon="class" />
+        <topic label="SignalReactor" href="javadoc/org/eclipse/net4j/signal/SignalReactor.html" icon="class" />
+        <topic label="SignalScheduledEvent&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/SignalScheduledEvent.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.signal.confirmation" href="javadoc/org/eclipse/net4j/signal/confirmation/package-summary.html" icon="package">
+        <topic label="ConfirmationIndication&lt;PROTOCOL&gt;" href="javadoc/org/eclipse/net4j/signal/confirmation/ConfirmationIndication.html" icon="class" />
+        <topic label="ConfirmationPrompt" href="javadoc/org/eclipse/net4j/signal/confirmation/ConfirmationPrompt.html" icon="class" />
+        <topic label="ConfirmationRequest" href="javadoc/org/eclipse/net4j/signal/confirmation/ConfirmationRequest.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.signal.heartbeat" href="javadoc/org/eclipse/net4j/signal/heartbeat/package-summary.html" icon="package">
+        <topic label="HeartBeatProtocol" href="javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.html" icon="class" />
+        <topic label="HeartBeatProtocol.Server" href="javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.html" icon="class" />
+        <topic label="HeartBeatProtocol.Server.Factory" href="javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.Factory.html" icon="class" />
+        <topic label="HeartBeatProtocol.Server.TimerInjector" href="javadoc/org/eclipse/net4j/signal/heartbeat/HeartBeatProtocol.Server.TimerInjector.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.signal.security" href="javadoc/org/eclipse/net4j/signal/security/package-summary.html" icon="package">
+        <topic label="AuthenticatingSignalProtocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/net4j/signal/security/AuthenticatingSignalProtocol.html" icon="class" />
+        <topic label="AuthenticationIndication" href="javadoc/org/eclipse/net4j/signal/security/AuthenticationIndication.html" icon="class" />
+        <topic label="AuthenticationRequest" href="javadoc/org/eclipse/net4j/signal/security/AuthenticationRequest.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.signal.wrapping" href="javadoc/org/eclipse/net4j/signal/wrapping/package-summary.html" icon="package">
+        <topic label="GZIPStreamWrapperInjector" href="javadoc/org/eclipse/net4j/signal/wrapping/GZIPStreamWrapperInjector.html" icon="class" />
+        <topic label="StreamWrapperInjector" href="javadoc/org/eclipse/net4j/signal/wrapping/StreamWrapperInjector.html" icon="class" />
+        <topic label="XORStreamWrapperInjector" href="javadoc/org/eclipse/net4j/signal/wrapping/XORStreamWrapperInjector.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.spi.net4j" href="javadoc/org/eclipse/spi/net4j/package-summary.html" icon="package">
+        <topic label="Acceptor" href="javadoc/org/eclipse/spi/net4j/Acceptor.html" icon="class" />
+        <topic label="Acceptor.ConnectorPreparer" href="javadoc/org/eclipse/spi/net4j/Acceptor.ConnectorPreparer.html" icon="interface" />
+        <topic label="AcceptorFactory" href="javadoc/org/eclipse/spi/net4j/AcceptorFactory.html" icon="class" />
+        <topic label="Channel" href="javadoc/org/eclipse/spi/net4j/Channel.html" icon="class" />
+        <topic label="ChannelContainer" href="javadoc/org/eclipse/spi/net4j/ChannelContainer.html" icon="class" />
+        <topic label="ChannelMultiplexer" href="javadoc/org/eclipse/spi/net4j/ChannelMultiplexer.html" icon="class" />
+        <topic label="ClientProtocolFactory" href="javadoc/org/eclipse/spi/net4j/ClientProtocolFactory.html" icon="class" />
+        <topic label="Connector" href="javadoc/org/eclipse/spi/net4j/Connector.html" icon="class" />
+        <topic label="ConnectorFactory" href="javadoc/org/eclipse/spi/net4j/ConnectorFactory.html" icon="class" />
+        <topic label="InternalAcceptor" href="javadoc/org/eclipse/spi/net4j/InternalAcceptor.html" icon="interface" />
+        <topic label="InternalBuffer" href="javadoc/org/eclipse/spi/net4j/InternalBuffer.html" icon="interface" />
+        <topic label="InternalChannel" href="javadoc/org/eclipse/spi/net4j/InternalChannel.html" icon="interface" />
+        <topic label="InternalChannel.CountersChangedEvent" href="javadoc/org/eclipse/spi/net4j/InternalChannel.CountersChangedEvent.html" icon="interface" />
+        <topic label="InternalChannel.SendQueueEvent" href="javadoc/org/eclipse/spi/net4j/InternalChannel.SendQueueEvent.html" icon="interface" />
+        <topic label="InternalChannel.SendQueueEvent.Type" href="javadoc/org/eclipse/spi/net4j/InternalChannel.SendQueueEvent.Type.html" icon="enum" />
+        <topic label="InternalChannelMultiplexer" href="javadoc/org/eclipse/spi/net4j/InternalChannelMultiplexer.html" icon="interface" />
+        <topic label="InternalChannelMultiplexer.BufferMultiplexer" href="javadoc/org/eclipse/spi/net4j/InternalChannelMultiplexer.BufferMultiplexer.html" icon="interface" />
+        <topic label="InternalConnector" href="javadoc/org/eclipse/spi/net4j/InternalConnector.html" icon="interface" />
+        <topic label="InverseCloseable" href="javadoc/org/eclipse/spi/net4j/InverseCloseable.html" icon="interface" />
+        <topic label="Protocol&lt;INFRA_STRUCTURE&gt;" href="javadoc/org/eclipse/spi/net4j/Protocol.html" icon="class" />
+        <topic label="ServerProtocolFactory" href="javadoc/org/eclipse/spi/net4j/ServerProtocolFactory.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j Signalling Platform JVM Transport" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.jvm" href="javadoc/org/eclipse/net4j/jvm/package-summary.html" icon="package">
+        <topic label="IJVMAcceptor" href="javadoc/org/eclipse/net4j/jvm/IJVMAcceptor.html" icon="interface" />
+        <topic label="IJVMAcceptorManager" href="javadoc/org/eclipse/net4j/jvm/IJVMAcceptorManager.html" icon="interface" />
+        <topic label="IJVMChannel" href="javadoc/org/eclipse/net4j/jvm/IJVMChannel.html" icon="interface" />
+        <topic label="IJVMConnector" href="javadoc/org/eclipse/net4j/jvm/IJVMConnector.html" icon="interface" />
+        <topic label="JVMUtil" href="javadoc/org/eclipse/net4j/jvm/JVMUtil.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j Signalling Platform TCP Transport" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.tcp" href="javadoc/org/eclipse/net4j/tcp/package-summary.html" icon="package">
+        <topic label="ITCPAcceptor" href="javadoc/org/eclipse/net4j/tcp/ITCPAcceptor.html" icon="interface" />
+        <topic label="ITCPActiveSelectorListener" href="javadoc/org/eclipse/net4j/tcp/ITCPActiveSelectorListener.html" icon="interface" />
+        <topic label="ITCPConnector" href="javadoc/org/eclipse/net4j/tcp/ITCPConnector.html" icon="interface" />
+        <topic label="ITCPNegotiationContext" href="javadoc/org/eclipse/net4j/tcp/ITCPNegotiationContext.html" icon="interface" />
+        <topic label="ITCPPassiveSelectorListener" href="javadoc/org/eclipse/net4j/tcp/ITCPPassiveSelectorListener.html" icon="interface" />
+        <topic label="ITCPSelector" href="javadoc/org/eclipse/net4j/tcp/ITCPSelector.html" icon="interface" />
+        <topic label="TCPUtil" href="javadoc/org/eclipse/net4j/tcp/TCPUtil.html" icon="class" />
+        <topic label="TCPUtil.AcceptorData" href="javadoc/org/eclipse/net4j/tcp/TCPUtil.AcceptorData.html" icon="class" />
+        <topic label="TCPUtil.ConnectorData" href="javadoc/org/eclipse/net4j/tcp/TCPUtil.ConnectorData.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.tcp.ssl" href="javadoc/org/eclipse/net4j/tcp/ssl/package-summary.html" icon="package">
+        <topic label="SSLUtil" href="javadoc/org/eclipse/net4j/tcp/ssl/SSLUtil.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j Signalling Platform UI" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.ui" href="javadoc/org/eclipse/net4j/ui/package-summary.html" icon="package">
+        <topic label="AcceptorContentProvider" href="javadoc/org/eclipse/net4j/ui/AcceptorContentProvider.html" icon="class" />
+        <topic label="ConnectorContentProvider" href="javadoc/org/eclipse/net4j/ui/ConnectorContentProvider.html" icon="class" />
+        <topic label="FactoryTypeContentProvider" href="javadoc/org/eclipse/net4j/ui/FactoryTypeContentProvider.html" icon="class" />
+        <topic label="Net4jItemProvider" href="javadoc/org/eclipse/net4j/ui/Net4jItemProvider.html" icon="class" />
+        <topic label="Net4jItemProvider.RemoveAction" href="javadoc/org/eclipse/net4j/ui/Net4jItemProvider.RemoveAction.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j Signalling Platform Websocket Transport" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.wss" href="javadoc/org/eclipse/net4j/wss/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.ws" href="javadoc/org/eclipse/net4j/ws/package-summary.html" icon="package">
+        <topic label="IWSAcceptor" href="javadoc/org/eclipse/net4j/ws/IWSAcceptor.html" icon="interface" />
+        <topic label="IWSAcceptorManager" href="javadoc/org/eclipse/net4j/ws/IWSAcceptorManager.html" icon="interface" />
+        <topic label="IWSConnector" href="javadoc/org/eclipse/net4j/ws/IWSConnector.html" icon="interface" />
+        <topic label="IWSNegotiationContext" href="javadoc/org/eclipse/net4j/ws/IWSNegotiationContext.html" icon="interface" />
+        <topic label="WSUtil" href="javadoc/org/eclipse/net4j/ws/WSUtil.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.ws.jetty" href="javadoc/org/eclipse/net4j/ws/jetty/package-summary.html" icon="package">
+        <topic label="Net4jWebSocket" href="javadoc/org/eclipse/net4j/ws/jetty/Net4jWebSocket.html" icon="class" />
+        <topic label="Net4jWebSocketServlet" href="javadoc/org/eclipse/net4j/ws/jetty/Net4jWebSocketServlet.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.wss" href="javadoc/org/eclipse/net4j/wss/package-summary.html" icon="package">
+        <topic label="WSSUtil" href="javadoc/org/eclipse/net4j/wss/WSSUtil.html" icon="class" />
+      </topic>
     </topic>
   </topic>
   <topic label="Product Group Reference" href="html/product/index.html">

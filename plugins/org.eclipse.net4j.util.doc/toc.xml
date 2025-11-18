@@ -5,45 +5,719 @@
   <topic label="Overview" href="html/Overview.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j Utilities" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.cache" href="javadoc/org/eclipse/net4j/util/cache/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.collection" href="javadoc/org/eclipse/net4j/util/collection/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.concurrent" href="javadoc/org/eclipse/net4j/util/concurrent/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.container" href="javadoc/org/eclipse/net4j/util/container/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.container.delegate" href="javadoc/org/eclipse/net4j/util/container/delegate/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.event" href="javadoc/org/eclipse/net4j/util/event/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.factory" href="javadoc/org/eclipse/net4j/util/factory/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.fsm" href="javadoc/org/eclipse/net4j/util/fsm/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.io" href="javadoc/org/eclipse/net4j/util/io/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.lifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om" href="javadoc/org/eclipse/net4j/util/om/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om.job" href="javadoc/org/eclipse/net4j/util/om/job/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om.log" href="javadoc/org/eclipse/net4j/util/om/log/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om.monitor" href="javadoc/org/eclipse/net4j/util/om/monitor/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om.pref" href="javadoc/org/eclipse/net4j/util/om/pref/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.om.trace" href="javadoc/org/eclipse/net4j/util/om/trace/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.options" href="javadoc/org/eclipse/net4j/util/options/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.properties" href="javadoc/org/eclipse/net4j/util/properties/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ref" href="javadoc/org/eclipse/net4j/util/ref/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.registry" href="javadoc/org/eclipse/net4j/util/registry/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.security" href="javadoc/org/eclipse/net4j/util/security/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.security.operations" href="javadoc/org/eclipse/net4j/util/security/operations/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.transaction" href="javadoc/org/eclipse/net4j/util/transaction/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util" href="javadoc/org/eclipse/net4j/util/package-summary.html" icon="package">
+        <topic label="AbstractSupport" href="javadoc/org/eclipse/net4j/util/AbstractSupport.html" icon="class" />
+        <topic label="AbstractSupport.ClassAvailability" href="javadoc/org/eclipse/net4j/util/AbstractSupport.ClassAvailability.html" icon="class" />
+        <topic label="AdapterUtil" href="javadoc/org/eclipse/net4j/util/AdapterUtil.html" icon="class" />
+        <topic label="ArrayUtil" href="javadoc/org/eclipse/net4j/util/ArrayUtil.html" icon="class" />
+        <topic label="CheckUtil" href="javadoc/org/eclipse/net4j/util/CheckUtil.html" icon="class" />
+        <topic label="DoubleBiPredicate" href="javadoc/org/eclipse/net4j/util/DoubleBiPredicate.html" icon="interface" />
+        <topic label="ExceptionHandler" href="javadoc/org/eclipse/net4j/util/ExceptionHandler.html" icon="interface" />
+        <topic label="ExceptionHandler.Factory" href="javadoc/org/eclipse/net4j/util/ExceptionHandler.Factory.html" icon="class" />
+        <topic label="Handler&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Handler.html" icon="interface" />
+        <topic label="HexUtil" href="javadoc/org/eclipse/net4j/util/HexUtil.html" icon="class" />
+        <topic label="IDChanger" href="javadoc/org/eclipse/net4j/util/IDChanger.html" icon="class" />
+        <topic label="IDChanger.ChangeHandler" href="javadoc/org/eclipse/net4j/util/IDChanger.ChangeHandler.html" icon="interface" />
+        <topic label="IErrorHandler" href="javadoc/org/eclipse/net4j/util/IErrorHandler.html" icon="interface" />
+        <topic label="ImplementationError" href="javadoc/org/eclipse/net4j/util/ImplementationError.html" icon="class" />
+        <topic label="LongBiPredicate" href="javadoc/org/eclipse/net4j/util/LongBiPredicate.html" icon="interface" />
+        <topic label="ObjectUtil" href="javadoc/org/eclipse/net4j/util/ObjectUtil.html" icon="class" />
+        <topic label="ParameterAware" href="javadoc/org/eclipse/net4j/util/ParameterAware.html" icon="interface" />
+        <topic label="PluginUtil" href="javadoc/org/eclipse/net4j/util/PluginUtil.html" icon="class" />
+        <topic label="Predicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Predicate.html" icon="interface" />
+        <topic label="Predicate.DelegatingPredicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Predicate.DelegatingPredicate.html" icon="class" />
+        <topic label="Predicates" href="javadoc/org/eclipse/net4j/util/Predicates.html" icon="class" />
+        <topic label="Predicates.ExcludedPredicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Predicates.ExcludedPredicate.html" icon="class" />
+        <topic label="Predicates.IncludedPredicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Predicates.IncludedPredicate.html" icon="class" />
+        <topic label="Predicates.UniquePredicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/Predicates.UniquePredicate.html" icon="class" />
+        <topic label="ReflectUtil" href="javadoc/org/eclipse/net4j/util/ReflectUtil.html" icon="class" />
+        <topic label="ReflectUtil.ExcludeFromDump" href="javadoc/org/eclipse/net4j/util/ReflectUtil.ExcludeFromDump.html" icon="annotation" />
+        <topic label="ReflectUtil.PrimitiveType" href="javadoc/org/eclipse/net4j/util/ReflectUtil.PrimitiveType.html" icon="enum" />
+        <topic label="ReflectUtil.ReflectionException" href="javadoc/org/eclipse/net4j/util/ReflectUtil.ReflectionException.html" icon="class" />
+        <topic label="ReflectUtil.Setting" href="javadoc/org/eclipse/net4j/util/ReflectUtil.Setting.html" icon="class" />
+        <topic label="RunnableWithException" href="javadoc/org/eclipse/net4j/util/RunnableWithException.html" icon="interface" />
+        <topic label="StringConverter" href="javadoc/org/eclipse/net4j/util/StringConverter.html" icon="interface" />
+        <topic label="StringConverter.MetaFactory" href="javadoc/org/eclipse/net4j/util/StringConverter.MetaFactory.html" icon="class" />
+        <topic label="StringParser&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/StringParser.html" icon="interface" />
+        <topic label="StringParser.EnumStringParser&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/StringParser.EnumStringParser.html" icon="class" />
+        <topic label="StringParser.MetaFactory" href="javadoc/org/eclipse/net4j/util/StringParser.MetaFactory.html" icon="class" />
+        <topic label="StringTester" href="javadoc/org/eclipse/net4j/util/StringTester.html" icon="interface" />
+        <topic label="StringTester.MetaFactory" href="javadoc/org/eclipse/net4j/util/StringTester.MetaFactory.html" icon="class" />
+        <topic label="StringUtil" href="javadoc/org/eclipse/net4j/util/StringUtil.html" icon="class" />
+        <topic label="UUIDGenerator" href="javadoc/org/eclipse/net4j/util/UUIDGenerator.html" icon="class" />
+        <topic label="WrappedException" href="javadoc/org/eclipse/net4j/util/WrappedException.html" icon="class" />
+        <topic label="XMLUtil" href="javadoc/org/eclipse/net4j/util/XMLUtil.html" icon="class" />
+        <topic label="XMLUtil.ElementHandler" href="javadoc/org/eclipse/net4j/util/XMLUtil.ElementHandler.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.cache" href="javadoc/org/eclipse/net4j/util/cache/package-summary.html" icon="package">
+        <topic label="Cache&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/cache/Cache.html" icon="class" />
+        <topic label="CacheMonitor" href="javadoc/org/eclipse/net4j/util/cache/CacheMonitor.html" icon="class" />
+        <topic label="CacheRegistration" href="javadoc/org/eclipse/net4j/util/cache/CacheRegistration.html" icon="class" />
+        <topic label="HysteresisConditionPolicy" href="javadoc/org/eclipse/net4j/util/cache/HysteresisConditionPolicy.html" icon="class" />
+        <topic label="ICache" href="javadoc/org/eclipse/net4j/util/cache/ICache.html" icon="interface" />
+        <topic label="ICacheMonitor" href="javadoc/org/eclipse/net4j/util/cache/ICacheMonitor.html" icon="interface" />
+        <topic label="ICacheMonitor.Condition" href="javadoc/org/eclipse/net4j/util/cache/ICacheMonitor.Condition.html" icon="enum" />
+        <topic label="ICacheMonitor.ConditionPolicy" href="javadoc/org/eclipse/net4j/util/cache/ICacheMonitor.ConditionPolicy.html" icon="interface" />
+        <topic label="ICacheMonitorEvent" href="javadoc/org/eclipse/net4j/util/cache/ICacheMonitorEvent.html" icon="interface" />
+        <topic label="ICacheProbe" href="javadoc/org/eclipse/net4j/util/cache/ICacheProbe.html" icon="interface" />
+        <topic label="ICacheRegistration" href="javadoc/org/eclipse/net4j/util/cache/ICacheRegistration.html" icon="interface" />
+        <topic label="ThresholdConditionPolicy" href="javadoc/org/eclipse/net4j/util/cache/ThresholdConditionPolicy.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.collection" href="javadoc/org/eclipse/net4j/util/collection/package-summary.html" icon="package">
+        <topic label="AbstractCloseableIterator&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/AbstractCloseableIterator.html" icon="class" />
+        <topic label="AbstractFilteredIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/AbstractFilteredIterator.html" icon="class" />
+        <topic label="AbstractFilteredIterator.Predicated&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/AbstractFilteredIterator.Predicated.html" icon="class" />
+        <topic label="AbstractIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/AbstractIterator.html" icon="class" />
+        <topic label="AbstractListIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/AbstractListIterator.html" icon="class" />
+        <topic label="ArrayIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/ArrayIterator.html" icon="class" />
+        <topic label="BidirectionalIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/BidirectionalIterator.html" icon="class" />
+        <topic label="ByteArrayWrapper" href="javadoc/org/eclipse/net4j/util/collection/ByteArrayWrapper.html" icon="class" />
+        <topic label="CaseInsensitiveStringSet" href="javadoc/org/eclipse/net4j/util/collection/CaseInsensitiveStringSet.html" icon="class" />
+        <topic label="Closeable" href="javadoc/org/eclipse/net4j/util/collection/Closeable.html" icon="interface" />
+        <topic label="CloseableIterator&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/CloseableIterator.html" icon="interface" />
+        <topic label="CollectionUtil" href="javadoc/org/eclipse/net4j/util/collection/CollectionUtil.html" icon="class" />
+        <topic label="CollectionUtil.KeepMappedValue" href="javadoc/org/eclipse/net4j/util/collection/CollectionUtil.KeepMappedValue.html" icon="class" />
+        <topic label="ComposedIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/ComposedIterator.html" icon="class" />
+        <topic label="ConcurrentArray&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/ConcurrentArray.html" icon="class" />
+        <topic label="ConcurrentArray.DuplicateCounter&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/ConcurrentArray.DuplicateCounter.html" icon="class" />
+        <topic label="ConcurrentArray.Unique&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/ConcurrentArray.Unique.html" icon="class" />
+        <topic label="DelegatingCloseableIterator&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/DelegatingCloseableIterator.html" icon="class" />
+        <topic label="DynamicArray&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/DynamicArray.html" icon="class" />
+        <topic label="Entity" href="javadoc/org/eclipse/net4j/util/collection/Entity.html" icon="class" />
+        <topic label="Entity.Builder" href="javadoc/org/eclipse/net4j/util/collection/Entity.Builder.html" icon="class" />
+        <topic label="Entity.ComposedStore" href="javadoc/org/eclipse/net4j/util/collection/Entity.ComposedStore.html" icon="class" />
+        <topic label="Entity.ConcurrentStore" href="javadoc/org/eclipse/net4j/util/collection/Entity.ConcurrentStore.html" icon="class" />
+        <topic label="Entity.SingleNamespace" href="javadoc/org/eclipse/net4j/util/collection/Entity.SingleNamespace.html" icon="class" />
+        <topic label="Entity.SingleNamespaceComputer" href="javadoc/org/eclipse/net4j/util/collection/Entity.SingleNamespaceComputer.html" icon="class" />
+        <topic label="Entity.SingleNamespaceStore" href="javadoc/org/eclipse/net4j/util/collection/Entity.SingleNamespaceStore.html" icon="class" />
+        <topic label="Entity.Store" href="javadoc/org/eclipse/net4j/util/collection/Entity.Store.html" icon="interface" />
+        <topic label="Entity.Store.Provider" href="javadoc/org/eclipse/net4j/util/collection/Entity.Store.Provider.html" icon="interface" />
+        <topic label="FastList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/FastList.html" icon="class" />
+        <topic label="GrowingRandomAccessList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/GrowingRandomAccessList.html" icon="class" />
+        <topic label="HashBag&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/HashBag.html" icon="class" />
+        <topic label="History&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/History.html" icon="class" />
+        <topic label="HistoryElement&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/HistoryElement.html" icon="class" />
+        <topic label="HistoryUtil" href="javadoc/org/eclipse/net4j/util/collection/HistoryUtil.html" icon="class" />
+        <topic label="IHistory&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/IHistory.html" icon="interface" />
+        <topic label="IHistoryChangeEvent" href="javadoc/org/eclipse/net4j/util/collection/IHistoryChangeEvent.html" icon="interface" />
+        <topic label="IHistoryElement&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/IHistoryElement.html" icon="interface" />
+        <topic label="IndexedList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/IndexedList.html" icon="class" />
+        <topic label="IndexedList.ArrayBacked&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/IndexedList.ArrayBacked.html" icon="class" />
+        <topic label="LimitedIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/LimitedIterator.html" icon="class" />
+        <topic label="MoveableArrayList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/MoveableArrayList.html" icon="class" />
+        <topic label="MoveableList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/MoveableList.html" icon="interface" />
+        <topic label="PositionProvider" href="javadoc/org/eclipse/net4j/util/collection/PositionProvider.html" icon="interface" />
+        <topic label="Predicate&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/Predicate.html" icon="interface" />
+        <topic label="PredicateIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/PredicateIterator.html" icon="class" />
+        <topic label="PreferenceHistory" href="javadoc/org/eclipse/net4j/util/collection/PreferenceHistory.html" icon="class" />
+        <topic label="RoundRobinBlockingQueue&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/RoundRobinBlockingQueue.html" icon="class" />
+        <topic label="RoundRobinIterator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/collection/RoundRobinIterator.html" icon="class" />
+        <topic label="Tree" href="javadoc/org/eclipse/net4j/util/collection/Tree.html" icon="class" />
+        <topic label="Tree.Builder" href="javadoc/org/eclipse/net4j/util/collection/Tree.Builder.html" icon="class" />
+        <topic label="Tree.Dumper" href="javadoc/org/eclipse/net4j/util/collection/Tree.Dumper.html" icon="class" />
+        <topic label="Tree.XMLConverter" href="javadoc/org/eclipse/net4j/util/collection/Tree.XMLConverter.html" icon="class" />
+        <topic label="UnionSet&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/collection/UnionSet.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.concurrent" href="javadoc/org/eclipse/net4j/util/concurrent/package-summary.html" icon="package">
+        <topic label="Access" href="javadoc/org/eclipse/net4j/util/concurrent/Access.html" icon="class" />
+        <topic label="AsynchronousWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/AsynchronousWorkSerializer.html" icon="class" />
+        <topic label="CompletionWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/CompletionWorkSerializer.html" icon="class" />
+        <topic label="ConcurrencyUtil" href="javadoc/org/eclipse/net4j/util/concurrent/ConcurrencyUtil.html" icon="class" />
+        <topic label="ConcurrentValue&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/ConcurrentValue.html" icon="class" />
+        <topic label="CriticalSection" href="javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.html" icon="interface" />
+        <topic label="CriticalSection.LockedCriticalSection" href="javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.LockedCriticalSection.html" icon="class" />
+        <topic label="CriticalSection.SynchronizedCriticalSection" href="javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.SynchronizedCriticalSection.html" icon="class" />
+        <topic label="CriticalSection.UnsynchronizedCriticalSection" href="javadoc/org/eclipse/net4j/util/concurrent/CriticalSection.UnsynchronizedCriticalSection.html" icon="class" />
+        <topic label="DelayingExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/DelayingExecutor.html" icon="class" />
+        <topic label="DelegableReentrantLock" href="javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.html" icon="class" />
+        <topic label="DelegableReentrantLock.DelegateDetector" href="javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.html" icon="interface" />
+        <topic label="DelegableReentrantLock.DelegateDetector.Factory" href="javadoc/org/eclipse/net4j/util/concurrent/DelegableReentrantLock.DelegateDetector.Factory.html" icon="class" />
+        <topic label="DelegatingExecutorService" href="javadoc/org/eclipse/net4j/util/concurrent/DelegatingExecutorService.html" icon="class" />
+        <topic label="ExecutorServiceFactory" href="javadoc/org/eclipse/net4j/util/concurrent/ExecutorServiceFactory.html" icon="class" />
+        <topic label="ExecutorWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/ExecutorWorkSerializer.html" icon="class" />
+        <topic label="Holder&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/Holder.html" icon="class" />
+        <topic label="IExecutorServiceProvider" href="javadoc/org/eclipse/net4j/util/concurrent/IExecutorServiceProvider.html" icon="interface" />
+        <topic label="IRWLockManager.LockType" href="javadoc/org/eclipse/net4j/util/concurrent/IRWLockManager.LockType.html" icon="enum" />
+        <topic label="ISynchronizer&lt;RESULT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/ISynchronizer.html" icon="interface" />
+        <topic label="IWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/IWorkSerializer.html" icon="interface" />
+        <topic label="MonitoredThread" href="javadoc/org/eclipse/net4j/util/concurrent/MonitoredThread.html" icon="class" />
+        <topic label="MonitoredThread.MultiThreadMonitor" href="javadoc/org/eclipse/net4j/util/concurrent/MonitoredThread.MultiThreadMonitor.html" icon="class" />
+        <topic label="MonitoredThread.ThreadMonitor" href="javadoc/org/eclipse/net4j/util/concurrent/MonitoredThread.ThreadMonitor.html" icon="interface" />
+        <topic label="NonBlockingIntCounter" href="javadoc/org/eclipse/net4j/util/concurrent/NonBlockingIntCounter.html" icon="class" />
+        <topic label="NonBlockingLongCounter" href="javadoc/org/eclipse/net4j/util/concurrent/NonBlockingLongCounter.html" icon="class" />
+        <topic label="NonFairReentrantLock" href="javadoc/org/eclipse/net4j/util/concurrent/NonFairReentrantLock.html" icon="class" />
+        <topic label="OnePendingExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/OnePendingExecutor.html" icon="class" />
+        <topic label="ParallelRunner" href="javadoc/org/eclipse/net4j/util/concurrent/ParallelRunner.html" icon="class" />
+        <topic label="PriorityQueueRunnable" href="javadoc/org/eclipse/net4j/util/concurrent/PriorityQueueRunnable.html" icon="class" />
+        <topic label="PriorityQueueRunner" href="javadoc/org/eclipse/net4j/util/concurrent/PriorityQueueRunner.html" icon="class" />
+        <topic label="QueueRunner" href="javadoc/org/eclipse/net4j/util/concurrent/QueueRunner.html" icon="class" />
+        <topic label="QueueRunner2&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/QueueRunner2.html" icon="class" />
+        <topic label="QueueWorker&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/QueueWorker.html" icon="class" />
+        <topic label="QueueWorkerWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/QueueWorkerWorkSerializer.html" icon="class" />
+        <topic label="ReentrantReadWriteAccess" href="javadoc/org/eclipse/net4j/util/concurrent/ReentrantReadWriteAccess.html" icon="class" />
+        <topic label="ResultSynchronizer&lt;RESULT&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/ResultSynchronizer.html" icon="class" />
+        <topic label="RoundRobinList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/RoundRobinList.html" icon="class" />
+        <topic label="RunnableWithName" href="javadoc/org/eclipse/net4j/util/concurrent/RunnableWithName.html" icon="class" />
+        <topic label="RWLock" href="javadoc/org/eclipse/net4j/util/concurrent/RWLock.html" icon="class" />
+        <topic label="SerializingExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/SerializingExecutor.html" icon="class" />
+        <topic label="Sleeper" href="javadoc/org/eclipse/net4j/util/concurrent/Sleeper.html" icon="class" />
+        <topic label="Stoppable" href="javadoc/org/eclipse/net4j/util/concurrent/Stoppable.html" icon="class" />
+        <topic label="SynchronousExecutor" href="javadoc/org/eclipse/net4j/util/concurrent/SynchronousExecutor.html" icon="class" />
+        <topic label="SynchronousWorkSerializer" href="javadoc/org/eclipse/net4j/util/concurrent/SynchronousWorkSerializer.html" icon="class" />
+        <topic label="TaskQueue&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/concurrent/TaskQueue.html" icon="class" />
+        <topic label="ThreadPool" href="javadoc/org/eclipse/net4j/util/concurrent/ThreadPool.html" icon="class" />
+        <topic label="Timeouter" href="javadoc/org/eclipse/net4j/util/concurrent/Timeouter.html" icon="class" />
+        <topic label="TimeoutRuntimeException" href="javadoc/org/eclipse/net4j/util/concurrent/TimeoutRuntimeException.html" icon="class" />
+        <topic label="TimerLifecycle" href="javadoc/org/eclipse/net4j/util/concurrent/TimerLifecycle.html" icon="class" />
+        <topic label="TimerLifecycle.DaemonFactory" href="javadoc/org/eclipse/net4j/util/concurrent/TimerLifecycle.DaemonFactory.html" icon="class" />
+        <topic label="TrackableTimerTask" href="javadoc/org/eclipse/net4j/util/concurrent/TrackableTimerTask.html" icon="class" />
+        <topic label="Worker" href="javadoc/org/eclipse/net4j/util/concurrent/Worker.html" icon="class" />
+        <topic label="Worker.Terminate" href="javadoc/org/eclipse/net4j/util/concurrent/Worker.Terminate.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/package-summary.html" icon="package">
+        <topic label="Confirmation" href="javadoc/org/eclipse/net4j/util/confirmation/Confirmation.html" icon="enum" />
+        <topic label="IConfirmationProvider" href="javadoc/org/eclipse/net4j/util/confirmation/IConfirmationProvider.html" icon="interface" />
+        <topic label="IConfirmationProvider.Factory" href="javadoc/org/eclipse/net4j/util/confirmation/IConfirmationProvider.Factory.html" icon="class" />
+        <topic label="IConfirmationProvider.Factory.Default" href="javadoc/org/eclipse/net4j/util/confirmation/IConfirmationProvider.Factory.Default.html" icon="class" />
+        <topic label="IConfirmationProvider.Provider" href="javadoc/org/eclipse/net4j/util/confirmation/IConfirmationProvider.Provider.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.container" href="javadoc/org/eclipse/net4j/util/container/package-summary.html" icon="package">
+        <topic label="Container&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/Container.html" icon="class" />
+        <topic label="ContainerDelta&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ContainerDelta.html" icon="class" />
+        <topic label="ContainerElementList&lt;ELEMENT&gt;" href="javadoc/org/eclipse/net4j/util/container/ContainerElementList.html" icon="class" />
+        <topic label="ContainerElementList.Prioritized" href="javadoc/org/eclipse/net4j/util/container/ContainerElementList.Prioritized.html" icon="interface" />
+        <topic label="ContainerEvent&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ContainerEvent.html" icon="class" />
+        <topic label="ContainerEventAdapter&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ContainerEventAdapter.html" icon="class" />
+        <topic label="ContainerPersistence&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ContainerPersistence.html" icon="class" />
+        <topic label="ContainerUtil" href="javadoc/org/eclipse/net4j/util/container/ContainerUtil.html" icon="class" />
+        <topic label="FactoryNotFoundException" href="javadoc/org/eclipse/net4j/util/container/FactoryNotFoundException.html" icon="class" />
+        <topic label="FileContainerPersistence&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/FileContainerPersistence.html" icon="class" />
+        <topic label="IContainer&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainer.html" icon="interface" />
+        <topic label="IContainer.Modifiable&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainer.Modifiable.html" icon="interface" />
+        <topic label="IContainer.Persistable&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainer.Persistable.html" icon="interface" />
+        <topic label="IContainer.Persistence&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainer.Persistence.html" icon="interface" />
+        <topic label="IContainerDelta&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainerDelta.html" icon="interface" />
+        <topic label="IContainerDelta.Kind" href="javadoc/org/eclipse/net4j/util/container/IContainerDelta.Kind.html" icon="enum" />
+        <topic label="IContainerEvent&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainerEvent.html" icon="interface" />
+        <topic label="IContainerEventVisitor&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainerEventVisitor.html" icon="interface" />
+        <topic label="IContainerEventVisitor.Filtered&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/IContainerEventVisitor.Filtered.html" icon="interface" />
+        <topic label="IElementProcessor" href="javadoc/org/eclipse/net4j/util/container/IElementProcessor.html" icon="interface" />
+        <topic label="IManagedContainer" href="javadoc/org/eclipse/net4j/util/container/IManagedContainer.html" icon="interface" />
+        <topic label="IManagedContainer.ContainerAware" href="javadoc/org/eclipse/net4j/util/container/IManagedContainer.ContainerAware.html" icon="interface" />
+        <topic label="IManagedContainerFactory" href="javadoc/org/eclipse/net4j/util/container/IManagedContainerFactory.html" icon="interface" />
+        <topic label="IManagedContainerProvider" href="javadoc/org/eclipse/net4j/util/container/IManagedContainerProvider.html" icon="interface" />
+        <topic label="IPluginContainer" href="javadoc/org/eclipse/net4j/util/container/IPluginContainer.html" icon="interface" />
+        <topic label="ISlow" href="javadoc/org/eclipse/net4j/util/container/ISlow.html" icon="interface" />
+        <topic label="LifecycleEventConverter&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/LifecycleEventConverter.html" icon="class" />
+        <topic label="ListContainer&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ListContainer.html" icon="class" />
+        <topic label="ManagedContainer" href="javadoc/org/eclipse/net4j/util/container/ManagedContainer.html" icon="class" />
+        <topic label="ModifiableContainer&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/ModifiableContainer.html" icon="class" />
+        <topic label="PersistableContainer&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/PersistableContainer.html" icon="class" />
+        <topic label="SelfAttachingContainerListener" href="javadoc/org/eclipse/net4j/util/container/SelfAttachingContainerListener.html" icon="class" />
+        <topic label="SelfAttachingContainerListener.Delegating" href="javadoc/org/eclipse/net4j/util/container/SelfAttachingContainerListener.Delegating.html" icon="class" />
+        <topic label="SelfAttachingContainerListener.DoNotDescend" href="javadoc/org/eclipse/net4j/util/container/SelfAttachingContainerListener.DoNotDescend.html" icon="interface" />
+        <topic label="SetContainer&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/SetContainer.html" icon="class" />
+        <topic label="SingleDeltaContainerEvent&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/SingleDeltaContainerEvent.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.container.delegate" href="javadoc/org/eclipse/net4j/util/container/delegate/package-summary.html" icon="package">
+        <topic label="AbstractDelegator&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/AbstractDelegator.html" icon="class" />
+        <topic label="ContainerBlockingQueue&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerBlockingQueue.html" icon="class" />
+        <topic label="ContainerCollection&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerCollection.html" icon="class" />
+        <topic label="ContainerList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerList.html" icon="class" />
+        <topic label="ContainerQueue&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerQueue.html" icon="class" />
+        <topic label="ContainerSet&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerSet.html" icon="class" />
+        <topic label="ContainerSortedSet&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/ContainerSortedSet.html" icon="class" />
+        <topic label="IContainerBlockingQueue&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerBlockingQueue.html" icon="interface" />
+        <topic label="IContainerCollection&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerCollection.html" icon="interface" />
+        <topic label="IContainerList&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerList.html" icon="interface" />
+        <topic label="IContainerQueue&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerQueue.html" icon="interface" />
+        <topic label="IContainerSet&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerSet.html" icon="interface" />
+        <topic label="IContainerSortedSet&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/container/delegate/IContainerSortedSet.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.event" href="javadoc/org/eclipse/net4j/util/event/package-summary.html" icon="package">
+        <topic label="Event" href="javadoc/org/eclipse/net4j/util/event/Event.html" icon="class" />
+        <topic label="EventPrinter" href="javadoc/org/eclipse/net4j/util/event/EventPrinter.html" icon="class" />
+        <topic label="EventUtil" href="javadoc/org/eclipse/net4j/util/event/EventUtil.html" icon="class" />
+        <topic label="ExecutorServiceNotifier" href="javadoc/org/eclipse/net4j/util/event/ExecutorServiceNotifier.html" icon="class" />
+        <topic label="ExecutorServiceNotifier.ThreadPool" href="javadoc/org/eclipse/net4j/util/event/ExecutorServiceNotifier.ThreadPool.html" icon="class" />
+        <topic label="FinishedEvent" href="javadoc/org/eclipse/net4j/util/event/FinishedEvent.html" icon="class" />
+        <topic label="IEvent" href="javadoc/org/eclipse/net4j/util/event/IEvent.html" icon="interface" />
+        <topic label="IListener" href="javadoc/org/eclipse/net4j/util/event/IListener.html" icon="interface" />
+        <topic label="IListener.NotifierAware" href="javadoc/org/eclipse/net4j/util/event/IListener.NotifierAware.html" icon="interface" />
+        <topic label="INotifier" href="javadoc/org/eclipse/net4j/util/event/INotifier.html" icon="interface" />
+        <topic label="INotifier.INotifier2" href="javadoc/org/eclipse/net4j/util/event/INotifier.INotifier2.html" icon="interface" />
+        <topic label="IPropertiesEvent" href="javadoc/org/eclipse/net4j/util/event/IPropertiesEvent.html" icon="interface" />
+        <topic label="LogListener" href="javadoc/org/eclipse/net4j/util/event/LogListener.html" icon="class" />
+        <topic label="Notifier" href="javadoc/org/eclipse/net4j/util/event/Notifier.html" icon="class" />
+        <topic label="Notifier.Cancelation" href="javadoc/org/eclipse/net4j/util/event/Notifier.Cancelation.html" icon="class" />
+        <topic label="PropertiesEvent" href="javadoc/org/eclipse/net4j/util/event/PropertiesEvent.html" icon="class" />
+        <topic label="ThrowableEvent" href="javadoc/org/eclipse/net4j/util/event/ThrowableEvent.html" icon="class" />
+        <topic label="ThrowableEventAdapter" href="javadoc/org/eclipse/net4j/util/event/ThrowableEventAdapter.html" icon="class" />
+        <topic label="ThrowableEventAdapter.ToPrintStream" href="javadoc/org/eclipse/net4j/util/event/ThrowableEventAdapter.ToPrintStream.html" icon="class" />
+        <topic label="ValueEvent&lt;VALUE&gt;" href="javadoc/org/eclipse/net4j/util/event/ValueEvent.html" icon="class" />
+        <topic label="ValueNotifier&lt;VALUE&gt;" href="javadoc/org/eclipse/net4j/util/event/ValueNotifier.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.factory" href="javadoc/org/eclipse/net4j/util/factory/package-summary.html" icon="package">
+        <topic label="AnnotationFactory&lt;PRODUCT&gt;" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.html" icon="class" />
+        <topic label="AnnotationFactory.InjectAttribute" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.InjectAttribute.html" icon="annotation" />
+        <topic label="AnnotationFactory.InjectConfig" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.InjectConfig.html" icon="annotation" />
+        <topic label="AnnotationFactory.InjectContainer" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.InjectContainer.html" icon="annotation" />
+        <topic label="AnnotationFactory.InjectElement" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.html" icon="annotation" />
+        <topic label="AnnotationFactory.InjectElement.Cardinality" href="javadoc/org/eclipse/net4j/util/factory/AnnotationFactory.InjectElement.Cardinality.html" icon="enum" />
+        <topic label="Factory" href="javadoc/org/eclipse/net4j/util/factory/Factory.html" icon="class" />
+        <topic label="FactoryCreationException" href="javadoc/org/eclipse/net4j/util/factory/FactoryCreationException.html" icon="class" />
+        <topic label="FactoryDescriptor" href="javadoc/org/eclipse/net4j/util/factory/FactoryDescriptor.html" icon="class" />
+        <topic label="FactoryKey" href="javadoc/org/eclipse/net4j/util/factory/FactoryKey.html" icon="class" />
+        <topic label="IFactory" href="javadoc/org/eclipse/net4j/util/factory/IFactory.html" icon="interface" />
+        <topic label="IFactoryKey" href="javadoc/org/eclipse/net4j/util/factory/IFactoryKey.html" icon="interface" />
+        <topic label="IFactoryKeyAware" href="javadoc/org/eclipse/net4j/util/factory/IFactoryKeyAware.html" icon="interface" />
+        <topic label="IPropertiesFactory" href="javadoc/org/eclipse/net4j/util/factory/IPropertiesFactory.html" icon="interface" />
+        <topic label="ITreeFactory" href="javadoc/org/eclipse/net4j/util/factory/ITreeFactory.html" icon="interface" />
+        <topic label="MetaFactory" href="javadoc/org/eclipse/net4j/util/factory/MetaFactory.html" icon="class" />
+        <topic label="ProductCreationException" href="javadoc/org/eclipse/net4j/util/factory/ProductCreationException.html" icon="class" />
+        <topic label="ProductDescriptionAware" href="javadoc/org/eclipse/net4j/util/factory/ProductDescriptionAware.html" icon="interface" />
+        <topic label="ProductDescriptionProvider" href="javadoc/org/eclipse/net4j/util/factory/ProductDescriptionProvider.html" icon="interface" />
+        <topic label="PropertiesFactory" href="javadoc/org/eclipse/net4j/util/factory/PropertiesFactory.html" icon="class" />
+        <topic label="SingletonFactory" href="javadoc/org/eclipse/net4j/util/factory/SingletonFactory.html" icon="class" />
+        <topic label="TreeFactory" href="javadoc/org/eclipse/net4j/util/factory/TreeFactory.html" icon="class" />
+        <topic label="TreeFactory.ContainerAware" href="javadoc/org/eclipse/net4j/util/factory/TreeFactory.ContainerAware.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.fsm" href="javadoc/org/eclipse/net4j/util/fsm/package-summary.html" icon="package">
+        <topic label="FiniteStateMachine.FailTransition" href="javadoc/org/eclipse/net4j/util/fsm/FiniteStateMachine.FailTransition.html" icon="class" />
+        <topic label="FiniteStateMachine.IgnoreTransition" href="javadoc/org/eclipse/net4j/util/fsm/FiniteStateMachine.IgnoreTransition.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.io" href="javadoc/org/eclipse/net4j/util/io/package-summary.html" icon="package">
+        <topic label="AsyncOutputStream" href="javadoc/org/eclipse/net4j/util/io/AsyncOutputStream.html" icon="class" />
+        <topic label="AsyncWriter" href="javadoc/org/eclipse/net4j/util/io/AsyncWriter.html" icon="class" />
+        <topic label="DataInputExtender" href="javadoc/org/eclipse/net4j/util/io/DataInputExtender.html" icon="class" />
+        <topic label="DataInputOutputFile" href="javadoc/org/eclipse/net4j/util/io/DataInputOutputFile.html" icon="class" />
+        <topic label="DataOutputExtender" href="javadoc/org/eclipse/net4j/util/io/DataOutputExtender.html" icon="class" />
+        <topic label="DelegatingInputStream" href="javadoc/org/eclipse/net4j/util/io/DelegatingInputStream.html" icon="class" />
+        <topic label="DelegatingOutputStream" href="javadoc/org/eclipse/net4j/util/io/DelegatingOutputStream.html" icon="class" />
+        <topic label="DelegatingStreamWrapper" href="javadoc/org/eclipse/net4j/util/io/DelegatingStreamWrapper.html" icon="class" />
+        <topic label="DigestWriter" href="javadoc/org/eclipse/net4j/util/io/DigestWriter.html" icon="class" />
+        <topic label="EmptyInputStream" href="javadoc/org/eclipse/net4j/util/io/EmptyInputStream.html" icon="class" />
+        <topic label="EncodingProvider" href="javadoc/org/eclipse/net4j/util/io/EncodingProvider.html" icon="interface" />
+        <topic label="ExpectedFileInputStream" href="javadoc/org/eclipse/net4j/util/io/ExpectedFileInputStream.html" icon="class" />
+        <topic label="ExpectedFileReader" href="javadoc/org/eclipse/net4j/util/io/ExpectedFileReader.html" icon="class" />
+        <topic label="ExtendedDataInput" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataInput.html" icon="interface" />
+        <topic label="ExtendedDataInput.Delegating" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataInput.Delegating.html" icon="class" />
+        <topic label="ExtendedDataInput.Stream" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataInput.Stream.html" icon="class" />
+        <topic label="ExtendedDataInputStream" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataInputStream.html" icon="class" />
+        <topic label="ExtendedDataOutput" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataOutput.html" icon="interface" />
+        <topic label="ExtendedDataOutput.Delegating" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataOutput.Delegating.html" icon="class" />
+        <topic label="ExtendedDataOutput.Stream" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataOutput.Stream.html" icon="class" />
+        <topic label="ExtendedDataOutputStream" href="javadoc/org/eclipse/net4j/util/io/ExtendedDataOutputStream.html" icon="class" />
+        <topic label="ExtendedInputHandler" href="javadoc/org/eclipse/net4j/util/io/ExtendedInputHandler.html" icon="interface" />
+        <topic label="ExtendedIOAdapter" href="javadoc/org/eclipse/net4j/util/io/ExtendedIOAdapter.html" icon="class" />
+        <topic label="ExtendedIOHandler" href="javadoc/org/eclipse/net4j/util/io/ExtendedIOHandler.html" icon="interface" />
+        <topic label="ExtendedIOUtil" href="javadoc/org/eclipse/net4j/util/io/ExtendedIOUtil.html" icon="class" />
+        <topic label="ExtendedIOUtil.ClassLoaderClassResolver" href="javadoc/org/eclipse/net4j/util/io/ExtendedIOUtil.ClassLoaderClassResolver.html" icon="class" />
+        <topic label="ExtendedIOUtil.ClassResolver" href="javadoc/org/eclipse/net4j/util/io/ExtendedIOUtil.ClassResolver.html" icon="interface" />
+        <topic label="ExtendedOutputHandler" href="javadoc/org/eclipse/net4j/util/io/ExtendedOutputHandler.html" icon="interface" />
+        <topic label="FileLock" href="javadoc/org/eclipse/net4j/util/io/FileLock.html" icon="class" />
+        <topic label="GZIPStreamWrapper" href="javadoc/org/eclipse/net4j/util/io/GZIPStreamWrapper.html" icon="class" />
+        <topic label="GZIPStreamWrapper.Factory" href="javadoc/org/eclipse/net4j/util/io/GZIPStreamWrapper.Factory.html" icon="class" />
+        <topic label="IOFilter&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/io/IOFilter.html" icon="interface" />
+        <topic label="IORunnable&lt;IO&gt;" href="javadoc/org/eclipse/net4j/util/io/IORunnable.html" icon="interface" />
+        <topic label="IORuntimeException" href="javadoc/org/eclipse/net4j/util/io/IORuntimeException.html" icon="class" />
+        <topic label="IOTimeoutException" href="javadoc/org/eclipse/net4j/util/io/IOTimeoutException.html" icon="class" />
+        <topic label="IOUtil" href="javadoc/org/eclipse/net4j/util/io/IOUtil.html" icon="class" />
+        <topic label="IOUtil.FileCollector" href="javadoc/org/eclipse/net4j/util/io/IOUtil.FileCollector.html" icon="class" />
+        <topic label="IOVisitor" href="javadoc/org/eclipse/net4j/util/io/IOVisitor.html" icon="interface" />
+        <topic label="IStreamWrapper" href="javadoc/org/eclipse/net4j/util/io/IStreamWrapper.html" icon="interface" />
+        <topic label="IStreamWrapper.Factory" href="javadoc/org/eclipse/net4j/util/io/IStreamWrapper.Factory.html" icon="class" />
+        <topic label="LimitedInputStream" href="javadoc/org/eclipse/net4j/util/io/LimitedInputStream.html" icon="class" />
+        <topic label="LimitedReader" href="javadoc/org/eclipse/net4j/util/io/LimitedReader.html" icon="class" />
+        <topic label="NIOUtil" href="javadoc/org/eclipse/net4j/util/io/NIOUtil.html" icon="class" />
+        <topic label="ReaderInputStream" href="javadoc/org/eclipse/net4j/util/io/ReaderInputStream.html" icon="class" />
+        <topic label="RemoteException" href="javadoc/org/eclipse/net4j/util/io/RemoteException.html" icon="class" />
+        <topic label="StreamWrapperChain" href="javadoc/org/eclipse/net4j/util/io/StreamWrapperChain.html" icon="class" />
+        <topic label="StringBuilderWriter" href="javadoc/org/eclipse/net4j/util/io/StringBuilderWriter.html" icon="class" />
+        <topic label="StringCompressor" href="javadoc/org/eclipse/net4j/util/io/StringCompressor.html" icon="class" />
+        <topic label="StringCompressor.Counting" href="javadoc/org/eclipse/net4j/util/io/StringCompressor.Counting.html" icon="class" />
+        <topic label="StringIO" href="javadoc/org/eclipse/net4j/util/io/StringIO.html" icon="interface" />
+        <topic label="TMPUtil" href="javadoc/org/eclipse/net4j/util/io/TMPUtil.html" icon="class" />
+        <topic label="XMLOutput" href="javadoc/org/eclipse/net4j/util/io/XMLOutput.html" icon="class" />
+        <topic label="XORInputStream" href="javadoc/org/eclipse/net4j/util/io/XORInputStream.html" icon="class" />
+        <topic label="XOROutputStream" href="javadoc/org/eclipse/net4j/util/io/XOROutputStream.html" icon="class" />
+        <topic label="XORStreamWrapper" href="javadoc/org/eclipse/net4j/util/io/XORStreamWrapper.html" icon="class" />
+        <topic label="ZIPUtil" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.html" icon="class" />
+        <topic label="ZIPUtil.EntryContext" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.EntryContext.html" icon="class" />
+        <topic label="ZIPUtil.FileSystemUnzipHandler" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.FileSystemUnzipHandler.html" icon="class" />
+        <topic label="ZIPUtil.FileSystemZipHandler" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.FileSystemZipHandler.html" icon="class" />
+        <topic label="ZIPUtil.UnzipHandler" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.UnzipHandler.html" icon="interface" />
+        <topic label="ZIPUtil.ZipEntryHandler" href="javadoc/org/eclipse/net4j/util/io/ZIPUtil.ZipEntryHandler.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.lifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/package-summary.html" icon="package">
+        <topic label="IDeactivateable" href="javadoc/org/eclipse/net4j/util/lifecycle/IDeactivateable.html" icon="interface" />
+        <topic label="ILifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.html" icon="interface" />
+        <topic label="ILifecycle.DeferrableActivation" href="javadoc/org/eclipse/net4j/util/lifecycle/ILifecycle.DeferrableActivation.html" icon="interface" />
+        <topic label="ILifecycleEvent" href="javadoc/org/eclipse/net4j/util/lifecycle/ILifecycleEvent.html" icon="interface" />
+        <topic label="ILifecycleEvent.Kind" href="javadoc/org/eclipse/net4j/util/lifecycle/ILifecycleEvent.Kind.html" icon="enum" />
+        <topic label="Lifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/Lifecycle.html" icon="class" />
+        <topic label="LifecycleEvent" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleEvent.html" icon="class" />
+        <topic label="LifecycleEventAdapter" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleEventAdapter.html" icon="class" />
+        <topic label="LifecycleException" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleException.html" icon="class" />
+        <topic label="LifecycleHook&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleHook.html" icon="class" />
+        <topic label="LifecycleState" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleState.html" icon="enum" />
+        <topic label="LifecycleUtil" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.html" icon="class" />
+        <topic label="LifecycleUtil.Activator" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.Activator.html" icon="annotation" />
+        <topic label="LifecycleUtil.Deactivator" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.Deactivator.html" icon="annotation" />
+        <topic label="LifecycleUtil.Delegator&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.Delegator.html" icon="class" />
+        <topic label="LifecycleUtil.ReactivationTrigger" href="javadoc/org/eclipse/net4j/util/lifecycle/LifecycleUtil.ReactivationTrigger.html" icon="class" />
+        <topic label="ShareableLifecycle" href="javadoc/org/eclipse/net4j/util/lifecycle/ShareableLifecycle.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om" href="javadoc/org/eclipse/net4j/util/om/package-summary.html" icon="package">
+        <topic label="LegacyUtil" href="javadoc/org/eclipse/net4j/util/om/LegacyUtil.html" icon="class" />
+        <topic label="OMBundle" href="javadoc/org/eclipse/net4j/util/om/OMBundle.html" icon="interface" />
+        <topic label="OMBundle.DebugSupport" href="javadoc/org/eclipse/net4j/util/om/OMBundle.DebugSupport.html" icon="interface" />
+        <topic label="OMBundle.TranslationSupport" href="javadoc/org/eclipse/net4j/util/om/OMBundle.TranslationSupport.html" icon="interface" />
+        <topic label="OMPlatform" href="javadoc/org/eclipse/net4j/util/om/OMPlatform.html" icon="interface" />
+        <topic label="OSGiActivator" href="javadoc/org/eclipse/net4j/util/om/OSGiActivator.html" icon="class" />
+        <topic label="OSGiActivator.StateHandler" href="javadoc/org/eclipse/net4j/util/om/OSGiActivator.StateHandler.html" icon="class" />
+        <topic label="OSGiActivator.WithState" href="javadoc/org/eclipse/net4j/util/om/OSGiActivator.WithState.html" icon="class" />
+        <topic label="OSGiApplication" href="javadoc/org/eclipse/net4j/util/om/OSGiApplication.html" icon="class" />
+        <topic label="OSGiUtil" href="javadoc/org/eclipse/net4j/util/om/OSGiUtil.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om.job" href="javadoc/org/eclipse/net4j/util/om/job/package-summary.html" icon="package">
+        <topic label="OMJob" href="javadoc/org/eclipse/net4j/util/om/job/OMJob.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om.log" href="javadoc/org/eclipse/net4j/util/om/log/package-summary.html" icon="package">
+        <topic label="AbstractLogHandler" href="javadoc/org/eclipse/net4j/util/om/log/AbstractLogHandler.html" icon="class" />
+        <topic label="EclipseLoggingBridge" href="javadoc/org/eclipse/net4j/util/om/log/EclipseLoggingBridge.html" icon="class" />
+        <topic label="FileLogHandler" href="javadoc/org/eclipse/net4j/util/om/log/FileLogHandler.html" icon="class" />
+        <topic label="Log" href="javadoc/org/eclipse/net4j/util/om/log/Log.html" icon="interface" />
+        <topic label="Logger" href="javadoc/org/eclipse/net4j/util/om/log/Logger.html" icon="class" />
+        <topic label="OMLogFilter" href="javadoc/org/eclipse/net4j/util/om/log/OMLogFilter.html" icon="interface" />
+        <topic label="OMLogger" href="javadoc/org/eclipse/net4j/util/om/log/OMLogger.html" icon="interface" />
+        <topic label="OMLogger.Level" href="javadoc/org/eclipse/net4j/util/om/log/OMLogger.Level.html" icon="enum" />
+        <topic label="OMLogHandler" href="javadoc/org/eclipse/net4j/util/om/log/OMLogHandler.html" icon="interface" />
+        <topic label="OSGiLoggingBridge" href="javadoc/org/eclipse/net4j/util/om/log/OSGiLoggingBridge.html" icon="class" />
+        <topic label="OSGiLogHandler" href="javadoc/org/eclipse/net4j/util/om/log/OSGiLogHandler.html" icon="class" />
+        <topic label="PrintLogHandler" href="javadoc/org/eclipse/net4j/util/om/log/PrintLogHandler.html" icon="class" />
+        <topic label="RollingLog" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.html" icon="class" />
+        <topic label="RollingLog.LogLine" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.LogLine.html" icon="class" />
+        <topic label="RollingLog.PropertiesEvent" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.html" icon="class" />
+        <topic label="RollingLog.PropertiesEvent.Type" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.PropertiesEvent.Type.html" icon="enum" />
+        <topic label="RollingLog.RecoveryEvent" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.RecoveryEvent.html" icon="class" />
+        <topic label="RollingLog.RollingLogEvent" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.RollingLogEvent.html" icon="class" />
+        <topic label="RollingLog.SplitEvent" href="javadoc/org/eclipse/net4j/util/om/log/RollingLog.SplitEvent.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om.monitor" href="javadoc/org/eclipse/net4j/util/om/monitor/package-summary.html" icon="package">
+        <topic label="AbstractMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/AbstractMonitor.html" icon="class" />
+        <topic label="AbstractMonitor.AsyncTimerTask" href="javadoc/org/eclipse/net4j/util/om/monitor/AbstractMonitor.AsyncTimerTask.html" icon="class" />
+        <topic label="DelegatingMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/DelegatingMonitor.html" icon="class" />
+        <topic label="EclipseMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/EclipseMonitor.html" icon="class" />
+        <topic label="EclipseMonitor.SynchronizedSubProgressMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/EclipseMonitor.SynchronizedSubProgressMonitor.html" icon="class" />
+        <topic label="Monitor" href="javadoc/org/eclipse/net4j/util/om/monitor/Monitor.html" icon="class" />
+        <topic label="MonitorCanceledException" href="javadoc/org/eclipse/net4j/util/om/monitor/MonitorCanceledException.html" icon="class" />
+        <topic label="NestedMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/NestedMonitor.html" icon="class" />
+        <topic label="NotifyingMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/NotifyingMonitor.html" icon="class" />
+        <topic label="NotifyingMonitor.ProgressEvent" href="javadoc/org/eclipse/net4j/util/om/monitor/NotifyingMonitor.ProgressEvent.html" icon="class" />
+        <topic label="OMMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.html" icon="interface" />
+        <topic label="OMMonitor.Async" href="javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.Async.html" icon="interface" />
+        <topic label="OMMonitor.AsyncMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/OMMonitor.AsyncMonitor.html" icon="interface" />
+        <topic label="OMMonitorProgress" href="javadoc/org/eclipse/net4j/util/om/monitor/OMMonitorProgress.html" icon="interface" />
+        <topic label="ProbingSubMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/ProbingSubMonitor.html" icon="class" />
+        <topic label="ProgressDistributable&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributable.html" icon="interface" />
+        <topic label="ProgressDistributable.Default&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributable.Default.html" icon="class" />
+        <topic label="ProgressDistributor" href="javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributor.html" icon="class" />
+        <topic label="ProgressDistributor.Arithmetic" href="javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributor.Arithmetic.html" icon="class" />
+        <topic label="ProgressDistributor.Geometric" href="javadoc/org/eclipse/net4j/util/om/monitor/ProgressDistributor.Geometric.html" icon="class" />
+        <topic label="SubMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/SubMonitor.html" icon="class" />
+        <topic label="SubMonitor.ProbingMode" href="javadoc/org/eclipse/net4j/util/om/monitor/SubMonitor.ProbingMode.html" icon="enum" />
+        <topic label="SubProgressMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/SubProgressMonitor.html" icon="class" />
+        <topic label="TimeoutMonitor" href="javadoc/org/eclipse/net4j/util/om/monitor/TimeoutMonitor.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om.pref" href="javadoc/org/eclipse/net4j/util/om/pref/package-summary.html" icon="package">
+        <topic label="OMPreference&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/om/pref/OMPreference.html" icon="interface" />
+        <topic label="OMPreference.Participant" href="javadoc/org/eclipse/net4j/util/om/pref/OMPreference.Participant.html" icon="interface" />
+        <topic label="OMPreference.Type" href="javadoc/org/eclipse/net4j/util/om/pref/OMPreference.Type.html" icon="enum" />
+        <topic label="OMPreferences" href="javadoc/org/eclipse/net4j/util/om/pref/OMPreferences.html" icon="interface" />
+        <topic label="OMPreferencesChangeEvent&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/om/pref/OMPreferencesChangeEvent.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.om.trace" href="javadoc/org/eclipse/net4j/util/om/trace/package-summary.html" icon="package">
+        <topic label="ContextTracer" href="javadoc/org/eclipse/net4j/util/om/trace/ContextTracer.html" icon="class" />
+        <topic label="OMTraceHandler" href="javadoc/org/eclipse/net4j/util/om/trace/OMTraceHandler.html" icon="interface" />
+        <topic label="OMTraceHandlerEvent" href="javadoc/org/eclipse/net4j/util/om/trace/OMTraceHandlerEvent.html" icon="interface" />
+        <topic label="OMTracer" href="javadoc/org/eclipse/net4j/util/om/trace/OMTracer.html" icon="interface" />
+        <topic label="PerfTracer" href="javadoc/org/eclipse/net4j/util/om/trace/PerfTracer.html" icon="class" />
+        <topic label="PrintTraceHandler" href="javadoc/org/eclipse/net4j/util/om/trace/PrintTraceHandler.html" icon="class" />
+        <topic label="RemoteTraceHandler" href="javadoc/org/eclipse/net4j/util/om/trace/RemoteTraceHandler.html" icon="class" />
+        <topic label="RemoteTraceServer" href="javadoc/org/eclipse/net4j/util/om/trace/RemoteTraceServer.html" icon="class" />
+        <topic label="RemoteTraceServer.Event" href="javadoc/org/eclipse/net4j/util/om/trace/RemoteTraceServer.Event.html" icon="class" />
+        <topic label="RemoteTraceServer.Listener" href="javadoc/org/eclipse/net4j/util/om/trace/RemoteTraceServer.Listener.html" icon="interface" />
+        <topic label="RemoteTraceServer.PrintListener" href="javadoc/org/eclipse/net4j/util/om/trace/RemoteTraceServer.PrintListener.html" icon="class" />
+        <topic label="TraceHandlerEvent" href="javadoc/org/eclipse/net4j/util/om/trace/TraceHandlerEvent.html" icon="class" />
+        <topic label="Tracer" href="javadoc/org/eclipse/net4j/util/om/trace/Tracer.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.options" href="javadoc/org/eclipse/net4j/util/options/package-summary.html" icon="package">
+        <topic label="IOptions" href="javadoc/org/eclipse/net4j/util/options/IOptions.html" icon="interface" />
+        <topic label="IOptionsContainer" href="javadoc/org/eclipse/net4j/util/options/IOptionsContainer.html" icon="interface" />
+        <topic label="IOptionsEvent" href="javadoc/org/eclipse/net4j/util/options/IOptionsEvent.html" icon="interface" />
+        <topic label="OptionsEvent" href="javadoc/org/eclipse/net4j/util/options/OptionsEvent.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.properties" href="javadoc/org/eclipse/net4j/util/properties/package-summary.html" icon="package">
+        <topic label="DefaultPropertyTester&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/DefaultPropertyTester.html" icon="class" />
+        <topic label="IProperties&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/IProperties.html" icon="interface" />
+        <topic label="IPropertiesContainer" href="javadoc/org/eclipse/net4j/util/properties/IPropertiesContainer.html" icon="interface" />
+        <topic label="IPropertyProvider&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/IPropertyProvider.html" icon="interface" />
+        <topic label="Properties&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/Properties.html" icon="class" />
+        <topic label="PropertiesContainerUtil" href="javadoc/org/eclipse/net4j/util/properties/PropertiesContainerUtil.html" icon="class" />
+        <topic label="Property&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/Property.html" icon="class" />
+        <topic label="Property.WithArguments&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/properties/Property.WithArguments.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ref" href="javadoc/org/eclipse/net4j/util/ref/package-summary.html" icon="package">
+        <topic label="CleanableReferenceQueue&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ref/CleanableReferenceQueue.html" icon="class" />
+        <topic label="Interner&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/ref/Interner.html" icon="class" />
+        <topic label="Interner.Entry&lt;E&gt;" href="javadoc/org/eclipse/net4j/util/ref/Interner.Entry.html" icon="class" />
+        <topic label="ReferenceMonitor&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ref/ReferenceMonitor.html" icon="class" />
+        <topic label="ReferenceQueueWorker&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ref/ReferenceQueueWorker.html" icon="class" />
+        <topic label="ReferenceType" href="javadoc/org/eclipse/net4j/util/ref/ReferenceType.html" icon="enum" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.registry" href="javadoc/org/eclipse/net4j/util/registry/package-summary.html" icon="package">
+        <topic label="RegistryUtil" href="javadoc/org/eclipse/net4j/util/registry/RegistryUtil.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.security" href="javadoc/org/eclipse/net4j/util/security/package-summary.html" icon="package">
+        <topic label="AdministrationPredicate" href="javadoc/org/eclipse/net4j/util/security/AdministrationPredicate.html" icon="interface" />
+        <topic label="AuthenticatorFactory" href="javadoc/org/eclipse/net4j/util/security/AuthenticatorFactory.html" icon="class" />
+        <topic label="ChallengeNegotiator" href="javadoc/org/eclipse/net4j/util/security/ChallengeNegotiator.html" icon="class" />
+        <topic label="ChallengeNegotiatorConfigurer" href="javadoc/org/eclipse/net4j/util/security/ChallengeNegotiatorConfigurer.html" icon="class" />
+        <topic label="ChallengeNegotiatorFactory" href="javadoc/org/eclipse/net4j/util/security/ChallengeNegotiatorFactory.html" icon="class" />
+        <topic label="ChallengeResponseNegotiator" href="javadoc/org/eclipse/net4j/util/security/ChallengeResponseNegotiator.html" icon="class" />
+        <topic label="Credentials" href="javadoc/org/eclipse/net4j/util/security/Credentials.html" icon="class" />
+        <topic label="CredentialsProviderFactory" href="javadoc/org/eclipse/net4j/util/security/CredentialsProviderFactory.html" icon="class" />
+        <topic label="CredentialsUpdateOperation" href="javadoc/org/eclipse/net4j/util/security/CredentialsUpdateOperation.html" icon="enum" />
+        <topic label="Crypter" href="javadoc/org/eclipse/net4j/util/security/Crypter.html" icon="class" />
+        <topic label="Crypter.MetaFactory" href="javadoc/org/eclipse/net4j/util/security/Crypter.MetaFactory.html" icon="class" />
+        <topic label="DiffieHellman" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.html" icon="class" />
+        <topic label="DiffieHellman.Client" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.Client.html" icon="class" />
+        <topic label="DiffieHellman.Client.Response" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.Client.Response.html" icon="class" />
+        <topic label="DiffieHellman.ParameterSpecGenerator" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.ParameterSpecGenerator.html" icon="class" />
+        <topic label="DiffieHellman.Server" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.html" icon="class" />
+        <topic label="DiffieHellman.Server.Challenge" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.Server.Challenge.html" icon="class" />
+        <topic label="DiffieHellman.SkipParameterSpec" href="javadoc/org/eclipse/net4j/util/security/DiffieHellman.SkipParameterSpec.html" icon="class" />
+        <topic label="FileAuthenticatorFactory" href="javadoc/org/eclipse/net4j/util/security/FileAuthenticatorFactory.html" icon="class" />
+        <topic label="FileUserManager" href="javadoc/org/eclipse/net4j/util/security/FileUserManager.html" icon="class" />
+        <topic label="FileUserManagerFactory" href="javadoc/org/eclipse/net4j/util/security/FileUserManagerFactory.html" icon="class" />
+        <topic label="IAuthenticator" href="javadoc/org/eclipse/net4j/util/security/IAuthenticator.html" icon="interface" />
+        <topic label="IAuthenticator2" href="javadoc/org/eclipse/net4j/util/security/IAuthenticator2.html" icon="interface" />
+        <topic label="IChallengeResponse" href="javadoc/org/eclipse/net4j/util/security/IChallengeResponse.html" icon="interface" />
+        <topic label="IChallengeResponse.Event" href="javadoc/org/eclipse/net4j/util/security/IChallengeResponse.Event.html" icon="enum" />
+        <topic label="IChallengeResponse.State" href="javadoc/org/eclipse/net4j/util/security/IChallengeResponse.State.html" icon="enum" />
+        <topic label="ICredentials" href="javadoc/org/eclipse/net4j/util/security/ICredentials.html" icon="interface" />
+        <topic label="ICredentialsProvider" href="javadoc/org/eclipse/net4j/util/security/ICredentialsProvider.html" icon="interface" />
+        <topic label="ICredentialsProvider2" href="javadoc/org/eclipse/net4j/util/security/ICredentialsProvider2.html" icon="interface" />
+        <topic label="ICrypter" href="javadoc/org/eclipse/net4j/util/security/ICrypter.html" icon="interface" />
+        <topic label="INegotiationContext" href="javadoc/org/eclipse/net4j/util/security/INegotiationContext.html" icon="interface" />
+        <topic label="INegotiationContext.Receiver" href="javadoc/org/eclipse/net4j/util/security/INegotiationContext.Receiver.html" icon="interface" />
+        <topic label="INegotiator" href="javadoc/org/eclipse/net4j/util/security/INegotiator.html" icon="interface" />
+        <topic label="INegotiatorAware" href="javadoc/org/eclipse/net4j/util/security/INegotiatorAware.html" icon="interface" />
+        <topic label="IPasswordCredentials" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentials.html" icon="interface" />
+        <topic label="IPasswordCredentialsProvider" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.html" icon="interface" />
+        <topic label="IPasswordCredentialsProvider.Provider" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider.Provider.html" icon="interface" />
+        <topic label="IPasswordCredentialsProvider2" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsProvider2.html" icon="interface" />
+        <topic label="IPasswordCredentialsUpdate" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsUpdate.html" icon="interface" />
+        <topic label="IPasswordCredentialsUpdateProvider" href="javadoc/org/eclipse/net4j/util/security/IPasswordCredentialsUpdateProvider.html" icon="interface" />
+        <topic label="IRandomizer" href="javadoc/org/eclipse/net4j/util/security/IRandomizer.html" icon="interface" />
+        <topic label="IUserAware" href="javadoc/org/eclipse/net4j/util/security/IUserAware.html" icon="interface" />
+        <topic label="IUserInfo" href="javadoc/org/eclipse/net4j/util/security/IUserInfo.html" icon="interface" />
+        <topic label="IUserManagement" href="javadoc/org/eclipse/net4j/util/security/IUserManagement.html" icon="interface" />
+        <topic label="IUserManagement.Attributed" href="javadoc/org/eclipse/net4j/util/security/IUserManagement.Attributed.html" icon="interface" />
+        <topic label="IUserManager" href="javadoc/org/eclipse/net4j/util/security/IUserManager.html" icon="interface" />
+        <topic label="MessageDigestCrypter" href="javadoc/org/eclipse/net4j/util/security/MessageDigestCrypter.html" icon="class" />
+        <topic label="NegotiationContext" href="javadoc/org/eclipse/net4j/util/security/NegotiationContext.html" icon="class" />
+        <topic label="NegotiationException" href="javadoc/org/eclipse/net4j/util/security/NegotiationException.html" icon="class" />
+        <topic label="NegotiatorFactory" href="javadoc/org/eclipse/net4j/util/security/NegotiatorFactory.html" icon="class" />
+        <topic label="NotAuthenticatedException" href="javadoc/org/eclipse/net4j/util/security/NotAuthenticatedException.html" icon="class" />
+        <topic label="PasswordCredentials" href="javadoc/org/eclipse/net4j/util/security/PasswordCredentials.html" icon="class" />
+        <topic label="PasswordCredentialsProvider" href="javadoc/org/eclipse/net4j/util/security/PasswordCredentialsProvider.html" icon="class" />
+        <topic label="PasswordCredentialsProvider.Delegating" href="javadoc/org/eclipse/net4j/util/security/PasswordCredentialsProvider.Delegating.html" icon="class" />
+        <topic label="PasswordCredentialsUpdate" href="javadoc/org/eclipse/net4j/util/security/PasswordCredentialsUpdate.html" icon="class" />
+        <topic label="Randomizer" href="javadoc/org/eclipse/net4j/util/security/Randomizer.html" icon="class" />
+        <topic label="RandomizerFactory" href="javadoc/org/eclipse/net4j/util/security/RandomizerFactory.html" icon="class" />
+        <topic label="ResponseNegotiator" href="javadoc/org/eclipse/net4j/util/security/ResponseNegotiator.html" icon="class" />
+        <topic label="ResponseNegotiatorFactory" href="javadoc/org/eclipse/net4j/util/security/ResponseNegotiatorFactory.html" icon="class" />
+        <topic label="ResponseNegotiatorInjector" href="javadoc/org/eclipse/net4j/util/security/ResponseNegotiatorInjector.html" icon="class" />
+        <topic label="SecurityUtil" href="javadoc/org/eclipse/net4j/util/security/SecurityUtil.html" icon="class" />
+        <topic label="UserManager" href="javadoc/org/eclipse/net4j/util/security/UserManager.html" icon="class" />
+        <topic label="UserManagerAuthenticator" href="javadoc/org/eclipse/net4j/util/security/UserManagerAuthenticator.html" icon="class" />
+        <topic label="UserManagerFactory" href="javadoc/org/eclipse/net4j/util/security/UserManagerFactory.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.security.operations" href="javadoc/org/eclipse/net4j/util/security/operations/package-summary.html" icon="package">
+        <topic label="AuthorizableOperation" href="javadoc/org/eclipse/net4j/util/security/operations/AuthorizableOperation.html" icon="class" />
+        <topic label="AuthorizableOperation.Builder" href="javadoc/org/eclipse/net4j/util/security/operations/AuthorizableOperation.Builder.html" icon="class" />
+        <topic label="AuthorizableOperationFactory" href="javadoc/org/eclipse/net4j/util/security/operations/AuthorizableOperationFactory.html" icon="class" />
+        <topic label="AuthorizableOperationImpl" href="javadoc/org/eclipse/net4j/util/security/operations/AuthorizableOperationImpl.html" icon="class" />
+        <topic label="OperationAuthorizer&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/security/operations/OperationAuthorizer.html" icon="interface" />
+        <topic label="OperationAuthorizerFactory&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/security/operations/OperationAuthorizerFactory.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.transaction" href="javadoc/org/eclipse/net4j/util/transaction/package-summary.html" icon="package">
+        <topic label="ITransaction&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/transaction/ITransaction.html" icon="interface" />
+        <topic label="ITransactionalOperation&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/transaction/ITransactionalOperation.html" icon="interface" />
+        <topic label="Transaction&lt;CONTEXT&gt;" href="javadoc/org/eclipse/net4j/util/transaction/Transaction.html" icon="class" />
+        <topic label="TransactionException" href="javadoc/org/eclipse/net4j/util/transaction/TransactionException.html" icon="class" />
+        <topic label="TransactionUtil" href="javadoc/org/eclipse/net4j/util/transaction/TransactionUtil.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j Utilities UI" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.chat" href="javadoc/org/eclipse/net4j/util/ui/chat/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.prefs" href="javadoc/org/eclipse/net4j/util/ui/prefs/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.proposals" href="javadoc/org/eclipse/net4j/util/ui/proposals/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.security" href="javadoc/org/eclipse/net4j/util/ui/security/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.views" href="javadoc/org/eclipse/net4j/util/ui/views/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.util.ui.widgets" href="javadoc/org/eclipse/net4j/util/ui/widgets/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.util.ui" href="javadoc/org/eclipse/net4j/util/ui/package-summary.html" icon="package">
+        <topic label="AbstractPropertyAdapterFactory" href="javadoc/org/eclipse/net4j/util/ui/AbstractPropertyAdapterFactory.html" icon="class" />
+        <topic label="ColorStyler" href="javadoc/org/eclipse/net4j/util/ui/ColorStyler.html" icon="class" />
+        <topic label="ComboAutoCompleter" href="javadoc/org/eclipse/net4j/util/ui/ComboAutoCompleter.html" icon="class" />
+        <topic label="DefaultActionFilter&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultActionFilter.html" icon="class" />
+        <topic label="DefaultPropertySource&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultPropertySource.html" icon="class" />
+        <topic label="DefaultPropertySource.DelegatingPropertyDescriptor&lt;RECEIVER&gt;" href="javadoc/org/eclipse/net4j/util/ui/DefaultPropertySource.DelegatingPropertyDescriptor.html" icon="class" />
+        <topic label="DelegatingContentProvider" href="javadoc/org/eclipse/net4j/util/ui/DelegatingContentProvider.html" icon="class" />
+        <topic label="FactoryTypeContentProvider" href="javadoc/org/eclipse/net4j/util/ui/FactoryTypeContentProvider.html" icon="class" />
+        <topic label="GlobalPartAdapter" href="javadoc/org/eclipse/net4j/util/ui/GlobalPartAdapter.html" icon="class" />
+        <topic label="ManagedLabelProvider" href="javadoc/org/eclipse/net4j/util/ui/ManagedLabelProvider.html" icon="class" />
+        <topic label="MenuFiller" href="javadoc/org/eclipse/net4j/util/ui/MenuFiller.html" icon="interface" />
+        <topic label="MenuFiller.Factory" href="javadoc/org/eclipse/net4j/util/ui/MenuFiller.Factory.html" icon="class" />
+        <topic label="OpenHandler" href="javadoc/org/eclipse/net4j/util/ui/OpenHandler.html" icon="interface" />
+        <topic label="OpenHandler.Factory" href="javadoc/org/eclipse/net4j/util/ui/OpenHandler.Factory.html" icon="class" />
+        <topic label="PropertyExtender" href="javadoc/org/eclipse/net4j/util/ui/PropertyExtender.html" icon="interface" />
+        <topic label="PropertyExtender.Factory" href="javadoc/org/eclipse/net4j/util/ui/PropertyExtender.Factory.html" icon="class" />
+        <topic label="SafeTreeViewer" href="javadoc/org/eclipse/net4j/util/ui/SafeTreeViewer.html" icon="class" />
+        <topic label="StaticContentProvider" href="javadoc/org/eclipse/net4j/util/ui/StaticContentProvider.html" icon="class" />
+        <topic label="StructuredContentProvider&lt;INPUT&gt;" href="javadoc/org/eclipse/net4j/util/ui/StructuredContentProvider.html" icon="class" />
+        <topic label="TableLabelProvider&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ui/TableLabelProvider.html" icon="class" />
+        <topic label="TableLabelProvider.Column&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ui/TableLabelProvider.Column.html" icon="class" />
+        <topic label="UIActivator" href="javadoc/org/eclipse/net4j/util/ui/UIActivator.html" icon="class" />
+        <topic label="UIActivator.WithState" href="javadoc/org/eclipse/net4j/util/ui/UIActivator.WithState.html" icon="class" />
+        <topic label="UIQueueRunner" href="javadoc/org/eclipse/net4j/util/ui/UIQueueRunner.html" icon="class" />
+        <topic label="UIUtil" href="javadoc/org/eclipse/net4j/util/ui/UIUtil.html" icon="class" />
+        <topic label="ValidationContext" href="javadoc/org/eclipse/net4j/util/ui/ValidationContext.html" icon="interface" />
+        <topic label="ValidationContext.Aggregator" href="javadoc/org/eclipse/net4j/util/ui/ValidationContext.Aggregator.html" icon="class" />
+        <topic label="ValidationParticipant" href="javadoc/org/eclipse/net4j/util/ui/ValidationParticipant.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.actions" href="javadoc/org/eclipse/net4j/util/ui/actions/package-summary.html" icon="package">
+        <topic label="LongRunningAction" href="javadoc/org/eclipse/net4j/util/ui/actions/LongRunningAction.html" icon="class" />
+        <topic label="LongRunningActionDelegate" href="javadoc/org/eclipse/net4j/util/ui/actions/LongRunningActionDelegate.html" icon="class" />
+        <topic label="SafeAction" href="javadoc/org/eclipse/net4j/util/ui/actions/SafeAction.html" icon="class" />
+        <topic label="SafeActionDelegate" href="javadoc/org/eclipse/net4j/util/ui/actions/SafeActionDelegate.html" icon="class" />
+        <topic label="SashLayoutAction" href="javadoc/org/eclipse/net4j/util/ui/actions/SashLayoutAction.html" icon="class" />
+        <topic label="SashLayoutAction.Horizontal" href="javadoc/org/eclipse/net4j/util/ui/actions/SashLayoutAction.Horizontal.html" icon="class" />
+        <topic label="SashLayoutAction.LayoutMenu" href="javadoc/org/eclipse/net4j/util/ui/actions/SashLayoutAction.LayoutMenu.html" icon="class" />
+        <topic label="SashLayoutAction.Vertical" href="javadoc/org/eclipse/net4j/util/ui/actions/SashLayoutAction.Vertical.html" icon="class" />
+        <topic label="SelectionListenerAction&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ui/actions/SelectionListenerAction.html" icon="class" />
+        <topic label="ToggleAction" href="javadoc/org/eclipse/net4j/util/ui/actions/ToggleAction.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.chat" href="javadoc/org/eclipse/net4j/util/ui/chat/package-summary.html" icon="package">
+        <topic label="ChatComposite" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatComposite.html" icon="class" />
+        <topic label="ChatComposite.Config" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatComposite.Config.html" icon="class" />
+        <topic label="ChatMessage" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatMessage.html" icon="interface" />
+        <topic label="ChatMessage.Author" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatMessage.Author.html" icon="class" />
+        <topic label="ChatMessage.Author.Builder" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatMessage.Author.Builder.html" icon="class" />
+        <topic label="ChatMessage.Author.Cache" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatMessage.Author.Cache.html" icon="class" />
+        <topic label="ChatMessage.Provider" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatMessage.Provider.html" icon="interface" />
+        <topic label="ChatRenderer" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.html" icon="class" />
+        <topic label="ChatRenderer.AvatarGenerator" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.AvatarGenerator.html" icon="interface" />
+        <topic label="ChatRenderer.AvatarGenerator.Default" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.AvatarGenerator.Default.html" icon="class" />
+        <topic label="ChatRenderer.AvatarGenerator.Default.Factory" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.AvatarGenerator.Default.Factory.html" icon="class" />
+        <topic label="ChatRenderer.Bubble" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.Bubble.html" icon="class" />
+        <topic label="ChatRenderer.BubbleGroup" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.BubbleGroup.html" icon="class" />
+        <topic label="ChatRenderer.DateLine" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.DateLine.html" icon="class" />
+        <topic label="ChatRenderer.Factory" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.Factory.html" icon="class" />
+        <topic label="ChatRenderer.Renderable" href="javadoc/org/eclipse/net4j/util/ui/chat/ChatRenderer.Renderable.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.confirmation" href="javadoc/org/eclipse/net4j/util/ui/confirmation/package-summary.html" icon="package">
+        <topic label="ConfirmationDialog" href="javadoc/org/eclipse/net4j/util/ui/confirmation/ConfirmationDialog.html" icon="class" />
+        <topic label="InteractiveConfirmationProvider" href="javadoc/org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.html" icon="class" />
+        <topic label="InteractiveConfirmationProvider.Factory" href="javadoc/org/eclipse/net4j/util/ui/confirmation/InteractiveConfirmationProvider.Factory.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.container" href="javadoc/org/eclipse/net4j/util/ui/container/package-summary.html" icon="package">
+        <topic label="ElementWizard" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizard.html" icon="class" />
+        <topic label="ElementWizardAction" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardAction.html" icon="class" />
+        <topic label="ElementWizardComposite" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardComposite.html" icon="class" />
+        <topic label="ElementWizardComposite.WithCombo" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardComposite.WithCombo.html" icon="class" />
+        <topic label="ElementWizardComposite.WithRadios" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardComposite.WithRadios.html" icon="class" />
+        <topic label="ElementWizardDialog" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardDialog.html" icon="class" />
+        <topic label="ElementWizardFactory" href="javadoc/org/eclipse/net4j/util/ui/container/ElementWizardFactory.html" icon="class" />
+        <topic label="IElementWizard" href="javadoc/org/eclipse/net4j/util/ui/container/IElementWizard.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.dnd" href="javadoc/org/eclipse/net4j/util/ui/dnd/package-summary.html" icon="package">
+        <topic label="DNDDragListener&lt;TYPE&gt;" href="javadoc/org/eclipse/net4j/util/ui/dnd/DNDDragListener.html" icon="class" />
+        <topic label="DNDDropAdapter&lt;TYPE&gt;" href="javadoc/org/eclipse/net4j/util/ui/dnd/DNDDropAdapter.html" icon="class" />
+        <topic label="DNDTransfer&lt;TYPE&gt;" href="javadoc/org/eclipse/net4j/util/ui/dnd/DNDTransfer.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.handlers" href="javadoc/org/eclipse/net4j/util/ui/handlers/package-summary.html" icon="package">
+        <topic label="AbstractBaseHandler&lt;T&gt;" href="javadoc/org/eclipse/net4j/util/ui/handlers/AbstractBaseHandler.html" icon="class" />
+        <topic label="LongRunningHandler" href="javadoc/org/eclipse/net4j/util/ui/handlers/LongRunningHandler.html" icon="class" />
+        <topic label="SafeHandler" href="javadoc/org/eclipse/net4j/util/ui/handlers/SafeHandler.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.prefs" href="javadoc/org/eclipse/net4j/util/ui/prefs/package-summary.html" icon="package">
+        <topic label="OMPreferencePage" href="javadoc/org/eclipse/net4j/util/ui/prefs/OMPreferencePage.html" icon="class" />
+        <topic label="OMPreferenceStore" href="javadoc/org/eclipse/net4j/util/ui/prefs/OMPreferenceStore.html" icon="class" />
+        <topic label="PrefBoolean" href="javadoc/org/eclipse/net4j/util/ui/prefs/PrefBoolean.html" icon="class" />
+        <topic label="PrefIntegerAndDisable" href="javadoc/org/eclipse/net4j/util/ui/prefs/PrefIntegerAndDisable.html" icon="class" />
+        <topic label="PrefText" href="javadoc/org/eclipse/net4j/util/ui/prefs/PrefText.html" icon="class" />
+        <topic label="PrefTextAndDisable" href="javadoc/org/eclipse/net4j/util/ui/prefs/PrefTextAndDisable.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.proposals" href="javadoc/org/eclipse/net4j/util/ui/proposals/package-summary.html" icon="package">
+        <topic label="RegExContentProposalProvider" href="javadoc/org/eclipse/net4j/util/ui/proposals/RegExContentProposalProvider.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.security" href="javadoc/org/eclipse/net4j/util/ui/security/package-summary.html" icon="package">
+        <topic label="CredentialsDialog" href="javadoc/org/eclipse/net4j/util/ui/security/CredentialsDialog.html" icon="class" />
+        <topic label="CredentialsResetDialog" href="javadoc/org/eclipse/net4j/util/ui/security/CredentialsResetDialog.html" icon="class" />
+        <topic label="CredentialsUpdateDialog" href="javadoc/org/eclipse/net4j/util/ui/security/CredentialsUpdateDialog.html" icon="class" />
+        <topic label="InteractiveCredentialsProvider" href="javadoc/org/eclipse/net4j/util/ui/security/InteractiveCredentialsProvider.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.views" href="javadoc/org/eclipse/net4j/util/ui/views/package-summary.html" icon="package">
+        <topic label="ContainerItemProvider&lt;CONTAINER&gt;" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.html" icon="class" />
+        <topic label="ContainerItemProvider.Node" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.Node.html" icon="interface" />
+        <topic label="ContainerItemProvider.SlowElement" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerItemProvider.SlowElement.html" icon="class" />
+        <topic label="ContainerNameSorter" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerNameSorter.html" icon="class" />
+        <topic label="ContainerPathItemProvider&lt;CONTAINER&gt;" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerPathItemProvider.html" icon="class" />
+        <topic label="ContainerView" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerView.html" icon="class" />
+        <topic label="ContainerView.Default&lt;CONTAINER&gt;" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerView.Default.html" icon="class" />
+        <topic label="ContainerView.MessageType" href="javadoc/org/eclipse/net4j/util/ui/views/ContainerView.MessageType.html" icon="enum" />
+        <topic label="IElementFilter" href="javadoc/org/eclipse/net4j/util/ui/views/IElementFilter.html" icon="interface" />
+        <topic label="IntrospectionProvider" href="javadoc/org/eclipse/net4j/util/ui/views/IntrospectionProvider.html" icon="class" />
+        <topic label="IntrospectionProvider.Factory" href="javadoc/org/eclipse/net4j/util/ui/views/IntrospectionProvider.Factory.html" icon="class" />
+        <topic label="IntrospectionProvider.NameAndValue" href="javadoc/org/eclipse/net4j/util/ui/views/IntrospectionProvider.NameAndValue.html" icon="class" />
+        <topic label="ItemProvider&lt;INPUT&gt;" href="javadoc/org/eclipse/net4j/util/ui/views/ItemProvider.html" icon="class" />
+        <topic label="ManagedContainerItemProvider" href="javadoc/org/eclipse/net4j/util/ui/views/ManagedContainerItemProvider.html" icon="class" />
+        <topic label="MasterDetailsView" href="javadoc/org/eclipse/net4j/util/ui/views/MasterDetailsView.html" icon="class" />
+        <topic label="MultiViewersView" href="javadoc/org/eclipse/net4j/util/ui/views/MultiViewersView.html" icon="class" />
+        <topic label="MultiViewersView.MessageType" href="javadoc/org/eclipse/net4j/util/ui/views/MultiViewersView.MessageType.html" icon="enum" />
+        <topic label="RowIntrospectionProvider" href="javadoc/org/eclipse/net4j/util/ui/views/RowIntrospectionProvider.html" icon="class" />
+        <topic label="RowIntrospectionProvider.Row" href="javadoc/org/eclipse/net4j/util/ui/views/RowIntrospectionProvider.Row.html" icon="class" />
+        <topic label="ValueFormatter" href="javadoc/org/eclipse/net4j/util/ui/views/ValueFormatter.html" icon="class" />
+        <topic label="ValueFormatter.Factory" href="javadoc/org/eclipse/net4j/util/ui/views/ValueFormatter.Factory.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.util.ui.widgets" href="javadoc/org/eclipse/net4j/util/ui/widgets/package-summary.html" icon="package">
+        <topic label="AbstractDialog" href="javadoc/org/eclipse/net4j/util/ui/widgets/AbstractDialog.html" icon="class" />
+        <topic label="BaseDialog&lt;VIEWER&gt;" href="javadoc/org/eclipse/net4j/util/ui/widgets/BaseDialog.html" icon="class" />
+        <topic label="CoolBarComposite" href="javadoc/org/eclipse/net4j/util/ui/widgets/CoolBarComposite.html" icon="class" />
+        <topic label="CustomizeableComposite" href="javadoc/org/eclipse/net4j/util/ui/widgets/CustomizeableComposite.html" icon="class" />
+        <topic label="CustomizeableComposite.CompositeCustomizer" href="javadoc/org/eclipse/net4j/util/ui/widgets/CustomizeableComposite.CompositeCustomizer.html" icon="interface" />
+        <topic label="DoubleClickButtonAdapter" href="javadoc/org/eclipse/net4j/util/ui/widgets/DoubleClickButtonAdapter.html" icon="class" />
+        <topic label="EntryControlAdvisor" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryControlAdvisor.html" icon="class" />
+        <topic label="EntryControlAdvisor.ControlConfig" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryControlAdvisor.ControlConfig.html" icon="class" />
+        <topic label="EntryControlAdvisor.Factory" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryControlAdvisor.Factory.html" icon="class" />
+        <topic label="EntryField" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryField.html" icon="class" />
+        <topic label="EntryField.ButtonAdvisor" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryField.ButtonAdvisor.html" icon="interface" />
+        <topic label="EntryField.FieldConfig" href="javadoc/org/eclipse/net4j/util/ui/widgets/EntryField.FieldConfig.html" icon="class" />
+        <topic label="FirstChildLayout" href="javadoc/org/eclipse/net4j/util/ui/widgets/FirstChildLayout.html" icon="class" />
+        <topic label="HistoryText" href="javadoc/org/eclipse/net4j/util/ui/widgets/HistoryText.html" icon="class" />
+        <topic label="HistoryTextDialog" href="javadoc/org/eclipse/net4j/util/ui/widgets/HistoryTextDialog.html" icon="class" />
+        <topic label="ImageButton" href="javadoc/org/eclipse/net4j/util/ui/widgets/ImageButton.html" icon="class" />
+        <topic label="ImageButton.SelectionMode" href="javadoc/org/eclipse/net4j/util/ui/widgets/ImageButton.SelectionMode.html" icon="enum" />
+        <topic label="LogDialog" href="javadoc/org/eclipse/net4j/util/ui/widgets/LogDialog.html" icon="class" />
+        <topic label="OneBorderComposite" href="javadoc/org/eclipse/net4j/util/ui/widgets/OneBorderComposite.html" icon="class" />
+        <topic label="PreferenceButton" href="javadoc/org/eclipse/net4j/util/ui/widgets/PreferenceButton.html" icon="class" />
+        <topic label="SafeBrowser" href="javadoc/org/eclipse/net4j/util/ui/widgets/SafeBrowser.html" icon="class" />
+        <topic label="SafeBrowser.DocumentUnavailableException" href="javadoc/org/eclipse/net4j/util/ui/widgets/SafeBrowser.DocumentUnavailableException.html" icon="class" />
+        <topic label="SashComposite" href="javadoc/org/eclipse/net4j/util/ui/widgets/SashComposite.html" icon="class" />
+        <topic label="SearchField" href="javadoc/org/eclipse/net4j/util/ui/widgets/SearchField.html" icon="class" />
+        <topic label="SearchField.FilterHandler" href="javadoc/org/eclipse/net4j/util/ui/widgets/SearchField.FilterHandler.html" icon="interface" />
+        <topic label="SecondaryToolItem" href="javadoc/org/eclipse/net4j/util/ui/widgets/SecondaryToolItem.html" icon="class" />
+        <topic label="StackComposite" href="javadoc/org/eclipse/net4j/util/ui/widgets/StackComposite.html" icon="class" />
+        <topic label="TextAndDisable" href="javadoc/org/eclipse/net4j/util/ui/widgets/TextAndDisable.html" icon="class" />
+        <topic label="ToolButton" href="javadoc/org/eclipse/net4j/util/ui/widgets/ToolButton.html" icon="class" />
+      </topic>
     </topic>
   </topic>
   <topic label="Extension Point Reference" href="html/schema/index.html">

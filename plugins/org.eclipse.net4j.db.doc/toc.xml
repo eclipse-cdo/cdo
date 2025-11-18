@@ -5,29 +5,123 @@
   <topic label="Overview" href="html/Overview.html" icon="article" />
   <topic label="API Reference" href="javadoc/overview-summary.html">
     <topic label="Net4j DB Framework" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.db.ddl" href="javadoc/org/eclipse/net4j/db/ddl/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package" />
-      <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db" href="javadoc/org/eclipse/net4j/db/package-summary.html" icon="package">
+        <topic label="Batch" href="javadoc/org/eclipse/net4j/db/Batch.html" icon="class" />
+        <topic label="BatchedStatement" href="javadoc/org/eclipse/net4j/db/BatchedStatement.html" icon="interface" />
+        <topic label="BatchingIDChanger" href="javadoc/org/eclipse/net4j/db/BatchingIDChanger.html" icon="class" />
+        <topic label="DBException" href="javadoc/org/eclipse/net4j/db/DBException.html" icon="class" />
+        <topic label="DBType" href="javadoc/org/eclipse/net4j/db/DBType.html" icon="enum" />
+        <topic label="DBUtil" href="javadoc/org/eclipse/net4j/db/DBUtil.html" icon="class" />
+        <topic label="DBUtil.DeserializeRowHandler" href="javadoc/org/eclipse/net4j/db/DBUtil.DeserializeRowHandler.html" icon="interface" />
+        <topic label="DBUtil.RowHandler" href="javadoc/org/eclipse/net4j/db/DBUtil.RowHandler.html" icon="interface" />
+        <topic label="DBUtil.RunnableWithConnection&lt;T&gt;" href="javadoc/org/eclipse/net4j/db/DBUtil.RunnableWithConnection.html" icon="interface" />
+        <topic label="DBUtil.SerializeRowHandler" href="javadoc/org/eclipse/net4j/db/DBUtil.SerializeRowHandler.html" icon="interface" />
+        <topic label="IDBAdapter" href="javadoc/org/eclipse/net4j/db/IDBAdapter.html" icon="interface" />
+        <topic label="IDBConnection" href="javadoc/org/eclipse/net4j/db/IDBConnection.html" icon="interface" />
+        <topic label="IDBConnectionProvider" href="javadoc/org/eclipse/net4j/db/IDBConnectionProvider.html" icon="interface" />
+        <topic label="IDBConnectionProvider2" href="javadoc/org/eclipse/net4j/db/IDBConnectionProvider2.html" icon="interface" />
+        <topic label="IDBDatabase" href="javadoc/org/eclipse/net4j/db/IDBDatabase.html" icon="interface" />
+        <topic label="IDBDatabase.RunnableWithSchema" href="javadoc/org/eclipse/net4j/db/IDBDatabase.RunnableWithSchema.html" icon="interface" />
+        <topic label="IDBDatabase.SchemaChangedEvent" href="javadoc/org/eclipse/net4j/db/IDBDatabase.SchemaChangedEvent.html" icon="interface" />
+        <topic label="IDBPreparedStatement" href="javadoc/org/eclipse/net4j/db/IDBPreparedStatement.html" icon="interface" />
+        <topic label="IDBPreparedStatement.ReuseProbability" href="javadoc/org/eclipse/net4j/db/IDBPreparedStatement.ReuseProbability.html" icon="enum" />
+        <topic label="IDBResultSet" href="javadoc/org/eclipse/net4j/db/IDBResultSet.html" icon="interface" />
+        <topic label="IDBRowHandler" href="javadoc/org/eclipse/net4j/db/IDBRowHandler.html" icon="interface" />
+        <topic label="IDBSchemaTransaction" href="javadoc/org/eclipse/net4j/db/IDBSchemaTransaction.html" icon="interface" />
+        <topic label="StatementBatcher" href="javadoc/org/eclipse/net4j/db/StatementBatcher.html" icon="class" />
+        <topic label="StatementBatcher.BatchEvent" href="javadoc/org/eclipse/net4j/db/StatementBatcher.BatchEvent.html" icon="class" />
+        <topic label="StatementBatcher.CloseEvent" href="javadoc/org/eclipse/net4j/db/StatementBatcher.CloseEvent.html" icon="class" />
+        <topic label="StatementBatcher.ResultEvent" href="javadoc/org/eclipse/net4j/db/StatementBatcher.ResultEvent.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.db.ddl" href="javadoc/org/eclipse/net4j/db/ddl/package-summary.html" icon="package">
+        <topic label="IDBElement" href="javadoc/org/eclipse/net4j/db/ddl/IDBElement.html" icon="interface" />
+        <topic label="IDBField" href="javadoc/org/eclipse/net4j/db/ddl/IDBField.html" icon="interface" />
+        <topic label="IDBIndex" href="javadoc/org/eclipse/net4j/db/ddl/IDBIndex.html" icon="interface" />
+        <topic label="IDBIndex.Type" href="javadoc/org/eclipse/net4j/db/ddl/IDBIndex.Type.html" icon="enum" />
+        <topic label="IDBIndexField" href="javadoc/org/eclipse/net4j/db/ddl/IDBIndexField.html" icon="interface" />
+        <topic label="IDBNamedElement" href="javadoc/org/eclipse/net4j/db/ddl/IDBNamedElement.html" icon="interface" />
+        <topic label="IDBSchema" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchema.html" icon="interface" />
+        <topic label="IDBSchemaElement" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaElement.html" icon="interface" />
+        <topic label="IDBSchemaElement.SchemaElementType" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaElement.SchemaElementType.html" icon="enum" />
+        <topic label="IDBSchemaVisitor" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaVisitor.html" icon="interface" />
+        <topic label="IDBSchemaVisitor.Default" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaVisitor.Default.html" icon="class" />
+        <topic label="IDBSchemaVisitor.StopRecursion" href="javadoc/org/eclipse/net4j/db/ddl/IDBSchemaVisitor.StopRecursion.html" icon="class" />
+        <topic label="IDBTable" href="javadoc/org/eclipse/net4j/db/ddl/IDBTable.html" icon="interface" />
+        <topic label="SchemaElementNotFoundException" href="javadoc/org/eclipse/net4j/db/ddl/SchemaElementNotFoundException.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.db.ddl.delta" href="javadoc/org/eclipse/net4j/db/ddl/delta/package-summary.html" icon="package">
+        <topic label="IDBDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDelta.html" icon="interface" />
+        <topic label="IDBDelta.ChangeKind" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDelta.ChangeKind.html" icon="enum" />
+        <topic label="IDBDelta.DeltaType" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDelta.DeltaType.html" icon="enum" />
+        <topic label="IDBDeltaVisitor" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.html" icon="interface" />
+        <topic label="IDBDeltaVisitor.Copier" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Copier.html" icon="class" />
+        <topic label="IDBDeltaVisitor.Default" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Default.html" icon="class" />
+        <topic label="IDBDeltaVisitor.Filter" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.html" icon="class" />
+        <topic label="IDBDeltaVisitor.Filter.ForbiddenChangeException" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.ForbiddenChangeException.html" icon="class" />
+        <topic label="IDBDeltaVisitor.Filter.Policy" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.Filter.Policy.html" icon="class" />
+        <topic label="IDBDeltaVisitor.StopRecursion" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaVisitor.StopRecursion.html" icon="class" />
+        <topic label="IDBDeltaWithPosition" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaWithPosition.html" icon="interface" />
+        <topic label="IDBDeltaWithProperties" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBDeltaWithProperties.html" icon="interface" />
+        <topic label="IDBFieldDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBFieldDelta.html" icon="interface" />
+        <topic label="IDBIndexDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBIndexDelta.html" icon="interface" />
+        <topic label="IDBIndexFieldDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBIndexFieldDelta.html" icon="interface" />
+        <topic label="IDBPropertyDelta&lt;T&gt;" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.html" icon="interface" />
+        <topic label="IDBPropertyDelta.Type" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBPropertyDelta.Type.html" icon="enum" />
+        <topic label="IDBSchemaDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBSchemaDelta.html" icon="interface" />
+        <topic label="IDBTableDelta" href="javadoc/org/eclipse/net4j/db/ddl/delta/IDBTableDelta.html" icon="interface" />
+      </topic>
+      <topic label="org.eclipse.net4j.spi.db" href="javadoc/org/eclipse/net4j/spi/db/package-summary.html" icon="package">
+        <topic label="DBAdapter" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.html" icon="class" />
+        <topic label="DBAdapter.FieldInfo" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.FieldInfo.html" icon="class" />
+        <topic label="DBAdapter.IndexInfo" href="javadoc/org/eclipse/net4j/spi/db/DBAdapter.IndexInfo.html" icon="class" />
+        <topic label="DBSchema" href="javadoc/org/eclipse/net4j/spi/db/DBSchema.html" icon="class" />
+      </topic>
+      <topic label="org.eclipse.net4j.spi.db.ddl" href="javadoc/org/eclipse/net4j/spi/db/ddl/package-summary.html" icon="package">
+        <topic label="InternalDBElement" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBElement.html" icon="interface" />
+        <topic label="InternalDBField" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBField.html" icon="interface" />
+        <topic label="InternalDBIndex" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBIndex.html" icon="interface" />
+        <topic label="InternalDBIndexField" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBIndexField.html" icon="interface" />
+        <topic label="InternalDBNamedElement" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBNamedElement.html" icon="interface" />
+        <topic label="InternalDBSchema" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBSchema.html" icon="interface" />
+        <topic label="InternalDBSchemaElement" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBSchemaElement.html" icon="interface" />
+        <topic label="InternalDBTable" href="javadoc/org/eclipse/net4j/spi/db/ddl/InternalDBTable.html" icon="interface" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework Derby Adapter" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.derby" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.derby" href="javadoc/org/eclipse/net4j/db/derby/package-summary.html" icon="package">
+        <topic label="DerbyAdapter" href="javadoc/org/eclipse/net4j/db/derby/DerbyAdapter.html" icon="class" />
+        <topic label="EmbeddedDerbyAdapter" href="javadoc/org/eclipse/net4j/db/derby/EmbeddedDerbyAdapter.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework H2 Adapter" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.h2" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.h2" href="javadoc/org/eclipse/net4j/db/h2/package-summary.html" icon="package">
+        <topic label="H2Adapter" href="javadoc/org/eclipse/net4j/db/h2/H2Adapter.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework HSQLDB Adapter" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.hsqldb" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.hsqldb" href="javadoc/org/eclipse/net4j/db/hsqldb/package-summary.html" icon="package">
+        <topic label="HSQLDBAdapter" href="javadoc/org/eclipse/net4j/db/hsqldb/HSQLDBAdapter.html" icon="class" />
+        <topic label="HSQLDBDataSource" href="javadoc/org/eclipse/net4j/db/hsqldb/HSQLDBDataSource.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework JDBC Support" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.jdbc" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.jdbc" href="javadoc/org/eclipse/net4j/db/jdbc/package-summary.html" icon="package">
+        <topic label="DelegatingConnection" href="javadoc/org/eclipse/net4j/db/jdbc/DelegatingConnection.html" icon="class" />
+        <topic label="DelegatingConnection.Default" href="javadoc/org/eclipse/net4j/db/jdbc/DelegatingConnection.Default.html" icon="class" />
+        <topic label="DelegatingPreparedStatement" href="javadoc/org/eclipse/net4j/db/jdbc/DelegatingPreparedStatement.html" icon="class" />
+        <topic label="DelegatingResultSet" href="javadoc/org/eclipse/net4j/db/jdbc/DelegatingResultSet.html" icon="class" />
+        <topic label="JDBCUtil" href="javadoc/org/eclipse/net4j/db/jdbc/JDBCUtil.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework MYSQL Adapter" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.mysql" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.mysql" href="javadoc/org/eclipse/net4j/db/mysql/package-summary.html" icon="package">
+        <topic label="MYSQLAdapter" href="javadoc/org/eclipse/net4j/db/mysql/MYSQLAdapter.html" icon="class" />
+      </topic>
     </topic>
     <topic label="Net4j DB Framework PostgreSQL Adapter" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="plugin">
-      <topic label="org.eclipse.net4j.db.postgresql" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="package" />
+      <topic label="org.eclipse.net4j.db.postgresql" href="javadoc/org/eclipse/net4j/db/postgresql/package-summary.html" icon="package">
+        <topic label="PostgreSQLAdapter" href="javadoc/org/eclipse/net4j/db/postgresql/PostgreSQLAdapter.html" icon="class" />
+      </topic>
     </topic>
   </topic>
   <topic label="Extension Point Reference" href="html/schema/index.html">

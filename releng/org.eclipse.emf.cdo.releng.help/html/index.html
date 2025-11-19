@@ -4,6 +4,40 @@
 <TITLE>CDO Help Center</TITLE>
 
 <script type="text/javascript">
+  // --- New logic for topic query parameter ---
+  function getQueryParam(name) {
+    var params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  function resolveTopicPage(topic) {
+    if (!topic) return null;
+    // Remove any leading slashes
+    return topic.replace(/^\/+/, '');
+  }
+
+  // Set the content frame src if topic param is present
+  var topicParam = getQueryParam('topic');
+  var topicPage = resolveTopicPage(topicParam);
+  if (topicPage) {
+    // Wait for DOMContentLoaded to ensure frames exist
+    window.addEventListener('DOMContentLoaded', function() {
+      var contentFrame = document.getElementsByName('content')[0];
+      if (contentFrame) {
+        // Add a one-time load event to highlight the TOC entry after loading
+        var onLoad = function() {
+          // Use the loaded frame's location (in case of redirects)
+          try {
+            highlightTOCLink(contentFrame.contentWindow.location.href);
+          } catch (e) {}
+          contentFrame.removeEventListener('load', onLoad);
+        };
+        contentFrame.addEventListener('load', onLoad);
+        contentFrame.src = topicPage;
+      }
+    });
+  }
+
   function highlightTOCLink(topicUrl) {
     var tocDoc = window.frames['toc'].document;
     var links = tocDoc.querySelectorAll('a');

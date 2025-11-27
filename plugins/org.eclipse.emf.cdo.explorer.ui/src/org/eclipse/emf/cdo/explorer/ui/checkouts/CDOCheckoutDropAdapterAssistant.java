@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, 2016, 2019, 2023 Eike Stepper (Loehne, Germany) and others.
+ * Copyright (c) 2015, 2016, 2019, 2023, 2025 Eike Stepper (Loehne, Germany) and others.
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
@@ -7,6 +7,7 @@
  *
  * Contributors:
  *    Eike Stepper - initial API and implementation
+ *    Maxime Porhel (Obeo) - Avoid NPE when dropped element checkout and target checkout are null
  */
 package org.eclipse.emf.cdo.explorer.ui.checkouts;
 
@@ -348,6 +349,11 @@ public class CDOCheckoutDropAdapterAssistant extends CommonDropAdapterAssistant
       EObject[] objects = getObjects();
 
       CDOCheckout targetCheckout = CDOExplorerUtil.getCheckout(target);
+      if (targetCheckout == null)
+      {
+        return false;
+      }
+      
       for (EObject object : objects)
       {
         CDOCheckout checkout = CDOExplorerUtil.getCheckout(object);

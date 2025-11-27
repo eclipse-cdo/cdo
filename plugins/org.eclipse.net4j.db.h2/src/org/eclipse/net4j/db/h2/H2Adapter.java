@@ -37,7 +37,7 @@ public class H2Adapter extends DBAdapter
 {
   private static final String NAME = "h2"; //$NON-NLS-1$
 
-  public static final String VERSION = String.valueOf("2.3.230"); //$NON-NLS-1$
+  public static final String VERSION = String.valueOf("2.4.240"); //$NON-NLS-1$
 
   private static final boolean LOWER_CASE_SCHEMA_NAME = OMPlatform.INSTANCE.isProperty("org.eclipse.net4j.db.h2.H2Adapter.LOWER_CASE_SCHEMA_NAME"); //$NON-NLS-1$
 

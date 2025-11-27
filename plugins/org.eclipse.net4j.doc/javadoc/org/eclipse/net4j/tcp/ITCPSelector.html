@@ -89,7 +89,7 @@ loadScripts(document, 'script');</script>
 <section class="class-description" id="class-description">
 <hr>
 <div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">ITCPSelector</span></div>
-<div class="block">Encapsulates a Java <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link"><code>socket selector</code></a> and orchestrates a number of <a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
+<div class="block">Encapsulates a Java <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link"><code>socket selector</code></a> and orchestrates a number of <a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>active</code></a> and <a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp"><code>passive</code></a> consumers, usually <a href="../connector/IConnector.html" title="interface in org.eclipse.net4j.connector"><code>connectors</code></a> and
  <a href="../acceptor/IAcceptor.html" title="interface in org.eclipse.net4j.acceptor"><code>acceptors</code></a> that compete for the socket selector's I/O time.</div>
 <dl class="notes">
 <dt>Author:</dt>
@@ -113,30 +113,30 @@ loadScripts(document, 'script');</script>
 <div class="table-header col-first">Modifier and Type</div>
 <div class="table-header col-second">Method</div>
 <div class="table-header col-last">Description</div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link">Selector</a></code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link">Selector</a></code></div>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#getSocketSelector()" class="member-name-link">getSocketSelector</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderConnectInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderConnectInterest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderConnectInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderConnectInterest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderReadInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderReadInterest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderReadInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderReadInterest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderRegistration(java.nio.channels.ServerSocketChannel,org.eclipse.net4j.tcp.ITCPPassiveSelectorListener)" class="member-name-link">orderRegistration</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/ServerSocketChannel.html" title="class or interface in java.nio.channels" class="external-link">ServerSocketChannel</a>&nbsp;channel,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderRegistration(java.nio.channels.ServerSocketChannel,org.eclipse.net4j.tcp.ITCPPassiveSelectorListener)" class="member-name-link">orderRegistration</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/ServerSocketChannel.html" title="class or interface in java.nio.channels" class="external-link">ServerSocketChannel</a>&nbsp;channel,
  <a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a>&nbsp;listener)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderRegistration(java.nio.channels.SocketChannel,boolean,org.eclipse.net4j.tcp.ITCPActiveSelectorListener)" class="member-name-link">orderRegistration</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;channel,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderRegistration(java.nio.channels.SocketChannel,boolean,org.eclipse.net4j.tcp.ITCPActiveSelectorListener)" class="member-name-link">orderRegistration</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;channel,
  boolean&nbsp;client,
  <a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a>&nbsp;listener)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderWriteInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderWriteInterest</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#orderWriteInterest(java.nio.channels.SelectionKey,boolean,boolean)" class="member-name-link">orderWriteInterest</a><wbr>(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
@@ -157,20 +157,20 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="getSocketSelector()">
 <h3>getSocketSelector</h3>
-<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link">Selector</a></span>&nbsp;<span class="element-name">getSocketSelector</span>()</div>
+<div class="member-signature"><span class="return-type"><a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/Selector.html" title="class or interface in java.nio.channels" class="external-link">Selector</a></span>&nbsp;<span class="element-name">getSocketSelector</span>()</div>
 </section>
 </li>
 <li>
 <section class="detail" id="orderRegistration(java.nio.channels.ServerSocketChannel,org.eclipse.net4j.tcp.ITCPPassiveSelectorListener)">
 <h3>orderRegistration</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderRegistration</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/ServerSocketChannel.html" title="class or interface in java.nio.channels" class="external-link">ServerSocketChannel</a>&nbsp;channel,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderRegistration</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/ServerSocketChannel.html" title="class or interface in java.nio.channels" class="external-link">ServerSocketChannel</a>&nbsp;channel,
  <a href="ITCPPassiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPPassiveSelectorListener</a>&nbsp;listener)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="orderRegistration(java.nio.channels.SocketChannel,boolean,org.eclipse.net4j.tcp.ITCPActiveSelectorListener)">
 <h3>orderRegistration</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderRegistration</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;channel,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderRegistration</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SocketChannel.html" title="class or interface in java.nio.channels" class="external-link">SocketChannel</a>&nbsp;channel,
  boolean&nbsp;client,
  <a href="ITCPActiveSelectorListener.html" title="interface in org.eclipse.net4j.tcp">ITCPActiveSelectorListener</a>&nbsp;listener)</span></div>
 </section>
@@ -178,7 +178,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="orderConnectInterest(java.nio.channels.SelectionKey,boolean,boolean)">
 <h3>orderConnectInterest</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderConnectInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderConnectInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</span></div>
 </section>
@@ -186,7 +186,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="orderReadInterest(java.nio.channels.SelectionKey,boolean,boolean)">
 <h3>orderReadInterest</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderReadInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderReadInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</span></div>
 </section>
@@ -194,7 +194,7 @@ loadScripts(document, 'script');</script>
 <li>
 <section class="detail" id="orderWriteInterest(java.nio.channels.SelectionKey,boolean,boolean)">
 <h3>orderWriteInterest</h3>
-<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderWriteInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
+<div class="member-signature"><span class="return-type">void</span>&nbsp;<span class="element-name">orderWriteInterest</span><wbr><span class="parameters">(<a href="https://docs.oracle.com/javase/8/docs/api/java/nio/channels/SelectionKey.html" title="class or interface in java.nio.channels" class="external-link">SelectionKey</a>&nbsp;selectionKey,
  boolean&nbsp;client,
  boolean&nbsp;on)</span></div>
 </section>

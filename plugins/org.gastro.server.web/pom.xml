@@ -25,7 +25,7 @@
 
   <groupId>org.eclipse.emf.cdo</groupId>
   <artifactId>org.gastro.server.web</artifactId>
-  <version>4.4.2-SNAPSHOT</version>
+  <version>4.4.3-SNAPSHOT</version>
   <packaging>eclipse-plugin</packaging>
 
 </project>

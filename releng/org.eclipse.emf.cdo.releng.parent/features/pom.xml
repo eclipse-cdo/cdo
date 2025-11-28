@@ -91,7 +91,7 @@ Eike Stepper - initial API and implementation
                 <feature id="org.eclipse.net4j.util.doc"/>
                 <plugin id="org.apache.commons.commons-codec"/>
                 <plugin id="org.apache.commons.httpclient"/>
-                <plugin id="org.apache.commons.lang"/>
+                <plugin id="org.apache.commons.text"/>
                 <plugin id="org.apache.commons.commons-logging"/>
                 <plugin id="org.apache.derby"/>
                 <plugin id="org.eclipse.emf.cdo.doc"/>

@@ -264,7 +264,7 @@
         </detail>
         <detail
             key="extraUnits">
-          <value>org.eclipse.orbit.mongodb, org.slf4j.api, org.apache.commons.lang, org.apache.log4j, org.eclipse.jetty.ee8.websocket.server, org.eclipse.jetty.ee8.websocket.client</value>
+          <value>org.eclipse.orbit.mongodb, org.slf4j.api, org.apache.commons.text, org.apache.log4j, org.eclipse.jetty.ee8.websocket.server, org.eclipse.jetty.ee8.websocket.client</value>
         </detail>
         <detail
             key="generateImplicitUnits">

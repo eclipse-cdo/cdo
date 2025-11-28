@@ -33,7 +33,7 @@
         <setEntry value="com.ibm.icu@default:default"/>
         <setEntry value="javax.xml@default:default"/>
         <setEntry value="lpg.runtime.java@default:default"/>
-        <setEntry value="org.apache.commons.lang@default:default"/>
+        <setEntry value="org.apache.commons.text@default:default"/>
         <setEntry value="org.apache.commons.logging@default:default"/>
         <setEntry value="org.apache.derby@default:default"/>
         <setEntry value="org.eclipse.ant.core@default:default"/>

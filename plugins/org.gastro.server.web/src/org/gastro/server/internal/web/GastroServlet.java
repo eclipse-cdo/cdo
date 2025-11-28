@@ -28,7 +28,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 import org.eclipse.net4j.util.io.IOUtil;
 import org.eclipse.net4j.util.om.OMPlatform;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.gastro.business.BusinessDay;
 import org.gastro.inventory.MenuCard;
 import org.gastro.server.GastroServer;
@@ -194,7 +194,7 @@ public class GastroServlet extends HttpServlet
 
   public static String html(String value)
   {
-    return StringEscapeUtils.escapeHtml(value);
+    return StringEscapeUtils.escapeHtml3(value);
   }
 
   public static String html(double value)

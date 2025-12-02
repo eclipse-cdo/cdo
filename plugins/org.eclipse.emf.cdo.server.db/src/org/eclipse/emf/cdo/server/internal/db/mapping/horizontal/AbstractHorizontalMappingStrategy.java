@@ -662,7 +662,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
       @Override
       protected String formatEventName()
       {
-        return "ModelEvolutionEvent";
+        return "SchemaMigrationEvent";
       }
     };
 
@@ -674,7 +674,7 @@ public abstract class AbstractHorizontalMappingStrategy extends AbstractMappingS
 
     public void evolveSchema() throws SQLException
     {
-      event.setType("StartingModelEvolution").fire();
+      event.setType("StartingSchemaMigration").fire();
 
       Holder<IDBSchemaTransaction> schemaTransactionHolder = new Holder<>(() -> {
         event.setType("OpeningSchemaTransaction").fire();

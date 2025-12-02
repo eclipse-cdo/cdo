@@ -25,8 +25,10 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry.PackagePr
 import org.eclipse.net4j.util.CheckUtil;
 import org.eclipse.net4j.util.StringUtil;
 import org.eclipse.net4j.util.collection.Pair;
+import org.eclipse.net4j.util.event.EventUtil;
 import org.eclipse.net4j.util.event.IListener;
 import org.eclipse.net4j.util.event.LogListener;
+import org.eclipse.net4j.util.event.PropertiesEvent;
 import org.eclipse.net4j.util.factory.AnnotationFactory;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectAttribute;
 import org.eclipse.net4j.util.factory.AnnotationFactory.InjectElement;
@@ -178,6 +180,26 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   private final Deque<Pair<String, Long>> logBuffer = new LinkedList<>();
 
   private final EnumMap<Phase, Handler> phaseHandlers = new EnumMap<>(Phase.class);
+
+  private final PropertiesEvent event = new PropertiesEvent(this)
+  {
+    @Override
+    public PropertiesEvent fire()
+    {
+      if (!EventUtil.fireEvent(PhasedModelEvolutionSupport.this, this))
+      {
+        fireEvent(this);
+      }
+
+      return this;
+    }
+
+    @Override
+    protected String formatEventName()
+    {
+      return "ModelEvolutionEvent";
+    }
+  };
 
   private Context.Manager contextManager;
 
@@ -670,9 +692,17 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
   protected void executePhaseHandler(Handler phaseHandler) throws Exception
   {
     Phase phase = phaseHandler.getPhase();
+    event.addProperty("phase", phase);
+
+    event.setType("InitializingModelEvolutionPhase").fire();
     phase.init(context);
+
+    event.setType("ExecutingModelEvolutionPhase").fire();
     phaseHandler.execute(context);
+    event.setType("ExecutedModelEvolutionPhase").fire();
+
     phase.done(context);
+    event.setType("FinishedModelEvolutionPhase").fire().removeProperty("phase");
   }
 
   /**
@@ -710,10 +740,14 @@ public class PhasedModelEvolutionSupport extends Lifecycle implements IModelEvol
 
   /**
    * Called after a change info has been added to the evolution context.
+   * <p>
+   * Can be used by phases and handlers to notify listeners about added change infos.
+   * <p>
+   * Subclasses may override.
    */
   protected void addedChangeInfo(Model model, Object changeInfo)
   {
-    // Subclasses may override.
+    event.setType("AddedChangeInfo").addProperty("changeInfo", changeInfo).fire().removeProperty("changeInfo");
   }
 
   @Override

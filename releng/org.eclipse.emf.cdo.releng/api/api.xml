@@ -1641,6 +1641,12 @@
             <message_argument value="ABSOLUTE_URI_PRESERVING_URI_HANDLER"/>
         </message_arguments>
     </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.common(4.27.0)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="CONVERT_TO_RELATIVE_URIS" kind="ADDED" message="The static field org.eclipse.emf.cdo.common.model.EMFUtil.CONVERT_TO_RELATIVE_URIS has been added" newModifiers="26" oldModifiers="0" restrictions="2" type_name="org.eclipse.emf.cdo.common.model.EMFUtil">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.common.model.EMFUtil"/>
+            <message_argument value="CONVERT_TO_RELATIVE_URIS"/>
+        </message_arguments>
+    </delta>
     <delta compatible="true" componentId="org.eclipse.net4j.db.h2(4.5.7)" element_type="CLASS_ELEMENT_TYPE" flags="16" key="LOWER_CASE_SCHEMA_NAME" kind="ADDED" message="The static field org.eclipse.net4j.db.h2.H2Adapter.LOWER_CASE_SCHEMA_NAME has been added" newModifiers="26" oldModifiers="0" restrictions="0" type_name="org.eclipse.net4j.db.h2.H2Adapter">
         <message_arguments>
             <message_argument value="org.eclipse.net4j.db.h2.H2Adapter"/>
@@ -1884,6 +1890,30 @@
     <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.evolution.phased.Context" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.evolution.phased.Context has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="49" oldModifiers="0" restrictions="8" type_name="org.eclipse.emf.cdo.server.db.evolution.phased.Context">
         <message_arguments>
             <message_argument value="org.eclipse.emf.cdo.server.db.evolution.phased.Context"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="33" oldModifiers="0" restrictions="10" type_name="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultChangeDetector"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="33" oldModifiers="0" restrictions="10" type_name="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultRepositoryExporter"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="33" oldModifiers="0" restrictions="10" type_name="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.evolution.phased.DefaultSchemaMigrator"/>
+            <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
+        </message_arguments>
+    </delta>
+    <delta compatible="true" componentId="org.eclipse.emf.cdo.server.db(4.14.0)" element_type="API_COMPONENT_ELEMENT_TYPE" flags="46" key="org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager" kind="ADDED" message="The type org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager has been added to org.eclipse.emf.cdo.server.db_4.14.0" newModifiers="33" oldModifiers="0" restrictions="10" type_name="org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager">
+        <message_arguments>
+            <message_argument value="org.eclipse.emf.cdo.server.db.evolution.phased.FolderContextManager"/>
             <message_argument value="org.eclipse.emf.cdo.server.db_4.14.0"/>
         </message_arguments>
     </delta>

@@ -18,6 +18,7 @@ import org.eclipse.emf.cdo.spi.common.model.InternalCDOPackageRegistry;
 
 import org.eclipse.net4j.util.WrappedException;
 import org.eclipse.net4j.util.io.ZIPUtil;
+import org.eclipse.net4j.util.om.OMPlatform;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -123,8 +124,6 @@ public final class EMFUtil
    */
   public static final EAttribute ECLASSIFIER_INSTANCE_TYPE_NAME = EcorePackage.eINSTANCE.getEClassifier_InstanceTypeName();
 
-  private static final XMLResource.URIHandler ABSOLUTE_URI_PRESERVING_URI_HANDLER = new AbsoluteURIPreservingURIHandler();
-
   /**
    * @since 4.2
    * @deprecated As of 4.9 use {@link EMFPredicates#ATTRIBUTES}.
@@ -214,6 +213,10 @@ public final class EMFUtil
   };
 
   private static final EPackage.Registry[] GLOBAL_REGISTRY_ARRAY = { EPackage.Registry.INSTANCE };
+
+  private static final XMLResource.URIHandler ABSOLUTE_URI_PRESERVING_URI_HANDLER = new AbsoluteURIPreservingURIHandler();
+
+  private static final boolean CONVERT_TO_RELATIVE_URIS = OMPlatform.INSTANCE.isProperty("org.eclipse.emf.cdo.common.model.EMFUtil.CONVERT_TO_RELATIVE_URIS");
 
   private EMFUtil()
   {
@@ -730,7 +733,11 @@ public final class EMFUtil
   {
     Map<String, Object> options = new HashMap<>();
     options.put(XMLResource.OPTION_DEFER_IDREF_RESOLUTION, true);
-    options.put(XMLResource.OPTION_URI_HANDLER, ABSOLUTE_URI_PRESERVING_URI_HANDLER);
+
+    if (!CONVERT_TO_RELATIVE_URIS)
+    {
+      options.put(XMLResource.OPTION_URI_HANDLER, ABSOLUTE_URI_PRESERVING_URI_HANDLER);
+    }
 
     if (zipped)
     {

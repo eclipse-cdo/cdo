@@ -803,7 +803,11 @@ org.eclipse.net4j.util.lifecycle.LifecycleUtil.ReactivationTrigger</span></div>
 <h3>addedChangeInfo</h3>
 <div class="member-signature"><span class="modifiers">protected</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">addedChangeInfo</span><wbr><span class="parameters">(<a href="Context.Model.html" title="class in org.eclipse.emf.cdo.server.db.evolution.phased">Context.Model</a>&nbsp;model,
  <a href="https://docs.oracle.com/javase/8/docs/api/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a>&nbsp;changeInfo)</span></div>
-<div class="block">Called after a change info has been added to the evolution context.</div>
+<div class="block">Called after a change info has been added to the evolution context.
+ <p>
+ Can be used by phases and handlers to notify listeners about added change infos.
+ <p>
+ Subclasses may override.</div>
 </section>
 </li>
 <li>

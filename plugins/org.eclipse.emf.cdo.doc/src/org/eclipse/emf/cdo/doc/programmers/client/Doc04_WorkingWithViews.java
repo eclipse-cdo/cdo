@@ -11,8 +11,16 @@
 package org.eclipse.emf.cdo.doc.programmers.client;
 
 import org.eclipse.emf.cdo.CDOObject;
+import org.eclipse.emf.cdo.common.branch.CDOBranch;
 import org.eclipse.emf.cdo.common.id.CDOID;
+import org.eclipse.emf.cdo.common.lob.CDOBlob;
+import org.eclipse.emf.cdo.common.lob.CDOClob;
+import org.eclipse.emf.cdo.common.revision.CDORevision;
+import org.eclipse.emf.cdo.eresource.CDOBinaryResource;
 import org.eclipse.emf.cdo.eresource.CDOResource;
+import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
+import org.eclipse.emf.cdo.eresource.CDOResourceNode;
+import org.eclipse.emf.cdo.eresource.CDOTextResource;
 import org.eclipse.emf.cdo.session.CDOSession;
 import org.eclipse.emf.cdo.transaction.CDOTransaction;
 import org.eclipse.emf.cdo.util.CDOUtil;
@@ -27,9 +35,15 @@ import org.eclipse.net4j.util.concurrent.DelegableReentrantLock.DelegateDetector
 
 import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.impl.AdapterImpl;
+import org.eclipse.emf.common.util.TreeIterator;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 
 import org.eclipse.swt.widgets.Display;
 
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+import java.io.Reader;
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -316,9 +330,65 @@ public class Doc04_WorkingWithViews
      * <p>
      * The root resource is the entry point to the CDO file system. It contains all top-level folders and resources,
      * providing a hierarchical view of the repository's contents.
+     * <p>
+     * Each CDO view or transaction can provide the root resource. Here is an example of how to access and list the
+     * contents of the root resource:
+     * {@link #getRootResource(CDOView) GetRootResource.java}
+     * <p>
+     * When you don't have a view or transaction available, you can ask a session for the root resource's ID as follows:
+     * {@link #getRootResourceID(CDOSession) GetRootResourceID.java}
+     * <p>
+     * The root resource of a repository is created automatically when the repository is initialized for the first time.
+     * It can not be deleted, but its contents can be modified like any other resource.
      */
     public class TheRootResource
     {
+      /**
+       * @snip
+       */
+      public void getRootResource(CDOView view) throws Exception
+      {
+        // Each CDO view or transaction can provide the root resource.
+        CDOResource rootResource = view.getRootResource();
+
+        for (EObject content : rootResource.getContents())
+        {
+          if (content instanceof CDOResourceFolder)
+          {
+            CDOResourceFolder folder = (CDOResourceFolder)content;
+            System.out.println("Folder: " + folder.getName());
+          }
+          else if (content instanceof CDOResource)
+          {
+            CDOResource resource = (CDOResource)content;
+            System.out.println("Model Resource: " + resource.getName());
+          }
+          else if (content instanceof CDOBinaryResource)
+          {
+            CDOBinaryResource binary = (CDOBinaryResource)content;
+            System.out.println("Binary File: " + binary.getName());
+          }
+          else if (content instanceof CDOTextResource)
+          {
+            CDOTextResource text = (CDOTextResource)content;
+            System.out.println("Text File: " + text.getName());
+          }
+        }
+      }
+
+      /**
+       * @snip
+       */
+      public void getRootResourceID(CDOSession session) throws Exception
+      {
+        CDOID rootResourceID = session.getRepositoryInfo().getRootResourceID();
+        CDOBranch mainBranch = session.getBranchManager().getMainBranch();
+
+        CDORevision rootResourceRevision = session.getRevisionManager(). //
+            getRevision(rootResourceID, mainBranch.getHead(), //
+                CDORevision.UNCHUNKED, CDORevision.DEPTH_NONE, true);
+        System.out.println("Root Resource Revision: " + rootResourceRevision);
+      }
     }
 
     /**
@@ -326,9 +396,63 @@ public class Doc04_WorkingWithViews
      * <p>
      * Resource folders organize model resources into logical groups. Learn how to create, navigate, and manage folders
      * to structure your repository effectively.
+     * <p>
+     * For creating resource folders you need a CDOTransaction. Here is an example that illustrates how to create
+     * folders and subfolders:
+     * {@link #createFolder(CDOTransaction) CreateFolder.java}
+     * <p>
+     * Listing subnodes (folders and resources) within a folder does not require a transaction and
+     * can be done as follows:
+     * {@link #listSubNodes(CDOResourceFolder) ListSubNodes.java}
+     * <p>
+     * Note that resource folders <b>are</b> model objects and therefore support EMF features such as adapters,
+     * notifications, and so on.
      */
     public class ResourceFolders
     {
+      /**
+       * @snip
+       */
+      public void createFolder(CDOTransaction transaction) throws Exception
+      {
+        // Create a new folder at the specified path directly in the transaction.
+        CDOResourceFolder folder = transaction.createResourceFolder("/my/new/folder");
+        System.out.println("Created folder: " + folder.getPath()); // Outputs: /my/new/folder
+
+        CDOResourceFolder parent = folder.getFolder();
+        System.out.println("Parent folder: " + parent.getPath()); // Outputs: /my/new
+
+        CDOResourceFolder parent2 = parent.getFolder();
+        System.out.println("Parent parent folder: " + parent2.getPath()); // Outputs: /my
+
+        // Create a subfolder within the newly created folder.
+        CDOResourceFolder subfolder = folder.addResourceFolder("subfolder");
+        System.out.println("Created subfolder: " + subfolder.getPath()); // Outputs: /my/new/folder/subfolder
+
+        // None of the above changes are visible in other views/transactions.
+        // They become visible only after committing the transaction.
+        transaction.commit();
+      }
+
+      /**
+       * @snip
+       */
+      public void listSubNodes(CDOResourceFolder folder) throws Exception
+      {
+        // List all nodes (folders and resources) within the folder.
+        for (CDOResourceNode node : folder.getNodes())
+        {
+          System.out.println("Node: " + node.getName());
+        }
+
+        // Access a specific subnode by name.
+        CDOResourceNode subnode = folder.getNode("subfolder"); // May return null.
+        if (subnode instanceof CDOResourceFolder)
+        {
+          CDOResourceFolder subfolder = (CDOResourceFolder)subnode;
+          System.out.println("Subfolder path: " + subfolder.getPath());
+        }
+      }
     }
 
     /**
@@ -336,29 +460,181 @@ public class Doc04_WorkingWithViews
      * <p>
      * Model resources store EMF model data in the repository. This section explains how to load, save, and query model
      * resources, and how they relate to EMF ResourceSet.
+     * <p>
+     * For creating model resources you need a CDOTransaction. Here is an example that illustrates how to create
+     * model resources:
+     * {@link #createResource(CDOTransaction) CreateResource.java}
+     * <p>
+     * Listing root objects and contained objects within a model resource does not require a transaction and
+     * can be done as follows:
+     * {@link #getContents(CDOResource) GetContents.java}
+     * <p>
+     * Note that model resources <b>are</b> model objects and therefore support EMF features such as adapters,
+     * notifications, and so on.
      */
     public class ModelResources
     {
+      /**
+       * @snip
+       */
+      public void createResource(CDOTransaction transaction) throws Exception
+      {
+        // Create a new folder at the specified path directly in the transaction.
+        CDOResource resource = transaction.createResource("/my/new/resource");
+        System.out.println("Created resource: " + resource.getPath()); // Outputs: /my/new/resource
+
+        // Your method to create the root object.
+        EObject rootObject = createContentTree();
+
+        // Add the root object to the resource's contents.
+        resource.getContents().add(rootObject);
+
+        // CDO resources support multiple root objects.
+        resource.getContents().add(EcoreUtil.copy(rootObject));
+
+        // None of the above changes are visible in other views/transactions.
+        // They become visible only after committing the transaction.
+        transaction.commit();
+      }
+
+      private EObject createContentTree()
+      {
+        return null;
+      }
+
+      /**
+       * @snip
+       */
+      public void getContents(CDOResource resource) throws Exception
+      {
+        // List root objects in the resource.
+        for (EObject rootObject : resource.getContents())
+        {
+          System.out.println("Root object: " + rootObject);
+        }
+
+        // Iterate over all contained objects in the resource. Normal EMF model object operation.
+        TreeIterator<EObject> allContents = resource.eAllContents();
+        allContents.forEachRemaining(eObject -> System.out.println("Contained object: " + eObject));
+      }
     }
 
     /**
      * Binary Resources
      * <p>
-     * Binary resources allow storage of non-model data, such as images or files, within the CDO repository. Learn how
-     * to manage binary resources and integrate them with your application.
+     * Binary resources allow storage of non-model data, such as images or files, within the CDO repository.
+     * They are based on CDO's special data type {@link CDOBlob}, which supports efficient handling of large binary objects.
+     * Large object support is described in detail in the chapter {@link Doc07_LargeObjects}.
+     * <p>
+     * For creating binary resources you need a CDOTransaction. Here is an example that illustrates how to create
+     * binary resources:
+     * {@link #createBinaryFile(CDOTransaction) CreateBinaryFile.java}
+     * <p>
+     * Getting the binary contents of a binary resource does not require a transaction and
+     * can be done as follows:
+     * {@link #getContents(CDOBinaryResource) GetContents.java}
+     * <p>
+     * Note that binary resources <b>are</b> model objects and therefore support EMF features such as adapters,
+     * notifications, and so on.
      */
     public class BinaryResources
     {
+      /**
+       * @snip
+       */
+      public void createBinaryFile(CDOTransaction transaction) throws Exception
+      {
+        // Create a new binary file at the specified path directly in the transaction.
+        CDOBinaryResource binary = transaction.createBinaryResource("/my/new/file");
+        System.out.println("Created binary file: " + binary.getPath()); // Outputs: /my/new/file
+
+        CDOBlob blob = transaction.getSession().newBlob(new byte[] { 0, 1, 2, 3, 4, 5 });
+        binary.setContents(blob);
+
+        // None of the above changes are visible in other views/transactions.
+        // They become visible only after committing the transaction.
+        transaction.commit();
+      }
+
+      /**
+       * @snip
+       */
+      public void getContents(CDOBinaryResource binary) throws Exception
+      {
+        // Get the binary contents.
+        CDOBlob blob = binary.getContents();
+
+        // Print some information about the binary contents.
+        System.out.println("Binary contents ID: " + blob.getID());
+        System.out.println("Binary contents size: " + blob.getSize());
+
+        // For demonstration purposes, copy the binary contents to System.out.
+        blob.copyTo(System.out);
+
+        try (InputStream stream = blob.getContents())
+        {
+          // Or do something else with the InputStream...
+        }
+      }
     }
 
     /**
      * Text Resources
      * <p>
-     * Text resources store textual data, such as configuration files or documentation, in the repository. This section
-     * covers reading, writing, and organizing text resources.
+     * Text resources store textual data, such as configuration files or documentation, in the repository.
+     * They are based on CDO's special data type {@link CDOClob}, which supports efficient handling of large text objects.
+     * Large object support is described in detail in the chapter {@link Doc07_LargeObjects}.
+     * <p>
+     * For creating text resources you need a CDOTransaction. Here is an example that illustrates how to create
+     * text resources:
+     * {@link #createTextFile(CDOTransaction) CreateTextFile.java}
+     * <p>
+     * Getting the text contents of a text resource does not require a transaction and
+     * can be done as follows:
+     * {@link #getContents(CDOTextResource) GetContents.java}
+     * <p>
+     * Note that text resources <b>are</b> model objects and therefore support EMF features such as adapters,
+     * notifications, and so on.
      */
     public class TextResources
     {
+      /**
+       * @snip
+       */
+      public void createTextFile(CDOTransaction transaction) throws Exception
+      {
+        // Create a new text file at the specified path directly in the transaction.
+        CDOTextResource text = transaction.createTextResource("/my/new/text");
+        System.out.println("Created text file: " + text.getPath()); // Outputs: /my/new/file
+
+        CDOClob clob = transaction.getSession().newClob("Hello, CDO Text Resource!");
+        text.setContents(clob);
+
+        // None of the above changes are visible in other views/transactions.
+        // They become visible only after committing the transaction.
+        transaction.commit();
+      }
+
+      /**
+       * @snip
+       */
+      public void getContents(CDOTextResource text) throws Exception
+      {
+        // Get the text contents.
+        CDOClob clob = text.getContents();
+
+        // Print some information about the binary contents.
+        System.out.println("Text contents ID: " + clob.getID());
+        System.out.println("Text contents size: " + clob.getSize());
+
+        // For demonstration purposes, copy the binary contents to System.out.
+        clob.copyTo(new OutputStreamWriter(System.out));
+
+        try (Reader reader = clob.getContents())
+        {
+          // Or do something else with the Reader...
+        }
+      }
     }
   }
 

@@ -416,26 +416,478 @@ function maximize(id)
 <p>
  The root resource is the entry point to the CDO file system. It contains all top-level folders and resources,
  providing a hierarchical view of the repository's contents.
+ <p>
+ Each CDO view or transaction can provide the root resource. Here is an example of how to access and list the
+ contents of the root resource:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TheRootResource_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetRootResource.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TheRootResource_1')" id="max_TheRootResource_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TheRootResource_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TheRootResource_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Each&nbsp;CDO&nbsp;view&nbsp;or&nbsp;transaction&nbsp;can&nbsp;provide&nbsp;the&nbsp;root&nbsp;resource.</font><br/>
+            CDOResource&nbsp;rootResource&nbsp;=&nbsp;view.getRootResource();<br/>
+            <br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(EObject&nbsp;content&nbsp;:&nbsp;rootResource.getContents())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>if&nbsp;</b></font>(content&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOResourceFolder)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOResourceFolder&nbsp;folder&nbsp;=&nbsp;(CDOResourceFolder)content;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Folder:&nbsp;&#34;&nbsp;</font>+&nbsp;folder.getName());<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>else&nbsp;if&nbsp;</b></font>(content&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOResource)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOResource&nbsp;resource&nbsp;=&nbsp;(CDOResource)content;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Model&nbsp;Resource:&nbsp;&#34;&nbsp;</font>+&nbsp;resource.getName());<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>else&nbsp;if&nbsp;</b></font>(content&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOBinaryResource)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOBinaryResource&nbsp;binary&nbsp;=&nbsp;(CDOBinaryResource)content;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Binary&nbsp;File:&nbsp;&#34;&nbsp;</font>+&nbsp;binary.getName());<br/>
+            &nbsp;&nbsp;}<br/>
+            &nbsp;&nbsp;<font color="#7f0055"><b>else&nbsp;if&nbsp;</b></font>(content&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOTextResource)<br/>
+            &nbsp;&nbsp;{<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;CDOTextResource&nbsp;text&nbsp;=&nbsp;(CDOTextResource)content;<br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Text&nbsp;File:&nbsp;&#34;&nbsp;</font>+&nbsp;text.getName());<br/>
+            &nbsp;&nbsp;}<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ When you don't have a view or transaction available, you can ask a session for the root resource's ID as follows:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TheRootResource_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetRootResourceID.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TheRootResource_2')" id="max_TheRootResource_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TheRootResource_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TheRootResource_2" style="padding:8px;">
+            <code>
+            CDOID&nbsp;rootResourceID&nbsp;=&nbsp;session.getRepositoryInfo().getRootResourceID();<br/>
+            CDOBranch&nbsp;mainBranch&nbsp;=&nbsp;session.getBranchManager().getMainBranch();<br/>
+            <br/>
+            CDORevision&nbsp;rootResourceRevision&nbsp;=&nbsp;session.getRevisionManager().&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;getRevision(rootResourceID,&nbsp;mainBranch.getHead(),&nbsp;<font color="#3f7f5f">//</font><br/>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;CDORevision.UNCHUNKED,&nbsp;CDORevision.DEPTH_NONE,&nbsp;<font color="#7f0055"><b>true</b></font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Root&nbsp;Resource&nbsp;Revision:&nbsp;&#34;&nbsp;</font>+&nbsp;rootResourceRevision);            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ The root resource of a repository is created automatically when the repository is initialized for the first time.
+ It can not be deleted, but its contents can be modified like any other resource.
 
 <h3><a name="ResourceFolders"></a>4.2&nbsp;&nbsp;Resource Folders</h3>
 <p>
  Resource folders organize model resources into logical groups. Learn how to create, navigate, and manage folders
  to structure your repository effectively.
+ <p>
+ For creating resource folders you need a CDOTransaction. Here is an example that illustrates how to create
+ folders and subfolders:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ResourceFolders_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateFolder.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ResourceFolders_1')" id="max_ResourceFolders_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ResourceFolders_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ResourceFolders_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;new&nbsp;folder&nbsp;at&nbsp;the&nbsp;specified&nbsp;path&nbsp;directly&nbsp;in&nbsp;the&nbsp;transaction.</font><br/>
+            CDOResourceFolder&nbsp;folder&nbsp;=&nbsp;transaction.createResourceFolder(<font color="#2a00ff">&#34;/my/new/folder&#34;</font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Created&nbsp;folder:&nbsp;&#34;&nbsp;</font>+&nbsp;folder.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new/folder</font><br/>
+            <br/>
+            CDOResourceFolder&nbsp;parent&nbsp;=&nbsp;folder.getFolder();<br/>
+            System.out.println(<font color="#2a00ff">&#34;Parent&nbsp;folder:&nbsp;&#34;&nbsp;</font>+&nbsp;parent.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new</font><br/>
+            <br/>
+            CDOResourceFolder&nbsp;parent2&nbsp;=&nbsp;parent.getFolder();<br/>
+            System.out.println(<font color="#2a00ff">&#34;Parent&nbsp;parent&nbsp;folder:&nbsp;&#34;&nbsp;</font>+&nbsp;parent2.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my</font><br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;subfolder&nbsp;within&nbsp;the&nbsp;newly&nbsp;created&nbsp;folder.</font><br/>
+            CDOResourceFolder&nbsp;subfolder&nbsp;=&nbsp;folder.addResourceFolder(<font color="#2a00ff">&#34;subfolder&#34;</font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Created&nbsp;subfolder:&nbsp;&#34;&nbsp;</font>+&nbsp;subfolder.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new/folder/subfolder</font><br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;None&nbsp;of&nbsp;the&nbsp;above&nbsp;changes&nbsp;are&nbsp;visible&nbsp;in&nbsp;other&nbsp;views/transactions.</font><br/>
+            <font color="#3f7f5f">//&nbsp;They&nbsp;become&nbsp;visible&nbsp;only&nbsp;after&nbsp;committing&nbsp;the&nbsp;transaction.</font><br/>
+            transaction.commit();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Listing subnodes (folders and resources) within a folder does not require a transaction and
+ can be done as follows:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ResourceFolders_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">ListSubNodes.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ResourceFolders_2')" id="max_ResourceFolders_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ResourceFolders_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ResourceFolders_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;List&nbsp;all&nbsp;nodes&nbsp;(folders&nbsp;and&nbsp;resources)&nbsp;within&nbsp;the&nbsp;folder.</font><br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(CDOResourceNode&nbsp;node&nbsp;:&nbsp;folder.getNodes())<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Node:&nbsp;&#34;&nbsp;</font>+&nbsp;node.getName());<br/>
+            }<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Access&nbsp;a&nbsp;specific&nbsp;subnode&nbsp;by&nbsp;name.</font><br/>
+            CDOResourceNode&nbsp;subnode&nbsp;=&nbsp;folder.getNode(<font color="#2a00ff">&#34;subfolder&#34;</font>);&nbsp;<font color="#3f7f5f">//&nbsp;May&nbsp;return&nbsp;null.</font><br/>
+            <font color="#7f0055"><b>if&nbsp;</b></font>(subnode&nbsp;<font color="#7f0055"><b>instanceof&nbsp;</b></font>CDOResourceFolder)<br/>
+            {<br/>
+            &nbsp;&nbsp;CDOResourceFolder&nbsp;subfolder&nbsp;=&nbsp;(CDOResourceFolder)subnode;<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Subfolder&nbsp;path:&nbsp;&#34;&nbsp;</font>+&nbsp;subfolder.getPath());<br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Note that resource folders <b>are</b> model objects and therefore support EMF features such as adapters,
+ notifications, and so on.
 
 <h3><a name="ModelResources"></a>4.3&nbsp;&nbsp;Model Resources</h3>
 <p>
  Model resources store EMF model data in the repository. This section explains how to load, save, and query model
  resources, and how they relate to EMF ResourceSet.
+ <p>
+ For creating model resources you need a CDOTransaction. Here is an example that illustrates how to create
+ model resources:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ModelResources_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateResource.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ModelResources_1')" id="max_ModelResources_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ModelResources_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ModelResources_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;new&nbsp;folder&nbsp;at&nbsp;the&nbsp;specified&nbsp;path&nbsp;directly&nbsp;in&nbsp;the&nbsp;transaction.</font><br/>
+            CDOResource&nbsp;resource&nbsp;=&nbsp;transaction.createResource(<font color="#2a00ff">&#34;/my/new/resource&#34;</font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Created&nbsp;resource:&nbsp;&#34;&nbsp;</font>+&nbsp;resource.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new/resource</font><br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Your&nbsp;method&nbsp;to&nbsp;create&nbsp;the&nbsp;root&nbsp;object.</font><br/>
+            EObject&nbsp;rootObject&nbsp;=&nbsp;createContentTree();<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Add&nbsp;the&nbsp;root&nbsp;object&nbsp;to&nbsp;the&nbsp;resource's&nbsp;contents.</font><br/>
+            resource.getContents().add(rootObject);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;CDO&nbsp;resources&nbsp;support&nbsp;multiple&nbsp;root&nbsp;objects.</font><br/>
+            resource.getContents().add(EcoreUtil.copy(rootObject));<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;None&nbsp;of&nbsp;the&nbsp;above&nbsp;changes&nbsp;are&nbsp;visible&nbsp;in&nbsp;other&nbsp;views/transactions.</font><br/>
+            <font color="#3f7f5f">//&nbsp;They&nbsp;become&nbsp;visible&nbsp;only&nbsp;after&nbsp;committing&nbsp;the&nbsp;transaction.</font><br/>
+            transaction.commit();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Listing root objects and contained objects within a model resource does not require a transaction and
+ can be done as follows:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_ModelResources_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetContents.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('ModelResources_2')" id="max_ModelResources_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_ModelResources_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_ModelResources_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;List&nbsp;root&nbsp;objects&nbsp;in&nbsp;the&nbsp;resource.</font><br/>
+            <font color="#7f0055"><b>for&nbsp;</b></font>(EObject&nbsp;rootObject&nbsp;:&nbsp;resource.getContents())<br/>
+            {<br/>
+            &nbsp;&nbsp;System.out.println(<font color="#2a00ff">&#34;Root&nbsp;object:&nbsp;&#34;&nbsp;</font>+&nbsp;rootObject);<br/>
+            }<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Iterate&nbsp;over&nbsp;all&nbsp;contained&nbsp;objects&nbsp;in&nbsp;the&nbsp;resource.&nbsp;Normal&nbsp;EMF&nbsp;model&nbsp;object&nbsp;operation.</font><br/>
+            TreeIterator&lt;EObject&gt;&nbsp;allContents&nbsp;=&nbsp;resource.eAllContents();<br/>
+            allContents.forEachRemaining(eObject&nbsp;-&gt;&nbsp;System.out.println(<font color="#2a00ff">&#34;Contained&nbsp;object:&nbsp;&#34;&nbsp;</font>+&nbsp;eObject));            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Note that model resources <b>are</b> model objects and therefore support EMF features such as adapters,
+ notifications, and so on.
 
 <h3><a name="BinaryResources"></a>4.4&nbsp;&nbsp;Binary Resources</h3>
 <p>
- Binary resources allow storage of non-model data, such as images or files, within the CDO repository. Learn how
- to manage binary resources and integrate them with your application.
+ Binary resources allow storage of non-model data, such as images or files, within the CDO repository.
+ They are based on CDO's special data type <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOBlob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOBlob</code></a>, which supports efficient handling of large binary objects.
+ Large object support is described in detail in the chapter <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>.
+ <p>
+ For creating binary resources you need a CDOTransaction. Here is an example that illustrates how to create
+ binary resources:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_BinaryResources_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateBinaryFile.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('BinaryResources_1')" id="max_BinaryResources_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_BinaryResources_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_BinaryResources_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;new&nbsp;binary&nbsp;file&nbsp;at&nbsp;the&nbsp;specified&nbsp;path&nbsp;directly&nbsp;in&nbsp;the&nbsp;transaction.</font><br/>
+            CDOBinaryResource&nbsp;binary&nbsp;=&nbsp;transaction.createBinaryResource(<font color="#2a00ff">&#34;/my/new/file&#34;</font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Created&nbsp;binary&nbsp;file:&nbsp;&#34;&nbsp;</font>+&nbsp;binary.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new/file</font><br/>
+            <br/>
+            CDOBlob&nbsp;blob&nbsp;=&nbsp;transaction.getSession().newBlob(<font color="#7f0055"><b>new&nbsp;</b></font><font color="#7f0055"><b>byte</b></font>[]&nbsp;{&nbsp;<font color="#990000">0</font>,&nbsp;<font color="#990000">1</font>,&nbsp;<font color="#990000">2</font>,&nbsp;<font color="#990000">3</font>,&nbsp;<font color="#990000">4</font>,&nbsp;<font color="#990000">5&nbsp;</font>});<br/>
+            binary.setContents(blob);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;None&nbsp;of&nbsp;the&nbsp;above&nbsp;changes&nbsp;are&nbsp;visible&nbsp;in&nbsp;other&nbsp;views/transactions.</font><br/>
+            <font color="#3f7f5f">//&nbsp;They&nbsp;become&nbsp;visible&nbsp;only&nbsp;after&nbsp;committing&nbsp;the&nbsp;transaction.</font><br/>
+            transaction.commit();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Getting the binary contents of a binary resource does not require a transaction and
+ can be done as follows:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_BinaryResources_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetContents.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('BinaryResources_2')" id="max_BinaryResources_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_BinaryResources_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_BinaryResources_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Get&nbsp;the&nbsp;binary&nbsp;contents.</font><br/>
+            CDOBlob&nbsp;blob&nbsp;=&nbsp;binary.getContents();<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Print&nbsp;some&nbsp;information&nbsp;about&nbsp;the&nbsp;binary&nbsp;contents.</font><br/>
+            System.out.println(<font color="#2a00ff">&#34;Binary&nbsp;contents&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;blob.getID());<br/>
+            System.out.println(<font color="#2a00ff">&#34;Binary&nbsp;contents&nbsp;size:&nbsp;&#34;&nbsp;</font>+&nbsp;blob.getSize());<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;For&nbsp;demonstration&nbsp;purposes,&nbsp;copy&nbsp;the&nbsp;binary&nbsp;contents&nbsp;to&nbsp;System.out.</font><br/>
+            blob.copyTo(System.out);<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(InputStream&nbsp;stream&nbsp;=&nbsp;blob.getContents())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Or&nbsp;do&nbsp;something&nbsp;else&nbsp;with&nbsp;the&nbsp;InputStream...</font><br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Note that binary resources <b>are</b> model objects and therefore support EMF features such as adapters,
+ notifications, and so on.
 
 <h3><a name="TextResources"></a>4.5&nbsp;&nbsp;Text Resources</h3>
 <p>
- Text resources store textual data, such as configuration files or documentation, in the repository. This section
- covers reading, writing, and organizing text resources.
+ Text resources store textual data, such as configuration files or documentation, in the repository.
+ They are based on CDO's special data type <a href="../../../javadoc/org/eclipse/emf/cdo/common/lob/CDOClob.html" title="Class in org.eclipse.emf.cdo.common.lob"><code>CDOClob</code></a>, which supports efficient handling of large text objects.
+ Large object support is described in detail in the chapter <a href="Doc07_LargeObjects.html" title="Article in CDO Model Repository Documentation">Large Objects</a>.
+ <p>
+ For creating text resources you need a CDOTransaction. Here is an example that illustrates how to create
+ text resources:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TextResources_1"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">CreateTextFile.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TextResources_1')" id="max_TextResources_1" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TextResources_1" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TextResources_1" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Create&nbsp;a&nbsp;new&nbsp;text&nbsp;file&nbsp;at&nbsp;the&nbsp;specified&nbsp;path&nbsp;directly&nbsp;in&nbsp;the&nbsp;transaction.</font><br/>
+            CDOTextResource&nbsp;text&nbsp;=&nbsp;transaction.createTextResource(<font color="#2a00ff">&#34;/my/new/text&#34;</font>);<br/>
+            System.out.println(<font color="#2a00ff">&#34;Created&nbsp;text&nbsp;file:&nbsp;&#34;&nbsp;</font>+&nbsp;text.getPath());&nbsp;<font color="#3f7f5f">//&nbsp;Outputs:&nbsp;/my/new/file</font><br/>
+            <br/>
+            CDOClob&nbsp;clob&nbsp;=&nbsp;transaction.getSession().newClob(<font color="#2a00ff">&#34;Hello,&nbsp;CDO&nbsp;Text&nbsp;Resource!&#34;</font>);<br/>
+            text.setContents(clob);<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;None&nbsp;of&nbsp;the&nbsp;above&nbsp;changes&nbsp;are&nbsp;visible&nbsp;in&nbsp;other&nbsp;views/transactions.</font><br/>
+            <font color="#3f7f5f">//&nbsp;They&nbsp;become&nbsp;visible&nbsp;only&nbsp;after&nbsp;committing&nbsp;the&nbsp;transaction.</font><br/>
+            transaction.commit();            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Getting the text contents of a text resource does not require a transaction and
+ can be done as follows:
+ 
+
+<div class="snippet" style="margin-left:24px;" align="left">
+  <a name="snippet_TextResources_2"></a>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td width="25px"><div style="position:relative;"><img src="../../../images/editor-1.png"><img style="position:absolute; top:5px; left:5px;" src="../../../images/formatter-java.gif"></div></td>
+      <td style="background-image:url(../../../images/editor-2.png); background-repeat:repeat-x;" width="1px"><font face="Segoe UI,Arial" size="-1">GetContents.java</font></td>
+      <td width="1px"><img src="../../../images/editor-3.png"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="right"></td>
+      <td style="background-image:url(../../../images/editor-4.png); background-repeat:repeat-x;" align="center" width="16"><a href="javascript:maximize('TextResources_2')" id="max_TextResources_2" class="rst" title="Restore">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></td>
+      <td width="6px"><img src="../../../images/editor-5.png"></td>
+    </tr>
+    <tr>
+      <td colspan="6" align="left" valign="top" style="border:1px solid #a0a0a0; border-top:none;" nowrap>
+        <div id="editor_content_1_TextResources_2" class="ui-widget-content resizable" style="border:2px solid #99b4d1; border-top:none;" style_orig="width:600px; height:300px; border:2px solid #99b4d1; border-top:none;">
+          <div id="editor_content_2_TextResources_2" style="padding:8px;">
+            <code>
+            <font color="#3f7f5f">//&nbsp;Get&nbsp;the&nbsp;text&nbsp;contents.</font><br/>
+            CDOClob&nbsp;clob&nbsp;=&nbsp;text.getContents();<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;Print&nbsp;some&nbsp;information&nbsp;about&nbsp;the&nbsp;binary&nbsp;contents.</font><br/>
+            System.out.println(<font color="#2a00ff">&#34;Text&nbsp;contents&nbsp;ID:&nbsp;&#34;&nbsp;</font>+&nbsp;clob.getID());<br/>
+            System.out.println(<font color="#2a00ff">&#34;Text&nbsp;contents&nbsp;size:&nbsp;&#34;&nbsp;</font>+&nbsp;clob.getSize());<br/>
+            <br/>
+            <font color="#3f7f5f">//&nbsp;For&nbsp;demonstration&nbsp;purposes,&nbsp;copy&nbsp;the&nbsp;binary&nbsp;contents&nbsp;to&nbsp;System.out.</font><br/>
+            clob.copyTo(<font color="#7f0055"><b>new&nbsp;</b></font>OutputStreamWriter(System.out));<br/>
+            <br/>
+            <font color="#7f0055"><b>try&nbsp;</b></font>(Reader&nbsp;reader&nbsp;=&nbsp;clob.getContents())<br/>
+            {<br/>
+            &nbsp;&nbsp;<font color="#3f7f5f">//&nbsp;Or&nbsp;do&nbsp;something&nbsp;else&nbsp;with&nbsp;the&nbsp;Reader...</font><br/>
+            }            </code>
+
+          </div>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>
+<p>
+
+ <p>
+ Note that text resources <b>are</b> model objects and therefore support EMF features such as adapters,
+ notifications, and so on.
 
 <h2><a name="ResourceSetsAndTheirUsage"></a>5&nbsp;&nbsp;Resource Sets and Their Usage</h2>
 <p>

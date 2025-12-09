@@ -2,14 +2,128 @@
 <HTML>
 <HEAD>
 <TITLE>CDO Help Center</TITLE>
+
+<script type="text/javascript">
+  // --- New logic for topic query parameter ---
+  function getQueryParam(name) {
+    var params = new URLSearchParams(window.location.search);
+    return params.get(name);
+  }
+
+  function resolveTopicPage(topic) {
+    if (!topic) return null;
+    // Remove any leading slashes
+    return topic.replace(/^\/+/, '');
+  }
+
+  // Set the content frame src if topic param is present
+  var topicParam = getQueryParam('topic');
+  var topicPage = resolveTopicPage(topicParam);
+  if (topicPage) {
+    // Wait for DOMContentLoaded to ensure frames exist
+    window.addEventListener('DOMContentLoaded', function() {
+      var contentFrame = document.getElementsByName('content')[0];
+      if (contentFrame) {
+        // Add a one-time load event to highlight the TOC entry after loading
+        var onLoad = function() {
+          // Use the loaded frame's location (in case of redirects)
+          try {
+            highlightTOCLink(contentFrame.contentWindow.location.href);
+          } catch (e) {}
+          contentFrame.removeEventListener('load', onLoad);
+        };
+        contentFrame.addEventListener('load', onLoad);
+        contentFrame.src = topicPage;
+      }
+    });
+  }
+
+  function highlightTOCLink(topicUrl) {
+    var tocDoc = window.frames['toc'].document;
+    var links = tocDoc.querySelectorAll('a');
+    var topicURL = new URL(topicUrl, document.baseURI);
+    // Remove highlight from all links first
+    links.forEach(function(link) {
+      link.classList.remove('highlight');
+    });
+    // Highlight only the first matching link
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i];
+      if (link.href) {
+        var linkURL = new URL(link.href, document.baseURI);
+        if (linkURL.pathname === topicURL.pathname && linkURL.hash === topicURL.hash) {
+          link.classList.add('highlight');
+          // Walk up the parent chain and remove display:none from ancestor <div>s
+          var parent = link.parentElement;
+          while (parent) {
+            if (parent.tagName && parent.tagName.toLowerCase() === 'div') {
+              if (parent.style && parent.style.display === 'none') {
+                parent.style.display = '';
+              }
+            }
+            parent = parent.parentElement;
+          }
+          // Scroll the highlighted link into view
+          if (typeof link.scrollIntoView === 'function') {
+            link.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+          }
+          break; // Stop after the first match
+        }
+      }
+    }
+  }
+  
+  function setupTopicFrameListener() {
+    var topicFrame = document.getElementsByName('content')[0];
+    topicFrame.addEventListener('load', function() {
+      var topicWin = topicFrame.contentWindow;
+      var currentUrl = topicWin.location.href;
+      highlightTOCLink(currentUrl);
+      // Inject hashchange and click listeners into the content frame
+      try {
+        var script = topicWin.document.createElement('script');
+        script.type = 'text/javascript';
+        script.text = `
+          function notifyParentOfHashChange() {
+            try {
+              parent.highlightTOCLink(window.location.href);
+            } catch (e) {}
+          }
+          window.addEventListener('hashchange', notifyParentOfHashChange);
+          // Also handle anchor clicks
+          document.addEventListener('click', function(e) {
+            var t = e.target;
+            while (t && t.tagName !== 'A') t = t.parentElement;
+            if (t && t.tagName === 'A' && t.hash) {
+              setTimeout(notifyParentOfHashChange, 0);
+            }
+          });
+        `;
+        topicWin.document.head.appendChild(script);
+      } catch (e) {
+        // If injection fails, fallback: listen for hashchange in parent (may not work cross-frame in all browsers)
+        try {
+          topicWin.addEventListener('hashchange', function() {
+            highlightTOCLink(topicWin.location.href);
+          });
+        } catch (e2) {}
+      }
+    });
+  }
+  
+  // Wait for frames to load
+  window.addEventListener('load', function() {
+    setupTopicFrameListener();
+  });
+</script>
+
 </HEAD>
 
-<FRAMESET cols="350px,*" title="CDO Help Center">
+<FRAMESET cols="400px,*" title="CDO Help Center">
 <FRAME src="toc.html" name="toc" title="Table of Contents">
 <FRAME src="usage.html" name="content" title="Content" scrolling="yes">
 <NOFRAMES>
-<H2>
-Frame Alert</H2>
+<H2>Frame Alert</H2>
 
 <P>
 This document is designed to be viewed using the frames feature. If you see this message, you are using a non-frame-capable web client.

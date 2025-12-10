@@ -390,12 +390,14 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   @Deprecated
   public static class IgnoreTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Deprecated
     @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
     }
 
+    @Deprecated
     @Override
     public String toString()
     {
@@ -412,12 +414,14 @@ public abstract class FiniteStateMachine<STATE extends Enum<?>, EVENT extends En
   @Deprecated
   public static class FailTransition implements ITransition<Enum<?>, Enum<?>, Object, Object>
   {
+    @Deprecated
     @Override
     public void execute(Object subject, Enum<?> state, Enum<?> event, Object data)
     {
       // Do nothing
     }
 
+    @Deprecated
     @Override
     public String toString()
     {

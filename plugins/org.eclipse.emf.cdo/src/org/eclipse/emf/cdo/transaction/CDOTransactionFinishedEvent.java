@@ -50,7 +50,11 @@ public interface CDOTransactionFinishedEvent extends CDOViewEvent
   @Deprecated
   public enum Type
   {
-    COMMITTED, ROLLED_BACK
+    @Deprecated
+    COMMITTED,
+
+    @Deprecated
+    ROLLED_BACK
   }
 
   /**

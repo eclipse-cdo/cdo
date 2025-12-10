@@ -30,20 +30,24 @@ public class ContainmentCycleDetectedException extends IllegalStateException
 {
   private static final long serialVersionUID = 1L;
 
+  @Deprecated
   public ContainmentCycleDetectedException()
   {
   }
 
+  @Deprecated
   public ContainmentCycleDetectedException(String message, Throwable cause)
   {
     super(message, cause);
   }
 
+  @Deprecated
   public ContainmentCycleDetectedException(String s)
   {
     super(s);
   }
 
+  @Deprecated
   public ContainmentCycleDetectedException(Throwable cause)
   {
     super(cause);

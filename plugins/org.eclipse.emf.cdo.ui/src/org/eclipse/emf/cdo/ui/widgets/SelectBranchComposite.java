@@ -57,6 +57,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
 
   private TreeViewer branchViewer;
 
+  @Deprecated
   public SelectBranchComposite(Composite parent, int style, CDOSession session, CDOBranch branch)
   {
     this(parent, style, session, branch, false);
@@ -65,6 +66,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
   /**
    * @since 4.2
    */
+  @Deprecated
   public SelectBranchComposite(Composite parent, int style, CDOSession session, CDOBranch branch, boolean withHistory)
   {
     super(parent, style);
@@ -120,6 +122,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     // setBranchFromPath();
   }
 
+  @Deprecated
   @Override
   public boolean setFocus()
   {
@@ -131,38 +134,45 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     return branchViewer.getTree().setFocus();
   }
 
+  @Deprecated
   @Override
   public ValidationContext getValidationContext()
   {
     return validationContext;
   }
 
+  @Deprecated
   @Override
   public void setValidationContext(ValidationContext validationContext)
   {
     this.validationContext = validationContext;
   }
 
+  @Deprecated
   public CDOSession getSession()
   {
     return session;
   }
 
+  @Deprecated
   public CDOBranch getBranch()
   {
     return branch;
   }
 
+  @Deprecated
   public HistoryText getBranchText()
   {
     return branchText;
   }
 
+  @Deprecated
   public TreeViewer getBranchViewer()
   {
     return branchViewer;
   }
 
+  @Deprecated
   public void rememberSettings()
   {
     if (branchText != null)
@@ -171,6 +181,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     }
   }
 
+  @Deprecated
   @Override
   public void addListener(int eventType, Listener listener)
   {
@@ -182,6 +193,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     }
   }
 
+  @Deprecated
   @Override
   public void removeListener(int eventType, Listener listener)
   {
@@ -193,6 +205,7 @@ public class SelectBranchComposite extends Composite implements ValidationPartic
     }
   }
 
+  @Deprecated
   protected void branchChanged(CDOBranch newBranch)
   {
   }

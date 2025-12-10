@@ -439,16 +439,19 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
     @Deprecated
     public static class DefaultLabelProvider implements IItemLabelProvider
     {
+      @Deprecated
       public DefaultLabelProvider()
       {
       }
 
+      @Deprecated
       @Override
       public Object getImage(Object object)
       {
         return null;
       }
 
+      @Deprecated
       @Override
       public String getText(Object object)
       {
@@ -515,6 +518,7 @@ public class CDOItemProviderAdapter extends ItemProviderAdapter
   @Deprecated
   public static class ContainerDescriptor extends CDOPropertyDescriptor
   {
+    @Deprecated
     public ContainerDescriptor(AdapterFactory adapterFactory)
     {
     }

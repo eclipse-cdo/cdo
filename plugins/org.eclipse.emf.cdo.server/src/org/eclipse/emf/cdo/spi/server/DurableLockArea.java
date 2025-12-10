@@ -31,6 +31,7 @@ import java.util.Map;
 @Deprecated
 public class DurableLockArea implements LockArea
 {
+  @Deprecated
   public static final int DEFAULT_DURABLE_LOCKING_ID_BYTES = 32;
 
   private String durableLockingID;
@@ -43,6 +44,7 @@ public class DurableLockArea implements LockArea
 
   private Map<CDOID, LockGrade> locks;
 
+  @Deprecated
   public DurableLockArea(String durableLockingID, String userID, CDOBranchPoint branchPoint, boolean readOnly, Map<CDOID, LockGrade> locks)
   {
     this.durableLockingID = durableLockingID;
@@ -52,42 +54,49 @@ public class DurableLockArea implements LockArea
     this.locks = locks;
   }
 
+  @Deprecated
   @Override
   public String getDurableLockingID()
   {
     return durableLockingID;
   }
 
+  @Deprecated
   @Override
   public String getUserID()
   {
     return userID;
   }
 
+  @Deprecated
   @Override
   public CDOBranch getBranch()
   {
     return branchPoint.getBranch();
   }
 
+  @Deprecated
   @Override
   public long getTimeStamp()
   {
     return branchPoint.getTimeStamp();
   }
 
+  @Deprecated
   @Override
   public boolean isReadOnly()
   {
     return readOnly;
   }
 
+  @Deprecated
   @Override
   public Map<CDOID, LockGrade> getLocks()
   {
     return locks;
   }
 
+  @Deprecated
   @Override
   public String toString()
   {
@@ -95,11 +104,13 @@ public class DurableLockArea implements LockArea
         locks);
   }
 
+  @Deprecated
   public static String createDurableLockingID()
   {
     return CDOLockUtil.createDurableLockingID();
   }
 
+  @Deprecated
   public static String createDurableLockingID(int bytes)
   {
     return CDOLockUtil.createDurableLockingID(bytes);
@@ -108,6 +119,7 @@ public class DurableLockArea implements LockArea
   /**
    * @since 4.1
    */
+  @Deprecated
   @Override
   public boolean isMissing()
   {

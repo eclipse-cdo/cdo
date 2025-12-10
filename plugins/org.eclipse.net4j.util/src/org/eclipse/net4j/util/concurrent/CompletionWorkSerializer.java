@@ -25,36 +25,43 @@ public class CompletionWorkSerializer implements IWorkSerializer
 {
   private CompletionService<Object> completionService;
 
+  @Deprecated
   public CompletionWorkSerializer(CompletionService<Object> completionService)
   {
     this.completionService = completionService;
   }
 
+  @Deprecated
   public CompletionWorkSerializer(Executor executor, BlockingQueue<Future<Object>> completionQueue)
   {
     this(new ExecutorCompletionService<>(executor, completionQueue));
   }
 
+  @Deprecated
   public CompletionWorkSerializer(Executor executor)
   {
     this(new ExecutorCompletionService<>(executor));
   }
 
+  @Deprecated
   public CompletionWorkSerializer()
   {
     this(new OnePendingExecutor());
   }
 
+  @Deprecated
   public CompletionService<Object> getCompletionService()
   {
     return completionService;
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {
   }
 
+  @Deprecated
   @Override
   public boolean addWork(Runnable work)
   {
@@ -62,6 +69,7 @@ public class CompletionWorkSerializer implements IWorkSerializer
     return true;
   }
 
+  @Deprecated
   @Override
   public String toString()
   {

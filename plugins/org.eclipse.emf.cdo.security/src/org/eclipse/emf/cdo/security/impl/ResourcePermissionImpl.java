@@ -48,6 +48,7 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected ResourcePermissionImpl()
   {
     super();
@@ -58,6 +59,7 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected EClass eStaticClass()
   {
@@ -69,6 +71,7 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public String getPattern()
   {
@@ -80,12 +83,14 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void setPattern(String newPattern)
   {
     eSet(SecurityPackage.Literals.RESOURCE_PERMISSION__PATTERN, newPattern);
   }
 
+  @Deprecated
   @Override
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
@@ -116,6 +121,7 @@ public class ResourcePermissionImpl extends PermissionImpl implements ResourcePe
     return matcher.matches();
   }
 
+  @Deprecated
   @Override
   public boolean isImpacted(CommitImpactContext context)
   {

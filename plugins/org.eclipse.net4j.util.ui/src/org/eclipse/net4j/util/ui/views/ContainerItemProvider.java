@@ -1019,11 +1019,13 @@ public class ContainerItemProvider<CONTAINER extends IContainer<Object>> extends
     /**
      * @since 3.5
      */
+    @Deprecated
     public LazyElement(IContainer<Object> container, String text)
     {
       super(container, text);
     }
 
+    @Deprecated
     public LazyElement(IContainer<Object> container)
     {
       this(container, getSlowText(container));

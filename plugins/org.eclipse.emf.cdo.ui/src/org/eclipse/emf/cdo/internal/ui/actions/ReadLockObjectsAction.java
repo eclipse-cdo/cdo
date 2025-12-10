@@ -24,14 +24,17 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 @Deprecated
 public class ReadLockObjectsAction extends AbstractLockObjectsAction
 {
+  @Deprecated
   public static final String ID = "readlock-objects"; //$NON-NLS-1$
 
+  @Deprecated
   public ReadLockObjectsAction()
   {
     super(Messages.getString("ReadLockObjectsAction.1")); //$NON-NLS-1$
     setId(ID);
   }
 
+  @Deprecated
   @Override
   protected CDOLock getLock(InternalCDOObject object)
   {

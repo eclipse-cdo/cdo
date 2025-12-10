@@ -23,11 +23,15 @@ import org.eclipse.emf.cdo.eresource.CDOResourceFolder;
 @Deprecated
 public interface CDOResourceNodeValidator
 {
+  @Deprecated
   boolean validate();
 
+  @Deprecated
   boolean validateFolder(CDOResourceFolder value);
 
+  @Deprecated
   boolean validateName(String value);
 
+  @Deprecated
   boolean validatePath(String value);
 }

@@ -21,11 +21,13 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 @Deprecated
 public class NewResourceActionDelegate extends NewResourceNodeActionDelegate
 {
+  @Deprecated
   public NewResourceActionDelegate()
   {
     super(Messages.getString("NewResourceAction_0")); //$NON-NLS-1$
   }
 
+  @Deprecated
   @Override
   protected CDOResourceNode createNewResourceNode()
   {

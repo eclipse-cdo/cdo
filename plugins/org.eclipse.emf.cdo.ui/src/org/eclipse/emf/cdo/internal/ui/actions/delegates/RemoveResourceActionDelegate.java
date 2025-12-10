@@ -53,22 +53,26 @@ public class RemoveResourceActionDelegate implements IObjectActionDelegate
 
   private Shell shell;
 
+  @Deprecated
   public RemoveResourceActionDelegate()
   {
   }
 
+  @Deprecated
   @Override
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
     shell = targetPart.getSite().getShell();
   }
 
+  @Deprecated
   @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
     nodes = UIUtil.getElements(selection, CDOResourceNode.class);
   }
 
+  @Deprecated
   @Override
   public void run(IAction action)
   {

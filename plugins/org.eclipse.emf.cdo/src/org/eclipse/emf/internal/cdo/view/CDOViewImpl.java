@@ -3239,6 +3239,7 @@ public class CDOViewImpl extends AbstractCDOView implements IManagedContainerPro
     {
       return new CDOLockStateLoadingPolicy()
       {
+        @Deprecated
         @Override
         public boolean loadLockState(CDOID id)
         {

@@ -43,6 +43,7 @@ public class DawnEditPartStylizerRegistry
 
   private static final String DAWN_STYLIZER_EXTENSION_POINT_ID = "org.eclipse.emf.cdo.dawn.editpartstylizers";
 
+  @Deprecated
   public static DawnEditPartStylizerRegistry instance = new DawnEditPartStylizerRegistry();
 
   private Map<String, DawnEditPartStylizer> registeredStylizers = new HashMap<>();
@@ -50,6 +51,7 @@ public class DawnEditPartStylizerRegistry
   /**
    * @since 2.0
    */
+  @Deprecated
   public DawnEditPartStylizer getStylizer(EditPart editPart)
   {
     DawnEditPartStylizer stylizer = registeredStylizers.get(editPart.getClass().getCanonicalName());

@@ -25,6 +25,7 @@ import org.eclipse.emf.cdo.view.CDOLockStatePrefetcher;
 @Deprecated
 public class CDODefaultLockStateLoadingPolicy implements CDOLockStateLoadingPolicy
 {
+  @Deprecated
   @Override
   public boolean loadLockState(CDOID id)
   {

@@ -24,6 +24,7 @@ public class PredicateIterator<T> extends AbstractFilteredIterator<T>
 {
   private final Predicate<? super T> predicate;
 
+  @Deprecated
   public PredicateIterator(Iterator<T> delegate, Predicate<? super T> predicate)
   {
     super(delegate);
@@ -33,17 +34,20 @@ public class PredicateIterator<T> extends AbstractFilteredIterator<T>
   /**
    * @since 3.4
    */
+  @Deprecated
   public PredicateIterator(Predicate<? super T> predicate, Iterator<T> delegate)
   {
     super(delegate);
     this.predicate = predicate;
   }
 
+  @Deprecated
   public Predicate<? super T> getPredicate()
   {
     return predicate;
   }
 
+  @Deprecated
   @Override
   protected boolean isValid(T element)
   {

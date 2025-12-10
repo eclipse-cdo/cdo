@@ -164,10 +164,12 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   @Deprecated
   public static class TakeRemoteChangesThenApplyLocalChanges extends AbstractObjectConflictResolver
   {
+    @Deprecated
     public TakeRemoteChangesThenApplyLocalChanges()
     {
     }
 
+    @Deprecated
     @Override
     public void resolveConflicts(Map<CDOObject, Pair<CDORevision, CDORevisionDelta>> conflicts, List<CDORevisionDelta> allRemoteDeltas)
     {
@@ -355,10 +357,12 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
   @Deprecated
   public static class MergeLocalChangesPerFeature extends ThreeWayMerge
   {
+    @Deprecated
     public MergeLocalChangesPerFeature()
     {
     }
 
+    @Deprecated
     @Override
     protected void resolveConflict(CDOObject conflict, CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
     {
@@ -383,6 +387,7 @@ public abstract class AbstractObjectConflictResolver extends AbstractConflictRes
       changeObject(conflict, localDelta);
     }
 
+    @Deprecated
     protected boolean hasFeatureConflicts(CDORevisionDelta localDelta, List<CDORevisionDelta> remoteDeltas)
     {
       Set<EStructuralFeature> features = new HashSet<>();

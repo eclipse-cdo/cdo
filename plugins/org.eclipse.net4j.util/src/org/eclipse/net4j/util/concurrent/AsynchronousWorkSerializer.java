@@ -34,6 +34,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorSer
 
   // private Object newElementLock = new Object();
 
+  @Deprecated
   public AsynchronousWorkSerializer(ExecutorService executorService, Queue<Runnable> workQueue)
   {
     if (executorService == null)
@@ -45,17 +46,20 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorSer
     this.workQueue = workQueue;
   }
 
+  @Deprecated
   public AsynchronousWorkSerializer(ExecutorService executorService)
   {
     this(executorService, new ConcurrentLinkedQueue<Runnable>());
   }
 
+  @Deprecated
   @Override
   public ExecutorService getExecutorService()
   {
     return executorService;
   }
 
+  @Deprecated
   @Override
   public boolean addWork(Runnable work)
   {
@@ -88,6 +92,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorSer
    * Executed in the context of the {@link #getExecutorService() executor service}.
    * <p>
    */
+  @Deprecated
   @Override
   public void run()
   {
@@ -128,6 +133,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorSer
     }
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {
@@ -141,6 +147,7 @@ public class AsynchronousWorkSerializer implements IWorkSerializer, IExecutorSer
     executorService = null;
   }
 
+  @Deprecated
   @Override
   public String toString()
   {

@@ -29,11 +29,13 @@ public final class OpenViewEditorAction extends AbstractViewAction
 
   private static final String TOOL_TIP = Messages.getString("OpenViewEditorAction.1"); //$NON-NLS-1$
 
+  @Deprecated
   public OpenViewEditorAction(IWorkbenchPage page, CDOView view)
   {
     super(page, TITLE, TOOL_TIP, null, view);
   }
 
+  @Deprecated
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {

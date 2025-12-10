@@ -17,10 +17,12 @@ package org.eclipse.net4j.util.concurrent;
 @Deprecated
 public class SynchronousWorkSerializer implements IWorkSerializer
 {
+  @Deprecated
   public SynchronousWorkSerializer()
   {
   }
 
+  @Deprecated
   @Override
   public boolean addWork(Runnable work)
   {
@@ -28,11 +30,13 @@ public class SynchronousWorkSerializer implements IWorkSerializer
     return true;
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {
   }
 
+  @Deprecated
   @Override
   public String toString()
   {

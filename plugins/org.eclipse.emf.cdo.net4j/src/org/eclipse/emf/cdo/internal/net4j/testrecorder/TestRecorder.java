@@ -66,7 +66,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 /**
  * @author Eike Stepper
  */
-@SuppressWarnings("restriction")
 public final class TestRecorder implements CDOTransactionHandler1.WithUndo
 {
   public static final TestRecorder INSTANCE = new TestRecorder();

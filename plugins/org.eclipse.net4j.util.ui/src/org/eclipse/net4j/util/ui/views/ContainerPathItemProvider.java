@@ -21,33 +21,39 @@ import org.eclipse.jface.viewers.TreePath;
 @Deprecated
 public class ContainerPathItemProvider<CONTAINER extends IContainer<Object>> extends ContainerItemProvider<CONTAINER> implements ITreePathContentProvider
 {
+  @Deprecated
   public ContainerPathItemProvider()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public ContainerPathItemProvider(IElementFilter rootElementFilter)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   protected TreePath getParentPath(Node node)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public Object[] getChildren(TreePath parentPath)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public boolean hasChildren(TreePath path)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public TreePath[] getParents(Object element)
   {

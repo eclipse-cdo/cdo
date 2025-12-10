@@ -20,6 +20,7 @@ import org.eclipse.net4j.util.container.IPluginContainer;
 @Deprecated
 public final class PluginRepositoryProvider extends ContainerRepositoryProvider
 {
+  @Deprecated
   public static final PluginRepositoryProvider INSTANCE = new PluginRepositoryProvider();
 
   private PluginRepositoryProvider()

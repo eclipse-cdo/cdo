@@ -52,11 +52,13 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   public ElementItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {
@@ -69,6 +71,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
   {
@@ -90,6 +93,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected void addUriPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
@@ -103,6 +107,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected void addExistsPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
@@ -116,6 +121,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected void addIncomingLinksPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
@@ -130,6 +136,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected void addBrokenLinksPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(createItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
@@ -145,6 +152,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Collection<? extends EStructuralFeature> getChildrenFeatures(Object object)
   {
@@ -161,6 +169,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected EStructuralFeature getChildFeature(Object object, Object child)
   {
@@ -176,6 +185,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Object getImage(Object object)
   {
@@ -187,6 +197,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected boolean shouldComposeCreationImage()
   {
@@ -199,6 +210,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public String getText(Object object)
   {
@@ -211,6 +223,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Object getStyledText(Object object)
   {
@@ -235,6 +248,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void notifyChanged(Notification notification)
   {
@@ -260,6 +274,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {
@@ -272,6 +287,7 @@ public class ElementItemProvider extends ItemProviderAdapter implements IEditing
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public ResourceLocator getResourceLocator()
   {

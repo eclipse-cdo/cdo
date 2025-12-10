@@ -1180,6 +1180,7 @@ public class CDOBranchManagerImpl extends Container<CDOBranch> implements Intern
   {
     private static final long serialVersionUID = 1L;
 
+    @Deprecated
     public BranchCreatedEvent(CDOBranch branch)
     {
       super(branch, ChangeKind.CREATED, branch.getID());

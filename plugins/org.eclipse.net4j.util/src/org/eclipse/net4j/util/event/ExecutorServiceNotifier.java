@@ -25,6 +25,7 @@ public class ExecutorServiceNotifier extends Notifier implements IExecutorServic
 {
   private ExecutorService notificationExecutorService;
 
+  @Deprecated
   public ExecutorServiceNotifier()
   {
   }
@@ -32,18 +33,21 @@ public class ExecutorServiceNotifier extends Notifier implements IExecutorServic
   /**
    * @since 3.6
    */
+  @Deprecated
   @Override
   public ExecutorService getExecutorService()
   {
     return notificationExecutorService;
   }
 
+  @Deprecated
   @Override
   public ExecutorService getNotificationService()
   {
     return notificationExecutorService;
   }
 
+  @Deprecated
   public void setNotificationExecutorService(ExecutorService notificationExecutorService)
   {
     this.notificationExecutorService = notificationExecutorService;

@@ -20,12 +20,14 @@ import org.eclipse.net4j.util.om.log.OMLogger;
 @Deprecated
 public class QueueWorkerWorkSerializer extends QueueRunner implements IWorkSerializer
 {
+  @Deprecated
   public QueueWorkerWorkSerializer()
   {
     setDaemon(true);
     activate();
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {

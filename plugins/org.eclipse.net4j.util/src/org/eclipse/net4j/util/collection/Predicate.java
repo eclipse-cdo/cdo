@@ -18,5 +18,6 @@ package org.eclipse.net4j.util.collection;
 @Deprecated
 public interface Predicate<T>
 {
+  @Deprecated
   public boolean apply(T element);
 }

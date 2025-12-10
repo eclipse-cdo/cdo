@@ -40,6 +40,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   public ClassPermissionItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
@@ -51,6 +52,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
   {
@@ -69,6 +71,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Deprecated
   protected void addApplicableClassPropertyDescriptor(Object object)
   {
     itemPropertyDescriptors.add(new ItemPropertyDescriptor(((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory(), getResourceLocator(),
@@ -99,6 +102,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public Object getImage(Object object)
   {
@@ -110,6 +114,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected boolean shouldComposeCreationImage()
   {
@@ -122,6 +127,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated NOT
    */
+  @Deprecated
   @Override
   public String getText(Object object)
   {
@@ -145,6 +151,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void notifyChanged(Notification notification)
   {
@@ -159,6 +166,7 @@ public class ClassPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {

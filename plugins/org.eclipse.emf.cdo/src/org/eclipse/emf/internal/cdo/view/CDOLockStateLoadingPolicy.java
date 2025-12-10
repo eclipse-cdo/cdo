@@ -41,5 +41,6 @@ public interface CDOLockStateLoadingPolicy
    * @param id the of the loaded revision
    * @return true to have lock state loaded for the specified revision's id for the current view
    */
+  @Deprecated
   public boolean loadLockState(CDOID id);
 }

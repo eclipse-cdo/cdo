@@ -32,29 +32,34 @@ public final class CDOAuthenticationResult implements Serializable
 
   private byte[] cryptedToken;
 
+  @Deprecated
   public CDOAuthenticationResult(String userID, byte[] cryptedToken)
   {
     this.userID = userID;
     this.cryptedToken = cryptedToken;
   }
 
+  @Deprecated
   public CDOAuthenticationResult(ExtendedDataInput in) throws IOException
   {
     userID = in.readString();
     cryptedToken = in.readByteArray();
   }
 
+  @Deprecated
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeString(userID);
     out.writeByteArray(cryptedToken);
   }
 
+  @Deprecated
   public String getUserID()
   {
     return userID;
   }
 
+  @Deprecated
   public byte[] getCryptedToken()
   {
     return cryptedToken;

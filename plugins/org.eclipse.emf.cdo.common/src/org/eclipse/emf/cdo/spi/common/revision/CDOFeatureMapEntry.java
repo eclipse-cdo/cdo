@@ -22,7 +22,9 @@ import org.eclipse.emf.ecore.EStructuralFeature;
 @Deprecated
 public interface CDOFeatureMapEntry extends org.eclipse.emf.ecore.util.FeatureMap.Entry
 {
+  @Deprecated
   public void setEStructuralFeature(EStructuralFeature feature);
 
+  @Deprecated
   public void setValue(Object value);
 }

@@ -21,11 +21,13 @@ import org.eclipse.emf.cdo.internal.ui.messages.Messages;
 @Deprecated
 public class NewBinaryResourceActionDelegate extends NewResourceNodeActionDelegate
 {
+  @Deprecated
   public NewBinaryResourceActionDelegate()
   {
     super(Messages.getString("NewBinaryResourceAction_0")); //$NON-NLS-1$
   }
 
+  @Deprecated
   @Override
   protected CDOResourceNode createNewResourceNode()
   {

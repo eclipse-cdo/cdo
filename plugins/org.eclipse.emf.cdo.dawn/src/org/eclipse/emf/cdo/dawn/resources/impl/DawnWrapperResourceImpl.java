@@ -37,17 +37,20 @@ import java.util.Map;
 @Deprecated
 public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrapperResource
 {
+  @Deprecated
   public DawnWrapperResourceImpl(URI uri)
   {
     super(uri);
   }
 
+  @Deprecated
   @Override
   public void setRoot(boolean root)
   {
     super.setRoot(root);
   }
 
+  @Deprecated
   @Override
   protected void setExisting(boolean existing)
   {
@@ -57,24 +60,28 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
 
   /************ XML STUFF BEGIN ********************/
 
+  @Deprecated
   @Override
   public DOMHelper getDOMHelper()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public synchronized Map<Object, Object> getDefaultLoadOptions()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public synchronized Map<Object, Object> getDefaultSaveOptions()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public Map<EObject, AnyType> getEObjectToExtensionMap()
   {
@@ -89,12 +96,14 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public String getEncoding()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public String getID(EObject eObject)
   {
@@ -108,78 +117,91 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public String getPublicId()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public String getSystemId()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public String getXMLVersion()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void load(Node node, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void load(InputSource inputSource, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void save(Writer writer, Map<?, ?> options) throws IOException
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public Document save(Document document, Map<?, ?> options, DOMHandler handler)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void setDoctypeInfo(String publicId, String systemId)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void setEncoding(String encoding)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void setID(EObject eObject, String id)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void setUseZip(boolean useZip)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public void setXMLVersion(String version)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public boolean useZip()
   {
@@ -187,6 +209,7 @@ public class DawnWrapperResourceImpl extends CDOResourceImpl implements DawnWrap
   }
 
   /************ XML STUFF END ********************/
+  @Deprecated
   @Override
   public String toString()
   {

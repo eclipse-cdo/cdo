@@ -36,28 +36,33 @@ import org.eclipse.core.runtime.IExtensionRegistry;
 @Deprecated
 public class FactoryDescriptor implements IFactoryDescriptor
 {
+  @Deprecated
   public FactoryDescriptor(IConfigurationElement configurationElement)
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   public IConfigurationElement getConfigurationElement()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public IFactoryKey getKey()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public IFactory createFactory()
   {
     throw new UnsupportedOperationException();
   }
 
+  @Deprecated
   @Override
   public Object create(String description)
   {

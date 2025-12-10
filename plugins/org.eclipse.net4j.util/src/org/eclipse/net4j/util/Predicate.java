@@ -18,6 +18,7 @@ package org.eclipse.net4j.util;
 @Deprecated
 public interface Predicate<T>
 {
+  @Deprecated
   public boolean apply(T element);
 
   /**
@@ -30,11 +31,13 @@ public interface Predicate<T>
   {
     private final java.util.function.Predicate<T> delegate;
 
+    @Deprecated
     public DelegatingPredicate(java.util.function.Predicate<T> delegate)
     {
       this.delegate = delegate;
     }
 
+    @Deprecated
     @Override
     public boolean apply(T element)
     {

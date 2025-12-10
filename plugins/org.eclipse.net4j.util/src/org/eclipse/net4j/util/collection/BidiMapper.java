@@ -25,37 +25,44 @@ public class BidiMapper<T1, T2>
 
   private Map<T2, T1> map2 = new HashMap<>();
 
+  @Deprecated
   public BidiMapper()
   {
   }
 
+  @Deprecated
   public synchronized void map(T1 v1, T2 v2)
   {
     map1.put(v1, v2);
     map2.put(v2, v1);
   }
 
+  @Deprecated
   public synchronized int size()
   {
     return map1.size();
   }
 
+  @Deprecated
   public synchronized void clear()
   {
     map1.clear();
     map2.clear();
   }
 
+  @Deprecated
   public synchronized T2 lookup1(T1 v1)
   {
     return map1.get(v1);
   }
 
+  @Deprecated
   public synchronized T1 lookup2(T2 v2)
   {
     return map2.get(v2);
   }
 
+  @Deprecated
   public synchronized boolean remove1(T1 v1)
   {
     T2 v2 = map1.remove(v1);
@@ -68,6 +75,7 @@ public class BidiMapper<T1, T2>
     return false;
   }
 
+  @Deprecated
   public synchronized boolean remove2(T2 v2)
   {
     T1 v1 = map2.remove(v2);

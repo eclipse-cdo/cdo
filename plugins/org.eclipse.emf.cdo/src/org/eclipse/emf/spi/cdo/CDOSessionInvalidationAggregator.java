@@ -24,6 +24,7 @@ import org.eclipse.emf.cdo.session.CDOSession;
 @Deprecated
 public class CDOSessionInvalidationAggregator extends CDOSessionInvalidationEventQueue
 {
+  @Deprecated
   public CDOSessionInvalidationAggregator(CDOSession session)
   {
     super(session);

@@ -30,11 +30,13 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
 {
   private CDOResourceNode newResourceNode;
 
+  @Deprecated
   public NewResourceNodeActionDelegate(String text)
   {
     super(text);
   }
 
+  @Deprecated
   @Override
   protected CDOObject preRun(CDOObject object)
   {
@@ -50,6 +52,7 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
     return null;
   }
 
+  @Deprecated
   @Override
   protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
   {
@@ -63,15 +66,18 @@ public abstract class NewResourceNodeActionDelegate extends TransactionalBackgro
     }
   }
 
+  @Deprecated
   protected void setNewResourceNode(CDOResourceNode newResourceNode)
   {
     this.newResourceNode = newResourceNode;
   }
 
+  @Deprecated
   protected CDOResourceNode getNewResourceNode()
   {
     return newResourceNode;
   }
 
+  @Deprecated
   protected abstract CDOResourceNode createNewResourceNode();
 }

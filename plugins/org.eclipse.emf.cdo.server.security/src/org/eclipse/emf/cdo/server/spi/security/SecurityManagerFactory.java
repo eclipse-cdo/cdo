@@ -205,11 +205,13 @@ public abstract class SecurityManagerFactory extends Factory
   {
     private static final String TYPE = "annotation";
 
+    @Deprecated
     public Annotation()
     {
       super(TYPE);
     }
 
+    @Deprecated
     @Override
     public ISecurityManager create(String realmPath) throws ProductCreationException
     {

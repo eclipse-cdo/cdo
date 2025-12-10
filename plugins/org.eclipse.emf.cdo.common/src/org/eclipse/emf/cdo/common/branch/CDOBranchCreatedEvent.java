@@ -25,9 +25,11 @@ import org.eclipse.net4j.util.event.IEvent;
 @Deprecated
 public interface CDOBranchCreatedEvent extends CDOBranchChangedEvent
 {
+  @Deprecated
   @Override
   public CDOBranchManager getSource();
 
+  @Deprecated
   @Override
   public CDOBranch getBranch();
 }

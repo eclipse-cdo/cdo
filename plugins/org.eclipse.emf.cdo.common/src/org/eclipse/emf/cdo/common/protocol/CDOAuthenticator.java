@@ -24,24 +24,33 @@ import org.eclipse.net4j.util.security.IPasswordCredentialsProvider;
 @Deprecated
 public interface CDOAuthenticator
 {
+  @Deprecated
   public String getEncryptionAlgorithmName();
 
+  @Deprecated
   public void setEncryptionAlgorithmName(String encryptionAlgorithmName);
 
+  @Deprecated
   public byte[] getEncryptionSaltBytes();
 
+  @Deprecated
   public void setEncryptionSaltBytes(byte[] encryptionSaltBytes);
 
+  @Deprecated
   public int getEncryptionIterationCount();
 
+  @Deprecated
   public void setEncryptionIterationCount(int encryptionIterationCount);
 
+  @Deprecated
   public IPasswordCredentialsProvider getCredentialsProvider();
 
+  @Deprecated
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider);
 
   /**
    * @since 4.0
    */
+  @Deprecated
   public CDOAuthenticationResult authenticate(byte[] randomToken);
 }

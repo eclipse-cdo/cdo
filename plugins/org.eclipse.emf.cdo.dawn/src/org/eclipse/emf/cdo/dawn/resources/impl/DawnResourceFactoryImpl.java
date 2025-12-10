@@ -23,6 +23,7 @@ import org.eclipse.emf.common.util.URI;
 @Deprecated
 public class DawnResourceFactoryImpl extends CDOResourceFactoryImpl implements DawnResourceFactory
 {
+  @Deprecated
   @Override
   protected CDOResourceImpl createCDOResource(URI uri)
   {

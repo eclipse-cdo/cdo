@@ -39,6 +39,7 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected ClassPermissionImpl()
   {
     super();
@@ -49,6 +50,7 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected EClass eStaticClass()
   {
@@ -60,6 +62,7 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public EClass getApplicableClass()
   {
@@ -71,12 +74,14 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void setApplicableClass(EClass newApplicableClass)
   {
     eSet(SecurityPackage.Literals.CLASS_PERMISSION__APPLICABLE_CLASS, newApplicableClass);
   }
 
+  @Deprecated
   @Override
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
@@ -85,6 +90,7 @@ public class ClassPermissionImpl extends PermissionImpl implements ClassPermissi
     return actualClass == applicableClass;
   }
 
+  @Deprecated
   @Override
   public boolean isImpacted(CommitImpactContext context)
   {

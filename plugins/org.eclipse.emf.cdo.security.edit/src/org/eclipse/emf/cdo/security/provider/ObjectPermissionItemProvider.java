@@ -36,6 +36,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   public ObjectPermissionItemProvider(AdapterFactory adapterFactory)
   {
     super(adapterFactory);
@@ -47,6 +48,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public List<IItemPropertyDescriptor> getPropertyDescriptors(Object object)
   {
@@ -63,6 +65,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected boolean shouldComposeCreationImage()
   {
@@ -75,6 +78,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public String getText(Object object)
   {
@@ -91,6 +95,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void notifyChanged(Notification notification)
   {
@@ -105,6 +110,7 @@ public class ObjectPermissionItemProvider extends PermissionItemProvider
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected void collectNewChildDescriptors(Collection<Object> newChildDescriptors, Object object)
   {

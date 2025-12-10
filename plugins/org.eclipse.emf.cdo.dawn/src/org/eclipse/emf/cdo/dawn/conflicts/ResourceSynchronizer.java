@@ -26,40 +26,58 @@ import java.util.Set;
 @Deprecated
 public interface ResourceSynchronizer
 {
+  @Deprecated
   public static final int NO_CONFLICT = -1;
 
+  @Deprecated
   public static final int REMOTELY_DELTETION_CONFLICT = 0;
 
+  @Deprecated
   public static final int LOCALLY_DELTETION_CONFLICT = 1;
 
+  @Deprecated
   public static final int REMOTELY_AND_LOCALLY_CHANGED_CONFLICT = 2;
 
+  @Deprecated
   void loadLastResource();
 
+  @Deprecated
   void saveLastResource(Resource localResource);
 
+  @Deprecated
   void setGloballyLocked(Set<String> lockedObjects);
 
+  @Deprecated
   Set<String> getGloballyLocked();
 
+  @Deprecated
   void setRemoteLocks(Map<String, Integer> lockedObjects);
 
+  @Deprecated
   void setIgnored(EObject obj);
 
+  @Deprecated
   void setIgnored(String id);
 
+  @Deprecated
   void setLastResource(Resource lastResource);
 
+  @Deprecated
   Resource getLastResource();
 
+  @Deprecated
   void unIgnored(String id);
 
+  @Deprecated
   int getConflictType(String key);
 
+  @Deprecated
   void resolveDeletedLocallyConflict(String xmiId);
 
+  @Deprecated
   void resolveChangedLocalyAndRemotellyConflict(String xmiId);
 
+  @Deprecated
   void resolveDeletedRemotellyConflict(String xmiId);
 
   // void updateViewWithRemoteView(View obj);
@@ -68,21 +86,30 @@ public interface ResourceSynchronizer
   //
   // void lastResourceChangeView(View newView);
 
+  @Deprecated
   boolean isConflicted();
 
+  @Deprecated
   void cleanIgnoreList();
 
+  @Deprecated
   void setSelectedElements(Set<EObject> selectedElements);
 
+  @Deprecated
   Set<EObject> getSelectedElements();
 
+  @Deprecated
   void setIgnoreList(Set<String> ignoreList);
 
+  @Deprecated
   Set<String> getIgnoreList();
 
+  @Deprecated
   void setLocallyLocked(Set<String> locallyLocked);
 
+  @Deprecated
   Set<String> getLocallyLocked();
 
+  @Deprecated
   void addObserver(Observer observer);
 }

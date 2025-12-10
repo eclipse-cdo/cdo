@@ -23,20 +23,24 @@ public class NotAuthenticatedException extends org.eclipse.net4j.util.security.N
 {
   private static final long serialVersionUID = 1L;
 
+  @Deprecated
   public NotAuthenticatedException()
   {
   }
 
+  @Deprecated
   public NotAuthenticatedException(String s)
   {
     super(s);
   }
 
+  @Deprecated
   public NotAuthenticatedException(Throwable cause)
   {
     super(cause);
   }
 
+  @Deprecated
   public NotAuthenticatedException(String message, Throwable cause)
   {
     super(message, cause);

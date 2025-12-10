@@ -27,12 +27,15 @@ import org.osgi.service.log.LogService;
 public class OSGiLoggingBridge implements OMLogHandler
 {
   // @Singleton
+  @Deprecated
   public static final OSGiLoggingBridge INSTANCE = new OSGiLoggingBridge();
 
+  @Deprecated
   protected OSGiLoggingBridge()
   {
   }
 
+  @Deprecated
   @Override
   public void logged(OMLogger logger, Level level, String msg, Throwable t)
   {
@@ -46,12 +49,14 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
   }
 
+  @Deprecated
   public void logged(BundleContext bundleContext, Level level, String msg, Throwable t)
   {
     LogService logService = getLogService(bundleContext);
     logService.log(toOSGi(level), msg, t);
   }
 
+  @Deprecated
   @SuppressWarnings({ "rawtypes", "unchecked" })
   protected LogService getLogService(BundleContext bundleContext)
   {
@@ -67,6 +72,7 @@ public class OSGiLoggingBridge implements OMLogHandler
     }
   }
 
+  @Deprecated
   public static int toOSGi(Level level)
   {
     switch (level)

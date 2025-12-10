@@ -46,6 +46,7 @@ public interface ClassPermission extends Permission
    * @model required="true"
    * @generated
    */
+  @Deprecated
   EClass getApplicableClass();
 
   /**
@@ -56,6 +57,7 @@ public interface ClassPermission extends Permission
    * @see #getApplicableClass()
    * @generated
    */
+  @Deprecated
   void setApplicableClass(EClass value);
 
 } // ClassPermission

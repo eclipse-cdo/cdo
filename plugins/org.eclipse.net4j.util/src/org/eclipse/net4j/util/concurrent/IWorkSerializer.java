@@ -17,7 +17,9 @@ package org.eclipse.net4j.util.concurrent;
 @Deprecated
 public interface IWorkSerializer
 {
+  @Deprecated
   public boolean addWork(Runnable work);
 
+  @Deprecated
   public void dispose();
 }

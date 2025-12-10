@@ -35,12 +35,14 @@ public final class AuthorizableOperationImpl
 
   private final Map<String, Object> parameters = new HashMap<>();
 
+  @Deprecated
   public AuthorizableOperationImpl(String id)
   {
     CheckUtil.checkArg(id, "id"); //$NON-NLS-1$
     this.id = id;
   }
 
+  @Deprecated
   public AuthorizableOperationImpl(ExtendedDataInput in) throws IOException
   {
     id = in.readString();
@@ -55,11 +57,13 @@ public final class AuthorizableOperationImpl
     }
   }
 
+  @Deprecated
   public final String getID()
   {
     return id;
   }
 
+  @Deprecated
   public AuthorizableOperationImpl parameter(String key, Object value)
   {
     CheckUtil.checkArg(key, "key"); //$NON-NLS-1$
@@ -69,16 +73,19 @@ public final class AuthorizableOperationImpl
     return this;
   }
 
+  @Deprecated
   public Object getParameter(String key)
   {
     return parameters.get(key);
   }
 
+  @Deprecated
   public Map<String, Object> getParameters()
   {
     return Collections.unmodifiableMap(parameters);
   }
 
+  @Deprecated
   public void write(ExtendedDataOutput out) throws IOException
   {
     out.writeString(id);
@@ -91,12 +98,14 @@ public final class AuthorizableOperationImpl
     }
   }
 
+  @Deprecated
   @Override
   public int hashCode()
   {
     return Objects.hash(id);
   }
 
+  @Deprecated
   @Override
   public boolean equals(Object obj)
   {
@@ -114,6 +123,7 @@ public final class AuthorizableOperationImpl
     return Objects.equals(id, other.id);
   }
 
+  @Deprecated
   @Override
   public String toString()
   {

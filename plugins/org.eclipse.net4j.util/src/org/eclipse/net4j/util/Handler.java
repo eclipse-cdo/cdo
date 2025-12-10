@@ -20,5 +20,6 @@ import java.util.function.Consumer;
 @Deprecated
 public interface Handler<T>
 {
+  @Deprecated
   public void handle(T object);
 }

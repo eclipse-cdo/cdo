@@ -34,26 +34,31 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
 
   private volatile boolean disposed;
 
+  @Deprecated
   public ExecutorWorkSerializer()
   {
   }
 
+  @Deprecated
   public ExecutorWorkSerializer(Executor executor)
   {
     this.executor = executor;
   }
 
+  @Deprecated
   public Executor getExecutor()
   {
     return executor;
   }
 
+  @Deprecated
   public void setExecutor(Executor executor)
   {
     checkInactive();
     this.executor = executor;
   }
 
+  @Deprecated
   @Override
   public synchronized boolean addWork(Runnable runnable)
   {
@@ -74,22 +79,26 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     return true;
   }
 
+  @Deprecated
   @Override
   public synchronized void dispose()
   {
     LifecycleUtil.deactivate(this, OMLogger.Level.DEBUG);
   }
 
+  @Deprecated
   @Override
   public String toString()
   {
     return ExecutorWorkSerializer.class.getSimpleName();
   }
 
+  @Deprecated
   protected void handleException(Runnable runnable, Throwable ex)
   {
   }
 
+  @Deprecated
   protected void noWork()
   {
   }
@@ -140,6 +149,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     }
   }
 
+  @Deprecated
   @Override
   protected void doBeforeActivate() throws Exception
   {
@@ -147,6 +157,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     checkState(executor, "executor"); //$NON-NLS-1$
   }
 
+  @Deprecated
   @Override
   protected void doActivate() throws Exception
   {
@@ -154,6 +165,7 @@ public class ExecutorWorkSerializer extends Lifecycle implements IWorkSerializer
     workDone();
   }
 
+  @Deprecated
   @Override
   protected void doDeactivate() throws Exception
   {

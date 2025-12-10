@@ -24,6 +24,7 @@ import org.eclipse.net4j.util.ui.StructuredContentProvider;
 @Deprecated
 public class FactoryTypeContentProvider extends org.eclipse.net4j.util.ui.FactoryTypeContentProvider
 {
+  @Deprecated
   public FactoryTypeContentProvider(String productGroup)
   {
     super(productGroup);

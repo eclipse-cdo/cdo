@@ -36,6 +36,7 @@ public class AuditScale extends Composite
 
   private Scale scale;
 
+  @Deprecated
   public AuditScale(Composite parent, int scaleStyle)
   {
     super(parent, SWT.NONE);
@@ -48,26 +49,31 @@ public class AuditScale extends Composite
   /**
    * @since 4.0
    */
+  @Deprecated
   public int getDirection()
   {
     return direction;
   }
 
+  @Deprecated
   public int getScaleStyle()
   {
     return scaleStyle;
   }
 
+  @Deprecated
   public Scale getScale()
   {
     return scale;
   }
 
+  @Deprecated
   protected Scale createScale(int style)
   {
     return new Scale(this, style);
   }
 
+  @Deprecated
   @Override
   public void setBounds(int x, int y, int width, int height)
   {
@@ -117,6 +123,7 @@ public class AuditScale extends Composite
     }
   }
 
+  @Deprecated
   public static void main(String[] args)
   {
     Display display = new Display();

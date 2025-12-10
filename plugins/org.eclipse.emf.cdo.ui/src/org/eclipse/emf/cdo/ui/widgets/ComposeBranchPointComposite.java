@@ -305,6 +305,7 @@ public class ComposeBranchPointComposite extends Composite
   {
     return new SelectBranchComposite(this, SWT.NONE, session, branch)
     {
+      @Deprecated
       @Override
       protected void branchChanged(CDOBranch newBranch)
       {

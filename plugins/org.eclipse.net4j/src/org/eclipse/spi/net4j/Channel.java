@@ -452,12 +452,14 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
   @Deprecated
   protected class ReceiveSerializer extends org.eclipse.net4j.util.concurrent.QueueWorkerWorkSerializer
   {
+    @Deprecated
     @Override
     protected String getThreadName()
     {
       return "Net4jReceiveSerializer-" + Channel.this; //$NON-NLS-1$
     }
 
+    @Deprecated
     @Override
     protected void noWork(WorkContext context)
     {
@@ -482,6 +484,7 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     /**
      * @since 3.0
      */
+    @Deprecated
     public ReceiverWork(IBuffer buffer)
     {
       this.buffer = buffer;
@@ -490,12 +493,14 @@ public class Channel extends Lifecycle implements InternalChannel, IExecutorServ
     /**
      * @since 4.5
      */
+    @Deprecated
     @Override
     public String getName()
     {
       return "Net4jReceiver-" + Channel.this; //$NON-NLS-1$
     }
 
+    @Deprecated
     @Override
     protected void doRun()
     {

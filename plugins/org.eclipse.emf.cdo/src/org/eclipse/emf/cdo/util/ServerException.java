@@ -25,20 +25,24 @@ public class ServerException extends CDOException
 {
   private static final long serialVersionUID = 1L;
 
+  @Deprecated
   public ServerException()
   {
   }
 
+  @Deprecated
   public ServerException(String message)
   {
     super(message);
   }
 
+  @Deprecated
   public ServerException(String message, Throwable cause)
   {
     super(message, cause);
   }
 
+  @Deprecated
   public ServerException(Throwable cause)
   {
     super(cause);

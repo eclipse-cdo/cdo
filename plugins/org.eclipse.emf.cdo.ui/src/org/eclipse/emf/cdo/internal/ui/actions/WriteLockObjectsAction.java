@@ -24,14 +24,17 @@ import org.eclipse.emf.spi.cdo.InternalCDOObject;
 @Deprecated
 public class WriteLockObjectsAction extends AbstractLockObjectsAction
 {
+  @Deprecated
   public static final String ID = "writelock-objects"; //$NON-NLS-1$
 
+  @Deprecated
   public WriteLockObjectsAction()
   {
     super(Messages.getString("WriteLockObjectsAction.1")); //$NON-NLS-1$
     setId(ID);
   }
 
+  @Deprecated
   @Override
   protected CDOLock getLock(InternalCDOObject object)
   {

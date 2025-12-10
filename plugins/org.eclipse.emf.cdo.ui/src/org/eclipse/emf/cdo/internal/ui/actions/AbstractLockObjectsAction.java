@@ -41,11 +41,13 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
 
   private Boolean lock;
 
+  @Deprecated
   public AbstractLockObjectsAction(String title)
   {
     super(title);
   }
 
+  @Deprecated
   public void selectionChanged(IStructuredSelection selection)
   {
     objects.clear();
@@ -63,6 +65,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
     }
   }
 
+  @Deprecated
   @Override
   public void update()
   {
@@ -71,6 +74,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
     setChecked(lock != null && lock);
   }
 
+  @Deprecated
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
@@ -110,6 +114,7 @@ public abstract class AbstractLockObjectsAction extends EditingDomainAction
     }
   }
 
+  @Deprecated
   protected abstract CDOLock getLock(InternalCDOObject object);
 
   private void updateLockInfo()

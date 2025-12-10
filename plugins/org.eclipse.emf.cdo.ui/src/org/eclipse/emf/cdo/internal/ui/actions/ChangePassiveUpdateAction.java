@@ -29,6 +29,7 @@ import org.eclipse.core.runtime.IProgressMonitor;
 @Deprecated
 public class ChangePassiveUpdateAction extends EditingDomainAction
 {
+  @Deprecated
   public static final String ID = "change-passiveupdate"; //$NON-NLS-1$
 
   private static final String TITLE = Messages.getString("ChangePassiveUpdateAction.1"); //$NON-NLS-1$
@@ -50,12 +51,14 @@ public class ChangePassiveUpdateAction extends EditingDomainAction
     }
   };
 
+  @Deprecated
   public ChangePassiveUpdateAction()
   {
     super(TITLE);
     setId(ID);
   }
 
+  @Deprecated
   @Override
   protected void doRun(IProgressMonitor progressMonitor) throws Exception
   {
@@ -67,6 +70,7 @@ public class ChangePassiveUpdateAction extends EditingDomainAction
     update();
   }
 
+  @Deprecated
   @Override
   public void update()
   {
@@ -77,6 +81,7 @@ public class ChangePassiveUpdateAction extends EditingDomainAction
   /**
    * Sets the {@link CDOSession session} to be associated with this action.
    */
+  @Deprecated
   public void setSession(CDOSession session)
   {
     if (this.session != null)

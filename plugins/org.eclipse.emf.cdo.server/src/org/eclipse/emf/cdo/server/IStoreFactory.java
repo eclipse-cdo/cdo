@@ -38,6 +38,7 @@ public interface IStoreFactory
   @Deprecated
   public interface ParameterAware extends org.eclipse.net4j.util.ParameterAware
   {
+    @Deprecated
     @Override
     public void setParameters(Map<String, String> parameters);
   }

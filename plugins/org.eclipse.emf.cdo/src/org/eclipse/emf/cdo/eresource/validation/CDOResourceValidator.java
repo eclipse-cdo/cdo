@@ -27,23 +27,33 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 @Deprecated
 public interface CDOResourceValidator
 {
+  @Deprecated
   boolean validate();
 
+  @Deprecated
   boolean validateResourceSet(ResourceSet value);
 
+  @Deprecated
   boolean validateURI(URI value);
 
+  @Deprecated
   boolean validateContents(EList<EObject> value);
 
+  @Deprecated
   boolean validateModified(boolean value);
 
+  @Deprecated
   boolean validateLoaded(boolean value);
 
+  @Deprecated
   boolean validateTrackingModification(boolean value);
 
+  @Deprecated
   boolean validateErrors(EList<Diagnostic> value);
 
+  @Deprecated
   boolean validateWarnings(EList<Diagnostic> value);
 
+  @Deprecated
   boolean validateTimeStamp(long value);
 }

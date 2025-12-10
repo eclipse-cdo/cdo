@@ -178,51 +178,60 @@ public abstract class CDOSessionConfigurationImpl extends Notifier implements In
   {
     return new org.eclipse.emf.cdo.common.protocol.CDOAuthenticator()
     {
+      @SuppressWarnings("deprecation")
       @Override
       public String getEncryptionAlgorithmName()
       {
         return null;
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
       {
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public byte[] getEncryptionSaltBytes()
       {
         return null;
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
       {
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public int getEncryptionIterationCount()
       {
         return 0;
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public void setEncryptionIterationCount(int encryptionIterationCount)
       {
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public IPasswordCredentialsProvider getCredentialsProvider()
       {
         return CDOSessionConfigurationImpl.this.getCredentialsProvider();
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
       {
         CDOSessionConfigurationImpl.this.setCredentialsProvider(credentialsProvider);
       }
 
+      @SuppressWarnings("deprecation")
       @Override
       public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
       {

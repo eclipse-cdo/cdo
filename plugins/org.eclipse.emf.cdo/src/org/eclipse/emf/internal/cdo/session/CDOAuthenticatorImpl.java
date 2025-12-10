@@ -28,58 +28,68 @@ public class CDOAuthenticatorImpl implements org.eclipse.emf.cdo.common.protocol
 
   private IPasswordCredentialsProvider credentialsProvider;
 
+  @Deprecated
   public CDOAuthenticatorImpl()
   {
   }
 
+  @Deprecated
   @Override
   public String getEncryptionAlgorithmName()
   {
     return encryptionAlgorithmName;
   }
 
+  @Deprecated
   @Override
   public void setEncryptionAlgorithmName(String encryptionAlgorithmName)
   {
     this.encryptionAlgorithmName = encryptionAlgorithmName;
   }
 
+  @Deprecated
   @Override
   public byte[] getEncryptionSaltBytes()
   {
     return encryptionSaltBytes;
   }
 
+  @Deprecated
   @Override
   public void setEncryptionSaltBytes(byte[] encryptionSaltBytes)
   {
     this.encryptionSaltBytes = encryptionSaltBytes;
   }
 
+  @Deprecated
   @Override
   public int getEncryptionIterationCount()
   {
     return encryptionIterationCount;
   }
 
+  @Deprecated
   @Override
   public void setEncryptionIterationCount(int encryptionIterationCount)
   {
     this.encryptionIterationCount = encryptionIterationCount;
   }
 
+  @Deprecated
   @Override
   public IPasswordCredentialsProvider getCredentialsProvider()
   {
     return credentialsProvider;
   }
 
+  @Deprecated
   @Override
   public void setCredentialsProvider(IPasswordCredentialsProvider credentialsProvider)
   {
     this.credentialsProvider = credentialsProvider;
   }
 
+  @Deprecated
   @Override
   public org.eclipse.emf.cdo.spi.common.CDOAuthenticationResult authenticate(byte[] randomToken)
   {
@@ -99,6 +109,7 @@ public class CDOAuthenticatorImpl implements org.eclipse.emf.cdo.common.protocol
     return null;
   }
 
+  @Deprecated
   protected byte[] encryptToken(char[] password, byte[] token)
   {
     try

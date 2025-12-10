@@ -28,6 +28,7 @@ public final class Predicates
   /**
    * @since 3.10
    */
+  @Deprecated
   public static <T> java.util.function.Predicate<T> toJava8(Predicate<T> from)
   {
     return new java.util.function.Predicate<T>()
@@ -43,10 +44,12 @@ public final class Predicates
   /**
    * @since 3.10
    */
+  @Deprecated
   public static <T> Predicate<T> fromJava8(java.util.function.Predicate<T> from)
   {
     return new Predicate<T>()
     {
+      @SuppressWarnings("deprecation")
       @Override
       public boolean apply(T t)
       {
@@ -58,6 +61,7 @@ public final class Predicates
   /**
    * @since 3.4
    */
+  @Deprecated
   public static <T> Predicate<T> included(Set<T> inclusions)
   {
     return new IncludedPredicate<>(inclusions);
@@ -66,6 +70,7 @@ public final class Predicates
   /**
    * @since 3.4
    */
+  @Deprecated
   public static <T> Predicate<T> excluded(Set<T> exclusions)
   {
     return new ExcludedPredicate<>(exclusions);
@@ -74,17 +79,20 @@ public final class Predicates
   /**
    * @since 3.4
    */
+  @Deprecated
   public static <T> Predicate<T> unique()
   {
     return new UniquePredicate<>();
   }
 
+  @Deprecated
   @SuppressWarnings("unchecked")
   public static <T> Predicate<T> alwaysFalse()
   {
     return (Predicate<T>)FalsePredicate.INSTANCE;
   }
 
+  @Deprecated
   @SuppressWarnings("unchecked")
   public static <T> Predicate<T> alwaysTrue()
   {
@@ -95,15 +103,18 @@ public final class Predicates
    * @author Eike Stepper
    * @since 3.4
    */
+  @Deprecated
   public static final class IncludedPredicate<T> implements Predicate<T>
   {
     private final Set<T> inclusions;
 
+    @Deprecated
     public IncludedPredicate(Set<T> inclusions)
     {
       this.inclusions = inclusions;
     }
 
+    @Deprecated
     @Override
     public boolean apply(T element)
     {
@@ -115,15 +126,18 @@ public final class Predicates
    * @author Eike Stepper
    * @since 3.4
    */
+  @Deprecated
   public static final class ExcludedPredicate<T> implements Predicate<T>
   {
     private final Set<T> exclusions;
 
+    @Deprecated
     public ExcludedPredicate(Set<T> exclusions)
     {
       this.exclusions = exclusions;
     }
 
+    @Deprecated
     @Override
     public boolean apply(T element)
     {
@@ -135,10 +149,12 @@ public final class Predicates
    * @author Eike Stepper
    * @since 3.4
    */
+  @Deprecated
   public static final class UniquePredicate<T> implements Predicate<T>
   {
     private final Set<T> applied = new HashSet<>();
 
+    @Deprecated
     @Override
     public boolean apply(T element)
     {
@@ -149,10 +165,12 @@ public final class Predicates
   /**
    * @author Eike Stepper
    */
+  @Deprecated
   private static final class FalsePredicate implements Predicate<Object>
   {
     private static final Predicate<Object> INSTANCE = new FalsePredicate();
 
+    @Deprecated
     @Override
     public boolean apply(Object element)
     {
@@ -163,10 +181,12 @@ public final class Predicates
   /**
    * @author Eike Stepper
    */
+  @Deprecated
   private static final class TruePredicate implements Predicate<Object>
   {
     private static final Predicate<Object> INSTANCE = new TruePredicate();
 
+    @Deprecated
     @Override
     public boolean apply(Object element)
     {

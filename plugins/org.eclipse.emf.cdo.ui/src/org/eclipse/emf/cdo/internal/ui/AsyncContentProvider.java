@@ -34,29 +34,34 @@ public class AsyncContentProvider implements ITreeContentProvider
 
   private WeakHashMap<Object, LoadJob> loadJobs = new WeakHashMap<>();
 
+  @Deprecated
   public AsyncContentProvider(ITreeContentProvider delegate)
   {
     this.delegate = delegate;
   }
 
+  @Deprecated
   @Override
   public void inputChanged(Viewer viewer, Object oldInput, Object newInput)
   {
     delegate.inputChanged(viewer, oldInput, newInput);
   }
 
+  @Deprecated
   @Override
   public void dispose()
   {
     delegate.dispose();
   }
 
+  @Deprecated
   @Override
   public final Object[] getElements(Object inputElement)
   {
     return getChildren(inputElement);
   }
 
+  @Deprecated
   @Override
   public Object[] getChildren(Object parentElement)
   {
@@ -78,6 +83,7 @@ public class AsyncContentProvider implements ITreeContentProvider
     return delegate.getChildren(parentElement);
   }
 
+  @Deprecated
   @Override
   public boolean hasChildren(Object parentElement)
   {
@@ -99,6 +105,7 @@ public class AsyncContentProvider implements ITreeContentProvider
     return delegate.hasChildren(parentElement);
   }
 
+  @Deprecated
   @Override
   public Object getParent(Object element)
   {

@@ -38,6 +38,7 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected ObjectPermissionImpl()
   {
     super();
@@ -48,12 +49,14 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected EClass eStaticClass()
   {
     return SecurityPackage.Literals.OBJECT_PERMISSION;
   }
 
+  @Deprecated
   protected CDOView getView(CDORevisionProvider revisionProvider)
   {
     return PermissionUtil.getView(revisionProvider);
@@ -62,6 +65,7 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
   /**
    * @ADDED
    */
+  @Deprecated
   @Override
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
@@ -72,6 +76,7 @@ public abstract class ObjectPermissionImpl extends PermissionImpl implements Obj
     return isApplicable(object, securityContext);
   }
 
+  @Deprecated
   protected abstract boolean isApplicable(CDOObject object, CDOBranchPoint securityContext);
 
 } // ObjectPermissionImpl

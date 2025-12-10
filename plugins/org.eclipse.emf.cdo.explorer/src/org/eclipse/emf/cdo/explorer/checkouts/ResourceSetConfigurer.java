@@ -24,6 +24,7 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 @Deprecated
 public interface ResourceSetConfigurer
 {
+  @Deprecated
   public boolean configureResourceSet(ResourceSet resourceSet, CDOCheckout checkout);
 
   /**
@@ -33,13 +34,16 @@ public interface ResourceSetConfigurer
   @Deprecated
   public static abstract class Factory extends org.eclipse.net4j.util.factory.Factory
   {
+    @Deprecated
     public static final String PRODUCT_GROUP = "org.eclipse.emf.cdo.explorer.ResourceSetConfigurers"; //$NON-NLS-1$
 
+    @Deprecated
     public Factory(String type)
     {
       super(PRODUCT_GROUP, type);
     }
 
+    @Deprecated
     @Override
     public abstract ResourceSetConfigurer create(String description) throws ProductCreationException;
   }
@@ -51,12 +55,14 @@ public interface ResourceSetConfigurer
   @Deprecated
   public static final class Registry
   {
+    @Deprecated
     public static final Registry INSTANCE = new Registry();
 
     private Registry()
     {
     }
 
+    @Deprecated
     public boolean configureResourceSet(ResourceSet resourceSet, CDOCheckout checkout, IManagedContainer container)
     {
       boolean configured = false;
@@ -70,6 +76,7 @@ public interface ResourceSetConfigurer
       return configured;
     }
 
+    @Deprecated
     public boolean configureResourceSet(ResourceSet resourceSet, CDOCheckout checkout)
     {
       return configureResourceSet(resourceSet, checkout, IPluginContainer.INSTANCE);

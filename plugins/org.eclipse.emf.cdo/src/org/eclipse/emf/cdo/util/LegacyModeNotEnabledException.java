@@ -30,21 +30,25 @@ public class LegacyModeNotEnabledException extends IllegalStateException
 
   private static final String MESSAGE = "Legacy mode is not enabled";
 
+  @Deprecated
   public LegacyModeNotEnabledException()
   {
     this(MESSAGE);
   }
 
+  @Deprecated
   public LegacyModeNotEnabledException(String message)
   {
     super(MESSAGE + ": " + message);
   }
 
+  @Deprecated
   public LegacyModeNotEnabledException(Throwable cause)
   {
     super(MESSAGE, cause);
   }
 
+  @Deprecated
   public LegacyModeNotEnabledException(String message, Throwable cause)
   {
     super(MESSAGE + ": " + message, cause);

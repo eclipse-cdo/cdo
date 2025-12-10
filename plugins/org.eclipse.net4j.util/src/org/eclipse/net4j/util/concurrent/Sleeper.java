@@ -23,32 +23,38 @@ public class Sleeper
 
   private int interval;
 
+  @Deprecated
   public Sleeper()
   {
     this(DEFAULT_INTERVAL);
   }
 
+  @Deprecated
   public Sleeper(int interval)
   {
     this.interval = interval;
     restart();
   }
 
+  @Deprecated
   public int getInterval()
   {
     return interval;
   }
 
+  @Deprecated
   public long getStart()
   {
     return start;
   }
 
+  @Deprecated
   public void restart()
   {
     start = System.currentTimeMillis();
   }
 
+  @Deprecated
   public void sleep(long millis)
   {
     while (System.currentTimeMillis() < start + millis)
@@ -57,6 +63,7 @@ public class Sleeper
     }
   }
 
+  @Deprecated
   public void resleep(long millis)
   {
     restart();

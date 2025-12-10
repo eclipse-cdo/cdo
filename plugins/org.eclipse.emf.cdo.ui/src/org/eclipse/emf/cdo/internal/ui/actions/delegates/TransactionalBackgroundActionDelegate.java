@@ -42,11 +42,13 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
 
   private CDOObject transactionalObject;
 
+  @Deprecated
   public TransactionalBackgroundActionDelegate(String text)
   {
     this.text = text;
   }
 
+  @Deprecated
   @Override
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {
@@ -54,22 +56,26 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
     selectionChanged(action, getSelection());
   }
 
+  @Deprecated
   public IWorkbenchPart getTargetPart()
   {
     return targetPart;
   }
 
+  @Deprecated
   @Override
   protected String getText()
   {
     return text;
   }
 
+  @Deprecated
   protected int getCommitWorkPercent()
   {
     return 90;
   }
 
+  @Deprecated
   @Override
   protected final void preRun() throws Exception
   {
@@ -103,6 +109,7 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
    *          Usually an object in a read-only view that needs to be modified in a separate transaction.
    * @return A transactional copy of the passed object, or <code>null</code> to indicate cancelation of this action.
    */
+  @Deprecated
   protected CDOObject preRun(CDOObject object)
   {
     CDOSession session = object.cdoView().getSession();
@@ -112,6 +119,7 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
     return transactionalObject;
   }
 
+  @Deprecated
   @Override
   protected final void doRun(IProgressMonitor progressMonitor) throws Exception
   {
@@ -132,5 +140,6 @@ public abstract class TransactionalBackgroundActionDelegate extends LongRunningA
     }
   }
 
+  @Deprecated
   protected abstract void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception;
 }

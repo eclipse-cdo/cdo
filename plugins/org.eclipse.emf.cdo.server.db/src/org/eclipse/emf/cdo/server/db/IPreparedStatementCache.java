@@ -29,10 +29,13 @@ import java.sql.PreparedStatement;
 @Deprecated
 public interface IPreparedStatementCache
 {
+  @Deprecated
   public void setConnection(Connection connection);
 
+  @Deprecated
   public PreparedStatement getPreparedStatement(String sql, ReuseProbability reuseProbability);
 
+  @Deprecated
   public void releasePreparedStatement(PreparedStatement ps);
 
   /**
@@ -52,8 +55,19 @@ public interface IPreparedStatementCache
    * @since 2.0
    * @noextend This interface is not intended to be extended by clients.
    */
+  @Deprecated
   public static enum ReuseProbability
   {
-    MAX, HIGH, MEDIUM, LOW;
+    @Deprecated
+    MAX,
+
+    @Deprecated
+    HIGH,
+
+    @Deprecated
+    MEDIUM,
+
+    @Deprecated
+    LOW;
   }
 }

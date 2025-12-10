@@ -40,10 +40,12 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
 {
   private URI sourceURI;
 
+  @Deprecated
   public ImportResourceActionDelegate()
   {
   }
 
+  @Deprecated
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
@@ -76,6 +78,7 @@ public class ImportResourceActionDelegate extends NewResourceActionDelegate
     return null;
   }
 
+  @Deprecated
   @Override
   protected CDOResourceNode createNewResourceNode()
   {

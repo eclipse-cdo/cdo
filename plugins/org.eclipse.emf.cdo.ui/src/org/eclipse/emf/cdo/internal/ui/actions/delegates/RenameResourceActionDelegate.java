@@ -29,11 +29,13 @@ public class RenameResourceActionDelegate extends TransactionalBackgroundActionD
 {
   private String newResourceName;
 
+  @Deprecated
   public RenameResourceActionDelegate()
   {
     super(Messages.getString("RenameResourceActionDelegate.0")); //$NON-NLS-1$
   }
 
+  @Deprecated
   @Override
   protected CDOObject preRun(CDOObject object)
   {
@@ -60,6 +62,7 @@ public class RenameResourceActionDelegate extends TransactionalBackgroundActionD
     return newResourceName;
   }
 
+  @Deprecated
   @Override
   protected final void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
   {

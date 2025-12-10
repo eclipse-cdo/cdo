@@ -37,16 +37,19 @@ import org.eclipse.emf.ecore.util.ECrossReferenceEList;
 @Deprecated
 public class NotationEObjectImpl extends EObjectImpl
 {
+  @Deprecated
   protected URI eProxyURI;
 
   /**
    * Creates an EObject that is faster and more space efficient.
    */
+  @Deprecated
   protected NotationEObjectImpl()
   {
     super();
   }
 
+  @Deprecated
   @Override
   protected EPropertiesHolder eProperties()
   {
@@ -59,30 +62,35 @@ public class NotationEObjectImpl extends EObjectImpl
     return eProperties;
   }
 
+  @Deprecated
   @Override
   public boolean eIsProxy()
   {
     return eProxyURI != null;
   }
 
+  @Deprecated
   @Override
   public URI eProxyURI()
   {
     return eProxyURI;
   }
 
+  @Deprecated
   @Override
   public void eSetProxyURI(URI uri)
   {
     eProxyURI = uri;
   }
 
+  @Deprecated
   @Override
   public EList eContents()
   {
     return EContentsEList.createEContentsEList(this);
   }
 
+  @Deprecated
   @Override
   public EList eCrossReferences()
   {

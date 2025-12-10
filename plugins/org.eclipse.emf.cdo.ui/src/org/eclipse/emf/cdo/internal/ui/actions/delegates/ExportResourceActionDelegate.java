@@ -46,11 +46,13 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
 {
   private URI targetURI;
 
+  @Deprecated
   public ExportResourceActionDelegate()
   {
     super(Messages.getString("ExportSelectedResourceAction_0")); //$NON-NLS-1$
   }
 
+  @Deprecated
   @Override
   protected final CDOObject preRun(CDOObject object)
   {
@@ -81,6 +83,7 @@ public class ExportResourceActionDelegate extends TransactionalBackgroundActionD
     return null;
   }
 
+  @Deprecated
   @Override
   protected void doRun(CDOTransaction transaction, CDOObject object, IProgressMonitor progressMonitor) throws Exception
   {

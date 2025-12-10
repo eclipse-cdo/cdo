@@ -46,6 +46,7 @@ public interface PackagePermission extends Permission
    * @model required="true"
    * @generated
    */
+  @Deprecated
   EPackage getApplicablePackage();
 
   /**
@@ -56,6 +57,7 @@ public interface PackagePermission extends Permission
    * @see #getApplicablePackage()
    * @generated
    */
+  @Deprecated
   void setApplicablePackage(EPackage value);
 
 } // PackagePermission

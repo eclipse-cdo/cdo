@@ -40,6 +40,7 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   protected PackagePermissionImpl()
   {
     super();
@@ -50,6 +51,7 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   protected EClass eStaticClass()
   {
@@ -61,6 +63,7 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public EPackage getApplicablePackage()
   {
@@ -72,12 +75,14 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
    * <!-- end-user-doc -->
    * @generated
    */
+  @Deprecated
   @Override
   public void setApplicablePackage(EPackage newApplicablePackage)
   {
     eSet(SecurityPackage.Literals.PACKAGE_PERMISSION__APPLICABLE_PACKAGE, newApplicablePackage);
   }
 
+  @Deprecated
   @Override
   public boolean isApplicable(CDORevision revision, CDORevisionProvider revisionProvider, CDOBranchPoint securityContext)
   {
@@ -86,6 +91,7 @@ public class PackagePermissionImpl extends PermissionImpl implements PackagePerm
     return actualPackage == applicablePackage;
   }
 
+  @Deprecated
   @Override
   public boolean isImpacted(CommitImpactContext context)
   {

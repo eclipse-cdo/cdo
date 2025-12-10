@@ -21,8 +21,10 @@ import org.eclipse.net4j.util.AbstractSupport;
 @Deprecated
 public abstract class Support extends AbstractSupport
 {
+  @Deprecated
   public static final Support PROPERTIES = new Support()
   {
+    @SuppressWarnings("deprecation")
     @Override
     protected boolean determineAvailability() throws Throwable
     {
@@ -30,8 +32,10 @@ public abstract class Support extends AbstractSupport
     }
   };
 
+  @Deprecated
   public static final Support HISTORY = new Support()
   {
+    @SuppressWarnings("deprecation")
     @Override
     protected boolean determineAvailability() throws Throwable
     {
@@ -39,8 +43,10 @@ public abstract class Support extends AbstractSupport
     }
   };
 
+  @Deprecated
   public static final Support COMPARE = new Support()
   {
+    @SuppressWarnings("deprecation")
     @Override
     protected boolean determineAvailability() throws Throwable
     {
@@ -51,8 +57,10 @@ public abstract class Support extends AbstractSupport
   /**
    * @since 4.11
    */
+  @Deprecated
   public static final Support SERVER_SECURITY = new Support()
   {
+    @SuppressWarnings("deprecation")
     @Override
     protected boolean determineAvailability() throws Throwable
     {
@@ -64,6 +72,7 @@ public abstract class Support extends AbstractSupport
   {
   }
 
+  @Deprecated
   @Override
   protected abstract boolean determineAvailability() throws Throwable;
 }

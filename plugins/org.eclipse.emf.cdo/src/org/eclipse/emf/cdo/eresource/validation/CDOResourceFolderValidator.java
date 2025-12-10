@@ -25,7 +25,9 @@ import org.eclipse.emf.common.util.EList;
 @Deprecated
 public interface CDOResourceFolderValidator
 {
+  @Deprecated
   boolean validate();
 
+  @Deprecated
   boolean validateNodes(EList<CDOResourceNode> value);
 }

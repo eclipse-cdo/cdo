@@ -44,6 +44,7 @@ public interface ResourcePermission extends Permission
    * @model
    * @generated
    */
+  @Deprecated
   String getPattern();
 
   /**
@@ -54,6 +55,7 @@ public interface ResourcePermission extends Permission
    * @see #getPattern()
    * @generated
    */
+  @Deprecated
   void setPattern(String value);
 
 } // ResourcePermission

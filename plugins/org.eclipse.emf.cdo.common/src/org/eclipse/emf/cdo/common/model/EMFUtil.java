@@ -131,6 +131,7 @@ public final class EMFUtil
   @Deprecated
   public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> ATTRIBUTES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean apply(EStructuralFeature feature)
     {
@@ -145,6 +146,7 @@ public final class EMFUtil
   @Deprecated
   public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean apply(EStructuralFeature feature)
     {
@@ -159,6 +161,7 @@ public final class EMFUtil
   @Deprecated
   public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINER_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean apply(EStructuralFeature feature)
     {
@@ -179,6 +182,7 @@ public final class EMFUtil
   @Deprecated
   public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CROSS_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean apply(EStructuralFeature feature)
     {
@@ -199,6 +203,7 @@ public final class EMFUtil
   @Deprecated
   public static final org.eclipse.net4j.util.Predicate<EStructuralFeature> CONTAINMENT_REFERENCES = new org.eclipse.net4j.util.Predicate<EStructuralFeature>()
   {
+    @SuppressWarnings("deprecation")
     @Override
     public boolean apply(EStructuralFeature feature)
     {

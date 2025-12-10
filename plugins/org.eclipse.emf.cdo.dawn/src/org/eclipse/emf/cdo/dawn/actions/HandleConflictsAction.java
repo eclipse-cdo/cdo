@@ -37,8 +37,10 @@ public class HandleConflictsAction implements IObjectActionDelegate
 
   private Object selectedElement;
 
+  @Deprecated
   public final static String ID = "org.eclipse.emf.cdo.dawn.actions.HandleConflictAction";
 
+  @Deprecated
   @Override
   public void run(IAction action)
   {
@@ -69,6 +71,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     }
   }
 
+  @Deprecated
   @Override
   public void selectionChanged(IAction action, ISelection selection)
   {
@@ -83,6 +86,7 @@ public class HandleConflictsAction implements IObjectActionDelegate
     }
   }
 
+  @Deprecated
   @Override
   public void setActivePart(IAction action, IWorkbenchPart targetPart)
   {

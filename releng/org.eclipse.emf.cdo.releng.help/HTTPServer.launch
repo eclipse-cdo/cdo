@@ -5,6 +5,6 @@
         <listEntry value="org.eclipse.ui.externaltools.launchGroup"/>
     </listAttribute>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_LOCATION" value="C:\develop\installer\eclipse-inst.exe"/>
-    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-application org.eclipse.oomph.util.HTTPServer&#13;&#10;-consoleLog&#13;&#10;-nosplash&#13;&#10;-alias&#13;&#10;/help-&gt;${resource_loc:/org.eclipse.emf.cdo.releng.help/test}"/>
+    <stringAttribute key="org.eclipse.ui.externaltools.ATTR_TOOL_ARGUMENTS" value="-application org.eclipse.oomph.util.HTTPServer&#13;&#10;-consoleLog&#13;&#10;-nosplash&#13;&#10;-alias&#13;&#10;/help-&gt;${resource_loc:/org.eclipse.emf.cdo.releng.help/test}&#13;&#10;/www-&gt;${resource_loc:/cdo.www}"/>
     <stringAttribute key="org.eclipse.ui.externaltools.ATTR_WORKING_DIRECTORY" value="${workspace_loc:/org.eclipse.emf.cdo.releng.help/test}"/>
 </launchConfiguration>
